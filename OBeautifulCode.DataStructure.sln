@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31105.61
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OBeautifulCode.DataStructure", "OBeautifulCode.DataStructure\OBeautifulCode.DataStructure.csproj", "{690B6894-4D9A-4BB3-AA5D-D9AC800EB7E9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OBeautifulCode.DataStructure.Test", "OBeautifulCode.DataStructure.Test\OBeautifulCode.DataStructure.Test.csproj", "{6D5DEA9A-3BCC-49BC-9182-FC640018CF42}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OBeautifulCode.DataStructure.Serialization.Bson", "OBeautifulCode.DataStructure.Serialization.Bson\OBeautifulCode.DataStructure.Serialization.Bson.csproj", "{099365F5-B064-4809-896D-92E8A55DCE8A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OBeautifulCode.DataStructure.Serialization.Json", "OBeautifulCode.DataStructure.Serialization.Json\OBeautifulCode.DataStructure.Serialization.Json.csproj", "{A64A0A68-18D4-436B-AEE2-562050EC6CFA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{690B6894-4D9A-4BB3-AA5D-D9AC800EB7E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{690B6894-4D9A-4BB3-AA5D-D9AC800EB7E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{690B6894-4D9A-4BB3-AA5D-D9AC800EB7E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{690B6894-4D9A-4BB3-AA5D-D9AC800EB7E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D5DEA9A-3BCC-49BC-9182-FC640018CF42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D5DEA9A-3BCC-49BC-9182-FC640018CF42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D5DEA9A-3BCC-49BC-9182-FC640018CF42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D5DEA9A-3BCC-49BC-9182-FC640018CF42}.Release|Any CPU.Build.0 = Release|Any CPU
+		{099365F5-B064-4809-896D-92E8A55DCE8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{099365F5-B064-4809-896D-92E8A55DCE8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{099365F5-B064-4809-896D-92E8A55DCE8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{099365F5-B064-4809-896D-92E8A55DCE8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A64A0A68-18D4-436B-AEE2-562050EC6CFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A64A0A68-18D4-436B-AEE2-562050EC6CFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A64A0A68-18D4-436B-AEE2-562050EC6CFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A64A0A68-18D4-436B-AEE2-562050EC6CFA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FD4D7F70-FC32-4B9E-A5A4-55CF678A2D2D}
+	EndGlobalSection
+EndGlobal

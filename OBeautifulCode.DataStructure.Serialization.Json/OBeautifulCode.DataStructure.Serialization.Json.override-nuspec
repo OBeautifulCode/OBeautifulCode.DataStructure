@@ -1,0 +1,8 @@
+﻿<?xml version="1.0"?>
+<package>
+  <metadata>
+    <description>JSON Serialization Configuration for types in OBeautifulCode.DataStructure</description>
+    <tags>json serialization configuration DataStructure</tags>
+    <iconUrl>https://raw.githubusercontent.com/OBeautifulCode/OBeautifulCode.DataStructure/main/OBeautifulCode.DataStructure.Serialization.Json/nuget-icon.png</iconUrl>
+  </metadata>
+</package>

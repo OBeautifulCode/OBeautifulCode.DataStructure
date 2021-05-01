@@ -1,0 +1,8 @@
+﻿<?xml version="1.0"?>
+<package>
+  <metadata>
+    <description>Shared types (models and utilities) for DataStructure</description>
+    <tags>models modelobject utilities DataStructure</tags>
+    <iconUrl>https://raw.githubusercontent.com/OBeautifulCode/OBeautifulCode.DataStructure/main/OBeautifulCode.DataStructure/nuget-icon.png</iconUrl>
+  </metadata>
+</package>

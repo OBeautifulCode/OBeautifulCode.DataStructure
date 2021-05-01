@@ -1,0 +1,18 @@
+﻿<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>OBeautifulCode.DataStructure.Recipes.DummyFactory</id>
+    <description>A Dummy Factory for types in OBeautifulCode.DataStructure</description>
+    <tags>dummyfactory dummy factory fakeiteasy autofixture snippet codeinclude utility shared recipe DataStructure</tags>
+    <iconUrl>https://raw.githubusercontent.com/OBeautifulCode/OBeautifulCode.DataStructure/main/OBeautifulCode.DataStructure.Test/nuget-icon.png</iconUrl>
+    <dependencies>
+        <dependency id="OBeautifulCode.DataStructure" version="$version$" />
+        <dependency id="OBeautifulCode.AutoFakeItEasy" version ="1.0.126" />
+        <dependency id="OBeautifulCode.CodeAnalysis.Recipes.SuppressBecause" version="1.0.6" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="DataStructureDummyFactory.cs" target="content\net462\.recipes\OBeautifulCode.DataStructure\DataStructureDummyFactory.cs" />
+    <file src="DataStructureDummyFactory.designer.cs" target="content\net462\.recipes\OBeautifulCode.DataStructure\DataStructureDummyFactory.designer.cs" />
+  </files>
+</package>
