@@ -7,8 +7,12 @@
 namespace OBeautifulCode.DataStructure
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
     using OBeautifulCode.Type;
+
+    using static System.FormattableString;
 
     /// <summary>
     /// A table (rows and columns) with parent-child relationships between rows
@@ -20,7 +24,7 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Initializes a new instance of the <see cref="TreeTable"/> class.
         /// </summary>
-        /// <param name="labeledColumns">The columns of the table.</param>
+        /// <param name="labeledColumns">The columns of the table and how they are labeled.</param>
         /// <param name="dataRows">OPTIONAL data rows of the table.  DEFAULT is no data rows.</param>
         /// <param name="format">OPTIONAL format to apply to the whole table.  DEFAULT is to leave the format unchanged.</param>
         public TreeTable(
@@ -28,10 +32,18 @@ namespace OBeautifulCode.DataStructure
             DataRows dataRows = null,
             TableFormat format = null)
         {
-            // ReSharper disable once JoinNullCheckWithUsage
             if (labeledColumns == null)
             {
                 throw new ArgumentNullException(nameof(labeledColumns));
+            }
+
+            var rows = dataRows.GetAllDataRowsInOrder();
+
+            var numberOfColumns = labeledColumns.Columns.Count;
+
+            if (rows.Any(_ => _.GetNumberOfColumnsSpanned() != numberOfColumns))
+            {
+                throw new ArgumentException(Invariant($"{nameof(dataRows)} contains a row or descendant row that does not span all {numberOfColumns} of the defined columns."));
             }
 
             this.LabeledColumns = labeledColumns;

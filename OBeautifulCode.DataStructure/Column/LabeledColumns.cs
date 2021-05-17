@@ -45,6 +45,18 @@ namespace OBeautifulCode.DataStructure
                 throw new ArgumentException(Invariant($"{nameof(columns)} contains a null object."));
             }
 
+            if (preHeaderRow != null)
+            {
+                var numberOfColumns = columns.Count;
+
+                var columnsSpannedInPreHeaderRow = preHeaderRow.Cells.GetNumberOfColumnsSpanned();
+
+                if (columnsSpannedInPreHeaderRow != numberOfColumns)
+                {
+                    throw new ArgumentException(Invariant($"{nameof(preHeaderRow)} spans {columnsSpannedInPreHeaderRow} columns, but there are {numberOfColumns} columns in the table; those numbers must match."));
+                }
+            }
+
             this.Columns = columns;
             this.HeaderRowFormat = headerRowFormat;
             this.PreHeaderRow = preHeaderRow;

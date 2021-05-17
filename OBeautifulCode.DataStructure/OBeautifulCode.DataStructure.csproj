@@ -75,6 +75,7 @@
     <Compile Include="Cell\Interfaces\IStringCell.cs" />
     <Compile Include="Cell\Interfaces\ICell.cs" />
     <Compile Include="Cell\Classes\DecimalCell.cs" />
+    <Compile Include="Extensions\RowExtensions.cs" />
     <Compile Include="Format\CellFormat.cs" />
     <Compile Include="Format\HorizontalAlignment.cs" />
     <Compile Include="Format\DataRowsFormat.cs" />
