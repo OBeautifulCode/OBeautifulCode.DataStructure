@@ -18,12 +18,15 @@ namespace OBeautifulCode.DataStructure
         /// </summary>
         /// <param name="format">OPTIONAL format to apply to all cells in the row.  DEFAULT is to leave the format unchanged.</param>
         /// <param name="heightInPixels">OPTIONAL height, in pixels, to apply to the row.  DEFAULT is to leave the height unchanged.</param>
+        /// <param name="isHidden">OPTIONAL value indicating whether the row is hidden.  DEFAULT is to leave the visibility unchanged.</param>
         public RowFormat(
             CellFormat format = null,
-            int? heightInPixels = null)
+            int? heightInPixels = null,
+            bool? isHidden = null)
         {
             this.Format = format;
             this.HeightInPixels = heightInPixels;
+            this.IsHidden = isHidden;
         }
 
         /// <summary>
@@ -35,5 +38,10 @@ namespace OBeautifulCode.DataStructure
         /// Gets the height, in pixels, to apply to the row.
         /// </summary>
         public int? HeightInPixels { get; private set; }
+
+        /// <summary>
+        /// Gets a value indicating whether the row is hidden.
+        /// </summary>
+        public bool? IsHidden { get; private set; }
     }
 }
