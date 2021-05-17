@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="TreeTableRow.cs" company="OBeautifulCode">
+// <copyright file="Row.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -17,17 +17,17 @@ namespace OBeautifulCode.DataStructure
     /// <summary>
     /// A row in a tree table.
     /// </summary>
-    public partial class TreeTableRow : IModelViaCodeGen
+    public partial class Row : IModelViaCodeGen
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="TreeTableRow"/> class.
+        /// Initializes a new instance of the <see cref="Row"/> class.
         /// </summary>
         /// <param name="cells">OPTIONAL cells in the row.  DEFAULT is none.</param>
         /// <param name="childRows">OPTIONAL child rows.  DEFAULT is none.</param>
         /// <param name="format">OPTIONAL format to apply to the whole row.  DEFAULT is to leave the format unchanged.</param>
-        public TreeTableRow(
+        public Row(
             IReadOnlyList<ICell> cells = null,
-            IReadOnlyList<TreeTableRow> childRows = null,
+            IReadOnlyList<Row> childRows = null,
             RowFormat format = null)
         {
             if ((cells != null) && cells.Any(_ => _ == null))
@@ -53,7 +53,7 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Gets the child rows.
         /// </summary>
-        public IReadOnlyList<TreeTableRow> ChildRows { get; private set; }
+        public IReadOnlyList<Row> ChildRows { get; private set; }
 
         /// <summary>
         /// Gets the format to apply to the whole row.

@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="TreeTableColumn.cs" company="OBeautifulCode">
+// <copyright file="Column.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -11,16 +11,16 @@ namespace OBeautifulCode.DataStructure
     /// <summary>
     /// A column in a tree table.
     /// </summary>
-    public partial class TreeTableColumn : IModelViaCodeGen
+    public partial class Column : IModelViaCodeGen
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="TreeTableColumn"/> class.
+        /// Initializes a new instance of the <see cref="Column"/> class.
         /// </summary>
         /// <param name="name">OPTIONAL name of the column.  DEFAULT is a nameless column.</param>
         /// <param name="headerCell">OPTIONAL header cell.   DEFAULT is to specify no header cell.</param>
         /// <param name="headerCellOptions">OPTIONAL options to apply to the header cell.  DEFAULT is to apply no options.</param>
         /// <param name="format">OPTIONAL format to apply to the whole column.  DEFAULT is to leave the format unchanged.</param>
-        public TreeTableColumn(
+        public Column(
             string name = null,
             StringCell headerCell = null,
             HeaderCellOptions? headerCellOptions = null,

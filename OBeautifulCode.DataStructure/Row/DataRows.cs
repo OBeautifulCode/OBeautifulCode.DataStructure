@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="TreeTableDataRows.cs" company="OBeautifulCode">
+// <copyright file="DataRows.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -17,15 +17,15 @@ namespace OBeautifulCode.DataStructure
     /// <summary>
     /// The data rows (the rows below the header row) in a tree table.
     /// </summary>
-    public partial class TreeTableDataRows : IModelViaCodeGen
+    public partial class DataRows : IModelViaCodeGen
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="TreeTableDataRows"/> class.
+        /// Initializes a new instance of the <see cref="DataRows"/> class.
         /// </summary>
         /// <param name="rows">OPTIONAL rows of the table (at the root level of the row-tree).  DEFAULT is no rows.</param>
         /// <param name="format">OPTIONAL format to apply to all data rows.  DEFAULT is to leave the format unchanged.</param>
-        public TreeTableDataRows(
-            IReadOnlyList<TreeTableRow> rows = null,
+        public DataRows(
+            IReadOnlyList<Row> rows = null,
             DataRowsFormat format = null)
         {
             if ((rows != null) && rows.Any(_ => _ == null))
@@ -40,7 +40,7 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Gets the rows of the table (at the root level of the row-tree).
         /// </summary>
-        public IReadOnlyList<TreeTableRow> Rows { get; private set; }
+        public IReadOnlyList<Row> Rows { get; private set; }
 
         /// <summary>
         /// Gets the format to apply to all data rows.
