@@ -42,6 +42,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include=".recipes\OBeautifulCode.CodeAnalysis\ObcSuppressBecause.cs" />
@@ -61,11 +62,39 @@
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringReadableOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringXmlDocOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
+    <Compile Include="Cell\Classes\CellBase.cs" />
+    <Compile Include="Cell\Classes\ColumnSpanningDecimalCell.cs" />
+    <Compile Include="Cell\Classes\SlottedCell.cs" />
+    <Compile Include="Cell\Classes\ColumnSpanningStringCell.cs" />
+    <Compile Include="Cell\Classes\NullCell.cs" />
+    <Compile Include="Cell\Interfaces\IHaveValueCell.cs" />
+    <Compile Include="Cell\Interfaces\IHaveDisplayValueCell.cs" />
+    <Compile Include="Cell\Interfaces\IFormattableCell.cs" />
+    <Compile Include="Cell\Interfaces\IColumnSpanningCell.cs" />
+    <Compile Include="Cell\Interfaces\IDecimalCell.cs" />
+    <Compile Include="Cell\Interfaces\IStringCell.cs" />
+    <Compile Include="Cell\Interfaces\ICell.cs" />
+    <Compile Include="Cell\Classes\DecimalCell.cs" />
+    <Compile Include="Format\CellFormat.cs" />
+    <Compile Include="Format\HorizontalAlignment.cs" />
+    <Compile Include="Format\DataRowsFormat.cs" />
+    <Compile Include="Format\TableFormat.cs" />
+    <Compile Include="Format\VerticalAlignment.cs" />
+    <Compile Include="Format\RowFormat.cs" />
+    <Compile Include="Format\ColumnFormat.cs" />
+    <Compile Include="Format\CellFormatOptions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\GlobalSuppressions.cs" />
-    <Compile Include="Class1.cs" />
+    <Compile Include="Cell\Classes\StringCell.cs" />
+    <Compile Include="Row\PreHeaderRow.cs" />
+    <Compile Include="Row\TreeTableRow.cs" />
+    <Compile Include="TreeTable.cs" />
     <Compile Include="Properties\ProjectInfo.cs" />
     <AdditionalFiles Include=".analyzers\stylecop.json" />
+    <Compile Include="Column\TreeTableColumn.cs" />
+    <Compile Include="Column\HeaderCellOptions.cs" />
+    <Compile Include="Column\TreeTableColumns.cs" />
+    <Compile Include="Row\TreeTableDataRows.cs" />
     <None Include=".analyzers\release.ruleset" />
     <None Include="OBeautifulCode.DataStructure.override-nuspec" />
     <None Include="packages.config" />
@@ -78,6 +107,7 @@
     <Content Include=".analyzers\dictionary.xml" />
     <None Include="nuget-icon.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\OBeautifulCode.Build.Analyzers.1.1.136\build\OBeautifulCode.Build.Analyzers.targets" Condition="Exists('..\packages\OBeautifulCode.Build.Analyzers.1.1.136\build\OBeautifulCode.Build.Analyzers.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
