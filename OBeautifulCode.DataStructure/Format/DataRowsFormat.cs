@@ -23,18 +23,18 @@ namespace OBeautifulCode.DataStructure
         /// Initializes a new instance of the <see cref="DataRowsFormat"/> class.
         /// </summary>
         /// <param name="format">OPTIONAL format to apply to all data rows.  DEFAULT is to leave the format unchanged.</param>
-        /// <param name="repeatedFormats">OPTIONAL formats to apply in order for successive data rows, that repeat after the last format is applied.  For example, this can be used to achieve a zebra striped table by specifying two <see cref="RowFormat"/> objects having different background colors.</param>
+        /// <param name="repeatingFormats">OPTIONAL formats to apply in order for successive data rows, that repeat after the last format is applied.  For example, this can be used to achieve a zebra striped table by specifying two <see cref="RowFormat"/> objects having different background colors.</param>
         public DataRowsFormat(
             RowFormat format = null,
-            IReadOnlyList<RowFormat> repeatedFormats = null)
+            IReadOnlyList<RowFormat> repeatingFormats = null)
         {
-            if ((repeatedFormats != null) && repeatedFormats.Any(_ => _ == null))
+            if ((repeatingFormats != null) && repeatingFormats.Any(_ => _ == null))
             {
-                throw new ArgumentException(Invariant($"{nameof(repeatedFormats)} contains a null element."));
+                throw new ArgumentException(Invariant($"{nameof(repeatingFormats)} contains a null element."));
             }
 
             this.Format = format;
-            this.RepeatedFormats = repeatedFormats;
+            this.RepeatingFormats = repeatingFormats;
         }
 
         /// <summary>
@@ -43,8 +43,8 @@ namespace OBeautifulCode.DataStructure
         public RowFormat Format { get; private set; }
 
         /// <summary>
-        /// Gets the format to apply to all data rows.
+        /// Gets the formats to apply in order for successive data rows, that repeat after the last format is applied.
         /// </summary>
-        public IReadOnlyList<RowFormat> RepeatedFormats { get; private set; }
+        public IReadOnlyList<RowFormat> RepeatingFormats { get; private set; }
     }
 }

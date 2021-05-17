@@ -11,7 +11,7 @@ namespace OBeautifulCode.DataStructure
     using System.Linq;
 
     /// <summary>
-    /// Extension methods on <see cref="Row"/>.
+    /// Extension methods on <see cref="DataRow"/>.
     /// </summary>
     public static class RowExtensions
     {
@@ -23,7 +23,7 @@ namespace OBeautifulCode.DataStructure
         /// The number of columns spanned the row.
         /// </returns>
         public static int GetNumberOfColumnsSpanned(
-            this Row row)
+            this DataRow row)
         {
             if (row == null)
             {
@@ -64,18 +64,18 @@ namespace OBeautifulCode.DataStructure
         /// </summary>
         /// <param name="dataRows">The data rows.</param>
         /// <returns>The data rows, descendants included, in the order they appear in the table.</returns>
-        public static IReadOnlyList<Row> GetAllDataRowsInOrder(
+        public static IReadOnlyList<DataRow> GetAllDataRowsInOrder(
             this DataRows dataRows)
         {
-            var result = GetAllDataRowsInOrder(dataRows?.Rows ?? new Row[0]);
+            var result = GetAllDataRowsInOrder(dataRows?.Rows ?? new DataRow[0]);
 
             return result;
         }
 
-        private static IReadOnlyList<Row> GetAllDataRowsInOrder(
-            IReadOnlyList<Row> rows)
+        private static IReadOnlyList<DataRow> GetAllDataRowsInOrder(
+            IReadOnlyList<DataRow> rows)
         {
-            var result = new List<Row>();
+            var result = new List<DataRow>();
 
             foreach (var row in rows)
             {

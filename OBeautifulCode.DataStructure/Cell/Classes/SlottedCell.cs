@@ -26,7 +26,7 @@ namespace OBeautifulCode.DataStructure
         /// <param name="slotNameToCellMap">A map of the slot's name to the cell contained in the slot.</param>
         /// <param name="defaultSlotName">The name of the slot to use when initially rendering the tree table.</param>
         protected SlottedCell(
-            IReadOnlyDictionary<string, ICell> slotNameToCellMap,
+            IReadOnlyDictionary<string, IHaveValueCell> slotNameToCellMap,
             string defaultSlotName)
         {
             if (slotNameToCellMap == null)
@@ -37,11 +37,6 @@ namespace OBeautifulCode.DataStructure
             if (!slotNameToCellMap.Any())
             {
                 throw new ArgumentException(Invariant($"{nameof(slotNameToCellMap)} is empty."));
-            }
-
-            if (!slotNameToCellMap.Values.Any(_ => _ is SlottedCell))
-            {
-                throw new ArgumentException(Invariant($"{nameof(slotNameToCellMap)} contains a slot which itself is a slotted cell, which is not allowed."));
             }
 
             if (!slotNameToCellMap.ContainsKey(defaultSlotName))
@@ -56,7 +51,7 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Gets a map of the slot's name to the cell contained in the slot.
         /// </summary>
-        public IReadOnlyDictionary<string, ICell> SlotNameToCellMap { get; private set; }
+        public IReadOnlyDictionary<string, IHaveValueCell> SlotNameToCellMap { get; private set; }
 
         /// <summary>
         /// Gets the name of the slot to use when initially rendering the tree table.
