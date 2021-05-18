@@ -7,7 +7,7 @@
 namespace OBeautifulCode.DataStructure
 {
     /// <summary>
-    /// A cell having a display value.
+    /// A cell having a value.
     /// </summary>
     public interface IHaveValueCell : ICell
     {

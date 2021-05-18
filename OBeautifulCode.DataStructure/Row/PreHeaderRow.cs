@@ -45,7 +45,7 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Gets the cells in the row.
         /// </summary>
-        public IReadOnlyList<ICell> Cells { get; private set; }
+        public IReadOnlyList<IStringCell> Cells { get; private set; }
 
         /// <summary>
         /// Gets the format to apply to the whole row.

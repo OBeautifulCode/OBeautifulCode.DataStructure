@@ -12,7 +12,7 @@ namespace OBeautifulCode.DataStructure
     /// A cell that contains a string value.
     /// </summary>
     // ReSharper disable once RedundantExtendsListEntry
-    public partial class StringCell : IStringCell, IFormattableCell, IModelViaCodeGen
+    public partial class StringCell : CellBase, IStringCell, IFormattableCell, IModelViaCodeGen
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="StringCell"/> class.

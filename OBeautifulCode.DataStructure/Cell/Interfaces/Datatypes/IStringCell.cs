@@ -9,7 +9,7 @@ namespace OBeautifulCode.DataStructure
     /// <summary>
     /// A cell that contains a string value.
     /// </summary>
-    public interface IStringCell : IHaveValueCell, ICell
+    public interface IStringCell : IHaveValueCell
     {
         /// <summary>
         /// Gets the cell's string value.

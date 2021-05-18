@@ -12,7 +12,7 @@ namespace OBeautifulCode.DataStructure
     /// A cell that contains a decimal value.
     /// </summary>
     // ReSharper disable once RedundantExtendsListEntry
-    public partial class DecimalCell : IDecimalCell, IFormattableCell, IModelViaCodeGen
+    public partial class DecimalCell : CellBase, IDecimalCell, IFormattableCell, IModelViaCodeGen
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="DecimalCell"/> class.
