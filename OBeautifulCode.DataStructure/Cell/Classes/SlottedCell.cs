@@ -23,35 +23,35 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Initializes a new instance of the <see cref="SlottedCell"/> class.
         /// </summary>
-        /// <param name="slotNameToCellMap">A map of the slot's name to the cell contained in the slot.</param>
+        /// <param name="slotIdToCellMap">A map of the slot's id to the cell contained in the slot.</param>
         /// <param name="defaultSlotName">The name of the slot to use when initially rendering the tree table.</param>
         protected SlottedCell(
-            IReadOnlyDictionary<string, IHaveValueCell> slotNameToCellMap,
+            IReadOnlyDictionary<string, IHaveValueCell> slotIdToCellMap,
             string defaultSlotName)
         {
-            if (slotNameToCellMap == null)
+            if (slotIdToCellMap == null)
             {
-                throw new ArgumentNullException(nameof(slotNameToCellMap));
+                throw new ArgumentNullException(nameof(slotIdToCellMap));
             }
 
-            if (!slotNameToCellMap.Any())
+            if (!slotIdToCellMap.Any())
             {
-                throw new ArgumentException(Invariant($"{nameof(slotNameToCellMap)} is empty."));
+                throw new ArgumentException(Invariant($"{nameof(slotIdToCellMap)} is empty."));
             }
 
-            if (!slotNameToCellMap.ContainsKey(defaultSlotName))
+            if (!slotIdToCellMap.ContainsKey(defaultSlotName))
             {
-                throw new ArgumentException(Invariant($"{nameof(slotNameToCellMap)} does not contain the specified {nameof(defaultSlotName)}."));
+                throw new ArgumentException(Invariant($"{nameof(slotIdToCellMap)} does not contain the specified {nameof(defaultSlotName)}."));
             }
 
-            this.SlotNameToCellMap = slotNameToCellMap;
+            this.SlotIdToCellMap = slotIdToCellMap;
             this.DefaultSlotName = defaultSlotName;
         }
 
         /// <summary>
-        /// Gets a map of the slot's name to the cell contained in the slot.
+        /// Gets a map of the slot's id to the cell contained in the slot.
         /// </summary>
-        public IReadOnlyDictionary<string, IHaveValueCell> SlotNameToCellMap { get; private set; }
+        public IReadOnlyDictionary<string, IHaveValueCell> SlotIdToCellMap { get; private set; }
 
         /// <summary>
         /// Gets the name of the slot to use when initially rendering the tree table.
