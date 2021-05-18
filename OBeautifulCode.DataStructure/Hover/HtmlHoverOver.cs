@@ -15,16 +15,16 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Initializes a new instance of the <see cref="HtmlHoverOver"/> class.
         /// </summary>
-        /// <param name="value">The hover-over HTML value.</param>
+        /// <param name="html">The hover-over HTML value.</param>
         public HtmlHoverOver(
-            string value)
+            string html)
         {
-            this.Value = value;
+            this.Html = html;
         }
 
         /// <summary>
         /// Gets the hover-over HTML value.
         /// </summary>
-        public string Value { get; private set; }
+        public string Html { get; private set; }
     }
 }

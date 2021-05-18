@@ -63,6 +63,7 @@
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringXmlDocOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
     <Compile Include="Cell\Classes\CellBase.cs" />
+    <Compile Include="Cell\Classes\NonSpanning\HtmlCell.cs" />
     <Compile Include="Cell\Classes\Spanning\ColumnSpanningCellBase.cs" />
     <Compile Include="Cell\Classes\Spanning\ColumnSpanningDecimalCell.cs" />
     <Compile Include="Cell\Classes\Spanning\ColumnSpanningNullCell.cs" />
@@ -70,6 +71,7 @@
     <Compile Include="Cell\Classes\Spanning\ColumnSpanningStringCell.cs" />
     <Compile Include="Cell\Classes\NonSpanning\NullCell.cs" />
     <Compile Include="Cell\Interfaces\Behavioral\IHaveHoverOverCell.cs" />
+    <Compile Include="Cell\Interfaces\Datatypes\IHtmlCell.cs" />
     <Compile Include="Hover\HoverOverBase.cs" />
     <Compile Include="Hover\IHoverOver.cs" />
     <Compile Include="Cell\Interfaces\Behavioral\IHaveValueCell.cs" />
