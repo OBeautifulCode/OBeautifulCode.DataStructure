@@ -22,10 +22,12 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Initializes a new instance of the <see cref="DataRow"/> class.
         /// </summary>
+        /// <param name="id">OPTIONAL row identifier.  DEFAULT is a row without an identifier.</param>
         /// <param name="cells">OPTIONAL cells in the row.  DEFAULT is none.</param>
         /// <param name="childRows">OPTIONAL child rows.  DEFAULT is none.</param>
         /// <param name="format">OPTIONAL format to apply to the whole row.  DEFAULT is to leave the format unchanged.</param>
         public DataRow(
+            string id = null,
             IReadOnlyList<ICell> cells = null,
             IReadOnlyList<DataRow> childRows = null,
             RowFormat format = null)
@@ -40,10 +42,16 @@ namespace OBeautifulCode.DataStructure
                 throw new ArgumentException(Invariant($"{nameof(childRows)} contains a null element."));
             }
 
+            this.Id = id;
             this.Cells = cells;
             this.ChildRows = childRows;
             this.Format = format;
         }
+
+        /// <summary>
+        /// Gets the row identifier.
+        /// </summary>
+        public string Id { get; private set; }
 
         /// <summary>
         /// Gets the cells in the row.
