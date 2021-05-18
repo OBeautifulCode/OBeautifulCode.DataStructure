@@ -12,7 +12,7 @@ namespace OBeautifulCode.DataStructure
     /// A cell that contains a string value and spans multiple columns.
     /// </summary>
     // ReSharper disable once RedundantExtendsListEntry
-    public partial class ColumnSpanningStringCell : ColumnSpanningCellBase, IStringCell, IHaveValueCell, IFormattableCell, IHaveHoverOverCell, IModelViaCodeGen
+    public partial class ColumnSpanningStringCell : ColumnSpanningCellBase, IHaveValueCell, IFormattableCell, IHaveHoverOverCell, IModelViaCodeGen
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ColumnSpanningStringCell"/> class.
@@ -33,7 +33,9 @@ namespace OBeautifulCode.DataStructure
             this.HoverOver = hoverOver;
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets the cell's string value.
+        /// </summary>
         public string Value { get; private set; }
 
         /// <inheritdoc />

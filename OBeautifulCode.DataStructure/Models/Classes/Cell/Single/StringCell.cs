@@ -12,7 +12,7 @@ namespace OBeautifulCode.DataStructure
     /// A cell that contains a string value.
     /// </summary>
     // ReSharper disable once RedundantExtendsListEntry
-    public partial class StringCell : CellBase, IStringCell, IHaveValueCell, IFormattableCell, IHaveHoverOverCell, IModelViaCodeGen
+    public partial class StringCell : CellBase, IHaveValueCell, IFormattableCell, IHaveHoverOverCell, IModelViaCodeGen
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="StringCell"/> class.
@@ -30,7 +30,9 @@ namespace OBeautifulCode.DataStructure
             this.HoverOver = hoverOver;
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets the cell's string value.
+        /// </summary>
         public string Value { get; private set; }
 
         /// <inheritdoc />
