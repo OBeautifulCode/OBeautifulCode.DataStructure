@@ -43,7 +43,7 @@ namespace OBeautifulCode.DataStructure
         /// </summary>
         /// <param name="dataRows">The data rows.</param>
         /// <returns>The data rows, descendants included, in the order they appear in the table.</returns>
-        public static IReadOnlyList<Row> GetAllDataRowsInOrder(
+        public static IReadOnlyList<RowBase> GetAllDataRowsInOrder(
             this DataRows dataRows)
         {
             var result = GetAllDataRowsInOrder(dataRows?.Rows ?? new Row[0]);
@@ -51,16 +51,26 @@ namespace OBeautifulCode.DataStructure
             return result;
         }
 
-        private static IReadOnlyList<Row> GetAllDataRowsInOrder(
+        private static IReadOnlyList<RowBase> GetAllDataRowsInOrder(
             IReadOnlyList<Row> rows)
         {
-            var result = new List<Row>();
+            var result = new List<RowBase>();
 
             foreach (var row in rows)
             {
                 result.Add(row);
 
-                result.AddRange(GetAllDataRowsInOrder(row.ChildRows));
+                if (row.CollapsedSummaryRow != null)
+                {
+                    result.Add(row.CollapsedSummaryRow);
+                }
+
+                result.AddRange(GetAllDataRowsInOrder(row.ChildRows ?? new Row[0]));
+
+                if (row.ExpandedSummaryRow != null)
+                {
+                    result.Add(row.ExpandedSummaryRow);
+                }
             }
 
             return result;
