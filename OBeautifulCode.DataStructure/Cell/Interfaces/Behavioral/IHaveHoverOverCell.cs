@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IStringCell.cs" company="OBeautifulCode">
+// <copyright file="IHaveHoverOverCell.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -7,13 +7,13 @@
 namespace OBeautifulCode.DataStructure
 {
     /// <summary>
-    /// A cell that contains a string value.
+    /// A cell having a hover-over.
     /// </summary>
-    public interface IStringCell
+    public interface IHaveHoverOverCell : ICell
     {
         /// <summary>
-        /// Gets the cell's string value.
+        /// Gets the cell's hover-over.
         /// </summary>
-        string Value { get; }
+        IHoverOver HoverOver { get; }
     }
 }

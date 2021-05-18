@@ -1,19 +1,17 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IStringCell.cs" company="OBeautifulCode">
+// <copyright file="HoverOverBase.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace OBeautifulCode.DataStructure
 {
+    using OBeautifulCode.Type;
+
     /// <summary>
-    /// A cell that contains a string value.
+    /// Base implementation of <see cref="IHoverOver"/>.
     /// </summary>
-    public interface IStringCell
+    public abstract partial class HoverOverBase : IHoverOver, IModelViaCodeGen
     {
-        /// <summary>
-        /// Gets the cell's string value.
-        /// </summary>
-        string Value { get; }
     }
 }

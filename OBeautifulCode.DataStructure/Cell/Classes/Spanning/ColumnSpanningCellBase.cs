@@ -13,7 +13,7 @@ namespace OBeautifulCode.DataStructure
     /// <summary>
     /// A cell that spans multiple columns.
     /// </summary>
-    public class ColumnSpanningCellBase : CellBase, IColumnSpanningCell
+    public abstract partial class ColumnSpanningCellBase : CellBase, IColumnSpanningCell
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ColumnSpanningCellBase"/> class.

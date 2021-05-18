@@ -12,7 +12,7 @@ namespace OBeautifulCode.DataStructure
     /// A cell that contains a string value and spans multiple columns.
     /// </summary>
     // ReSharper disable once RedundantExtendsListEntry
-    public partial class ColumnSpanningStringCell : ColumnSpanningCellBase, IStringCell, IFormattableCell, IModelViaCodeGen
+    public partial class ColumnSpanningStringCell : ColumnSpanningCellBase, IStringCell, IHaveValueCell, IFormattableCell, IHaveHoverOverCell, IModelViaCodeGen
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ColumnSpanningStringCell"/> class.
@@ -20,14 +20,17 @@ namespace OBeautifulCode.DataStructure
         /// <param name="columnsSpanned">The number of columns spanned.</param>
         /// <param name="value">The cell's string value.</param>
         /// <param name="format">OPTIONAL format to apply to the cell.  DEFAULT is to leave the format unchanged.</param>
+        /// <param name="hoverOver">OPTIONAL hover-over for the cell.  DEFAULT is no hover-over.</param>
         public ColumnSpanningStringCell(
             int columnsSpanned,
             string value,
-            CellFormat format = null)
+            CellFormat format = null,
+            IHoverOver hoverOver = null)
             : base(columnsSpanned)
         {
             this.Value = value;
             this.Format = format;
+            this.HoverOver = hoverOver;
         }
 
         /// <inheritdoc />
@@ -35,6 +38,9 @@ namespace OBeautifulCode.DataStructure
 
         /// <inheritdoc />
         public CellFormat Format { get; private set; }
+
+        /// <inheritdoc />
+        public IHoverOver HoverOver { get; private set; }
 
         /// <inheritdoc />
         public object GetValue() => this.Value;

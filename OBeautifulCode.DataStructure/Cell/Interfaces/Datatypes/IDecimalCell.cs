@@ -9,7 +9,7 @@ namespace OBeautifulCode.DataStructure
     /// <summary>
     /// A cell that contains a decimal value.
     /// </summary>
-    public interface IDecimalCell : IHaveValueCell, IHaveDisplayValueCell
+    public interface IDecimalCell
     {
         /// <summary>
         /// Gets the cell's decimal value.
