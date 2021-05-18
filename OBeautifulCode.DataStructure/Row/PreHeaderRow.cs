@@ -25,7 +25,7 @@ namespace OBeautifulCode.DataStructure
         /// <param name="cells">Cells in the row.</param>
         /// <param name="format">OPTIONAL format to apply to the whole row.  DEFAULT is to leave the format unchanged.</param>
         public PreHeaderRow(
-            IReadOnlyList<IStringCell> cells,
+            IReadOnlyList<ICell> cells,
             RowFormat format = null)
         {
             if (cells == null)
@@ -45,7 +45,7 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Gets the cells in the row.
         /// </summary>
-        public IReadOnlyList<IStringCell> Cells { get; private set; }
+        public IReadOnlyList<ICell> Cells { get; private set; }
 
         /// <summary>
         /// Gets the format to apply to the whole row.
