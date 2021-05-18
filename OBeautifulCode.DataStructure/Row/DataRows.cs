@@ -25,7 +25,7 @@ namespace OBeautifulCode.DataStructure
         /// <param name="rows">OPTIONAL rows of the table (at the root level of the row-tree).  DEFAULT is no rows.</param>
         /// <param name="format">OPTIONAL format to apply to all data rows.  DEFAULT is to leave the format unchanged.</param>
         public DataRows(
-            IReadOnlyList<DataRow> rows = null,
+            IReadOnlyList<Row> rows = null,
             DataRowsFormat format = null)
         {
             if ((rows != null) && rows.Any(_ => _ == null))
@@ -40,7 +40,7 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Gets the rows of the table (at the root level of the row-tree).
         /// </summary>
-        public IReadOnlyList<DataRow> Rows { get; private set; }
+        public IReadOnlyList<Row> Rows { get; private set; }
 
         /// <summary>
         /// Gets the format to apply to all data rows.

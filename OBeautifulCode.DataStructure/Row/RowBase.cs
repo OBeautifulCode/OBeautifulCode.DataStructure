@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="PreHeaderRow.cs" company="OBeautifulCode">
+// <copyright file="RowBase.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -15,32 +15,35 @@ namespace OBeautifulCode.DataStructure
     using static System.FormattableString;
 
     /// <summary>
-    /// A row just above the header row in a tree table.
+    /// Base class for a row in a tree table.
     /// </summary>
-    public partial class PreHeaderRow : IModelViaCodeGen
+    public abstract partial class RowBase : IModelViaCodeGen
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="PreHeaderRow"/> class.
+        /// Initializes a new instance of the <see cref="RowBase"/> class.
         /// </summary>
-        /// <param name="cells">Cells in the row.</param>
+        /// <param name="id">OPTIONAL row identifier.  DEFAULT is a row without an identifier.</param>
+        /// <param name="cells">OPTIONAL cells in the row.  DEFAULT is none.</param>
         /// <param name="format">OPTIONAL format to apply to the whole row.  DEFAULT is to leave the format unchanged.</param>
-        public PreHeaderRow(
-            IReadOnlyList<ICell> cells,
+        protected RowBase(
+            string id = null,
+            IReadOnlyList<ICell> cells = null,
             RowFormat format = null)
         {
-            if (cells == null)
-            {
-                throw new ArgumentNullException(nameof(cells));
-            }
-
-            if (cells.Any(_ => _ == null))
+            if ((cells != null) && cells.Any(_ => _ == null))
             {
                 throw new ArgumentException(Invariant($"{nameof(cells)} contains a null element."));
             }
 
+            this.Id = id;
             this.Cells = cells;
             this.Format = format;
         }
+
+        /// <summary>
+        /// Gets the row identifier.
+        /// </summary>
+        public string Id { get; private set; }
 
         /// <summary>
         /// Gets the cells in the row.

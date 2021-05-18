@@ -24,11 +24,11 @@ namespace OBeautifulCode.DataStructure
         /// </summary>
         /// <param name="columns">The columns.</param>
         /// <param name="headerRowFormat">OPTIONAL format to apply to the whole header row.  DEFAULT is to leave the format unchanged.</param>
-        /// <param name="preHeaderRow">OPTIONAL row just above the header row.</param>
+        /// <param name="preHeaderRows">OPTIONAL rows just above the header row.</param>
         public LabeledColumns(
             IReadOnlyList<Column> columns,
             RowFormat headerRowFormat = null,
-            PreHeaderRow preHeaderRow = null)
+            IReadOnlyList<FlatRow> preHeaderRows = null)
         {
             if (columns == null)
             {
@@ -45,21 +45,24 @@ namespace OBeautifulCode.DataStructure
                 throw new ArgumentException(Invariant($"{nameof(columns)} contains a null object."));
             }
 
-            if (preHeaderRow != null)
+            if (preHeaderRows != null)
             {
+                if (preHeaderRows.Any(_ => _ == null))
+                {
+                    throw new ArgumentException(Invariant($"{nameof(preHeaderRows)} contains a null object."));
+                }
+
                 var numberOfColumns = columns.Count;
 
-                var columnsSpannedInPreHeaderRow = preHeaderRow.Cells.GetNumberOfColumnsSpanned();
-
-                if (columnsSpannedInPreHeaderRow != numberOfColumns)
+                if (preHeaderRows.Any(_ => _.GetNumberOfColumnsSpanned() != numberOfColumns))
                 {
-                    throw new ArgumentException(Invariant($"{nameof(preHeaderRow)} spans {columnsSpannedInPreHeaderRow} columns, but there are {numberOfColumns} columns in the table; those numbers must match."));
+                    throw new ArgumentException(Invariant($"{nameof(preHeaderRows)} contains a row that does not span all {numberOfColumns} of the defined columns."));
                 }
             }
 
             this.Columns = columns;
             this.HeaderRowFormat = headerRowFormat;
-            this.PreHeaderRow = preHeaderRow;
+            this.PreHeaderRows = preHeaderRows;
         }
 
         /// <summary>
@@ -73,8 +76,8 @@ namespace OBeautifulCode.DataStructure
         public RowFormat HeaderRowFormat { get; private set; }
 
         /// <summary>
-        /// Gets the row just above the header row.
+        /// Gets the rows just above the header row.
         /// </summary>
-        public PreHeaderRow PreHeaderRow { get; private set; }
+        public IReadOnlyList<FlatRow> PreHeaderRows { get; private set; }
     }
 }
