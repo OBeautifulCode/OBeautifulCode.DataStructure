@@ -16,31 +16,31 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Initializes a new instance of the <see cref="Column"/> class.
         /// </summary>
-        /// <param name="name">OPTIONAL name of the column.  DEFAULT is a nameless column.</param>
+        /// <param name="id">OPTIONAL id of the column.  DEFAULT is non-identified column.</param>
         /// <param name="headerCell">OPTIONAL header cell.   DEFAULT is to specify no header cell.</param>
         /// <param name="headerCellOptions">OPTIONAL options to apply to the header cell.  DEFAULT is to apply no options.</param>
         /// <param name="format">OPTIONAL format to apply to the whole column.  DEFAULT is to leave the format unchanged.</param>
         public Column(
-            string name = null,
-            StringCell headerCell = null,
+            string id = null,
+            ICell headerCell = null,
             HeaderCellOptions? headerCellOptions = null,
             ColumnFormat format = null)
         {
-            this.Name = name;
+            this.Id = id;
             this.HeaderCell = headerCell;
             this.HeaderCellOptions = headerCellOptions;
             this.Format = format;
         }
 
         /// <summary>
-        /// Gets the name of the cell.
+        /// Gets the id of the column.
         /// </summary>
-        public string Name { get; private set; }
+        public string Id { get; private set; }
 
         /// <summary>
         /// Gets the header cell.
         /// </summary>
-        public StringCell HeaderCell { get; private set; }
+        public ICell HeaderCell { get; private set; }
 
         /// <summary>
         /// Gets the options to apply to the header cell.

@@ -20,10 +20,10 @@ namespace OBeautifulCode.DataStructure
         None = 0,
 
         /// <summary>
-        /// Do not use the name of the column in the header cell,
+        /// Do not use the id of the column in the header cell,
         /// when the header cell value is not specified.
         /// </summary>
-        DoNotUseColumnNameForMissingHeaderCellValue = 1,
+        DoNotUseColumnIdForMissingHeaderCellValue = 1,
 
         /// <summary>
         /// Makes the column sortable and exposes this by adding a sort chevron on the header cell.
