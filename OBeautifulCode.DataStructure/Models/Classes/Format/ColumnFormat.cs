@@ -19,17 +19,17 @@ namespace OBeautifulCode.DataStructure
         /// <param name="format">OPTIONAL format to apply to all cells in the column.  DEFAULT is to leave the format unchanged.</param>
         /// <param name="widthInPixels">OPTIONAL width, in pixels, to apply to the column.  DEFAULT is to leave the width unchanged.</param>
         /// <param name="autoFitColumnWidth">OPTIONAL value indicating whether to auto-fit the width of the column.</param>
-        /// <param name="isHidden">OPTIONAL value indicating whether the column is hidden.  DEFAULT is to leave the visibility unchanged.</param>
+        /// <param name="options">OPTIONAL formatting options to apply to the column.  DEFAULT is to not apply any of the formatting options.</param>
         public ColumnFormat(
             CellFormat format = null,
             int? widthInPixels = null,
             bool? autoFitColumnWidth = null,
-            bool? isHidden = null)
+            ColumnFormatOptions? options = null)
         {
             this.Format = format;
             this.WidthInPixels = widthInPixels;
             this.AutoFitColumnWidth = autoFitColumnWidth;
-            this.IsHidden = isHidden;
+            this.Options = options;
         }
 
         /// <summary>
@@ -48,8 +48,8 @@ namespace OBeautifulCode.DataStructure
         public bool? AutoFitColumnWidth { get; private set; }
 
         /// <summary>
-        /// Gets a value indicating whether the column is hidden.
+        /// Gets the formatting options to apply to the column.
         /// </summary>
-        public bool? IsHidden { get; private set; }
+        public ColumnFormatOptions? Options { get; private set; }
     }
 }

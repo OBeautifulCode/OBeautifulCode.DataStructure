@@ -82,6 +82,8 @@
     <Compile Include="Models\Classes\Cell\Single\DecimalCell.cs" />
     <Compile Include="Logic\Extensions\RowExtensions.cs" />
     <Compile Include="Models\Classes\Format\CellFormat.cs" />
+    <Compile Include="Models\Enums\ColumnFormatOptions.cs" />
+    <Compile Include="Models\Enums\RowFormatOptions.cs" />
     <Compile Include="Models\Enums\HorizontalAlignment.cs" />
     <Compile Include="Models\Classes\Format\DataRowsFormat.cs" />
     <Compile Include="Models\Classes\Format\TableFormat.cs" />
