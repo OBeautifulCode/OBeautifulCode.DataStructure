@@ -14,38 +14,54 @@ namespace OBeautifulCode.DataStructure
     using static System.FormattableString;
 
     /// <summary>
-    /// A table (rows and columns) with parent-child relationships between rows
-    /// along with various visualization (e.g. setting cell colors)
-    /// and interaction (e.g. sorting) options.
+    /// A table (rows and columns) where cells can have arbitrary data, with parent-child relationships between rows
+    /// along with various visualization (e.g. setting cell colors) and interaction (e.g. sorting) options.
     /// </summary>
     public partial class TreeTable : IModelViaCodeGen
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TreeTable"/> class.
         /// </summary>
-        /// <param name="labeledColumns">The columns of the table and how they are labeled.</param>
+        /// <param name="tableColumns">The columns of the table.</param>
+        /// <param name="headerRows">OPTIONAL header rows of the table.  DEFAULT is no header rows.</param>
         /// <param name="dataRows">OPTIONAL data rows of the table.  DEFAULT is no data rows.</param>
         /// <param name="format">OPTIONAL format to apply to the whole table.  DEFAULT is to leave the format unchanged.</param>
         public TreeTable(
-            LabeledColumns labeledColumns,
+            TableColumns tableColumns,
+            HeaderRows headerRows = null,
             DataRows dataRows = null,
             TableFormat format = null)
         {
-            if (labeledColumns == null)
+            if (tableColumns == null)
             {
-                throw new ArgumentNullException(nameof(labeledColumns));
+                throw new ArgumentNullException(nameof(tableColumns));
             }
 
-            var rows = dataRows.GetAllDataRowsInOrder();
+            var numberOfColumns = tableColumns.Columns.Count;
 
-            var numberOfColumns = labeledColumns.Columns.Count;
-
-            if (rows.Any(_ => _.GetNumberOfColumnsSpanned() != numberOfColumns))
+            if (headerRows != null)
             {
-                throw new ArgumentException(Invariant($"{nameof(dataRows)} contains a row or descendant row that does not span all {numberOfColumns} of the defined columns."));
+                if (headerRows.Rows.Any(_ => _.GetNumberOfColumnsSpanned() != numberOfColumns))
+                {
+                    throw new ArgumentException(Invariant($"{nameof(headerRows)} contains a row that does not span all {numberOfColumns} of the defined columns."));
+                }
+
+                if (headerRows.Rows.Last().Cells.Count != numberOfColumns)
+                {
+                    throw new ArgumentException(Invariant($"The last row in {nameof(headerRows)} does not contain one cell for all {numberOfColumns} of the defined columns.  Spanning is disallowed for the last header row."));
+                }
             }
 
-            this.LabeledColumns = labeledColumns;
+            if (dataRows != null)
+            {
+                if (dataRows.GetAllDataRowsInOrder().Any(_ => _.GetNumberOfColumnsSpanned() != numberOfColumns))
+                {
+                    throw new ArgumentException(Invariant($"{nameof(dataRows)} contains a row or descendant row that does not span all {numberOfColumns} of the defined columns."));
+                }
+            }
+
+            this.TableColumns = tableColumns;
+            this.HeaderRows = headerRows;
             this.DataRows = dataRows;
             this.Format = format;
         }
@@ -53,7 +69,12 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Gets the columns of the table.
         /// </summary>
-        public LabeledColumns LabeledColumns { get; private set; }
+        public TableColumns TableColumns { get; private set; }
+
+        /// <summary>
+        /// Gets the header rows of the table.
+        /// </summary>
+        public HeaderRows HeaderRows { get; private set; }
 
         /// <summary>
         /// Gets the data rows of the table.

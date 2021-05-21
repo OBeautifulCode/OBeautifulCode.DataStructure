@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="DataRows.cs" company="OBeautifulCode">
+// <copyright file="HeaderRows.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -15,18 +15,18 @@ namespace OBeautifulCode.DataStructure
     using static System.FormattableString;
 
     /// <summary>
-    /// The data rows (the rows below the header row) in a tree table.
+    /// The header rows in a tree table.
     /// </summary>
-    public partial class DataRows : IModelViaCodeGen
+    public partial class HeaderRows : IModelViaCodeGen
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="DataRows"/> class.
+        /// Initializes a new instance of the <see cref="HeaderRows"/> class.
         /// </summary>
-        /// <param name="rows">The rows (at the root level of the row-tree).</param>
-        /// <param name="format">OPTIONAL format to apply to all data rows.  DEFAULT is to leave the format unchanged.</param>
-        public DataRows(
-            IReadOnlyList<Row> rows,
-            DataRowsFormat format = null)
+        /// <param name="rows">The rows.</param>
+        /// <param name="format">OPTIONAL format to apply to all header rows.  DEFAULT is to leave the format unchanged.</param>
+        public HeaderRows(
+            IReadOnlyList<FlatRow> rows,
+            HeaderRowsFormat format = null)
         {
             if (rows == null)
             {
@@ -43,13 +43,13 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <summary>
-        /// Gets the rows of the table (at the root level of the row-tree).
+        /// Gets the rows.
         /// </summary>
-        public IReadOnlyList<Row> Rows { get; private set; }
+        public IReadOnlyList<FlatRow> Rows { get; private set; }
 
         /// <summary>
-        /// Gets the format to apply to all data rows.
+        /// Gets the format to apply to all header rows.
         /// </summary>
-        public DataRowsFormat Format { get; private set; }
+        public HeaderRowsFormat Format { get; private set; }
     }
 }

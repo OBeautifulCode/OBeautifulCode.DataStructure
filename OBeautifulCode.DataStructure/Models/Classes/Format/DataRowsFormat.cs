@@ -22,29 +22,29 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Initializes a new instance of the <see cref="DataRowsFormat"/> class.
         /// </summary>
-        /// <param name="format">OPTIONAL format to apply to all data rows.  DEFAULT is to leave the format unchanged.</param>
-        /// <param name="repeatingFormats">OPTIONAL formats to apply in order for successive data rows, that repeat after the last format is applied.  For example, this can be used to achieve a zebra striped table by specifying two <see cref="RowFormat"/> objects having different background colors.</param>
+        /// <param name="rowsFormat">OPTIONAL format to apply to all data rows.  DEFAULT is to leave the format unchanged.</param>
+        /// <param name="rowsRepeatingFormat">OPTIONAL formats to apply in order for successive data rows, that repeat after the last format is applied.  For example, this can be used to achieve a zebra striped table by specifying two <see cref="RowFormat"/> objects having different background colors.</param>
         public DataRowsFormat(
-            RowFormat format = null,
-            IReadOnlyList<RowFormat> repeatingFormats = null)
+            RowFormat rowsFormat = null,
+            IReadOnlyList<RowFormat> rowsRepeatingFormat = null)
         {
-            if ((repeatingFormats != null) && repeatingFormats.Any(_ => _ == null))
+            if ((rowsRepeatingFormat != null) && rowsRepeatingFormat.Any(_ => _ == null))
             {
-                throw new ArgumentException(Invariant($"{nameof(repeatingFormats)} contains a null element."));
+                throw new ArgumentException(Invariant($"{nameof(rowsRepeatingFormat)} contains a null element."));
             }
 
-            this.Format = format;
-            this.RepeatingFormats = repeatingFormats;
+            this.RowsFormat = rowsFormat;
+            this.RowsRepeatingFormat = rowsRepeatingFormat;
         }
 
         /// <summary>
         /// Gets the format to apply to all data rows.
         /// </summary>
-        public RowFormat Format { get; private set; }
+        public RowFormat RowsFormat { get; private set; }
 
         /// <summary>
         /// Gets the formats to apply in order for successive data rows, that repeat after the last format is applied.
         /// </summary>
-        public IReadOnlyList<RowFormat> RepeatingFormats { get; private set; }
+        public IReadOnlyList<RowFormat> RowsRepeatingFormat { get; private set; }
     }
 }

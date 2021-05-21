@@ -16,15 +16,15 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Initializes a new instance of the <see cref="RowFormat"/> class.
         /// </summary>
-        /// <param name="format">OPTIONAL format to apply to all cells in the row.  DEFAULT is to leave the format unchanged.</param>
+        /// <param name="cellsFormat">OPTIONAL format to apply to all cells in the row.  DEFAULT is to leave the format unchanged.</param>
         /// <param name="heightInPixels">OPTIONAL height, in pixels, to apply to the row.  DEFAULT is to leave the height unchanged.</param>
         /// <param name="options">OPTIONAL formatting options to apply to the row.  DEFAULT is to not apply any of the formatting options.</param>
         public RowFormat(
-            CellFormat format = null,
+            CellFormat cellsFormat = null,
             int? heightInPixels = null,
             RowFormatOptions? options = null)
         {
-            this.Format = format;
+            this.CellsFormat = cellsFormat;
             this.HeightInPixels = heightInPixels;
             this.Options = options;
         }
@@ -32,7 +32,7 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Gets the format to apply to all cells in the row.
         /// </summary>
-        public CellFormat Format { get; private set; }
+        public CellFormat CellsFormat { get; private set; }
 
         /// <summary>
         /// Gets the height, in pixels, to apply to the row.

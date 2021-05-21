@@ -16,17 +16,17 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Initializes a new instance of the <see cref="ColumnFormat"/> class.
         /// </summary>
-        /// <param name="format">OPTIONAL format to apply to all cells in the column.  DEFAULT is to leave the format unchanged.</param>
+        /// <param name="cellsFormat">OPTIONAL format to apply to all cells in the column.  DEFAULT is to leave the format unchanged.</param>
         /// <param name="widthInPixels">OPTIONAL width, in pixels, to apply to the column.  DEFAULT is to leave the width unchanged.</param>
         /// <param name="autoFitColumnWidth">OPTIONAL value indicating whether to auto-fit the width of the column.</param>
         /// <param name="options">OPTIONAL formatting options to apply to the column.  DEFAULT is to not apply any of the formatting options.</param>
         public ColumnFormat(
-            CellFormat format = null,
+            CellFormat cellsFormat = null,
             int? widthInPixels = null,
             bool? autoFitColumnWidth = null,
             ColumnFormatOptions? options = null)
         {
-            this.Format = format;
+            this.CellsFormat = cellsFormat;
             this.WidthInPixels = widthInPixels;
             this.AutoFitColumnWidth = autoFitColumnWidth;
             this.Options = options;
@@ -35,7 +35,7 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Gets the format to apply to all cells in the column.
         /// </summary>
-        public CellFormat Format { get; private set; }
+        public CellFormat CellsFormat { get; private set; }
 
         /// <summary>
         /// Gets the width, in pixels, to apply to the column.
