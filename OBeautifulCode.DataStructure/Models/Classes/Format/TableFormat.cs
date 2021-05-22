@@ -16,24 +16,16 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Initializes a new instance of the <see cref="TableFormat"/> class.
         /// </summary>
-        /// <param name="rowsFormat">OPTIONAL format to apply to all rows in the table.  DEFAULT is to leave the format unchanged.</param>
-        /// <param name="columnsFormat">OPTIONAL format to apply to all columns in the table.  DEFAULT is to leave the format unchanged.</param>
+        /// <param name="cellsFormat">OPTIONAL format to apply to all cells in the table.  DEFAULT is to leave the format unchanged.</param>
         public TableFormat(
-            RowFormat rowsFormat = null,
-            ColumnFormat columnsFormat = null)
+            CellFormat cellsFormat = null)
         {
-            this.RowsFormat = rowsFormat;
-            this.ColumnsFormat = columnsFormat;
+            this.CellsFormat = cellsFormat;
         }
 
         /// <summary>
         /// Gets the format to apply to all cells in the table.
         /// </summary>
-        public RowFormat RowsFormat { get; private set; }
-
-        /// <summary>
-        /// Gets the format to apply to all cells in the table.
-        /// </summary>
-        public ColumnFormat ColumnsFormat { get; private set; }
+        public CellFormat CellsFormat { get; private set; }
     }
 }

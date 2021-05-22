@@ -23,13 +23,11 @@ namespace OBeautifulCode.DataStructure
         /// Initializes a new instance of the <see cref="TreeTable"/> class.
         /// </summary>
         /// <param name="tableColumns">The columns of the table.</param>
-        /// <param name="headerRows">OPTIONAL header rows of the table.  DEFAULT is no header rows.</param>
-        /// <param name="dataRows">OPTIONAL data rows of the table.  DEFAULT is no data rows.</param>
+        /// <param name="tableRows">OPTIONAL rows of the table.  DEFAULT is no rows.</param>
         /// <param name="format">OPTIONAL format to apply to the whole table.  DEFAULT is to leave the format unchanged.</param>
         public TreeTable(
             TableColumns tableColumns,
-            HeaderRows headerRows = null,
-            DataRows dataRows = null,
+            TableRows tableRows = null,
             TableFormat format = null)
         {
             if (tableColumns == null)
@@ -39,30 +37,24 @@ namespace OBeautifulCode.DataStructure
 
             var numberOfColumns = tableColumns.Columns.Count;
 
-            if (headerRows != null)
+            if (tableRows != null)
             {
-                if (headerRows.Rows.Any(_ => _.GetNumberOfColumnsSpanned() != numberOfColumns))
+                if (tableRows.GetAllRowsInOrder().Any(_ => _.GetNumberOfColumnsSpanned() != numberOfColumns))
                 {
-                    throw new ArgumentException(Invariant($"{nameof(headerRows)} contains a row that does not span all {numberOfColumns} of the defined columns."));
+                    throw new ArgumentException(Invariant($"{nameof(tableRows)} contains a row or descendant row that does not span all {numberOfColumns} of the defined columns."));
                 }
 
-                if (headerRows.Rows.Last().Cells.Count != numberOfColumns)
+                if (tableRows.HeaderRows != null)
                 {
-                    throw new ArgumentException(Invariant($"The last row in {nameof(headerRows)} does not contain one cell for all {numberOfColumns} of the defined columns.  Spanning is disallowed for the last header row."));
-                }
-            }
-
-            if (dataRows != null)
-            {
-                if (dataRows.GetAllDataRowsInOrder().Any(_ => _.GetNumberOfColumnsSpanned() != numberOfColumns))
-                {
-                    throw new ArgumentException(Invariant($"{nameof(dataRows)} contains a row or descendant row that does not span all {numberOfColumns} of the defined columns."));
+                    if (tableRows.HeaderRows.Rows.Last().Cells.Count != numberOfColumns)
+                    {
+                        throw new ArgumentException(Invariant($"The last row in {nameof(tableRows)}.{nameof(this.TableRows.HeaderRows)} does not contain one cell for all {numberOfColumns} of the defined columns.  Spanning is disallowed for the last header row."));
+                    }
                 }
             }
 
             this.TableColumns = tableColumns;
-            this.HeaderRows = headerRows;
-            this.DataRows = dataRows;
+            this.TableRows = tableRows;
             this.Format = format;
         }
 
@@ -72,14 +64,9 @@ namespace OBeautifulCode.DataStructure
         public TableColumns TableColumns { get; private set; }
 
         /// <summary>
-        /// Gets the header rows of the table.
+        /// Gets the rows of the table.
         /// </summary>
-        public HeaderRows HeaderRows { get; private set; }
-
-        /// <summary>
-        /// Gets the data rows of the table.
-        /// </summary>
-        public DataRows DataRows { get; private set; }
+        public TableRows TableRows { get; private set; }
 
         /// <summary>
         /// Gets the format to apply to the whole table.

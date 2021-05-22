@@ -39,14 +39,24 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <summary>
-        /// Gets all of the data rows, descendants included, in the order they appear in the table.
+        /// Gets all of the rows, header and descendants included, in the order they appear in the table.
         /// </summary>
-        /// <param name="dataRows">The data rows.</param>
-        /// <returns>The data rows, descendants included, in the order they appear in the table.</returns>
-        public static IReadOnlyList<RowBase> GetAllDataRowsInOrder(
-            this DataRows dataRows)
+        /// <param name="tableRows">The table rows.</param>
+        /// <returns>The rows, header and descendants included, in the order they appear in the table.</returns>
+        public static IReadOnlyList<RowBase> GetAllRowsInOrder(
+            this TableRows tableRows)
         {
-            var result = GetAllDataRowsInOrder(dataRows?.Rows ?? new Row[0]);
+            var result = new List<RowBase>();
+
+            if (tableRows.HeaderRows != null)
+            {
+                result.AddRange(tableRows.HeaderRows.Rows);
+            }
+
+            if (tableRows.DataRows != null)
+            {
+                GetAllDataRowsInOrder(tableRows.DataRows.Rows);
+            }
 
             return result;
         }
