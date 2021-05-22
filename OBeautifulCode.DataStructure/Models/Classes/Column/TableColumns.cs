@@ -23,7 +23,7 @@ namespace OBeautifulCode.DataStructure
         /// Initializes a new instance of the <see cref="TableColumns"/> class.
         /// </summary>
         /// <param name="columns">The columns.</param>
-        /// <param name="columnsFormat">OPTIONAL format to apply to all columns in the table.  DEFAULT is to leave the format unchanged.</param>
+        /// <param name="columnsFormat">OPTIONAL format to apply to all columns in the table, individually.  DEFAULT is to leave the format unchanged.</param>
         public TableColumns(
             IReadOnlyList<Column> columns,
             ColumnFormat columnsFormat = null)
@@ -53,7 +53,7 @@ namespace OBeautifulCode.DataStructure
         public IReadOnlyList<Column> Columns { get; private set; }
 
         /// <summary>
-        /// Gets the format to apply to all columns in the table.
+        /// Gets the format to apply to all columns in the table, individually.
         /// </summary>
         public ColumnFormat ColumnsFormat { get; private set; }
     }

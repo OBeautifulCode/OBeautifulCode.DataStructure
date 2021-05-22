@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="VerticalAlignment.cs" company="OBeautifulCode">
+// <copyright file="BorderWeight.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -7,9 +7,9 @@
 namespace OBeautifulCode.DataStructure
 {
     /// <summary>
-    /// Specifies the vertical alignment.
+    /// Specifies the weight of a border.
     /// </summary>
-    public enum VerticalAlignment
+    public enum BorderWeight
     {
         /// <summary>
         /// Unspecified (default).
@@ -17,18 +17,28 @@ namespace OBeautifulCode.DataStructure
         Unspecified,
 
         /// <summary>
-        /// Top align.
+        /// An extra-light border.
         /// </summary>
-        Top,
+        ExtraLight,
 
         /// <summary>
-        /// Center align.
+        /// A light border.
         /// </summary>
-        Center,
+        Light,
 
         /// <summary>
-        /// Bottom align.
+        /// A normal border.
         /// </summary>
-        Bottom,
+        Normal,
+
+        /// <summary>
+        /// A bold border.
+        /// </summary>
+        Bold,
+
+        /// <summary>
+        /// An extra-bold border.
+        /// </summary>
+        ExtraBold,
     }
 }

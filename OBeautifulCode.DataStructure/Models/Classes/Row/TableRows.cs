@@ -18,7 +18,7 @@ namespace OBeautifulCode.DataStructure
         /// </summary>
         /// <param name="headerRows">OPTIONAL header rows.  DEFAULT is no headers rows.</param>
         /// <param name="dataRows">OPTIONAL data rows.  DEFAULT is no data rows.</param>
-        /// <param name="rowsFormat">OPTIONAL format to apply to all rows.  DEFAULT is to leave the format unchanged.</param>
+        /// <param name="rowsFormat">OPTIONAL format to apply to all rows, individually.  DEFAULT is to leave the format unchanged.</param>
         public TableRows(
             HeaderRows headerRows = null,
             DataRows dataRows = null,
@@ -40,7 +40,7 @@ namespace OBeautifulCode.DataStructure
         public DataRows DataRows { get; private set; }
 
         /// <summary>
-        /// Gets the format to apply to all rows.
+        /// Gets the format to apply to all rows, individually.
         /// </summary>
         public RowFormat RowsFormat { get; private set; }
     }

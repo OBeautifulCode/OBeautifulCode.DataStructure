@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="VerticalAlignment.cs" company="OBeautifulCode">
+// <copyright file="BorderStyle.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -7,9 +7,9 @@
 namespace OBeautifulCode.DataStructure
 {
     /// <summary>
-    /// Specifies the vertical alignment.
+    /// Specifies the style of a border.
     /// </summary>
-    public enum VerticalAlignment
+    public enum BorderStyle
     {
         /// <summary>
         /// Unspecified (default).
@@ -17,18 +17,8 @@ namespace OBeautifulCode.DataStructure
         Unspecified,
 
         /// <summary>
-        /// Top align.
+        /// A a solid line.
         /// </summary>
-        Top,
-
-        /// <summary>
-        /// Center align.
-        /// </summary>
-        Center,
-
-        /// <summary>
-        /// Bottom align.
-        /// </summary>
-        Bottom,
+        Solid,
     }
 }

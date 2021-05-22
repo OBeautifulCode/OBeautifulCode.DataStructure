@@ -22,11 +22,15 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Initializes a new instance of the <see cref="DataRowsFormat"/> class.
         /// </summary>
-        /// <param name="rowsFormat">OPTIONAL format to apply to all data rows.  DEFAULT is to leave the format unchanged.</param>
+        /// <param name="rowsFormat">OPTIONAL format to apply to all data rows, individually.  DEFAULT is to leave the format unchanged.</param>
         /// <param name="rowsRepeatingFormat">OPTIONAL formats to apply in order for successive data rows, that repeat after the last format is applied.  For example, this can be used to achieve a zebra striped table by specifying two <see cref="RowFormat"/> objects having different background colors.</param>
+        /// <param name="outerBorder">OPTIONAL border to apply to the outside of the data rows.  DEFAULT is no border.</param>
+        /// <param name="innerBorder">OPTIONAL border to apply to the cells inside the data rows.  DEFAULT is no border.</param>
         public DataRowsFormat(
             RowFormat rowsFormat = null,
-            IReadOnlyList<RowFormat> rowsRepeatingFormat = null)
+            IReadOnlyList<RowFormat> rowsRepeatingFormat = null,
+            OuterBorder outerBorder = null,
+            InnerBorder innerBorder = null)
         {
             if ((rowsRepeatingFormat != null) && rowsRepeatingFormat.Any(_ => _ == null))
             {
@@ -35,10 +39,12 @@ namespace OBeautifulCode.DataStructure
 
             this.RowsFormat = rowsFormat;
             this.RowsRepeatingFormat = rowsRepeatingFormat;
+            this.OuterBorder = outerBorder;
+            this.InnerBorder = innerBorder;
         }
 
         /// <summary>
-        /// Gets the format to apply to all data rows.
+        /// Gets the format to apply to all data rows, individually.
         /// </summary>
         public RowFormat RowsFormat { get; private set; }
 
@@ -46,5 +52,15 @@ namespace OBeautifulCode.DataStructure
         /// Gets the formats to apply in order for successive data rows, that repeat after the last format is applied.
         /// </summary>
         public IReadOnlyList<RowFormat> RowsRepeatingFormat { get; private set; }
+
+        /// <summary>
+        /// Gets the border to apply to the outside of the data rows.
+        /// </summary>
+        public OuterBorder OuterBorder { get; private set; }
+
+        /// <summary>
+        /// Gets the border to apply to the cells inside the data rows.
+        /// </summary>
+        public InnerBorder InnerBorder { get; private set; }
     }
 }
