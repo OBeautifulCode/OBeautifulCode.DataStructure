@@ -12,7 +12,7 @@ namespace OBeautifulCode.DataStructure
     /// A cell that contains a decimal value.
     /// </summary>
     // ReSharper disable once RedundantExtendsListEntry
-    public partial class DecimalCell : CellBase, IHaveValueCell, IHaveDisplayValueCell, IFormattableCell, IHaveHoverOverCell, IModelViaCodeGen
+    public partial class DecimalCell : StandardCellBase, IHaveValueCell, IHaveDisplayValueCell, IModelViaCodeGen
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="DecimalCell"/> class.
@@ -21,16 +21,17 @@ namespace OBeautifulCode.DataStructure
         /// <param name="displayValue">OPTIONAL display value for the cell.  DEFAULT is to use default function to convert <paramref name="value"/> into a display value.</param>
         /// <param name="format">OPTIONAL format to apply to the cell.  DEFAULT is to leave the format unchanged.</param>
         /// <param name="hoverOver">OPTIONAL hover-over for the cell.  DEFAULT is no hover-over.</param>
+        /// <param name="link">OPTIONAL link to some resource.  DEFAULT is no link.</param>
         public DecimalCell(
             decimal value,
             string displayValue = null,
             CellFormat format = null,
-            IHoverOver hoverOver = null)
+            IHoverOver hoverOver = null,
+            ILink link = null)
+            : base(format, hoverOver, link)
         {
             this.Value = value;
             this.DisplayValue = displayValue;
-            this.Format = format;
-            this.HoverOver = hoverOver;
         }
 
         /// <summary>
@@ -40,12 +41,6 @@ namespace OBeautifulCode.DataStructure
 
         /// <inheritdoc />
         public string DisplayValue { get; private set; }
-
-        /// <inheritdoc />
-        public CellFormat Format { get; private set; }
-
-        /// <inheritdoc />
-        public IHoverOver HoverOver { get; private set; }
 
         /// <inheritdoc />
         public object GetValue() => this.Value;

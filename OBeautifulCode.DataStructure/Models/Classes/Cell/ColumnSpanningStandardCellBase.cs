@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ColumnSpanningCellBase.cs" company="OBeautifulCode">
+// <copyright file="ColumnSpanningStandardCellBase.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -13,14 +13,21 @@ namespace OBeautifulCode.DataStructure
     /// <summary>
     /// A cell that spans multiple columns.
     /// </summary>
-    public abstract partial class ColumnSpanningCellBase : CellBase, IColumnSpanningCell
+    public abstract partial class ColumnSpanningStandardCellBase : StandardCellBase, IColumnSpanningCell
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ColumnSpanningCellBase"/> class.
+        /// Initializes a new instance of the <see cref="ColumnSpanningStandardCellBase"/> class.
         /// </summary>
         /// <param name="columnsSpanned">The number of columns spanned.</param>
-        protected ColumnSpanningCellBase(
-            int columnsSpanned)
+        /// <param name="format">Format to apply to the cell.</param>
+        /// <param name="hoverOver">Hover-over for the cell.</param>
+        /// <param name="link">Link to some resource.</param>
+        protected ColumnSpanningStandardCellBase(
+            int columnsSpanned,
+            CellFormat format,
+            IHoverOver hoverOver,
+            ILink link)
+            : base(format, hoverOver, link)
         {
             if (columnsSpanned < 2)
             {
