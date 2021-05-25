@@ -12,9 +12,9 @@ namespace OBeautifulCode.DataStructure
     public enum BorderStyle
     {
         /// <summary>
-        /// Unspecified (default).
+        /// Unknown (default).
         /// </summary>
-        Unspecified,
+        Unknown,
 
         /// <summary>
         /// A a solid line.

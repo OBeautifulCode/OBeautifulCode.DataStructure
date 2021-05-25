@@ -6,9 +6,12 @@
 
 namespace OBeautifulCode.DataStructure
 {
+    using System;
     using System.Drawing;
 
     using OBeautifulCode.Type;
+
+    using static System.FormattableString;
 
     /// <summary>
     /// A border on the outside of a region of a tree table.
@@ -30,6 +33,11 @@ namespace OBeautifulCode.DataStructure
             OuterBorderSides sides)
             : base(weight, style, color)
         {
+            if (sides == OuterBorderSides.None)
+            {
+                throw new ArgumentException(Invariant($"{nameof(sides)} is {nameof(OuterBorderSides.None)}."));
+            }
+
             this.Sides = sides;
         }
 

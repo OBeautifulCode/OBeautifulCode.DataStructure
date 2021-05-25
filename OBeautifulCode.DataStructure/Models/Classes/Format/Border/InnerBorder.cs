@@ -6,9 +6,12 @@
 
 namespace OBeautifulCode.DataStructure
 {
+    using System;
     using System.Drawing;
 
     using OBeautifulCode.Type;
+
+    using static System.FormattableString;
 
     /// <summary>
     /// A border applied to the edges of the cells inside some region of a tree table.
@@ -30,6 +33,11 @@ namespace OBeautifulCode.DataStructure
             InnerBorderEdges edges)
             : base(weight, style, color)
         {
+            if (edges == InnerBorderEdges.None)
+            {
+                throw new ArgumentException(Invariant($"{nameof(edges)} is {nameof(InnerBorderEdges.None)}."));
+            }
+
             this.Edges = edges;
         }
 

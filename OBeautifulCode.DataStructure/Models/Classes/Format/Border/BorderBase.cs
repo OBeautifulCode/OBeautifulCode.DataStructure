@@ -6,9 +6,12 @@
 
 namespace OBeautifulCode.DataStructure
 {
+    using System;
     using System.Drawing;
 
     using OBeautifulCode.Type;
+
+    using static System.FormattableString;
 
     /// <summary>
     /// Base class for a border.
@@ -26,6 +29,16 @@ namespace OBeautifulCode.DataStructure
             BorderStyle style,
             Color color)
         {
+            if (weight == BorderWeight.Unknown)
+            {
+                throw new ArgumentException(Invariant($"{nameof(weight)} is {nameof(BorderWeight.Unknown)}."));
+            }
+
+            if (style == BorderStyle.Unknown)
+            {
+                throw new ArgumentException(Invariant($"{nameof(style)} is {nameof(BorderStyle.Unknown)}."));
+            }
+
             this.Weight = weight;
             this.Style = style;
             this.Color = color;

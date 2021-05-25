@@ -12,9 +12,9 @@ namespace OBeautifulCode.DataStructure
     public enum BorderWeight
     {
         /// <summary>
-        /// Unspecified (default).
+        /// Unknown (default).
         /// </summary>
-        Unspecified,
+        Unknown,
 
         /// <summary>
         /// An extra-light border.

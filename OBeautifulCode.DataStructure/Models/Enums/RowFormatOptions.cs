@@ -25,8 +25,13 @@ namespace OBeautifulCode.DataStructure
         Hide = 1,
 
         /// <summary>
+        /// Freeze the row (frozen row and all rows above it will not scroll).
+        /// </summary>
+        Freeze = 2,
+
+        /// <summary>
         /// Disable the ability to collapse the row.
         /// </summary>
-        DisableCollapsing = 2,
+        DisableCollapsing = 4,
     }
 }

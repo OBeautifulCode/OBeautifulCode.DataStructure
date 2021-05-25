@@ -27,6 +27,7 @@ namespace OBeautifulCode.DataStructure
         /// <param name="horizontalAlignment">OPTIONAL horizontal alignment.  DEFAULT is to leave the horizontal alignment unchanged.</param>
         /// <param name="fontRotationAngle">OPTIONAL font rotation angle, between +90 and -90.  Positive numbers cause the text to slope upward, negative numbers cause the text to slope downward.  DEFAULT is to leave the font rotation angle unchanged.</param>
         /// <param name="border">OPTIONAL border to apply to the cell.  DEFAULT is no border.</param>
+        /// <param name="fillPattern">OPTIONAL pattern to fill the cell with.  DEFAULT is no pattern.</param>
         /// <param name="options">OPTIONAL formatting options to apply to the cell.  DEFAULT is to not apply any of the formatting options.</param>
         public CellFormat(
             Color? backgroundColor = null,
@@ -37,6 +38,7 @@ namespace OBeautifulCode.DataStructure
             HorizontalAlignment? horizontalAlignment = null,
             int? fontRotationAngle = null,
             OuterBorder border = null,
+            FillPattern fillPattern = null,
             CellFormatOptions? options = null)
         {
             this.BackgroundColor = backgroundColor;
@@ -47,6 +49,7 @@ namespace OBeautifulCode.DataStructure
             this.HorizontalAlignment = horizontalAlignment;
             this.FontRotationAngle = fontRotationAngle;
             this.Border = border;
+            this.FillPattern = fillPattern;
             this.Options = options;
         }
 
@@ -89,6 +92,11 @@ namespace OBeautifulCode.DataStructure
         /// Gets the border to apply to the cell.
         /// </summary>
         public OuterBorder Border { get; private set; }
+
+        /// <summary>
+        /// Gets the pattern to fill the cell with.
+        /// </summary>
+        public FillPattern FillPattern { get; private set; }
 
         /// <summary>
         /// Gets the formatting options to apply to the cell.

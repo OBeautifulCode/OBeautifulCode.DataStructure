@@ -25,9 +25,14 @@ namespace OBeautifulCode.DataStructure
         Hide = 1,
 
         /// <summary>
+        /// Freeze the column (frozen column and all columns to the left of it will not scroll).
+        /// </summary>
+        Freeze = 2,
+
+        /// <summary>
         /// Makes the column sortable and exposes this by adding a sort chevron on the header cell.
         /// </summary>
-        Sortable = 2,
+        Sortable = 4,
 
         /// <summary>
         /// In addition to <see cref="Sortable"/>, exercises the features to perform an ascending sort.
@@ -36,7 +41,7 @@ namespace OBeautifulCode.DataStructure
         /// If two or more columns have this option or <see cref="SortedDescending"/>,
         /// then a double/triple/etc. sort is performed on all of those columns.
         /// </remarks>
-        SortedAscending = 4,
+        SortedAscending = 8,
 
         /// <summary>
         /// In addition to <see cref="Sortable"/>, exercises the feature to perform a descending sort.
@@ -45,6 +50,6 @@ namespace OBeautifulCode.DataStructure
         /// If two or more columns have this option or <see cref="SortedDescending"/>,
         /// then a double/triple/etc. sort is performed on all of those columns.
         /// </remarks>
-        SortedDescending = 8,
+        SortedDescending = 16,
     }
 }
