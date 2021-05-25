@@ -1,17 +1,16 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ILink.cs" company="OBeautifulCode">
+// <copyright file="LinkBase.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
-
 namespace OBeautifulCode.DataStructure
 {
+    using OBeautifulCode.Type;
+
     /// <summary>
-    /// A reference that a user can follow to view some resource,
-    /// with instructions on how to navigate the user to it
-    /// (e.g. show the resource in another pane).
+    /// Base implementation of <see cref="ILink"/>.
     /// </summary>
-    public interface ILink
+    public abstract partial class LinkBase : ILink, IModelViaCodeGen
     {
     }
 }
