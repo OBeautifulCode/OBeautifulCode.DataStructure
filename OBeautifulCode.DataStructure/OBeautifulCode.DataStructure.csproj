@@ -66,9 +66,10 @@
     <Compile Include="Interfaces\Model\ILinkedResource.cs" />
     <Compile Include="Interfaces\Model\ILink.cs" />
     <Compile Include="Interfaces\Model\IStandardCell.cs" />
-    <Compile Include="Models\Classes\Cell\Single\ImageReferenceCell.cs" />
-    <Compile Include="Models\Classes\Cell\Spanning\ColumnSpanningImageReferenceCell.cs" />
+    <Compile Include="Models\Classes\CellProperty\MediaReference.cs" />
+    <Compile Include="Models\Classes\Cell\Single\MediaReferenceCell.cs" />
     <Compile Include="Models\Classes\Cell\Spanning\ColumnSpanningSlottedCell.cs" />
+    <Compile Include="Models\Classes\Cell\Spanning\ColumnSpanningMediaReferenceCell.cs" />
     <Compile Include="Models\Classes\Cell\StandardCellBase.cs" />
     <Compile Include="Models\Classes\Cell\CellBase.cs" />
     <Compile Include="Models\Classes\Cell\Single\HtmlCell.cs" />
@@ -103,6 +104,7 @@
     <Compile Include="Models\Classes\Link\SimpleLink.cs" />
     <Compile Include="Models\Classes\Row\TableRows.cs" />
     <Compile Include="Models\Classes\Row\HeaderRows.cs" />
+    <Compile Include="Models\Enums\Cell\MediaReferenceKind.cs" />
     <Compile Include="Models\Enums\Linking\BytesPayloadLinkedResourceKind.cs" />
     <Compile Include="Models\Enums\Linking\StringPayloadLinkedResourceKind.cs" />
     <Compile Include="Models\Enums\Linking\UrlLinkedResourceKind.cs" />

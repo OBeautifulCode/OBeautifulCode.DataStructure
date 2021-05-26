@@ -6,9 +6,12 @@
 
 namespace OBeautifulCode.DataStructure
 {
+    using System;
     using System.Drawing;
 
     using OBeautifulCode.Type;
+
+    using static System.FormattableString;
 
     /// <summary>
     /// A pattern to fill a cell with.
@@ -24,6 +27,11 @@ namespace OBeautifulCode.DataStructure
             FillPatternStyle style,
             Color color)
         {
+            if (style == FillPatternStyle.Unknown)
+            {
+                throw new ArgumentException(Invariant($"{nameof(style)} is {nameof(FillPatternStyle.Unknown)}."));
+            }
+
             this.Style = style;
             this.Color = color;
         }

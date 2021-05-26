@@ -5,7 +5,11 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace OBeautifulCode.DataStructure
 {
+    using System;
+
     using OBeautifulCode.Type;
+
+    using static System.FormattableString;
 
     /// <summary>
     /// A resource that is bundled within a link as a string payload
@@ -23,6 +27,11 @@ namespace OBeautifulCode.DataStructure
             string value,
             StringPayloadLinkedResourceKind resourceKind)
         {
+            if (resourceKind == StringPayloadLinkedResourceKind.Unknown)
+            {
+                throw new ArgumentException(Invariant($"{nameof(resourceKind)} is {nameof(StringPayloadLinkedResourceKind.Unknown)}."));
+            }
+
             this.Value = value;
             this.ResourceKind = resourceKind;
         }

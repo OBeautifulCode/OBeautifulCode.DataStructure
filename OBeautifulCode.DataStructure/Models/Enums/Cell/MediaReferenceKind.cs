@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="BorderStyle.cs" company="OBeautifulCode">
+// <copyright file="MediaReferenceKind.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -7,9 +7,9 @@
 namespace OBeautifulCode.DataStructure
 {
     /// <summary>
-    /// Specifies the style of a border.
+    /// Specifies the kind of media reference.
     /// </summary>
-    public enum BorderStyle
+    public enum MediaReferenceKind
     {
         /// <summary>
         /// Unknown (default).
@@ -17,8 +17,18 @@ namespace OBeautifulCode.DataStructure
         Unknown,
 
         /// <summary>
-        /// A solid line.
+        /// Image media.
         /// </summary>
-        Solid,
+        Image,
+
+        /// <summary>
+        /// Audio media.
+        /// </summary>
+        Audio,
+
+        /// <summary>
+        /// Video media.
+        /// </summary>
+        Video,
     }
 }

@@ -36,6 +36,11 @@ namespace OBeautifulCode.DataStructure
                 throw new ArgumentNullException(Invariant($"{nameof(url)} is white space."));
             }
 
+            if (resourceKind == UrlLinkedResourceKind.Unknown)
+            {
+                throw new ArgumentException(Invariant($"{nameof(resourceKind)} is {nameof(UrlLinkedResourceKind.Unknown)}."));
+            }
+
             this.Url = url;
             this.ResourceKind = resourceKind;
         }
