@@ -6,10 +6,14 @@
 
 namespace OBeautifulCode.DataStructure
 {
+    using System;
     using System.Collections.Generic;
     using System.Drawing;
+    using System.Linq;
 
     using OBeautifulCode.Type;
+
+    using static System.FormattableString;
 
     /// <summary>
     /// The format to apply to a cell in a tree table.
@@ -26,7 +30,7 @@ namespace OBeautifulCode.DataStructure
         /// <param name="verticalAlignment">OPTIONAL vertical alignment.  DEFAULT is to leave the vertical alignment unchanged.</param>
         /// <param name="horizontalAlignment">OPTIONAL horizontal alignment.  DEFAULT is to leave the horizontal alignment unchanged.</param>
         /// <param name="fontRotationAngle">OPTIONAL font rotation angle, between +90 and -90.  Positive numbers cause the text to slope upward, negative numbers cause the text to slope downward.  DEFAULT is to leave the font rotation angle unchanged.</param>
-        /// <param name="border">OPTIONAL border to apply to the cell.  DEFAULT is no border.</param>
+        /// <param name="borders">OPTIONAL borders to apply to the cell, in the order that they should be applied.  DEFAULT is no border.</param>
         /// <param name="fillPattern">OPTIONAL pattern to fill the cell with.  DEFAULT is no pattern.</param>
         /// <param name="options">OPTIONAL formatting options to apply to the cell.  DEFAULT is to not apply any of the formatting options.</param>
         public CellFormat(
@@ -37,10 +41,20 @@ namespace OBeautifulCode.DataStructure
             VerticalAlignment? verticalAlignment = null,
             HorizontalAlignment? horizontalAlignment = null,
             int? fontRotationAngle = null,
-            OuterBorder border = null,
+            IReadOnlyList<OuterBorder> borders = null,
             FillPattern fillPattern = null,
             CellFormatOptions? options = null)
         {
+            if ((fontNamesInFallbackOrder != null) && fontNamesInFallbackOrder.Any(string.IsNullOrWhiteSpace))
+            {
+                throw new ArgumentException(Invariant($"{nameof(fontNamesInFallbackOrder)} contains a null or white space element."));
+            }
+
+            if ((borders != null) && borders.Any(_ => _ == null))
+            {
+                throw new ArgumentException(Invariant($"{nameof(borders)} contains a null element."));
+            }
+
             this.BackgroundColor = backgroundColor;
             this.FontColor = fontColor;
             this.FontNamesInFallbackOrder = fontNamesInFallbackOrder;
@@ -48,7 +62,7 @@ namespace OBeautifulCode.DataStructure
             this.VerticalAlignment = verticalAlignment;
             this.HorizontalAlignment = horizontalAlignment;
             this.FontRotationAngle = fontRotationAngle;
-            this.Border = border;
+            this.Borders = borders;
             this.FillPattern = fillPattern;
             this.Options = options;
         }
@@ -89,9 +103,9 @@ namespace OBeautifulCode.DataStructure
         public int? FontRotationAngle { get; private set; }
 
         /// <summary>
-        /// Gets the border to apply to the cell.
+        /// Gets the borders to apply to the cell, in the order that they should be applied.
         /// </summary>
-        public OuterBorder Border { get; private set; }
+        public IReadOnlyList<OuterBorder> Borders { get; private set; }
 
         /// <summary>
         /// Gets the pattern to fill the cell with.

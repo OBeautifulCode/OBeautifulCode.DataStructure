@@ -6,7 +6,13 @@
 
 namespace OBeautifulCode.DataStructure
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
     using OBeautifulCode.Type;
+
+    using static System.FormattableString;
 
     /// <summary>
     /// The format to apply to a column in a tree table.
@@ -19,22 +25,32 @@ namespace OBeautifulCode.DataStructure
         /// <param name="cellsFormat">OPTIONAL format to apply to all cells in the column, individually.  DEFAULT is to leave the format unchanged.</param>
         /// <param name="widthInPixels">OPTIONAL width, in pixels, to apply to the column.  DEFAULT is to leave the width unchanged.</param>
         /// <param name="autoFitColumnWidth">OPTIONAL value indicating whether to auto-fit the width of the column.</param>
-        /// <param name="outerBorder">OPTIONAL border to apply to the outside of the column.  DEFAULT is no border.</param>
-        /// <param name="innerBorder">OPTIONAL border to apply to the cells inside the column.  DEFAULT is no border.</param>
+        /// <param name="outerBorders">OPTIONAL borders to apply to the outside of the column, in the order that they should be applied.  DEFAULT is no border.</param>
+        /// <param name="innerBorders">OPTIONAL borders to apply to the cells inside the column, in the order that they should be applied.  DEFAULT is no border.</param>
         /// <param name="options">OPTIONAL formatting options to apply to the column.  DEFAULT is to not apply any of the formatting options.</param>
         public ColumnFormat(
             CellFormat cellsFormat = null,
             int? widthInPixels = null,
             bool? autoFitColumnWidth = null,
-            OuterBorder outerBorder = null,
-            InnerBorder innerBorder = null,
+            IReadOnlyList<OuterBorder> outerBorders = null,
+            IReadOnlyList<InnerBorder> innerBorders = null,
             ColumnFormatOptions? options = null)
         {
+            if ((outerBorders != null) && outerBorders.Any(_ => _ == null))
+            {
+                throw new ArgumentException(Invariant($"{nameof(outerBorders)} contains a null element."));
+            }
+
+            if ((innerBorders != null) && innerBorders.Any(_ => _ == null))
+            {
+                throw new ArgumentException(Invariant($"{nameof(innerBorders)} contains a null element."));
+            }
+
             this.CellsFormat = cellsFormat;
             this.WidthInPixels = widthInPixels;
             this.AutoFitColumnWidth = autoFitColumnWidth;
-            this.OuterBorder = outerBorder;
-            this.InnerBorder = innerBorder;
+            this.OuterBorders = outerBorders;
+            this.InnerBorders = innerBorders;
             this.Options = options;
         }
 
@@ -54,14 +70,14 @@ namespace OBeautifulCode.DataStructure
         public bool? AutoFitColumnWidth { get; private set; }
 
         /// <summary>
-        /// Gets the border to apply to the outside of the column.
+        /// Gets the borders to apply to the outside of the column, in the order that they should be applied.
         /// </summary>
-        public OuterBorder OuterBorder { get; private set; }
+        public IReadOnlyList<OuterBorder> OuterBorders { get; private set; }
 
         /// <summary>
-        /// Gets the border to apply to the cells inside the column.
+        /// Gets the borders to apply to the cells inside the column, in the order that they should be applied.
         /// </summary>
-        public InnerBorder InnerBorder { get; private set; }
+        public IReadOnlyList<InnerBorder> InnerBorders { get; private set; }
 
         /// <summary>
         /// Gets the formatting options to apply to the column.

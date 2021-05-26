@@ -24,23 +24,33 @@ namespace OBeautifulCode.DataStructure
         /// </summary>
         /// <param name="rowsFormat">OPTIONAL format to apply to all data rows, individually.  DEFAULT is to leave the format unchanged.</param>
         /// <param name="rowsRepeatingFormat">OPTIONAL formats to apply in order for successive data rows, that repeat after the last format is applied.  For example, this can be used to achieve a zebra striped table by specifying two <see cref="RowFormat"/> objects having different background colors.</param>
-        /// <param name="outerBorder">OPTIONAL border to apply to the outside of the data rows.  DEFAULT is no border.</param>
-        /// <param name="innerBorder">OPTIONAL border to apply to the cells inside the data rows.  DEFAULT is no border.</param>
+        /// <param name="outerBorders">OPTIONAL borders to apply to the outside of the data rows, in the order that they should be applied.  DEFAULT is no border.</param>
+        /// <param name="innerBorders">OPTIONAL borders to apply to the cells inside the data rows, in the order that they should be applied.  DEFAULT is no border.</param>
         public DataRowsFormat(
             RowFormat rowsFormat = null,
             IReadOnlyList<RowFormat> rowsRepeatingFormat = null,
-            OuterBorder outerBorder = null,
-            InnerBorder innerBorder = null)
+            IReadOnlyList<OuterBorder> outerBorders = null,
+            IReadOnlyList<InnerBorder> innerBorders = null)
         {
             if ((rowsRepeatingFormat != null) && rowsRepeatingFormat.Any(_ => _ == null))
             {
                 throw new ArgumentException(Invariant($"{nameof(rowsRepeatingFormat)} contains a null element."));
             }
 
+            if ((outerBorders != null) && outerBorders.Any(_ => _ == null))
+            {
+                throw new ArgumentException(Invariant($"{nameof(outerBorders)} contains a null element."));
+            }
+
+            if ((innerBorders != null) && innerBorders.Any(_ => _ == null))
+            {
+                throw new ArgumentException(Invariant($"{nameof(innerBorders)} contains a null element."));
+            }
+
             this.RowsFormat = rowsFormat;
             this.RowsRepeatingFormat = rowsRepeatingFormat;
-            this.OuterBorder = outerBorder;
-            this.InnerBorder = innerBorder;
+            this.OuterBorders = outerBorders;
+            this.InnerBorders = innerBorders;
         }
 
         /// <summary>
@@ -54,13 +64,13 @@ namespace OBeautifulCode.DataStructure
         public IReadOnlyList<RowFormat> RowsRepeatingFormat { get; private set; }
 
         /// <summary>
-        /// Gets the border to apply to the outside of the data rows.
+        /// Gets the borders to apply to the outside of the data rows, in the order that they should be applied.
         /// </summary>
-        public OuterBorder OuterBorder { get; private set; }
+        public IReadOnlyList<OuterBorder> OuterBorders { get; private set; }
 
         /// <summary>
-        /// Gets the border to apply to the cells inside the data rows.
+        /// Gets the borders to apply to the cells inside the data rows, in the order that they should be applied.
         /// </summary>
-        public InnerBorder InnerBorder { get; private set; }
+        public IReadOnlyList<InnerBorder> InnerBorders { get; private set; }
     }
 }
