@@ -26,7 +26,7 @@ namespace OBeautifulCode.DataStructure
         /// <param name="slotIdToCellMap">A map of the slot's id to the cell contained in the slot.</param>
         /// <param name="defaultSlotName">The name of the slot to use when initially rendering the tree table.</param>
         /// <param name="columnsSpanned">The number of columns spanned.</param>
-        protected ColumnSpanningSlottedCell(
+        public ColumnSpanningSlottedCell(
             IReadOnlyDictionary<string, IHaveValueCell> slotIdToCellMap,
             string defaultSlotName,
             int columnsSpanned)

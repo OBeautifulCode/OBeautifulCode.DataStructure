@@ -26,7 +26,7 @@ namespace OBeautifulCode.DataStructure
         /// <param name="style">The style of the border.</param>
         /// <param name="color">The color of the border.</param>
         /// <param name="sides">The sides to apply the border to.</param>
-        protected OuterBorder(
+        public OuterBorder(
             BorderWeight weight,
             BorderStyle style,
             Color color,
