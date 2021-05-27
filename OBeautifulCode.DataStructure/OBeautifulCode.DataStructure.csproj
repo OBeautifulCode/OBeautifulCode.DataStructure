@@ -85,6 +85,7 @@
     <Compile Include="Models\Classes\Format\Border\OuterBorder.cs" />
     <Compile Include="Models\Classes\Format\Border\BorderBase.cs" />
     <Compile Include="Models\Classes\Format\Fill\FillPattern.cs" />
+    <Compile Include="Models\Classes\Format\Region\RegionFormatBase.cs" />
     <Compile Include="Models\Classes\Format\Region\HeaderRowsFormat.cs" />
     <Compile Include="Models\Classes\HoverOver\HoverOverBase.cs" />
     <Compile Include="Interfaces\Model\IHoverOver.cs" />

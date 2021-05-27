@@ -17,7 +17,8 @@ namespace OBeautifulCode.DataStructure
     /// <summary>
     /// The format to apply to a column in a tree table.
     /// </summary>
-    public partial class ColumnFormat : IModelViaCodeGen
+    // ReSharper disable once RedundantExtendsListEntry
+    public partial class ColumnFormat : RegionFormatBase, IModelViaCodeGen
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ColumnFormat"/> class.

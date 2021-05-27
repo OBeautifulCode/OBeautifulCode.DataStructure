@@ -18,7 +18,8 @@ namespace OBeautifulCode.DataStructure
     /// <summary>
     /// The format to apply to a cell in a tree table.
     /// </summary>
-    public partial class CellFormat : IModelViaCodeGen
+    // ReSharper disable once RedundantExtendsListEntry
+    public partial class CellFormat : RegionFormatBase, IModelViaCodeGen
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CellFormat"/> class.

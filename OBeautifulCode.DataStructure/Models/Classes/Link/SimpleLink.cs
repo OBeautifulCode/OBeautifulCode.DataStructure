@@ -7,6 +7,8 @@
 namespace OBeautifulCode.DataStructure
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
     using static System.FormattableString;
 
@@ -20,9 +22,11 @@ namespace OBeautifulCode.DataStructure
         /// </summary>
         /// <param name="target">A value that specifies where/how a linked resource is displayed/experienced.</param>
         /// <param name="resource">The resource.</param>
+        /// <param name="formatsToApplyWhenActivated">OPTIONAL formatting to apply, in order, when the link is activated (e.g. clicked).  DEFAULT is to leave the formatting unchanged.</param>
         public SimpleLink(
             LinkTarget target,
-            ILinkedResource resource)
+            ILinkedResource resource,
+            IReadOnlyList<RegionFormatBase> formatsToApplyWhenActivated = null)
         {
             if (target == LinkTarget.Unknown)
             {
@@ -34,8 +38,14 @@ namespace OBeautifulCode.DataStructure
                 throw new ArgumentNullException(nameof(resource));
             }
 
+            if ((formatsToApplyWhenActivated != null) && formatsToApplyWhenActivated.Any(_ => _ == null))
+            {
+                throw new ArgumentException(Invariant($"{nameof(formatsToApplyWhenActivated)} contains a null element."));
+            }
+
             this.Target = target;
             this.Resource = resource;
+            this.FormatsToApplyWhenActivated = formatsToApplyWhenActivated;
         }
 
         /// <summary>
@@ -47,5 +57,10 @@ namespace OBeautifulCode.DataStructure
         /// Gets the resource.
         /// </summary>
         public ILinkedResource Resource { get; private set; }
+
+        /// <summary>
+        /// Gets the formatting to apply, in order, when the link is activated (e.g. clicked).
+        /// </summary>
+        public IReadOnlyList<RegionFormatBase> FormatsToApplyWhenActivated { get; private set; }
     }
 }

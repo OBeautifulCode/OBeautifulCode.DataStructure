@@ -17,7 +17,8 @@ namespace OBeautifulCode.DataStructure
     /// <summary>
     /// The format to apply to the data rows (the rows below the header row) in a tree table.
     /// </summary>
-    public partial class DataRowsFormat : IModelViaCodeGen
+    // ReSharper disable once RedundantExtendsListEntry
+    public partial class DataRowsFormat : RegionFormatBase, IModelViaCodeGen
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="DataRowsFormat"/> class.
