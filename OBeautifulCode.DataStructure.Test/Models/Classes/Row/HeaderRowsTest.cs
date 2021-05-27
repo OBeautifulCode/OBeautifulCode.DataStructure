@@ -29,6 +29,42 @@ namespace OBeautifulCode.DataStructure.Test
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = ObcSuppressBecause.CA1810_InitializeReferenceTypeStaticFieldsInline_FieldsDeclaredInCodeGeneratedPartialTestClass)]
         static HeaderRowsTest()
         {
+            ConstructorArgumentValidationTestScenarios
+                .RemoveAllScenarios()
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<HeaderRows>
+                    {
+                        Name = "constructor should throw ArgumentNullException when parameter 'rows' is null scenario",
+                        ConstructionFunc = () =>
+                        {
+                            var referenceObject = A.Dummy<HeaderRows>();
+
+                            var result = new HeaderRows(
+                                                 null,
+                                                 referenceObject.Format);
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentNullException),
+                        ExpectedExceptionMessageContains = new[] { "rows", },
+                    })
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<HeaderRows>
+                    {
+                        Name = "constructor should throw ArgumentException when parameter 'rows' contains a null element scenario",
+                        ConstructionFunc = () =>
+                        {
+                            var referenceObject = A.Dummy<HeaderRows>();
+
+                            var result = new HeaderRows(
+                                                 new FlatRow[0].Concat(referenceObject.Rows).Concat(new FlatRow[] { null }).Concat(referenceObject.Rows).ToList(),
+                                                 referenceObject.Format);
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentException),
+                        ExpectedExceptionMessageContains = new[] { "rows", "contains at least one null element", },
+                    });
         }
     }
 }

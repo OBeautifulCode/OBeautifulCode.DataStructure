@@ -29,6 +29,48 @@ namespace OBeautifulCode.DataStructure.Test
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = ObcSuppressBecause.CA1810_InitializeReferenceTypeStaticFieldsInline_FieldsDeclaredInCodeGeneratedPartialTestClass)]
         static ColumnSpanningHtmlCellTest()
         {
+            ConstructorArgumentValidationTestScenarios
+                .RemoveAllScenarios()
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<ColumnSpanningHtmlCell>
+                    {
+                        Name = "constructor should throw ArgumentNullException when parameter 'html' is null scenario",
+                        ConstructionFunc = () =>
+                        {
+                            var referenceObject = A.Dummy<ColumnSpanningHtmlCell>();
+
+                            var result = new ColumnSpanningHtmlCell(
+                                                 null,
+                                                 referenceObject.ColumnsSpanned,
+                                                 referenceObject.Format,
+                                                 referenceObject.HoverOver,
+                                                 referenceObject.Link);
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentNullException),
+                        ExpectedExceptionMessageContains = new[] { "html", },
+                    })
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<ColumnSpanningHtmlCell>
+                    {
+                        Name = "constructor should throw ArgumentException when parameter 'html' is white space scenario",
+                        ConstructionFunc = () =>
+                        {
+                            var referenceObject = A.Dummy<ColumnSpanningHtmlCell>();
+
+                            var result = new ColumnSpanningHtmlCell(
+                                                 Invariant($"  {Environment.NewLine}  "),
+                                                 referenceObject.ColumnsSpanned,
+                                                 referenceObject.Format,
+                                                 referenceObject.HoverOver,
+                                                 referenceObject.Link);
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentException),
+                        ExpectedExceptionMessageContains = new[] { "html", "white space", },
+                    });
         }
     }
 }

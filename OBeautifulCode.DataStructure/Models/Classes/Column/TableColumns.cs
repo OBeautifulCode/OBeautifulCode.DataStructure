@@ -35,12 +35,12 @@ namespace OBeautifulCode.DataStructure
 
             if (!columns.Any())
             {
-                throw new ArgumentException(Invariant($"{nameof(columns)} is empty."));
+                throw new ArgumentException(Invariant($"{nameof(columns)} is an empty enumerable."));
             }
 
             if (columns.Any(_ => _ == null))
             {
-                throw new ArgumentException(Invariant($"{nameof(columns)} contains a null object."));
+                throw new ArgumentException(Invariant($"{nameof(columns)} contains at least one null element."));
             }
 
             this.Columns = columns;

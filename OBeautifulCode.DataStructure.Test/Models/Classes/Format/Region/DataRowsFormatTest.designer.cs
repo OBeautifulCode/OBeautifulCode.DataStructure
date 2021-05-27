@@ -464,11 +464,11 @@ namespace OBeautifulCode.DataStructure.Test
                         A.Dummy<int>(),
                         A.Dummy<int?>(),
                         A.Dummy<Guid>(),
-                        A.Dummy<HeaderRowsFormat>(),
                         A.Dummy<CellFormat>(),
-                        A.Dummy<TableFormat>(),
-                        A.Dummy<RowFormat>(),
                         A.Dummy<ColumnFormat>(),
+                        A.Dummy<HeaderRowsFormat>(),
+                        A.Dummy<RowFormat>(),
+                        A.Dummy<TableFormat>(),
                     },
                 });
 

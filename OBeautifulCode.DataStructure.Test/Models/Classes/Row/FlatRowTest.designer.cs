@@ -58,50 +58,14 @@ namespace OBeautifulCode.DataStructure.Test
             .AddScenario(() =>
                 new ConstructorArgumentValidationTestScenario<FlatRow>
                 {
-                    Name = "constructor should throw ArgumentNullException when parameter 'id' is null scenario",
-                    ConstructionFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<FlatRow>();
-
-                        var result = new FlatRow(
-                                             null,
-                                             referenceObject.Cells,
-                                             referenceObject.Format);
-
-                        return result;
-                    },
-                    ExpectedExceptionType = typeof(ArgumentNullException),
-                    ExpectedExceptionMessageContains = new[] { "id", },
-                })
-            .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<FlatRow>
-                {
-                    Name = "constructor should throw ArgumentException when parameter 'id' is white space scenario",
-                    ConstructionFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<FlatRow>();
-
-                        var result = new FlatRow(
-                                             Invariant($"  {Environment.NewLine}  "),
-                                             referenceObject.Cells,
-                                             referenceObject.Format);
-
-                        return result;
-                    },
-                    ExpectedExceptionType = typeof(ArgumentException),
-                    ExpectedExceptionMessageContains = new[] { "id", "white space", },
-                })
-            .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<FlatRow>
-                {
                     Name = "constructor should throw ArgumentNullException when parameter 'cells' is null scenario",
                     ConstructionFunc = () =>
                     {
                         var referenceObject = A.Dummy<FlatRow>();
 
                         var result = new FlatRow(
-                                             referenceObject.Id,
                                              null,
+                                             referenceObject.Id,
                                              referenceObject.Format);
 
                         return result;
@@ -118,8 +82,8 @@ namespace OBeautifulCode.DataStructure.Test
                         var referenceObject = A.Dummy<FlatRow>();
 
                         var result = new FlatRow(
-                                             referenceObject.Id,
                                              new List<ICell>(),
+                                             referenceObject.Id,
                                              referenceObject.Format);
 
                         return result;
@@ -136,8 +100,8 @@ namespace OBeautifulCode.DataStructure.Test
                         var referenceObject = A.Dummy<FlatRow>();
 
                         var result = new FlatRow(
-                                             referenceObject.Id,
                                              new ICell[0].Concat(referenceObject.Cells).Concat(new ICell[] { null }).Concat(referenceObject.Cells).ToList(),
+                                             referenceObject.Id,
                                              referenceObject.Format);
 
                         return result;
@@ -148,14 +112,50 @@ namespace OBeautifulCode.DataStructure.Test
             .AddScenario(() =>
                 new ConstructorArgumentValidationTestScenario<FlatRow>
                 {
+                    Name = "constructor should throw ArgumentNullException when parameter 'id' is null scenario",
+                    ConstructionFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<FlatRow>();
+
+                        var result = new FlatRow(
+                                             referenceObject.Cells,
+                                             null,
+                                             referenceObject.Format);
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentNullException),
+                    ExpectedExceptionMessageContains = new[] { "id", },
+                })
+            .AddScenario(() =>
+                new ConstructorArgumentValidationTestScenario<FlatRow>
+                {
+                    Name = "constructor should throw ArgumentException when parameter 'id' is white space scenario",
+                    ConstructionFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<FlatRow>();
+
+                        var result = new FlatRow(
+                                             referenceObject.Cells,
+                                             Invariant($"  {Environment.NewLine}  "),
+                                             referenceObject.Format);
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentException),
+                    ExpectedExceptionMessageContains = new[] { "id", "white space", },
+                })
+            .AddScenario(() =>
+                new ConstructorArgumentValidationTestScenario<FlatRow>
+                {
                     Name = "constructor should throw ArgumentNullException when parameter 'format' is null scenario",
                     ConstructionFunc = () =>
                     {
                         var referenceObject = A.Dummy<FlatRow>();
 
                         var result = new FlatRow(
-                                             referenceObject.Id,
                                              referenceObject.Cells,
+                                             referenceObject.Id,
                                              null);
 
                         return result;
@@ -168,27 +168,6 @@ namespace OBeautifulCode.DataStructure.Test
             .AddScenario(() =>
                 new ConstructorPropertyAssignmentTestScenario<FlatRow>
                 {
-                    Name = "Id should return same 'id' parameter passed to constructor when getting",
-                    SystemUnderTestExpectedPropertyValueFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<FlatRow>();
-
-                        var result = new SystemUnderTestExpectedPropertyValue<FlatRow>
-                        {
-                            SystemUnderTest = new FlatRow(
-                                                      referenceObject.Id,
-                                                      referenceObject.Cells,
-                                                      referenceObject.Format),
-                            ExpectedPropertyValue = referenceObject.Id,
-                        };
-
-                        return result;
-                    },
-                    PropertyName = "Id",
-                })
-            .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<FlatRow>
-                {
                     Name = "Cells should return same 'cells' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
@@ -197,8 +176,8 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new SystemUnderTestExpectedPropertyValue<FlatRow>
                         {
                             SystemUnderTest = new FlatRow(
-                                                      referenceObject.Id,
                                                       referenceObject.Cells,
+                                                      referenceObject.Id,
                                                       referenceObject.Format),
                             ExpectedPropertyValue = referenceObject.Cells,
                         };
@@ -206,6 +185,27 @@ namespace OBeautifulCode.DataStructure.Test
                         return result;
                     },
                     PropertyName = "Cells",
+                })
+            .AddScenario(() =>
+                new ConstructorPropertyAssignmentTestScenario<FlatRow>
+                {
+                    Name = "Id should return same 'id' parameter passed to constructor when getting",
+                    SystemUnderTestExpectedPropertyValueFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<FlatRow>();
+
+                        var result = new SystemUnderTestExpectedPropertyValue<FlatRow>
+                        {
+                            SystemUnderTest = new FlatRow(
+                                                      referenceObject.Cells,
+                                                      referenceObject.Id,
+                                                      referenceObject.Format),
+                            ExpectedPropertyValue = referenceObject.Id,
+                        };
+
+                        return result;
+                    },
+                    PropertyName = "Id",
                 })
             .AddScenario(() =>
                 new ConstructorPropertyAssignmentTestScenario<FlatRow>
@@ -218,8 +218,8 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new SystemUnderTestExpectedPropertyValue<FlatRow>
                         {
                             SystemUnderTest = new FlatRow(
-                                                      referenceObject.Id,
                                                       referenceObject.Cells,
+                                                      referenceObject.Id,
                                                       referenceObject.Format),
                             ExpectedPropertyValue = referenceObject.Format,
                         };
@@ -302,23 +302,23 @@ namespace OBeautifulCode.DataStructure.Test
                     ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new FlatRow[]
                     {
                         new FlatRow(
-                                ReferenceObjectForEquatableTestScenarios.Id,
                                 ReferenceObjectForEquatableTestScenarios.Cells,
+                                ReferenceObjectForEquatableTestScenarios.Id,
                                 ReferenceObjectForEquatableTestScenarios.Format),
                     },
                     ObjectsThatAreNotEqualToReferenceObject = new FlatRow[]
                     {
                         new FlatRow(
+                                ReferenceObjectForEquatableTestScenarios.Cells,
                                 A.Dummy<FlatRow>().Whose(_ => !_.Id.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Id)).Id,
-                                ReferenceObjectForEquatableTestScenarios.Cells,
                                 ReferenceObjectForEquatableTestScenarios.Format),
                         new FlatRow(
-                                ReferenceObjectForEquatableTestScenarios.Id,
                                 A.Dummy<FlatRow>().Whose(_ => !_.Cells.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Cells)).Cells,
+                                ReferenceObjectForEquatableTestScenarios.Id,
                                 ReferenceObjectForEquatableTestScenarios.Format),
                         new FlatRow(
-                                ReferenceObjectForEquatableTestScenarios.Id,
                                 ReferenceObjectForEquatableTestScenarios.Cells,
+                                ReferenceObjectForEquatableTestScenarios.Id,
                                 A.Dummy<FlatRow>().Whose(_ => !_.Format.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Format)).Format),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]

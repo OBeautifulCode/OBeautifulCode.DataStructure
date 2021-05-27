@@ -33,7 +33,7 @@ namespace OBeautifulCode.DataStructure
 
             if (string.IsNullOrWhiteSpace(url))
             {
-                throw new ArgumentNullException(Invariant($"{nameof(url)} is white space."));
+                throw new ArgumentException(Invariant($"{nameof(url)} is white space."));
             }
 
             if (resourceKind == UrlLinkedResourceKind.Unknown)

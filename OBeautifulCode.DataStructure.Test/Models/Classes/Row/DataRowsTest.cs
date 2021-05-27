@@ -29,6 +29,25 @@ namespace OBeautifulCode.DataStructure.Test
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = ObcSuppressBecause.CA1810_InitializeReferenceTypeStaticFieldsInline_FieldsDeclaredInCodeGeneratedPartialTestClass)]
         static DataRowsTest()
         {
+            ConstructorArgumentValidationTestScenarios
+                .RemoveAllScenarios()
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<DataRows>
+                    {
+                        Name = "constructor should throw ArgumentException when parameter 'rows' contains a null element scenario",
+                        ConstructionFunc = () =>
+                        {
+                            var referenceObject = A.Dummy<DataRows>();
+
+                            var result = new DataRows(
+                                                 new Row[0].Concat(referenceObject.Rows).Concat(new Row[] { null }).Concat(referenceObject.Rows).ToList(),
+                                                 referenceObject.Format);
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentException),
+                        ExpectedExceptionMessageContains = new[] { "rows", "contains at least one null element", },
+                    });
         }
     }
 }

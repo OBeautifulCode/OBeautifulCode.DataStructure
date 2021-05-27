@@ -29,6 +29,27 @@ namespace OBeautifulCode.DataStructure.Test
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = ObcSuppressBecause.CA1810_InitializeReferenceTypeStaticFieldsInline_FieldsDeclaredInCodeGeneratedPartialTestClass)]
         static MediaReferenceCellTest()
         {
+            ConstructorArgumentValidationTestScenarios
+                .RemoveAllScenarios()
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<MediaReferenceCell>
+                    {
+                        Name = "constructor should throw ArgumentNullException when parameter 'mediaReference' is null scenario",
+                        ConstructionFunc = () =>
+                        {
+                            var referenceObject = A.Dummy<MediaReferenceCell>();
+
+                            var result = new MediaReferenceCell(
+                                null,
+                                referenceObject.Format,
+                                referenceObject.HoverOver,
+                                referenceObject.Link);
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentNullException),
+                        ExpectedExceptionMessageContains = new[] { "mediaReference", },
+                    });
         }
     }
 }

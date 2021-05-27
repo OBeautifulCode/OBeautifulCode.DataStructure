@@ -6,6 +6,7 @@
 namespace OBeautifulCode.DataStructure
 {
     using System;
+    using System.Linq;
 
     using OBeautifulCode.Type;
 
@@ -27,6 +28,16 @@ namespace OBeautifulCode.DataStructure
             byte[] bytes,
             BytesPayloadLinkedResourceKind resourceKind)
         {
+            if (bytes == null)
+            {
+                throw new ArgumentNullException(nameof(bytes));
+            }
+
+            if (!bytes.Any())
+            {
+                throw new ArgumentException(Invariant($"{nameof(bytes)} is an empty enumerable."));
+            }
+
             if (resourceKind == BytesPayloadLinkedResourceKind.Unknown)
             {
                 throw new ArgumentException(Invariant($"{nameof(resourceKind)} is {nameof(BytesPayloadLinkedResourceKind.Unknown)}."));

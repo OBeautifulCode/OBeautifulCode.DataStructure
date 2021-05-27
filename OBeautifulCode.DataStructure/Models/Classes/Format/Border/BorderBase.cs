@@ -31,12 +31,12 @@ namespace OBeautifulCode.DataStructure
         {
             if (weight == BorderWeight.Unknown)
             {
-                throw new ArgumentException(Invariant($"{nameof(weight)} is {nameof(BorderWeight.Unknown)}."));
+                throw new ArgumentOutOfRangeException(Invariant($"{nameof(weight)} is {nameof(BorderWeight.Unknown)}."));
             }
 
             if (style == BorderStyle.Unknown)
             {
-                throw new ArgumentException(Invariant($"{nameof(style)} is {nameof(BorderStyle.Unknown)}."));
+                throw new ArgumentOutOfRangeException(Invariant($"{nameof(style)} is {nameof(BorderStyle.Unknown)}."));
             }
 
             this.Weight = weight;

@@ -18,14 +18,14 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Initializes a new instance of the <see cref="FlatRow"/> class.
         /// </summary>
+        /// <param name="cells">Cells in the row.</param>
         /// <param name="id">OPTIONAL row identifier.  DEFAULT is a row without an identifier.</param>
-        /// <param name="cells">OPTIONAL cells in the row.  DEFAULT is none.</param>
         /// <param name="format">OPTIONAL format to apply to the whole row.  DEFAULT is to leave the format unchanged.</param>
         public FlatRow(
+            IReadOnlyList<ICell> cells,
             string id = null,
-            IReadOnlyList<ICell> cells = null,
             RowFormat format = null)
-            : base(id, cells, format)
+            : base(cells, id, format)
         {
         }
     }

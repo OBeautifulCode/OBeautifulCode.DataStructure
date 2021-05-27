@@ -6,7 +6,11 @@
 
 namespace OBeautifulCode.DataStructure
 {
+    using System;
+
     using OBeautifulCode.Type;
+
+    using static System.FormattableString;
 
     /// <summary>
     /// A cell that contains an HTML value and spans multiple columns.
@@ -30,6 +34,16 @@ namespace OBeautifulCode.DataStructure
             ILink link = null)
             : base(columnsSpanned, format, hoverOver, link)
         {
+            if (html == null)
+            {
+                throw new ArgumentNullException(nameof(html));
+            }
+
+            if (string.IsNullOrWhiteSpace(html))
+            {
+                throw new ArgumentException(Invariant($"{nameof(html)} is white space"));
+            }
+
             this.Html = html;
         }
 

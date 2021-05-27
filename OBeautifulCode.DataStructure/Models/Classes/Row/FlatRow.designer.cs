@@ -110,8 +110,8 @@ namespace OBeautifulCode.DataStructure
         public override RowBase DeepCloneWithId(string id)
         {
             var result = new FlatRow(
-                                 id,
                                  this.Cells?.DeepClone(),
+                                 id,
                                  this.Format?.DeepClone());
 
             return result;
@@ -138,8 +138,8 @@ namespace OBeautifulCode.DataStructure
         public override RowBase DeepCloneWithCells(IReadOnlyList<ICell> cells)
         {
             var result = new FlatRow(
-                                 this.Id?.DeepClone(),
                                  cells,
+                                 this.Id?.DeepClone(),
                                  this.Format?.DeepClone());
 
             return result;
@@ -166,8 +166,8 @@ namespace OBeautifulCode.DataStructure
         public override RowBase DeepCloneWithFormat(RowFormat format)
         {
             var result = new FlatRow(
-                                 this.Id?.DeepClone(),
                                  this.Cells?.DeepClone(),
+                                 this.Id?.DeepClone(),
                                  format);
 
             return result;
@@ -178,8 +178,8 @@ namespace OBeautifulCode.DataStructure
         protected override RowBase DeepCloneInternal()
         {
             var result = new FlatRow(
-                                 this.Id?.DeepClone(),
                                  this.Cells?.DeepClone(),
+                                 this.Id?.DeepClone(),
                                  this.Format?.DeepClone());
 
             return result;

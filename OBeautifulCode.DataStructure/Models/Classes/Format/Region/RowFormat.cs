@@ -35,14 +35,30 @@ namespace OBeautifulCode.DataStructure
             IReadOnlyList<InnerBorder> innerBorders = null,
             RowFormatOptions? options = null)
         {
-            if ((outerBorders != null) && outerBorders.Any(_ => _ == null))
+            if (outerBorders != null)
             {
-                throw new ArgumentException(Invariant($"{nameof(outerBorders)} contains a null element."));
+                if (!outerBorders.Any())
+                {
+                    throw new ArgumentException(Invariant($"{nameof(outerBorders)} is an empty enumerable."));
+                }
+
+                if (outerBorders.Any(_ => _ == null))
+                {
+                    throw new ArgumentException(Invariant($"{nameof(outerBorders)} contains at least one null element."));
+                }
             }
 
-            if ((innerBorders != null) && innerBorders.Any(_ => _ == null))
+            if (innerBorders != null)
             {
-                throw new ArgumentException(Invariant($"{nameof(innerBorders)} contains a null element."));
+                if (!innerBorders.Any())
+                {
+                    throw new ArgumentException(Invariant($"{nameof(innerBorders)} is an empty enumerable."));
+                }
+
+                if (innerBorders.Any(_ => _ == null))
+                {
+                    throw new ArgumentException(Invariant($"{nameof(innerBorders)} contains at least one null element."));
+                }
             }
 
             this.CellsFormat = cellsFormat;

@@ -12,9 +12,9 @@ namespace OBeautifulCode.DataStructure
     public enum VerticalAlignment
     {
         /// <summary>
-        /// Unspecified (default).
+        /// Unknown (default).
         /// </summary>
-        Unspecified,
+        Unknown,
 
         /// <summary>
         /// Top align.

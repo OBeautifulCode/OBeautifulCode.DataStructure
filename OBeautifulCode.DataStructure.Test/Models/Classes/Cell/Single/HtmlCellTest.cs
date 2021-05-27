@@ -29,6 +29,46 @@ namespace OBeautifulCode.DataStructure.Test
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = ObcSuppressBecause.CA1810_InitializeReferenceTypeStaticFieldsInline_FieldsDeclaredInCodeGeneratedPartialTestClass)]
         static HtmlCellTest()
         {
+            ConstructorArgumentValidationTestScenarios
+                .RemoveAllScenarios()
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<HtmlCell>
+                    {
+                        Name = "constructor should throw ArgumentNullException when parameter 'html' is null scenario",
+                        ConstructionFunc = () =>
+                        {
+                            var referenceObject = A.Dummy<HtmlCell>();
+
+                            var result = new HtmlCell(
+                                                 null,
+                                                 referenceObject.Format,
+                                                 referenceObject.HoverOver,
+                                                 referenceObject.Link);
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentNullException),
+                        ExpectedExceptionMessageContains = new[] { "html", },
+                    })
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<HtmlCell>
+                    {
+                        Name = "constructor should throw ArgumentException when parameter 'html' is white space scenario",
+                        ConstructionFunc = () =>
+                        {
+                            var referenceObject = A.Dummy<HtmlCell>();
+
+                            var result = new HtmlCell(
+                                                 Invariant($"  {Environment.NewLine}  "),
+                                                 referenceObject.Format,
+                                                 referenceObject.HoverOver,
+                                                 referenceObject.Link);
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentException),
+                        ExpectedExceptionMessageContains = new[] { "html", "white space", },
+                    });
         }
     }
 }

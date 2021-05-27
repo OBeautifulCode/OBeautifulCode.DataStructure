@@ -35,7 +35,7 @@ namespace OBeautifulCode.DataStructure
         {
             if (edges == InnerBorderEdges.None)
             {
-                throw new ArgumentException(Invariant($"{nameof(edges)} is {nameof(InnerBorderEdges.None)}."));
+                throw new ArgumentOutOfRangeException(Invariant($"{nameof(edges)} is {nameof(InnerBorderEdges.None)}."));
             }
 
             this.Edges = edges;

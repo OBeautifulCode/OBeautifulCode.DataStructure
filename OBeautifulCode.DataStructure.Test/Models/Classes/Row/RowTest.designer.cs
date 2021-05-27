@@ -58,56 +58,14 @@ namespace OBeautifulCode.DataStructure.Test
             .AddScenario(() =>
                 new ConstructorArgumentValidationTestScenario<Row>
                 {
-                    Name = "constructor should throw ArgumentNullException when parameter 'id' is null scenario",
-                    ConstructionFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<Row>();
-
-                        var result = new Row(
-                                             null,
-                                             referenceObject.Cells,
-                                             referenceObject.Format,
-                                             referenceObject.ChildRows,
-                                             referenceObject.ExpandedSummaryRow,
-                                             referenceObject.CollapsedSummaryRow);
-
-                        return result;
-                    },
-                    ExpectedExceptionType = typeof(ArgumentNullException),
-                    ExpectedExceptionMessageContains = new[] { "id", },
-                })
-            .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<Row>
-                {
-                    Name = "constructor should throw ArgumentException when parameter 'id' is white space scenario",
-                    ConstructionFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<Row>();
-
-                        var result = new Row(
-                                             Invariant($"  {Environment.NewLine}  "),
-                                             referenceObject.Cells,
-                                             referenceObject.Format,
-                                             referenceObject.ChildRows,
-                                             referenceObject.ExpandedSummaryRow,
-                                             referenceObject.CollapsedSummaryRow);
-
-                        return result;
-                    },
-                    ExpectedExceptionType = typeof(ArgumentException),
-                    ExpectedExceptionMessageContains = new[] { "id", "white space", },
-                })
-            .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<Row>
-                {
                     Name = "constructor should throw ArgumentNullException when parameter 'cells' is null scenario",
                     ConstructionFunc = () =>
                     {
                         var referenceObject = A.Dummy<Row>();
 
                         var result = new Row(
-                                             referenceObject.Id,
                                              null,
+                                             referenceObject.Id,
                                              referenceObject.Format,
                                              referenceObject.ChildRows,
                                              referenceObject.ExpandedSummaryRow,
@@ -127,8 +85,8 @@ namespace OBeautifulCode.DataStructure.Test
                         var referenceObject = A.Dummy<Row>();
 
                         var result = new Row(
-                                             referenceObject.Id,
                                              new List<ICell>(),
+                                             referenceObject.Id,
                                              referenceObject.Format,
                                              referenceObject.ChildRows,
                                              referenceObject.ExpandedSummaryRow,
@@ -148,8 +106,8 @@ namespace OBeautifulCode.DataStructure.Test
                         var referenceObject = A.Dummy<Row>();
 
                         var result = new Row(
-                                             referenceObject.Id,
                                              new ICell[0].Concat(referenceObject.Cells).Concat(new ICell[] { null }).Concat(referenceObject.Cells).ToList(),
+                                             referenceObject.Id,
                                              referenceObject.Format,
                                              referenceObject.ChildRows,
                                              referenceObject.ExpandedSummaryRow,
@@ -163,14 +121,56 @@ namespace OBeautifulCode.DataStructure.Test
             .AddScenario(() =>
                 new ConstructorArgumentValidationTestScenario<Row>
                 {
+                    Name = "constructor should throw ArgumentNullException when parameter 'id' is null scenario",
+                    ConstructionFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<Row>();
+
+                        var result = new Row(
+                                             referenceObject.Cells,
+                                             null,
+                                             referenceObject.Format,
+                                             referenceObject.ChildRows,
+                                             referenceObject.ExpandedSummaryRow,
+                                             referenceObject.CollapsedSummaryRow);
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentNullException),
+                    ExpectedExceptionMessageContains = new[] { "id", },
+                })
+            .AddScenario(() =>
+                new ConstructorArgumentValidationTestScenario<Row>
+                {
+                    Name = "constructor should throw ArgumentException when parameter 'id' is white space scenario",
+                    ConstructionFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<Row>();
+
+                        var result = new Row(
+                                             referenceObject.Cells,
+                                             Invariant($"  {Environment.NewLine}  "),
+                                             referenceObject.Format,
+                                             referenceObject.ChildRows,
+                                             referenceObject.ExpandedSummaryRow,
+                                             referenceObject.CollapsedSummaryRow);
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentException),
+                    ExpectedExceptionMessageContains = new[] { "id", "white space", },
+                })
+            .AddScenario(() =>
+                new ConstructorArgumentValidationTestScenario<Row>
+                {
                     Name = "constructor should throw ArgumentNullException when parameter 'format' is null scenario",
                     ConstructionFunc = () =>
                     {
                         var referenceObject = A.Dummy<Row>();
 
                         var result = new Row(
-                                             referenceObject.Id,
                                              referenceObject.Cells,
+                                             referenceObject.Id,
                                              null,
                                              referenceObject.ChildRows,
                                              referenceObject.ExpandedSummaryRow,
@@ -190,8 +190,8 @@ namespace OBeautifulCode.DataStructure.Test
                         var referenceObject = A.Dummy<Row>();
 
                         var result = new Row(
-                                             referenceObject.Id,
                                              referenceObject.Cells,
+                                             referenceObject.Id,
                                              referenceObject.Format,
                                              null,
                                              referenceObject.ExpandedSummaryRow,
@@ -211,8 +211,8 @@ namespace OBeautifulCode.DataStructure.Test
                         var referenceObject = A.Dummy<Row>();
 
                         var result = new Row(
-                                             referenceObject.Id,
                                              referenceObject.Cells,
+                                             referenceObject.Id,
                                              referenceObject.Format,
                                              new List<Row>(),
                                              referenceObject.ExpandedSummaryRow,
@@ -232,8 +232,8 @@ namespace OBeautifulCode.DataStructure.Test
                         var referenceObject = A.Dummy<Row>();
 
                         var result = new Row(
-                                             referenceObject.Id,
                                              referenceObject.Cells,
+                                             referenceObject.Id,
                                              referenceObject.Format,
                                              new Row[0].Concat(referenceObject.ChildRows).Concat(new Row[] { null }).Concat(referenceObject.ChildRows).ToList(),
                                              referenceObject.ExpandedSummaryRow,
@@ -253,8 +253,8 @@ namespace OBeautifulCode.DataStructure.Test
                         var referenceObject = A.Dummy<Row>();
 
                         var result = new Row(
-                                             referenceObject.Id,
                                              referenceObject.Cells,
+                                             referenceObject.Id,
                                              referenceObject.Format,
                                              referenceObject.ChildRows,
                                              null,
@@ -274,8 +274,8 @@ namespace OBeautifulCode.DataStructure.Test
                         var referenceObject = A.Dummy<Row>();
 
                         var result = new Row(
-                                             referenceObject.Id,
                                              referenceObject.Cells,
+                                             referenceObject.Id,
                                              referenceObject.Format,
                                              referenceObject.ChildRows,
                                              referenceObject.ExpandedSummaryRow,
@@ -291,30 +291,6 @@ namespace OBeautifulCode.DataStructure.Test
             .AddScenario(() =>
                 new ConstructorPropertyAssignmentTestScenario<Row>
                 {
-                    Name = "Id should return same 'id' parameter passed to constructor when getting",
-                    SystemUnderTestExpectedPropertyValueFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<Row>();
-
-                        var result = new SystemUnderTestExpectedPropertyValue<Row>
-                        {
-                            SystemUnderTest = new Row(
-                                                      referenceObject.Id,
-                                                      referenceObject.Cells,
-                                                      referenceObject.Format,
-                                                      referenceObject.ChildRows,
-                                                      referenceObject.ExpandedSummaryRow,
-                                                      referenceObject.CollapsedSummaryRow),
-                            ExpectedPropertyValue = referenceObject.Id,
-                        };
-
-                        return result;
-                    },
-                    PropertyName = "Id",
-                })
-            .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<Row>
-                {
                     Name = "Cells should return same 'cells' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
@@ -323,8 +299,8 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new SystemUnderTestExpectedPropertyValue<Row>
                         {
                             SystemUnderTest = new Row(
-                                                      referenceObject.Id,
                                                       referenceObject.Cells,
+                                                      referenceObject.Id,
                                                       referenceObject.Format,
                                                       referenceObject.ChildRows,
                                                       referenceObject.ExpandedSummaryRow,
@@ -339,6 +315,30 @@ namespace OBeautifulCode.DataStructure.Test
             .AddScenario(() =>
                 new ConstructorPropertyAssignmentTestScenario<Row>
                 {
+                    Name = "Id should return same 'id' parameter passed to constructor when getting",
+                    SystemUnderTestExpectedPropertyValueFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<Row>();
+
+                        var result = new SystemUnderTestExpectedPropertyValue<Row>
+                        {
+                            SystemUnderTest = new Row(
+                                                      referenceObject.Cells,
+                                                      referenceObject.Id,
+                                                      referenceObject.Format,
+                                                      referenceObject.ChildRows,
+                                                      referenceObject.ExpandedSummaryRow,
+                                                      referenceObject.CollapsedSummaryRow),
+                            ExpectedPropertyValue = referenceObject.Id,
+                        };
+
+                        return result;
+                    },
+                    PropertyName = "Id",
+                })
+            .AddScenario(() =>
+                new ConstructorPropertyAssignmentTestScenario<Row>
+                {
                     Name = "Format should return same 'format' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
@@ -347,8 +347,8 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new SystemUnderTestExpectedPropertyValue<Row>
                         {
                             SystemUnderTest = new Row(
-                                                      referenceObject.Id,
                                                       referenceObject.Cells,
+                                                      referenceObject.Id,
                                                       referenceObject.Format,
                                                       referenceObject.ChildRows,
                                                       referenceObject.ExpandedSummaryRow,
@@ -371,8 +371,8 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new SystemUnderTestExpectedPropertyValue<Row>
                         {
                             SystemUnderTest = new Row(
-                                                      referenceObject.Id,
                                                       referenceObject.Cells,
+                                                      referenceObject.Id,
                                                       referenceObject.Format,
                                                       referenceObject.ChildRows,
                                                       referenceObject.ExpandedSummaryRow,
@@ -395,8 +395,8 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new SystemUnderTestExpectedPropertyValue<Row>
                         {
                             SystemUnderTest = new Row(
-                                                      referenceObject.Id,
                                                       referenceObject.Cells,
+                                                      referenceObject.Id,
                                                       referenceObject.Format,
                                                       referenceObject.ChildRows,
                                                       referenceObject.ExpandedSummaryRow,
@@ -419,8 +419,8 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new SystemUnderTestExpectedPropertyValue<Row>
                         {
                             SystemUnderTest = new Row(
-                                                      referenceObject.Id,
                                                       referenceObject.Cells,
+                                                      referenceObject.Id,
                                                       referenceObject.Format,
                                                       referenceObject.ChildRows,
                                                       referenceObject.ExpandedSummaryRow,
@@ -566,8 +566,8 @@ namespace OBeautifulCode.DataStructure.Test
                     ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new Row[]
                     {
                         new Row(
-                                ReferenceObjectForEquatableTestScenarios.Id,
                                 ReferenceObjectForEquatableTestScenarios.Cells,
+                                ReferenceObjectForEquatableTestScenarios.Id,
                                 ReferenceObjectForEquatableTestScenarios.Format,
                                 ReferenceObjectForEquatableTestScenarios.ChildRows,
                                 ReferenceObjectForEquatableTestScenarios.ExpandedSummaryRow,
@@ -576,43 +576,43 @@ namespace OBeautifulCode.DataStructure.Test
                     ObjectsThatAreNotEqualToReferenceObject = new Row[]
                     {
                         new Row(
+                                ReferenceObjectForEquatableTestScenarios.Cells,
                                 A.Dummy<Row>().Whose(_ => !_.Id.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Id)).Id,
-                                ReferenceObjectForEquatableTestScenarios.Cells,
                                 ReferenceObjectForEquatableTestScenarios.Format,
                                 ReferenceObjectForEquatableTestScenarios.ChildRows,
                                 ReferenceObjectForEquatableTestScenarios.ExpandedSummaryRow,
                                 ReferenceObjectForEquatableTestScenarios.CollapsedSummaryRow),
                         new Row(
-                                ReferenceObjectForEquatableTestScenarios.Id,
                                 A.Dummy<Row>().Whose(_ => !_.Cells.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Cells)).Cells,
+                                ReferenceObjectForEquatableTestScenarios.Id,
                                 ReferenceObjectForEquatableTestScenarios.Format,
                                 ReferenceObjectForEquatableTestScenarios.ChildRows,
                                 ReferenceObjectForEquatableTestScenarios.ExpandedSummaryRow,
                                 ReferenceObjectForEquatableTestScenarios.CollapsedSummaryRow),
                         new Row(
-                                ReferenceObjectForEquatableTestScenarios.Id,
                                 ReferenceObjectForEquatableTestScenarios.Cells,
+                                ReferenceObjectForEquatableTestScenarios.Id,
                                 A.Dummy<Row>().Whose(_ => !_.Format.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Format)).Format,
                                 ReferenceObjectForEquatableTestScenarios.ChildRows,
                                 ReferenceObjectForEquatableTestScenarios.ExpandedSummaryRow,
                                 ReferenceObjectForEquatableTestScenarios.CollapsedSummaryRow),
                         new Row(
-                                ReferenceObjectForEquatableTestScenarios.Id,
                                 ReferenceObjectForEquatableTestScenarios.Cells,
+                                ReferenceObjectForEquatableTestScenarios.Id,
                                 ReferenceObjectForEquatableTestScenarios.Format,
                                 A.Dummy<Row>().Whose(_ => !_.ChildRows.IsEqualTo(ReferenceObjectForEquatableTestScenarios.ChildRows)).ChildRows,
                                 ReferenceObjectForEquatableTestScenarios.ExpandedSummaryRow,
                                 ReferenceObjectForEquatableTestScenarios.CollapsedSummaryRow),
                         new Row(
-                                ReferenceObjectForEquatableTestScenarios.Id,
                                 ReferenceObjectForEquatableTestScenarios.Cells,
+                                ReferenceObjectForEquatableTestScenarios.Id,
                                 ReferenceObjectForEquatableTestScenarios.Format,
                                 ReferenceObjectForEquatableTestScenarios.ChildRows,
                                 A.Dummy<Row>().Whose(_ => !_.ExpandedSummaryRow.IsEqualTo(ReferenceObjectForEquatableTestScenarios.ExpandedSummaryRow)).ExpandedSummaryRow,
                                 ReferenceObjectForEquatableTestScenarios.CollapsedSummaryRow),
                         new Row(
-                                ReferenceObjectForEquatableTestScenarios.Id,
                                 ReferenceObjectForEquatableTestScenarios.Cells,
+                                ReferenceObjectForEquatableTestScenarios.Id,
                                 ReferenceObjectForEquatableTestScenarios.Format,
                                 ReferenceObjectForEquatableTestScenarios.ChildRows,
                                 ReferenceObjectForEquatableTestScenarios.ExpandedSummaryRow,

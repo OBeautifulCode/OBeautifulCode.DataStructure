@@ -29,6 +29,62 @@ namespace OBeautifulCode.DataStructure.Test
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = ObcSuppressBecause.CA1810_InitializeReferenceTypeStaticFieldsInline_FieldsDeclaredInCodeGeneratedPartialTestClass)]
         static FlatRowTest()
         {
+            ConstructorArgumentValidationTestScenarios
+                .RemoveAllScenarios()
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<FlatRow>
+                    {
+                        Name = "constructor should throw ArgumentNullException when parameter 'cells' is null scenario",
+                        ConstructionFunc = () =>
+                        {
+                            var referenceObject = A.Dummy<FlatRow>();
+
+                            var result = new FlatRow(
+                                null,
+                                referenceObject.Id,
+                                referenceObject.Format);
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentNullException),
+                        ExpectedExceptionMessageContains = new[] { "cells", },
+                    })
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<FlatRow>
+                    {
+                        Name = "constructor should throw ArgumentException when parameter 'cells' is an empty enumerable scenario",
+                        ConstructionFunc = () =>
+                        {
+                            var referenceObject = A.Dummy<FlatRow>();
+
+                            var result = new FlatRow(
+                                new List<ICell>(),
+                                referenceObject.Id,
+                                referenceObject.Format);
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentException),
+                        ExpectedExceptionMessageContains = new[] { "cells", "is an empty enumerable", },
+                    })
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<FlatRow>
+                    {
+                        Name = "constructor should throw ArgumentException when parameter 'cells' contains a null element scenario",
+                        ConstructionFunc = () =>
+                        {
+                            var referenceObject = A.Dummy<FlatRow>();
+
+                            var result = new FlatRow(
+                                new ICell[0].Concat(referenceObject.Cells).Concat(new ICell[] { null }).Concat(referenceObject.Cells).ToList(),
+                                referenceObject.Id,
+                                referenceObject.Format);
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentException),
+                        ExpectedExceptionMessageContains = new[] { "cells", "contains at least one null element", },
+                    });
         }
     }
 }

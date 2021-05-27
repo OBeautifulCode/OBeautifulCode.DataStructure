@@ -46,14 +46,45 @@ namespace OBeautifulCode.DataStructure
             FillPattern fillPattern = null,
             CellFormatOptions? options = null)
         {
-            if ((fontNamesInFallbackOrder != null) && fontNamesInFallbackOrder.Any(string.IsNullOrWhiteSpace))
+            if (fontNamesInFallbackOrder != null)
             {
-                throw new ArgumentException(Invariant($"{nameof(fontNamesInFallbackOrder)} contains a null or white space element."));
+                if (!fontNamesInFallbackOrder.Any())
+                {
+                    throw new ArgumentException(Invariant($"{nameof(fontNamesInFallbackOrder)} is an empty enumerable."));
+                }
+
+                if (fontNamesInFallbackOrder.Any(_ => _ == null))
+                {
+                    throw new ArgumentException(Invariant($"{nameof(fontNamesInFallbackOrder)} contains at least one null element."));
+                }
+
+                if (fontNamesInFallbackOrder.Any(string.IsNullOrWhiteSpace))
+                {
+                    throw new ArgumentException(Invariant($"{nameof(fontNamesInFallbackOrder)} contains a white space element."));
+                }
             }
 
-            if ((borders != null) && borders.Any(_ => _ == null))
+            if (verticalAlignment == DataStructure.VerticalAlignment.Unknown)
             {
-                throw new ArgumentException(Invariant($"{nameof(borders)} contains a null element."));
+                throw new ArgumentException(Invariant($"{nameof(verticalAlignment)} is {nameof(DataStructure.VerticalAlignment.Unknown)}."));
+            }
+
+            if (horizontalAlignment == DataStructure.HorizontalAlignment.Unknown)
+            {
+                throw new ArgumentException(Invariant($"{nameof(horizontalAlignment)} is {nameof(DataStructure.HorizontalAlignment.Unknown)}."));
+            }
+
+            if (borders != null)
+            {
+                if (!borders.Any())
+                {
+                    throw new ArgumentException(Invariant($"{nameof(borders)} is an empty enumerable."));
+                }
+
+                if (borders.Any(_ => _ == null))
+                {
+                    throw new ArgumentException(Invariant($"{nameof(borders)} contains at least one null element."));
+                }
             }
 
             this.BackgroundColor = backgroundColor;

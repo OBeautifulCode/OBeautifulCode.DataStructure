@@ -29,6 +29,59 @@ namespace OBeautifulCode.DataStructure.Test
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = ObcSuppressBecause.CA1810_InitializeReferenceTypeStaticFieldsInline_FieldsDeclaredInCodeGeneratedPartialTestClass)]
         static TableColumnsTest()
         {
+            ConstructorArgumentValidationTestScenarios
+                .RemoveAllScenarios()
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<TableColumns>
+                    {
+                        Name = "constructor should throw ArgumentNullException when parameter 'columns' is null scenario",
+                        ConstructionFunc = () =>
+                        {
+                            var referenceObject = A.Dummy<TableColumns>();
+
+                            var result = new TableColumns(
+                                                 null,
+                                                 referenceObject.ColumnsFormat);
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentNullException),
+                        ExpectedExceptionMessageContains = new[] { "columns", },
+                    })
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<TableColumns>
+                    {
+                        Name = "constructor should throw ArgumentException when parameter 'columns' is an empty enumerable scenario",
+                        ConstructionFunc = () =>
+                        {
+                            var referenceObject = A.Dummy<TableColumns>();
+
+                            var result = new TableColumns(
+                                                 new List<Column>(),
+                                                 referenceObject.ColumnsFormat);
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentException),
+                        ExpectedExceptionMessageContains = new[] { "columns", "is an empty enumerable", },
+                    })
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<TableColumns>
+                    {
+                        Name = "constructor should throw ArgumentException when parameter 'columns' contains a null element scenario",
+                        ConstructionFunc = () =>
+                        {
+                            var referenceObject = A.Dummy<TableColumns>();
+
+                            var result = new TableColumns(
+                                                 new Column[0].Concat(referenceObject.Columns).Concat(new Column[] { null }).Concat(referenceObject.Columns).ToList(),
+                                                 referenceObject.ColumnsFormat);
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentException),
+                        ExpectedExceptionMessageContains = new[] { "columns", "contains at least one null element", },
+                    });
         }
     }
 }

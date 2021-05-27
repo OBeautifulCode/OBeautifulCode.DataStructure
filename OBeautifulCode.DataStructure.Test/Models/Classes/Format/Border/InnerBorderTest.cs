@@ -29,6 +29,53 @@ namespace OBeautifulCode.DataStructure.Test
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = ObcSuppressBecause.CA1810_InitializeReferenceTypeStaticFieldsInline_FieldsDeclaredInCodeGeneratedPartialTestClass)]
         static InnerBorderTest()
         {
+            ConstructorArgumentValidationTestScenarios
+                .RemoveAllScenarios()
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<InnerBorder>
+                    {
+                        Name = "constructor should throw ArgumentOutOfRangeException when parameter 'weight' is BorderWeight.Unknown",
+                        ConstructionFunc = () =>
+                        {
+                            var referenceObject = A.Dummy<InnerBorder>();
+
+                            var result = new InnerBorder(BorderWeight.Unknown, referenceObject.Style, referenceObject.Color, referenceObject.Edges);
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentOutOfRangeException),
+                        ExpectedExceptionMessageContains = new[] { "weight", "Unknown", },
+                    })
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<InnerBorder>
+                    {
+                        Name = "constructor should throw ArgumentOutOfRangeException when parameter 'style' is BorderStyle.Unknown",
+                        ConstructionFunc = () =>
+                        {
+                            var referenceObject = A.Dummy<InnerBorder>();
+
+                            var result = new InnerBorder(referenceObject.Weight, BorderStyle.Unknown, referenceObject.Color, referenceObject.Edges);
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentOutOfRangeException),
+                        ExpectedExceptionMessageContains = new[] { "style", "Unknown", },
+                    })
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<InnerBorder>
+                    {
+                        Name = "constructor should throw ArgumentOutOfRangeException when parameter 'edges' is InnerBorderEdges.None",
+                        ConstructionFunc = () =>
+                        {
+                            var referenceObject = A.Dummy<InnerBorder>();
+
+                            var result = new InnerBorder(referenceObject.Weight, referenceObject.Style, referenceObject.Color, InnerBorderEdges.None);
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentOutOfRangeException),
+                        ExpectedExceptionMessageContains = new[] { "edges", "None", },
+                    });
         }
     }
 }

@@ -29,7 +29,7 @@ namespace OBeautifulCode.DataStructure
         {
             if (style == FillPatternStyle.Unknown)
             {
-                throw new ArgumentException(Invariant($"{nameof(style)} is {nameof(FillPatternStyle.Unknown)}."));
+                throw new ArgumentOutOfRangeException(Invariant($"{nameof(style)} is {nameof(FillPatternStyle.Unknown)}."));
             }
 
             this.Style = style;

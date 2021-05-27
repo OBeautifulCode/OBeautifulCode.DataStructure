@@ -36,7 +36,22 @@ namespace OBeautifulCode.DataStructure
 
             if (!slotIdToCellMap.Any())
             {
-                throw new ArgumentException(Invariant($"{nameof(slotIdToCellMap)} is empty."));
+                throw new ArgumentException(Invariant($"{nameof(slotIdToCellMap)} is an empty dictionary."));
+            }
+
+            if (slotIdToCellMap.Any(_ => _.Value == null))
+            {
+                throw new ArgumentException(Invariant($"{nameof(slotIdToCellMap)} contains at least one key-value pair with a null value."));
+            }
+
+            if (defaultSlotName == null)
+            {
+                throw new ArgumentNullException(nameof(defaultSlotName));
+            }
+
+            if (string.IsNullOrWhiteSpace(defaultSlotName))
+            {
+                throw new ArgumentException(Invariant($"{nameof(defaultSlotName)} is white space."));
             }
 
             if (!slotIdToCellMap.ContainsKey(defaultSlotName))

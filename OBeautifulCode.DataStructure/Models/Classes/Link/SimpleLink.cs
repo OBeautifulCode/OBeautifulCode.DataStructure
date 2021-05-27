@@ -38,9 +38,17 @@ namespace OBeautifulCode.DataStructure
                 throw new ArgumentNullException(nameof(resource));
             }
 
-            if ((formatsToApplyWhenActivated != null) && formatsToApplyWhenActivated.Any(_ => _ == null))
+            if (formatsToApplyWhenActivated != null)
             {
-                throw new ArgumentException(Invariant($"{nameof(formatsToApplyWhenActivated)} contains a null element."));
+                if (!formatsToApplyWhenActivated.Any())
+                {
+                    throw new ArgumentException(Invariant($"{nameof(formatsToApplyWhenActivated)} is an empty enumerable."));
+                }
+
+                if (formatsToApplyWhenActivated.Any(_ => _ == null))
+                {
+                    throw new ArgumentException(Invariant($"{nameof(formatsToApplyWhenActivated)} contains at least one null element."));
+                }
             }
 
             this.Target = target;

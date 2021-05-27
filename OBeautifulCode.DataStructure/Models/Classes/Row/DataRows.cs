@@ -35,7 +35,7 @@ namespace OBeautifulCode.DataStructure
 
             if (rows.Any(_ => _ == null))
             {
-                throw new ArgumentException(Invariant($"{nameof(rows)} contains a null element."));
+                throw new ArgumentException(Invariant($"{nameof(rows)} contains at least one null element."));
             }
 
             this.Rows = rows;

@@ -44,7 +44,7 @@ namespace OBeautifulCode.DataStructure
                     throw new ArgumentException(Invariant($"{nameof(tableRows)} contains a row or descendant row that does not span all {numberOfColumns} of the defined columns."));
                 }
 
-                if (tableRows.HeaderRows != null)
+                if ((tableRows.HeaderRows != null) && tableRows.HeaderRows.Rows.Any())
                 {
                     if (tableRows.HeaderRows.Rows.Last().Cells.Count != numberOfColumns)
                     {

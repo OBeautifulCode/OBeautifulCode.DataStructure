@@ -12,9 +12,9 @@ namespace OBeautifulCode.DataStructure
     public enum HorizontalAlignment
     {
         /// <summary>
-        /// Unspecified (default).
+        /// Unknown (default).
         /// </summary>
-        Unspecified,
+        Unknown,
 
         /// <summary>
         /// Left align.

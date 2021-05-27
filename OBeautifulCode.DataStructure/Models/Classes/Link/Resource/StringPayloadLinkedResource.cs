@@ -27,6 +27,16 @@ namespace OBeautifulCode.DataStructure
             string value,
             StringPayloadLinkedResourceKind resourceKind)
         {
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                throw new ArgumentException(Invariant($"{nameof(value)} is white space."));
+            }
+
             if (resourceKind == StringPayloadLinkedResourceKind.Unknown)
             {
                 throw new ArgumentException(Invariant($"{nameof(resourceKind)} is {nameof(StringPayloadLinkedResourceKind.Unknown)}."));

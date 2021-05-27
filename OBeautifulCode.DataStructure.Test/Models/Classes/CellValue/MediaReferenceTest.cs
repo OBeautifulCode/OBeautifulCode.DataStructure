@@ -29,6 +29,44 @@ namespace OBeautifulCode.DataStructure.Test
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = ObcSuppressBecause.CA1810_InitializeReferenceTypeStaticFieldsInline_FieldsDeclaredInCodeGeneratedPartialTestClass)]
         static MediaReferenceTest()
         {
+            ConstructorArgumentValidationTestScenarios
+                .RemoveAllScenarios()
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<MediaReference>
+                    {
+                        Name = "constructor should throw ArgumentNullException when parameter 'url' is null scenario",
+                        ConstructionFunc = () =>
+                        {
+                            var referenceObject = A.Dummy<MediaReference>();
+
+                            var result = new MediaReference(
+                                                 null,
+                                                 referenceObject.MediaReferenceKind,
+                                                 referenceObject.Name);
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentNullException),
+                        ExpectedExceptionMessageContains = new[] { "url", },
+                    })
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<MediaReference>
+                    {
+                        Name = "constructor should throw ArgumentException when parameter 'url' is white space scenario",
+                        ConstructionFunc = () =>
+                        {
+                            var referenceObject = A.Dummy<MediaReference>();
+
+                            var result = new MediaReference(
+                                                 Invariant($"  {Environment.NewLine}  "),
+                                                 referenceObject.MediaReferenceKind,
+                                                 referenceObject.Name);
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentException),
+                        ExpectedExceptionMessageContains = new[] { "url", "white space", },
+                    });
         }
     }
 }

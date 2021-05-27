@@ -17,8 +17,18 @@ namespace OBeautifulCode.DataStructure
         Unknown,
 
         /// <summary>
+        /// A solid thin line.
+        /// </summary>
+        SolidThin,
+
+        /// <summary>
         /// A solid line.
         /// </summary>
         Solid,
+
+        /// <summary>
+        /// A solid thick line.
+        /// </summary>
+        SolidThick,
     }
 }

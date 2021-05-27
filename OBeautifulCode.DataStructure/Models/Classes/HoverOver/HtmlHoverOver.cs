@@ -5,7 +5,11 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace OBeautifulCode.DataStructure
 {
+    using System;
+
     using OBeautifulCode.Type;
+
+    using static System.FormattableString;
 
     /// <summary>
     /// An HTML hover-over.
@@ -19,6 +23,16 @@ namespace OBeautifulCode.DataStructure
         public HtmlHoverOver(
             string html)
         {
+            if (html == null)
+            {
+                throw new ArgumentNullException(nameof(html));
+            }
+
+            if (string.IsNullOrWhiteSpace(html))
+            {
+                throw new ArgumentException(Invariant($"{nameof(html)} is white space"));
+            }
+
             this.Html = html;
         }
 

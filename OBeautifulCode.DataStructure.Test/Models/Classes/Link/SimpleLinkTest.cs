@@ -29,6 +29,62 @@ namespace OBeautifulCode.DataStructure.Test
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = ObcSuppressBecause.CA1810_InitializeReferenceTypeStaticFieldsInline_FieldsDeclaredInCodeGeneratedPartialTestClass)]
         static SimpleLinkTest()
         {
+            ConstructorArgumentValidationTestScenarios
+                .RemoveAllScenarios()
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<SimpleLink>
+                    {
+                        Name = "constructor should throw ArgumentNullException when parameter 'resource' is null scenario",
+                        ConstructionFunc = () =>
+                        {
+                            var referenceObject = A.Dummy<SimpleLink>();
+
+                            var result = new SimpleLink(
+                                                 referenceObject.Target,
+                                                 null,
+                                                 referenceObject.FormatsToApplyWhenActivated);
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentNullException),
+                        ExpectedExceptionMessageContains = new[] { "resource", },
+                    })
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<SimpleLink>
+                    {
+                        Name = "constructor should throw ArgumentException when parameter 'formatsToApplyWhenActivated' is an empty enumerable scenario",
+                        ConstructionFunc = () =>
+                        {
+                            var referenceObject = A.Dummy<SimpleLink>();
+
+                            var result = new SimpleLink(
+                                                 referenceObject.Target,
+                                                 referenceObject.Resource,
+                                                 new List<RegionFormatBase>());
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentException),
+                        ExpectedExceptionMessageContains = new[] { "formatsToApplyWhenActivated", "is an empty enumerable", },
+                    })
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<SimpleLink>
+                    {
+                        Name = "constructor should throw ArgumentException when parameter 'formatsToApplyWhenActivated' contains a null element scenario",
+                        ConstructionFunc = () =>
+                        {
+                            var referenceObject = A.Dummy<SimpleLink>();
+
+                            var result = new SimpleLink(
+                                                 referenceObject.Target,
+                                                 referenceObject.Resource,
+                                                 new RegionFormatBase[0].Concat(referenceObject.FormatsToApplyWhenActivated).Concat(new RegionFormatBase[] { null }).Concat(referenceObject.FormatsToApplyWhenActivated).ToList());
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentException),
+                        ExpectedExceptionMessageContains = new[] { "formatsToApplyWhenActivated", "contains at least one null element", },
+                    });
         }
     }
 }

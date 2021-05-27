@@ -22,24 +22,24 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Initializes a new instance of the <see cref="Row"/> class.
         /// </summary>
+        /// <param name="cells">Cells in the row.</param>
         /// <param name="id">OPTIONAL row identifier.  DEFAULT is a row without an identifier.</param>
-        /// <param name="cells">OPTIONAL cells in the row.  DEFAULT is none.</param>
         /// <param name="format">OPTIONAL format to apply to the whole row.  DEFAULT is to leave the format unchanged.</param>
         /// <param name="childRows">OPTIONAL child rows.  DEFAULT is none.</param>
         /// <param name="expandedSummaryRow">OPTIONAL row that summarizes the children (e.g. a Total row) when this row is expanded.  DEFAULT is to forgo a summary row when this row is expanded.</param>
         /// <param name="collapsedSummaryRow">OPTIONAL row that summarizes the children (e.g. a Total row) when this row is collapsed.  DEFAULT is to forgo a summary row when this row is collapsed.</param>
         public Row(
+            IReadOnlyList<ICell> cells,
             string id = null,
-            IReadOnlyList<ICell> cells = null,
             RowFormat format = null,
             IReadOnlyList<Row> childRows = null,
             FlatRow expandedSummaryRow = null,
             FlatRow collapsedSummaryRow = null)
-            : base(id, cells, format)
+            : base(cells, id, format)
         {
             if ((childRows != null) && childRows.Any(_ => _ == null))
             {
-                throw new ArgumentException(Invariant($"{nameof(childRows)} contains a null element."));
+                throw new ArgumentException(Invariant($"{nameof(childRows)} contains at least one null element."));
             }
 
             if ((expandedSummaryRow != null) && ((childRows == null) || (!childRows.Any())))

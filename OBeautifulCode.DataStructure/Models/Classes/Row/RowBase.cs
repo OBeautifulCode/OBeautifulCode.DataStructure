@@ -22,17 +22,32 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Initializes a new instance of the <see cref="RowBase"/> class.
         /// </summary>
+        /// <param name="cells">Cells in the row.</param>
         /// <param name="id">OPTIONAL row identifier.  DEFAULT is a row without an identifier.</param>
-        /// <param name="cells">OPTIONAL cells in the row.  DEFAULT is none.</param>
         /// <param name="format">OPTIONAL format to apply to the whole row.  DEFAULT is to leave the format unchanged.</param>
         protected RowBase(
+            IReadOnlyList<ICell> cells,
             string id = null,
-            IReadOnlyList<ICell> cells = null,
             RowFormat format = null)
         {
-            if ((cells != null) && cells.Any(_ => _ == null))
+            if (cells == null)
             {
-                throw new ArgumentException(Invariant($"{nameof(cells)} contains a null element."));
+                throw new ArgumentNullException(nameof(cells));
+            }
+
+            if (!cells.Any())
+            {
+                throw new ArgumentException(Invariant($"{nameof(cells)} is an empty enumerable."));
+            }
+
+            if (cells.Any(_ => _ == null))
+            {
+                throw new ArgumentException(Invariant($"{nameof(cells)} contains at least one null element."));
+            }
+
+            if ((id != null) && string.IsNullOrWhiteSpace(id))
+            {
+                throw new ArgumentException(Invariant($"{nameof(id)} is white space"));
             }
 
             this.Id = id;

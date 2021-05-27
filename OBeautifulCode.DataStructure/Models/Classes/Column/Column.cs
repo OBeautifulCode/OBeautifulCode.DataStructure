@@ -6,7 +6,11 @@
 
 namespace OBeautifulCode.DataStructure
 {
+    using System;
+
     using OBeautifulCode.Type;
+
+    using static System.FormattableString;
 
     /// <summary>
     /// A column in a tree table.
@@ -22,6 +26,11 @@ namespace OBeautifulCode.DataStructure
             string id = null,
             ColumnFormat format = null)
         {
+            if ((id != null) && string.IsNullOrWhiteSpace(id))
+            {
+                throw new ArgumentException(Invariant($"{id} is white space"));
+            }
+
             this.Id = id;
             this.Format = format;
         }

@@ -116,8 +116,8 @@ namespace OBeautifulCode.DataStructure
         public override RowBase DeepCloneWithId(string id)
         {
             var result = new Row(
-                                 id,
                                  this.Cells?.DeepClone(),
+                                 id,
                                  this.Format?.DeepClone(),
                                  this.ChildRows?.DeepClone(),
                                  this.ExpandedSummaryRow?.DeepClone(),
@@ -147,8 +147,8 @@ namespace OBeautifulCode.DataStructure
         public override RowBase DeepCloneWithCells(IReadOnlyList<ICell> cells)
         {
             var result = new Row(
-                                 this.Id?.DeepClone(),
                                  cells,
+                                 this.Id?.DeepClone(),
                                  this.Format?.DeepClone(),
                                  this.ChildRows?.DeepClone(),
                                  this.ExpandedSummaryRow?.DeepClone(),
@@ -178,8 +178,8 @@ namespace OBeautifulCode.DataStructure
         public override RowBase DeepCloneWithFormat(RowFormat format)
         {
             var result = new Row(
-                                 this.Id?.DeepClone(),
                                  this.Cells?.DeepClone(),
+                                 this.Id?.DeepClone(),
                                  format,
                                  this.ChildRows?.DeepClone(),
                                  this.ExpandedSummaryRow?.DeepClone(),
@@ -213,8 +213,8 @@ namespace OBeautifulCode.DataStructure
         public Row DeepCloneWithChildRows(IReadOnlyList<Row> childRows)
         {
             var result = new Row(
-                                 this.Id?.DeepClone(),
                                  this.Cells?.DeepClone(),
+                                 this.Id?.DeepClone(),
                                  this.Format?.DeepClone(),
                                  childRows,
                                  this.ExpandedSummaryRow?.DeepClone(),
@@ -248,8 +248,8 @@ namespace OBeautifulCode.DataStructure
         public Row DeepCloneWithExpandedSummaryRow(FlatRow expandedSummaryRow)
         {
             var result = new Row(
-                                 this.Id?.DeepClone(),
                                  this.Cells?.DeepClone(),
+                                 this.Id?.DeepClone(),
                                  this.Format?.DeepClone(),
                                  this.ChildRows?.DeepClone(),
                                  expandedSummaryRow,
@@ -283,8 +283,8 @@ namespace OBeautifulCode.DataStructure
         public Row DeepCloneWithCollapsedSummaryRow(FlatRow collapsedSummaryRow)
         {
             var result = new Row(
-                                 this.Id?.DeepClone(),
                                  this.Cells?.DeepClone(),
+                                 this.Id?.DeepClone(),
                                  this.Format?.DeepClone(),
                                  this.ChildRows?.DeepClone(),
                                  this.ExpandedSummaryRow?.DeepClone(),
@@ -298,8 +298,8 @@ namespace OBeautifulCode.DataStructure
         protected override RowBase DeepCloneInternal()
         {
             var result = new Row(
-                                 this.Id?.DeepClone(),
                                  this.Cells?.DeepClone(),
+                                 this.Id?.DeepClone(),
                                  this.Format?.DeepClone(),
                                  this.ChildRows?.DeepClone(),
                                  this.ExpandedSummaryRow?.DeepClone(),

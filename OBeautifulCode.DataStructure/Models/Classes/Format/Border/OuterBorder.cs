@@ -35,7 +35,7 @@ namespace OBeautifulCode.DataStructure
         {
             if (sides == OuterBorderSides.None)
             {
-                throw new ArgumentException(Invariant($"{nameof(sides)} is {nameof(OuterBorderSides.None)}."));
+                throw new ArgumentOutOfRangeException(Invariant($"{nameof(sides)} is {nameof(OuterBorderSides.None)}."));
             }
 
             this.Sides = sides;
