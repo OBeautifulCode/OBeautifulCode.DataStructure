@@ -35,7 +35,7 @@ namespace OBeautifulCode.Equality.Recipes
             }
 
             // If one is null, but not both, return false.
-            if ((x == null) || (y == null))
+            if (ReferenceEquals(x, null) || ReferenceEquals(y, null))
             {
                 return false;
             }

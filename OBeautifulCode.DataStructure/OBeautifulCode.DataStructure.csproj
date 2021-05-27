@@ -37,14 +37,15 @@
     <DocumentationFile>bin\Release\OBeautifulCode.DataStructure.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="OBeautifulCode.Type, Version=1.0.78.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OBeautifulCode.Type.1.0.78\lib\net462\OBeautifulCode.Type.dll</HintPath>
+    <Reference Include="OBeautifulCode.Type, Version=1.0.80.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Type.1.0.80\lib\net462\OBeautifulCode.Type.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include=".recipes\OBeautifulCode.Cloning\CloningExtensions.cs" />
     <Compile Include=".recipes\OBeautifulCode.CodeAnalysis\ObcSuppressBecause.cs" />
     <Compile Include=".recipes\OBeautifulCode.Equality\ByteArrayEqualityComparer.cs" />
     <Compile Include=".recipes\OBeautifulCode.Equality\DateTimeEqualityComparer.cs" />
@@ -56,9 +57,10 @@
     <Compile Include=".recipes\OBeautifulCode.Equality\HashCodeHelper.cs" />
     <Compile Include=".recipes\OBeautifulCode.Equality\LambdaBackedEqualityComparer.cs" />
     <Compile Include=".recipes\OBeautifulCode.Equality\NativeMethods.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Equality\NullableDateTimeEqualityComparer.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Equality\ObjectEqualityComparer.cs" />
     <Compile Include=".recipes\OBeautifulCode.Equality\ReadOnlyDictionaryEqualityComparer.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\ArrayKind.cs" />
-    <Compile Include=".recipes\OBeautifulCode.Type\DeepCloneExtensions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringReadableOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringXmlDocOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
@@ -66,10 +68,55 @@
     <Compile Include="Interfaces\Model\ILinkedResource.cs" />
     <Compile Include="Interfaces\Model\ILink.cs" />
     <Compile Include="Interfaces\Model\IStandardCell.cs" />
-    <Compile Include="Models\Classes\CellProperty\MediaReference.cs" />
+    <Compile Include="Models\Classes\CellValue\MediaReference.cs" />
+    <Compile Include="Models\Classes\CellValue\MediaReference.designer.cs">
+      <DependentUpon>MediaReference.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Cell\CellBase.designer.cs">
+      <DependentUpon>CellBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Cell\ColumnSpanningStandardCellBase.designer.cs">
+      <DependentUpon>ColumnSpanningStandardCellBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Cell\Single\DecimalCell.designer.cs">
+      <DependentUpon>DecimalCell.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Cell\Single\HtmlCell.designer.cs">
+      <DependentUpon>HtmlCell.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Classes\Cell\Single\MediaReferenceCell.cs" />
+    <Compile Include="Models\Classes\Cell\Single\MediaReferenceCell.designer.cs">
+      <DependentUpon>MediaReferenceCell.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Cell\Single\NullCell.designer.cs">
+      <DependentUpon>NullCell.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Cell\Single\SlottedCell.designer.cs">
+      <DependentUpon>SlottedCell.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Cell\Single\StringCell.designer.cs">
+      <DependentUpon>StringCell.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Cell\Spanning\ColumnSpanningDecimalCell.designer.cs">
+      <DependentUpon>ColumnSpanningDecimalCell.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Cell\Spanning\ColumnSpanningHtmlCell.designer.cs">
+      <DependentUpon>ColumnSpanningHtmlCell.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Cell\Spanning\ColumnSpanningMediaReferenceCell.designer.cs">
+      <DependentUpon>ColumnSpanningMediaReferenceCell.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Cell\Spanning\ColumnSpanningNullCell.designer.cs">
+      <DependentUpon>ColumnSpanningNullCell.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Classes\Cell\Spanning\ColumnSpanningSlottedCell.cs" />
     <Compile Include="Models\Classes\Cell\Spanning\ColumnSpanningMediaReferenceCell.cs" />
+    <Compile Include="Models\Classes\Cell\Spanning\ColumnSpanningSlottedCell.designer.cs">
+      <DependentUpon>ColumnSpanningSlottedCell.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Cell\Spanning\ColumnSpanningStringCell.designer.cs">
+      <DependentUpon>ColumnSpanningStringCell.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Classes\Cell\StandardCellBase.cs" />
     <Compile Include="Models\Classes\Cell\CellBase.cs" />
     <Compile Include="Models\Classes\Cell\Single\HtmlCell.cs" />
@@ -81,12 +128,54 @@
     <Compile Include="Models\Classes\Cell\Spanning\ColumnSpanningStringCell.cs" />
     <Compile Include="Models\Classes\Cell\Single\NullCell.cs" />
     <Compile Include="Interfaces\Behavioral\IHaveHoverOverCell.cs" />
+    <Compile Include="Models\Classes\Cell\StandardCellBase.designer.cs">
+      <DependentUpon>StandardCellBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Column\Column.designer.cs">
+      <DependentUpon>Column.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Column\TableColumns.designer.cs">
+      <DependentUpon>TableColumns.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Format\Border\BorderBase.designer.cs">
+      <DependentUpon>BorderBase.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Classes\Format\Border\InnerBorder.cs" />
+    <Compile Include="Models\Classes\Format\Border\InnerBorder.designer.cs">
+      <DependentUpon>InnerBorder.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Classes\Format\Border\OuterBorder.cs" />
     <Compile Include="Models\Classes\Format\Border\BorderBase.cs" />
+    <Compile Include="Models\Classes\Format\Border\OuterBorder.designer.cs">
+      <DependentUpon>OuterBorder.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Classes\Format\Fill\FillPattern.cs" />
+    <Compile Include="Models\Classes\Format\Fill\FillPattern.designer.cs">
+      <DependentUpon>FillPattern.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Format\Region\CellFormat.designer.cs">
+      <DependentUpon>CellFormat.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Format\Region\ColumnFormat.designer.cs">
+      <DependentUpon>ColumnFormat.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Format\Region\DataRowsFormat.designer.cs">
+      <DependentUpon>DataRowsFormat.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Format\Region\HeaderRowsFormat.designer.cs">
+      <DependentUpon>HeaderRowsFormat.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Classes\Format\Region\RegionFormatBase.cs" />
     <Compile Include="Models\Classes\Format\Region\HeaderRowsFormat.cs" />
+    <Compile Include="Models\Classes\Format\Region\RegionFormatBase.designer.cs">
+      <DependentUpon>RegionFormatBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Format\Region\RowFormat.designer.cs">
+      <DependentUpon>RowFormat.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Format\Region\TableFormat.designer.cs">
+      <DependentUpon>TableFormat.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Classes\HoverOver\HoverOverBase.cs" />
     <Compile Include="Interfaces\Model\IHoverOver.cs" />
     <Compile Include="Interfaces\Behavioral\IHaveValueCell.cs" />
@@ -97,14 +186,62 @@
     <Compile Include="Models\Classes\Cell\Single\DecimalCell.cs" />
     <Compile Include="Logic\Extensions\RowExtensions.cs" />
     <Compile Include="Models\Classes\Format\Region\CellFormat.cs" />
+    <Compile Include="Models\Classes\HoverOver\HoverOverBase.designer.cs">
+      <DependentUpon>HoverOverBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\HoverOver\HtmlHoverOver.designer.cs">
+      <DependentUpon>HtmlHoverOver.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\HoverOver\StringHoverOver.designer.cs">
+      <DependentUpon>StringHoverOver.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Link\LinkBase.designer.cs">
+      <DependentUpon>LinkBase.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Classes\Link\LinkedResourceBase.cs" />
     <Compile Include="Models\Classes\Link\LinkBase.cs" />
+    <Compile Include="Models\Classes\Link\LinkedResourceBase.designer.cs">
+      <DependentUpon>LinkedResourceBase.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Classes\Link\Resource\BytesPayloadLinkedResource.cs" />
+    <Compile Include="Models\Classes\Link\Resource\BytesPayloadLinkedResource.designer.cs">
+      <DependentUpon>BytesPayloadLinkedResource.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Classes\Link\Resource\StringPayloadLinkedResource.cs" />
+    <Compile Include="Models\Classes\Link\Resource\StringPayloadLinkedResource.designer.cs">
+      <DependentUpon>StringPayloadLinkedResource.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Classes\Link\Resource\UrlLinkedResource.cs" />
+    <Compile Include="Models\Classes\Link\Resource\UrlLinkedResource.designer.cs">
+      <DependentUpon>UrlLinkedResource.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Classes\Link\SimpleLink.cs" />
+    <Compile Include="Models\Classes\Link\SimpleLink.designer.cs">
+      <DependentUpon>SimpleLink.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Row\DataRows.designer.cs">
+      <DependentUpon>DataRows.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Row\FlatRow.designer.cs">
+      <DependentUpon>FlatRow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Row\HeaderRows.designer.cs">
+      <DependentUpon>HeaderRows.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Row\Row.designer.cs">
+      <DependentUpon>Row.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Row\RowBase.designer.cs">
+      <DependentUpon>RowBase.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Classes\Row\TableRows.cs" />
     <Compile Include="Models\Classes\Row\HeaderRows.cs" />
+    <Compile Include="Models\Classes\Row\TableRows.designer.cs">
+      <DependentUpon>TableRows.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\TreeTable.designer.cs">
+      <DependentUpon>TreeTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Enums\Cell\MediaReferenceKind.cs" />
     <Compile Include="Models\Enums\Linking\BytesPayloadLinkedResourceKind.cs" />
     <Compile Include="Models\Enums\Linking\StringPayloadLinkedResourceKind.cs" />

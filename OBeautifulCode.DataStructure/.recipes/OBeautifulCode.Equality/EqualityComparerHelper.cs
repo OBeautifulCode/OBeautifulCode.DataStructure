@@ -27,7 +27,7 @@ namespace OBeautifulCode.Equality.Recipes
 #endif
     static class EqualityComparerHelper
     {
-        private static readonly ConcurrentDictionary<Type, object> TypeToEqualityComparerMap = new ConcurrentDictionary<Type, object>();
+        private static readonly ConcurrentDictionary<Type, object> CachedTypeToEqualityComparerMap = new ConcurrentDictionary<Type, object>();
 
         /// <summary>
         /// Gets the equality comparer to use for the specified type.
@@ -47,14 +47,18 @@ namespace OBeautifulCode.Equality.Recipes
                 return comparer;
             }
             
-            if (TypeToEqualityComparerMap.TryGetValue(type, out object cachedResult))
+            if (CachedTypeToEqualityComparerMap.TryGetValue(type, out object cachedResult))
             {
                 return (IEqualityComparer<T>)cachedResult;
             }
 
             IEqualityComparer<T> result;
 
-            if (type.IsClosedSystemDictionaryType())
+            if (type == typeof(object))
+            {
+                result = (IEqualityComparer<T>)new ObjectEqualityComparer();
+            }
+            else if (type.IsClosedSystemDictionaryType())
             {
                 // IDictionary is the only System dictionary type that doesn't implement IReadOnlyDictionary
                 // which is why we have to special-case it here.
@@ -99,12 +103,16 @@ namespace OBeautifulCode.Equality.Recipes
             {
                 result = (IEqualityComparer<T>)new DateTimeEqualityComparer();
             }
+            else if (type == typeof(DateTime?))
+            {
+                result = (IEqualityComparer<T>)new NullableDateTimeEqualityComparer();
+            }
             else
             {
                 result = EqualityComparer<T>.Default;
             }
 
-            TypeToEqualityComparerMap.TryAdd(type, result);
+            CachedTypeToEqualityComparerMap.TryAdd(type, result);
 
             return result;
         }
