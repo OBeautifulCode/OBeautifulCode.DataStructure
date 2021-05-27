@@ -79,6 +79,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
+    <Reference Include="System.Drawing" />
     <Reference Include="xunit.abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
       <HintPath>..\packages\xunit.abstractions.2.0.3\lib\net35\xunit.abstractions.dll</HintPath>
     </Reference>
@@ -405,6 +406,10 @@
     <ProjectReference Include="..\OBeautifulCode.DataStructure.Serialization.Json\OBeautifulCode.DataStructure.Serialization.Json.csproj">
       <Project>{A64A0A68-18D4-436B-AEE2-562050EC6CFA}</Project>
       <Name>OBeautifulCode.DataStructure.Serialization.Json</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OBeautifulCode.DataStructure\OBeautifulCode.DataStructure.csproj">
+      <Project>{690b6894-4d9a-4bb3-aa5d-d9ac800eb7e9}</Project>
+      <Name>OBeautifulCode.DataStructure</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

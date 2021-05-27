@@ -15,7 +15,7 @@ namespace OBeautifulCode.DataStructure
     /// <summary>
     /// A reference to a resource with instructions on where/how it is displayed/experienced.
     /// </summary>
-    public class SimpleLink : LinkBase
+    public partial class SimpleLink : LinkBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SimpleLink"/> class.
