@@ -38,7 +38,7 @@ namespace OBeautifulCode.DataStructure
 
             if (resourceKind == UrlLinkedResourceKind.Unknown)
             {
-                throw new ArgumentException(Invariant($"{nameof(resourceKind)} is {nameof(UrlLinkedResourceKind.Unknown)}."));
+                throw new ArgumentOutOfRangeException(Invariant($"{nameof(resourceKind)} is {nameof(UrlLinkedResourceKind.Unknown)}."));
             }
 
             this.Url = url;

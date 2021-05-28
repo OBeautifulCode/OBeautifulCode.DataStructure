@@ -17,6 +17,7 @@ namespace OBeautifulCode.DataStructure
     /// <summary>
     /// A row in a tree table; optionally having child rows.
     /// </summary>
+    // ReSharper disable once RedundantExtendsListEntry
     public partial class Row : RowBase, IModelViaCodeGen
     {
         /// <summary>

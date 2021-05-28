@@ -34,6 +34,23 @@ namespace OBeautifulCode.DataStructure.Test
                 .AddScenario(() =>
                     new ConstructorArgumentValidationTestScenario<DataRows>
                     {
+                        Name = "constructor should throw ArgumentNullException when parameter 'rows' is null",
+                        ConstructionFunc = () =>
+                        {
+                            var referenceObject = A.Dummy<DataRows>();
+
+                            var result = new DataRows(
+                                null,
+                                referenceObject.Format);
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentNullException),
+                        ExpectedExceptionMessageContains = new[] { "rows", },
+                    })
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<DataRows>
+                    {
                         Name = "constructor should throw ArgumentException when parameter 'rows' contains a null element scenario",
                         ConstructionFunc = () =>
                         {

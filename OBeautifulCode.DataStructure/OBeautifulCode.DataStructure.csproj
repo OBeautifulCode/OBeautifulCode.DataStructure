@@ -153,27 +153,31 @@
     <Compile Include="Models\Classes\Format\Fill\FillPattern.designer.cs">
       <DependentUpon>FillPattern.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Classes\Format\Region\CellFormat.designer.cs">
-      <DependentUpon>CellFormat.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Format\Region\ColumnFormat.designer.cs">
-      <DependentUpon>ColumnFormat.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Format\Region\DataRowsFormat.designer.cs">
-      <DependentUpon>DataRowsFormat.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Format\Region\HeaderRowsFormat.designer.cs">
-      <DependentUpon>HeaderRowsFormat.cs</DependentUpon>
+    <Compile Include="Models\Classes\Format\Region\MultiCellRegionFormatBase.cs" />
+    <Compile Include="Models\Classes\Format\Region\MultiCellRegionFormatBase.designer.cs">
+      <DependentUpon>MultiCellRegionFormatBase.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Classes\Format\Region\RegionFormatBase.cs" />
-    <Compile Include="Models\Classes\Format\Region\HeaderRowsFormat.cs" />
+    <Compile Include="Models\Classes\Format\Region\Regions\CellFormat.designer.cs">
+      <DependentUpon>CellFormat.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Format\Region\Regions\ColumnFormat.designer.cs">
+      <DependentUpon>ColumnFormat.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Format\Region\Regions\DataRowsFormat.designer.cs">
+      <DependentUpon>DataRowsFormat.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Format\Region\Regions\HeaderRowsFormat.cs" />
     <Compile Include="Models\Classes\Format\Region\RegionFormatBase.designer.cs">
       <DependentUpon>RegionFormatBase.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Classes\Format\Region\RowFormat.designer.cs">
+    <Compile Include="Models\Classes\Format\Region\Regions\HeaderRowsFormat.designer.cs">
+      <DependentUpon>HeaderRowsFormat.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Format\Region\Regions\RowFormat.designer.cs">
       <DependentUpon>RowFormat.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Classes\Format\Region\TableFormat.designer.cs">
+    <Compile Include="Models\Classes\Format\Region\Regions\TableFormat.designer.cs">
       <DependentUpon>TableFormat.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Classes\HoverOver\HoverOverBase.cs" />
@@ -185,7 +189,7 @@
     <Compile Include="Interfaces\Model\ICell.cs" />
     <Compile Include="Models\Classes\Cell\Single\DecimalCell.cs" />
     <Compile Include="Logic\Extensions\RowExtensions.cs" />
-    <Compile Include="Models\Classes\Format\Region\CellFormat.cs" />
+    <Compile Include="Models\Classes\Format\Region\Regions\CellFormat.cs" />
     <Compile Include="Models\Classes\HoverOver\HoverOverBase.designer.cs">
       <DependentUpon>HoverOverBase.cs</DependentUpon>
     </Compile>
@@ -254,12 +258,12 @@
     <Compile Include="Models\Enums\Formatting\ColumnFormatOptions.cs" />
     <Compile Include="Models\Enums\Formatting\RowFormatOptions.cs" />
     <Compile Include="Models\Enums\Formatting\HorizontalAlignment.cs" />
-    <Compile Include="Models\Classes\Format\Region\DataRowsFormat.cs" />
-    <Compile Include="Models\Classes\Format\Region\TableFormat.cs" />
+    <Compile Include="Models\Classes\Format\Region\Regions\DataRowsFormat.cs" />
+    <Compile Include="Models\Classes\Format\Region\Regions\TableFormat.cs" />
     <Compile Include="Models\Enums\Formatting\BorderWeight.cs" />
     <Compile Include="Models\Enums\Formatting\VerticalAlignment.cs" />
-    <Compile Include="Models\Classes\Format\Region\RowFormat.cs" />
-    <Compile Include="Models\Classes\Format\Region\ColumnFormat.cs" />
+    <Compile Include="Models\Classes\Format\Region\Regions\RowFormat.cs" />
+    <Compile Include="Models\Classes\Format\Region\Regions\ColumnFormat.cs" />
     <Compile Include="Models\Enums\Formatting\CellFormatOptions.cs" />
     <Compile Include="Models\Classes\HoverOver\HtmlHoverOver.cs" />
     <Compile Include="Models\Classes\HoverOver\StringHoverOver.cs" />

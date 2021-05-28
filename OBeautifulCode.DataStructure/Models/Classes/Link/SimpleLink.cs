@@ -30,7 +30,7 @@ namespace OBeautifulCode.DataStructure
         {
             if (target == LinkTarget.Unknown)
             {
-                throw new ArgumentException(Invariant($"{nameof(target)} is {nameof(LinkTarget.Unknown)}."));
+                throw new ArgumentOutOfRangeException(Invariant($"{nameof(target)} is {nameof(LinkTarget.Unknown)}."));
             }
 
             if (resource == null)

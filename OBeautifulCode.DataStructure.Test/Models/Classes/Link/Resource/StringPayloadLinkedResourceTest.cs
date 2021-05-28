@@ -29,6 +29,24 @@ namespace OBeautifulCode.DataStructure.Test
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = ObcSuppressBecause.CA1810_InitializeReferenceTypeStaticFieldsInline_FieldsDeclaredInCodeGeneratedPartialTestClass)]
         static StringPayloadLinkedResourceTest()
         {
+            ConstructorArgumentValidationTestScenarios
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<StringPayloadLinkedResource>
+                    {
+                        Name = "constructor should throw ArgumentOutOfRangeException when parameter 'resourceKind' is StringPayloadLinkedResourceKind.Unknown",
+                        ConstructionFunc = () =>
+                        {
+                            var referenceObject = A.Dummy<StringPayloadLinkedResource>();
+
+                            var result = new StringPayloadLinkedResource(
+                                referenceObject.Value,
+                                StringPayloadLinkedResourceKind.Unknown);
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentOutOfRangeException),
+                        ExpectedExceptionMessageContains = new[] { "resourceKind", "Unknown", },
+                    });
         }
     }
 }

@@ -28,7 +28,7 @@ namespace OBeautifulCode.DataStructure
         {
             if ((id != null) && string.IsNullOrWhiteSpace(id))
             {
-                throw new ArgumentException(Invariant($"{id} is white space"));
+                throw new ArgumentException(Invariant($"{nameof(id)} is white space"));
             }
 
             this.Id = id;

@@ -34,6 +34,24 @@ namespace OBeautifulCode.DataStructure.Test
                 .AddScenario(() =>
                     new ConstructorArgumentValidationTestScenario<SimpleLink>
                     {
+                        Name = "constructor should throw ArgumentOutOfRangeException when parameter 'target' is LinkTarget.Unknown",
+                        ConstructionFunc = () =>
+                        {
+                            var referenceObject = A.Dummy<SimpleLink>();
+
+                            var result = new SimpleLink(
+                                LinkTarget.Unknown,
+                                referenceObject.Resource,
+                                referenceObject.FormatsToApplyWhenActivated);
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentOutOfRangeException),
+                        ExpectedExceptionMessageContains = new[] { "target", "Unknown" },
+                    })
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<SimpleLink>
+                    {
                         Name = "constructor should throw ArgumentNullException when parameter 'resource' is null scenario",
                         ConstructionFunc = () =>
                         {

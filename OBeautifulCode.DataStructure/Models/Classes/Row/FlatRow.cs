@@ -13,6 +13,7 @@ namespace OBeautifulCode.DataStructure
     /// <summary>
     /// A row in a tree table that cannot have children.
     /// </summary>
+    // ReSharper disable once RedundantExtendsListEntry
     public partial class FlatRow : RowBase, IModelViaCodeGen
     {
         /// <summary>

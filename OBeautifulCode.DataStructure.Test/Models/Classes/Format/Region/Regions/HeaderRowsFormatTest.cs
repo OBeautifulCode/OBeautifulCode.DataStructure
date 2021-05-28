@@ -40,9 +40,9 @@ namespace OBeautifulCode.DataStructure.Test
                             var referenceObject = A.Dummy<HeaderRowsFormat>();
 
                             var result = new HeaderRowsFormat(
-                                                 referenceObject.RowsFormat,
-                                                 new List<OuterBorder>(),
-                                                 referenceObject.InnerBorders);
+                                new List<OuterBorder>(),
+                                referenceObject.InnerBorders,
+                                referenceObject.RowsFormat);
 
                             return result;
                         },
@@ -58,9 +58,9 @@ namespace OBeautifulCode.DataStructure.Test
                             var referenceObject = A.Dummy<HeaderRowsFormat>();
 
                             var result = new HeaderRowsFormat(
-                                                 referenceObject.RowsFormat,
-                                                 new OuterBorder[0].Concat(referenceObject.OuterBorders).Concat(new OuterBorder[] { null }).Concat(referenceObject.OuterBorders).ToList(),
-                                                 referenceObject.InnerBorders);
+                                new OuterBorder[0].Concat(referenceObject.OuterBorders).Concat(new OuterBorder[] { null }).Concat(referenceObject.OuterBorders).ToList(),
+                                referenceObject.InnerBorders,
+                                referenceObject.RowsFormat);
 
                             return result;
                         },
@@ -76,9 +76,9 @@ namespace OBeautifulCode.DataStructure.Test
                             var referenceObject = A.Dummy<HeaderRowsFormat>();
 
                             var result = new HeaderRowsFormat(
-                                                 referenceObject.RowsFormat,
-                                                 referenceObject.OuterBorders,
-                                                 new List<InnerBorder>());
+                                referenceObject.OuterBorders,
+                                new List<InnerBorder>(),
+                                referenceObject.RowsFormat);
 
                             return result;
                         },
@@ -94,9 +94,9 @@ namespace OBeautifulCode.DataStructure.Test
                             var referenceObject = A.Dummy<HeaderRowsFormat>();
 
                             var result = new HeaderRowsFormat(
-                                                 referenceObject.RowsFormat,
-                                                 referenceObject.OuterBorders,
-                                                 new InnerBorder[0].Concat(referenceObject.InnerBorders).Concat(new InnerBorder[] { null }).Concat(referenceObject.InnerBorders).ToList());
+                                referenceObject.OuterBorders,
+                                new InnerBorder[0].Concat(referenceObject.InnerBorders).Concat(new InnerBorder[] { null }).Concat(referenceObject.InnerBorders).ToList(),
+                                referenceObject.RowsFormat);
 
                             return result;
                         },

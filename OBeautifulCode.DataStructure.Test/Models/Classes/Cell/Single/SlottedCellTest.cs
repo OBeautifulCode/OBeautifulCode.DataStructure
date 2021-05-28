@@ -30,6 +30,46 @@ namespace OBeautifulCode.DataStructure.Test
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = ObcSuppressBecause.CA1810_InitializeReferenceTypeStaticFieldsInline_FieldsDeclaredInCodeGeneratedPartialTestClass)]
         static SlottedCellTest()
         {
+            ConstructorArgumentValidationTestScenarios
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<SlottedCell>
+                    {
+                        Name = "constructor should throw ArgumentException when parameter 'slotIdToCellMap' contains a white space key",
+                        ConstructionFunc = () =>
+                        {
+                            var referenceObject = A.Dummy<SlottedCell>();
+
+                            var slotIdToCellMap = referenceObject.SlotIdToCellMap.ToDictionary(_ => _.Key, _ => _.Value);
+
+                            slotIdToCellMap.Add(" \r\n ", A.Dummy<IHaveValueCell>());
+
+                            var result = new SlottedCell(
+                                slotIdToCellMap,
+                                referenceObject.DefaultSlotName);
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentException),
+                        ExpectedExceptionMessageContains = new[] { "slotIdToCellMap", "contains at least one key-value pair with a white space key" },
+                    })
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<SlottedCell>
+                    {
+                        Name = "constructor should throw ArgumentException when parameter 'slotIdToCellMap' does not contain the specified defaultSlotName",
+                        ConstructionFunc = () =>
+                        {
+                            var referenceObject = A.Dummy<SlottedCell>();
+
+                            var result = new SlottedCell(
+                                referenceObject.SlotIdToCellMap,
+                                A.Dummy<string>());
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentException),
+                        ExpectedExceptionMessageContains = new[] { "slotIdToCellMap does not contain the specified defaultSlotName" },
+                    });
+
             DeepCloneWithTestScenarios
                 .RemoveAllScenarios()
                 .AddScenario(() =>

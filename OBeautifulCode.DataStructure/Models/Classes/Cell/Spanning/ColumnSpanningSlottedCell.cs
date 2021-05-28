@@ -46,6 +46,11 @@ namespace OBeautifulCode.DataStructure
                 throw new ArgumentException(Invariant($"{nameof(slotIdToCellMap)} contains at least one key-value pair with a null value."));
             }
 
+            if (slotIdToCellMap.Any(_ => string.IsNullOrWhiteSpace(_.Key)))
+            {
+                throw new ArgumentException(Invariant($"{nameof(slotIdToCellMap)} contains at least one key-value pair with a white space key."));
+            }
+
             if (defaultSlotName == null)
             {
                 throw new ArgumentNullException(nameof(defaultSlotName));

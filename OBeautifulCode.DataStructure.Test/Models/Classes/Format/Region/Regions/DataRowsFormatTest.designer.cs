@@ -47,7 +47,7 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new SystemUnderTestExpectedStringRepresentation<DataRowsFormat>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.DataRowsFormat: RowsFormat = {systemUnderTest.RowsFormat?.ToString() ?? "<null>"}, RowsRepeatingFormat = {systemUnderTest.RowsRepeatingFormat?.ToString() ?? "<null>"}, OuterBorders = {systemUnderTest.OuterBorders?.ToString() ?? "<null>"}, InnerBorders = {systemUnderTest.InnerBorders?.ToString() ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.DataRowsFormat: OuterBorders = {systemUnderTest.OuterBorders?.ToString() ?? "<null>"}, InnerBorders = {systemUnderTest.InnerBorders?.ToString() ?? "<null>"}, RowsFormat = {systemUnderTest.RowsFormat?.ToString() ?? "<null>"}, RowsRepeatingFormat = {systemUnderTest.RowsRepeatingFormat?.ToString() ?? "<null>"}."),
                         };
 
                         return result;
@@ -58,92 +58,16 @@ namespace OBeautifulCode.DataStructure.Test
             .AddScenario(() =>
                 new ConstructorArgumentValidationTestScenario<DataRowsFormat>
                 {
-                    Name = "constructor should throw ArgumentNullException when parameter 'rowsFormat' is null scenario",
-                    ConstructionFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<DataRowsFormat>();
-
-                        var result = new DataRowsFormat(
-                                             null,
-                                             referenceObject.RowsRepeatingFormat,
-                                             referenceObject.OuterBorders,
-                                             referenceObject.InnerBorders);
-
-                        return result;
-                    },
-                    ExpectedExceptionType = typeof(ArgumentNullException),
-                    ExpectedExceptionMessageContains = new[] { "rowsFormat", },
-                })
-            .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<DataRowsFormat>
-                {
-                    Name = "constructor should throw ArgumentNullException when parameter 'rowsRepeatingFormat' is null scenario",
-                    ConstructionFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<DataRowsFormat>();
-
-                        var result = new DataRowsFormat(
-                                             referenceObject.RowsFormat,
-                                             null,
-                                             referenceObject.OuterBorders,
-                                             referenceObject.InnerBorders);
-
-                        return result;
-                    },
-                    ExpectedExceptionType = typeof(ArgumentNullException),
-                    ExpectedExceptionMessageContains = new[] { "rowsRepeatingFormat", },
-                })
-            .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<DataRowsFormat>
-                {
-                    Name = "constructor should throw ArgumentException when parameter 'rowsRepeatingFormat' is an empty enumerable scenario",
-                    ConstructionFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<DataRowsFormat>();
-
-                        var result = new DataRowsFormat(
-                                             referenceObject.RowsFormat,
-                                             new List<RowFormat>(),
-                                             referenceObject.OuterBorders,
-                                             referenceObject.InnerBorders);
-
-                        return result;
-                    },
-                    ExpectedExceptionType = typeof(ArgumentException),
-                    ExpectedExceptionMessageContains = new[] { "rowsRepeatingFormat", "is an empty enumerable", },
-                })
-            .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<DataRowsFormat>
-                {
-                    Name = "constructor should throw ArgumentException when parameter 'rowsRepeatingFormat' contains a null element scenario",
-                    ConstructionFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<DataRowsFormat>();
-
-                        var result = new DataRowsFormat(
-                                             referenceObject.RowsFormat,
-                                             new RowFormat[0].Concat(referenceObject.RowsRepeatingFormat).Concat(new RowFormat[] { null }).Concat(referenceObject.RowsRepeatingFormat).ToList(),
-                                             referenceObject.OuterBorders,
-                                             referenceObject.InnerBorders);
-
-                        return result;
-                    },
-                    ExpectedExceptionType = typeof(ArgumentException),
-                    ExpectedExceptionMessageContains = new[] { "rowsRepeatingFormat", "contains at least one null element", },
-                })
-            .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<DataRowsFormat>
-                {
                     Name = "constructor should throw ArgumentNullException when parameter 'outerBorders' is null scenario",
                     ConstructionFunc = () =>
                     {
                         var referenceObject = A.Dummy<DataRowsFormat>();
 
                         var result = new DataRowsFormat(
-                                             referenceObject.RowsFormat,
-                                             referenceObject.RowsRepeatingFormat,
                                              null,
-                                             referenceObject.InnerBorders);
+                                             referenceObject.InnerBorders,
+                                             referenceObject.RowsFormat,
+                                             referenceObject.RowsRepeatingFormat);
 
                         return result;
                     },
@@ -159,10 +83,10 @@ namespace OBeautifulCode.DataStructure.Test
                         var referenceObject = A.Dummy<DataRowsFormat>();
 
                         var result = new DataRowsFormat(
-                                             referenceObject.RowsFormat,
-                                             referenceObject.RowsRepeatingFormat,
                                              new List<OuterBorder>(),
-                                             referenceObject.InnerBorders);
+                                             referenceObject.InnerBorders,
+                                             referenceObject.RowsFormat,
+                                             referenceObject.RowsRepeatingFormat);
 
                         return result;
                     },
@@ -178,10 +102,10 @@ namespace OBeautifulCode.DataStructure.Test
                         var referenceObject = A.Dummy<DataRowsFormat>();
 
                         var result = new DataRowsFormat(
-                                             referenceObject.RowsFormat,
-                                             referenceObject.RowsRepeatingFormat,
                                              new OuterBorder[0].Concat(referenceObject.OuterBorders).Concat(new OuterBorder[] { null }).Concat(referenceObject.OuterBorders).ToList(),
-                                             referenceObject.InnerBorders);
+                                             referenceObject.InnerBorders,
+                                             referenceObject.RowsFormat,
+                                             referenceObject.RowsRepeatingFormat);
 
                         return result;
                     },
@@ -197,10 +121,10 @@ namespace OBeautifulCode.DataStructure.Test
                         var referenceObject = A.Dummy<DataRowsFormat>();
 
                         var result = new DataRowsFormat(
-                                             referenceObject.RowsFormat,
-                                             referenceObject.RowsRepeatingFormat,
                                              referenceObject.OuterBorders,
-                                             null);
+                                             null,
+                                             referenceObject.RowsFormat,
+                                             referenceObject.RowsRepeatingFormat);
 
                         return result;
                     },
@@ -216,10 +140,10 @@ namespace OBeautifulCode.DataStructure.Test
                         var referenceObject = A.Dummy<DataRowsFormat>();
 
                         var result = new DataRowsFormat(
-                                             referenceObject.RowsFormat,
-                                             referenceObject.RowsRepeatingFormat,
                                              referenceObject.OuterBorders,
-                                             new List<InnerBorder>());
+                                             new List<InnerBorder>(),
+                                             referenceObject.RowsFormat,
+                                             referenceObject.RowsRepeatingFormat);
 
                         return result;
                     },
@@ -235,62 +159,94 @@ namespace OBeautifulCode.DataStructure.Test
                         var referenceObject = A.Dummy<DataRowsFormat>();
 
                         var result = new DataRowsFormat(
-                                             referenceObject.RowsFormat,
-                                             referenceObject.RowsRepeatingFormat,
                                              referenceObject.OuterBorders,
-                                             new InnerBorder[0].Concat(referenceObject.InnerBorders).Concat(new InnerBorder[] { null }).Concat(referenceObject.InnerBorders).ToList());
+                                             new InnerBorder[0].Concat(referenceObject.InnerBorders).Concat(new InnerBorder[] { null }).Concat(referenceObject.InnerBorders).ToList(),
+                                             referenceObject.RowsFormat,
+                                             referenceObject.RowsRepeatingFormat);
 
                         return result;
                     },
                     ExpectedExceptionType = typeof(ArgumentException),
                     ExpectedExceptionMessageContains = new[] { "innerBorders", "contains at least one null element", },
+                })
+            .AddScenario(() =>
+                new ConstructorArgumentValidationTestScenario<DataRowsFormat>
+                {
+                    Name = "constructor should throw ArgumentNullException when parameter 'rowsFormat' is null scenario",
+                    ConstructionFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<DataRowsFormat>();
+
+                        var result = new DataRowsFormat(
+                                             referenceObject.OuterBorders,
+                                             referenceObject.InnerBorders,
+                                             null,
+                                             referenceObject.RowsRepeatingFormat);
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentNullException),
+                    ExpectedExceptionMessageContains = new[] { "rowsFormat", },
+                })
+            .AddScenario(() =>
+                new ConstructorArgumentValidationTestScenario<DataRowsFormat>
+                {
+                    Name = "constructor should throw ArgumentNullException when parameter 'rowsRepeatingFormat' is null scenario",
+                    ConstructionFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<DataRowsFormat>();
+
+                        var result = new DataRowsFormat(
+                                             referenceObject.OuterBorders,
+                                             referenceObject.InnerBorders,
+                                             referenceObject.RowsFormat,
+                                             null);
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentNullException),
+                    ExpectedExceptionMessageContains = new[] { "rowsRepeatingFormat", },
+                })
+            .AddScenario(() =>
+                new ConstructorArgumentValidationTestScenario<DataRowsFormat>
+                {
+                    Name = "constructor should throw ArgumentException when parameter 'rowsRepeatingFormat' is an empty enumerable scenario",
+                    ConstructionFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<DataRowsFormat>();
+
+                        var result = new DataRowsFormat(
+                                             referenceObject.OuterBorders,
+                                             referenceObject.InnerBorders,
+                                             referenceObject.RowsFormat,
+                                             new List<RowFormat>());
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentException),
+                    ExpectedExceptionMessageContains = new[] { "rowsRepeatingFormat", "is an empty enumerable", },
+                })
+            .AddScenario(() =>
+                new ConstructorArgumentValidationTestScenario<DataRowsFormat>
+                {
+                    Name = "constructor should throw ArgumentException when parameter 'rowsRepeatingFormat' contains a null element scenario",
+                    ConstructionFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<DataRowsFormat>();
+
+                        var result = new DataRowsFormat(
+                                             referenceObject.OuterBorders,
+                                             referenceObject.InnerBorders,
+                                             referenceObject.RowsFormat,
+                                             new RowFormat[0].Concat(referenceObject.RowsRepeatingFormat).Concat(new RowFormat[] { null }).Concat(referenceObject.RowsRepeatingFormat).ToList());
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentException),
+                    ExpectedExceptionMessageContains = new[] { "rowsRepeatingFormat", "contains at least one null element", },
                 });
 
         private static readonly ConstructorPropertyAssignmentTestScenarios<DataRowsFormat> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<DataRowsFormat>()
-            .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<DataRowsFormat>
-                {
-                    Name = "RowsFormat should return same 'rowsFormat' parameter passed to constructor when getting",
-                    SystemUnderTestExpectedPropertyValueFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<DataRowsFormat>();
-
-                        var result = new SystemUnderTestExpectedPropertyValue<DataRowsFormat>
-                        {
-                            SystemUnderTest = new DataRowsFormat(
-                                                      referenceObject.RowsFormat,
-                                                      referenceObject.RowsRepeatingFormat,
-                                                      referenceObject.OuterBorders,
-                                                      referenceObject.InnerBorders),
-                            ExpectedPropertyValue = referenceObject.RowsFormat,
-                        };
-
-                        return result;
-                    },
-                    PropertyName = "RowsFormat",
-                })
-            .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<DataRowsFormat>
-                {
-                    Name = "RowsRepeatingFormat should return same 'rowsRepeatingFormat' parameter passed to constructor when getting",
-                    SystemUnderTestExpectedPropertyValueFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<DataRowsFormat>();
-
-                        var result = new SystemUnderTestExpectedPropertyValue<DataRowsFormat>
-                        {
-                            SystemUnderTest = new DataRowsFormat(
-                                                      referenceObject.RowsFormat,
-                                                      referenceObject.RowsRepeatingFormat,
-                                                      referenceObject.OuterBorders,
-                                                      referenceObject.InnerBorders),
-                            ExpectedPropertyValue = referenceObject.RowsRepeatingFormat,
-                        };
-
-                        return result;
-                    },
-                    PropertyName = "RowsRepeatingFormat",
-                })
             .AddScenario(() =>
                 new ConstructorPropertyAssignmentTestScenario<DataRowsFormat>
                 {
@@ -302,10 +258,10 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new SystemUnderTestExpectedPropertyValue<DataRowsFormat>
                         {
                             SystemUnderTest = new DataRowsFormat(
-                                                      referenceObject.RowsFormat,
-                                                      referenceObject.RowsRepeatingFormat,
                                                       referenceObject.OuterBorders,
-                                                      referenceObject.InnerBorders),
+                                                      referenceObject.InnerBorders,
+                                                      referenceObject.RowsFormat,
+                                                      referenceObject.RowsRepeatingFormat),
                             ExpectedPropertyValue = referenceObject.OuterBorders,
                         };
 
@@ -324,59 +280,63 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new SystemUnderTestExpectedPropertyValue<DataRowsFormat>
                         {
                             SystemUnderTest = new DataRowsFormat(
-                                                      referenceObject.RowsFormat,
-                                                      referenceObject.RowsRepeatingFormat,
                                                       referenceObject.OuterBorders,
-                                                      referenceObject.InnerBorders),
+                                                      referenceObject.InnerBorders,
+                                                      referenceObject.RowsFormat,
+                                                      referenceObject.RowsRepeatingFormat),
                             ExpectedPropertyValue = referenceObject.InnerBorders,
                         };
 
                         return result;
                     },
                     PropertyName = "InnerBorders",
+                })
+            .AddScenario(() =>
+                new ConstructorPropertyAssignmentTestScenario<DataRowsFormat>
+                {
+                    Name = "RowsFormat should return same 'rowsFormat' parameter passed to constructor when getting",
+                    SystemUnderTestExpectedPropertyValueFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<DataRowsFormat>();
+
+                        var result = new SystemUnderTestExpectedPropertyValue<DataRowsFormat>
+                        {
+                            SystemUnderTest = new DataRowsFormat(
+                                                      referenceObject.OuterBorders,
+                                                      referenceObject.InnerBorders,
+                                                      referenceObject.RowsFormat,
+                                                      referenceObject.RowsRepeatingFormat),
+                            ExpectedPropertyValue = referenceObject.RowsFormat,
+                        };
+
+                        return result;
+                    },
+                    PropertyName = "RowsFormat",
+                })
+            .AddScenario(() =>
+                new ConstructorPropertyAssignmentTestScenario<DataRowsFormat>
+                {
+                    Name = "RowsRepeatingFormat should return same 'rowsRepeatingFormat' parameter passed to constructor when getting",
+                    SystemUnderTestExpectedPropertyValueFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<DataRowsFormat>();
+
+                        var result = new SystemUnderTestExpectedPropertyValue<DataRowsFormat>
+                        {
+                            SystemUnderTest = new DataRowsFormat(
+                                                      referenceObject.OuterBorders,
+                                                      referenceObject.InnerBorders,
+                                                      referenceObject.RowsFormat,
+                                                      referenceObject.RowsRepeatingFormat),
+                            ExpectedPropertyValue = referenceObject.RowsRepeatingFormat,
+                        };
+
+                        return result;
+                    },
+                    PropertyName = "RowsRepeatingFormat",
                 });
 
         private static readonly DeepCloneWithTestScenarios<DataRowsFormat> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<DataRowsFormat>()
-            .AddScenario(() =>
-                new DeepCloneWithTestScenario<DataRowsFormat>
-                {
-                    Name = "DeepCloneWithRowsFormat should deep clone object and replace RowsFormat with the provided rowsFormat",
-                    WithPropertyName = "RowsFormat",
-                    SystemUnderTestDeepCloneWithValueFunc = () =>
-                    {
-                        var systemUnderTest = A.Dummy<DataRowsFormat>();
-
-                        var referenceObject = A.Dummy<DataRowsFormat>().ThatIs(_ => !systemUnderTest.RowsFormat.IsEqualTo(_.RowsFormat));
-
-                        var result = new SystemUnderTestDeepCloneWithValue<DataRowsFormat>
-                        {
-                            SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.RowsFormat,
-                        };
-
-                        return result;
-                    },
-                })
-            .AddScenario(() =>
-                new DeepCloneWithTestScenario<DataRowsFormat>
-                {
-                    Name = "DeepCloneWithRowsRepeatingFormat should deep clone object and replace RowsRepeatingFormat with the provided rowsRepeatingFormat",
-                    WithPropertyName = "RowsRepeatingFormat",
-                    SystemUnderTestDeepCloneWithValueFunc = () =>
-                    {
-                        var systemUnderTest = A.Dummy<DataRowsFormat>();
-
-                        var referenceObject = A.Dummy<DataRowsFormat>().ThatIs(_ => !systemUnderTest.RowsRepeatingFormat.IsEqualTo(_.RowsRepeatingFormat));
-
-                        var result = new SystemUnderTestDeepCloneWithValue<DataRowsFormat>
-                        {
-                            SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.RowsRepeatingFormat,
-                        };
-
-                        return result;
-                    },
-                })
             .AddScenario(() =>
                 new DeepCloneWithTestScenario<DataRowsFormat>
                 {
@@ -416,6 +376,46 @@ namespace OBeautifulCode.DataStructure.Test
 
                         return result;
                     },
+                })
+            .AddScenario(() =>
+                new DeepCloneWithTestScenario<DataRowsFormat>
+                {
+                    Name = "DeepCloneWithRowsFormat should deep clone object and replace RowsFormat with the provided rowsFormat",
+                    WithPropertyName = "RowsFormat",
+                    SystemUnderTestDeepCloneWithValueFunc = () =>
+                    {
+                        var systemUnderTest = A.Dummy<DataRowsFormat>();
+
+                        var referenceObject = A.Dummy<DataRowsFormat>().ThatIs(_ => !systemUnderTest.RowsFormat.IsEqualTo(_.RowsFormat));
+
+                        var result = new SystemUnderTestDeepCloneWithValue<DataRowsFormat>
+                        {
+                            SystemUnderTest = systemUnderTest,
+                            DeepCloneWithValue = referenceObject.RowsFormat,
+                        };
+
+                        return result;
+                    },
+                })
+            .AddScenario(() =>
+                new DeepCloneWithTestScenario<DataRowsFormat>
+                {
+                    Name = "DeepCloneWithRowsRepeatingFormat should deep clone object and replace RowsRepeatingFormat with the provided rowsRepeatingFormat",
+                    WithPropertyName = "RowsRepeatingFormat",
+                    SystemUnderTestDeepCloneWithValueFunc = () =>
+                    {
+                        var systemUnderTest = A.Dummy<DataRowsFormat>();
+
+                        var referenceObject = A.Dummy<DataRowsFormat>().ThatIs(_ => !systemUnderTest.RowsRepeatingFormat.IsEqualTo(_.RowsRepeatingFormat));
+
+                        var result = new SystemUnderTestDeepCloneWithValue<DataRowsFormat>
+                        {
+                            SystemUnderTest = systemUnderTest,
+                            DeepCloneWithValue = referenceObject.RowsRepeatingFormat,
+                        };
+
+                        return result;
+                    },
                 });
 
         private static readonly DataRowsFormat ReferenceObjectForEquatableTestScenarios = A.Dummy<DataRowsFormat>();
@@ -429,33 +429,33 @@ namespace OBeautifulCode.DataStructure.Test
                     ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new DataRowsFormat[]
                     {
                         new DataRowsFormat(
-                                ReferenceObjectForEquatableTestScenarios.RowsFormat,
-                                ReferenceObjectForEquatableTestScenarios.RowsRepeatingFormat,
                                 ReferenceObjectForEquatableTestScenarios.OuterBorders,
-                                ReferenceObjectForEquatableTestScenarios.InnerBorders),
+                                ReferenceObjectForEquatableTestScenarios.InnerBorders,
+                                ReferenceObjectForEquatableTestScenarios.RowsFormat,
+                                ReferenceObjectForEquatableTestScenarios.RowsRepeatingFormat),
                     },
                     ObjectsThatAreNotEqualToReferenceObject = new DataRowsFormat[]
                     {
                         new DataRowsFormat(
-                                A.Dummy<DataRowsFormat>().Whose(_ => !_.RowsFormat.IsEqualTo(ReferenceObjectForEquatableTestScenarios.RowsFormat)).RowsFormat,
-                                ReferenceObjectForEquatableTestScenarios.RowsRepeatingFormat,
-                                ReferenceObjectForEquatableTestScenarios.OuterBorders,
-                                ReferenceObjectForEquatableTestScenarios.InnerBorders),
-                        new DataRowsFormat(
-                                ReferenceObjectForEquatableTestScenarios.RowsFormat,
-                                A.Dummy<DataRowsFormat>().Whose(_ => !_.RowsRepeatingFormat.IsEqualTo(ReferenceObjectForEquatableTestScenarios.RowsRepeatingFormat)).RowsRepeatingFormat,
-                                ReferenceObjectForEquatableTestScenarios.OuterBorders,
-                                ReferenceObjectForEquatableTestScenarios.InnerBorders),
-                        new DataRowsFormat(
-                                ReferenceObjectForEquatableTestScenarios.RowsFormat,
-                                ReferenceObjectForEquatableTestScenarios.RowsRepeatingFormat,
                                 A.Dummy<DataRowsFormat>().Whose(_ => !_.OuterBorders.IsEqualTo(ReferenceObjectForEquatableTestScenarios.OuterBorders)).OuterBorders,
-                                ReferenceObjectForEquatableTestScenarios.InnerBorders),
-                        new DataRowsFormat(
+                                ReferenceObjectForEquatableTestScenarios.InnerBorders,
                                 ReferenceObjectForEquatableTestScenarios.RowsFormat,
-                                ReferenceObjectForEquatableTestScenarios.RowsRepeatingFormat,
+                                ReferenceObjectForEquatableTestScenarios.RowsRepeatingFormat),
+                        new DataRowsFormat(
                                 ReferenceObjectForEquatableTestScenarios.OuterBorders,
-                                A.Dummy<DataRowsFormat>().Whose(_ => !_.InnerBorders.IsEqualTo(ReferenceObjectForEquatableTestScenarios.InnerBorders)).InnerBorders),
+                                A.Dummy<DataRowsFormat>().Whose(_ => !_.InnerBorders.IsEqualTo(ReferenceObjectForEquatableTestScenarios.InnerBorders)).InnerBorders,
+                                ReferenceObjectForEquatableTestScenarios.RowsFormat,
+                                ReferenceObjectForEquatableTestScenarios.RowsRepeatingFormat),
+                        new DataRowsFormat(
+                                ReferenceObjectForEquatableTestScenarios.OuterBorders,
+                                ReferenceObjectForEquatableTestScenarios.InnerBorders,
+                                A.Dummy<DataRowsFormat>().Whose(_ => !_.RowsFormat.IsEqualTo(ReferenceObjectForEquatableTestScenarios.RowsFormat)).RowsFormat,
+                                ReferenceObjectForEquatableTestScenarios.RowsRepeatingFormat),
+                        new DataRowsFormat(
+                                ReferenceObjectForEquatableTestScenarios.OuterBorders,
+                                ReferenceObjectForEquatableTestScenarios.InnerBorders,
+                                ReferenceObjectForEquatableTestScenarios.RowsFormat,
+                                A.Dummy<DataRowsFormat>().Whose(_ => !_.RowsRepeatingFormat.IsEqualTo(ReferenceObjectForEquatableTestScenarios.RowsRepeatingFormat)).RowsRepeatingFormat),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
                     {
@@ -464,11 +464,11 @@ namespace OBeautifulCode.DataStructure.Test
                         A.Dummy<int>(),
                         A.Dummy<int?>(),
                         A.Dummy<Guid>(),
-                        A.Dummy<CellFormat>(),
-                        A.Dummy<ColumnFormat>(),
                         A.Dummy<HeaderRowsFormat>(),
-                        A.Dummy<RowFormat>(),
+                        A.Dummy<CellFormat>(),
                         A.Dummy<TableFormat>(),
+                        A.Dummy<RowFormat>(),
+                        A.Dummy<ColumnFormat>(),
                     },
                 });
 
@@ -735,24 +735,6 @@ namespace OBeautifulCode.DataStructure.Test
                 actual.AsTest().Must().BeEqualTo(systemUnderTest);
                 actual.AsTest().Must().NotBeSameReferenceAs(systemUnderTest);
 
-                if (systemUnderTest.RowsFormat == null)
-                {
-                    actual.RowsFormat.AsTest().Must().BeNull();
-                }
-                else
-                {
-                    actual.RowsFormat.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.RowsFormat);
-                }
-
-                if (systemUnderTest.RowsRepeatingFormat == null)
-                {
-                    actual.RowsRepeatingFormat.AsTest().Must().BeNull();
-                }
-                else
-                {
-                    actual.RowsRepeatingFormat.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.RowsRepeatingFormat);
-                }
-
                 if (systemUnderTest.OuterBorders == null)
                 {
                     actual.OuterBorders.AsTest().Must().BeNull();
@@ -769,6 +751,24 @@ namespace OBeautifulCode.DataStructure.Test
                 else
                 {
                     actual.InnerBorders.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.InnerBorders);
+                }
+
+                if (systemUnderTest.RowsFormat == null)
+                {
+                    actual.RowsFormat.AsTest().Must().BeNull();
+                }
+                else
+                {
+                    actual.RowsFormat.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.RowsFormat);
+                }
+
+                if (systemUnderTest.RowsRepeatingFormat == null)
+                {
+                    actual.RowsRepeatingFormat.AsTest().Must().BeNull();
+                }
+                else
+                {
+                    actual.RowsRepeatingFormat.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.RowsRepeatingFormat);
                 }
             }
 
@@ -788,7 +788,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "RowsFormat", "RowsRepeatingFormat", "OuterBorders", "InnerBorders" };
+                var propertyNames = new string[] { "OuterBorders", "InnerBorders", "RowsFormat", "RowsRepeatingFormat" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1479,6 +1479,149 @@ namespace OBeautifulCode.DataStructure.Test
                 {
                     // Arrange, Act
                     var actuals = scenario.ObjectsThatAreEqualToButNotTheSameAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((RegionFormatBase)_)).ToList();
+
+                    // Assert
+                    actuals.AsTest().Must().Each().BeTrue(because: scenario.Id);
+                }
+            }
+
+            [Fact]
+            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+            public static void Equals_with_MultiCellRegionFormatBase___Should_return_false___When_parameter_other_is_null()
+            {
+                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
+
+                foreach (var scenario in scenarios)
+                {
+                    // Arrange
+                    MultiCellRegionFormatBase systemUnderTest = null;
+
+                    // Act
+                    var actual = scenario.ReferenceObject.Equals((MultiCellRegionFormatBase)systemUnderTest);
+
+                    // Assert
+                    actual.AsTest().Must().BeFalse(because: scenario.Id);
+                }
+            }
+
+            [Fact]
+            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+            public static void Equals_with_MultiCellRegionFormatBase___Should_return_true___When_parameter_other_is_same_object()
+            {
+                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
+
+                foreach (var scenario in scenarios)
+                {
+                    // Arrange, Act
+                    var actual = scenario.ReferenceObject.Equals((MultiCellRegionFormatBase)scenario.ReferenceObject);
+
+                    // Assert
+                    actual.AsTest().Must().BeTrue(because: scenario.Id);
+                }
+            }
+
+            [Fact]
+            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+            public static void Equals_with_MultiCellRegionFormatBase___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
+            {
+                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
+
+                foreach (var scenario in scenarios)
+                {
+                    // Arrange, Act
+                    var actuals = scenario.ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((MultiCellRegionFormatBase)_)).ToList();
+
+                    // Assert
+                    actuals.AsTest().Must().Each().BeFalse(because: scenario.Id);
+                }
+            }
+
+            [Fact]
+            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+            public static void Equals_with_MultiCellRegionFormatBase___Should_return_false___When_objects_being_compared_have_different_property_values()
+            {
+                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
+
+                foreach (var scenario in scenarios)
+                {
+                    // Arrange, Act
+                    var actuals = scenario.ObjectsThatAreNotEqualToReferenceObject.Select(_ => scenario.ReferenceObject.Equals((MultiCellRegionFormatBase)_)).ToList();
+
+                    // Assert
+                    actuals.AsTest().Must().Each().BeFalse(because: scenario.Id);
+                }
+            }
+
+            [Fact]
+            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+            public static void Equals_with_MultiCellRegionFormatBase___Should_return_true___When_objects_being_compared_have_same_property_values()
+            {
+                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
+
+                foreach (var scenario in scenarios)
+                {
+                    // Arrange, Act
+                    var actuals = scenario.ObjectsThatAreEqualToButNotTheSameAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((MultiCellRegionFormatBase)_)).ToList();
 
                     // Assert
                     actuals.AsTest().Must().Each().BeTrue(because: scenario.Id);

@@ -84,6 +84,24 @@ namespace OBeautifulCode.DataStructure.Test
                         },
                         ExpectedExceptionType = typeof(ArgumentException),
                         ExpectedExceptionMessageContains = new[] { "cells", "contains at least one null element", },
+                    })
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<FlatRow>
+                    {
+                        Name = "constructor should throw ArgumentException when parameter 'id' is white space scenario",
+                        ConstructionFunc = () =>
+                        {
+                            var referenceObject = A.Dummy<FlatRow>();
+
+                            var result = new FlatRow(
+                                referenceObject.Cells,
+                                Invariant($"  {Environment.NewLine}  "),
+                                referenceObject.Format);
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentException),
+                        ExpectedExceptionMessageContains = new[] { "id", "white space", },
                     });
         }
     }

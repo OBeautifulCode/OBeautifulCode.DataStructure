@@ -13,6 +13,7 @@ namespace OBeautifulCode.DataStructure.Test
 
     using FakeItEasy;
 
+    using OBeautifulCode.Assertion.Recipes;
     using OBeautifulCode.AutoFakeItEasy;
     using OBeautifulCode.CodeAnalysis.Recipes;
     using OBeautifulCode.CodeGen.ModelObject.Recipes;
@@ -49,6 +50,101 @@ namespace OBeautifulCode.DataStructure.Test
                         },
                         ExpectedExceptionType = typeof(ArgumentNullException),
                         ExpectedExceptionMessageContains = new[] { "tableColumns", },
+                    })
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<TreeTable>
+                    {
+                        Name = "constructor should throw ArgumentException when parameter 'tableRows' contains a header row that does not span all of the columns in tableColumns",
+                        ConstructionFunc = () =>
+                        {
+                            var tableColumns = new TableColumns(Some.ReadOnlyDummies<Column>(2).ToList());
+
+                            var rows = new[]
+                            {
+                                new FlatRow(Some.ReadOnlyDummies<DecimalCell>(2).ToList()),
+                                new FlatRow(Some.ReadOnlyDummies<StringCell>(3).ToList()),
+                                new FlatRow(Some.ReadOnlyDummies<HtmlCell>(2).ToList()),
+                            };
+
+                            var headerRows = new HeaderRows(rows, null);
+
+                            var tableRows = new TableRows(headerRows, null);
+
+                            var result = new TreeTable(
+                                tableColumns,
+                                tableRows);
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentException),
+                        ExpectedExceptionMessageContains = new[] { "tableRows contains a row or descendant row that does not span all 2 of the defined columns", },
+                    })
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<TreeTable>
+                    {
+                        Name = "constructor should throw ArgumentException when parameter 'tableRows' contains a data row that does not span all of the columns in tableColumns",
+                        ConstructionFunc = () =>
+                        {
+                            var tableColumns = new TableColumns(Some.ReadOnlyDummies<Column>(2).ToList());
+
+                            var rows = new[]
+                            {
+                                new Row(Some.ReadOnlyDummies<DecimalCell>(2).ToList()),
+                                new Row(
+                                    Some.ReadOnlyDummies<HtmlCell>(2).ToList(),
+                                    childRows: new[]
+                                    {
+                                        new Row(Some.ReadOnlyDummies<MediaReferenceCell>(2).ToList()),
+                                        new Row(Some.ReadOnlyDummies<StringCell>(3).ToList()),
+                                        new Row(Some.ReadOnlyDummies<SlottedCell>(2).ToList()),
+                                    }),
+                                new Row(Some.ReadOnlyDummies<DecimalCell>(2).ToList()),
+                            };
+
+                            var dataRows = new DataRows(rows, null);
+
+                            var tableRows = new TableRows(null, dataRows);
+
+                            var result = new TreeTable(
+                                tableColumns,
+                                tableRows);
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentException),
+                        ExpectedExceptionMessageContains = new[] { "tableRows contains a row or descendant row that does not span all 2 of the defined columns", },
+                    })
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<TreeTable>
+                    {
+                        Name = "constructor should throw ArgumentException when parameter 'tableRows' contains header rows where the last header row does not contain one cell for all defined columns",
+                        ConstructionFunc = () =>
+                        {
+                            var tableColumns = new TableColumns(Some.ReadOnlyDummies<Column>(3).ToList());
+
+                            var rows = new[]
+                            {
+                                new FlatRow(Some.ReadOnlyDummies<MediaReferenceCell>(3).ToList()),
+                                new FlatRow(Some.ReadOnlyDummies<StringCell>(3).ToList()),
+                                new FlatRow(
+                                    new[]
+                                    {
+                                        new ColumnSpanningDecimalCell(A.Dummy<decimal>(), 3),
+                                    }),
+                            };
+
+                            var headerRows = new HeaderRows(rows, null);
+
+                            var tableRows = new TableRows(headerRows, null);
+
+                            var result = new TreeTable(
+                                tableColumns,
+                                tableRows);
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentException),
+                        ExpectedExceptionMessageContains = new[] { "The last row in tableRows.HeaderRows does not contain one cell for all 3 of the defined columns.  Spanning is disallowed for the last header row.", },
                     });
 
             DeepCloneWithTestScenarios
@@ -154,6 +250,88 @@ namespace OBeautifulCode.DataStructure.Test
                             A.Dummy<Guid>(),
                         },
                     });
+        }
+
+        [Fact]
+        public static void Constructor___Does_not_throw___When_all_rows_span_all_columns()
+        {
+            // Arrange
+            var tableColumns = new TableColumns(Some.ReadOnlyDummies<Column>(3).ToList());
+
+            var allHeaderRows = new[]
+            {
+                new FlatRow(
+                    new ICell[]
+                    {
+                        new DecimalCell(A.Dummy<decimal>()),
+                        new ColumnSpanningHtmlCell(A.Dummy<string>(), 2),
+                    }),
+                new FlatRow(
+                    new ICell[]
+                    {
+                        new ColumnSpanningStringCell(A.Dummy<string>(), 2),
+                        new HtmlCell(A.Dummy<string>()),
+                    }),
+                new FlatRow(
+                    new ICell[]
+                    {
+                        new ColumnSpanningMediaReferenceCell(A.Dummy<MediaReference>(), 3),
+                    }),
+                new FlatRow(
+                    new ICell[]
+                    {
+                        new DecimalCell(A.Dummy<decimal>()),
+                        new StringCell(A.Dummy<string>()),
+                        new MediaReferenceCell(A.Dummy<MediaReference>()),
+                    }),
+            };
+
+            var headerRows = new HeaderRows(allHeaderRows);
+
+            var allDataRows = new[]
+            {
+                new Row(Some.ReadOnlyDummies<DecimalCell>(3).ToList()),
+                new Row(
+                    Some.ReadOnlyDummies<HtmlCell>(3).ToList(),
+                    childRows: new[]
+                    {
+                        new Row(Some.ReadOnlyDummies<MediaReferenceCell>(3).ToList()),
+                        new Row(Some.ReadOnlyDummies<StringCell>(3).ToList()),
+                        new Row(
+                            new ICell[]
+                            {
+                                new DecimalCell(A.Dummy<decimal>()),
+                                new ColumnSpanningHtmlCell(A.Dummy<string>(), 2),
+                            }),
+                    }),
+                new Row(
+                    Some.ReadOnlyDummies<DecimalCell>(3).ToList(),
+                    childRows: new[]
+                    {
+                        new Row(Some.ReadOnlyDummies<StringCell>(3).ToList()),
+                        new Row(
+                            new ICell[]
+                            {
+                                new ColumnSpanningStringCell(A.Dummy<string>(), 2),
+                                new HtmlCell(A.Dummy<string>()),
+                            }),
+                        new Row(
+                            new ICell[]
+                            {
+                                new ColumnSpanningMediaReferenceCell(A.Dummy<MediaReference>(), 3),
+                            }),
+                    }),
+            };
+
+            var dataRows = new DataRows(allDataRows, null);
+
+            var tableRows = new TableRows(headerRows, dataRows);
+
+            // Act
+            var actual = Record.Exception(() => new TreeTable(tableColumns, tableRows));
+
+            // Assert
+            actual.AsTest().Must().BeNull();
         }
     }
 }

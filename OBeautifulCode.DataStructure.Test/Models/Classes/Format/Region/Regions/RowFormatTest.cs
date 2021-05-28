@@ -40,11 +40,11 @@ namespace OBeautifulCode.DataStructure.Test
                             var referenceObject = A.Dummy<RowFormat>();
 
                             var result = new RowFormat(
-                                                 referenceObject.CellsFormat,
-                                                 referenceObject.HeightInPixels,
-                                                 new List<OuterBorder>(),
-                                                 referenceObject.InnerBorders,
-                                                 referenceObject.Options);
+                                new List<OuterBorder>(),
+                                referenceObject.InnerBorders,
+                                referenceObject.CellsFormat,
+                                referenceObject.HeightInPixels,
+                                referenceObject.Options);
 
                             return result;
                         },
@@ -60,11 +60,11 @@ namespace OBeautifulCode.DataStructure.Test
                             var referenceObject = A.Dummy<RowFormat>();
 
                             var result = new RowFormat(
-                                                 referenceObject.CellsFormat,
-                                                 referenceObject.HeightInPixels,
-                                                 new OuterBorder[0].Concat(referenceObject.OuterBorders).Concat(new OuterBorder[] { null }).Concat(referenceObject.OuterBorders).ToList(),
-                                                 referenceObject.InnerBorders,
-                                                 referenceObject.Options);
+                                new OuterBorder[0].Concat(referenceObject.OuterBorders).Concat(new OuterBorder[] { null }).Concat(referenceObject.OuterBorders).ToList(),
+                                referenceObject.InnerBorders,
+                                referenceObject.CellsFormat,
+                                referenceObject.HeightInPixels,
+                                referenceObject.Options);
 
                             return result;
                         },
@@ -80,11 +80,11 @@ namespace OBeautifulCode.DataStructure.Test
                             var referenceObject = A.Dummy<RowFormat>();
 
                             var result = new RowFormat(
-                                                 referenceObject.CellsFormat,
-                                                 referenceObject.HeightInPixels,
-                                                 referenceObject.OuterBorders,
-                                                 new List<InnerBorder>(),
-                                                 referenceObject.Options);
+                                referenceObject.OuterBorders,
+                                new List<InnerBorder>(),
+                                referenceObject.CellsFormat,
+                                referenceObject.HeightInPixels,
+                                referenceObject.Options);
 
                             return result;
                         },
@@ -100,11 +100,11 @@ namespace OBeautifulCode.DataStructure.Test
                             var referenceObject = A.Dummy<RowFormat>();
 
                             var result = new RowFormat(
-                                                 referenceObject.CellsFormat,
-                                                 referenceObject.HeightInPixels,
-                                                 referenceObject.OuterBorders,
-                                                 new InnerBorder[0].Concat(referenceObject.InnerBorders).Concat(new InnerBorder[] { null }).Concat(referenceObject.InnerBorders).ToList(),
-                                                 referenceObject.Options);
+                                referenceObject.OuterBorders,
+                                new InnerBorder[0].Concat(referenceObject.InnerBorders).Concat(new InnerBorder[] { null }).Concat(referenceObject.InnerBorders).ToList(),
+                                referenceObject.CellsFormat,
+                                referenceObject.HeightInPixels,
+                                referenceObject.Options);
 
                             return result;
                         },

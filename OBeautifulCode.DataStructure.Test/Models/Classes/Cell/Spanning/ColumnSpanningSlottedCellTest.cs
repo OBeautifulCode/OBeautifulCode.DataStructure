@@ -30,6 +30,102 @@ namespace OBeautifulCode.DataStructure.Test
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = ObcSuppressBecause.CA1810_InitializeReferenceTypeStaticFieldsInline_FieldsDeclaredInCodeGeneratedPartialTestClass)]
         static ColumnSpanningSlottedCellTest()
         {
+            ConstructorArgumentValidationTestScenarios
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<ColumnSpanningSlottedCell>
+                    {
+                        Name = "constructor should throw ArgumentException when parameter 'slotIdToCellMap' contains a white space key",
+                        ConstructionFunc = () =>
+                        {
+                            var referenceObject = A.Dummy<ColumnSpanningSlottedCell>();
+
+                            var slotIdToCellMap = referenceObject.SlotIdToCellMap.ToDictionary(_ => _.Key, _ => _.Value);
+
+                            slotIdToCellMap.Add(" \r\n ", A.Dummy<IHaveValueCell>());
+
+                            var result = new ColumnSpanningSlottedCell(
+                                slotIdToCellMap,
+                                referenceObject.DefaultSlotName,
+                                referenceObject.ColumnsSpanned);
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentException),
+                        ExpectedExceptionMessageContains = new[] { "slotIdToCellMap", "contains at least one key-value pair with a white space key" },
+                    })
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<ColumnSpanningSlottedCell>
+                    {
+                        Name = "constructor should throw ArgumentException when parameter 'slotIdToCellMap' does not contain the specified defaultSlotName",
+                        ConstructionFunc = () =>
+                        {
+                            var referenceObject = A.Dummy<ColumnSpanningSlottedCell>();
+
+                            var result = new ColumnSpanningSlottedCell(
+                                referenceObject.SlotIdToCellMap,
+                                A.Dummy<string>(),
+                                referenceObject.ColumnsSpanned);
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentException),
+                        ExpectedExceptionMessageContains = new[] { "slotIdToCellMap does not contain the specified defaultSlotName" },
+                    })
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<ColumnSpanningSlottedCell>
+                    {
+                        Name = "constructor should throw ArgumentOutOfRangeException when parameter 'columnsSpanned' is 1",
+                        ConstructionFunc = () =>
+                        {
+                            var referenceObject = A.Dummy<ColumnSpanningSlottedCell>();
+
+                            var result = new ColumnSpanningSlottedCell(
+                                referenceObject.SlotIdToCellMap,
+                                referenceObject.DefaultSlotName,
+                                1);
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentOutOfRangeException),
+                        ExpectedExceptionMessageContains = new[] { "columnsSpanned is 1; must be >= 2", },
+                    })
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<ColumnSpanningSlottedCell>
+                    {
+                        Name = "constructor should throw ArgumentOutOfRangeException when parameter 'columnsSpanned' is 0",
+                        ConstructionFunc = () =>
+                        {
+                            var referenceObject = A.Dummy<ColumnSpanningSlottedCell>();
+
+                            var result = new ColumnSpanningSlottedCell(
+                                referenceObject.SlotIdToCellMap,
+                                referenceObject.DefaultSlotName,
+                                0);
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentOutOfRangeException),
+                        ExpectedExceptionMessageContains = new[] { "columnsSpanned is 0; must be >= 2", },
+                    })
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<ColumnSpanningSlottedCell>
+                    {
+                        Name = "constructor should throw ArgumentOutOfRangeException when parameter 'columnsSpanned' is < 0",
+                        ConstructionFunc = () =>
+                        {
+                            var referenceObject = A.Dummy<ColumnSpanningSlottedCell>();
+
+                            var result = new ColumnSpanningSlottedCell(
+                                referenceObject.SlotIdToCellMap,
+                                referenceObject.DefaultSlotName,
+                                A.Dummy<NegativeInteger>());
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentOutOfRangeException),
+                        ExpectedExceptionMessageContains = new[] { "columnsSpanned is", "must be >= 2", },
+                    });
+
             DeepCloneWithTestScenarios
                 .RemoveAllScenarios()
                 .AddScenario(() =>

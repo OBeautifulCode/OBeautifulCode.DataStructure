@@ -40,12 +40,12 @@ namespace OBeautifulCode.DataStructure.Test
                             var referenceObject = A.Dummy<ColumnFormat>();
 
                             var result = new ColumnFormat(
-                                                 referenceObject.CellsFormat,
-                                                 referenceObject.WidthInPixels,
-                                                 referenceObject.AutoFitColumnWidth,
-                                                 new List<OuterBorder>(),
-                                                 referenceObject.InnerBorders,
-                                                 referenceObject.Options);
+                                new List<OuterBorder>(),
+                                referenceObject.InnerBorders,
+                                referenceObject.CellsFormat,
+                                referenceObject.WidthInPixels,
+                                referenceObject.AutoFitColumnWidth,
+                                referenceObject.Options);
 
                             return result;
                         },
@@ -61,12 +61,12 @@ namespace OBeautifulCode.DataStructure.Test
                             var referenceObject = A.Dummy<ColumnFormat>();
 
                             var result = new ColumnFormat(
-                                                 referenceObject.CellsFormat,
-                                                 referenceObject.WidthInPixels,
-                                                 referenceObject.AutoFitColumnWidth,
-                                                 new OuterBorder[0].Concat(referenceObject.OuterBorders).Concat(new OuterBorder[] { null }).Concat(referenceObject.OuterBorders).ToList(),
-                                                 referenceObject.InnerBorders,
-                                                 referenceObject.Options);
+                                new OuterBorder[0].Concat(referenceObject.OuterBorders).Concat(new OuterBorder[] { null }).Concat(referenceObject.OuterBorders).ToList(),
+                                referenceObject.InnerBorders,
+                                referenceObject.CellsFormat,
+                                referenceObject.WidthInPixels,
+                                referenceObject.AutoFitColumnWidth,
+                                referenceObject.Options);
 
                             return result;
                         },
@@ -82,12 +82,12 @@ namespace OBeautifulCode.DataStructure.Test
                             var referenceObject = A.Dummy<ColumnFormat>();
 
                             var result = new ColumnFormat(
-                                                 referenceObject.CellsFormat,
-                                                 referenceObject.WidthInPixels,
-                                                 referenceObject.AutoFitColumnWidth,
-                                                 referenceObject.OuterBorders,
-                                                 new List<InnerBorder>(),
-                                                 referenceObject.Options);
+                                referenceObject.OuterBorders,
+                                new List<InnerBorder>(),
+                                referenceObject.CellsFormat,
+                                referenceObject.WidthInPixels,
+                                referenceObject.AutoFitColumnWidth,
+                                referenceObject.Options);
 
                             return result;
                         },
@@ -103,12 +103,12 @@ namespace OBeautifulCode.DataStructure.Test
                             var referenceObject = A.Dummy<ColumnFormat>();
 
                             var result = new ColumnFormat(
-                                                 referenceObject.CellsFormat,
-                                                 referenceObject.WidthInPixels,
-                                                 referenceObject.AutoFitColumnWidth,
-                                                 referenceObject.OuterBorders,
-                                                 new InnerBorder[0].Concat(referenceObject.InnerBorders).Concat(new InnerBorder[] { null }).Concat(referenceObject.InnerBorders).ToList(),
-                                                 referenceObject.Options);
+                                referenceObject.OuterBorders,
+                                new InnerBorder[0].Concat(referenceObject.InnerBorders).Concat(new InnerBorder[] { null }).Concat(referenceObject.InnerBorders).ToList(),
+                                referenceObject.CellsFormat,
+                                referenceObject.WidthInPixels,
+                                referenceObject.AutoFitColumnWidth,
+                                referenceObject.Options);
 
                             return result;
                         },

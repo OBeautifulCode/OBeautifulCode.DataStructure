@@ -64,7 +64,7 @@ namespace OBeautifulCode.DataStructure.Test
                 .AddScenario(() =>
                     new ConstructorArgumentValidationTestScenario<OuterBorder>
                     {
-                        Name = "constructor should throw ArgumentOutOfRangeException when parameter 'edges' is OuterBorderSides.Sides",
+                        Name = "constructor should throw ArgumentOutOfRangeException when parameter 'sides' is OuterBorderSides.None",
                         ConstructionFunc = () =>
                         {
                             var referenceObject = A.Dummy<OuterBorder>();

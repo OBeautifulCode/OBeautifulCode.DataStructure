@@ -66,6 +66,24 @@ namespace OBeautifulCode.DataStructure.Test
                         },
                         ExpectedExceptionType = typeof(ArgumentException),
                         ExpectedExceptionMessageContains = new[] { "url", "white space", },
+                    })
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<MediaReference>
+                    {
+                        Name = "constructor should throw ArgumentOutOfRangeException when parameter 'mediaReferenceKind' is Unknown",
+                        ConstructionFunc = () =>
+                        {
+                            var referenceObject = A.Dummy<MediaReference>();
+
+                            var result = new MediaReference(
+                                referenceObject.Url,
+                                MediaReferenceKind.Unknown,
+                                referenceObject.Name);
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentOutOfRangeException),
+                        ExpectedExceptionMessageContains = new[] { "mediaReferenceKind", "Unknown", },
                     });
         }
     }

@@ -70,14 +70,14 @@ namespace OBeautifulCode.DataStructure
                 return false;
             }
 
-            var result = this.BackgroundColor.IsEqualTo(other.BackgroundColor)
+            var result = this.OuterBorders.IsEqualTo(other.OuterBorders)
+                      && this.BackgroundColor.IsEqualTo(other.BackgroundColor)
                       && this.FontColor.IsEqualTo(other.FontColor)
                       && this.FontNamesInFallbackOrder.IsEqualTo(other.FontNamesInFallbackOrder)
                       && this.FontSizeInPoints.IsEqualTo(other.FontSizeInPoints)
                       && this.VerticalAlignment.IsEqualTo(other.VerticalAlignment)
                       && this.HorizontalAlignment.IsEqualTo(other.HorizontalAlignment)
                       && this.FontRotationAngle.IsEqualTo(other.FontRotationAngle)
-                      && this.Borders.IsEqualTo(other.Borders)
                       && this.FillPattern.IsEqualTo(other.FillPattern)
                       && this.Options.IsEqualTo(other.Options);
 
@@ -89,6 +89,7 @@ namespace OBeautifulCode.DataStructure
 
         /// <inheritdoc />
         public override int GetHashCode() => HashCodeHelper.Initialize()
+            .Hash(this.OuterBorders)
             .Hash(this.BackgroundColor)
             .Hash(this.FontColor)
             .Hash(this.FontNamesInFallbackOrder)
@@ -96,13 +97,47 @@ namespace OBeautifulCode.DataStructure
             .Hash(this.VerticalAlignment)
             .Hash(this.HorizontalAlignment)
             .Hash(this.FontRotationAngle)
-            .Hash(this.Borders)
             .Hash(this.FillPattern)
             .Hash(this.Options)
             .Value;
 
         /// <inheritdoc />
         public new CellFormat DeepClone() => (CellFormat)this.DeepCloneInternal();
+
+        /// <inheritdoc />
+        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
+        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
+        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
+        public override RegionFormatBase DeepCloneWithOuterBorders(IReadOnlyList<OuterBorder> outerBorders)
+        {
+            var result = new CellFormat(
+                                 outerBorders,
+                                 this.BackgroundColor?.DeepClone(),
+                                 this.FontColor?.DeepClone(),
+                                 this.FontNamesInFallbackOrder?.DeepClone(),
+                                 this.FontSizeInPoints?.DeepClone(),
+                                 this.VerticalAlignment?.DeepClone(),
+                                 this.HorizontalAlignment?.DeepClone(),
+                                 this.FontRotationAngle?.DeepClone(),
+                                 this.FillPattern?.DeepClone(),
+                                 this.Options?.DeepClone());
+
+            return result;
+        }
 
         /// <summary>
         /// Deep clones this object with a new <see cref="BackgroundColor" />.
@@ -129,6 +164,7 @@ namespace OBeautifulCode.DataStructure
         public CellFormat DeepCloneWithBackgroundColor(Color? backgroundColor)
         {
             var result = new CellFormat(
+                                 this.OuterBorders?.DeepClone(),
                                  backgroundColor,
                                  this.FontColor?.DeepClone(),
                                  this.FontNamesInFallbackOrder?.DeepClone(),
@@ -136,7 +172,6 @@ namespace OBeautifulCode.DataStructure
                                  this.VerticalAlignment?.DeepClone(),
                                  this.HorizontalAlignment?.DeepClone(),
                                  this.FontRotationAngle?.DeepClone(),
-                                 this.Borders?.DeepClone(),
                                  this.FillPattern?.DeepClone(),
                                  this.Options?.DeepClone());
 
@@ -168,6 +203,7 @@ namespace OBeautifulCode.DataStructure
         public CellFormat DeepCloneWithFontColor(Color? fontColor)
         {
             var result = new CellFormat(
+                                 this.OuterBorders?.DeepClone(),
                                  this.BackgroundColor?.DeepClone(),
                                  fontColor,
                                  this.FontNamesInFallbackOrder?.DeepClone(),
@@ -175,7 +211,6 @@ namespace OBeautifulCode.DataStructure
                                  this.VerticalAlignment?.DeepClone(),
                                  this.HorizontalAlignment?.DeepClone(),
                                  this.FontRotationAngle?.DeepClone(),
-                                 this.Borders?.DeepClone(),
                                  this.FillPattern?.DeepClone(),
                                  this.Options?.DeepClone());
 
@@ -207,6 +242,7 @@ namespace OBeautifulCode.DataStructure
         public CellFormat DeepCloneWithFontNamesInFallbackOrder(IReadOnlyList<string> fontNamesInFallbackOrder)
         {
             var result = new CellFormat(
+                                 this.OuterBorders?.DeepClone(),
                                  this.BackgroundColor?.DeepClone(),
                                  this.FontColor?.DeepClone(),
                                  fontNamesInFallbackOrder,
@@ -214,7 +250,6 @@ namespace OBeautifulCode.DataStructure
                                  this.VerticalAlignment?.DeepClone(),
                                  this.HorizontalAlignment?.DeepClone(),
                                  this.FontRotationAngle?.DeepClone(),
-                                 this.Borders?.DeepClone(),
                                  this.FillPattern?.DeepClone(),
                                  this.Options?.DeepClone());
 
@@ -246,6 +281,7 @@ namespace OBeautifulCode.DataStructure
         public CellFormat DeepCloneWithFontSizeInPoints(decimal? fontSizeInPoints)
         {
             var result = new CellFormat(
+                                 this.OuterBorders?.DeepClone(),
                                  this.BackgroundColor?.DeepClone(),
                                  this.FontColor?.DeepClone(),
                                  this.FontNamesInFallbackOrder?.DeepClone(),
@@ -253,7 +289,6 @@ namespace OBeautifulCode.DataStructure
                                  this.VerticalAlignment?.DeepClone(),
                                  this.HorizontalAlignment?.DeepClone(),
                                  this.FontRotationAngle?.DeepClone(),
-                                 this.Borders?.DeepClone(),
                                  this.FillPattern?.DeepClone(),
                                  this.Options?.DeepClone());
 
@@ -285,6 +320,7 @@ namespace OBeautifulCode.DataStructure
         public CellFormat DeepCloneWithVerticalAlignment(VerticalAlignment? verticalAlignment)
         {
             var result = new CellFormat(
+                                 this.OuterBorders?.DeepClone(),
                                  this.BackgroundColor?.DeepClone(),
                                  this.FontColor?.DeepClone(),
                                  this.FontNamesInFallbackOrder?.DeepClone(),
@@ -292,7 +328,6 @@ namespace OBeautifulCode.DataStructure
                                  verticalAlignment,
                                  this.HorizontalAlignment?.DeepClone(),
                                  this.FontRotationAngle?.DeepClone(),
-                                 this.Borders?.DeepClone(),
                                  this.FillPattern?.DeepClone(),
                                  this.Options?.DeepClone());
 
@@ -324,6 +359,7 @@ namespace OBeautifulCode.DataStructure
         public CellFormat DeepCloneWithHorizontalAlignment(HorizontalAlignment? horizontalAlignment)
         {
             var result = new CellFormat(
+                                 this.OuterBorders?.DeepClone(),
                                  this.BackgroundColor?.DeepClone(),
                                  this.FontColor?.DeepClone(),
                                  this.FontNamesInFallbackOrder?.DeepClone(),
@@ -331,7 +367,6 @@ namespace OBeautifulCode.DataStructure
                                  this.VerticalAlignment?.DeepClone(),
                                  horizontalAlignment,
                                  this.FontRotationAngle?.DeepClone(),
-                                 this.Borders?.DeepClone(),
                                  this.FillPattern?.DeepClone(),
                                  this.Options?.DeepClone());
 
@@ -363,6 +398,7 @@ namespace OBeautifulCode.DataStructure
         public CellFormat DeepCloneWithFontRotationAngle(int? fontRotationAngle)
         {
             var result = new CellFormat(
+                                 this.OuterBorders?.DeepClone(),
                                  this.BackgroundColor?.DeepClone(),
                                  this.FontColor?.DeepClone(),
                                  this.FontNamesInFallbackOrder?.DeepClone(),
@@ -370,46 +406,6 @@ namespace OBeautifulCode.DataStructure
                                  this.VerticalAlignment?.DeepClone(),
                                  this.HorizontalAlignment?.DeepClone(),
                                  fontRotationAngle,
-                                 this.Borders?.DeepClone(),
-                                 this.FillPattern?.DeepClone(),
-                                 this.Options?.DeepClone());
-
-            return result;
-        }
-
-        /// <summary>
-        /// Deep clones this object with a new <see cref="Borders" />.
-        /// </summary>
-        /// <param name="borders">The new <see cref="Borders" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="CellFormat" /> using the specified <paramref name="borders" /> for <see cref="Borders" /> and a deep clone of every other property.</returns>
-        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
-        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
-        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
-        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public CellFormat DeepCloneWithBorders(IReadOnlyList<OuterBorder> borders)
-        {
-            var result = new CellFormat(
-                                 this.BackgroundColor?.DeepClone(),
-                                 this.FontColor?.DeepClone(),
-                                 this.FontNamesInFallbackOrder?.DeepClone(),
-                                 this.FontSizeInPoints?.DeepClone(),
-                                 this.VerticalAlignment?.DeepClone(),
-                                 this.HorizontalAlignment?.DeepClone(),
-                                 this.FontRotationAngle?.DeepClone(),
-                                 borders,
                                  this.FillPattern?.DeepClone(),
                                  this.Options?.DeepClone());
 
@@ -441,6 +437,7 @@ namespace OBeautifulCode.DataStructure
         public CellFormat DeepCloneWithFillPattern(FillPattern fillPattern)
         {
             var result = new CellFormat(
+                                 this.OuterBorders?.DeepClone(),
                                  this.BackgroundColor?.DeepClone(),
                                  this.FontColor?.DeepClone(),
                                  this.FontNamesInFallbackOrder?.DeepClone(),
@@ -448,7 +445,6 @@ namespace OBeautifulCode.DataStructure
                                  this.VerticalAlignment?.DeepClone(),
                                  this.HorizontalAlignment?.DeepClone(),
                                  this.FontRotationAngle?.DeepClone(),
-                                 this.Borders?.DeepClone(),
                                  fillPattern,
                                  this.Options?.DeepClone());
 
@@ -480,6 +476,7 @@ namespace OBeautifulCode.DataStructure
         public CellFormat DeepCloneWithOptions(CellFormatOptions? options)
         {
             var result = new CellFormat(
+                                 this.OuterBorders?.DeepClone(),
                                  this.BackgroundColor?.DeepClone(),
                                  this.FontColor?.DeepClone(),
                                  this.FontNamesInFallbackOrder?.DeepClone(),
@@ -487,7 +484,6 @@ namespace OBeautifulCode.DataStructure
                                  this.VerticalAlignment?.DeepClone(),
                                  this.HorizontalAlignment?.DeepClone(),
                                  this.FontRotationAngle?.DeepClone(),
-                                 this.Borders?.DeepClone(),
                                  this.FillPattern?.DeepClone(),
                                  options);
 
@@ -499,6 +495,7 @@ namespace OBeautifulCode.DataStructure
         protected override RegionFormatBase DeepCloneInternal()
         {
             var result = new CellFormat(
+                                 this.OuterBorders?.DeepClone(),
                                  this.BackgroundColor?.DeepClone(),
                                  this.FontColor?.DeepClone(),
                                  this.FontNamesInFallbackOrder?.DeepClone(),
@@ -506,7 +503,6 @@ namespace OBeautifulCode.DataStructure
                                  this.VerticalAlignment?.DeepClone(),
                                  this.HorizontalAlignment?.DeepClone(),
                                  this.FontRotationAngle?.DeepClone(),
-                                 this.Borders?.DeepClone(),
                                  this.FillPattern?.DeepClone(),
                                  this.Options?.DeepClone());
 
@@ -517,7 +513,7 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"OBeautifulCode.DataStructure.CellFormat: BackgroundColor = {this.BackgroundColor?.ToString() ?? "<null>"}, FontColor = {this.FontColor?.ToString() ?? "<null>"}, FontNamesInFallbackOrder = {this.FontNamesInFallbackOrder?.ToString() ?? "<null>"}, FontSizeInPoints = {this.FontSizeInPoints?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, VerticalAlignment = {this.VerticalAlignment?.ToString() ?? "<null>"}, HorizontalAlignment = {this.HorizontalAlignment?.ToString() ?? "<null>"}, FontRotationAngle = {this.FontRotationAngle?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Borders = {this.Borders?.ToString() ?? "<null>"}, FillPattern = {this.FillPattern?.ToString() ?? "<null>"}, Options = {this.Options?.ToString() ?? "<null>"}.");
+            var result = Invariant($"OBeautifulCode.DataStructure.CellFormat: OuterBorders = {this.OuterBorders?.ToString() ?? "<null>"}, BackgroundColor = {this.BackgroundColor?.ToString() ?? "<null>"}, FontColor = {this.FontColor?.ToString() ?? "<null>"}, FontNamesInFallbackOrder = {this.FontNamesInFallbackOrder?.ToString() ?? "<null>"}, FontSizeInPoints = {this.FontSizeInPoints?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, VerticalAlignment = {this.VerticalAlignment?.ToString() ?? "<null>"}, HorizontalAlignment = {this.HorizontalAlignment?.ToString() ?? "<null>"}, FontRotationAngle = {this.FontRotationAngle?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, FillPattern = {this.FillPattern?.ToString() ?? "<null>"}, Options = {this.Options?.ToString() ?? "<null>"}.");
 
             return result;
         }

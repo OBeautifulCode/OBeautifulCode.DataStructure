@@ -55,7 +55,7 @@ namespace OBeautifulCode.DataStructure
 
             if (tableRows.DataRows != null)
             {
-                GetAllDataRowsInOrder(tableRows.DataRows.Rows);
+                result.AddRange(GetAllDataRowsInOrder(tableRows.DataRows.Rows));
             }
 
             return result;

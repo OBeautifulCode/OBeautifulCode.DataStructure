@@ -31,7 +31,23 @@ namespace OBeautifulCode.DataStructure.Test
         {
             ConstructorArgumentValidationTestScenarios
                 .RemoveAllScenarios()
-                .AddScenario(ConstructorArgumentValidationTestScenario<Column>.ConstructorCannotThrowScenario);
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<Column>
+                    {
+                        Name = "constructor should throw ArgumentException when parameter 'id' is white space scenario",
+                        ConstructionFunc = () =>
+                        {
+                            var referenceObject = A.Dummy<Column>();
+
+                            var result = new Column(
+                                                 Invariant($"  {Environment.NewLine}  "),
+                                                 referenceObject.Format);
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentException),
+                        ExpectedExceptionMessageContains = new[] { "id", "white space", },
+                    });
         }
     }
 }

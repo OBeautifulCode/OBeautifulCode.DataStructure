@@ -192,9 +192,36 @@
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringReadableOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringXmlDocOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
+    <Compile Include="Models\Classes\Cell\Single\MediaReferenceCellTest.designer.cs">
+      <DependentUpon>MediaReferenceCellTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Classes\Format\Border\BorderBaseTest.cs" />
     <Compile Include="Models\Classes\Format\Border\BorderBaseTest.designer.cs">
       <DependentUpon>BorderBaseTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Format\Fill\FillPatternTest.designer.cs">
+      <DependentUpon>FillPatternTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Format\Region\Regions\CellFormatTest.designer.cs">
+      <DependentUpon>CellFormatTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Format\Region\Regions\ColumnFormatTest.designer.cs">
+      <DependentUpon>ColumnFormatTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Format\Region\Regions\DataRowsFormatTest.designer.cs">
+      <DependentUpon>DataRowsFormatTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Format\Region\Regions\HeaderRowsFormatTest.designer.cs">
+      <DependentUpon>HeaderRowsFormatTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Format\Region\RegionFormatBaseTest.designer.cs">
+      <DependentUpon>RegionFormatBaseTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Format\Region\Regions\RowFormatTest.designer.cs">
+      <DependentUpon>RowFormatTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Format\Region\Regions\TableFormatTest.designer.cs">
+      <DependentUpon>TableFormatTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Classes\Link\Resource\BytesPayloadLinkedResourceTest.cs" />
     <Compile Include="Models\Classes\Link\Resource\BytesPayloadLinkedResourceTest.designer.cs">
@@ -204,14 +231,8 @@
     <Compile Include="Models\Classes\Cell\CellBaseTest.designer.cs">
       <DependentUpon>CellBaseTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Classes\Format\Region\CellFormatTest.cs" />
-    <Compile Include="Models\Classes\Format\Region\CellFormatTest.designer.cs">
-      <DependentUpon>CellFormatTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Format\Region\ColumnFormatTest.cs" />
-    <Compile Include="Models\Classes\Format\Region\ColumnFormatTest.designer.cs">
-      <DependentUpon>ColumnFormatTest.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Models\Classes\Format\Region\Regions\CellFormatTest.cs" />
+    <Compile Include="Models\Classes\Format\Region\Regions\ColumnFormatTest.cs" />
     <Compile Include="Models\Classes\Cell\Spanning\ColumnSpanningDecimalCellTest.cs" />
     <Compile Include="Models\Classes\Cell\Spanning\ColumnSpanningDecimalCellTest.designer.cs">
       <DependentUpon>ColumnSpanningDecimalCellTest.cs</DependentUpon>
@@ -244,10 +265,7 @@
     <Compile Include="Models\Classes\Column\ColumnTest.designer.cs">
       <DependentUpon>ColumnTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Classes\Format\Region\DataRowsFormatTest.cs" />
-    <Compile Include="Models\Classes\Format\Region\DataRowsFormatTest.designer.cs">
-      <DependentUpon>DataRowsFormatTest.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Models\Classes\Format\Region\Regions\DataRowsFormatTest.cs" />
     <Compile Include="Models\Classes\Row\DataRowsTest.cs" />
     <Compile Include="Models\Classes\Row\DataRowsTest.designer.cs">
       <DependentUpon>DataRowsTest.cs</DependentUpon>
@@ -260,17 +278,11 @@
       <DependentUpon>DecimalCellTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Classes\Format\Fill\FillPatternTest.cs" />
-    <Compile Include="Models\Classes\Format\Fill\FillPatternTest.designer.cs">
-      <DependentUpon>FillPatternTest.cs</DependentUpon>
-    </Compile>
     <Compile Include="Models\Classes\Row\FlatRowTest.cs" />
     <Compile Include="Models\Classes\Row\FlatRowTest.designer.cs">
       <DependentUpon>FlatRowTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Classes\Format\Region\HeaderRowsFormatTest.cs" />
-    <Compile Include="Models\Classes\Format\Region\HeaderRowsFormatTest.designer.cs">
-      <DependentUpon>HeaderRowsFormatTest.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Models\Classes\Format\Region\Regions\HeaderRowsFormatTest.cs" />
     <Compile Include="Models\Classes\Row\HeaderRowsTest.cs" />
     <Compile Include="Models\Classes\Row\HeaderRowsTest.designer.cs">
       <DependentUpon>HeaderRowsTest.cs</DependentUpon>
@@ -300,9 +312,6 @@
       <DependentUpon>LinkedResourceBaseTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Classes\Cell\Single\MediaReferenceCellTest.cs" />
-    <Compile Include="Models\Classes\Cell\Single\MediaReferenceCellTest.designer.cs">
-      <DependentUpon>MediaReferenceCellTest.cs</DependentUpon>
-    </Compile>
     <Compile Include="Models\Classes\CellValue\MediaReferenceTest.cs" />
     <Compile Include="Models\Classes\CellValue\MediaReferenceTest.designer.cs">
       <DependentUpon>MediaReferenceTest.cs</DependentUpon>
@@ -314,6 +323,10 @@
     <Compile Include="Models\Classes\Format\Border\OuterBorderTest.cs" />
     <Compile Include="Models\Classes\Format\Border\OuterBorderTest.designer.cs">
       <DependentUpon>OuterBorderTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Format\Region\MultiCellRegionFormatBaseTest.cs" />
+    <Compile Include="Models\Classes\Format\Region\MultiCellRegionFormatBaseTest.designer.cs">
+      <DependentUpon>MultiCellRegionFormatBaseTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\GlobalSuppressions.cs" />
@@ -351,10 +364,7 @@
     <Compile Include="Models\Classes\Column\TableColumnsTest.designer.cs">
       <DependentUpon>TableColumnsTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Classes\Format\Region\TableFormatTest.cs" />
-    <Compile Include="Models\Classes\Format\Region\TableFormatTest.designer.cs">
-      <DependentUpon>TableFormatTest.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Models\Classes\Format\Region\Regions\TableFormatTest.cs" />
     <Compile Include="Models\Classes\Row\TableRowsTest.cs" />
     <Compile Include="Models\Classes\Row\TableRowsTest.designer.cs">
       <DependentUpon>TableRowsTest.cs</DependentUpon>
@@ -371,17 +381,11 @@
     <None Include="DummyFactory.recipe-nuspec" />
     <Compile Include="Properties\ProjectInfo.cs" />
     <Compile Include="Models\Classes\Format\Region\RegionFormatBaseTest.cs" />
-    <Compile Include="Models\Classes\Format\Region\RegionFormatBaseTest.designer.cs">
-      <DependentUpon>RegionFormatBaseTest.cs</DependentUpon>
-    </Compile>
     <Compile Include="Models\Classes\Row\RowBaseTest.cs" />
     <Compile Include="Models\Classes\Row\RowBaseTest.designer.cs">
       <DependentUpon>RowBaseTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Classes\Format\Region\RowFormatTest.cs" />
-    <Compile Include="Models\Classes\Format\Region\RowFormatTest.designer.cs">
-      <DependentUpon>RowFormatTest.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Models\Classes\Format\Region\Regions\RowFormatTest.cs" />
     <Compile Include="Models\Classes\Row\RowTest.cs" />
     <Compile Include="Models\Classes\Row\RowTest.designer.cs">
       <DependentUpon>RowTest.cs</DependentUpon>

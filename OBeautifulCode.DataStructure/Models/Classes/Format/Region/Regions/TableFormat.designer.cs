@@ -69,9 +69,9 @@ namespace OBeautifulCode.DataStructure
                 return false;
             }
 
-            var result = this.CellsFormat.IsEqualTo(other.CellsFormat)
-                      && this.OuterBorders.IsEqualTo(other.OuterBorders)
-                      && this.InnerBorders.IsEqualTo(other.InnerBorders);
+            var result = this.OuterBorders.IsEqualTo(other.OuterBorders)
+                      && this.InnerBorders.IsEqualTo(other.InnerBorders)
+                      && this.CellsFormat.IsEqualTo(other.CellsFormat);
 
             return result;
         }
@@ -81,13 +81,69 @@ namespace OBeautifulCode.DataStructure
 
         /// <inheritdoc />
         public override int GetHashCode() => HashCodeHelper.Initialize()
-            .Hash(this.CellsFormat)
             .Hash(this.OuterBorders)
             .Hash(this.InnerBorders)
+            .Hash(this.CellsFormat)
             .Value;
 
         /// <inheritdoc />
         public new TableFormat DeepClone() => (TableFormat)this.DeepCloneInternal();
+
+        /// <inheritdoc />
+        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
+        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
+        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
+        public override RegionFormatBase DeepCloneWithOuterBorders(IReadOnlyList<OuterBorder> outerBorders)
+        {
+            var result = new TableFormat(
+                                 outerBorders,
+                                 this.InnerBorders?.DeepClone(),
+                                 this.CellsFormat?.DeepClone());
+
+            return result;
+        }
+
+        /// <inheritdoc />
+        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
+        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
+        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
+        public override MultiCellRegionFormatBase DeepCloneWithInnerBorders(IReadOnlyList<InnerBorder> innerBorders)
+        {
+            var result = new TableFormat(
+                                 this.OuterBorders?.DeepClone(),
+                                 innerBorders,
+                                 this.CellsFormat?.DeepClone());
+
+            return result;
+        }
 
         /// <summary>
         /// Deep clones this object with a new <see cref="CellsFormat" />.
@@ -114,73 +170,9 @@ namespace OBeautifulCode.DataStructure
         public TableFormat DeepCloneWithCellsFormat(CellFormat cellsFormat)
         {
             var result = new TableFormat(
-                                 cellsFormat,
                                  this.OuterBorders?.DeepClone(),
-                                 this.InnerBorders?.DeepClone());
-
-            return result;
-        }
-
-        /// <summary>
-        /// Deep clones this object with a new <see cref="OuterBorders" />.
-        /// </summary>
-        /// <param name="outerBorders">The new <see cref="OuterBorders" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="TableFormat" /> using the specified <paramref name="outerBorders" /> for <see cref="OuterBorders" /> and a deep clone of every other property.</returns>
-        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
-        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
-        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
-        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public TableFormat DeepCloneWithOuterBorders(IReadOnlyList<OuterBorder> outerBorders)
-        {
-            var result = new TableFormat(
-                                 this.CellsFormat?.DeepClone(),
-                                 outerBorders,
-                                 this.InnerBorders?.DeepClone());
-
-            return result;
-        }
-
-        /// <summary>
-        /// Deep clones this object with a new <see cref="InnerBorders" />.
-        /// </summary>
-        /// <param name="innerBorders">The new <see cref="InnerBorders" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="TableFormat" /> using the specified <paramref name="innerBorders" /> for <see cref="InnerBorders" /> and a deep clone of every other property.</returns>
-        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
-        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
-        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
-        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public TableFormat DeepCloneWithInnerBorders(IReadOnlyList<InnerBorder> innerBorders)
-        {
-            var result = new TableFormat(
-                                 this.CellsFormat?.DeepClone(),
-                                 this.OuterBorders?.DeepClone(),
-                                 innerBorders);
+                                 this.InnerBorders?.DeepClone(),
+                                 cellsFormat);
 
             return result;
         }
@@ -190,9 +182,9 @@ namespace OBeautifulCode.DataStructure
         protected override RegionFormatBase DeepCloneInternal()
         {
             var result = new TableFormat(
-                                 this.CellsFormat?.DeepClone(),
                                  this.OuterBorders?.DeepClone(),
-                                 this.InnerBorders?.DeepClone());
+                                 this.InnerBorders?.DeepClone(),
+                                 this.CellsFormat?.DeepClone());
 
             return result;
         }
@@ -201,7 +193,7 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"OBeautifulCode.DataStructure.TableFormat: CellsFormat = {this.CellsFormat?.ToString() ?? "<null>"}, OuterBorders = {this.OuterBorders?.ToString() ?? "<null>"}, InnerBorders = {this.InnerBorders?.ToString() ?? "<null>"}.");
+            var result = Invariant($"OBeautifulCode.DataStructure.TableFormat: OuterBorders = {this.OuterBorders?.ToString() ?? "<null>"}, InnerBorders = {this.InnerBorders?.ToString() ?? "<null>"}, CellsFormat = {this.CellsFormat?.ToString() ?? "<null>"}.");
 
             return result;
         }

@@ -136,6 +136,90 @@ namespace OBeautifulCode.DataStructure.Test
                         },
                         ExpectedExceptionType = typeof(ArgumentException),
                         ExpectedExceptionMessageContains = new[] { "childRows", "contains at least one null element", },
+                    })
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<Row>
+                    {
+                        Name = "constructor should throw ArgumentException when parameter 'expandedSummaryRow' is not null, but childRows is null.",
+                        ConstructionFunc = () =>
+                        {
+                            var referenceObject = A.Dummy<Row>();
+
+                            var result = new Row(
+                                referenceObject.Cells,
+                                referenceObject.Id,
+                                referenceObject.Format,
+                                null,
+                                A.Dummy<FlatRow>(),
+                                null);
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentException),
+                        ExpectedExceptionMessageContains = new[] { "expandedSummaryRow is specified when there are no rows in childRows", },
+                    })
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<Row>
+                    {
+                        Name = "constructor should throw ArgumentException when parameter 'expandedSummaryRow' is not null, but childRows is empty.",
+                        ConstructionFunc = () =>
+                        {
+                            var referenceObject = A.Dummy<Row>();
+
+                            var result = new Row(
+                                referenceObject.Cells,
+                                referenceObject.Id,
+                                referenceObject.Format,
+                                new Row[0],
+                                A.Dummy<FlatRow>(),
+                                null);
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentException),
+                        ExpectedExceptionMessageContains = new[] { "expandedSummaryRow is specified when there are no rows in childRows", },
+                    })
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<Row>
+                    {
+                        Name = "constructor should throw ArgumentException when parameter 'collapsedSummaryRow' is not null, but childRows is null.",
+                        ConstructionFunc = () =>
+                        {
+                            var referenceObject = A.Dummy<Row>();
+
+                            var result = new Row(
+                                referenceObject.Cells,
+                                referenceObject.Id,
+                                referenceObject.Format,
+                                null,
+                                null,
+                                A.Dummy<FlatRow>());
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentException),
+                        ExpectedExceptionMessageContains = new[] { "collapsedSummaryRow is specified when there are no rows in childRows", },
+                    })
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<Row>
+                    {
+                        Name = "constructor should throw ArgumentException when parameter 'collapsedSummaryRow' is not null, but childRows is empty.",
+                        ConstructionFunc = () =>
+                        {
+                            var referenceObject = A.Dummy<Row>();
+
+                            var result = new Row(
+                                referenceObject.Cells,
+                                referenceObject.Id,
+                                referenceObject.Format,
+                                new Row[0],
+                                null,
+                                A.Dummy<FlatRow>());
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentException),
+                        ExpectedExceptionMessageContains = new[] { "collapsedSummaryRow is specified when there are no rows in childRows", },
                     });
 
             DeepCloneWithTestScenarios
@@ -207,13 +291,9 @@ namespace OBeautifulCode.DataStructure.Test
                         WithPropertyName = "ChildRows",
                         SystemUnderTestDeepCloneWithValueFunc = () =>
                         {
-                            var systemUnderTest = A.Dummy<Row>();
+                            var systemUnderTest = A.Dummy<Row>().Whose(_ => _.ChildRows.Any());
 
-                            var referenceObject = A.Dummy<Row>().ThatIs(_ => !systemUnderTest.ChildRows.IsEqualTo(_.ChildRows));
-
-                            systemUnderTest = referenceObject.ChildRows.Any()
-                                ? new Row(systemUnderTest.Cells, systemUnderTest.Id, systemUnderTest.Format, systemUnderTest.ChildRows, systemUnderTest.ExpandedSummaryRow, systemUnderTest.CollapsedSummaryRow)
-                                : new Row(systemUnderTest.Cells, systemUnderTest.Id, systemUnderTest.Format, systemUnderTest.ChildRows, null, null);
+                            var referenceObject = A.Dummy<Row>().Whose(_ => _.ChildRows.Any() && (!_.ChildRows.IsEqualTo(systemUnderTest.ChildRows)));
 
                             var result = new SystemUnderTestDeepCloneWithValue<Row>
                             {
@@ -231,9 +311,9 @@ namespace OBeautifulCode.DataStructure.Test
                         WithPropertyName = "ExpandedSummaryRow",
                         SystemUnderTestDeepCloneWithValueFunc = () =>
                         {
-                            var systemUnderTest = A.Dummy<Row>();
+                            var systemUnderTest = A.Dummy<Row>().Whose(_ => _.ChildRows.Any());
 
-                            var referenceObject = A.Dummy<Row>().ThatIs(_ => _.ChildRows.Any() && !systemUnderTest.ExpandedSummaryRow.IsEqualTo(_.ExpandedSummaryRow));
+                            var referenceObject = A.Dummy<Row>().Whose(_ => _.ChildRows.Any() && (!_.ExpandedSummaryRow.IsEqualTo(systemUnderTest.ExpandedSummaryRow)));
 
                             var result = new SystemUnderTestDeepCloneWithValue<Row>
                             {
@@ -251,9 +331,9 @@ namespace OBeautifulCode.DataStructure.Test
                         WithPropertyName = "CollapsedSummaryRow",
                         SystemUnderTestDeepCloneWithValueFunc = () =>
                         {
-                            var systemUnderTest = A.Dummy<Row>();
+                            var systemUnderTest = A.Dummy<Row>().Whose(_ => _.ChildRows.Any());
 
-                            var referenceObject = A.Dummy<Row>().ThatIs(_ => _.ChildRows.Any() && !systemUnderTest.CollapsedSummaryRow.IsEqualTo(_.CollapsedSummaryRow));
+                            var referenceObject = A.Dummy<Row>().Whose(_ => _.ChildRows.Any() && (!_.CollapsedSummaryRow.IsEqualTo(systemUnderTest.CollapsedSummaryRow)));
 
                             var result = new SystemUnderTestDeepCloneWithValue<Row>
                             {
@@ -264,6 +344,85 @@ namespace OBeautifulCode.DataStructure.Test
                             return result;
                         },
                     });
+
+            EquatableTestScenarios
+                .RemoveAllScenarios()
+                .AddScenario(() =>
+                {
+                    var referenceObject = A.Dummy<Row>().Whose(_ => _.ChildRows.Any());
+
+                    var result = new EquatableTestScenario<Row>
+                    {
+                        Name = "Default Code Generated Scenario",
+                        ReferenceObject = referenceObject,
+                        ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new Row[]
+                        {
+                            new Row(
+                                    referenceObject.Cells,
+                                    referenceObject.Id,
+                                    referenceObject.Format,
+                                    referenceObject.ChildRows,
+                                    referenceObject.ExpandedSummaryRow,
+                                    referenceObject.CollapsedSummaryRow),
+                        },
+                        ObjectsThatAreNotEqualToReferenceObject = new Row[]
+                        {
+                            new Row(
+                                    referenceObject.Cells,
+                                    A.Dummy<Row>().Whose(_ => !_.Id.IsEqualTo(referenceObject.Id)).Id,
+                                    referenceObject.Format,
+                                    referenceObject.ChildRows,
+                                    referenceObject.ExpandedSummaryRow,
+                                    referenceObject.CollapsedSummaryRow),
+                            new Row(
+                                    A.Dummy<Row>().Whose(_ => !_.Cells.IsEqualTo(referenceObject.Cells)).Cells,
+                                    referenceObject.Id,
+                                    referenceObject.Format,
+                                    referenceObject.ChildRows,
+                                    referenceObject.ExpandedSummaryRow,
+                                    referenceObject.CollapsedSummaryRow),
+                            new Row(
+                                    referenceObject.Cells,
+                                    referenceObject.Id,
+                                    A.Dummy<Row>().Whose(_ => !_.Format.IsEqualTo(referenceObject.Format)).Format,
+                                    referenceObject.ChildRows,
+                                    referenceObject.ExpandedSummaryRow,
+                                    referenceObject.CollapsedSummaryRow),
+                            new Row(
+                                    referenceObject.Cells,
+                                    referenceObject.Id,
+                                    referenceObject.Format,
+                                    A.Dummy<Row>().Whose(_ => (!_.ChildRows.IsEqualTo(referenceObject.ChildRows)) && _.ChildRows.Any()).ChildRows,
+                                    referenceObject.ExpandedSummaryRow,
+                                    referenceObject.CollapsedSummaryRow),
+                            new Row(
+                                    referenceObject.Cells,
+                                    referenceObject.Id,
+                                    referenceObject.Format,
+                                    referenceObject.ChildRows,
+                                    A.Dummy<Row>().Whose(_ => (!_.ExpandedSummaryRow.IsEqualTo(referenceObject.ExpandedSummaryRow)) && _.ChildRows.Any()).ExpandedSummaryRow,
+                                    referenceObject.CollapsedSummaryRow),
+                            new Row(
+                                    referenceObject.Cells,
+                                    referenceObject.Id,
+                                    referenceObject.Format,
+                                    referenceObject.ChildRows,
+                                    referenceObject.ExpandedSummaryRow,
+                                    A.Dummy<Row>().Whose(_ => (!_.CollapsedSummaryRow.IsEqualTo(ReferenceObjectForEquatableTestScenarios.CollapsedSummaryRow)) && _.ChildRows.Any()).CollapsedSummaryRow),
+                        },
+                        ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
+                        {
+                            A.Dummy<object>(),
+                            A.Dummy<string>(),
+                            A.Dummy<int>(),
+                            A.Dummy<int?>(),
+                            A.Dummy<Guid>(),
+                            A.Dummy<FlatRow>(),
+                        },
+                    };
+
+                    return result;
+                });
         }
     }
 }

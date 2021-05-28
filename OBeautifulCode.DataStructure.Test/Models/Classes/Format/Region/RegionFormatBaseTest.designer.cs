@@ -53,6 +53,7 @@ namespace OBeautifulCode.DataStructure.Test
                         // when the derivative's constructor in-use (by code gen) does not have a parameter that
                         // corresponds with the property who's value is provided in the DeepCloneWith___() method.
                         // We do not know in advance if this will happen.  As such, the following objects are commented out.
+                        // ReferenceObjectForEquatableTestScenarios.DeepCloneWithOuterBorders(A.Dummy<RegionFormatBase>().Whose(_ => !_.OuterBorders.IsEqualTo(ReferenceObjectForEquatableTestScenarios.OuterBorders)).OuterBorders),
                     },
                     ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject = new RegionFormatBase[]
                     {
@@ -188,6 +189,15 @@ namespace OBeautifulCode.DataStructure.Test
                 // Assert
                 actual.AsTest().Must().BeEqualTo(systemUnderTest);
                 actual.AsTest().Must().NotBeSameReferenceAs(systemUnderTest);
+
+                if (systemUnderTest.OuterBorders == null)
+                {
+                    actual.OuterBorders.AsTest().Must().BeNull();
+                }
+                else
+                {
+                    actual.OuterBorders.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.OuterBorders);
+                }
             }
         }
 

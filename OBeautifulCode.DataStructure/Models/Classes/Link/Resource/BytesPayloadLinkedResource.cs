@@ -40,7 +40,7 @@ namespace OBeautifulCode.DataStructure
 
             if (resourceKind == BytesPayloadLinkedResourceKind.Unknown)
             {
-                throw new ArgumentException(Invariant($"{nameof(resourceKind)} is {nameof(BytesPayloadLinkedResourceKind.Unknown)}."));
+                throw new ArgumentOutOfRangeException(Invariant($"{nameof(resourceKind)} is {nameof(BytesPayloadLinkedResourceKind.Unknown)}."));
             }
 
             this.Bytes = bytes;

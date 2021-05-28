@@ -41,7 +41,7 @@ namespace OBeautifulCode.DataStructure
 
             if (mediaReferenceKind == MediaReferenceKind.Unknown)
             {
-                throw new ArgumentException(Invariant($"{nameof(mediaReferenceKind)} is {nameof(MediaReferenceKind.Unknown)}."));
+                throw new ArgumentOutOfRangeException(Invariant($"{nameof(mediaReferenceKind)} is {nameof(MediaReferenceKind.Unknown)}."));
             }
 
             this.Url = url;

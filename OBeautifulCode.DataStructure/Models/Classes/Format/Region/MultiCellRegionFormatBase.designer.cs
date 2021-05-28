@@ -23,15 +23,15 @@ namespace OBeautifulCode.DataStructure
     using static global::System.FormattableString;
 
     [Serializable]
-    public partial class RegionFormatBase : IModel<RegionFormatBase>
+    public partial class MultiCellRegionFormatBase : IModel<MultiCellRegionFormatBase>
     {
         /// <summary>
-        /// Determines whether two objects of type <see cref="RegionFormatBase"/> are equal.
+        /// Determines whether two objects of type <see cref="MultiCellRegionFormatBase"/> are equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are equal; otherwise false.</returns>
-        public static bool operator ==(RegionFormatBase left, RegionFormatBase right)
+        public static bool operator ==(MultiCellRegionFormatBase left, MultiCellRegionFormatBase right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -49,15 +49,15 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <summary>
-        /// Determines whether two objects of type <see cref="RegionFormatBase"/> are not equal.
+        /// Determines whether two objects of type <see cref="MultiCellRegionFormatBase"/> are not equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are not equal; otherwise false.</returns>
-        public static bool operator !=(RegionFormatBase left, RegionFormatBase right) => !(left == right);
+        public static bool operator !=(MultiCellRegionFormatBase left, MultiCellRegionFormatBase right) => !(left == right);
 
         /// <inheritdoc />
-        public bool Equals(RegionFormatBase other) => this == other;
+        public bool Equals(MultiCellRegionFormatBase other) => this == other;
 
         /// <inheritdoc />
         [SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]
@@ -74,16 +74,13 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <inheritdoc />
-        public object Clone() => this.DeepClone();
-
-        /// <inheritdoc />
-        public RegionFormatBase DeepClone() => this.DeepCloneInternal();
+        public new MultiCellRegionFormatBase DeepClone() => (MultiCellRegionFormatBase)this.DeepCloneInternal();
 
         /// <summary>
-        /// Deep clones this object with a new <see cref="OuterBorders" />.
+        /// Deep clones this object with a new <see cref="InnerBorders" />.
         /// </summary>
-        /// <param name="outerBorders">The new <see cref="OuterBorders" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="RegionFormatBase" /> using the specified <paramref name="outerBorders" /> for <see cref="OuterBorders" /> and a deep clone of every other property.</returns>
+        /// <param name="innerBorders">The new <see cref="InnerBorders" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="MultiCellRegionFormatBase" /> using the specified <paramref name="innerBorders" /> for <see cref="InnerBorders" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -101,18 +98,7 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public virtual RegionFormatBase DeepCloneWithOuterBorders(IReadOnlyList<OuterBorder> outerBorders)
-        {
-            throw new NotImplementedException("This method should be abstract.  It was generated as virtual so that you aren't forced to override it when you create a new model that derives from this model.  It will be overridden in the generated designer file.");
-        }
-
-        /// <summary>
-        /// Creates a new object that is a deep clone of this instance.
-        /// </summary>
-        /// <returns>
-        /// A new object that is a deep clone of this instance.
-        /// </returns>
-        protected virtual RegionFormatBase DeepCloneInternal()
+        public virtual MultiCellRegionFormatBase DeepCloneWithInnerBorders(IReadOnlyList<InnerBorder> innerBorders)
         {
             throw new NotImplementedException("This method should be abstract.  It was generated as virtual so that you aren't forced to override it when you create a new model that derives from this model.  It will be overridden in the generated designer file.");
         }

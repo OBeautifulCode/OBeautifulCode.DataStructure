@@ -24,6 +24,7 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Initializes a new instance of the <see cref="CellFormat"/> class.
         /// </summary>
+        /// <param name="outerBorders">OPTIONAL borders to apply to the cell, in the order that they should be applied.  DEFAULT is no border.</param>
         /// <param name="backgroundColor">OPTIONAL background color of the cell.  DEFAULT is to leave the background color unchanged.</param>
         /// <param name="fontColor">OPTIONAL font color.  DEFAULT is to leave the font color unchanged.</param>
         /// <param name="fontNamesInFallbackOrder">OPTIONAL font names, in fallback order, of the fonts to use.  DEFAULT is leave the font unchanged.</param>
@@ -31,10 +32,10 @@ namespace OBeautifulCode.DataStructure
         /// <param name="verticalAlignment">OPTIONAL vertical alignment.  DEFAULT is to leave the vertical alignment unchanged.</param>
         /// <param name="horizontalAlignment">OPTIONAL horizontal alignment.  DEFAULT is to leave the horizontal alignment unchanged.</param>
         /// <param name="fontRotationAngle">OPTIONAL font rotation angle, between +90 and -90.  Positive numbers cause the text to slope upward, negative numbers cause the text to slope downward.  DEFAULT is to leave the font rotation angle unchanged.</param>
-        /// <param name="borders">OPTIONAL borders to apply to the cell, in the order that they should be applied.  DEFAULT is no border.</param>
         /// <param name="fillPattern">OPTIONAL pattern to fill the cell with.  DEFAULT is no pattern.</param>
         /// <param name="options">OPTIONAL formatting options to apply to the cell.  DEFAULT is to not apply any of the formatting options.</param>
         public CellFormat(
+            IReadOnlyList<OuterBorder> outerBorders = null,
             Color? backgroundColor = null,
             Color? fontColor = null,
             IReadOnlyList<string> fontNamesInFallbackOrder = null,
@@ -42,9 +43,9 @@ namespace OBeautifulCode.DataStructure
             VerticalAlignment? verticalAlignment = null,
             HorizontalAlignment? horizontalAlignment = null,
             int? fontRotationAngle = null,
-            IReadOnlyList<OuterBorder> borders = null,
             FillPattern fillPattern = null,
             CellFormatOptions? options = null)
+            : base(outerBorders)
         {
             if (fontNamesInFallbackOrder != null)
             {
@@ -66,25 +67,12 @@ namespace OBeautifulCode.DataStructure
 
             if (verticalAlignment == DataStructure.VerticalAlignment.Unknown)
             {
-                throw new ArgumentException(Invariant($"{nameof(verticalAlignment)} is {nameof(DataStructure.VerticalAlignment.Unknown)}."));
+                throw new ArgumentOutOfRangeException(Invariant($"{nameof(verticalAlignment)} is {nameof(DataStructure.VerticalAlignment.Unknown)}."));
             }
 
             if (horizontalAlignment == DataStructure.HorizontalAlignment.Unknown)
             {
-                throw new ArgumentException(Invariant($"{nameof(horizontalAlignment)} is {nameof(DataStructure.HorizontalAlignment.Unknown)}."));
-            }
-
-            if (borders != null)
-            {
-                if (!borders.Any())
-                {
-                    throw new ArgumentException(Invariant($"{nameof(borders)} is an empty enumerable."));
-                }
-
-                if (borders.Any(_ => _ == null))
-                {
-                    throw new ArgumentException(Invariant($"{nameof(borders)} contains at least one null element."));
-                }
+                throw new ArgumentOutOfRangeException(Invariant($"{nameof(horizontalAlignment)} is {nameof(DataStructure.HorizontalAlignment.Unknown)}."));
             }
 
             this.BackgroundColor = backgroundColor;
@@ -94,7 +82,6 @@ namespace OBeautifulCode.DataStructure
             this.VerticalAlignment = verticalAlignment;
             this.HorizontalAlignment = horizontalAlignment;
             this.FontRotationAngle = fontRotationAngle;
-            this.Borders = borders;
             this.FillPattern = fillPattern;
             this.Options = options;
         }
@@ -133,11 +120,6 @@ namespace OBeautifulCode.DataStructure
         /// Gets the font rotation angle, between +90 and -90.  Positive numbers cause the text to slope upward, negative numbers cause the text to slope downward.
         /// </summary>
         public int? FontRotationAngle { get; private set; }
-
-        /// <summary>
-        /// Gets the borders to apply to the cell, in the order that they should be applied.
-        /// </summary>
-        public IReadOnlyList<OuterBorder> Borders { get; private set; }
 
         /// <summary>
         /// Gets the pattern to fill the cell with.

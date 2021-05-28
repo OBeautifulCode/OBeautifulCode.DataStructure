@@ -47,7 +47,7 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new SystemUnderTestExpectedStringRepresentation<ColumnFormat>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.ColumnFormat: CellsFormat = {systemUnderTest.CellsFormat?.ToString() ?? "<null>"}, WidthInPixels = {systemUnderTest.WidthInPixels?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, AutoFitColumnWidth = {systemUnderTest.AutoFitColumnWidth?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, OuterBorders = {systemUnderTest.OuterBorders?.ToString() ?? "<null>"}, InnerBorders = {systemUnderTest.InnerBorders?.ToString() ?? "<null>"}, Options = {systemUnderTest.Options?.ToString() ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.ColumnFormat: OuterBorders = {systemUnderTest.OuterBorders?.ToString() ?? "<null>"}, InnerBorders = {systemUnderTest.InnerBorders?.ToString() ?? "<null>"}, CellsFormat = {systemUnderTest.CellsFormat?.ToString() ?? "<null>"}, WidthInPixels = {systemUnderTest.WidthInPixels?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, AutoFitColumnWidth = {systemUnderTest.AutoFitColumnWidth?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Options = {systemUnderTest.Options?.ToString() ?? "<null>"}."),
                         };
 
                         return result;
@@ -58,38 +58,17 @@ namespace OBeautifulCode.DataStructure.Test
             .AddScenario(() =>
                 new ConstructorArgumentValidationTestScenario<ColumnFormat>
                 {
-                    Name = "constructor should throw ArgumentNullException when parameter 'cellsFormat' is null scenario",
-                    ConstructionFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<ColumnFormat>();
-
-                        var result = new ColumnFormat(
-                                             null,
-                                             referenceObject.WidthInPixels,
-                                             referenceObject.AutoFitColumnWidth,
-                                             referenceObject.OuterBorders,
-                                             referenceObject.InnerBorders,
-                                             referenceObject.Options);
-
-                        return result;
-                    },
-                    ExpectedExceptionType = typeof(ArgumentNullException),
-                    ExpectedExceptionMessageContains = new[] { "cellsFormat", },
-                })
-            .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<ColumnFormat>
-                {
                     Name = "constructor should throw ArgumentNullException when parameter 'outerBorders' is null scenario",
                     ConstructionFunc = () =>
                     {
                         var referenceObject = A.Dummy<ColumnFormat>();
 
                         var result = new ColumnFormat(
+                                             null,
+                                             referenceObject.InnerBorders,
                                              referenceObject.CellsFormat,
                                              referenceObject.WidthInPixels,
                                              referenceObject.AutoFitColumnWidth,
-                                             null,
-                                             referenceObject.InnerBorders,
                                              referenceObject.Options);
 
                         return result;
@@ -106,11 +85,11 @@ namespace OBeautifulCode.DataStructure.Test
                         var referenceObject = A.Dummy<ColumnFormat>();
 
                         var result = new ColumnFormat(
+                                             new List<OuterBorder>(),
+                                             referenceObject.InnerBorders,
                                              referenceObject.CellsFormat,
                                              referenceObject.WidthInPixels,
                                              referenceObject.AutoFitColumnWidth,
-                                             new List<OuterBorder>(),
-                                             referenceObject.InnerBorders,
                                              referenceObject.Options);
 
                         return result;
@@ -127,11 +106,11 @@ namespace OBeautifulCode.DataStructure.Test
                         var referenceObject = A.Dummy<ColumnFormat>();
 
                         var result = new ColumnFormat(
+                                             new OuterBorder[0].Concat(referenceObject.OuterBorders).Concat(new OuterBorder[] { null }).Concat(referenceObject.OuterBorders).ToList(),
+                                             referenceObject.InnerBorders,
                                              referenceObject.CellsFormat,
                                              referenceObject.WidthInPixels,
                                              referenceObject.AutoFitColumnWidth,
-                                             new OuterBorder[0].Concat(referenceObject.OuterBorders).Concat(new OuterBorder[] { null }).Concat(referenceObject.OuterBorders).ToList(),
-                                             referenceObject.InnerBorders,
                                              referenceObject.Options);
 
                         return result;
@@ -148,11 +127,11 @@ namespace OBeautifulCode.DataStructure.Test
                         var referenceObject = A.Dummy<ColumnFormat>();
 
                         var result = new ColumnFormat(
+                                             referenceObject.OuterBorders,
+                                             null,
                                              referenceObject.CellsFormat,
                                              referenceObject.WidthInPixels,
                                              referenceObject.AutoFitColumnWidth,
-                                             referenceObject.OuterBorders,
-                                             null,
                                              referenceObject.Options);
 
                         return result;
@@ -169,11 +148,11 @@ namespace OBeautifulCode.DataStructure.Test
                         var referenceObject = A.Dummy<ColumnFormat>();
 
                         var result = new ColumnFormat(
+                                             referenceObject.OuterBorders,
+                                             new List<InnerBorder>(),
                                              referenceObject.CellsFormat,
                                              referenceObject.WidthInPixels,
                                              referenceObject.AutoFitColumnWidth,
-                                             referenceObject.OuterBorders,
-                                             new List<InnerBorder>(),
                                              referenceObject.Options);
 
                         return result;
@@ -190,92 +169,41 @@ namespace OBeautifulCode.DataStructure.Test
                         var referenceObject = A.Dummy<ColumnFormat>();
 
                         var result = new ColumnFormat(
+                                             referenceObject.OuterBorders,
+                                             new InnerBorder[0].Concat(referenceObject.InnerBorders).Concat(new InnerBorder[] { null }).Concat(referenceObject.InnerBorders).ToList(),
                                              referenceObject.CellsFormat,
                                              referenceObject.WidthInPixels,
                                              referenceObject.AutoFitColumnWidth,
-                                             referenceObject.OuterBorders,
-                                             new InnerBorder[0].Concat(referenceObject.InnerBorders).Concat(new InnerBorder[] { null }).Concat(referenceObject.InnerBorders).ToList(),
                                              referenceObject.Options);
 
                         return result;
                     },
                     ExpectedExceptionType = typeof(ArgumentException),
                     ExpectedExceptionMessageContains = new[] { "innerBorders", "contains at least one null element", },
+                })
+            .AddScenario(() =>
+                new ConstructorArgumentValidationTestScenario<ColumnFormat>
+                {
+                    Name = "constructor should throw ArgumentNullException when parameter 'cellsFormat' is null scenario",
+                    ConstructionFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<ColumnFormat>();
+
+                        var result = new ColumnFormat(
+                                             referenceObject.OuterBorders,
+                                             referenceObject.InnerBorders,
+                                             null,
+                                             referenceObject.WidthInPixels,
+                                             referenceObject.AutoFitColumnWidth,
+                                             referenceObject.Options);
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentNullException),
+                    ExpectedExceptionMessageContains = new[] { "cellsFormat", },
                 });
 
         private static readonly ConstructorPropertyAssignmentTestScenarios<ColumnFormat> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<ColumnFormat>()
-            .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<ColumnFormat>
-                {
-                    Name = "CellsFormat should return same 'cellsFormat' parameter passed to constructor when getting",
-                    SystemUnderTestExpectedPropertyValueFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<ColumnFormat>();
-
-                        var result = new SystemUnderTestExpectedPropertyValue<ColumnFormat>
-                        {
-                            SystemUnderTest = new ColumnFormat(
-                                                      referenceObject.CellsFormat,
-                                                      referenceObject.WidthInPixels,
-                                                      referenceObject.AutoFitColumnWidth,
-                                                      referenceObject.OuterBorders,
-                                                      referenceObject.InnerBorders,
-                                                      referenceObject.Options),
-                            ExpectedPropertyValue = referenceObject.CellsFormat,
-                        };
-
-                        return result;
-                    },
-                    PropertyName = "CellsFormat",
-                })
-            .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<ColumnFormat>
-                {
-                    Name = "WidthInPixels should return same 'widthInPixels' parameter passed to constructor when getting",
-                    SystemUnderTestExpectedPropertyValueFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<ColumnFormat>();
-
-                        var result = new SystemUnderTestExpectedPropertyValue<ColumnFormat>
-                        {
-                            SystemUnderTest = new ColumnFormat(
-                                                      referenceObject.CellsFormat,
-                                                      referenceObject.WidthInPixels,
-                                                      referenceObject.AutoFitColumnWidth,
-                                                      referenceObject.OuterBorders,
-                                                      referenceObject.InnerBorders,
-                                                      referenceObject.Options),
-                            ExpectedPropertyValue = referenceObject.WidthInPixels,
-                        };
-
-                        return result;
-                    },
-                    PropertyName = "WidthInPixels",
-                })
-            .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<ColumnFormat>
-                {
-                    Name = "AutoFitColumnWidth should return same 'autoFitColumnWidth' parameter passed to constructor when getting",
-                    SystemUnderTestExpectedPropertyValueFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<ColumnFormat>();
-
-                        var result = new SystemUnderTestExpectedPropertyValue<ColumnFormat>
-                        {
-                            SystemUnderTest = new ColumnFormat(
-                                                      referenceObject.CellsFormat,
-                                                      referenceObject.WidthInPixels,
-                                                      referenceObject.AutoFitColumnWidth,
-                                                      referenceObject.OuterBorders,
-                                                      referenceObject.InnerBorders,
-                                                      referenceObject.Options),
-                            ExpectedPropertyValue = referenceObject.AutoFitColumnWidth,
-                        };
-
-                        return result;
-                    },
-                    PropertyName = "AutoFitColumnWidth",
-                })
             .AddScenario(() =>
                 new ConstructorPropertyAssignmentTestScenario<ColumnFormat>
                 {
@@ -287,11 +215,11 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new SystemUnderTestExpectedPropertyValue<ColumnFormat>
                         {
                             SystemUnderTest = new ColumnFormat(
+                                                      referenceObject.OuterBorders,
+                                                      referenceObject.InnerBorders,
                                                       referenceObject.CellsFormat,
                                                       referenceObject.WidthInPixels,
                                                       referenceObject.AutoFitColumnWidth,
-                                                      referenceObject.OuterBorders,
-                                                      referenceObject.InnerBorders,
                                                       referenceObject.Options),
                             ExpectedPropertyValue = referenceObject.OuterBorders,
                         };
@@ -311,11 +239,11 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new SystemUnderTestExpectedPropertyValue<ColumnFormat>
                         {
                             SystemUnderTest = new ColumnFormat(
+                                                      referenceObject.OuterBorders,
+                                                      referenceObject.InnerBorders,
                                                       referenceObject.CellsFormat,
                                                       referenceObject.WidthInPixels,
                                                       referenceObject.AutoFitColumnWidth,
-                                                      referenceObject.OuterBorders,
-                                                      referenceObject.InnerBorders,
                                                       referenceObject.Options),
                             ExpectedPropertyValue = referenceObject.InnerBorders,
                         };
@@ -323,6 +251,78 @@ namespace OBeautifulCode.DataStructure.Test
                         return result;
                     },
                     PropertyName = "InnerBorders",
+                })
+            .AddScenario(() =>
+                new ConstructorPropertyAssignmentTestScenario<ColumnFormat>
+                {
+                    Name = "CellsFormat should return same 'cellsFormat' parameter passed to constructor when getting",
+                    SystemUnderTestExpectedPropertyValueFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<ColumnFormat>();
+
+                        var result = new SystemUnderTestExpectedPropertyValue<ColumnFormat>
+                        {
+                            SystemUnderTest = new ColumnFormat(
+                                                      referenceObject.OuterBorders,
+                                                      referenceObject.InnerBorders,
+                                                      referenceObject.CellsFormat,
+                                                      referenceObject.WidthInPixels,
+                                                      referenceObject.AutoFitColumnWidth,
+                                                      referenceObject.Options),
+                            ExpectedPropertyValue = referenceObject.CellsFormat,
+                        };
+
+                        return result;
+                    },
+                    PropertyName = "CellsFormat",
+                })
+            .AddScenario(() =>
+                new ConstructorPropertyAssignmentTestScenario<ColumnFormat>
+                {
+                    Name = "WidthInPixels should return same 'widthInPixels' parameter passed to constructor when getting",
+                    SystemUnderTestExpectedPropertyValueFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<ColumnFormat>();
+
+                        var result = new SystemUnderTestExpectedPropertyValue<ColumnFormat>
+                        {
+                            SystemUnderTest = new ColumnFormat(
+                                                      referenceObject.OuterBorders,
+                                                      referenceObject.InnerBorders,
+                                                      referenceObject.CellsFormat,
+                                                      referenceObject.WidthInPixels,
+                                                      referenceObject.AutoFitColumnWidth,
+                                                      referenceObject.Options),
+                            ExpectedPropertyValue = referenceObject.WidthInPixels,
+                        };
+
+                        return result;
+                    },
+                    PropertyName = "WidthInPixels",
+                })
+            .AddScenario(() =>
+                new ConstructorPropertyAssignmentTestScenario<ColumnFormat>
+                {
+                    Name = "AutoFitColumnWidth should return same 'autoFitColumnWidth' parameter passed to constructor when getting",
+                    SystemUnderTestExpectedPropertyValueFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<ColumnFormat>();
+
+                        var result = new SystemUnderTestExpectedPropertyValue<ColumnFormat>
+                        {
+                            SystemUnderTest = new ColumnFormat(
+                                                      referenceObject.OuterBorders,
+                                                      referenceObject.InnerBorders,
+                                                      referenceObject.CellsFormat,
+                                                      referenceObject.WidthInPixels,
+                                                      referenceObject.AutoFitColumnWidth,
+                                                      referenceObject.Options),
+                            ExpectedPropertyValue = referenceObject.AutoFitColumnWidth,
+                        };
+
+                        return result;
+                    },
+                    PropertyName = "AutoFitColumnWidth",
                 })
             .AddScenario(() =>
                 new ConstructorPropertyAssignmentTestScenario<ColumnFormat>
@@ -335,11 +335,11 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new SystemUnderTestExpectedPropertyValue<ColumnFormat>
                         {
                             SystemUnderTest = new ColumnFormat(
+                                                      referenceObject.OuterBorders,
+                                                      referenceObject.InnerBorders,
                                                       referenceObject.CellsFormat,
                                                       referenceObject.WidthInPixels,
                                                       referenceObject.AutoFitColumnWidth,
-                                                      referenceObject.OuterBorders,
-                                                      referenceObject.InnerBorders,
                                                       referenceObject.Options),
                             ExpectedPropertyValue = referenceObject.Options,
                         };
@@ -350,6 +350,46 @@ namespace OBeautifulCode.DataStructure.Test
                 });
 
         private static readonly DeepCloneWithTestScenarios<ColumnFormat> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<ColumnFormat>()
+            .AddScenario(() =>
+                new DeepCloneWithTestScenario<ColumnFormat>
+                {
+                    Name = "DeepCloneWithOuterBorders should deep clone object and replace OuterBorders with the provided outerBorders",
+                    WithPropertyName = "OuterBorders",
+                    SystemUnderTestDeepCloneWithValueFunc = () =>
+                    {
+                        var systemUnderTest = A.Dummy<ColumnFormat>();
+
+                        var referenceObject = A.Dummy<ColumnFormat>().ThatIs(_ => !systemUnderTest.OuterBorders.IsEqualTo(_.OuterBorders));
+
+                        var result = new SystemUnderTestDeepCloneWithValue<ColumnFormat>
+                        {
+                            SystemUnderTest = systemUnderTest,
+                            DeepCloneWithValue = referenceObject.OuterBorders,
+                        };
+
+                        return result;
+                    },
+                })
+            .AddScenario(() =>
+                new DeepCloneWithTestScenario<ColumnFormat>
+                {
+                    Name = "DeepCloneWithInnerBorders should deep clone object and replace InnerBorders with the provided innerBorders",
+                    WithPropertyName = "InnerBorders",
+                    SystemUnderTestDeepCloneWithValueFunc = () =>
+                    {
+                        var systemUnderTest = A.Dummy<ColumnFormat>();
+
+                        var referenceObject = A.Dummy<ColumnFormat>().ThatIs(_ => !systemUnderTest.InnerBorders.IsEqualTo(_.InnerBorders));
+
+                        var result = new SystemUnderTestDeepCloneWithValue<ColumnFormat>
+                        {
+                            SystemUnderTest = systemUnderTest,
+                            DeepCloneWithValue = referenceObject.InnerBorders,
+                        };
+
+                        return result;
+                    },
+                })
             .AddScenario(() =>
                 new DeepCloneWithTestScenario<ColumnFormat>
                 {
@@ -413,46 +453,6 @@ namespace OBeautifulCode.DataStructure.Test
             .AddScenario(() =>
                 new DeepCloneWithTestScenario<ColumnFormat>
                 {
-                    Name = "DeepCloneWithOuterBorders should deep clone object and replace OuterBorders with the provided outerBorders",
-                    WithPropertyName = "OuterBorders",
-                    SystemUnderTestDeepCloneWithValueFunc = () =>
-                    {
-                        var systemUnderTest = A.Dummy<ColumnFormat>();
-
-                        var referenceObject = A.Dummy<ColumnFormat>().ThatIs(_ => !systemUnderTest.OuterBorders.IsEqualTo(_.OuterBorders));
-
-                        var result = new SystemUnderTestDeepCloneWithValue<ColumnFormat>
-                        {
-                            SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.OuterBorders,
-                        };
-
-                        return result;
-                    },
-                })
-            .AddScenario(() =>
-                new DeepCloneWithTestScenario<ColumnFormat>
-                {
-                    Name = "DeepCloneWithInnerBorders should deep clone object and replace InnerBorders with the provided innerBorders",
-                    WithPropertyName = "InnerBorders",
-                    SystemUnderTestDeepCloneWithValueFunc = () =>
-                    {
-                        var systemUnderTest = A.Dummy<ColumnFormat>();
-
-                        var referenceObject = A.Dummy<ColumnFormat>().ThatIs(_ => !systemUnderTest.InnerBorders.IsEqualTo(_.InnerBorders));
-
-                        var result = new SystemUnderTestDeepCloneWithValue<ColumnFormat>
-                        {
-                            SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.InnerBorders,
-                        };
-
-                        return result;
-                    },
-                })
-            .AddScenario(() =>
-                new DeepCloneWithTestScenario<ColumnFormat>
-                {
                     Name = "DeepCloneWithOptions should deep clone object and replace Options with the provided options",
                     WithPropertyName = "Options",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
@@ -482,56 +482,56 @@ namespace OBeautifulCode.DataStructure.Test
                     ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new ColumnFormat[]
                     {
                         new ColumnFormat(
+                                ReferenceObjectForEquatableTestScenarios.OuterBorders,
+                                ReferenceObjectForEquatableTestScenarios.InnerBorders,
                                 ReferenceObjectForEquatableTestScenarios.CellsFormat,
                                 ReferenceObjectForEquatableTestScenarios.WidthInPixels,
                                 ReferenceObjectForEquatableTestScenarios.AutoFitColumnWidth,
-                                ReferenceObjectForEquatableTestScenarios.OuterBorders,
-                                ReferenceObjectForEquatableTestScenarios.InnerBorders,
                                 ReferenceObjectForEquatableTestScenarios.Options),
                     },
                     ObjectsThatAreNotEqualToReferenceObject = new ColumnFormat[]
                     {
                         new ColumnFormat(
+                                A.Dummy<ColumnFormat>().Whose(_ => !_.OuterBorders.IsEqualTo(ReferenceObjectForEquatableTestScenarios.OuterBorders)).OuterBorders,
+                                ReferenceObjectForEquatableTestScenarios.InnerBorders,
+                                ReferenceObjectForEquatableTestScenarios.CellsFormat,
+                                ReferenceObjectForEquatableTestScenarios.WidthInPixels,
+                                ReferenceObjectForEquatableTestScenarios.AutoFitColumnWidth,
+                                ReferenceObjectForEquatableTestScenarios.Options),
+                        new ColumnFormat(
+                                ReferenceObjectForEquatableTestScenarios.OuterBorders,
+                                A.Dummy<ColumnFormat>().Whose(_ => !_.InnerBorders.IsEqualTo(ReferenceObjectForEquatableTestScenarios.InnerBorders)).InnerBorders,
+                                ReferenceObjectForEquatableTestScenarios.CellsFormat,
+                                ReferenceObjectForEquatableTestScenarios.WidthInPixels,
+                                ReferenceObjectForEquatableTestScenarios.AutoFitColumnWidth,
+                                ReferenceObjectForEquatableTestScenarios.Options),
+                        new ColumnFormat(
+                                ReferenceObjectForEquatableTestScenarios.OuterBorders,
+                                ReferenceObjectForEquatableTestScenarios.InnerBorders,
                                 A.Dummy<ColumnFormat>().Whose(_ => !_.CellsFormat.IsEqualTo(ReferenceObjectForEquatableTestScenarios.CellsFormat)).CellsFormat,
                                 ReferenceObjectForEquatableTestScenarios.WidthInPixels,
                                 ReferenceObjectForEquatableTestScenarios.AutoFitColumnWidth,
-                                ReferenceObjectForEquatableTestScenarios.OuterBorders,
-                                ReferenceObjectForEquatableTestScenarios.InnerBorders,
                                 ReferenceObjectForEquatableTestScenarios.Options),
                         new ColumnFormat(
+                                ReferenceObjectForEquatableTestScenarios.OuterBorders,
+                                ReferenceObjectForEquatableTestScenarios.InnerBorders,
                                 ReferenceObjectForEquatableTestScenarios.CellsFormat,
                                 A.Dummy<ColumnFormat>().Whose(_ => !_.WidthInPixels.IsEqualTo(ReferenceObjectForEquatableTestScenarios.WidthInPixels)).WidthInPixels,
                                 ReferenceObjectForEquatableTestScenarios.AutoFitColumnWidth,
-                                ReferenceObjectForEquatableTestScenarios.OuterBorders,
-                                ReferenceObjectForEquatableTestScenarios.InnerBorders,
                                 ReferenceObjectForEquatableTestScenarios.Options),
                         new ColumnFormat(
+                                ReferenceObjectForEquatableTestScenarios.OuterBorders,
+                                ReferenceObjectForEquatableTestScenarios.InnerBorders,
                                 ReferenceObjectForEquatableTestScenarios.CellsFormat,
                                 ReferenceObjectForEquatableTestScenarios.WidthInPixels,
                                 A.Dummy<ColumnFormat>().Whose(_ => !_.AutoFitColumnWidth.IsEqualTo(ReferenceObjectForEquatableTestScenarios.AutoFitColumnWidth)).AutoFitColumnWidth,
-                                ReferenceObjectForEquatableTestScenarios.OuterBorders,
-                                ReferenceObjectForEquatableTestScenarios.InnerBorders,
                                 ReferenceObjectForEquatableTestScenarios.Options),
                         new ColumnFormat(
+                                ReferenceObjectForEquatableTestScenarios.OuterBorders,
+                                ReferenceObjectForEquatableTestScenarios.InnerBorders,
                                 ReferenceObjectForEquatableTestScenarios.CellsFormat,
                                 ReferenceObjectForEquatableTestScenarios.WidthInPixels,
                                 ReferenceObjectForEquatableTestScenarios.AutoFitColumnWidth,
-                                A.Dummy<ColumnFormat>().Whose(_ => !_.OuterBorders.IsEqualTo(ReferenceObjectForEquatableTestScenarios.OuterBorders)).OuterBorders,
-                                ReferenceObjectForEquatableTestScenarios.InnerBorders,
-                                ReferenceObjectForEquatableTestScenarios.Options),
-                        new ColumnFormat(
-                                ReferenceObjectForEquatableTestScenarios.CellsFormat,
-                                ReferenceObjectForEquatableTestScenarios.WidthInPixels,
-                                ReferenceObjectForEquatableTestScenarios.AutoFitColumnWidth,
-                                ReferenceObjectForEquatableTestScenarios.OuterBorders,
-                                A.Dummy<ColumnFormat>().Whose(_ => !_.InnerBorders.IsEqualTo(ReferenceObjectForEquatableTestScenarios.InnerBorders)).InnerBorders,
-                                ReferenceObjectForEquatableTestScenarios.Options),
-                        new ColumnFormat(
-                                ReferenceObjectForEquatableTestScenarios.CellsFormat,
-                                ReferenceObjectForEquatableTestScenarios.WidthInPixels,
-                                ReferenceObjectForEquatableTestScenarios.AutoFitColumnWidth,
-                                ReferenceObjectForEquatableTestScenarios.OuterBorders,
-                                ReferenceObjectForEquatableTestScenarios.InnerBorders,
                                 A.Dummy<ColumnFormat>().Whose(_ => !_.Options.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Options)).Options),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
@@ -541,11 +541,11 @@ namespace OBeautifulCode.DataStructure.Test
                         A.Dummy<int>(),
                         A.Dummy<int?>(),
                         A.Dummy<Guid>(),
+                        A.Dummy<HeaderRowsFormat>(),
                         A.Dummy<CellFormat>(),
                         A.Dummy<DataRowsFormat>(),
-                        A.Dummy<HeaderRowsFormat>(),
-                        A.Dummy<RowFormat>(),
                         A.Dummy<TableFormat>(),
+                        A.Dummy<RowFormat>(),
                     },
                 });
 
@@ -812,15 +812,6 @@ namespace OBeautifulCode.DataStructure.Test
                 actual.AsTest().Must().BeEqualTo(systemUnderTest);
                 actual.AsTest().Must().NotBeSameReferenceAs(systemUnderTest);
 
-                if (systemUnderTest.CellsFormat == null)
-                {
-                    actual.CellsFormat.AsTest().Must().BeNull();
-                }
-                else
-                {
-                    actual.CellsFormat.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.CellsFormat);
-                }
-
                 if (systemUnderTest.OuterBorders == null)
                 {
                     actual.OuterBorders.AsTest().Must().BeNull();
@@ -837,6 +828,15 @@ namespace OBeautifulCode.DataStructure.Test
                 else
                 {
                     actual.InnerBorders.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.InnerBorders);
+                }
+
+                if (systemUnderTest.CellsFormat == null)
+                {
+                    actual.CellsFormat.AsTest().Must().BeNull();
+                }
+                else
+                {
+                    actual.CellsFormat.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.CellsFormat);
                 }
             }
 
@@ -856,7 +856,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "CellsFormat", "WidthInPixels", "AutoFitColumnWidth", "OuterBorders", "InnerBorders", "Options" };
+                var propertyNames = new string[] { "OuterBorders", "InnerBorders", "CellsFormat", "WidthInPixels", "AutoFitColumnWidth", "Options" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1547,6 +1547,149 @@ namespace OBeautifulCode.DataStructure.Test
                 {
                     // Arrange, Act
                     var actuals = scenario.ObjectsThatAreEqualToButNotTheSameAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((RegionFormatBase)_)).ToList();
+
+                    // Assert
+                    actuals.AsTest().Must().Each().BeTrue(because: scenario.Id);
+                }
+            }
+
+            [Fact]
+            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+            public static void Equals_with_MultiCellRegionFormatBase___Should_return_false___When_parameter_other_is_null()
+            {
+                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
+
+                foreach (var scenario in scenarios)
+                {
+                    // Arrange
+                    MultiCellRegionFormatBase systemUnderTest = null;
+
+                    // Act
+                    var actual = scenario.ReferenceObject.Equals((MultiCellRegionFormatBase)systemUnderTest);
+
+                    // Assert
+                    actual.AsTest().Must().BeFalse(because: scenario.Id);
+                }
+            }
+
+            [Fact]
+            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+            public static void Equals_with_MultiCellRegionFormatBase___Should_return_true___When_parameter_other_is_same_object()
+            {
+                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
+
+                foreach (var scenario in scenarios)
+                {
+                    // Arrange, Act
+                    var actual = scenario.ReferenceObject.Equals((MultiCellRegionFormatBase)scenario.ReferenceObject);
+
+                    // Assert
+                    actual.AsTest().Must().BeTrue(because: scenario.Id);
+                }
+            }
+
+            [Fact]
+            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+            public static void Equals_with_MultiCellRegionFormatBase___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
+            {
+                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
+
+                foreach (var scenario in scenarios)
+                {
+                    // Arrange, Act
+                    var actuals = scenario.ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((MultiCellRegionFormatBase)_)).ToList();
+
+                    // Assert
+                    actuals.AsTest().Must().Each().BeFalse(because: scenario.Id);
+                }
+            }
+
+            [Fact]
+            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+            public static void Equals_with_MultiCellRegionFormatBase___Should_return_false___When_objects_being_compared_have_different_property_values()
+            {
+                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
+
+                foreach (var scenario in scenarios)
+                {
+                    // Arrange, Act
+                    var actuals = scenario.ObjectsThatAreNotEqualToReferenceObject.Select(_ => scenario.ReferenceObject.Equals((MultiCellRegionFormatBase)_)).ToList();
+
+                    // Assert
+                    actuals.AsTest().Must().Each().BeFalse(because: scenario.Id);
+                }
+            }
+
+            [Fact]
+            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+            public static void Equals_with_MultiCellRegionFormatBase___Should_return_true___When_objects_being_compared_have_same_property_values()
+            {
+                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
+
+                foreach (var scenario in scenarios)
+                {
+                    // Arrange, Act
+                    var actuals = scenario.ObjectsThatAreEqualToButNotTheSameAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((MultiCellRegionFormatBase)_)).ToList();
 
                     // Assert
                     actuals.AsTest().Must().Each().BeTrue(because: scenario.Id);

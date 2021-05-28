@@ -31,7 +31,69 @@ namespace OBeautifulCode.DataStructure.Test
         {
             ConstructorArgumentValidationTestScenarios
                 .RemoveAllScenarios()
-                .AddScenario(ConstructorArgumentValidationTestScenario<ColumnSpanningDecimalCell>.ConstructorCannotThrowScenario);
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<ColumnSpanningDecimalCell>
+                    {
+                        Name = "constructor should throw ArgumentOutOfRangeException when parameter 'columnsSpanned' is 1",
+                        ConstructionFunc = () =>
+                        {
+                            var referenceObject = A.Dummy<ColumnSpanningDecimalCell>();
+
+                            var result = new ColumnSpanningDecimalCell(
+                                referenceObject.Value,
+                                1,
+                                referenceObject.DisplayValue,
+                                referenceObject.Format,
+                                referenceObject.HoverOver,
+                                referenceObject.Link);
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentOutOfRangeException),
+                        ExpectedExceptionMessageContains = new[] { "columnsSpanned is 1; must be >= 2", },
+                    })
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<ColumnSpanningDecimalCell>
+                    {
+                        Name = "constructor should throw ArgumentOutOfRangeException when parameter 'columnsSpanned' is 0",
+                        ConstructionFunc = () =>
+                        {
+                            var referenceObject = A.Dummy<ColumnSpanningDecimalCell>();
+
+                            var result = new ColumnSpanningDecimalCell(
+                                referenceObject.Value,
+                                0,
+                                referenceObject.DisplayValue,
+                                referenceObject.Format,
+                                referenceObject.HoverOver,
+                                referenceObject.Link);
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentOutOfRangeException),
+                        ExpectedExceptionMessageContains = new[] { "columnsSpanned is 0; must be >= 2", },
+                    })
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<ColumnSpanningDecimalCell>
+                    {
+                        Name = "constructor should throw ArgumentOutOfRangeException when parameter 'columnsSpanned' is < 0",
+                        ConstructionFunc = () =>
+                        {
+                            var referenceObject = A.Dummy<ColumnSpanningDecimalCell>();
+
+                            var result = new ColumnSpanningDecimalCell(
+                                referenceObject.Value,
+                                A.Dummy<NegativeInteger>(),
+                                referenceObject.DisplayValue,
+                                referenceObject.Format,
+                                referenceObject.HoverOver,
+                                referenceObject.Link);
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentOutOfRangeException),
+                        ExpectedExceptionMessageContains = new[] { "columnsSpanned is", "must be >= 2", },
+                    });
         }
     }
 }

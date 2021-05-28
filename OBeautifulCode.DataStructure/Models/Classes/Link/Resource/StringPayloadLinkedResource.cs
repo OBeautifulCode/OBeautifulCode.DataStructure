@@ -39,7 +39,7 @@ namespace OBeautifulCode.DataStructure
 
             if (resourceKind == StringPayloadLinkedResourceKind.Unknown)
             {
-                throw new ArgumentException(Invariant($"{nameof(resourceKind)} is {nameof(StringPayloadLinkedResourceKind.Unknown)}."));
+                throw new ArgumentOutOfRangeException(Invariant($"{nameof(resourceKind)} is {nameof(StringPayloadLinkedResourceKind.Unknown)}."));
             }
 
             this.Value = value;

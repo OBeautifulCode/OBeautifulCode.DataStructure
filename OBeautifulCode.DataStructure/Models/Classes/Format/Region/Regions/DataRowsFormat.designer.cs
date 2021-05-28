@@ -69,10 +69,10 @@ namespace OBeautifulCode.DataStructure
                 return false;
             }
 
-            var result = this.RowsFormat.IsEqualTo(other.RowsFormat)
-                      && this.RowsRepeatingFormat.IsEqualTo(other.RowsRepeatingFormat)
-                      && this.OuterBorders.IsEqualTo(other.OuterBorders)
-                      && this.InnerBorders.IsEqualTo(other.InnerBorders);
+            var result = this.OuterBorders.IsEqualTo(other.OuterBorders)
+                      && this.InnerBorders.IsEqualTo(other.InnerBorders)
+                      && this.RowsFormat.IsEqualTo(other.RowsFormat)
+                      && this.RowsRepeatingFormat.IsEqualTo(other.RowsRepeatingFormat);
 
             return result;
         }
@@ -82,14 +82,72 @@ namespace OBeautifulCode.DataStructure
 
         /// <inheritdoc />
         public override int GetHashCode() => HashCodeHelper.Initialize()
-            .Hash(this.RowsFormat)
-            .Hash(this.RowsRepeatingFormat)
             .Hash(this.OuterBorders)
             .Hash(this.InnerBorders)
+            .Hash(this.RowsFormat)
+            .Hash(this.RowsRepeatingFormat)
             .Value;
 
         /// <inheritdoc />
         public new DataRowsFormat DeepClone() => (DataRowsFormat)this.DeepCloneInternal();
+
+        /// <inheritdoc />
+        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
+        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
+        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
+        public override RegionFormatBase DeepCloneWithOuterBorders(IReadOnlyList<OuterBorder> outerBorders)
+        {
+            var result = new DataRowsFormat(
+                                 outerBorders,
+                                 this.InnerBorders?.DeepClone(),
+                                 this.RowsFormat?.DeepClone(),
+                                 this.RowsRepeatingFormat?.DeepClone());
+
+            return result;
+        }
+
+        /// <inheritdoc />
+        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
+        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
+        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
+        public override MultiCellRegionFormatBase DeepCloneWithInnerBorders(IReadOnlyList<InnerBorder> innerBorders)
+        {
+            var result = new DataRowsFormat(
+                                 this.OuterBorders?.DeepClone(),
+                                 innerBorders,
+                                 this.RowsFormat?.DeepClone(),
+                                 this.RowsRepeatingFormat?.DeepClone());
+
+            return result;
+        }
 
         /// <summary>
         /// Deep clones this object with a new <see cref="RowsFormat" />.
@@ -116,10 +174,10 @@ namespace OBeautifulCode.DataStructure
         public DataRowsFormat DeepCloneWithRowsFormat(RowFormat rowsFormat)
         {
             var result = new DataRowsFormat(
-                                 rowsFormat,
-                                 this.RowsRepeatingFormat?.DeepClone(),
                                  this.OuterBorders?.DeepClone(),
-                                 this.InnerBorders?.DeepClone());
+                                 this.InnerBorders?.DeepClone(),
+                                 rowsFormat,
+                                 this.RowsRepeatingFormat?.DeepClone());
 
             return result;
         }
@@ -149,76 +207,10 @@ namespace OBeautifulCode.DataStructure
         public DataRowsFormat DeepCloneWithRowsRepeatingFormat(IReadOnlyList<RowFormat> rowsRepeatingFormat)
         {
             var result = new DataRowsFormat(
-                                 this.RowsFormat?.DeepClone(),
-                                 rowsRepeatingFormat,
                                  this.OuterBorders?.DeepClone(),
-                                 this.InnerBorders?.DeepClone());
-
-            return result;
-        }
-
-        /// <summary>
-        /// Deep clones this object with a new <see cref="OuterBorders" />.
-        /// </summary>
-        /// <param name="outerBorders">The new <see cref="OuterBorders" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="DataRowsFormat" /> using the specified <paramref name="outerBorders" /> for <see cref="OuterBorders" /> and a deep clone of every other property.</returns>
-        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
-        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
-        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
-        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public DataRowsFormat DeepCloneWithOuterBorders(IReadOnlyList<OuterBorder> outerBorders)
-        {
-            var result = new DataRowsFormat(
+                                 this.InnerBorders?.DeepClone(),
                                  this.RowsFormat?.DeepClone(),
-                                 this.RowsRepeatingFormat?.DeepClone(),
-                                 outerBorders,
-                                 this.InnerBorders?.DeepClone());
-
-            return result;
-        }
-
-        /// <summary>
-        /// Deep clones this object with a new <see cref="InnerBorders" />.
-        /// </summary>
-        /// <param name="innerBorders">The new <see cref="InnerBorders" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="DataRowsFormat" /> using the specified <paramref name="innerBorders" /> for <see cref="InnerBorders" /> and a deep clone of every other property.</returns>
-        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
-        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
-        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
-        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public DataRowsFormat DeepCloneWithInnerBorders(IReadOnlyList<InnerBorder> innerBorders)
-        {
-            var result = new DataRowsFormat(
-                                 this.RowsFormat?.DeepClone(),
-                                 this.RowsRepeatingFormat?.DeepClone(),
-                                 this.OuterBorders?.DeepClone(),
-                                 innerBorders);
+                                 rowsRepeatingFormat);
 
             return result;
         }
@@ -228,10 +220,10 @@ namespace OBeautifulCode.DataStructure
         protected override RegionFormatBase DeepCloneInternal()
         {
             var result = new DataRowsFormat(
-                                 this.RowsFormat?.DeepClone(),
-                                 this.RowsRepeatingFormat?.DeepClone(),
                                  this.OuterBorders?.DeepClone(),
-                                 this.InnerBorders?.DeepClone());
+                                 this.InnerBorders?.DeepClone(),
+                                 this.RowsFormat?.DeepClone(),
+                                 this.RowsRepeatingFormat?.DeepClone());
 
             return result;
         }
@@ -240,7 +232,7 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"OBeautifulCode.DataStructure.DataRowsFormat: RowsFormat = {this.RowsFormat?.ToString() ?? "<null>"}, RowsRepeatingFormat = {this.RowsRepeatingFormat?.ToString() ?? "<null>"}, OuterBorders = {this.OuterBorders?.ToString() ?? "<null>"}, InnerBorders = {this.InnerBorders?.ToString() ?? "<null>"}.");
+            var result = Invariant($"OBeautifulCode.DataStructure.DataRowsFormat: OuterBorders = {this.OuterBorders?.ToString() ?? "<null>"}, InnerBorders = {this.InnerBorders?.ToString() ?? "<null>"}, RowsFormat = {this.RowsFormat?.ToString() ?? "<null>"}, RowsRepeatingFormat = {this.RowsRepeatingFormat?.ToString() ?? "<null>"}.");
 
             return result;
         }
