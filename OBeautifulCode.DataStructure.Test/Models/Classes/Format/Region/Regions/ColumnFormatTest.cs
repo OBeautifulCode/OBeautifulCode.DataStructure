@@ -44,7 +44,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 referenceObject.InnerBorders,
                                 referenceObject.CellsFormat,
                                 referenceObject.WidthInPixels,
-                                referenceObject.AutoFitColumnWidth,
+                                referenceObject.AutofitColumnWidth,
                                 referenceObject.Options);
 
                             return result;
@@ -65,7 +65,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 referenceObject.InnerBorders,
                                 referenceObject.CellsFormat,
                                 referenceObject.WidthInPixels,
-                                referenceObject.AutoFitColumnWidth,
+                                referenceObject.AutofitColumnWidth,
                                 referenceObject.Options);
 
                             return result;
@@ -86,7 +86,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 new List<InnerBorder>(),
                                 referenceObject.CellsFormat,
                                 referenceObject.WidthInPixels,
-                                referenceObject.AutoFitColumnWidth,
+                                referenceObject.AutofitColumnWidth,
                                 referenceObject.Options);
 
                             return result;
@@ -107,7 +107,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 new InnerBorder[0].Concat(referenceObject.InnerBorders).Concat(new InnerBorder[] { null }).Concat(referenceObject.InnerBorders).ToList(),
                                 referenceObject.CellsFormat,
                                 referenceObject.WidthInPixels,
-                                referenceObject.AutoFitColumnWidth,
+                                referenceObject.AutofitColumnWidth,
                                 referenceObject.Options);
 
                             return result;

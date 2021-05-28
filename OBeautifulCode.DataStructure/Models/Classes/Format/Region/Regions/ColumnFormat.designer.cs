@@ -73,7 +73,7 @@ namespace OBeautifulCode.DataStructure
                       && this.InnerBorders.IsEqualTo(other.InnerBorders)
                       && this.CellsFormat.IsEqualTo(other.CellsFormat)
                       && this.WidthInPixels.IsEqualTo(other.WidthInPixels)
-                      && this.AutoFitColumnWidth.IsEqualTo(other.AutoFitColumnWidth)
+                      && this.AutofitColumnWidth.IsEqualTo(other.AutofitColumnWidth)
                       && this.Options.IsEqualTo(other.Options);
 
             return result;
@@ -88,7 +88,7 @@ namespace OBeautifulCode.DataStructure
             .Hash(this.InnerBorders)
             .Hash(this.CellsFormat)
             .Hash(this.WidthInPixels)
-            .Hash(this.AutoFitColumnWidth)
+            .Hash(this.AutofitColumnWidth)
             .Hash(this.Options)
             .Value;
 
@@ -120,7 +120,7 @@ namespace OBeautifulCode.DataStructure
                                  this.InnerBorders?.DeepClone(),
                                  this.CellsFormat?.DeepClone(),
                                  this.WidthInPixels?.DeepClone(),
-                                 this.AutoFitColumnWidth?.DeepClone(),
+                                 this.AutofitColumnWidth?.DeepClone(),
                                  this.Options?.DeepClone());
 
             return result;
@@ -151,7 +151,7 @@ namespace OBeautifulCode.DataStructure
                                  innerBorders,
                                  this.CellsFormat?.DeepClone(),
                                  this.WidthInPixels?.DeepClone(),
-                                 this.AutoFitColumnWidth?.DeepClone(),
+                                 this.AutofitColumnWidth?.DeepClone(),
                                  this.Options?.DeepClone());
 
             return result;
@@ -186,7 +186,7 @@ namespace OBeautifulCode.DataStructure
                                  this.InnerBorders?.DeepClone(),
                                  cellsFormat,
                                  this.WidthInPixels?.DeepClone(),
-                                 this.AutoFitColumnWidth?.DeepClone(),
+                                 this.AutofitColumnWidth?.DeepClone(),
                                  this.Options?.DeepClone());
 
             return result;
@@ -221,17 +221,17 @@ namespace OBeautifulCode.DataStructure
                                  this.InnerBorders?.DeepClone(),
                                  this.CellsFormat?.DeepClone(),
                                  widthInPixels,
-                                 this.AutoFitColumnWidth?.DeepClone(),
+                                 this.AutofitColumnWidth?.DeepClone(),
                                  this.Options?.DeepClone());
 
             return result;
         }
 
         /// <summary>
-        /// Deep clones this object with a new <see cref="AutoFitColumnWidth" />.
+        /// Deep clones this object with a new <see cref="AutofitColumnWidth" />.
         /// </summary>
-        /// <param name="autoFitColumnWidth">The new <see cref="AutoFitColumnWidth" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="ColumnFormat" /> using the specified <paramref name="autoFitColumnWidth" /> for <see cref="AutoFitColumnWidth" /> and a deep clone of every other property.</returns>
+        /// <param name="autoFitColumnWidth">The new <see cref="AutofitColumnWidth" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="ColumnFormat" /> using the specified <paramref name="autoFitColumnWidth" /> for <see cref="AutofitColumnWidth" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -291,7 +291,7 @@ namespace OBeautifulCode.DataStructure
                                  this.InnerBorders?.DeepClone(),
                                  this.CellsFormat?.DeepClone(),
                                  this.WidthInPixels?.DeepClone(),
-                                 this.AutoFitColumnWidth?.DeepClone(),
+                                 this.AutofitColumnWidth?.DeepClone(),
                                  options);
 
             return result;
@@ -306,7 +306,7 @@ namespace OBeautifulCode.DataStructure
                                  this.InnerBorders?.DeepClone(),
                                  this.CellsFormat?.DeepClone(),
                                  this.WidthInPixels?.DeepClone(),
-                                 this.AutoFitColumnWidth?.DeepClone(),
+                                 this.AutofitColumnWidth?.DeepClone(),
                                  this.Options?.DeepClone());
 
             return result;
@@ -316,7 +316,7 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"OBeautifulCode.DataStructure.ColumnFormat: OuterBorders = {this.OuterBorders?.ToString() ?? "<null>"}, InnerBorders = {this.InnerBorders?.ToString() ?? "<null>"}, CellsFormat = {this.CellsFormat?.ToString() ?? "<null>"}, WidthInPixels = {this.WidthInPixels?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, AutoFitColumnWidth = {this.AutoFitColumnWidth?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Options = {this.Options?.ToString() ?? "<null>"}.");
+            var result = Invariant($"OBeautifulCode.DataStructure.ColumnFormat: OuterBorders = {this.OuterBorders?.ToString() ?? "<null>"}, InnerBorders = {this.InnerBorders?.ToString() ?? "<null>"}, CellsFormat = {this.CellsFormat?.ToString() ?? "<null>"}, WidthInPixels = {this.WidthInPixels?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, AutoFitColumnWidth = {this.AutofitColumnWidth?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Options = {this.Options?.ToString() ?? "<null>"}.");
 
             return result;
         }

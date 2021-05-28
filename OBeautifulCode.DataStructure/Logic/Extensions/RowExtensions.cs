@@ -46,6 +46,11 @@ namespace OBeautifulCode.DataStructure
         public static IReadOnlyList<RowBase> GetAllRowsInOrder(
             this TableRows tableRows)
         {
+            if (tableRows == null)
+            {
+                throw new ArgumentNullException(nameof(tableRows));
+            }
+
             var result = new List<RowBase>();
 
             if (tableRows.HeaderRows != null)

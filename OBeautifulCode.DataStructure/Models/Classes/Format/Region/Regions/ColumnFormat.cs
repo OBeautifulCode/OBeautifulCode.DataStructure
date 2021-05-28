@@ -23,20 +23,20 @@ namespace OBeautifulCode.DataStructure
         /// <param name="innerBorders">OPTIONAL borders to apply to the cells inside the column, in the order that they should be applied.  DEFAULT is no border.</param>
         /// <param name="cellsFormat">OPTIONAL format to apply to all cells in the column, individually.  DEFAULT is to leave the format unchanged.</param>
         /// <param name="widthInPixels">OPTIONAL width, in pixels, to apply to the column.  DEFAULT is to leave the width unchanged.</param>
-        /// <param name="autoFitColumnWidth">OPTIONAL value indicating whether to auto-fit the width of the column.</param>
+        /// <param name="autofitColumnWidth">OPTIONAL value indicating whether to auto-fit the width of the column.</param>
         /// <param name="options">OPTIONAL formatting options to apply to the column.  DEFAULT is to not apply any of the formatting options.</param>
         public ColumnFormat(
             IReadOnlyList<OuterBorder> outerBorders = null,
             IReadOnlyList<InnerBorder> innerBorders = null,
             CellFormat cellsFormat = null,
             int? widthInPixels = null,
-            bool? autoFitColumnWidth = null,
+            bool? autofitColumnWidth = null,
             ColumnFormatOptions? options = null)
             : base(outerBorders, innerBorders)
         {
             this.CellsFormat = cellsFormat;
             this.WidthInPixels = widthInPixels;
-            this.AutoFitColumnWidth = autoFitColumnWidth;
+            this.AutofitColumnWidth = autofitColumnWidth;
             this.Options = options;
         }
 
@@ -53,7 +53,7 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Gets a value indicating whether to auto-fit the width of the column.
         /// </summary>
-        public bool? AutoFitColumnWidth { get; private set; }
+        public bool? AutofitColumnWidth { get; private set; }
 
         /// <summary>
         /// Gets the formatting options to apply to the column.

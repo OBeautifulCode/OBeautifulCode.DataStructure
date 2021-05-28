@@ -6,6 +6,10 @@
 
 namespace OBeautifulCode.DataStructure
 {
+    using System.Diagnostics.CodeAnalysis;
+
+    using OBeautifulCode.CodeAnalysis.Recipes;
+
     /// <summary>
     /// Specifies the weight of a border.
     /// </summary>
@@ -39,6 +43,7 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// An extra-bold border.
         /// </summary>
+        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "ExtraBold", Justification = ObcSuppressBecause.CA1702_CompoundWordsShouldBeCasedCorrectly_AnalyzerIsIncorrectlyDetectingCompoundWords)]
         ExtraBold,
     }
 }

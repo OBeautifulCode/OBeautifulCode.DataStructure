@@ -17,6 +17,6 @@ namespace OBeautifulCode.DataStructure
         /// <returns>
         /// The value of the cell.
         /// </returns>
-        object GetValue();
+        object GetCellValue();
     }
 }

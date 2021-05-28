@@ -46,6 +46,6 @@ namespace OBeautifulCode.DataStructure
         public MediaReference MediaReference { get; private set; }
 
         /// <inheritdoc />
-        public object GetValue() => this.MediaReference;
+        public object GetCellValue() => this.MediaReference;
     }
 }

@@ -8,8 +8,10 @@ namespace OBeautifulCode.DataStructure
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
 
+    using OBeautifulCode.CodeAnalysis.Recipes;
     using OBeautifulCode.Type;
 
     using static System.FormattableString;
@@ -17,6 +19,7 @@ namespace OBeautifulCode.DataStructure
     /// <summary>
     /// Base class for the format to apply to a region of a tree table that can contain multiple cells.
     /// </summary>
+    [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Multi", Justification = ObcSuppressBecause.CA1704_IdentifiersShouldBeSpelledCorrectly_SpellingIsCorrectInContextOfTheDomain)]
     public abstract partial class MultiCellRegionFormatBase : RegionFormatBase, IModelViaCodeGen
     {
         /// <summary>

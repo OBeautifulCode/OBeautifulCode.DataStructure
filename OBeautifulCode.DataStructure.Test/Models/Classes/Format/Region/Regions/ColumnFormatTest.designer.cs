@@ -47,7 +47,7 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new SystemUnderTestExpectedStringRepresentation<ColumnFormat>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.ColumnFormat: OuterBorders = {systemUnderTest.OuterBorders?.ToString() ?? "<null>"}, InnerBorders = {systemUnderTest.InnerBorders?.ToString() ?? "<null>"}, CellsFormat = {systemUnderTest.CellsFormat?.ToString() ?? "<null>"}, WidthInPixels = {systemUnderTest.WidthInPixels?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, AutoFitColumnWidth = {systemUnderTest.AutoFitColumnWidth?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Options = {systemUnderTest.Options?.ToString() ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.ColumnFormat: OuterBorders = {systemUnderTest.OuterBorders?.ToString() ?? "<null>"}, InnerBorders = {systemUnderTest.InnerBorders?.ToString() ?? "<null>"}, CellsFormat = {systemUnderTest.CellsFormat?.ToString() ?? "<null>"}, WidthInPixels = {systemUnderTest.WidthInPixels?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, AutoFitColumnWidth = {systemUnderTest.AutofitColumnWidth?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Options = {systemUnderTest.Options?.ToString() ?? "<null>"}."),
                         };
 
                         return result;
@@ -68,7 +68,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.InnerBorders,
                                              referenceObject.CellsFormat,
                                              referenceObject.WidthInPixels,
-                                             referenceObject.AutoFitColumnWidth,
+                                             referenceObject.AutofitColumnWidth,
                                              referenceObject.Options);
 
                         return result;
@@ -89,7 +89,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.InnerBorders,
                                              referenceObject.CellsFormat,
                                              referenceObject.WidthInPixels,
-                                             referenceObject.AutoFitColumnWidth,
+                                             referenceObject.AutofitColumnWidth,
                                              referenceObject.Options);
 
                         return result;
@@ -110,7 +110,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.InnerBorders,
                                              referenceObject.CellsFormat,
                                              referenceObject.WidthInPixels,
-                                             referenceObject.AutoFitColumnWidth,
+                                             referenceObject.AutofitColumnWidth,
                                              referenceObject.Options);
 
                         return result;
@@ -131,7 +131,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              null,
                                              referenceObject.CellsFormat,
                                              referenceObject.WidthInPixels,
-                                             referenceObject.AutoFitColumnWidth,
+                                             referenceObject.AutofitColumnWidth,
                                              referenceObject.Options);
 
                         return result;
@@ -152,7 +152,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              new List<InnerBorder>(),
                                              referenceObject.CellsFormat,
                                              referenceObject.WidthInPixels,
-                                             referenceObject.AutoFitColumnWidth,
+                                             referenceObject.AutofitColumnWidth,
                                              referenceObject.Options);
 
                         return result;
@@ -173,7 +173,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              new InnerBorder[0].Concat(referenceObject.InnerBorders).Concat(new InnerBorder[] { null }).Concat(referenceObject.InnerBorders).ToList(),
                                              referenceObject.CellsFormat,
                                              referenceObject.WidthInPixels,
-                                             referenceObject.AutoFitColumnWidth,
+                                             referenceObject.AutofitColumnWidth,
                                              referenceObject.Options);
 
                         return result;
@@ -194,7 +194,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.InnerBorders,
                                              null,
                                              referenceObject.WidthInPixels,
-                                             referenceObject.AutoFitColumnWidth,
+                                             referenceObject.AutofitColumnWidth,
                                              referenceObject.Options);
 
                         return result;
@@ -219,7 +219,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.InnerBorders,
                                                       referenceObject.CellsFormat,
                                                       referenceObject.WidthInPixels,
-                                                      referenceObject.AutoFitColumnWidth,
+                                                      referenceObject.AutofitColumnWidth,
                                                       referenceObject.Options),
                             ExpectedPropertyValue = referenceObject.OuterBorders,
                         };
@@ -243,7 +243,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.InnerBorders,
                                                       referenceObject.CellsFormat,
                                                       referenceObject.WidthInPixels,
-                                                      referenceObject.AutoFitColumnWidth,
+                                                      referenceObject.AutofitColumnWidth,
                                                       referenceObject.Options),
                             ExpectedPropertyValue = referenceObject.InnerBorders,
                         };
@@ -267,7 +267,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.InnerBorders,
                                                       referenceObject.CellsFormat,
                                                       referenceObject.WidthInPixels,
-                                                      referenceObject.AutoFitColumnWidth,
+                                                      referenceObject.AutofitColumnWidth,
                                                       referenceObject.Options),
                             ExpectedPropertyValue = referenceObject.CellsFormat,
                         };
@@ -291,7 +291,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.InnerBorders,
                                                       referenceObject.CellsFormat,
                                                       referenceObject.WidthInPixels,
-                                                      referenceObject.AutoFitColumnWidth,
+                                                      referenceObject.AutofitColumnWidth,
                                                       referenceObject.Options),
                             ExpectedPropertyValue = referenceObject.WidthInPixels,
                         };
@@ -315,9 +315,9 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.InnerBorders,
                                                       referenceObject.CellsFormat,
                                                       referenceObject.WidthInPixels,
-                                                      referenceObject.AutoFitColumnWidth,
+                                                      referenceObject.AutofitColumnWidth,
                                                       referenceObject.Options),
-                            ExpectedPropertyValue = referenceObject.AutoFitColumnWidth,
+                            ExpectedPropertyValue = referenceObject.AutofitColumnWidth,
                         };
 
                         return result;
@@ -339,7 +339,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.InnerBorders,
                                                       referenceObject.CellsFormat,
                                                       referenceObject.WidthInPixels,
-                                                      referenceObject.AutoFitColumnWidth,
+                                                      referenceObject.AutofitColumnWidth,
                                                       referenceObject.Options),
                             ExpectedPropertyValue = referenceObject.Options,
                         };
@@ -439,12 +439,12 @@ namespace OBeautifulCode.DataStructure.Test
                     {
                         var systemUnderTest = A.Dummy<ColumnFormat>();
 
-                        var referenceObject = A.Dummy<ColumnFormat>().ThatIs(_ => !systemUnderTest.AutoFitColumnWidth.IsEqualTo(_.AutoFitColumnWidth));
+                        var referenceObject = A.Dummy<ColumnFormat>().ThatIs(_ => !systemUnderTest.AutofitColumnWidth.IsEqualTo(_.AutofitColumnWidth));
 
                         var result = new SystemUnderTestDeepCloneWithValue<ColumnFormat>
                         {
                             SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.AutoFitColumnWidth,
+                            DeepCloneWithValue = referenceObject.AutofitColumnWidth,
                         };
 
                         return result;
@@ -486,7 +486,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.InnerBorders,
                                 ReferenceObjectForEquatableTestScenarios.CellsFormat,
                                 ReferenceObjectForEquatableTestScenarios.WidthInPixels,
-                                ReferenceObjectForEquatableTestScenarios.AutoFitColumnWidth,
+                                ReferenceObjectForEquatableTestScenarios.AutofitColumnWidth,
                                 ReferenceObjectForEquatableTestScenarios.Options),
                     },
                     ObjectsThatAreNotEqualToReferenceObject = new ColumnFormat[]
@@ -496,42 +496,42 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.InnerBorders,
                                 ReferenceObjectForEquatableTestScenarios.CellsFormat,
                                 ReferenceObjectForEquatableTestScenarios.WidthInPixels,
-                                ReferenceObjectForEquatableTestScenarios.AutoFitColumnWidth,
+                                ReferenceObjectForEquatableTestScenarios.AutofitColumnWidth,
                                 ReferenceObjectForEquatableTestScenarios.Options),
                         new ColumnFormat(
                                 ReferenceObjectForEquatableTestScenarios.OuterBorders,
                                 A.Dummy<ColumnFormat>().Whose(_ => !_.InnerBorders.IsEqualTo(ReferenceObjectForEquatableTestScenarios.InnerBorders)).InnerBorders,
                                 ReferenceObjectForEquatableTestScenarios.CellsFormat,
                                 ReferenceObjectForEquatableTestScenarios.WidthInPixels,
-                                ReferenceObjectForEquatableTestScenarios.AutoFitColumnWidth,
+                                ReferenceObjectForEquatableTestScenarios.AutofitColumnWidth,
                                 ReferenceObjectForEquatableTestScenarios.Options),
                         new ColumnFormat(
                                 ReferenceObjectForEquatableTestScenarios.OuterBorders,
                                 ReferenceObjectForEquatableTestScenarios.InnerBorders,
                                 A.Dummy<ColumnFormat>().Whose(_ => !_.CellsFormat.IsEqualTo(ReferenceObjectForEquatableTestScenarios.CellsFormat)).CellsFormat,
                                 ReferenceObjectForEquatableTestScenarios.WidthInPixels,
-                                ReferenceObjectForEquatableTestScenarios.AutoFitColumnWidth,
+                                ReferenceObjectForEquatableTestScenarios.AutofitColumnWidth,
                                 ReferenceObjectForEquatableTestScenarios.Options),
                         new ColumnFormat(
                                 ReferenceObjectForEquatableTestScenarios.OuterBorders,
                                 ReferenceObjectForEquatableTestScenarios.InnerBorders,
                                 ReferenceObjectForEquatableTestScenarios.CellsFormat,
                                 A.Dummy<ColumnFormat>().Whose(_ => !_.WidthInPixels.IsEqualTo(ReferenceObjectForEquatableTestScenarios.WidthInPixels)).WidthInPixels,
-                                ReferenceObjectForEquatableTestScenarios.AutoFitColumnWidth,
+                                ReferenceObjectForEquatableTestScenarios.AutofitColumnWidth,
                                 ReferenceObjectForEquatableTestScenarios.Options),
                         new ColumnFormat(
                                 ReferenceObjectForEquatableTestScenarios.OuterBorders,
                                 ReferenceObjectForEquatableTestScenarios.InnerBorders,
                                 ReferenceObjectForEquatableTestScenarios.CellsFormat,
                                 ReferenceObjectForEquatableTestScenarios.WidthInPixels,
-                                A.Dummy<ColumnFormat>().Whose(_ => !_.AutoFitColumnWidth.IsEqualTo(ReferenceObjectForEquatableTestScenarios.AutoFitColumnWidth)).AutoFitColumnWidth,
+                                A.Dummy<ColumnFormat>().Whose(_ => !_.AutofitColumnWidth.IsEqualTo(ReferenceObjectForEquatableTestScenarios.AutofitColumnWidth)).AutofitColumnWidth,
                                 ReferenceObjectForEquatableTestScenarios.Options),
                         new ColumnFormat(
                                 ReferenceObjectForEquatableTestScenarios.OuterBorders,
                                 ReferenceObjectForEquatableTestScenarios.InnerBorders,
                                 ReferenceObjectForEquatableTestScenarios.CellsFormat,
                                 ReferenceObjectForEquatableTestScenarios.WidthInPixels,
-                                ReferenceObjectForEquatableTestScenarios.AutoFitColumnWidth,
+                                ReferenceObjectForEquatableTestScenarios.AutofitColumnWidth,
                                 A.Dummy<ColumnFormat>().Whose(_ => !_.Options.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Options)).Options),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]

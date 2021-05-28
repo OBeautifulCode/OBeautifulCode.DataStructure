@@ -6,7 +6,9 @@
 namespace OBeautifulCode.DataStructure
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
 
+    using OBeautifulCode.CodeAnalysis.Recipes;
     using OBeautifulCode.Type;
 
     using static System.FormattableString;
@@ -22,6 +24,7 @@ namespace OBeautifulCode.DataStructure
         /// </summary>
         /// <param name="url">The url of the resource.</param>
         /// <param name="resourceKind">The kind of resource.</param>
+        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings", MessageId = "0#", Justification = ObcSuppressBecause.CA1054_UriParametersShouldNotBeStrings_PreferToRepresentUrlAsString)]
         public UrlLinkedResource(
             string url,
             UrlLinkedResourceKind resourceKind)
@@ -48,6 +51,7 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Gets the url of the resource.
         /// </summary>
+        [SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings", Justification = ObcSuppressBecause.CA1056_UriPropertiesShouldNotBeStrings_PreferToRepresentUrlAsString)]
         public string Url { get; private set; }
 
         /// <summary>

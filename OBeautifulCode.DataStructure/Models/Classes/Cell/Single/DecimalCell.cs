@@ -43,6 +43,6 @@ namespace OBeautifulCode.DataStructure
         public string DisplayValue { get; private set; }
 
         /// <inheritdoc />
-        public object GetValue() => this.Value;
+        public object GetCellValue() => this.Value;
     }
 }

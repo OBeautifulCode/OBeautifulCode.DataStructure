@@ -53,6 +53,6 @@ namespace OBeautifulCode.DataStructure
         public string Html { get; private set; }
 
         /// <inheritdoc />
-        public object GetValue() => this.Html;
+        public object GetCellValue() => this.Html;
     }
 }

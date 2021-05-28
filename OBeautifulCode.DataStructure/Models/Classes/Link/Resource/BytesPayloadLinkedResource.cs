@@ -6,8 +6,10 @@
 namespace OBeautifulCode.DataStructure
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
 
+    using OBeautifulCode.CodeAnalysis.Recipes;
     using OBeautifulCode.Type;
 
     using static System.FormattableString;
@@ -24,6 +26,7 @@ namespace OBeautifulCode.DataStructure
         /// </summary>
         /// <param name="bytes">The bytes payload.</param>
         /// <param name="resourceKind">The kind of resource.</param>
+        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", MessageId = "bytes", Justification = ObcSuppressBecause.CA1720_IdentifiersShouldNotContainTypeNames_TypeNameAddsClarityToIdentifierAndAlternativesDegradeClarity)]
         public BytesPayloadLinkedResource(
             byte[] bytes,
             BytesPayloadLinkedResourceKind resourceKind)
@@ -50,6 +53,7 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Gets the bytes payload.
         /// </summary>
+        [SuppressMessage("Microsoft.Performance", "CA1819:PropertiesShouldNotReturnArrays", Justification = ObcSuppressBecause.CA1819_PropertiesShouldNotReturnArrays_DataPayloadsAreCommonlyRepresentedAsByteArrays)]
         public byte[] Bytes { get; private set; }
 
         /// <summary>
