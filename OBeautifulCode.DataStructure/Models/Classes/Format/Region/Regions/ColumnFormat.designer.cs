@@ -230,8 +230,8 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Deep clones this object with a new <see cref="AutofitColumnWidth" />.
         /// </summary>
-        /// <param name="autoFitColumnWidth">The new <see cref="AutofitColumnWidth" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="ColumnFormat" /> using the specified <paramref name="autoFitColumnWidth" /> for <see cref="AutofitColumnWidth" /> and a deep clone of every other property.</returns>
+        /// <param name="autofitColumnWidth">The new <see cref="AutofitColumnWidth" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="ColumnFormat" /> using the specified <paramref name="autofitColumnWidth" /> for <see cref="AutofitColumnWidth" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -249,14 +249,14 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public ColumnFormat DeepCloneWithAutoFitColumnWidth(bool? autoFitColumnWidth)
+        public ColumnFormat DeepCloneWithAutofitColumnWidth(bool? autofitColumnWidth)
         {
             var result = new ColumnFormat(
                                  this.OuterBorders?.DeepClone(),
                                  this.InnerBorders?.DeepClone(),
                                  this.CellsFormat?.DeepClone(),
                                  this.WidthInPixels?.DeepClone(),
-                                 autoFitColumnWidth,
+                                 autofitColumnWidth,
                                  this.Options?.DeepClone());
 
             return result;
@@ -316,7 +316,7 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"OBeautifulCode.DataStructure.ColumnFormat: OuterBorders = {this.OuterBorders?.ToString() ?? "<null>"}, InnerBorders = {this.InnerBorders?.ToString() ?? "<null>"}, CellsFormat = {this.CellsFormat?.ToString() ?? "<null>"}, WidthInPixels = {this.WidthInPixels?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, AutoFitColumnWidth = {this.AutofitColumnWidth?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Options = {this.Options?.ToString() ?? "<null>"}.");
+            var result = Invariant($"OBeautifulCode.DataStructure.ColumnFormat: OuterBorders = {this.OuterBorders?.ToString() ?? "<null>"}, InnerBorders = {this.InnerBorders?.ToString() ?? "<null>"}, CellsFormat = {this.CellsFormat?.ToString() ?? "<null>"}, WidthInPixels = {this.WidthInPixels?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, AutofitColumnWidth = {this.AutofitColumnWidth?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Options = {this.Options?.ToString() ?? "<null>"}.");
 
             return result;
         }

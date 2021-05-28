@@ -346,11 +346,11 @@ namespace OBeautifulCode.DataStructure.Test
                         A.Dummy<int>(),
                         A.Dummy<int?>(),
                         A.Dummy<Guid>(),
-                        A.Dummy<HeaderRowsFormat>(),
                         A.Dummy<CellFormat>(),
-                        A.Dummy<DataRowsFormat>(),
-                        A.Dummy<RowFormat>(),
                         A.Dummy<ColumnFormat>(),
+                        A.Dummy<DataRowsFormat>(),
+                        A.Dummy<HeaderRowsFormat>(),
+                        A.Dummy<RowFormat>(),
                     },
                 });
 

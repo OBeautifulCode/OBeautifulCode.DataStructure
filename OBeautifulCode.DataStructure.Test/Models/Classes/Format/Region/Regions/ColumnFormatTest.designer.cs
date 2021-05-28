@@ -47,7 +47,7 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new SystemUnderTestExpectedStringRepresentation<ColumnFormat>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.ColumnFormat: OuterBorders = {systemUnderTest.OuterBorders?.ToString() ?? "<null>"}, InnerBorders = {systemUnderTest.InnerBorders?.ToString() ?? "<null>"}, CellsFormat = {systemUnderTest.CellsFormat?.ToString() ?? "<null>"}, WidthInPixels = {systemUnderTest.WidthInPixels?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, AutoFitColumnWidth = {systemUnderTest.AutofitColumnWidth?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Options = {systemUnderTest.Options?.ToString() ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.ColumnFormat: OuterBorders = {systemUnderTest.OuterBorders?.ToString() ?? "<null>"}, InnerBorders = {systemUnderTest.InnerBorders?.ToString() ?? "<null>"}, CellsFormat = {systemUnderTest.CellsFormat?.ToString() ?? "<null>"}, WidthInPixels = {systemUnderTest.WidthInPixels?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, AutofitColumnWidth = {systemUnderTest.AutofitColumnWidth?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Options = {systemUnderTest.Options?.ToString() ?? "<null>"}."),
                         };
 
                         return result;
@@ -303,7 +303,7 @@ namespace OBeautifulCode.DataStructure.Test
             .AddScenario(() =>
                 new ConstructorPropertyAssignmentTestScenario<ColumnFormat>
                 {
-                    Name = "AutoFitColumnWidth should return same 'autoFitColumnWidth' parameter passed to constructor when getting",
+                    Name = "AutofitColumnWidth should return same 'autofitColumnWidth' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
                         var referenceObject = A.Dummy<ColumnFormat>();
@@ -322,7 +322,7 @@ namespace OBeautifulCode.DataStructure.Test
 
                         return result;
                     },
-                    PropertyName = "AutoFitColumnWidth",
+                    PropertyName = "AutofitColumnWidth",
                 })
             .AddScenario(() =>
                 new ConstructorPropertyAssignmentTestScenario<ColumnFormat>
@@ -433,8 +433,8 @@ namespace OBeautifulCode.DataStructure.Test
             .AddScenario(() =>
                 new DeepCloneWithTestScenario<ColumnFormat>
                 {
-                    Name = "DeepCloneWithAutoFitColumnWidth should deep clone object and replace AutoFitColumnWidth with the provided autoFitColumnWidth",
-                    WithPropertyName = "AutoFitColumnWidth",
+                    Name = "DeepCloneWithAutofitColumnWidth should deep clone object and replace AutofitColumnWidth with the provided autofitColumnWidth",
+                    WithPropertyName = "AutofitColumnWidth",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
                         var systemUnderTest = A.Dummy<ColumnFormat>();
@@ -541,11 +541,11 @@ namespace OBeautifulCode.DataStructure.Test
                         A.Dummy<int>(),
                         A.Dummy<int?>(),
                         A.Dummy<Guid>(),
-                        A.Dummy<HeaderRowsFormat>(),
                         A.Dummy<CellFormat>(),
                         A.Dummy<DataRowsFormat>(),
-                        A.Dummy<TableFormat>(),
+                        A.Dummy<HeaderRowsFormat>(),
                         A.Dummy<RowFormat>(),
+                        A.Dummy<TableFormat>(),
                     },
                 });
 
@@ -856,7 +856,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "OuterBorders", "InnerBorders", "CellsFormat", "WidthInPixels", "AutoFitColumnWidth", "Options" };
+                var propertyNames = new string[] { "OuterBorders", "InnerBorders", "CellsFormat", "WidthInPixels", "AutofitColumnWidth", "Options" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 
