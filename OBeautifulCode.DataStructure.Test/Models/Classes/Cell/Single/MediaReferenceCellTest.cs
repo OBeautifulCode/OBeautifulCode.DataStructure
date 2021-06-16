@@ -41,6 +41,7 @@ namespace OBeautifulCode.DataStructure.Test
 
                             var result = new MediaReferenceCell(
                                 null,
+                                referenceObject.Id,
                                 referenceObject.Format,
                                 referenceObject.HoverOver,
                                 referenceObject.Link);

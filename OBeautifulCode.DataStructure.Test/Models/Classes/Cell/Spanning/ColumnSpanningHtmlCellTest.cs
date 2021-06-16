@@ -42,6 +42,7 @@ namespace OBeautifulCode.DataStructure.Test
                             var result = new ColumnSpanningHtmlCell(
                                                  null,
                                                  referenceObject.ColumnsSpanned,
+                                                 referenceObject.Id,
                                                  referenceObject.Format,
                                                  referenceObject.HoverOver,
                                                  referenceObject.Link);
@@ -62,6 +63,7 @@ namespace OBeautifulCode.DataStructure.Test
                             var result = new ColumnSpanningHtmlCell(
                                                  Invariant($"  {Environment.NewLine}  "),
                                                  referenceObject.ColumnsSpanned,
+                                                 referenceObject.Id,
                                                  referenceObject.Format,
                                                  referenceObject.HoverOver,
                                                  referenceObject.Link);
@@ -82,6 +84,7 @@ namespace OBeautifulCode.DataStructure.Test
                             var result = new ColumnSpanningHtmlCell(
                                 referenceObject.Html,
                                 1,
+                                referenceObject.Id,
                                 referenceObject.Format,
                                 referenceObject.HoverOver,
                                 referenceObject.Link);
@@ -102,6 +105,7 @@ namespace OBeautifulCode.DataStructure.Test
                             var result = new ColumnSpanningHtmlCell(
                                 referenceObject.Html,
                                 0,
+                                referenceObject.Id,
                                 referenceObject.Format,
                                 referenceObject.HoverOver,
                                 referenceObject.Link);
@@ -122,6 +126,7 @@ namespace OBeautifulCode.DataStructure.Test
                             var result = new ColumnSpanningHtmlCell(
                                 referenceObject.Html,
                                 A.Dummy<NegativeInteger>(),
+                                referenceObject.Id,
                                 referenceObject.Format,
                                 referenceObject.HoverOver,
                                 referenceObject.Link);

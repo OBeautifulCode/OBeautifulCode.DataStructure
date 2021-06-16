@@ -19,15 +19,17 @@ namespace OBeautifulCode.DataStructure
         /// Initializes a new instance of the <see cref="ColumnSpanningStandardCellBase"/> class.
         /// </summary>
         /// <param name="columnsSpanned">The number of columns spanned.</param>
+        /// <param name="id">The cell's unique identifier.</param>
         /// <param name="format">Format to apply to the cell.</param>
         /// <param name="hoverOver">Hover-over for the cell.</param>
         /// <param name="link">Link to some resource.</param>
         protected ColumnSpanningStandardCellBase(
             int columnsSpanned,
+            string id,
             CellFormat format,
             IHoverOver hoverOver,
             ILink link)
-            : base(format, hoverOver, link)
+            : base(id, format, hoverOver, link)
         {
             if (columnsSpanned < 2)
             {

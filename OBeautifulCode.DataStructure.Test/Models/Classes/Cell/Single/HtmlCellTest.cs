@@ -41,6 +41,7 @@ namespace OBeautifulCode.DataStructure.Test
 
                             var result = new HtmlCell(
                                                  null,
+                                                 referenceObject.Id,
                                                  referenceObject.Format,
                                                  referenceObject.HoverOver,
                                                  referenceObject.Link);
@@ -60,6 +61,7 @@ namespace OBeautifulCode.DataStructure.Test
 
                             var result = new HtmlCell(
                                                  Invariant($"  {Environment.NewLine}  "),
+                                                 referenceObject.Id,
                                                  referenceObject.Format,
                                                  referenceObject.HoverOver,
                                                  referenceObject.Link);

@@ -145,6 +145,137 @@ namespace OBeautifulCode.DataStructure.Test
                         },
                         ExpectedExceptionType = typeof(ArgumentException),
                         ExpectedExceptionMessageContains = new[] { "The last row in tableRows.HeaderRows does not contain one cell for all 3 of the defined columns.  Spanning is disallowed for the last header row.", },
+                    })
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<TreeTable>
+                    {
+                        Name = "constructor should throw ArgumentException when two columns have the same identifier",
+                        ConstructionFunc = () =>
+                        {
+                            var tableColumns = new TableColumns(new[]
+                            {
+                                new Column("column-1"),
+                                new Column("column-2"),
+                                new Column("column-1"),
+                            });
+
+                            var headerRows = new HeaderRows(
+                                new[]
+                                {
+                                    new FlatRow(Some.ReadOnlyDummies<MediaReferenceCell>(3).ToList()),
+                                    new FlatRow(Some.ReadOnlyDummies<StringCell>(3).ToList()),
+                                },
+                                null);
+
+                            var dataRows = new DataRows(
+                                new[]
+                                {
+                                    new Row(Some.ReadOnlyDummies<NullCell>(3).ToList()),
+                                    new Row(Some.ReadOnlyDummies<NullCell>(3).ToList(), childRows:
+                                        new[]
+                                        {
+                                            new Row(Some.ReadOnlyDummies<NullCell>(3).ToList()),
+                                        }),
+                                });
+
+                            var tableRows = new TableRows(headerRows, dataRows);
+
+                            var result = new TreeTable(
+                                tableColumns,
+                                tableRows);
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentException),
+                        ExpectedExceptionMessageContains = new[] { "Two or more elements (i.e. columns, rows, cells) have the same identifier.", },
+                    })
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<TreeTable>
+                    {
+                        Name = "constructor should throw ArgumentException when two rows have the same identifier",
+                        ConstructionFunc = () =>
+                        {
+                            var tableColumns = new TableColumns(Some.ReadOnlyDummies<Column>(3).ToList());
+
+                            var headerRows = new HeaderRows(
+                                new[]
+                                {
+                                    new FlatRow(Some.ReadOnlyDummies<MediaReferenceCell>(3).ToList(), "row-1"),
+                                    new FlatRow(Some.ReadOnlyDummies<StringCell>(3).ToList(), "row-2"),
+                                },
+                                null);
+
+                            var dataRows = new DataRows(
+                                new[]
+                                {
+                                    new Row(Some.ReadOnlyDummies<NullCell>(3).ToList(), "row-3"),
+                                    new Row(Some.ReadOnlyDummies<NullCell>(3).ToList(), childRows:
+                                        new[]
+                                        {
+                                            new Row(Some.ReadOnlyDummies<NullCell>(3).ToList(), "row-1"),
+                                        }),
+                                });
+
+                            var tableRows = new TableRows(headerRows, dataRows);
+
+                            var result = new TreeTable(
+                                tableColumns,
+                                tableRows);
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentException),
+                        ExpectedExceptionMessageContains = new[] { "Two or more elements (i.e. columns, rows, cells) have the same identifier.", },
+                    })
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<TreeTable>
+                    {
+                        Name = "constructor should throw ArgumentException when two cells have the same identifier",
+                        ConstructionFunc = () =>
+                        {
+                            var tableColumns = new TableColumns(Some.ReadOnlyDummies<Column>(3).ToList());
+
+                            var headerRows = new HeaderRows(
+                                new[]
+                                {
+                                    new FlatRow(
+                                        new ICell[]
+                                        {
+                                            A.Dummy<MediaReferenceCell>(),
+                                            new NullCell(id: "cell-1"),
+                                            A.Dummy<StringCell>(),
+                                        }),
+                                    new FlatRow(Some.ReadOnlyDummies<StringCell>(3).ToList()),
+                                },
+                                null);
+
+                            var dataRows = new DataRows(
+                                new[]
+                                {
+                                    new Row(Some.ReadOnlyDummies<NullCell>(3).ToList()),
+                                    new Row(Some.ReadOnlyDummies<NullCell>(3).ToList(), childRows:
+                                        new[]
+                                        {
+                                            new Row(
+                                                new ICell[]
+                                                {
+                                                    A.Dummy<MediaReferenceCell>(),
+                                                    A.Dummy<StringCell>(),
+                                                    new MediaReferenceCell(A.Dummy<MediaReference>(), id: "cell-1"),
+                                                }),
+                                        }),
+                                });
+
+                            var tableRows = new TableRows(headerRows, dataRows);
+
+                            var result = new TreeTable(
+                                tableColumns,
+                                tableRows);
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentException),
+                        ExpectedExceptionMessageContains = new[] { "Two or more elements (i.e. columns, rows, cells) have the same identifier.", },
                     });
 
             DeepCloneWithTestScenarios

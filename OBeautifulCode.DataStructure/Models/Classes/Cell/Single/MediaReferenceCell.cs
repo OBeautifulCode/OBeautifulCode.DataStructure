@@ -20,15 +20,17 @@ namespace OBeautifulCode.DataStructure
         /// Initializes a new instance of the <see cref="MediaReferenceCell"/> class.
         /// </summary>
         /// <param name="mediaReference">The media reference.</param>
+        /// <param name="id">OPTIONAL unique identifier of the cell.  DEFAULT is a cell with no unique identifier.</param>
         /// <param name="format">OPTIONAL format to apply to the cell.  DEFAULT is to leave the format unchanged.</param>
         /// <param name="hoverOver">OPTIONAL hover-over for the cell.  DEFAULT is no hover-over.</param>
         /// <param name="link">OPTIONAL link to some resource.  DEFAULT is no link.</param>
         public MediaReferenceCell(
             MediaReference mediaReference,
+            string id = null,
             CellFormat format = null,
             IHoverOver hoverOver = null,
             ILink link = null)
-            : base(format, hoverOver, link)
+            : base(id, format, hoverOver, link)
         {
             if (mediaReference == null)
             {

@@ -42,6 +42,7 @@ namespace OBeautifulCode.DataStructure.Test
                             var result = new ColumnSpanningMediaReferenceCell(
                                                  null,
                                                  referenceObject.ColumnsSpanned,
+                                                 referenceObject.Id,
                                                  referenceObject.Format,
                                                  referenceObject.HoverOver,
                                                  referenceObject.Link);
@@ -62,6 +63,7 @@ namespace OBeautifulCode.DataStructure.Test
                             var result = new ColumnSpanningMediaReferenceCell(
                                 referenceObject.MediaReference,
                                 1,
+                                referenceObject.Id,
                                 referenceObject.Format,
                                 referenceObject.HoverOver,
                                 referenceObject.Link);
@@ -82,6 +84,7 @@ namespace OBeautifulCode.DataStructure.Test
                             var result = new ColumnSpanningMediaReferenceCell(
                                 referenceObject.MediaReference,
                                 0,
+                                referenceObject.Id,
                                 referenceObject.Format,
                                 referenceObject.HoverOver,
                                 referenceObject.Link);
@@ -102,6 +105,7 @@ namespace OBeautifulCode.DataStructure.Test
                             var result = new ColumnSpanningMediaReferenceCell(
                                 referenceObject.MediaReference,
                                 A.Dummy<NegativeInteger>(),
+                                referenceObject.Id,
                                 referenceObject.Format,
                                 referenceObject.HoverOver,
                                 referenceObject.Link);

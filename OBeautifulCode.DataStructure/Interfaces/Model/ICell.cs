@@ -16,5 +16,9 @@ namespace OBeautifulCode.DataStructure
     [SuppressMessage("Microsoft.Design", "CA1040:AvoidEmptyInterfaces", Justification = ObcSuppressBecause.CA1040_AvoidEmptyInterfaces_NeedToIdentifyGroupOfTypesAndPreferInterfaceOverAttribute)]
     public interface ICell
     {
+        /// <summary>
+        /// Gets the cell's unique identifier.
+        /// </summary>
+        string Id { get; }
     }
 }

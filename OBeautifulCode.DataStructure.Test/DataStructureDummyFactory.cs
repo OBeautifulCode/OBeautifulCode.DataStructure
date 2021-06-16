@@ -124,28 +124,28 @@ namespace OBeautifulCode.DataStructure.Test
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
             {
-                var result = new ColumnSpanningDecimalCell(A.Dummy<decimal>(), A.Dummy<PositiveInteger>().ThatIs(_ => _ != 1), A.Dummy<string>(), A.Dummy<CellFormat>(), A.Dummy<IHoverOver>(), A.Dummy<ILink>());
+                var result = new ColumnSpanningDecimalCell(A.Dummy<decimal>(), A.Dummy<PositiveInteger>().ThatIs(_ => _ != 1), A.Dummy<string>(), A.Dummy<string>(), A.Dummy<CellFormat>(), A.Dummy<IHoverOver>(), A.Dummy<ILink>());
 
                 return result;
             });
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
             {
-                var result = new ColumnSpanningHtmlCell(A.Dummy<string>(), A.Dummy<PositiveInteger>().ThatIs(_ => _ != 1), A.Dummy<CellFormat>(), A.Dummy<IHoverOver>(), A.Dummy<ILink>());
+                var result = new ColumnSpanningHtmlCell(A.Dummy<string>(), A.Dummy<PositiveInteger>().ThatIs(_ => _ != 1), A.Dummy<string>(), A.Dummy<CellFormat>(), A.Dummy<IHoverOver>(), A.Dummy<ILink>());
 
                 return result;
             });
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
             {
-                var result = new ColumnSpanningMediaReferenceCell(A.Dummy<MediaReference>(), A.Dummy<PositiveInteger>().ThatIs(_ => _ != 1), A.Dummy<CellFormat>(), A.Dummy<IHoverOver>(), A.Dummy<ILink>());
+                var result = new ColumnSpanningMediaReferenceCell(A.Dummy<MediaReference>(), A.Dummy<PositiveInteger>().ThatIs(_ => _ != 1), A.Dummy<string>(), A.Dummy<CellFormat>(), A.Dummy<IHoverOver>(), A.Dummy<ILink>());
 
                 return result;
             });
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
             {
-                var result = new ColumnSpanningNullCell(A.Dummy<PositiveInteger>().ThatIs(_ => _ != 1), A.Dummy<string>(), A.Dummy<CellFormat>(), A.Dummy<IHoverOver>(), A.Dummy<ILink>());
+                var result = new ColumnSpanningNullCell(A.Dummy<PositiveInteger>().ThatIs(_ => _ != 1), A.Dummy<string>(), A.Dummy<string>(), A.Dummy<CellFormat>(), A.Dummy<IHoverOver>(), A.Dummy<ILink>());
 
                 return result;
             });
@@ -161,7 +161,7 @@ namespace OBeautifulCode.DataStructure.Test
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
             {
-                var result = new ColumnSpanningStringCell(A.Dummy<string>(), A.Dummy<PositiveInteger>().ThatIs(_ => _ != 1), A.Dummy<string>(), A.Dummy<CellFormat>(), A.Dummy<IHoverOver>(), A.Dummy<ILink>());
+                var result = new ColumnSpanningStringCell(A.Dummy<string>(), A.Dummy<PositiveInteger>().ThatIs(_ => _ != 1), A.Dummy<string>(), A.Dummy<string>(), A.Dummy<CellFormat>(), A.Dummy<IHoverOver>(), A.Dummy<ILink>());
 
                 return result;
             });

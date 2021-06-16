@@ -7,6 +7,7 @@
 namespace OBeautifulCode.DataStructure
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
 
     using OBeautifulCode.Type;
@@ -37,9 +38,15 @@ namespace OBeautifulCode.DataStructure
 
             var numberOfColumns = tableColumns.Columns.Count;
 
+            var ids = new List<string>();
+
+            ids.AddRange(tableColumns.Columns.Where(_ => _.Id != null).Select(_ => _.Id));
+
             if (tableRows != null)
             {
-                if (tableRows.GetAllRowsInOrder().Any(_ => _.GetNumberOfColumnsSpanned() != numberOfColumns))
+                var allRowsInOrder = tableRows.GetAllRowsInOrder();
+
+                if (allRowsInOrder.Any(_ => _.GetNumberOfColumnsSpanned() != numberOfColumns))
                 {
                     throw new ArgumentException(Invariant($"{nameof(tableRows)} contains a row or descendant row that does not span all {numberOfColumns} of the defined columns."));
                 }
@@ -51,6 +58,18 @@ namespace OBeautifulCode.DataStructure
                         throw new ArgumentException(Invariant($"The last row in {nameof(tableRows)}.{nameof(this.TableRows.HeaderRows)} does not contain one cell for all {numberOfColumns} of the defined columns.  Spanning is disallowed for the last header row."));
                     }
                 }
+
+                ids.AddRange(allRowsInOrder.Where(_ => _.Id != null).Select(_ => _.Id));
+
+                var allCells = allRowsInOrder.SelectMany(_ => _.Cells).ToList();
+
+                ids.AddRange(allCells.Where(_ => _.Id != null).Select(_ => _.Id));
+                ids.AddRange(allCells.OfType<SlottedCell>().SelectMany(_ => _.SlotIdToCellMap.Values).Where(_ => _.Id != null).Select(_ => _.Id));
+            }
+
+            if (ids.Distinct().Count() != ids.Count)
+            {
+                throw new ArgumentException(Invariant($"Two or more elements (i.e. columns, rows, cells) have the same identifier."));
             }
 
             this.TableColumns = tableColumns;

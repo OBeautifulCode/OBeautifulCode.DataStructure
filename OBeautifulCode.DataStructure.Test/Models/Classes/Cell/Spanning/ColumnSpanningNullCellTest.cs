@@ -41,6 +41,7 @@ namespace OBeautifulCode.DataStructure.Test
 
                             var result = new ColumnSpanningNullCell(
                                 1,
+                                referenceObject.Id,
                                 referenceObject.DisplayValue,
                                 referenceObject.Format,
                                 referenceObject.HoverOver,
@@ -61,6 +62,7 @@ namespace OBeautifulCode.DataStructure.Test
 
                             var result = new ColumnSpanningNullCell(
                                 0,
+                                referenceObject.Id,
                                 referenceObject.DisplayValue,
                                 referenceObject.Format,
                                 referenceObject.HoverOver,
@@ -81,6 +83,7 @@ namespace OBeautifulCode.DataStructure.Test
 
                             var result = new ColumnSpanningNullCell(
                                 A.Dummy<NegativeInteger>(),
+                                referenceObject.Id,
                                 referenceObject.DisplayValue,
                                 referenceObject.Format,
                                 referenceObject.HoverOver,
