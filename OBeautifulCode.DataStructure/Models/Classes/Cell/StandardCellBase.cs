@@ -11,6 +11,7 @@ namespace OBeautifulCode.DataStructure
     /// <summary>
     /// Base implementation of <see cref="ICell"/>.
     /// </summary>
+    // ReSharper disable once RedundantExtendsListEntry
     public abstract partial class StandardCellBase : CellBase, IStandardCell, IModelViaCodeGen
     {
         /// <summary>

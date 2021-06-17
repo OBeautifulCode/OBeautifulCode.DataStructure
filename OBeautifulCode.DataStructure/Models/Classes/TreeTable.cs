@@ -8,8 +8,10 @@ namespace OBeautifulCode.DataStructure
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
 
+    using OBeautifulCode.CodeAnalysis.Recipes;
     using OBeautifulCode.Type;
 
     using static System.FormattableString;
@@ -26,6 +28,7 @@ namespace OBeautifulCode.DataStructure
         /// <param name="tableColumns">The columns of the table.</param>
         /// <param name="tableRows">OPTIONAL rows of the table.  DEFAULT is no rows.</param>
         /// <param name="format">OPTIONAL format to apply to the whole table.  DEFAULT is to leave the format unchanged.</param>
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = ObcSuppressBecause.CA1502_AvoidExcessiveComplexity_DisagreeWithAssessment)]
         public TreeTable(
             TableColumns tableColumns,
             TableRows tableRows = null,
