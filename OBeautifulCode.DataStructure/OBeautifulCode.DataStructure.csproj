@@ -65,9 +65,9 @@
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringXmlDocOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
     <Compile Include="Interfaces\Behavioral\ILinkedCell.cs" />
-    <Compile Include="Interfaces\Model\ILinkedResource.cs" />
-    <Compile Include="Interfaces\Model\ILink.cs" />
-    <Compile Include="Interfaces\Model\IStandardCell.cs" />
+    <Compile Include="Interfaces\Model\Resource\ILinkedResource.cs" />
+    <Compile Include="Interfaces\Model\Resource\ILink.cs" />
+    <Compile Include="Interfaces\Model\Cell\IStandardCell.cs" />
     <Compile Include="Models\Classes\CellValue\MediaReference.cs" />
     <Compile Include="Models\Classes\CellValue\MediaReference.designer.cs">
       <DependentUpon>MediaReference.cs</DependentUpon>
@@ -184,13 +184,21 @@
     <Compile Include="Models\Classes\Format\Region\Regions\TableFormat.designer.cs">
       <DependentUpon>TableFormat.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\Classes\Format\Report\ReportFormat.designer.cs">
+      <DependentUpon>ReportFormat.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Format\Report\SectionFormat.cs" />
+    <Compile Include="Models\Classes\Format\Report\ReportFormat.cs" />
+    <Compile Include="Models\Classes\Format\Report\SectionFormat.designer.cs">
+      <DependentUpon>SectionFormat.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Classes\HoverOver\HoverOverBase.cs" />
-    <Compile Include="Interfaces\Model\IHoverOver.cs" />
+    <Compile Include="Interfaces\Model\Resource\IHoverOver.cs" />
     <Compile Include="Interfaces\Behavioral\IHaveValueCell.cs" />
     <Compile Include="Interfaces\Behavioral\IHaveDisplayValueCell.cs" />
     <Compile Include="Interfaces\Behavioral\IFormattableCell.cs" />
     <Compile Include="Interfaces\Behavioral\IColumnSpanningCell.cs" />
-    <Compile Include="Interfaces\Model\ICell.cs" />
+    <Compile Include="Interfaces\Model\Cell\ICell.cs" />
     <Compile Include="Models\Classes\Cell\Single\DecimalCell.cs" />
     <Compile Include="Logic\Extensions\RowExtensions.cs" />
     <Compile Include="Models\Classes\Format\Region\Regions\CellFormat.cs" />
@@ -227,6 +235,13 @@
     <Compile Include="Models\Classes\Link\SimpleLink.designer.cs">
       <DependentUpon>SimpleLink.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\Classes\Report\Report.designer.cs">
+      <DependentUpon>Report.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Report\Section.cs" />
+    <Compile Include="Models\Classes\Report\Section.designer.cs">
+      <DependentUpon>Section.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Classes\Row\DataRows.designer.cs">
       <DependentUpon>DataRows.cs</DependentUpon>
     </Compile>
@@ -247,6 +262,7 @@
     <Compile Include="Models\Classes\Row\TableRows.designer.cs">
       <DependentUpon>TableRows.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\Classes\Report\Report.cs" />
     <Compile Include="Models\Classes\TreeTable.designer.cs">
       <DependentUpon>TreeTable.cs</DependentUpon>
     </Compile>

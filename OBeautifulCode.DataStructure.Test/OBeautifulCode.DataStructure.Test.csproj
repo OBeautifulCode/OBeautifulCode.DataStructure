@@ -395,6 +395,22 @@
     <Compile Include="Models\Classes\Row\RowTest.designer.cs">
       <DependentUpon>RowTest.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\Classes\Format\Report\ReportFormatTest.cs" />
+    <Compile Include="Models\Classes\Format\Report\ReportFormatTest.designer.cs">
+      <DependentUpon>ReportFormatTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Report\ReportTest.cs" />
+    <Compile Include="Models\Classes\Report\ReportTest.designer.cs">
+      <DependentUpon>ReportTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Format\Report\SectionFormatTest.cs" />
+    <Compile Include="Models\Classes\Format\Report\SectionFormatTest.designer.cs">
+      <DependentUpon>SectionFormatTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Report\SectionTest.cs" />
+    <Compile Include="Models\Classes\Report\SectionTest.designer.cs">
+      <DependentUpon>SectionTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="SerializationConfigurationTypes.cs" />
     <None Include="packages.config" />
   </ItemGroup>

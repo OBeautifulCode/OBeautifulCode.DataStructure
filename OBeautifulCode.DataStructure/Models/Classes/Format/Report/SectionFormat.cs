@@ -1,15 +1,17 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IStandardCell.cs" company="OBeautifulCode">
+// <copyright file="SectionFormat.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace OBeautifulCode.DataStructure
 {
+    using OBeautifulCode.Type;
+
     /// <summary>
-    /// A standard/typical cell.
+    /// The format to apply to a <see cref="Section"/>.
     /// </summary>
-    public interface IStandardCell : IFormattableCell, IHaveHoverOverCell, ILinkedCell
+    public partial class SectionFormat : IModelViaCodeGen
     {
     }
 }

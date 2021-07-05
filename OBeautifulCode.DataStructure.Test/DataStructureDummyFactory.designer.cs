@@ -363,6 +363,12 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<CellFormat>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new SectionFormat());
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new ReportFormat());
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () =>
                 {
                     var availableTypes = new[]
@@ -446,6 +452,13 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<IReadOnlyList<RegionFormatBase>>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new Section(
+                                 A.Dummy<string>(),
+                                 A.Dummy<TreeTable>(),
+                                 A.Dummy<string>(),
+                                 A.Dummy<SectionFormat>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new DataRows(
                                  A.Dummy<IReadOnlyList<Row>>(),
                                  A.Dummy<DataRowsFormat>()));
@@ -493,6 +506,13 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<HeaderRows>(),
                                  A.Dummy<DataRows>(),
                                  A.Dummy<RowFormat>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new Report(
+                                 A.Dummy<string>(),
+                                 A.Dummy<IReadOnlyCollection<Section>>(),
+                                 A.Dummy<string>(),
+                                 A.Dummy<ReportFormat>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new TreeTable(
