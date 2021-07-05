@@ -12,6 +12,7 @@ namespace OBeautifulCode.DataStructure
     using global::System.Collections.Generic;
     using global::System.Collections.ObjectModel;
     using global::System.Diagnostics.CodeAnalysis;
+    using global::System.Drawing;
     using global::System.Globalization;
     using global::System.Linq;
 
@@ -23,15 +24,15 @@ namespace OBeautifulCode.DataStructure
     using static global::System.FormattableString;
 
     [Serializable]
-    public partial class FlatRow : IModel<FlatRow>
+    public partial class FontFormat : IModel<FontFormat>
     {
         /// <summary>
-        /// Determines whether two objects of type <see cref="FlatRow"/> are equal.
+        /// Determines whether two objects of type <see cref="FontFormat"/> are equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are equal; otherwise false.</returns>
-        public static bool operator ==(FlatRow left, FlatRow right)
+        public static bool operator ==(FontFormat left, FontFormat right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -49,15 +50,15 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <summary>
-        /// Determines whether two objects of type <see cref="FlatRow"/> are not equal.
+        /// Determines whether two objects of type <see cref="FontFormat"/> are not equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are not equal; otherwise false.</returns>
-        public static bool operator !=(FlatRow left, FlatRow right) => !(left == right);
+        public static bool operator !=(FontFormat left, FontFormat right) => !(left == right);
 
         /// <inheritdoc />
-        public bool Equals(FlatRow other)
+        public bool Equals(FontFormat other)
         {
             if (ReferenceEquals(this, other))
             {
@@ -69,27 +70,45 @@ namespace OBeautifulCode.DataStructure
                 return false;
             }
 
-            var result = this.Id.IsEqualTo(other.Id, StringComparer.Ordinal)
-                      && this.Cells.IsEqualTo(other.Cells)
-                      && this.Format.IsEqualTo(other.Format);
+            var result = this.FontColor.IsEqualTo(other.FontColor)
+                      && this.FontNamesInFallbackOrder.IsEqualTo(other.FontNamesInFallbackOrder)
+                      && this.FontSizeInPoints.IsEqualTo(other.FontSizeInPoints)
+                      && this.Options.IsEqualTo(other.Options);
 
             return result;
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => this == (obj as FlatRow);
+        public override bool Equals(object obj) => this == (obj as FontFormat);
 
         /// <inheritdoc />
         public override int GetHashCode() => HashCodeHelper.Initialize()
-            .Hash(this.Id)
-            .Hash(this.Cells)
-            .Hash(this.Format)
+            .Hash(this.FontColor)
+            .Hash(this.FontNamesInFallbackOrder)
+            .Hash(this.FontSizeInPoints)
+            .Hash(this.Options)
             .Value;
 
         /// <inheritdoc />
-        public new FlatRow DeepClone() => (FlatRow)this.DeepCloneInternal();
+        public object Clone() => this.DeepClone();
 
         /// <inheritdoc />
+        public FontFormat DeepClone()
+        {
+            var result = new FontFormat(
+                                 this.FontColor?.DeepClone(),
+                                 this.FontNamesInFallbackOrder?.DeepClone(),
+                                 this.FontSizeInPoints?.DeepClone(),
+                                 this.Options?.DeepClone());
+
+            return result;
+        }
+
+        /// <summary>
+        /// Deep clones this object with a new <see cref="FontColor" />.
+        /// </summary>
+        /// <param name="fontColor">The new <see cref="FontColor" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="FontFormat" /> using the specified <paramref name="fontColor" /> for <see cref="FontColor" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -107,17 +126,22 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public override RowBase DeepCloneWithId(string id)
+        public FontFormat DeepCloneWithFontColor(Color? fontColor)
         {
-            var result = new FlatRow(
-                                 this.Cells?.DeepClone(),
-                                 id,
-                                 this.Format?.DeepClone());
+            var result = new FontFormat(
+                                 fontColor,
+                                 this.FontNamesInFallbackOrder?.DeepClone(),
+                                 this.FontSizeInPoints?.DeepClone(),
+                                 this.Options?.DeepClone());
 
             return result;
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Deep clones this object with a new <see cref="FontNamesInFallbackOrder" />.
+        /// </summary>
+        /// <param name="fontNamesInFallbackOrder">The new <see cref="FontNamesInFallbackOrder" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="FontFormat" /> using the specified <paramref name="fontNamesInFallbackOrder" /> for <see cref="FontNamesInFallbackOrder" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -135,17 +159,22 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public override RowBase DeepCloneWithCells(IReadOnlyList<ICell> cells)
+        public FontFormat DeepCloneWithFontNamesInFallbackOrder(IReadOnlyList<string> fontNamesInFallbackOrder)
         {
-            var result = new FlatRow(
-                                 cells,
-                                 this.Id?.DeepClone(),
-                                 this.Format?.DeepClone());
+            var result = new FontFormat(
+                                 this.FontColor?.DeepClone(),
+                                 fontNamesInFallbackOrder,
+                                 this.FontSizeInPoints?.DeepClone(),
+                                 this.Options?.DeepClone());
 
             return result;
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Deep clones this object with a new <see cref="FontSizeInPoints" />.
+        /// </summary>
+        /// <param name="fontSizeInPoints">The new <see cref="FontSizeInPoints" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="FontFormat" /> using the specified <paramref name="fontSizeInPoints" /> for <see cref="FontSizeInPoints" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -163,24 +192,46 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public override RowBase DeepCloneWithFormat(RowFormat format)
+        public FontFormat DeepCloneWithFontSizeInPoints(decimal? fontSizeInPoints)
         {
-            var result = new FlatRow(
-                                 this.Cells?.DeepClone(),
-                                 this.Id?.DeepClone(),
-                                 format);
+            var result = new FontFormat(
+                                 this.FontColor?.DeepClone(),
+                                 this.FontNamesInFallbackOrder?.DeepClone(),
+                                 fontSizeInPoints,
+                                 this.Options?.DeepClone());
 
             return result;
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Deep clones this object with a new <see cref="Options" />.
+        /// </summary>
+        /// <param name="options">The new <see cref="Options" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="FontFormat" /> using the specified <paramref name="options" /> for <see cref="Options" /> and a deep clone of every other property.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
-        protected override RowBase DeepCloneInternal()
+        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
+        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
+        public FontFormat DeepCloneWithOptions(FontFormatOptions? options)
         {
-            var result = new FlatRow(
-                                 this.Cells?.DeepClone(),
-                                 this.Id?.DeepClone(),
-                                 this.Format?.DeepClone());
+            var result = new FontFormat(
+                                 this.FontColor?.DeepClone(),
+                                 this.FontNamesInFallbackOrder?.DeepClone(),
+                                 this.FontSizeInPoints?.DeepClone(),
+                                 options);
 
             return result;
         }
@@ -189,7 +240,7 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"OBeautifulCode.DataStructure.FlatRow: Id = {this.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Cells = {this.Cells?.ToString() ?? "<null>"}, Format = {this.Format?.ToString() ?? "<null>"}.");
+            var result = Invariant($"OBeautifulCode.DataStructure.FontFormat: FontColor = {this.FontColor?.ToString() ?? "<null>"}, FontNamesInFallbackOrder = {this.FontNamesInFallbackOrder?.ToString() ?? "<null>"}, FontSizeInPoints = {this.FontSizeInPoints?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Options = {this.Options?.ToString() ?? "<null>"}.");
 
             return result;
         }

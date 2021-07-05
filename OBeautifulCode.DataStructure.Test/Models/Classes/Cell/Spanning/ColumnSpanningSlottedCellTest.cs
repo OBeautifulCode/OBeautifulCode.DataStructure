@@ -42,7 +42,7 @@ namespace OBeautifulCode.DataStructure.Test
 
                             var result = new ColumnSpanningSlottedCell(
                                                  null,
-                                                 referenceObject.DefaultSlotName,
+                                                 referenceObject.DefaultSlotId,
                                                  referenceObject.ColumnsSpanned,
                                                  referenceObject.Id);
 
@@ -61,7 +61,7 @@ namespace OBeautifulCode.DataStructure.Test
 
                             var result = new ColumnSpanningSlottedCell(
                                                  new Dictionary<string, IHaveValueCell>(),
-                                                 referenceObject.DefaultSlotName,
+                                                 referenceObject.DefaultSlotId,
                                                  referenceObject.ColumnsSpanned,
                                                  referenceObject.Id);
 
@@ -86,7 +86,7 @@ namespace OBeautifulCode.DataStructure.Test
 
                             var result = new ColumnSpanningSlottedCell(
                                                  dictionaryWithNullValue,
-                                                 referenceObject.DefaultSlotName,
+                                                 referenceObject.DefaultSlotId,
                                                  referenceObject.ColumnsSpanned,
                                                  referenceObject.Id);
 
@@ -98,7 +98,7 @@ namespace OBeautifulCode.DataStructure.Test
                 .AddScenario(() =>
                     new ConstructorArgumentValidationTestScenario<ColumnSpanningSlottedCell>
                     {
-                        Name = "constructor should throw ArgumentNullException when parameter 'defaultSlotName' is null scenario",
+                        Name = "constructor should throw ArgumentNullException when parameter 'defaultSlotId' is null scenario",
                         ConstructionFunc = () =>
                         {
                             var referenceObject = A.Dummy<ColumnSpanningSlottedCell>();
@@ -112,12 +112,12 @@ namespace OBeautifulCode.DataStructure.Test
                             return result;
                         },
                         ExpectedExceptionType = typeof(ArgumentNullException),
-                        ExpectedExceptionMessageContains = new[] { "defaultSlotName", },
+                        ExpectedExceptionMessageContains = new[] { "defaultSlotId", },
                     })
                 .AddScenario(() =>
                     new ConstructorArgumentValidationTestScenario<ColumnSpanningSlottedCell>
                     {
-                        Name = "constructor should throw ArgumentException when parameter 'defaultSlotName' is white space scenario",
+                        Name = "constructor should throw ArgumentException when parameter 'defaultSlotId' is white space scenario",
                         ConstructionFunc = () =>
                         {
                             var referenceObject = A.Dummy<ColumnSpanningSlottedCell>();
@@ -131,7 +131,7 @@ namespace OBeautifulCode.DataStructure.Test
                             return result;
                         },
                         ExpectedExceptionType = typeof(ArgumentException),
-                        ExpectedExceptionMessageContains = new[] { "defaultSlotName", "white space", },
+                        ExpectedExceptionMessageContains = new[] { "defaultSlotId", "white space", },
                     })
                 .AddScenario(() =>
                     new ConstructorArgumentValidationTestScenario<ColumnSpanningSlottedCell>
@@ -147,7 +147,7 @@ namespace OBeautifulCode.DataStructure.Test
 
                             var result = new ColumnSpanningSlottedCell(
                                 slotIdToCellMap,
-                                referenceObject.DefaultSlotName,
+                                referenceObject.DefaultSlotId,
                                 referenceObject.ColumnsSpanned);
 
                             return result;
@@ -158,7 +158,7 @@ namespace OBeautifulCode.DataStructure.Test
                 .AddScenario(() =>
                     new ConstructorArgumentValidationTestScenario<ColumnSpanningSlottedCell>
                     {
-                        Name = "constructor should throw ArgumentException when parameter 'slotIdToCellMap' does not contain the specified defaultSlotName",
+                        Name = "constructor should throw ArgumentException when parameter 'slotIdToCellMap' does not contain the specified defaultSlotId",
                         ConstructionFunc = () =>
                         {
                             var referenceObject = A.Dummy<ColumnSpanningSlottedCell>();
@@ -171,7 +171,7 @@ namespace OBeautifulCode.DataStructure.Test
                             return result;
                         },
                         ExpectedExceptionType = typeof(ArgumentException),
-                        ExpectedExceptionMessageContains = new[] { "slotIdToCellMap does not contain the specified defaultSlotName" },
+                        ExpectedExceptionMessageContains = new[] { "slotIdToCellMap does not contain the specified defaultSlotId" },
                     })
                 .AddScenario(() =>
                     new ConstructorArgumentValidationTestScenario<ColumnSpanningSlottedCell>
@@ -183,7 +183,7 @@ namespace OBeautifulCode.DataStructure.Test
 
                             var result = new ColumnSpanningSlottedCell(
                                 referenceObject.SlotIdToCellMap,
-                                referenceObject.DefaultSlotName,
+                                referenceObject.DefaultSlotId,
                                 1);
 
                             return result;
@@ -201,7 +201,7 @@ namespace OBeautifulCode.DataStructure.Test
 
                             var result = new ColumnSpanningSlottedCell(
                                 referenceObject.SlotIdToCellMap,
-                                referenceObject.DefaultSlotName,
+                                referenceObject.DefaultSlotId,
                                 0);
 
                             return result;
@@ -219,7 +219,7 @@ namespace OBeautifulCode.DataStructure.Test
 
                             var result = new ColumnSpanningSlottedCell(
                                 referenceObject.SlotIdToCellMap,
-                                referenceObject.DefaultSlotName,
+                                referenceObject.DefaultSlotId,
                                 A.Dummy<NegativeInteger>());
 
                             return result;
@@ -243,7 +243,7 @@ namespace OBeautifulCode.DataStructure.Test
 
                             var slotIdToCellMap = referenceObject.SlotIdToCellMap.ToDictionary(_ => _.Key, _ => _.Value);
 
-                            slotIdToCellMap.Add(systemUnderTest.DefaultSlotName, A.Dummy<IHaveValueCell>());
+                            slotIdToCellMap.Add(systemUnderTest.DefaultSlotId, A.Dummy<IHaveValueCell>());
 
                             var result = new SystemUnderTestDeepCloneWithValue<ColumnSpanningSlottedCell>
                             {
@@ -257,18 +257,18 @@ namespace OBeautifulCode.DataStructure.Test
                 .AddScenario(() =>
                     new DeepCloneWithTestScenario<ColumnSpanningSlottedCell>
                     {
-                        Name = "DeepCloneWithDefaultSlotName should deep clone object and replace DefaultSlotName with the provided defaultSlotName",
-                        WithPropertyName = "DefaultSlotName",
+                        Name = "DeepCloneWithDefaultSlotId should deep clone object and replace DefaultSlotId with the provided defaultSlotId",
+                        WithPropertyName = "DefaultSlotId",
                         SystemUnderTestDeepCloneWithValueFunc = () =>
                         {
                             var systemUnderTest = A.Dummy<ColumnSpanningSlottedCell>();
 
-                            var defaultSlotName = systemUnderTest.SlotIdToCellMap.Keys.First(_ => _ != systemUnderTest.DefaultSlotName);
+                            var defaultSlotId = systemUnderTest.SlotIdToCellMap.Keys.First(_ => _ != systemUnderTest.DefaultSlotId);
 
                             var result = new SystemUnderTestDeepCloneWithValue<ColumnSpanningSlottedCell>
                             {
                                 SystemUnderTest = systemUnderTest,
-                                DeepCloneWithValue = defaultSlotName,
+                                DeepCloneWithValue = defaultSlotId,
                             };
 
                             return result;
@@ -304,7 +304,7 @@ namespace OBeautifulCode.DataStructure.Test
                             .SlotIdToCellMap
                             .ToDictionary(_ => _.Key, _ => _.Value);
 
-                        slotIdToCellMap.Add(ReferenceObjectForEquatableTestScenarios.DefaultSlotName, A.Dummy<IHaveValueCell>());
+                        slotIdToCellMap.Add(ReferenceObjectForEquatableTestScenarios.DefaultSlotId, A.Dummy<IHaveValueCell>());
 
                         var result = new EquatableTestScenario<ColumnSpanningSlottedCell>
                         {
@@ -314,22 +314,22 @@ namespace OBeautifulCode.DataStructure.Test
                             {
                                 new ColumnSpanningSlottedCell(
                                     ReferenceObjectForEquatableTestScenarios.SlotIdToCellMap,
-                                    ReferenceObjectForEquatableTestScenarios.DefaultSlotName,
+                                    ReferenceObjectForEquatableTestScenarios.DefaultSlotId,
                                     ReferenceObjectForEquatableTestScenarios.ColumnsSpanned),
                             },
                             ObjectsThatAreNotEqualToReferenceObject = new ColumnSpanningSlottedCell[]
                             {
                                 new ColumnSpanningSlottedCell(
                                     slotIdToCellMap,
-                                    ReferenceObjectForEquatableTestScenarios.DefaultSlotName,
+                                    ReferenceObjectForEquatableTestScenarios.DefaultSlotId,
                                     ReferenceObjectForEquatableTestScenarios.ColumnsSpanned),
                                 new ColumnSpanningSlottedCell(
                                     ReferenceObjectForEquatableTestScenarios.SlotIdToCellMap,
-                                    ReferenceObjectForEquatableTestScenarios.SlotIdToCellMap.Keys.First(_ => _ != ReferenceObjectForEquatableTestScenarios.DefaultSlotName),
+                                    ReferenceObjectForEquatableTestScenarios.SlotIdToCellMap.Keys.First(_ => _ != ReferenceObjectForEquatableTestScenarios.DefaultSlotId),
                                     ReferenceObjectForEquatableTestScenarios.ColumnsSpanned),
                                 new ColumnSpanningSlottedCell(
                                     ReferenceObjectForEquatableTestScenarios.SlotIdToCellMap,
-                                    ReferenceObjectForEquatableTestScenarios.DefaultSlotName,
+                                    ReferenceObjectForEquatableTestScenarios.DefaultSlotId,
                                     A.Dummy<ColumnSpanningSlottedCell>().Whose(_ => !_.ColumnsSpanned.IsEqualTo(ReferenceObjectForEquatableTestScenarios.ColumnsSpanned)).ColumnsSpanned),
                             },
                             ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]

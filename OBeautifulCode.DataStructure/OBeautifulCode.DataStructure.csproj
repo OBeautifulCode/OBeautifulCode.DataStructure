@@ -153,6 +153,9 @@
     <Compile Include="Models\Classes\Format\Fill\FillPattern.designer.cs">
       <DependentUpon>FillPattern.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\Classes\Format\FontFormat.designer.cs">
+      <DependentUpon>FontFormat.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Classes\Format\Region\MultiCellRegionFormatBase.cs" />
     <Compile Include="Models\Classes\Format\Region\MultiCellRegionFormatBase.designer.cs">
       <DependentUpon>MultiCellRegionFormatBase.cs</DependentUpon>
@@ -167,6 +170,7 @@
     <Compile Include="Models\Classes\Format\Region\Regions\DataRowsFormat.designer.cs">
       <DependentUpon>DataRowsFormat.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\Classes\Format\FontFormat.cs" />
     <Compile Include="Models\Classes\Format\Region\Regions\HeaderRowsFormat.cs" />
     <Compile Include="Models\Classes\Format\Region\RegionFormatBase.designer.cs">
       <DependentUpon>RegionFormatBase.cs</DependentUpon>
@@ -247,6 +251,7 @@
       <DependentUpon>TreeTable.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Enums\Cell\MediaReferenceKind.cs" />
+    <Compile Include="Models\Enums\Formatting\FontFormatOptions.cs" />
     <Compile Include="Models\Enums\Linking\BytesPayloadLinkedResourceKind.cs" />
     <Compile Include="Models\Enums\Linking\StringPayloadLinkedResourceKind.cs" />
     <Compile Include="Models\Enums\Linking\UrlLinkedResourceKind.cs" />

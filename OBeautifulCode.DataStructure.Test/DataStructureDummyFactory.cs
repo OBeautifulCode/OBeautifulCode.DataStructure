@@ -115,9 +115,9 @@ namespace OBeautifulCode.DataStructure.Test
             {
                 var slotIdToCellMap = A.Dummy<Dictionary<string, IHaveValueCell>>();
 
-                var defaultSlotName = slotIdToCellMap.ElementAt(ThreadSafeRandom.Next(0, slotIdToCellMap.Count)).Key;
+                var defaultSlotId = slotIdToCellMap.ElementAt(ThreadSafeRandom.Next(0, slotIdToCellMap.Count)).Key;
 
-                var result = new SlottedCell(slotIdToCellMap, defaultSlotName);
+                var result = new SlottedCell(slotIdToCellMap, defaultSlotId);
 
                 return result;
             });
@@ -154,7 +154,7 @@ namespace OBeautifulCode.DataStructure.Test
             {
                 var slottedCell = A.Dummy<SlottedCell>();
 
-                var result = new ColumnSpanningSlottedCell(slottedCell.SlotIdToCellMap, slottedCell.DefaultSlotName, A.Dummy<PositiveInteger>().ThatIs(_ => _ != 1));
+                var result = new ColumnSpanningSlottedCell(slottedCell.SlotIdToCellMap, slottedCell.DefaultSlotId, A.Dummy<PositiveInteger>().ThatIs(_ => _ != 1));
 
                 return result;
             });

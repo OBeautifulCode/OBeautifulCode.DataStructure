@@ -12,6 +12,7 @@ namespace OBeautifulCode.DataStructure.Test
     using global::System.Collections.Generic;
     using global::System.Collections.ObjectModel;
     using global::System.Diagnostics.CodeAnalysis;
+    using global::System.Drawing;
     using global::System.Globalization;
     using global::System.Linq;
     using global::System.Reflection;
@@ -33,30 +34,296 @@ namespace OBeautifulCode.DataStructure.Test
 
     using static global::System.FormattableString;
 
-    public static partial class LinkedResourceBaseTest
+    public static partial class FontFormatTest
     {
-        private static readonly LinkedResourceBase ReferenceObjectForEquatableTestScenarios = A.Dummy<LinkedResourceBase>();
-
-        private static readonly EquatableTestScenarios<LinkedResourceBase> EquatableTestScenarios = new EquatableTestScenarios<LinkedResourceBase>()
+        private static readonly StringRepresentationTestScenarios<FontFormat> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<FontFormat>()
             .AddScenario(() =>
-                new EquatableTestScenario<LinkedResourceBase>
+                new StringRepresentationTestScenario<FontFormat>
+                {
+                    Name = "Default Code Generated Scenario",
+                    SystemUnderTestExpectedStringRepresentationFunc = () =>
+                    {
+                        var systemUnderTest = A.Dummy<FontFormat>();
+
+                        var result = new SystemUnderTestExpectedStringRepresentation<FontFormat>
+                        {
+                            SystemUnderTest = systemUnderTest,
+                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.FontFormat: FontColor = {systemUnderTest.FontColor?.ToString() ?? "<null>"}, FontNamesInFallbackOrder = {systemUnderTest.FontNamesInFallbackOrder?.ToString() ?? "<null>"}, FontSizeInPoints = {systemUnderTest.FontSizeInPoints?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Options = {systemUnderTest.Options?.ToString() ?? "<null>"}."),
+                        };
+
+                        return result;
+                    },
+                });
+
+        private static readonly ConstructorArgumentValidationTestScenarios<FontFormat> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<FontFormat>()
+            .AddScenario(() =>
+                new ConstructorArgumentValidationTestScenario<FontFormat>
+                {
+                    Name = "constructor should throw ArgumentNullException when parameter 'fontNamesInFallbackOrder' is null scenario",
+                    ConstructionFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<FontFormat>();
+
+                        var result = new FontFormat(
+                                             referenceObject.FontColor,
+                                             null,
+                                             referenceObject.FontSizeInPoints,
+                                             referenceObject.Options);
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentNullException),
+                    ExpectedExceptionMessageContains = new[] { "fontNamesInFallbackOrder", },
+                })
+            .AddScenario(() =>
+                new ConstructorArgumentValidationTestScenario<FontFormat>
+                {
+                    Name = "constructor should throw ArgumentException when parameter 'fontNamesInFallbackOrder' is an empty enumerable scenario",
+                    ConstructionFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<FontFormat>();
+
+                        var result = new FontFormat(
+                                             referenceObject.FontColor,
+                                             new List<string>(),
+                                             referenceObject.FontSizeInPoints,
+                                             referenceObject.Options);
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentException),
+                    ExpectedExceptionMessageContains = new[] { "fontNamesInFallbackOrder", "is an empty enumerable", },
+                })
+            .AddScenario(() =>
+                new ConstructorArgumentValidationTestScenario<FontFormat>
+                {
+                    Name = "constructor should throw ArgumentException when parameter 'fontNamesInFallbackOrder' contains a null element scenario",
+                    ConstructionFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<FontFormat>();
+
+                        var result = new FontFormat(
+                                             referenceObject.FontColor,
+                                             new string[0].Concat(referenceObject.FontNamesInFallbackOrder).Concat(new string[] { null }).Concat(referenceObject.FontNamesInFallbackOrder).ToList(),
+                                             referenceObject.FontSizeInPoints,
+                                             referenceObject.Options);
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentException),
+                    ExpectedExceptionMessageContains = new[] { "fontNamesInFallbackOrder", "contains at least one null element", },
+                });
+
+        private static readonly ConstructorPropertyAssignmentTestScenarios<FontFormat> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<FontFormat>()
+            .AddScenario(() =>
+                new ConstructorPropertyAssignmentTestScenario<FontFormat>
+                {
+                    Name = "FontColor should return same 'fontColor' parameter passed to constructor when getting",
+                    SystemUnderTestExpectedPropertyValueFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<FontFormat>();
+
+                        var result = new SystemUnderTestExpectedPropertyValue<FontFormat>
+                        {
+                            SystemUnderTest = new FontFormat(
+                                                      referenceObject.FontColor,
+                                                      referenceObject.FontNamesInFallbackOrder,
+                                                      referenceObject.FontSizeInPoints,
+                                                      referenceObject.Options),
+                            ExpectedPropertyValue = referenceObject.FontColor,
+                        };
+
+                        return result;
+                    },
+                    PropertyName = "FontColor",
+                })
+            .AddScenario(() =>
+                new ConstructorPropertyAssignmentTestScenario<FontFormat>
+                {
+                    Name = "FontNamesInFallbackOrder should return same 'fontNamesInFallbackOrder' parameter passed to constructor when getting",
+                    SystemUnderTestExpectedPropertyValueFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<FontFormat>();
+
+                        var result = new SystemUnderTestExpectedPropertyValue<FontFormat>
+                        {
+                            SystemUnderTest = new FontFormat(
+                                                      referenceObject.FontColor,
+                                                      referenceObject.FontNamesInFallbackOrder,
+                                                      referenceObject.FontSizeInPoints,
+                                                      referenceObject.Options),
+                            ExpectedPropertyValue = referenceObject.FontNamesInFallbackOrder,
+                        };
+
+                        return result;
+                    },
+                    PropertyName = "FontNamesInFallbackOrder",
+                })
+            .AddScenario(() =>
+                new ConstructorPropertyAssignmentTestScenario<FontFormat>
+                {
+                    Name = "FontSizeInPoints should return same 'fontSizeInPoints' parameter passed to constructor when getting",
+                    SystemUnderTestExpectedPropertyValueFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<FontFormat>();
+
+                        var result = new SystemUnderTestExpectedPropertyValue<FontFormat>
+                        {
+                            SystemUnderTest = new FontFormat(
+                                                      referenceObject.FontColor,
+                                                      referenceObject.FontNamesInFallbackOrder,
+                                                      referenceObject.FontSizeInPoints,
+                                                      referenceObject.Options),
+                            ExpectedPropertyValue = referenceObject.FontSizeInPoints,
+                        };
+
+                        return result;
+                    },
+                    PropertyName = "FontSizeInPoints",
+                })
+            .AddScenario(() =>
+                new ConstructorPropertyAssignmentTestScenario<FontFormat>
+                {
+                    Name = "Options should return same 'options' parameter passed to constructor when getting",
+                    SystemUnderTestExpectedPropertyValueFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<FontFormat>();
+
+                        var result = new SystemUnderTestExpectedPropertyValue<FontFormat>
+                        {
+                            SystemUnderTest = new FontFormat(
+                                                      referenceObject.FontColor,
+                                                      referenceObject.FontNamesInFallbackOrder,
+                                                      referenceObject.FontSizeInPoints,
+                                                      referenceObject.Options),
+                            ExpectedPropertyValue = referenceObject.Options,
+                        };
+
+                        return result;
+                    },
+                    PropertyName = "Options",
+                });
+
+        private static readonly DeepCloneWithTestScenarios<FontFormat> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<FontFormat>()
+            .AddScenario(() =>
+                new DeepCloneWithTestScenario<FontFormat>
+                {
+                    Name = "DeepCloneWithFontColor should deep clone object and replace FontColor with the provided fontColor",
+                    WithPropertyName = "FontColor",
+                    SystemUnderTestDeepCloneWithValueFunc = () =>
+                    {
+                        var systemUnderTest = A.Dummy<FontFormat>();
+
+                        var referenceObject = A.Dummy<FontFormat>().ThatIs(_ => !systemUnderTest.FontColor.IsEqualTo(_.FontColor));
+
+                        var result = new SystemUnderTestDeepCloneWithValue<FontFormat>
+                        {
+                            SystemUnderTest = systemUnderTest,
+                            DeepCloneWithValue = referenceObject.FontColor,
+                        };
+
+                        return result;
+                    },
+                })
+            .AddScenario(() =>
+                new DeepCloneWithTestScenario<FontFormat>
+                {
+                    Name = "DeepCloneWithFontNamesInFallbackOrder should deep clone object and replace FontNamesInFallbackOrder with the provided fontNamesInFallbackOrder",
+                    WithPropertyName = "FontNamesInFallbackOrder",
+                    SystemUnderTestDeepCloneWithValueFunc = () =>
+                    {
+                        var systemUnderTest = A.Dummy<FontFormat>();
+
+                        var referenceObject = A.Dummy<FontFormat>().ThatIs(_ => !systemUnderTest.FontNamesInFallbackOrder.IsEqualTo(_.FontNamesInFallbackOrder));
+
+                        var result = new SystemUnderTestDeepCloneWithValue<FontFormat>
+                        {
+                            SystemUnderTest = systemUnderTest,
+                            DeepCloneWithValue = referenceObject.FontNamesInFallbackOrder,
+                        };
+
+                        return result;
+                    },
+                })
+            .AddScenario(() =>
+                new DeepCloneWithTestScenario<FontFormat>
+                {
+                    Name = "DeepCloneWithFontSizeInPoints should deep clone object and replace FontSizeInPoints with the provided fontSizeInPoints",
+                    WithPropertyName = "FontSizeInPoints",
+                    SystemUnderTestDeepCloneWithValueFunc = () =>
+                    {
+                        var systemUnderTest = A.Dummy<FontFormat>();
+
+                        var referenceObject = A.Dummy<FontFormat>().ThatIs(_ => !systemUnderTest.FontSizeInPoints.IsEqualTo(_.FontSizeInPoints));
+
+                        var result = new SystemUnderTestDeepCloneWithValue<FontFormat>
+                        {
+                            SystemUnderTest = systemUnderTest,
+                            DeepCloneWithValue = referenceObject.FontSizeInPoints,
+                        };
+
+                        return result;
+                    },
+                })
+            .AddScenario(() =>
+                new DeepCloneWithTestScenario<FontFormat>
+                {
+                    Name = "DeepCloneWithOptions should deep clone object and replace Options with the provided options",
+                    WithPropertyName = "Options",
+                    SystemUnderTestDeepCloneWithValueFunc = () =>
+                    {
+                        var systemUnderTest = A.Dummy<FontFormat>();
+
+                        var referenceObject = A.Dummy<FontFormat>().ThatIs(_ => !systemUnderTest.Options.IsEqualTo(_.Options));
+
+                        var result = new SystemUnderTestDeepCloneWithValue<FontFormat>
+                        {
+                            SystemUnderTest = systemUnderTest,
+                            DeepCloneWithValue = referenceObject.Options,
+                        };
+
+                        return result;
+                    },
+                });
+
+        private static readonly FontFormat ReferenceObjectForEquatableTestScenarios = A.Dummy<FontFormat>();
+
+        private static readonly EquatableTestScenarios<FontFormat> EquatableTestScenarios = new EquatableTestScenarios<FontFormat>()
+            .AddScenario(() =>
+                new EquatableTestScenario<FontFormat>
                 {
                     Name = "Default Code Generated Scenario",
                     ReferenceObject = ReferenceObjectForEquatableTestScenarios,
-                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new LinkedResourceBase[]
+                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new FontFormat[]
                     {
-                        ReferenceObjectForEquatableTestScenarios.DeepClone(),
+                        new FontFormat(
+                                ReferenceObjectForEquatableTestScenarios.FontColor,
+                                ReferenceObjectForEquatableTestScenarios.FontNamesInFallbackOrder,
+                                ReferenceObjectForEquatableTestScenarios.FontSizeInPoints,
+                                ReferenceObjectForEquatableTestScenarios.Options),
                     },
-                    ObjectsThatAreNotEqualToReferenceObject = new LinkedResourceBase[]
+                    ObjectsThatAreNotEqualToReferenceObject = new FontFormat[]
                     {
-                        // DeepCloneWith___() methods implemented in concrete derivates throw NotSupportedException
-                        // when the derivative's constructor in-use (by code gen) does not have a parameter that
-                        // corresponds with the property who's value is provided in the DeepCloneWith___() method.
-                        // We do not know in advance if this will happen.  As such, the following objects are commented out.
-                    },
-                    ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject = new LinkedResourceBase[]
-                    {
-                        A.Dummy<LinkedResourceBase>().Whose(_ => _.GetType() != ReferenceObjectForEquatableTestScenarios.GetType()),
+                        new FontFormat(
+                                A.Dummy<FontFormat>().Whose(_ => !_.FontColor.IsEqualTo(ReferenceObjectForEquatableTestScenarios.FontColor)).FontColor,
+                                ReferenceObjectForEquatableTestScenarios.FontNamesInFallbackOrder,
+                                ReferenceObjectForEquatableTestScenarios.FontSizeInPoints,
+                                ReferenceObjectForEquatableTestScenarios.Options),
+                        new FontFormat(
+                                ReferenceObjectForEquatableTestScenarios.FontColor,
+                                A.Dummy<FontFormat>().Whose(_ => !_.FontNamesInFallbackOrder.IsEqualTo(ReferenceObjectForEquatableTestScenarios.FontNamesInFallbackOrder)).FontNamesInFallbackOrder,
+                                ReferenceObjectForEquatableTestScenarios.FontSizeInPoints,
+                                ReferenceObjectForEquatableTestScenarios.Options),
+                        new FontFormat(
+                                ReferenceObjectForEquatableTestScenarios.FontColor,
+                                ReferenceObjectForEquatableTestScenarios.FontNamesInFallbackOrder,
+                                A.Dummy<FontFormat>().Whose(_ => !_.FontSizeInPoints.IsEqualTo(ReferenceObjectForEquatableTestScenarios.FontSizeInPoints)).FontSizeInPoints,
+                                ReferenceObjectForEquatableTestScenarios.Options),
+                        new FontFormat(
+                                ReferenceObjectForEquatableTestScenarios.FontColor,
+                                ReferenceObjectForEquatableTestScenarios.FontNamesInFallbackOrder,
+                                ReferenceObjectForEquatableTestScenarios.FontSizeInPoints,
+                                A.Dummy<FontFormat>().Whose(_ => !_.Options.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Options)).Options),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
                     {
@@ -86,12 +353,12 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void LinkedResourceBase___Should_implement_IModel_of_LinkedResourceBase___When_reflecting()
+            public static void FontFormat___Should_implement_IModel_of_FontFormat___When_reflecting()
             {
                 // Arrange
-                var type = typeof(LinkedResourceBase);
+                var type = typeof(FontFormat);
 
-                var expectedModelMethods = typeof(IModel<LinkedResourceBase>).GetInterfaceDeclaredAndImplementedMethods();
+                var expectedModelMethods = typeof(IModel<FontFormat>).GetInterfaceDeclaredAndImplementedMethods();
 
                 var expectedModelMethodHashes = expectedModelMethods.Select(_ => _.GetSignatureHash());
 
@@ -101,7 +368,7 @@ namespace OBeautifulCode.DataStructure.Test
                 var actualModelMethodHashes = actualModelMethods.Select(_ => _.GetSignatureHash());
 
                 // Assert
-                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<LinkedResourceBase>));
+                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<FontFormat>));
                 expectedModelMethodHashes.Except(actualModelMethodHashes).AsTest().Must().BeEmptyEnumerable();
             }
 
@@ -119,16 +386,143 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void LinkedResourceBase___Should_be_attributed_with_Serializable____When_reflecting()
+            public static void FontFormat___Should_be_attributed_with_Serializable____When_reflecting()
             {
                 // Arrange
-                var type = typeof(LinkedResourceBase);
+                var type = typeof(FontFormat);
 
                 // Act
                 var actualAttributes = type.GetCustomAttributes(typeof(SerializableAttribute), false);
 
                 // Assert
                 actualAttributes.AsTest().Must().NotBeEmptyEnumerable();
+            }
+        }
+
+        [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
+        [SuppressMessage("Microsoft.Naming", "CA1724:TypeNamesShouldNotMatchNamespaces")]
+        public static class StringRepresentation
+        {
+            [Fact]
+            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+            public static void ToString___Should_generate_friendly_string_representation_of_object___When_called()
+            {
+                var scenarios = StringRepresentationTestScenarios.ValidateAndPrepareForTesting();
+
+                foreach (var scenario in scenarios)
+                {
+                    // Arrange, Act
+                    var actual = scenario.SystemUnderTest.ToString();
+
+                    // Assert
+                    actual.AsTest().Must().BeEqualTo(scenario.ExpectedStringRepresentation, because: scenario.Id);
+                }
+            }
+        }
+
+        [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
+        [SuppressMessage("Microsoft.Naming", "CA1724:TypeNamesShouldNotMatchNamespaces")]
+        public static class Constructing
+        {
+            [Fact]
+            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+            public static void Constructor___Should_throw___When_parameters_are_not_valid()
+            {
+                var scenarios = ConstructorArgumentValidationTestScenarios.ValidateAndPrepareForTesting();
+
+                foreach (var scenario in scenarios)
+                {
+                    // Arrange, Act
+                    var actual = Record.Exception(scenario.ConstructionFunc);
+
+                    // Assert
+                    actual.AsTest().Must().BeOfType(scenario.ExpectedExceptionType, because: scenario.Id);
+
+                    foreach(var expected in scenario.ExpectedExceptionMessageContains ?? new List<string>())
+                    {
+                        actual.Message.AsTest().Must().ContainString(expected, because: scenario.Id);
+                    }
+
+                    if (scenario.ExpectedExceptionMessageEquals != null)
+                    {
+                        actual.Message.AsTest().Must().BeEqualTo(scenario.ExpectedExceptionMessageEquals, because: scenario.Id);
+                    }
+                }
+            }
+
+            [Fact]
+            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+            [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "referenceObject")]
+            public static void Properties___Should_be_assigned_by_constructor_to_expected_value___When_getting()
+            {
+                var scenarios = ConstructorPropertyAssignmentTestScenarios.ValidateAndPrepareForTesting();
+
+                foreach (var scenario in scenarios)
+                {
+                    // Arrange
+                    if ((scenario.PropertyName == ConstructorPropertyAssignmentTestScenario.NoPropertiesAssignedInConstructorScenarioPropertyName) || (scenario.PropertyName == ConstructorPropertyAssignmentTestScenario.ForceGeneratedTestsToPassAndWriteMyOwnScenarioPropertyName))
+                    {
+                        continue;
+                    }
+
+                    // Act
+                    var actual = scenario.Property.GetValue(scenario.SystemUnderTest);
+
+                    // Assert
+                    // When the scenario specifies CompareActualToExpectedUsing.DefaultStrategy, ValidateAndPrepareForTesting()
+                    // will check if ExpectedPropertyValue == null.  If so, it sets CompareActualToExpectedUsing = ReferenceEquality.
+                    // If not, then it checks the runtime type of ExpectedPropertyValue and if it's a value type,
+                    // then it sets CompareActualToExpectedUsing = ValueEquality, otherwise it uses ValueEquality.
+                    // So a boxed value type is handled properly (using ValueEquality instead of ReferenceEquality).
+                    if (scenario.CompareActualToExpectedUsing == CompareActualToExpectedUsing.ValueEquality)
+                    {
+                        actual.AsTest().Must().BeEqualTo(scenario.ExpectedPropertyValue, because: scenario.Id);
+                    }
+                    else if (scenario.CompareActualToExpectedUsing == CompareActualToExpectedUsing.ReferenceEquality)
+                    {
+                        actual.AsTest().Must().BeSameReferenceAs(scenario.ExpectedPropertyValue, because: scenario.Id);
+                    }
+                    else
+                    {
+                        throw new NotSupportedException("This CompareActualToExpectedUsing is not supported: " + scenario.CompareActualToExpectedUsing);
+                    }
+                }
             }
         }
 
@@ -153,10 +547,10 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Clone___Should_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<LinkedResourceBase>();
+                var systemUnderTest = A.Dummy<FontFormat>();
 
                 // Act
-                var actual = (LinkedResourceBase)systemUnderTest.Clone();
+                var actual = (FontFormat)systemUnderTest.Clone();
 
                 // Assert
                 actual.AsTest().Must().BeEqualTo(systemUnderTest);
@@ -180,7 +574,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void DeepClone___Should_deep_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<LinkedResourceBase>();
+                var systemUnderTest = A.Dummy<FontFormat>();
 
                 // Act
                 var actual = systemUnderTest.DeepClone();
@@ -188,6 +582,92 @@ namespace OBeautifulCode.DataStructure.Test
                 // Assert
                 actual.AsTest().Must().BeEqualTo(systemUnderTest);
                 actual.AsTest().Must().NotBeSameReferenceAs(systemUnderTest);
+
+                if (systemUnderTest.FontNamesInFallbackOrder == null)
+                {
+                    actual.FontNamesInFallbackOrder.AsTest().Must().BeNull();
+                }
+                else if (!actual.FontNamesInFallbackOrder.GetType().IsValueType)
+                {
+                    // When the declared type is a reference type, we still have to check the runtime type.
+                    // The object could be a boxed value type, which will fail this asseration because
+                    // a deep clone of a value type object is the same object.
+                    actual.FontNamesInFallbackOrder.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.FontNamesInFallbackOrder);
+                }
+            }
+
+            [Fact]
+            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+            public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
+            {
+                var propertyNames = new string[] { "FontColor", "FontNamesInFallbackOrder", "FontSizeInPoints", "Options" };
+
+                var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
+
+                foreach (var scenario in scenarios)
+                {
+                    // Arrange
+                    if (scenario.WithPropertyName == DeepCloneWithTestScenario.ForceGeneratedTestsToPassAndWriteMyOwnScenarioWithPropertyName)
+                    {
+                        continue;
+                    }
+
+                    // Act
+                    var actual = (FontFormat)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
+
+                    // Assert
+                    foreach(var propertyName in propertyNames)
+                    {
+                        var propertyInfo = typeof(FontFormat).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
+
+                        var actualPropertyValue = propertyInfo.GetValue(actual);
+
+                        var comparisonValue = propertyName == scenario.WithPropertyName
+                            ? scenario.WithValue
+                            : propertyInfo.GetValue(scenario.SystemUnderTest);
+
+                        if (actualPropertyValue == null)
+                        {
+                            comparisonValue.Must().BeNull(because: scenario.Id);
+                        }
+                        else
+                        {
+                            // We use the runtime type here to solve for the case where the object is a boxed value type.
+                            var actualPropertyValueRuntimeType = actualPropertyValue.GetType();
+
+                            if (actualPropertyValueRuntimeType.IsValueType || (actualPropertyValueRuntimeType == typeof(string)))
+                            {
+                                // actualPropertyValue and comparisonValue are declared as typeof(object), but
+                                // BeEqualTo (which uses IsEqualTo), will do the right thing by comparing the
+                                // objects using their runtime type.
+                                actualPropertyValue.AsTest().Must().BeEqualTo(comparisonValue, because: scenario.Id);
+                            }
+                            else
+                            {
+                                if (propertyName == scenario.WithPropertyName)
+                                {
+                                    actualPropertyValue.AsTest().Must().BeSameReferenceAs(comparisonValue, because: scenario.Id);
+                                }
+                                else
+                                {
+                                    actualPropertyValue.AsTest().Must().NotBeSameReferenceAs(comparisonValue, because: scenario.Id);
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
 
@@ -212,7 +692,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<LinkedResourceBase>();
+                var expected = A.Dummy<FontFormat>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -241,7 +721,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<LinkedResourceBase>();
+                var expected = A.Dummy<FontFormat>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -270,7 +750,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<LinkedResourceBase>();
+                var expected = A.Dummy<FontFormat>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -299,7 +779,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<LinkedResourceBase>();
+                var expected = A.Dummy<FontFormat>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -333,8 +813,8 @@ namespace OBeautifulCode.DataStructure.Test
             public static void EqualsOperator___Should_return_true___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                LinkedResourceBase systemUnderTest1 = null;
-                LinkedResourceBase systemUnderTest2 = null;
+                FontFormat systemUnderTest1 = null;
+                FontFormat systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 == systemUnderTest2;
@@ -364,7 +844,7 @@ namespace OBeautifulCode.DataStructure.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    LinkedResourceBase systemUnderTest = null;
+                    FontFormat systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest == scenario.ReferenceObject;
@@ -513,8 +993,8 @@ namespace OBeautifulCode.DataStructure.Test
             public static void NotEqualsOperator___Should_return_false___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                LinkedResourceBase systemUnderTest1 = null;
-                LinkedResourceBase systemUnderTest2 = null;
+                FontFormat systemUnderTest1 = null;
+                FontFormat systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 != systemUnderTest2;
@@ -544,7 +1024,7 @@ namespace OBeautifulCode.DataStructure.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    LinkedResourceBase systemUnderTest = null;
+                    FontFormat systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest != scenario.ReferenceObject;
@@ -690,14 +1170,14 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_LinkedResourceBase___Should_return_false___When_parameter_other_is_null()
+            public static void Equals_with_FontFormat___Should_return_false___When_parameter_other_is_null()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    LinkedResourceBase systemUnderTest = null;
+                    FontFormat systemUnderTest = null;
 
                     // Act
                     var actual = scenario.ReferenceObject.Equals(systemUnderTest);
@@ -721,7 +1201,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_LinkedResourceBase___Should_return_true___When_parameter_other_is_same_object()
+            public static void Equals_with_FontFormat___Should_return_true___When_parameter_other_is_same_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -749,7 +1229,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_LinkedResourceBase___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
+            public static void Equals_with_FontFormat___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -777,7 +1257,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_LinkedResourceBase___Should_return_false___When_objects_being_compared_have_different_property_values()
+            public static void Equals_with_FontFormat___Should_return_false___When_objects_being_compared_have_different_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -805,7 +1285,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_LinkedResourceBase___Should_return_true___When_objects_being_compared_have_same_property_values()
+            public static void Equals_with_FontFormat___Should_return_true___When_objects_being_compared_have_same_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 

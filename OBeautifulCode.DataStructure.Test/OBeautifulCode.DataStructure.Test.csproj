@@ -192,6 +192,10 @@
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringReadableOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringXmlDocOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
+    <Compile Include="Models\Classes\Format\FontFormatTest.cs" />
+    <Compile Include="Models\Classes\Format\FontFormatTest.designer.cs">
+      <DependentUpon>FontFormatTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Logic\Extensions\RowExtensionsTest.cs" />
     <Compile Include="Models\Classes\Cell\Single\MediaReferenceCellTest.designer.cs">
       <DependentUpon>MediaReferenceCellTest.cs</DependentUpon>

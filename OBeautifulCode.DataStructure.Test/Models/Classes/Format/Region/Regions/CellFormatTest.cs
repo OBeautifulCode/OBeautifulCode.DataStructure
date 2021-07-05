@@ -34,81 +34,6 @@ namespace OBeautifulCode.DataStructure.Test
                 .AddScenario(() =>
                     new ConstructorArgumentValidationTestScenario<CellFormat>
                     {
-                        Name = "constructor should throw ArgumentException when parameter 'fontNamesInFallbackOrder' is an empty enumerable scenario",
-                        ConstructionFunc = () =>
-                        {
-                            var referenceObject = A.Dummy<CellFormat>();
-
-                            var result = new CellFormat(
-                                                 referenceObject.OuterBorders,
-                                                 referenceObject.BackgroundColor,
-                                                 referenceObject.FontColor,
-                                                 new List<string>(),
-                                                 referenceObject.FontSizeInPoints,
-                                                 referenceObject.VerticalAlignment,
-                                                 referenceObject.HorizontalAlignment,
-                                                 referenceObject.FontRotationAngle,
-                                                 referenceObject.FillPattern,
-                                                 referenceObject.Options);
-
-                            return result;
-                        },
-                        ExpectedExceptionType = typeof(ArgumentException),
-                        ExpectedExceptionMessageContains = new[] { "fontNamesInFallbackOrder", "is an empty enumerable", },
-                    })
-                .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<CellFormat>
-                    {
-                        Name = "constructor should throw ArgumentException when parameter 'fontNamesInFallbackOrder' contains a null element scenario",
-                        ConstructionFunc = () =>
-                        {
-                            var referenceObject = A.Dummy<CellFormat>();
-
-                            var result = new CellFormat(
-                                                 referenceObject.OuterBorders,
-                                                 referenceObject.BackgroundColor,
-                                                 referenceObject.FontColor,
-                                                 new string[0].Concat(referenceObject.FontNamesInFallbackOrder).Concat(new string[] { null }).Concat(referenceObject.FontNamesInFallbackOrder).ToList(),
-                                                 referenceObject.FontSizeInPoints,
-                                                 referenceObject.VerticalAlignment,
-                                                 referenceObject.HorizontalAlignment,
-                                                 referenceObject.FontRotationAngle,
-                                                 referenceObject.FillPattern,
-                                                 referenceObject.Options);
-
-                            return result;
-                        },
-                        ExpectedExceptionType = typeof(ArgumentException),
-                        ExpectedExceptionMessageContains = new[] { "fontNamesInFallbackOrder", "contains at least one null element", },
-                    })
-                .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<CellFormat>
-                    {
-                        Name = "constructor should throw ArgumentException when parameter 'fontNamesInFallbackOrder' contains a white space element scenario",
-                        ConstructionFunc = () =>
-                        {
-                            var referenceObject = A.Dummy<CellFormat>();
-
-                            var result = new CellFormat(
-                                referenceObject.OuterBorders,
-                                referenceObject.BackgroundColor,
-                                referenceObject.FontColor,
-                                new string[0].Concat(referenceObject.FontNamesInFallbackOrder).Concat(new string[] { " \r\n " }).Concat(referenceObject.FontNamesInFallbackOrder).ToList(),
-                                referenceObject.FontSizeInPoints,
-                                referenceObject.VerticalAlignment,
-                                referenceObject.HorizontalAlignment,
-                                referenceObject.FontRotationAngle,
-                                referenceObject.FillPattern,
-                                referenceObject.Options);
-
-                            return result;
-                        },
-                        ExpectedExceptionType = typeof(ArgumentException),
-                        ExpectedExceptionMessageContains = new[] { "fontNamesInFallbackOrder", "contains a white space element", },
-                    })
-                .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<CellFormat>
-                    {
                         Name = "constructor should throw ArgumentOutOfRangeException when parameter 'verticalAlignment' is VerticalAlignment.Unknown",
                         ConstructionFunc = () =>
                         {
@@ -116,10 +41,8 @@ namespace OBeautifulCode.DataStructure.Test
 
                             var result = new CellFormat(
                                 referenceObject.OuterBorders,
+                                referenceObject.FontFormat,
                                 referenceObject.BackgroundColor,
-                                referenceObject.FontColor,
-                                referenceObject.FontNamesInFallbackOrder,
-                                referenceObject.FontSizeInPoints,
                                 VerticalAlignment.Unknown,
                                 referenceObject.HorizontalAlignment,
                                 referenceObject.FontRotationAngle,
@@ -141,10 +64,8 @@ namespace OBeautifulCode.DataStructure.Test
 
                             var result = new CellFormat(
                                 referenceObject.OuterBorders,
+                                referenceObject.FontFormat,
                                 referenceObject.BackgroundColor,
-                                referenceObject.FontColor,
-                                referenceObject.FontNamesInFallbackOrder,
-                                referenceObject.FontSizeInPoints,
                                 referenceObject.VerticalAlignment,
                                 HorizontalAlignment.Unknown,
                                 referenceObject.FontRotationAngle,
@@ -166,10 +87,8 @@ namespace OBeautifulCode.DataStructure.Test
 
                             var result = new CellFormat(
                                 new List<OuterBorder>(),
+                                referenceObject.FontFormat,
                                 referenceObject.BackgroundColor,
-                                referenceObject.FontColor,
-                                referenceObject.FontNamesInFallbackOrder,
-                                referenceObject.FontSizeInPoints,
                                 referenceObject.VerticalAlignment,
                                 referenceObject.HorizontalAlignment,
                                 referenceObject.FontRotationAngle,
@@ -191,10 +110,8 @@ namespace OBeautifulCode.DataStructure.Test
 
                             var result = new CellFormat(
                                 new OuterBorder[0].Concat(referenceObject.OuterBorders).Concat(new OuterBorder[] { null }).Concat(referenceObject.OuterBorders).ToList(),
+                                referenceObject.FontFormat,
                                 referenceObject.BackgroundColor,
-                                referenceObject.FontColor,
-                                referenceObject.FontNamesInFallbackOrder,
-                                referenceObject.FontSizeInPoints,
                                 referenceObject.VerticalAlignment,
                                 referenceObject.HorizontalAlignment,
                                 referenceObject.FontRotationAngle,

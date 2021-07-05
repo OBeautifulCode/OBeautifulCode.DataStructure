@@ -24,11 +24,11 @@ namespace OBeautifulCode.DataStructure
         /// Initializes a new instance of the <see cref="SlottedCell"/> class.
         /// </summary>
         /// <param name="slotIdToCellMap">A map of the slot's id to the cell contained in the slot.</param>
-        /// <param name="defaultSlotName">The name of the slot to use when initially rendering the tree table.</param>
+        /// <param name="defaultSlotId">The id of the slot to use when initially rendering the tree table.</param>
         /// <param name="id">OPTIONAL unique identifier of the cell.  DEFAULT is a cell with no unique identifier.</param>
         public SlottedCell(
             IReadOnlyDictionary<string, IHaveValueCell> slotIdToCellMap,
-            string defaultSlotName,
+            string defaultSlotId,
             string id = null)
             : base(id)
         {
@@ -52,23 +52,23 @@ namespace OBeautifulCode.DataStructure
                 throw new ArgumentException(Invariant($"{nameof(slotIdToCellMap)} contains at least one key-value pair with a white space key."));
             }
 
-            if (defaultSlotName == null)
+            if (defaultSlotId == null)
             {
-                throw new ArgumentNullException(nameof(defaultSlotName));
+                throw new ArgumentNullException(nameof(defaultSlotId));
             }
 
-            if (string.IsNullOrWhiteSpace(defaultSlotName))
+            if (string.IsNullOrWhiteSpace(defaultSlotId))
             {
-                throw new ArgumentException(Invariant($"{nameof(defaultSlotName)} is white space."));
+                throw new ArgumentException(Invariant($"{nameof(defaultSlotId)} is white space."));
             }
 
-            if (!slotIdToCellMap.ContainsKey(defaultSlotName))
+            if (!slotIdToCellMap.ContainsKey(defaultSlotId))
             {
-                throw new ArgumentException(Invariant($"{nameof(slotIdToCellMap)} does not contain the specified {nameof(defaultSlotName)}."));
+                throw new ArgumentException(Invariant($"{nameof(slotIdToCellMap)} does not contain the specified {nameof(defaultSlotId)}."));
             }
 
             this.SlotIdToCellMap = slotIdToCellMap;
-            this.DefaultSlotName = defaultSlotName;
+            this.DefaultSlotId = defaultSlotId;
         }
 
         /// <summary>
@@ -79,6 +79,6 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Gets the name of the slot to use when initially rendering the tree table.
         /// </summary>
-        public string DefaultSlotName { get; private set; }
+        public string DefaultSlotId { get; private set; }
     }
 }

@@ -9,7 +9,6 @@ namespace OBeautifulCode.DataStructure
     using System;
     using System.Collections.Generic;
     using System.Drawing;
-    using System.Linq;
 
     using OBeautifulCode.Type;
 
@@ -26,9 +25,7 @@ namespace OBeautifulCode.DataStructure
         /// </summary>
         /// <param name="outerBorders">OPTIONAL borders to apply to the cell, in the order that they should be applied.  DEFAULT is no border.</param>
         /// <param name="backgroundColor">OPTIONAL background color of the cell.  DEFAULT is to leave the background color unchanged.</param>
-        /// <param name="fontColor">OPTIONAL font color.  DEFAULT is to leave the font color unchanged.</param>
-        /// <param name="fontNamesInFallbackOrder">OPTIONAL font names, in fallback order, of the fonts to use.  DEFAULT is leave the font unchanged.</param>
-        /// <param name="fontSizeInPoints">OPTIONAL font size, in points.  DEFAULT is to leave the font size unchanged.</param>
+        /// <param name="fontFormat">OPTIONAL font format.  DEFAULT is to leave the font unchanged.</param>
         /// <param name="verticalAlignment">OPTIONAL vertical alignment.  DEFAULT is to leave the vertical alignment unchanged.</param>
         /// <param name="horizontalAlignment">OPTIONAL horizontal alignment.  DEFAULT is to leave the horizontal alignment unchanged.</param>
         /// <param name="fontRotationAngle">OPTIONAL font rotation angle, between +90 and -90.  Positive numbers cause the text to slope upward, negative numbers cause the text to slope downward.  DEFAULT is to leave the font rotation angle unchanged.</param>
@@ -36,10 +33,8 @@ namespace OBeautifulCode.DataStructure
         /// <param name="options">OPTIONAL formatting options to apply to the cell.  DEFAULT is to not apply any of the formatting options.</param>
         public CellFormat(
             IReadOnlyList<OuterBorder> outerBorders = null,
+            FontFormat fontFormat = null,
             Color? backgroundColor = null,
-            Color? fontColor = null,
-            IReadOnlyList<string> fontNamesInFallbackOrder = null,
-            decimal? fontSizeInPoints = null,
             VerticalAlignment? verticalAlignment = null,
             HorizontalAlignment? horizontalAlignment = null,
             int? fontRotationAngle = null,
@@ -47,24 +42,6 @@ namespace OBeautifulCode.DataStructure
             CellFormatOptions? options = null)
             : base(outerBorders)
         {
-            if (fontNamesInFallbackOrder != null)
-            {
-                if (!fontNamesInFallbackOrder.Any())
-                {
-                    throw new ArgumentException(Invariant($"{nameof(fontNamesInFallbackOrder)} is an empty enumerable."));
-                }
-
-                if (fontNamesInFallbackOrder.Any(_ => _ == null))
-                {
-                    throw new ArgumentException(Invariant($"{nameof(fontNamesInFallbackOrder)} contains at least one null element."));
-                }
-
-                if (fontNamesInFallbackOrder.Any(string.IsNullOrWhiteSpace))
-                {
-                    throw new ArgumentException(Invariant($"{nameof(fontNamesInFallbackOrder)} contains a white space element."));
-                }
-            }
-
             if (verticalAlignment == DataStructure.VerticalAlignment.Unknown)
             {
                 throw new ArgumentOutOfRangeException(Invariant($"{nameof(verticalAlignment)} is {nameof(DataStructure.VerticalAlignment.Unknown)}."));
@@ -75,10 +52,8 @@ namespace OBeautifulCode.DataStructure
                 throw new ArgumentOutOfRangeException(Invariant($"{nameof(horizontalAlignment)} is {nameof(DataStructure.HorizontalAlignment.Unknown)}."));
             }
 
+            this.FontFormat = fontFormat;
             this.BackgroundColor = backgroundColor;
-            this.FontColor = fontColor;
-            this.FontNamesInFallbackOrder = fontNamesInFallbackOrder;
-            this.FontSizeInPoints = fontSizeInPoints;
             this.VerticalAlignment = verticalAlignment;
             this.HorizontalAlignment = horizontalAlignment;
             this.FontRotationAngle = fontRotationAngle;
@@ -87,24 +62,14 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <summary>
+        /// Gets the font format.
+        /// </summary>
+        public FontFormat FontFormat { get; private set; }
+
+        /// <summary>
         /// Gets the background color.
         /// </summary>
         public Color? BackgroundColor { get; private set; }
-
-        /// <summary>
-        /// Gets the font color.
-        /// </summary>
-        public Color? FontColor { get; private set; }
-
-        /// <summary>
-        /// Gets the font names, in fallback order.
-        /// </summary>
-        public IReadOnlyList<string> FontNamesInFallbackOrder { get; private set; }
-
-        /// <summary>
-        /// Gets the font size, in points.
-        /// </summary>
-        public decimal? FontSizeInPoints { get; private set; }
 
         /// <summary>
         /// Gets the vertical alignment.
