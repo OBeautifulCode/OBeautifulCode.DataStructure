@@ -41,5 +41,8 @@ namespace OBeautifulCode.DataStructure
 
         /// <inheritdoc />
         public ILink Link { get; private set; }
+
+        /// <inheritdoc />
+        public abstract object GetCellValue();
     }
 }

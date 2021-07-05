@@ -12,7 +12,7 @@ namespace OBeautifulCode.DataStructure
     /// A cell that contains a string value and spans multiple columns.
     /// </summary>
     // ReSharper disable once RedundantExtendsListEntry
-    public partial class ColumnSpanningDecimalCell : ColumnSpanningStandardCellBase, IHaveValueCell, IHaveDisplayValueCell, IModelViaCodeGen
+    public partial class ColumnSpanningDecimalCell : ColumnSpanningStandardCellBase, IHaveDisplayValueCell, IModelViaCodeGen
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ColumnSpanningDecimalCell"/> class.
@@ -46,6 +46,6 @@ namespace OBeautifulCode.DataStructure
         public string DisplayValue { get; private set; }
 
         /// <inheritdoc />
-        public object GetCellValue() => this.Value;
+        public override object GetCellValue() => this.Value;
     }
 }

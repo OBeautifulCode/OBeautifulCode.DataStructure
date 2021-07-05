@@ -14,7 +14,7 @@ namespace OBeautifulCode.DataStructure
     /// A standard/typical cell.
     /// </summary>
     [SuppressMessage("Microsoft.Design", "CA1040:AvoidEmptyInterfaces", Justification = ObcSuppressBecause.CA1040_AvoidEmptyInterfaces_NeedToIdentifyGroupOfTypesAndPreferInterfaceOverAttribute)]
-    public interface IStandardCell : IFormattableCell, IHaveHoverOverCell, ILinkedCell
+    public interface IStandardCell : IOutputCell, IFormattableCell, IHaveValueCell, IHaveHoverOverCell, ILinkedCell
     {
     }
 }

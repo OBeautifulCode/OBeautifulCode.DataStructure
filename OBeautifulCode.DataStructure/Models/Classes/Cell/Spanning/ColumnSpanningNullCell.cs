@@ -37,5 +37,8 @@ namespace OBeautifulCode.DataStructure
 
         /// <inheritdoc />
         public string DisplayValue { get; private set; }
+
+        /// <inheritdoc />
+        public override object GetCellValue() => null;
     }
 }

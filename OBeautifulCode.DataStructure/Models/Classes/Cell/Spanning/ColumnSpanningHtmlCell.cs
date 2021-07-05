@@ -16,7 +16,7 @@ namespace OBeautifulCode.DataStructure
     /// A cell that contains an HTML value and spans multiple columns.
     /// </summary>
     // ReSharper disable once RedundantExtendsListEntry
-    public partial class ColumnSpanningHtmlCell : ColumnSpanningStandardCellBase, IHaveValueCell, IFormattableCell, IModelViaCodeGen
+    public partial class ColumnSpanningHtmlCell : ColumnSpanningStandardCellBase, IFormattableCell, IModelViaCodeGen
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ColumnSpanningHtmlCell"/> class.
@@ -55,6 +55,6 @@ namespace OBeautifulCode.DataStructure
         public string Html { get; private set; }
 
         /// <inheritdoc />
-        public object GetCellValue() => this.Html;
+        public override object GetCellValue() => this.Html;
     }
 }

@@ -14,7 +14,7 @@ namespace OBeautifulCode.DataStructure
     /// A cell that contains media via a reference to that media (i.e. must be fetched from a server) and spans multiple columns.
     /// </summary>
     // ReSharper disable once RedundantExtendsListEntry
-    public partial class ColumnSpanningMediaReferenceCell : ColumnSpanningStandardCellBase, IHaveValueCell, IModelViaCodeGen
+    public partial class ColumnSpanningMediaReferenceCell : ColumnSpanningStandardCellBase, IModelViaCodeGen
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ColumnSpanningMediaReferenceCell"/> class.
@@ -48,6 +48,6 @@ namespace OBeautifulCode.DataStructure
         public MediaReference MediaReference { get; private set; }
 
         /// <inheritdoc />
-        public object GetCellValue() => this.MediaReference;
+        public override object GetCellValue() => this.MediaReference;
     }
 }

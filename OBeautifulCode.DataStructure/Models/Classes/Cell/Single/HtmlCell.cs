@@ -16,7 +16,7 @@ namespace OBeautifulCode.DataStructure
     /// A cell that contains an HTML value.
     /// </summary>
     // ReSharper disable once RedundantExtendsListEntry
-    public partial class HtmlCell : StandardCellBase, IHaveValueCell, IModelViaCodeGen
+    public partial class HtmlCell : StandardCellBase, IModelViaCodeGen
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="HtmlCell"/> class.
@@ -53,6 +53,6 @@ namespace OBeautifulCode.DataStructure
         public string Html { get; private set; }
 
         /// <inheritdoc />
-        public object GetCellValue() => this.Html;
+        public override object GetCellValue() => this.Html;
     }
 }
