@@ -18,7 +18,7 @@ namespace OBeautifulCode.DataStructure
     /// A cell that contains one or more slots, effectively making the tree table 3-dimensional.
     /// </summary>
     // ReSharper disable once RedundantExtendsListEntry
-    public partial class ColumnSpanningSlottedCell : CellBase, IColumnSpanningCell, IModelViaCodeGen
+    public partial class ColumnSpanningSlottedCell : CellBase, ISlottedCell, IColumnSpanningCell, IModelViaCodeGen
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ColumnSpanningSlottedCell"/> class.
@@ -79,14 +79,10 @@ namespace OBeautifulCode.DataStructure
             this.ColumnsSpanned = columnsSpanned;
         }
 
-        /// <summary>
-        /// Gets a map of the slot's id to the cell contained in the slot.
-        /// </summary>
+        /// <inheritdoc />
         public IReadOnlyDictionary<string, IHaveValueCell> SlotIdToCellMap { get; private set; }
 
-        /// <summary>
-        /// Gets the name of the slot to use when initially rendering the tree table.
-        /// </summary>
+        /// <inheritdoc />
         public string DefaultSlotId { get; private set; }
 
         /// <inheritdoc />
