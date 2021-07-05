@@ -13,6 +13,7 @@ namespace OBeautifulCode.DataStructure.Test
 
     using FakeItEasy;
 
+    using OBeautifulCode.Assertion.Recipes;
     using OBeautifulCode.AutoFakeItEasy;
     using OBeautifulCode.CodeAnalysis.Recipes;
     using OBeautifulCode.CodeGen.ModelObject.Recipes;
@@ -151,6 +152,23 @@ namespace OBeautifulCode.DataStructure.Test
                         ExpectedExceptionType = typeof(ArgumentException),
                         ExpectedExceptionMessageContains = new[] { "sections", "contains two or more elements with the same Id", },
                     });
+        }
+
+        [Fact]
+        public static void GetSectionIdToSectionMap___Should_return_map_of_Section_Id_to_Section___When_called()
+        {
+            // Arrange
+            var sections = Some.ReadOnlyDummies<Section>(3);
+
+            var systemUnderTest = new Report(A.Dummy<string>(), sections);
+
+            var expected = sections.ToDictionary(_ => _.Id, _ => _);
+
+            // Act
+            var actual = systemUnderTest.GetSectionIdToSectionMap().ToDictionary(_ => _.Key, _ => _.Value);
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
         }
     }
 }

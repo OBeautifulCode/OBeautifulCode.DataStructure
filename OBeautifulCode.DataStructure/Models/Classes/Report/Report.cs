@@ -19,6 +19,8 @@ namespace OBeautifulCode.DataStructure
     /// </summary>
     public partial class Report : IModelViaCodeGen
     {
+        private IReadOnlyDictionary<string, Section> sectionIdToSectionMap;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Report"/> class.
         /// </summary>
@@ -62,6 +64,8 @@ namespace OBeautifulCode.DataStructure
                 throw new ArgumentException(Invariant($"{nameof(sections)} contains two or more elements with the same {nameof(Section.Id)}."));
             }
 
+            this.sectionIdToSectionMap = sections.ToDictionary(_ => _.Id, _ => _);
+
             this.Id = id;
             this.Sections = sections;
             this.Title = title;
@@ -87,5 +91,13 @@ namespace OBeautifulCode.DataStructure
         /// Gets the format to apply to the report.
         /// </summary>
         public ReportFormat Format { get; private set; }
+
+        /// <summary>
+        /// Gets a map of section id to the corresponding section.
+        /// </summary>
+        /// <returns>
+        /// A map of section id to the corresponding section.
+        /// </returns>
+        public IReadOnlyDictionary<string, Section> GetSectionIdToSectionMap() => this.sectionIdToSectionMap;
     }
 }
