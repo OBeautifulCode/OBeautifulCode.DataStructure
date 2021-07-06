@@ -67,6 +67,10 @@ namespace OBeautifulCode.DataStructure
                 throw new ArgumentException(Invariant($"{nameof(slotIdToCellMap)} does not contain the specified {nameof(defaultSlotId)}."));
             }
 
+            if (slotIdToCellMap.Values.Any(_ => _ is IColumnSpanningCell))
+            {
+                throw new ArgumentException(Invariant($"{nameof(slotIdToCellMap)} contains a column spanning cell."));
+            }
             this.SlotIdToCellMap = slotIdToCellMap;
             this.DefaultSlotId = defaultSlotId;
         }

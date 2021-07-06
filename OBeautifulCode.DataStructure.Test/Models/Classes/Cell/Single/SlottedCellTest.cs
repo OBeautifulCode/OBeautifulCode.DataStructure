@@ -165,6 +165,28 @@ namespace OBeautifulCode.DataStructure.Test
                         },
                         ExpectedExceptionType = typeof(ArgumentException),
                         ExpectedExceptionMessageContains = new[] { "slotIdToCellMap does not contain the specified defaultSlotId" },
+                    })
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<SlottedCell>
+                    {
+                        Name = "constructor should throw ArgumentException when parameter 'slotIdToCellMap' contains a value that is an IColumnSpanningCell",
+                        ConstructionFunc = () =>
+                        {
+                            var slotIdToCellMap = new Dictionary<string, IHaveValueCell>
+                            {
+                                { A.Dummy<string>(), A.Dummy<NullCell>() },
+                                { A.Dummy<string>(), A.Dummy<ColumnSpanningHtmlCell>() },
+                                { A.Dummy<string>(), A.Dummy<NullCell>() },
+                            };
+
+                            var result = new SlottedCell(
+                                slotIdToCellMap,
+                                slotIdToCellMap.Keys.First());
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentException),
+                        ExpectedExceptionMessageContains = new[] { "slotIdToCellMap contains a column spanning cell" },
                     });
 
             DeepCloneWithTestScenarios
