@@ -64,6 +64,7 @@
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringReadableOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringXmlDocOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
+    <Compile Include="Interfaces\Behavioral\ISlottedCell.cs" />
     <Compile Include="Interfaces\Behavioral\ILinkedCell.cs" />
     <Compile Include="Interfaces\Model\Resource\ILinkedResource.cs" />
     <Compile Include="Interfaces\Model\Resource\ILink.cs" />
