@@ -113,7 +113,9 @@ namespace OBeautifulCode.DataStructure.Test
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
             {
-                var slotIdToCellMap = A.Dummy<Dictionary<string, IHaveValueCell>>();
+                var cells = Some.ReadOnlyDummies<IHaveValueCell>().Whose(_ => !_.Any(e => e is IColumnSpanningCell));
+
+                var slotIdToCellMap = cells.ToDictionary(_ => A.Dummy<string>(), _ => _);
 
                 var defaultSlotId = slotIdToCellMap.ElementAt(ThreadSafeRandom.Next(0, slotIdToCellMap.Count)).Key;
 

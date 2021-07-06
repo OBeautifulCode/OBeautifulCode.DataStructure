@@ -22,6 +22,8 @@ namespace OBeautifulCode.DataStructure
     /// </summary>
     public partial class TreeTable : IModelViaCodeGen
     {
+        private IReadOnlyDictionary<string, ICell> cellIdToCellMap;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="TreeTable"/> class.
         /// </summary>
@@ -43,7 +45,9 @@ namespace OBeautifulCode.DataStructure
 
             var ids = new List<string>();
 
-            ids.AddRange(tableColumns.Columns.Where(_ => _.Id != null).Select(_ => _.Id));
+            ids.AddRange(tableColumns.Columns.Where(_ => !string.IsNullOrWhiteSpace(_.Id)).Select(_ => _.Id));
+
+            var allCellsWithIds = new List<ICell>();
 
             if (tableRows != null)
             {
@@ -62,18 +66,25 @@ namespace OBeautifulCode.DataStructure
                     }
                 }
 
-                ids.AddRange(allRowsInOrder.Where(_ => _.Id != null).Select(_ => _.Id));
+                ids.AddRange(allRowsInOrder.Where(_ => !string.IsNullOrWhiteSpace(_.Id)).Select(_ => _.Id));
 
-                var allCells = allRowsInOrder.SelectMany(_ => _.Cells).ToList();
+                var allCells = new List<ICell>(allRowsInOrder.SelectMany(_ => _.Cells).ToList());
 
-                ids.AddRange(allCells.Where(_ => _.Id != null).Select(_ => _.Id));
-                ids.AddRange(allCells.OfType<SlottedCell>().SelectMany(_ => _.SlotIdToCellMap.Values).Where(_ => _.Id != null).Select(_ => _.Id));
+                var slottedCells = allCells.OfType<ISlottedCell>().SelectMany(_ => _.SlotIdToCellMap.Values).ToList();
+
+                allCells.AddRange(slottedCells);
+
+                allCellsWithIds = allCells.Where(_ => !string.IsNullOrWhiteSpace(_.Id)).ToList();
+
+                ids.AddRange(allCellsWithIds.Select(_ => _.Id));
             }
 
             if (ids.Distinct().Count() != ids.Count)
             {
                 throw new ArgumentException(Invariant($"Two or more elements (i.e. columns, rows, cells) have the same identifier."));
             }
+
+            this.cellIdToCellMap = allCellsWithIds.ToDictionary(_ => _.Id, _ => _);
 
             this.TableColumns = tableColumns;
             this.TableRows = tableRows;
@@ -94,5 +105,13 @@ namespace OBeautifulCode.DataStructure
         /// Gets the format to apply to the whole table.
         /// </summary>
         public TableFormat Format { get; private set; }
+
+        /// <summary>
+        /// Gets a map of cell id to the corresponding cell.
+        /// </summary>
+        /// <returns>
+        /// A map of cell id to the corresponding cell.
+        /// </returns>
+        public IReadOnlyDictionary<string, ICell> GetCellIdToCellMap() => this.cellIdToCellMap;
     }
 }

@@ -464,5 +464,115 @@ namespace OBeautifulCode.DataStructure.Test
             // Assert
             actual.AsTest().Must().BeNull();
         }
+
+        [Fact]
+        public static void GetCellIdToCellMap___Should_return_map_of_Cell_Id_to_Cell___When_called()
+        {
+            // Arrange
+            var tableColumns = new TableColumns(Some.ReadOnlyDummies<Column>(2).ToList());
+
+            var cell1 = new MediaReferenceCell(A.Dummy<MediaReference>(), "id-1");
+            var cell2 = new ColumnSpanningDecimalCell(A.Dummy<decimal>(), 2, "id-2");
+            var cell3 = new DecimalCell(A.Dummy<decimal>(), null, "id-3");
+            var cell4 = A.Dummy<IHaveValueCell>().ThatIs(_ => !(_ is IColumnSpanningCell));
+            var cell5 = A.Dummy<IHaveValueCell>().ThatIs(_ => !(_ is IColumnSpanningCell));
+            var cell6 = A.Dummy<IHaveValueCell>().ThatIs(_ => !(_ is IColumnSpanningCell));
+            var cell7 = A.Dummy<IHaveValueCell>().ThatIs(_ => !(_ is IColumnSpanningCell));
+            var cell8 = new SlottedCell(
+                new Dictionary<string, IHaveValueCell>
+                {
+                    { "slot-1-id", new NullCell() },
+                    { "slot-2-id", cell6 },
+                    { "slot-3-id", cell7 },
+                },
+                "slot-2-id",
+                A.Dummy<string>());
+
+            var cell9 = A.Dummy<IHaveValueCell>().ThatIs(_ => !(_ is IColumnSpanningCell));
+            var cell10 = new SlottedCell(
+                new Dictionary<string, IHaveValueCell>
+                {
+                    { "slot-1-id", new NullCell() },
+                    { "slot-2-id", new NullCell() },
+                    { "slot-3-id", cell9 },
+                },
+                "slot-2-id");
+
+            IReadOnlyDictionary<string, ICell> expected = new Dictionary<string, ICell>
+            {
+                { cell1.Id, cell1 },
+                { cell2.Id, cell2 },
+                { cell3.Id, cell3 },
+                { cell4.Id, cell4 },
+                { cell5.Id, cell5 },
+                { cell6.Id, cell6 },
+                { cell7.Id, cell7 },
+                { cell8.Id, cell8 },
+                { cell9.Id, cell9 },
+            };
+
+            var headerRows = new HeaderRows(
+                new[]
+                {
+                    new FlatRow(
+                        new ICell[]
+                        {
+                            cell2,
+                        }),
+                    new FlatRow(Some.ReadOnlyDummies<StringCell>(2).Select(_ => _.DeepCloneWithId(null)).ToList()),
+                    new FlatRow(
+                        new ICell[]
+                        {
+                            new NullCell(),
+                            cell1,
+                        }),
+                },
+                null);
+
+            var dataRows = new DataRows(
+                new[]
+                {
+                    new Row(
+                        new[]
+                        {
+                            cell3,
+                            cell4,
+                        }),
+                    new Row(
+                        Some.ReadOnlyDummies<NullCell>(2).Select(_ => _.DeepCloneWithId(null)).ToList(),
+                        childRows:
+                        new[]
+                        {
+                            new Row(
+                                new ICell[]
+                                {
+                                    cell5,
+                                    cell8,
+                                },
+                                childRows:
+                                new[]
+                                {
+                                    new Row(
+                                        new ICell[]
+                                        {
+                                            cell10,
+                                            new NullCell(),
+                                        }),
+                                }),
+                        }),
+                });
+
+            var tableRows = new TableRows(headerRows, dataRows);
+
+            var systemUnderTest = new TreeTable(
+                tableColumns,
+                tableRows);
+
+            // Act
+            var actual = systemUnderTest.GetCellIdToCellMap();
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+        }
     }
 }
