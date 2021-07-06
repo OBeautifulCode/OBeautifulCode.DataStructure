@@ -69,6 +69,7 @@
     <Compile Include="Interfaces\Model\Resource\ILinkedResource.cs" />
     <Compile Include="Interfaces\Model\Resource\ILink.cs" />
     <Compile Include="Interfaces\Model\Cell\IStandardCell.cs" />
+    <Compile Include="Logic\Extensions\TreeTableExtensions.cs" />
     <Compile Include="Models\Classes\CellValue\MediaReference.cs" />
     <Compile Include="Models\Classes\CellValue\MediaReference.designer.cs">
       <DependentUpon>MediaReference.cs</DependentUpon>

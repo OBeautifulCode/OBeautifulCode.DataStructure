@@ -119,7 +119,7 @@ namespace OBeautifulCode.DataStructure.Test
 
                 var defaultSlotId = slotIdToCellMap.ElementAt(ThreadSafeRandom.Next(0, slotIdToCellMap.Count)).Key;
 
-                var result = new SlottedCell(slotIdToCellMap, defaultSlotId);
+                var result = new SlottedCell(slotIdToCellMap, defaultSlotId, A.Dummy<string>());
 
                 return result;
             });
@@ -286,7 +286,7 @@ namespace OBeautifulCode.DataStructure.Test
                 }
                 else
                 {
-                    cell = A.Dummy<StandardCellBase>().ThatIs(_ => !(_ is IColumnSpanningCell));
+                    cell = A.Dummy<CellBase>().ThatIs(_ => !(_ is IColumnSpanningCell));
 
                     columnsSpanned += 1;
                 }

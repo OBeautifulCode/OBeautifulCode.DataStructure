@@ -192,6 +192,7 @@
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringReadableOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringXmlDocOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
+    <Compile Include="Logic\Extensions\TreeTableExtensionsTest.cs" />
     <Compile Include="Models\Classes\Format\FontFormatTest.cs" />
     <Compile Include="Models\Classes\Format\FontFormatTest.designer.cs">
       <DependentUpon>FontFormatTest.cs</DependentUpon>

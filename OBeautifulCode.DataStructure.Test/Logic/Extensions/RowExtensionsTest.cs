@@ -8,7 +8,9 @@ namespace OBeautifulCode.DataStructure.Test
 {
     using System;
     using System.Linq;
+
     using FakeItEasy;
+
     using OBeautifulCode.Assertion.Recipes;
     using OBeautifulCode.AutoFakeItEasy;
     using Xunit;
