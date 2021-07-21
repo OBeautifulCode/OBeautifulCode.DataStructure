@@ -35,19 +35,19 @@ namespace OBeautifulCode.DataStructure.Test
 
     public static partial class StandardCellBaseTest
     {
-        private static readonly StandardCellBase ReferenceObjectForEquatableTestScenarios = A.Dummy<StandardCellBase>();
+        private static readonly ConstCell<> ReferenceObjectForEquatableTestScenarios = A.Dummy<ConstCell<>>();
 
-        private static readonly EquatableTestScenarios<StandardCellBase> EquatableTestScenarios = new EquatableTestScenarios<StandardCellBase>()
+        private static readonly EquatableTestScenarios<ConstCell<>> EquatableTestScenarios = new EquatableTestScenarios<ConstCell<>>()
             .AddScenario(() =>
-                new EquatableTestScenario<StandardCellBase>
+                new EquatableTestScenario<ConstCell<>>
                 {
                     Name = "Default Code Generated Scenario",
                     ReferenceObject = ReferenceObjectForEquatableTestScenarios,
-                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new StandardCellBase[]
+                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new ConstCell<>[]
                     {
                         ReferenceObjectForEquatableTestScenarios.DeepClone(),
                     },
-                    ObjectsThatAreNotEqualToReferenceObject = new StandardCellBase[]
+                    ObjectsThatAreNotEqualToReferenceObject = new ConstCell<>[]
                     {
                         // DeepCloneWith___() methods implemented in concrete derivates throw NotSupportedException
                         // when the derivative's constructor in-use (by code gen) does not have a parameter that
@@ -58,9 +58,9 @@ namespace OBeautifulCode.DataStructure.Test
                         // ReferenceObjectForEquatableTestScenarios.DeepCloneWithHoverOver(A.Dummy<StandardCellBase>().Whose(_ => !_.HoverOver.IsEqualTo(ReferenceObjectForEquatableTestScenarios.HoverOver)).HoverOver),
                         // ReferenceObjectForEquatableTestScenarios.DeepCloneWithLink(A.Dummy<StandardCellBase>().Whose(_ => !_.Link.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Link)).Link),
                     },
-                    ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject = new StandardCellBase[]
+                    ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject = new ConstCell<>[]
                     {
-                        A.Dummy<StandardCellBase>().Whose(_ => _.GetType() != ReferenceObjectForEquatableTestScenarios.GetType()),
+                        A.Dummy<ConstCell<>>().Whose(_ => _.GetType() != ReferenceObjectForEquatableTestScenarios.GetType()),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
                     {
@@ -93,9 +93,9 @@ namespace OBeautifulCode.DataStructure.Test
             public static void StandardCellBase___Should_implement_IModel_of_StandardCellBase___When_reflecting()
             {
                 // Arrange
-                var type = typeof(StandardCellBase);
+                var type = typeof(ConstCell<>);
 
-                var expectedModelMethods = typeof(IModel<StandardCellBase>).GetInterfaceDeclaredAndImplementedMethods();
+                var expectedModelMethods = typeof(IModel<ConstCell<>>).GetInterfaceDeclaredAndImplementedMethods();
 
                 var expectedModelMethodHashes = expectedModelMethods.Select(_ => _.GetSignatureHash());
 
@@ -105,7 +105,7 @@ namespace OBeautifulCode.DataStructure.Test
                 var actualModelMethodHashes = actualModelMethods.Select(_ => _.GetSignatureHash());
 
                 // Assert
-                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<StandardCellBase>));
+                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<ConstCell<>>));
                 expectedModelMethodHashes.Except(actualModelMethodHashes).AsTest().Must().BeEmptyEnumerable();
             }
 
@@ -126,7 +126,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void StandardCellBase___Should_be_attributed_with_Serializable____When_reflecting()
             {
                 // Arrange
-                var type = typeof(StandardCellBase);
+                var type = typeof(ConstCell<>);
 
                 // Act
                 var actualAttributes = type.GetCustomAttributes(typeof(SerializableAttribute), false);
@@ -157,10 +157,10 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Clone___Should_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<StandardCellBase>();
+                var systemUnderTest = A.Dummy<ConstCell<>>();
 
                 // Act
-                var actual = (StandardCellBase)systemUnderTest.Clone();
+                var actual = (ConstCell<>)systemUnderTest.Clone();
 
                 // Assert
                 actual.AsTest().Must().BeEqualTo(systemUnderTest);
@@ -184,7 +184,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void DeepClone___Should_deep_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<StandardCellBase>();
+                var systemUnderTest = A.Dummy<ConstCell<>>();
 
                 // Act
                 var actual = systemUnderTest.DeepClone();
@@ -252,7 +252,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<StandardCellBase>();
+                var expected = A.Dummy<ConstCell<>>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -281,7 +281,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<StandardCellBase>();
+                var expected = A.Dummy<ConstCell<>>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -310,7 +310,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<StandardCellBase>();
+                var expected = A.Dummy<ConstCell<>>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -339,7 +339,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<StandardCellBase>();
+                var expected = A.Dummy<ConstCell<>>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -373,8 +373,8 @@ namespace OBeautifulCode.DataStructure.Test
             public static void EqualsOperator___Should_return_true___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                StandardCellBase systemUnderTest1 = null;
-                StandardCellBase systemUnderTest2 = null;
+                ConstCell<> systemUnderTest1 = null;
+                ConstCell<> systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 == systemUnderTest2;
@@ -404,7 +404,7 @@ namespace OBeautifulCode.DataStructure.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    StandardCellBase systemUnderTest = null;
+                    ConstCell<> systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest == scenario.ReferenceObject;
@@ -553,8 +553,8 @@ namespace OBeautifulCode.DataStructure.Test
             public static void NotEqualsOperator___Should_return_false___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                StandardCellBase systemUnderTest1 = null;
-                StandardCellBase systemUnderTest2 = null;
+                ConstCell<> systemUnderTest1 = null;
+                ConstCell<> systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 != systemUnderTest2;
@@ -584,7 +584,7 @@ namespace OBeautifulCode.DataStructure.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    StandardCellBase systemUnderTest = null;
+                    ConstCell<> systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest != scenario.ReferenceObject;
@@ -880,7 +880,7 @@ namespace OBeautifulCode.DataStructure.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    StandardCellBase systemUnderTest = null;
+                    ConstCell<> systemUnderTest = null;
 
                     // Act
                     var actual = scenario.ReferenceObject.Equals(systemUnderTest);

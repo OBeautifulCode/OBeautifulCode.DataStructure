@@ -32,7 +32,7 @@ namespace OBeautifulCode.DataStructure
 
             var result = row
                 .Cells
-                .Select(_ => _ is IColumnSpanningCell spanningCell ? spanningCell.ColumnsSpanned : 1)
+                .Select(_ => _.ColumnsSpanned ?? 1)
                 .Sum();
 
             return result;

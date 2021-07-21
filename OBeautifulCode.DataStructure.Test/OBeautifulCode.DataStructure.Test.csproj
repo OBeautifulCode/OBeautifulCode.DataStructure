@@ -72,8 +72,8 @@
     <Reference Include="OBeautifulCode.Serialization.PropertyBag, Version=1.0.109.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\OBeautifulCode.Serialization.PropertyBag.1.0.109\lib\net462\OBeautifulCode.Serialization.PropertyBag.dll</HintPath>
     </Reference>
-    <Reference Include="OBeautifulCode.Type, Version=1.0.86.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OBeautifulCode.Type.1.0.86\lib\net462\OBeautifulCode.Type.dll</HintPath>
+    <Reference Include="OBeautifulCode.Type, Version=1.0.92.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Type.1.0.92\lib\net462\OBeautifulCode.Type.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
@@ -192,147 +192,11 @@
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringReadableOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringXmlDocOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
-    <Compile Include="Logic\Extensions\TreeTableExtensionsTest.cs" />
-    <Compile Include="Models\Classes\Format\FontFormatTest.cs" />
-    <Compile Include="Models\Classes\Format\FontFormatTest.designer.cs">
-      <DependentUpon>FontFormatTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Logic\Extensions\RowExtensionsTest.cs" />
-    <Compile Include="Models\Classes\Cell\Single\MediaReferenceCellTest.designer.cs">
-      <DependentUpon>MediaReferenceCellTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Format\Border\BorderBaseTest.cs" />
-    <Compile Include="Models\Classes\Format\Border\BorderBaseTest.designer.cs">
-      <DependentUpon>BorderBaseTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Format\Fill\FillPatternTest.designer.cs">
-      <DependentUpon>FillPatternTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Format\Region\Regions\CellFormatTest.designer.cs">
-      <DependentUpon>CellFormatTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Format\Region\Regions\ColumnFormatTest.designer.cs">
-      <DependentUpon>ColumnFormatTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Format\Region\Regions\DataRowsFormatTest.designer.cs">
-      <DependentUpon>DataRowsFormatTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Format\Region\Regions\HeaderRowsFormatTest.designer.cs">
-      <DependentUpon>HeaderRowsFormatTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Format\Region\RegionFormatBaseTest.designer.cs">
-      <DependentUpon>RegionFormatBaseTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Format\Region\Regions\RowFormatTest.designer.cs">
-      <DependentUpon>RowFormatTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Format\Region\Regions\TableFormatTest.designer.cs">
-      <DependentUpon>TableFormatTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Link\Resource\BytesPayloadLinkedResourceTest.cs" />
-    <Compile Include="Models\Classes\Link\Resource\BytesPayloadLinkedResourceTest.designer.cs">
-      <DependentUpon>BytesPayloadLinkedResourceTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Cell\CellBaseTest.cs" />
-    <Compile Include="Models\Classes\Cell\CellBaseTest.designer.cs">
-      <DependentUpon>CellBaseTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Format\Region\Regions\CellFormatTest.cs" />
-    <Compile Include="Models\Classes\Format\Region\Regions\ColumnFormatTest.cs" />
-    <Compile Include="Models\Classes\Cell\Spanning\ColumnSpanningDecimalCellTest.cs" />
-    <Compile Include="Models\Classes\Cell\Spanning\ColumnSpanningDecimalCellTest.designer.cs">
-      <DependentUpon>ColumnSpanningDecimalCellTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Cell\Spanning\ColumnSpanningHtmlCellTest.cs" />
-    <Compile Include="Models\Classes\Cell\Spanning\ColumnSpanningHtmlCellTest.designer.cs">
-      <DependentUpon>ColumnSpanningHtmlCellTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Cell\Spanning\ColumnSpanningMediaReferenceCellTest.cs" />
-    <Compile Include="Models\Classes\Cell\Spanning\ColumnSpanningMediaReferenceCellTest.designer.cs">
-      <DependentUpon>ColumnSpanningMediaReferenceCellTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Cell\Spanning\ColumnSpanningNullCellTest.cs" />
-    <Compile Include="Models\Classes\Cell\Spanning\ColumnSpanningNullCellTest.designer.cs">
-      <DependentUpon>ColumnSpanningNullCellTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Cell\Spanning\ColumnSpanningSlottedCellTest.cs" />
-    <Compile Include="Models\Classes\Cell\Spanning\ColumnSpanningSlottedCellTest.designer.cs">
-      <DependentUpon>ColumnSpanningSlottedCellTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Cell\ColumnSpanningStandardCellBaseTest.cs" />
-    <Compile Include="Models\Classes\Cell\ColumnSpanningStandardCellBaseTest.designer.cs">
-      <DependentUpon>ColumnSpanningStandardCellBaseTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Cell\Spanning\ColumnSpanningStringCellTest.cs" />
-    <Compile Include="Models\Classes\Cell\Spanning\ColumnSpanningStringCellTest.designer.cs">
-      <DependentUpon>ColumnSpanningStringCellTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Column\ColumnTest.cs" />
-    <Compile Include="Models\Classes\Column\ColumnTest.designer.cs">
-      <DependentUpon>ColumnTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Format\Region\Regions\DataRowsFormatTest.cs" />
-    <Compile Include="Models\Classes\Row\DataRowsTest.cs" />
-    <Compile Include="Models\Classes\Row\DataRowsTest.designer.cs">
-      <DependentUpon>DataRowsTest.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Expressions\ExpressionTest.cs" />
+    <Compile Include="Expressions\Protocols.cs" />
+    <Compile Include="Expressions\Operations.cs" />
     <Compile Include="DataStructureDummyFactoryTest.designer.cs">
       <DependentUpon>DataStructureDummyFactoryTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Cell\Single\DecimalCellTest.cs" />
-    <Compile Include="Models\Classes\Cell\Single\DecimalCellTest.designer.cs">
-      <DependentUpon>DecimalCellTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Format\Fill\FillPatternTest.cs" />
-    <Compile Include="Models\Classes\Row\FlatRowTest.cs" />
-    <Compile Include="Models\Classes\Row\FlatRowTest.designer.cs">
-      <DependentUpon>FlatRowTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Format\Region\Regions\HeaderRowsFormatTest.cs" />
-    <Compile Include="Models\Classes\Row\HeaderRowsTest.cs" />
-    <Compile Include="Models\Classes\Row\HeaderRowsTest.designer.cs">
-      <DependentUpon>HeaderRowsTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\HoverOver\HoverOverBaseTest.cs" />
-    <Compile Include="Models\Classes\HoverOver\HoverOverBaseTest.designer.cs">
-      <DependentUpon>HoverOverBaseTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Cell\Single\HtmlCellTest.cs" />
-    <Compile Include="Models\Classes\Cell\Single\HtmlCellTest.designer.cs">
-      <DependentUpon>HtmlCellTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\HoverOver\HtmlHoverOverTest.cs" />
-    <Compile Include="Models\Classes\HoverOver\HtmlHoverOverTest.designer.cs">
-      <DependentUpon>HtmlHoverOverTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Format\Border\InnerBorderTest.cs" />
-    <Compile Include="Models\Classes\Format\Border\InnerBorderTest.designer.cs">
-      <DependentUpon>InnerBorderTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Link\LinkBaseTest.cs" />
-    <Compile Include="Models\Classes\Link\LinkBaseTest.designer.cs">
-      <DependentUpon>LinkBaseTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Link\LinkedResourceBaseTest.cs" />
-    <Compile Include="Models\Classes\Link\LinkedResourceBaseTest.designer.cs">
-      <DependentUpon>LinkedResourceBaseTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Cell\Single\MediaReferenceCellTest.cs" />
-    <Compile Include="Models\Classes\CellValue\MediaReferenceTest.cs" />
-    <Compile Include="Models\Classes\CellValue\MediaReferenceTest.designer.cs">
-      <DependentUpon>MediaReferenceTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Cell\Single\NullCellTest.cs" />
-    <Compile Include="Models\Classes\Cell\Single\NullCellTest.designer.cs">
-      <DependentUpon>NullCellTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Format\Border\OuterBorderTest.cs" />
-    <Compile Include="Models\Classes\Format\Border\OuterBorderTest.designer.cs">
-      <DependentUpon>OuterBorderTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Format\Region\MultiCellRegionFormatBaseTest.cs" />
-    <Compile Include="Models\Classes\Format\Region\MultiCellRegionFormatBaseTest.designer.cs">
-      <DependentUpon>MultiCellRegionFormatBaseTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\GlobalSuppressions.cs" />
@@ -342,76 +206,9 @@
     </Compile>
     <Compile Include="DataStructureDummyFactoryTest.cs" />
     <AdditionalFiles Include=".analyzers\stylecop.json" />
-    <Compile Include="Models\Classes\Link\SimpleLinkTest.cs" />
-    <Compile Include="Models\Classes\Link\SimpleLinkTest.designer.cs">
-      <DependentUpon>SimpleLinkTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Cell\Single\SlottedCellTest.cs" />
-    <Compile Include="Models\Classes\Cell\Single\SlottedCellTest.designer.cs">
-      <DependentUpon>SlottedCellTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Cell\StandardCellBaseTest.cs" />
-    <Compile Include="Models\Classes\Cell\StandardCellBaseTest.designer.cs">
-      <DependentUpon>StandardCellBaseTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Cell\Single\StringCellTest.cs" />
-    <Compile Include="Models\Classes\Cell\Single\StringCellTest.designer.cs">
-      <DependentUpon>StringCellTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\HoverOver\StringHoverOverTest.cs" />
-    <Compile Include="Models\Classes\HoverOver\StringHoverOverTest.designer.cs">
-      <DependentUpon>StringHoverOverTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Link\Resource\StringPayloadLinkedResourceTest.cs" />
-    <Compile Include="Models\Classes\Link\Resource\StringPayloadLinkedResourceTest.designer.cs">
-      <DependentUpon>StringPayloadLinkedResourceTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Column\TableColumnsTest.cs" />
-    <Compile Include="Models\Classes\Column\TableColumnsTest.designer.cs">
-      <DependentUpon>TableColumnsTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Format\Region\Regions\TableFormatTest.cs" />
-    <Compile Include="Models\Classes\Row\TableRowsTest.cs" />
-    <Compile Include="Models\Classes\Row\TableRowsTest.designer.cs">
-      <DependentUpon>TableRowsTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\TreeTableTest.cs" />
-    <Compile Include="Models\Classes\TreeTableTest.designer.cs">
-      <DependentUpon>TreeTableTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Link\Resource\UrlLinkedResourceTest.cs" />
-    <Compile Include="Models\Classes\Link\Resource\UrlLinkedResourceTest.designer.cs">
-      <DependentUpon>UrlLinkedResourceTest.cs</DependentUpon>
-    </Compile>
     <None Include=".analyzers\test.ruleset" />
     <None Include="DummyFactory.recipe-nuspec" />
     <Compile Include="Properties\ProjectInfo.cs" />
-    <Compile Include="Models\Classes\Format\Region\RegionFormatBaseTest.cs" />
-    <Compile Include="Models\Classes\Row\RowBaseTest.cs" />
-    <Compile Include="Models\Classes\Row\RowBaseTest.designer.cs">
-      <DependentUpon>RowBaseTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Format\Region\Regions\RowFormatTest.cs" />
-    <Compile Include="Models\Classes\Row\RowTest.cs" />
-    <Compile Include="Models\Classes\Row\RowTest.designer.cs">
-      <DependentUpon>RowTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Format\Report\ReportFormatTest.cs" />
-    <Compile Include="Models\Classes\Format\Report\ReportFormatTest.designer.cs">
-      <DependentUpon>ReportFormatTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Report\ReportTest.cs" />
-    <Compile Include="Models\Classes\Report\ReportTest.designer.cs">
-      <DependentUpon>ReportTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Format\Report\SectionFormatTest.cs" />
-    <Compile Include="Models\Classes\Format\Report\SectionFormatTest.designer.cs">
-      <DependentUpon>SectionFormatTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Report\SectionTest.cs" />
-    <Compile Include="Models\Classes\Report\SectionTest.designer.cs">
-      <DependentUpon>SectionTest.cs</DependentUpon>
-    </Compile>
     <Compile Include="SerializationConfigurationTypes.cs" />
     <None Include="packages.config" />
   </ItemGroup>

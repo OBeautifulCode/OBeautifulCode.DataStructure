@@ -15,7 +15,7 @@ namespace OBeautifulCode.DataStructure
     using static System.FormattableString;
 
     /// <summary>
-    /// A a reference to that media (i.e. must be fetched from a server).
+    /// A reference to that media (i.e. must be fetched from a server).
     /// </summary>
     // ReSharper disable once RedundantExtendsListEntry
     public partial class MediaReference : IModelViaCodeGen

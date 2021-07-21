@@ -37,8 +37,8 @@
     <DocumentationFile>bin\Release\OBeautifulCode.DataStructure.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="OBeautifulCode.Type, Version=1.0.86.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OBeautifulCode.Type.1.0.86\lib\net462\OBeautifulCode.Type.dll</HintPath>
+    <Reference Include="OBeautifulCode.Type, Version=1.0.92.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Type.1.0.92\lib\net462\OBeautifulCode.Type.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
@@ -64,75 +64,42 @@
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringReadableOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringXmlDocOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
-    <Compile Include="Interfaces\Behavioral\ISlottedCell.cs" />
-    <Compile Include="Interfaces\Behavioral\ILinkedCell.cs" />
-    <Compile Include="Interfaces\Model\Resource\ILinkedResource.cs" />
-    <Compile Include="Interfaces\Model\Resource\ILink.cs" />
-    <Compile Include="Interfaces\Model\Cell\IStandardCell.cs" />
+    <Compile Include="Events\InputAppliedToCellEvent{TValue}.cs" />
+    <Compile Include="Events\CellOpExecutedEvent{TResult}.cs" />
+    <Compile Include="Interfaces\Behavior\IClearCellValue.cs" />
+    <Compile Include="Interfaces\Behavior\IGetCellValue.cs" />
+    <Compile Include="Interfaces\Behavior\IGetCellValue{TValue}.cs" />
+    <Compile Include="Interfaces\Classification\Cell\INotSlottedCell.cs" />
+    <Compile Include="Interfaces\Classification\Cell\Output\IConstOutputCell{TValue}.cs" />
+    <Compile Include="Interfaces\Classification\Cell\Null\INullCell.cs" />
+    <Compile Include="Interfaces\Classification\Cell\Slotted\ISlottedCell.cs" />
+    <Compile Include="Interfaces\Property\IHaveStandardFeatures.cs" />
+    <Compile Include="Interfaces\Property\IHaveLink.cs" />
+    <Compile Include="Interfaces\Classification\Cell\Output\IOperationOutputCell{TValue}.cs" />
+    <Compile Include="Interfaces\Classification\Cell\Output\IOutputCell{TValue}.cs" />
+    <Compile Include="Interfaces\Classification\Cell\Input\IInputCell{TValue}.cs" />
+    <Compile Include="Interfaces\Classification\Resource\ILinkedResource.cs" />
+    <Compile Include="Interfaces\Classification\Resource\ILink.cs" />
+    <Compile Include="Logic\Builders\Value.cs" />
+    <Compile Include="Logic\Builders\Cell.cs" />
     <Compile Include="Logic\Extensions\TreeTableExtensions.cs" />
+    <Compile Include="Logic\Extensions\ReportExtensions.cs" />
+    <Compile Include="Logic\Protocols\DataStructureCellProtocols{TValue}.cs" />
     <Compile Include="Models\Classes\CellValue\MediaReference.cs" />
     <Compile Include="Models\Classes\CellValue\MediaReference.designer.cs">
       <DependentUpon>MediaReference.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Classes\Cell\CellBase.designer.cs">
-      <DependentUpon>CellBase.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Cell\ColumnSpanningStandardCellBase.designer.cs">
-      <DependentUpon>ColumnSpanningStandardCellBase.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Cell\Single\DecimalCell.designer.cs">
-      <DependentUpon>DecimalCell.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Cell\Single\HtmlCell.designer.cs">
-      <DependentUpon>HtmlCell.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Cell\Single\MediaReferenceCell.cs" />
-    <Compile Include="Models\Classes\Cell\Single\MediaReferenceCell.designer.cs">
-      <DependentUpon>MediaReferenceCell.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Cell\Single\NullCell.designer.cs">
-      <DependentUpon>NullCell.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Cell\Single\SlottedCell.designer.cs">
-      <DependentUpon>SlottedCell.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Cell\Single\StringCell.designer.cs">
-      <DependentUpon>StringCell.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Cell\Spanning\ColumnSpanningDecimalCell.designer.cs">
-      <DependentUpon>ColumnSpanningDecimalCell.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Cell\Spanning\ColumnSpanningHtmlCell.designer.cs">
-      <DependentUpon>ColumnSpanningHtmlCell.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Cell\Spanning\ColumnSpanningMediaReferenceCell.designer.cs">
-      <DependentUpon>ColumnSpanningMediaReferenceCell.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Cell\Spanning\ColumnSpanningNullCell.designer.cs">
-      <DependentUpon>ColumnSpanningNullCell.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Cell\Spanning\ColumnSpanningSlottedCell.cs" />
-    <Compile Include="Models\Classes\Cell\Spanning\ColumnSpanningMediaReferenceCell.cs" />
-    <Compile Include="Models\Classes\Cell\Spanning\ColumnSpanningSlottedCell.designer.cs">
-      <DependentUpon>ColumnSpanningSlottedCell.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Cell\Spanning\ColumnSpanningStringCell.designer.cs">
-      <DependentUpon>ColumnSpanningStringCell.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Cell\StandardCellBase.cs" />
+    <Compile Include="Models\Classes\Cell\Input\InputCellBase{TValue}.cs" />
+    <Compile Include="Models\Classes\Cell\Output\Operation\OperationOutputCellBase{TValue}.cs" />
+    <Compile Include="Models\Classes\Cell\Output\Const\ConstOutputCellBase{TValue}.cs" />
+    <Compile Include="Models\Classes\Cell\Output\OutputCellBase{TValue}.cs" />
+    <Compile Include="Models\Classes\Cell\Output\Operation\OperationCell{TValue}.cs" />
+    <Compile Include="Models\Classes\Cell\Output\Const\ConstCell{TValue}.cs" />
     <Compile Include="Models\Classes\Cell\CellBase.cs" />
-    <Compile Include="Models\Classes\Cell\Single\HtmlCell.cs" />
-    <Compile Include="Models\Classes\Cell\ColumnSpanningStandardCellBase.cs" />
-    <Compile Include="Models\Classes\Cell\Spanning\ColumnSpanningDecimalCell.cs" />
-    <Compile Include="Models\Classes\Cell\Spanning\ColumnSpanningNullCell.cs" />
-    <Compile Include="Models\Classes\Cell\Single\SlottedCell.cs" />
-    <Compile Include="Models\Classes\Cell\Spanning\ColumnSpanningHtmlCell.cs" />
-    <Compile Include="Models\Classes\Cell\Spanning\ColumnSpanningStringCell.cs" />
-    <Compile Include="Models\Classes\Cell\Single\NullCell.cs" />
-    <Compile Include="Interfaces\Behavioral\IHaveHoverOverCell.cs" />
-    <Compile Include="Models\Classes\Cell\StandardCellBase.designer.cs">
-      <DependentUpon>StandardCellBase.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Models\Classes\Cell\Null\NullCellBase.cs" />
+    <Compile Include="Models\Classes\Cell\Slotted\SlottedCell.cs" />
+    <Compile Include="Models\Classes\Cell\Null\NullCell.cs" />
+    <Compile Include="Interfaces\Property\IHaveHoverOver.cs" />
     <Compile Include="Models\Classes\Column\Column.designer.cs">
       <DependentUpon>Column.cs</DependentUpon>
     </Compile>
@@ -195,13 +162,9 @@
       <DependentUpon>SectionFormat.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Classes\HoverOver\HoverOverBase.cs" />
-    <Compile Include="Interfaces\Model\Resource\IHoverOver.cs" />
-    <Compile Include="Interfaces\Behavioral\IHaveValueCell.cs" />
-    <Compile Include="Interfaces\Behavioral\IHaveDisplayValueCell.cs" />
-    <Compile Include="Interfaces\Behavioral\IFormattableCell.cs" />
-    <Compile Include="Interfaces\Behavioral\IColumnSpanningCell.cs" />
-    <Compile Include="Interfaces\Model\Cell\ICell.cs" />
-    <Compile Include="Models\Classes\Cell\Single\DecimalCell.cs" />
+    <Compile Include="Interfaces\Classification\Resource\IHoverOver.cs" />
+    <Compile Include="Interfaces\Property\IHaveCellFormat.cs" />
+    <Compile Include="Interfaces\Classification\Cell\ICell.cs" />
     <Compile Include="Logic\Extensions\RowExtensions.cs" />
     <Compile Include="Models\Classes\Format\Region\Regions\CellFormat.cs" />
     <Compile Include="Models\Classes\HoverOver\HoverOverBase.designer.cs">
@@ -290,9 +253,14 @@
     <Compile Include="Models\Enums\Formatting\CellFormatOptions.cs" />
     <Compile Include="Models\Classes\HoverOver\HtmlHoverOver.cs" />
     <Compile Include="Models\Classes\HoverOver\StringHoverOver.cs" />
+    <Compile Include="Models\Enums\Operations\SlotSelectionStrategy.cs" />
+    <Compile Include="Operations\ExecuteOperationCellIfNecessaryOp{TValue}.cs" />
+    <Compile Include="Operations\GetCellValueByCellReferenceOp{TValue}.cs" />
+    <Compile Include="Operations\HasCellValueOp.cs" />
+    <Compile Include="Operations\GetConstValueOp{TValue}.cs" />
+    <Compile Include="Operations\GetCellValueOp{TValue}.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\GlobalSuppressions.cs" />
-    <Compile Include="Models\Classes\Cell\Single\StringCell.cs" />
     <Compile Include="Models\Classes\Row\FlatRow.cs" />
     <Compile Include="Models\Classes\Row\Row.cs" />
     <Compile Include="Models\Classes\Row\RowBase.cs" />

@@ -20,7 +20,7 @@ namespace OBeautifulCode.DataStructure
         /// </summary>
         /// <param name="treeTable">The tree table.</param>
         /// <param name="cellId">The id of the cell.</param>
-        /// <param name="slotId">OPTIONAL id of the slot to use.  DEFAULT is to address a cell that is not contained within a slot.</param>
+        /// <param name="slotId">OPTIONAL id of the slot to use -OR- null if not addressing an <see cref="ISlottedCell"/>.  DEFAULT is to address an <see cref="INotSlottedCell"/>.</param>
         /// <returns>
         /// The addressed cell.
         /// </returns>

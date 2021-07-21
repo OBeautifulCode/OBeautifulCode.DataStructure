@@ -41,182 +41,182 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<MediaReferenceKind>(),
                                  A.Dummy<string>()));
 
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () =>
-                {
-                    var availableTypes = new[]
-                    {
-                        typeof(DecimalCell),
-                        typeof(HtmlCell),
-                        typeof(MediaReferenceCell),
-                        typeof(NullCell),
-                        typeof(SlottedCell),
-                        typeof(StringCell),
-                        typeof(ColumnSpanningDecimalCell),
-                        typeof(ColumnSpanningHtmlCell),
-                        typeof(ColumnSpanningMediaReferenceCell),
-                        typeof(ColumnSpanningNullCell),
-                        typeof(ColumnSpanningSlottedCell),
-                        typeof(ColumnSpanningStringCell)
-                    };
+            ////AutoFixtureBackedDummyFactory.AddDummyCreator(
+            ////    () =>
+            ////    {
+            ////        var availableTypes = new[]
+            ////        {
+            ////            typeof(DecimalCell),
+            ////            typeof(HtmlCell),
+            ////            typeof(MediaReferenceCell),
+            ////            typeof(NullCell),
+            ////            typeof(SlottedCell),
+            ////            typeof(StringCell),
+            ////            typeof(ColumnSpanningDecimalCell),
+            ////            typeof(ColumnSpanningHtmlCell),
+            ////            typeof(ColumnSpanningMediaReferenceCell),
+            ////            typeof(ColumnSpanningNullCell),
+            ////            typeof(ColumnSpanningSlottedCell),
+            ////            typeof(ColumnSpanningStringCell)
+            ////        };
 
-                    var randomIndex = ThreadSafeRandom.Next(0, availableTypes.Length);
+            ////        var randomIndex = ThreadSafeRandom.Next(0, availableTypes.Length);
 
-                    var randomType = availableTypes[randomIndex];
+            ////        var randomType = availableTypes[randomIndex];
 
-                    var result = (CellBase)AD.ummy(randomType);
+            ////        var result = (CellBase)AD.ummy(randomType);
 
-                    return result;
-                });
+            ////        return result;
+            ////    });
 
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () =>
-                {
-                    var availableTypes = new[]
-                    {
-                        typeof(ColumnSpanningDecimalCell),
-                        typeof(ColumnSpanningHtmlCell),
-                        typeof(ColumnSpanningMediaReferenceCell),
-                        typeof(ColumnSpanningNullCell),
-                        typeof(ColumnSpanningStringCell)
-                    };
+            ////AutoFixtureBackedDummyFactory.AddDummyCreator(
+            ////    () =>
+            ////    {
+            ////        var availableTypes = new[]
+            ////        {
+            ////            typeof(ColumnSpanningDecimalCell),
+            ////            typeof(ColumnSpanningHtmlCell),
+            ////            typeof(ColumnSpanningMediaReferenceCell),
+            ////            typeof(ColumnSpanningNullCell),
+            ////            typeof(ColumnSpanningStringCell)
+            ////        };
 
-                    var randomIndex = ThreadSafeRandom.Next(0, availableTypes.Length);
+            ////        var randomIndex = ThreadSafeRandom.Next(0, availableTypes.Length);
 
-                    var randomType = availableTypes[randomIndex];
+            ////        var randomType = availableTypes[randomIndex];
 
-                    var result = (ColumnSpanningStandardCellBase)AD.ummy(randomType);
+            ////        var result = (ColumnSpanningStandardCellBase)AD.ummy(randomType);
 
-                    return result;
-                });
+            ////        return result;
+            ////    });
 
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new DecimalCell(
-                                 A.Dummy<decimal>(),
-                                 A.Dummy<string>(),
-                                 A.Dummy<string>(),
-                                 A.Dummy<CellFormat>(),
-                                 A.Dummy<IHoverOver>(),
-                                 A.Dummy<ILink>()));
+            ////AutoFixtureBackedDummyFactory.AddDummyCreator(
+            ////    () => new DecimalCell(
+            ////                     A.Dummy<decimal>(),
+            ////                     A.Dummy<string>(),
+            ////                     A.Dummy<string>(),
+            ////                     A.Dummy<CellFormat>(),
+            ////                     A.Dummy<IHoverOver>(),
+            ////                     A.Dummy<ILink>()));
 
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new HtmlCell(
-                                 A.Dummy<string>(),
-                                 A.Dummy<string>(),
-                                 A.Dummy<CellFormat>(),
-                                 A.Dummy<IHoverOver>(),
-                                 A.Dummy<ILink>()));
+            ////AutoFixtureBackedDummyFactory.AddDummyCreator(
+            ////    () => new HtmlCell(
+            ////                     A.Dummy<string>(),
+            ////                     A.Dummy<string>(),
+            ////                     A.Dummy<CellFormat>(),
+            ////                     A.Dummy<IHoverOver>(),
+            ////                     A.Dummy<ILink>()));
 
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new MediaReferenceCell(
-                                 A.Dummy<MediaReference>(),
-                                 A.Dummy<string>(),
-                                 A.Dummy<CellFormat>(),
-                                 A.Dummy<IHoverOver>(),
-                                 A.Dummy<ILink>()));
+            ////AutoFixtureBackedDummyFactory.AddDummyCreator(
+            ////    () => new MediaReferenceCell(
+            ////                     A.Dummy<MediaReference>(),
+            ////                     A.Dummy<string>(),
+            ////                     A.Dummy<CellFormat>(),
+            ////                     A.Dummy<IHoverOver>(),
+            ////                     A.Dummy<ILink>()));
 
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new NullCell(
-                                 A.Dummy<string>(),
-                                 A.Dummy<string>(),
-                                 A.Dummy<CellFormat>(),
-                                 A.Dummy<IHoverOver>(),
-                                 A.Dummy<ILink>()));
+            ////AutoFixtureBackedDummyFactory.AddDummyCreator(
+            ////    () => new NullCell(
+            ////                     A.Dummy<string>(),
+            ////                     A.Dummy<string>(),
+            ////                     A.Dummy<CellFormat>(),
+            ////                     A.Dummy<IHoverOver>(),
+            ////                     A.Dummy<ILink>()));
 
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new SlottedCell(
-                                 A.Dummy<IReadOnlyDictionary<string, IHaveValueCell>>(),
-                                 A.Dummy<string>(),
-                                 A.Dummy<string>()));
+            ////AutoFixtureBackedDummyFactory.AddDummyCreator(
+            ////    () => new SlottedCell(
+            ////                     A.Dummy<IReadOnlyDictionary<string, IHaveValueCell>>(),
+            ////                     A.Dummy<string>(),
+            ////                     A.Dummy<string>()));
 
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new StringCell(
-                                 A.Dummy<string>(),
-                                 A.Dummy<string>(),
-                                 A.Dummy<string>(),
-                                 A.Dummy<CellFormat>(),
-                                 A.Dummy<IHoverOver>(),
-                                 A.Dummy<ILink>()));
+            ////AutoFixtureBackedDummyFactory.AddDummyCreator(
+            ////    () => new StringCell(
+            ////                     A.Dummy<string>(),
+            ////                     A.Dummy<string>(),
+            ////                     A.Dummy<string>(),
+            ////                     A.Dummy<CellFormat>(),
+            ////                     A.Dummy<IHoverOver>(),
+            ////                     A.Dummy<ILink>()));
 
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new ColumnSpanningDecimalCell(
-                                 A.Dummy<decimal>(),
-                                 A.Dummy<int>(),
-                                 A.Dummy<string>(),
-                                 A.Dummy<string>(),
-                                 A.Dummy<CellFormat>(),
-                                 A.Dummy<IHoverOver>(),
-                                 A.Dummy<ILink>()));
+            ////AutoFixtureBackedDummyFactory.AddDummyCreator(
+            ////    () => new ColumnSpanningDecimalCell(
+            ////                     A.Dummy<decimal>(),
+            ////                     A.Dummy<int>(),
+            ////                     A.Dummy<string>(),
+            ////                     A.Dummy<string>(),
+            ////                     A.Dummy<CellFormat>(),
+            ////                     A.Dummy<IHoverOver>(),
+            ////                     A.Dummy<ILink>()));
 
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new ColumnSpanningHtmlCell(
-                                 A.Dummy<string>(),
-                                 A.Dummy<int>(),
-                                 A.Dummy<string>(),
-                                 A.Dummy<CellFormat>(),
-                                 A.Dummy<IHoverOver>(),
-                                 A.Dummy<ILink>()));
+            ////AutoFixtureBackedDummyFactory.AddDummyCreator(
+            ////    () => new ColumnSpanningHtmlCell(
+            ////                     A.Dummy<string>(),
+            ////                     A.Dummy<int>(),
+            ////                     A.Dummy<string>(),
+            ////                     A.Dummy<CellFormat>(),
+            ////                     A.Dummy<IHoverOver>(),
+            ////                     A.Dummy<ILink>()));
 
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new ColumnSpanningMediaReferenceCell(
-                                 A.Dummy<MediaReference>(),
-                                 A.Dummy<int>(),
-                                 A.Dummy<string>(),
-                                 A.Dummy<CellFormat>(),
-                                 A.Dummy<IHoverOver>(),
-                                 A.Dummy<ILink>()));
+            ////AutoFixtureBackedDummyFactory.AddDummyCreator(
+            ////    () => new ColumnSpanningMediaReferenceCell(
+            ////                     A.Dummy<MediaReference>(),
+            ////                     A.Dummy<int>(),
+            ////                     A.Dummy<string>(),
+            ////                     A.Dummy<CellFormat>(),
+            ////                     A.Dummy<IHoverOver>(),
+            ////                     A.Dummy<ILink>()));
 
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new ColumnSpanningNullCell(
-                                 A.Dummy<int>(),
-                                 A.Dummy<string>(),
-                                 A.Dummy<string>(),
-                                 A.Dummy<CellFormat>(),
-                                 A.Dummy<IHoverOver>(),
-                                 A.Dummy<ILink>()));
+            ////AutoFixtureBackedDummyFactory.AddDummyCreator(
+            ////    () => new ColumnSpanningNullCell(
+            ////                     A.Dummy<int>(),
+            ////                     A.Dummy<string>(),
+            ////                     A.Dummy<string>(),
+            ////                     A.Dummy<CellFormat>(),
+            ////                     A.Dummy<IHoverOver>(),
+            ////                     A.Dummy<ILink>()));
 
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new ColumnSpanningSlottedCell(
-                                 A.Dummy<IReadOnlyDictionary<string, IHaveValueCell>>(),
-                                 A.Dummy<string>(),
-                                 A.Dummy<int>(),
-                                 A.Dummy<string>()));
+            ////AutoFixtureBackedDummyFactory.AddDummyCreator(
+            ////    () => new ColumnSpanningSlottedCell(
+            ////                     A.Dummy<IReadOnlyDictionary<string, IHaveValueCell>>(),
+            ////                     A.Dummy<string>(),
+            ////                     A.Dummy<int>(),
+            ////                     A.Dummy<string>()));
 
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new ColumnSpanningStringCell(
-                                 A.Dummy<string>(),
-                                 A.Dummy<int>(),
-                                 A.Dummy<string>(),
-                                 A.Dummy<string>(),
-                                 A.Dummy<CellFormat>(),
-                                 A.Dummy<IHoverOver>(),
-                                 A.Dummy<ILink>()));
+            ////AutoFixtureBackedDummyFactory.AddDummyCreator(
+            ////    () => new ColumnSpanningStringCell(
+            ////                     A.Dummy<string>(),
+            ////                     A.Dummy<int>(),
+            ////                     A.Dummy<string>(),
+            ////                     A.Dummy<string>(),
+            ////                     A.Dummy<CellFormat>(),
+            ////                     A.Dummy<IHoverOver>(),
+            ////                     A.Dummy<ILink>()));
 
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () =>
-                {
-                    var availableTypes = new[]
-                    {
-                        typeof(DecimalCell),
-                        typeof(HtmlCell),
-                        typeof(MediaReferenceCell),
-                        typeof(NullCell),
-                        typeof(StringCell),
-                        typeof(ColumnSpanningDecimalCell),
-                        typeof(ColumnSpanningHtmlCell),
-                        typeof(ColumnSpanningMediaReferenceCell),
-                        typeof(ColumnSpanningNullCell),
-                        typeof(ColumnSpanningStringCell)
-                    };
+            ////AutoFixtureBackedDummyFactory.AddDummyCreator(
+            ////    () =>
+            ////    {
+            ////        var availableTypes = new[]
+            ////        {
+            ////            typeof(DecimalCell),
+            ////            typeof(HtmlCell),
+            ////            typeof(MediaReferenceCell),
+            ////            typeof(NullCell),
+            ////            typeof(StringCell),
+            ////            typeof(ColumnSpanningDecimalCell),
+            ////            typeof(ColumnSpanningHtmlCell),
+            ////            typeof(ColumnSpanningMediaReferenceCell),
+            ////            typeof(ColumnSpanningNullCell),
+            ////            typeof(ColumnSpanningStringCell)
+            ////        };
 
-                    var randomIndex = ThreadSafeRandom.Next(0, availableTypes.Length);
+            ////        var randomIndex = ThreadSafeRandom.Next(0, availableTypes.Length);
 
-                    var randomType = availableTypes[randomIndex];
+            ////        var randomType = availableTypes[randomIndex];
 
-                    var result = (StandardCellBase)AD.ummy(randomType);
+            ////        var result = (StandardImmutableOutputCellBase)AD.ummy(randomType);
 
-                    return result;
-                });
+            ////        return result;
+            ////    });
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new Column(

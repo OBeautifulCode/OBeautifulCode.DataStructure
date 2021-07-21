@@ -6,7 +6,11 @@
 
 namespace OBeautifulCode.DataStructure
 {
+    using System;
+
     using OBeautifulCode.Type;
+
+    using static System.FormattableString;
 
     /// <summary>
     /// Base implementation of <see cref="ICell"/>.
@@ -17,13 +21,36 @@ namespace OBeautifulCode.DataStructure
         /// Initializes a new instance of the <see cref="CellBase"/> class.
         /// </summary>
         /// <param name="id">The cell's unique identifier.</param>
+        /// <param name="columnsSpanned">The number of columns spanned or null if none (cell occupies a single column).</param>
         protected CellBase(
-            string id)
+            string id,
+            int? columnsSpanned)
         {
+            if ((columnsSpanned != null) && (columnsSpanned < 1))
+            {
+                throw new ArgumentOutOfRangeException(Invariant($"{nameof(columnsSpanned)} is {columnsSpanned}; must be null or >= 1."));
+            }
+
             this.Id = id;
+            this.ColumnsSpanned = columnsSpanned;
         }
 
         /// <inheritdoc />
         public string Id { get; private set; }
+
+        /// <inheritdoc />
+        public int? ColumnsSpanned { get; private set; }
+
+        /// <inheritdoc />
+        public abstract bool IsConstCell();
+
+        /// <inheritdoc />
+        public abstract bool IsInputCell();
+
+        /// <inheritdoc />
+        public abstract bool IsOperationCell();
+
+        /// <inheritdoc />
+        public abstract Type GetValueTypeOrNull();
     }
 }

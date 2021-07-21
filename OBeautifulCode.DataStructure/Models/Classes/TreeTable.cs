@@ -24,6 +24,8 @@ namespace OBeautifulCode.DataStructure
     {
         private IReadOnlyDictionary<string, ICell> cellIdToCellMap;
 
+        private IReadOnlyCollection<ICell> operationCells;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="TreeTable"/> class.
         /// </summary>
@@ -47,6 +49,8 @@ namespace OBeautifulCode.DataStructure
 
             ids.AddRange(tableColumns.Columns.Where(_ => !string.IsNullOrWhiteSpace(_.Id)).Select(_ => _.Id));
 
+            var allCells = new List<ICell>();
+
             var allCellsWithIds = new List<ICell>();
 
             if (tableRows != null)
@@ -68,7 +72,7 @@ namespace OBeautifulCode.DataStructure
 
                 ids.AddRange(allRowsInOrder.Where(_ => !string.IsNullOrWhiteSpace(_.Id)).Select(_ => _.Id));
 
-                var allCells = new List<ICell>(allRowsInOrder.SelectMany(_ => _.Cells).ToList());
+                allCells = new List<ICell>(allRowsInOrder.SelectMany(_ => _.Cells).ToList());
 
                 var slottedCells = allCells.OfType<ISlottedCell>().SelectMany(_ => _.SlotIdToCellMap.Values).ToList();
 
@@ -77,6 +81,13 @@ namespace OBeautifulCode.DataStructure
                 allCellsWithIds = allCells.Where(_ => !string.IsNullOrWhiteSpace(_.Id)).ToList();
 
                 ids.AddRange(allCellsWithIds.Select(_ => _.Id));
+
+                var inputCellsWithoutId = allCells.Where(_ => _.IsInputCell()).Where(_ => string.IsNullOrWhiteSpace(_.Id)).ToList();
+
+                if (inputCellsWithoutId.Any())
+                {
+                    throw new ArgumentException(Invariant($"One or more input cell(s) does not have an identifier and thus cannot be addressed."));
+                }
             }
 
             if (ids.Distinct().Count() != ids.Count)
@@ -85,6 +96,7 @@ namespace OBeautifulCode.DataStructure
             }
 
             this.cellIdToCellMap = allCellsWithIds.ToDictionary(_ => _.Id, _ => _);
+            this.operationCells = allCells.Where(_ => _.IsOperationCell()).ToList();
 
             this.TableColumns = tableColumns;
             this.TableRows = tableRows;
@@ -113,5 +125,13 @@ namespace OBeautifulCode.DataStructure
         /// A map of cell id to the corresponding cell.
         /// </returns>
         public IReadOnlyDictionary<string, ICell> GetCellIdToCellMap() => this.cellIdToCellMap;
+
+        /// <summary>
+        /// Gets all <see cref="ICell"/>s.
+        /// </summary>
+        /// <returns>
+        /// All <see cref="ICell"/>s in the tree table.
+        /// </returns>
+        public IReadOnlyCollection<ICell> GetOperationCells() => this.operationCells;
     }
 }
