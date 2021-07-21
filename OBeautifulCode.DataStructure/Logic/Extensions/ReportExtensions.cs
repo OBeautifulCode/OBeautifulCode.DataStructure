@@ -129,7 +129,7 @@ namespace OBeautifulCode.DataStructure
 
             if (!report.GetSectionIdToSectionMap().TryGetValue(sectionId, out var section))
             {
-                throw new ArgumentException(Invariant($"There is no section with id {sectionId}."));
+                throw new InvalidOperationException(Invariant($"There is no section with id {sectionId}."));
             }
 
             var result = section.TreeTable.GetCell(cellId, slotId);
@@ -138,39 +138,10 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <summary>
-        /// Gets the value of a cell.
-        /// </summary>
-        /// <typeparam name="TValue">The type of value.</typeparam>
-        /// <param name="report">The report.</param>
-        /// <param name="sectionId">The id of the section that contains the cell.</param>
-        /// <param name="cellId">The id of the cell.</param>
-        /// <param name="slotId">OPTIONAL id of the slot to use -OR- null if not addressing an <see cref="ISlottedCell"/>.  DEFAULT is to address an <see cref="INotSlottedCell"/>.</param>
-        /// <returns>
-        /// The cell's value.
-        /// </returns>
-        public static TValue GetCellValue<TValue>(
-            this Report report,
-            string sectionId,
-            string cellId,
-            string slotId = null)
-        {
-            var cell = report.GetCell(sectionId, cellId, slotId);
-
-            if (!(cell is IGetCellValue<TValue> valueCell))
-            {
-                throw new ArgumentException("The specified cell is not the kind of cell that has a value.");
-            }
-
-            var result = valueCell.GetCellValue();
-
-            return result;
-        }
-
-        /// <summary>
         /// Sets the value of an input cell.
         /// </summary>
         /// <param name="report">The report.</param>
-        /// <param name="timestampUtc">The timestamp (in UTC) to use when recording a <see cref="CellOpExecutedEvent{TResult}"/> with an <see cref="IOperationOutputCell{TValue}"/>.</param>
+        /// <param name="timestampUtc">The timestamp (in UTC) to use when recording a <see cref="CellOpExecutionEventBase"/> with an <see cref="IOperationOutputCell{TValue}"/>.</param>
         /// <param name="protocolFactoryFuncs">
         /// OPTIONAL protocol factory chain-of-responsibility for protocols needed to execute the operations for all <see cref="IOperationOutputCell{TValue}"/>.
         /// Each func takes, as input, the protocol factory that should be used when these protocols need to execute other operations
@@ -205,7 +176,7 @@ namespace OBeautifulCode.DataStructure
         /// Sets the value of an input cell.
         /// </summary>
         /// <param name="report">The report.</param>
-        /// <param name="timestampUtc">The timestamp (in UTC) to use when recording a <see cref="CellOpExecutedEvent{TResult}"/> with an <see cref="IOperationOutputCell{TValue}"/>.</param>
+        /// <param name="timestampUtc">The timestamp (in UTC) to use when recording a <see cref="CellOpExecutionEventBase"/> with an <see cref="IOperationOutputCell{TValue}"/>.</param>
         /// <param name="protocolFactoryFuncs">
         /// OPTIONAL protocol factory chain-of-responsibility for protocols needed to execute the operations for all <see cref="IOperationOutputCell{TValue}"/>.
         /// Each func takes, as input, the protocol factory that should be used when these protocols need to execute other operations

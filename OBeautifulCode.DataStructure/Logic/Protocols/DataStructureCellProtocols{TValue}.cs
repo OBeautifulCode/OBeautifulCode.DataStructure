@@ -18,8 +18,7 @@ namespace OBeautifulCode.DataStructure
     /// The core <see cref="ICell"/>-related protocols.
     /// </summary>
     /// <typeparam name="TValue">The type of value.</typeparam>
-    public class DataStructureCellProtocols<TValue>
-        : ISyncAndAsyncReturningProtocol<GetCellValueByCellReferenceOp<TValue>, TValue>,
+    public class DataStructureCellProtocols<TValue> :
           ISyncAndAsyncReturningProtocol<GetCellValueOp<TValue>, TValue>,
           ISyncAndAsyncVoidProtocol<ExecuteOperationCellIfNecessaryOp<TValue>>,
           ISyncAndAsyncReturningProtocol<GetConstValueOp<TValue>, TValue>,
@@ -36,7 +35,7 @@ namespace OBeautifulCode.DataStructure
         /// </summary>
         /// <param name="report">The report in-context.</param>
         /// <param name="protocolFactory">The protocol factory to use when executing an <see cref="IOperationOutputCell{TValue}"/>'s <see cref="IOperationOutputCell{TValue}.Operation"/>.</param>
-        /// <param name="timestampUtc">The timestamp (in UTC) to use when recording a <see cref="CellOpExecutedEvent{TResult}"/> with an <see cref="IOperationOutputCell{TValue}"/>.</param>
+        /// <param name="timestampUtc">The timestamp (in UTC) to use when recording a <see cref="CellOpExecutionEventBase"/> with an <see cref="IOperationOutputCell{TValue}"/>.</param>
         public DataStructureCellProtocols(
             Report report,
             IProtocolFactory protocolFactory,
@@ -64,34 +63,6 @@ namespace OBeautifulCode.DataStructure
 
         /// <inheritdoc />
         public TValue Execute(
-            GetCellValueByCellReferenceOp<TValue> operation)
-        {
-            if (operation == null)
-            {
-                throw new ArgumentNullException(nameof(operation));
-            }
-
-            var result = this.GetCellValue(operation.Cell);
-
-            return result;
-        }
-
-        /// <inheritdoc />
-        public async Task<TValue> ExecuteAsync(
-            GetCellValueByCellReferenceOp<TValue> operation)
-        {
-            if (operation == null)
-            {
-                throw new ArgumentNullException(nameof(operation));
-            }
-
-            var result = await this.GetCellValueAsync(operation.Cell);
-
-            return result;
-        }
-
-        /// <inheritdoc />
-        public TValue Execute(
             GetCellValueOp<TValue> operation)
         {
             if (operation == null)
@@ -99,9 +70,23 @@ namespace OBeautifulCode.DataStructure
                 throw new ArgumentNullException(nameof(operation));
             }
 
-            var cell = this.GetCellWithTypedValue(operation.SectionId, operation.CellId, operation.SlotId, operation.SlotSelectionStrategy);
+            var cell = this.GetCellHavingTypedValue(operation.CellLocator);
 
-            var result = this.GetCellValue(cell);
+            if (cell is IOperationOutputCell<TValue> operationCell)
+            {
+                this.ExecuteOperationCellIfNecessary(operationCell);
+            }
+
+            TValue result;
+
+            try
+            {
+                result = cell.GetCellValue();
+            }
+            catch (Exception ex)
+            {
+                throw new CellValueMissingException(ex.Message, operation.CellLocator);
+            }
 
             return result;
         }
@@ -115,9 +100,23 @@ namespace OBeautifulCode.DataStructure
                 throw new ArgumentNullException(nameof(operation));
             }
 
-            var cell = this.GetCellWithTypedValue(operation.SectionId, operation.CellId, operation.SlotId, operation.SlotSelectionStrategy);
+            var cell = this.GetCellHavingTypedValue(operation.CellLocator);
 
-            var result = await this.GetCellValueAsync(cell);
+            if (cell is IOperationOutputCell<TValue> operationCell)
+            {
+                await this.ExecuteOperationCellIfNecessaryAsync(operationCell);
+            }
+
+            TValue result;
+
+            try
+            {
+                result = cell.GetCellValue();
+            }
+            catch (Exception ex)
+            {
+                throw new CellValueMissingException(ex.Message, operation.CellLocator);
+            }
 
             return result;
         }
@@ -183,7 +182,7 @@ namespace OBeautifulCode.DataStructure
                 throw new ArgumentNullException(nameof(operation));
             }
 
-            var cell = this.GetCellWithValue(operation.SectionId, operation.CellId, operation.SlotId, operation.SlotSelectionStrategy);
+            var cell = this.GetCellHavingValue(operation.CellLocator);
 
             var result = cell.HasCellValue();
 
@@ -199,88 +198,65 @@ namespace OBeautifulCode.DataStructure
                 throw new ArgumentNullException(nameof(operation));
             }
 
-            var cell = this.GetCellWithValue(operation.SectionId, operation.CellId, operation.SlotId, operation.SlotSelectionStrategy);
+            var cell = this.GetCellHavingValue(operation.CellLocator);
 
             var result = await Task.FromResult(cell.HasCellValue());
 
             return result;
         }
 
-        private IGetCellValue<TValue> GetCellWithTypedValue(
-            string sectionId,
-            string cellId,
-            string slotId,
-            SlotSelectionStrategy slotSelectionStrategy)
+        private IGetCellValue<TValue> GetCellHavingTypedValue(
+            CellLocator cellLocator)
         {
-            var cell = this.GetCellWithValue(sectionId, cellId, slotId, slotSelectionStrategy);
+            var cell = this.GetCellHavingValue(cellLocator);
 
             if (!(cell is IGetCellValue<TValue> result))
             {
-                throw new InvalidOperationException(Invariant($"The operation addresses a cell whose type is not an {typeof(IGetCellValue<TValue>).ToStringReadable()}: {cell.GetType().ToStringReadable()}."));
+                throw new CellNotFoundException(Invariant($"The operation addresses a cell whose type is not an {typeof(IGetCellValue<TValue>).ToStringReadable()}: {cell.GetType().ToStringReadable()}."), cellLocator);
             }
 
             return result;
         }
 
-        private IGetCellValue GetCellWithValue(
-            string sectionId,
-            string cellId,
-            string slotId,
-            SlotSelectionStrategy slotSelectionStrategy)
+        private IGetCellValue GetCellHavingValue(
+            CellLocator cellLocator)
         {
-            var cell = this.report.GetCell(sectionId, cellId, slotId);
+            ICell cell;
+
+            try
+            {
+                cell = this.report.GetCell(cellLocator.SectionId, cellLocator.CellId, cellLocator.SlotId);
+            }
+            catch (Exception ex)
+            {
+                throw new CellNotFoundException(ex.Message, cellLocator);
+            }
 
             if (cell is ISlottedCell slottedCell)
             {
-                if (!string.IsNullOrWhiteSpace(slotId))
+                if (!string.IsNullOrWhiteSpace(cellLocator.SlotId))
                 {
                     throw new InvalidOperationException(Invariant($"Something went wrong.  The only way to address a slotted cell is if the slot id is not provided."));
                 }
 
-                if (slotSelectionStrategy == SlotSelectionStrategy.DefaultSlot)
+                if (cellLocator.SlotSelectionStrategy == SlotSelectionStrategy.DefaultSlot)
                 {
                     cell = slottedCell.SlotIdToCellMap[slottedCell.DefaultSlotId];
                 }
-                else if (slotSelectionStrategy == SlotSelectionStrategy.ThrowIfSlotIdNotSpecified)
+                else if (cellLocator.SlotSelectionStrategy == SlotSelectionStrategy.ThrowIfSlotIdNotSpecified)
                 {
-                    throw new InvalidOperationException(Invariant($"The operation addresses an {nameof(ISlottedCell)} (and not a slot within that cell) and {nameof(SlotSelectionStrategy)} is {nameof(SlotSelectionStrategy.ThrowIfSlotIdNotSpecified)}."));
+                    throw new CellNotFoundException(Invariant($"The operation addresses an {nameof(ISlottedCell)} (and not a slot within that cell) and {nameof(SlotSelectionStrategy)} is {nameof(SlotSelectionStrategy.ThrowIfSlotIdNotSpecified)}."), cellLocator);
                 }
                 else
                 {
-                    throw new NotSupportedException(Invariant($"This {nameof(SlotSelectionStrategy)} is not supported: {slotSelectionStrategy}."));
+                    throw new NotSupportedException(Invariant($"This {nameof(SlotSelectionStrategy)} is not supported: {cellLocator.SlotSelectionStrategy}."));
                 }
             }
 
             if (!(cell is IGetCellValue result))
             {
-                throw new InvalidOperationException(Invariant($"The operation addresses a cell whose type is not an {typeof(IGetCellValue).ToStringReadable()}: {cell.GetType().ToStringReadable()}."));
+                throw new CellNotFoundException(Invariant($"The operation addresses a cell whose type is not an {typeof(IGetCellValue).ToStringReadable()}: {cell.GetType().ToStringReadable()}."), cellLocator);
             }
-
-            return result;
-        }
-
-        private TValue GetCellValue(
-            IGetCellValue<TValue> cell)
-        {
-            if (cell is IOperationOutputCell<TValue> operationCell)
-            {
-                this.ExecuteOperationCellIfNecessary(operationCell);
-            }
-
-            var result = cell.GetCellValue();
-
-            return result;
-        }
-
-        private async Task<TValue> GetCellValueAsync(
-            IGetCellValue<TValue> cell)
-        {
-            if (cell is IOperationOutputCell<TValue> operationCell)
-            {
-                await this.ExecuteOperationCellIfNecessaryAsync(operationCell);
-            }
-
-            var result = cell.GetCellValue();
 
             return result;
         }
@@ -288,56 +264,92 @@ namespace OBeautifulCode.DataStructure
         private void ExecuteOperationCellIfNecessary(
             IOperationOutputCell<TValue> cell)
         {
-            // if it's a Skipped or CellOpFailedEvent, then record Skipped
-            // else if
-            if ((cell.CellOpExecutedEvent == null) || (cell.CellOpExecutedEvent.TimestampUtc != this.timestampUtc))
+            // NOTE: THIS CODE IS A NEAR DUPLICATE OF THE ASYNC METHOD BELOW; NO GOOD WAY TO D.R.Y. IT OUT
+            if (cell.CellOpExecutionEvent == null)
             {
+                CellOpExecutionEventBase cellOpExecutionEvent;
+
                 try
                 {
-                    var operationResult =
-                        this.protocolFactory.GetProtocolAndExecuteViaReflection<TValue>(cell.Operation);
+                    var operationResult = this.protocolFactory.GetProtocolAndExecuteViaReflection<TValue>(cell.Operation);
 
-                    var cellOpExecutedEvent = new CellOpExecutedEvent<TValue>(this.timestampUtc, operationResult);
-
-                    cell.RecordExecution(cellOpExecutedEvent);
+                    cellOpExecutionEvent = new SucceededInExecutingCellOpEvent<TValue>(this.timestampUtc, null, operationResult);
                 }
-                ////catch (CellValueMissingException)
-                ////{
-                ////    // Skip
-                ////}
-                ////catch (CellNotFoundException)
-                ////{
-                ////    // Skip
-                ////}
-                ////catch (OpExecutionAbortedExceptionBase(IOperation))
-                ////catch (OpExecutionAbortedException(IOperation) )
-                ////{
-                ////   IThrowOpExecutionAbortedException : IHaveDetails
-                ////   ThrowOpExecutionAbortedExceptionReturningOp{TValue} : IReturningOp{TValue}  // has to play into else statement
-                ////   ThrowOpExecutionAbortedExceptionVoidOp : IVoidOp
-                ////}
-                ////catch (OperationExecutionFailedExceptionBase)
-                ////catch (OperationExecutionFailedException)
-                ////{
-                ////    // record CellOpFailed (include the op that failed)
-                ////}
-                catch (Exception)
+                catch (CellValueMissingException ex)
                 {
-                    // record CellOpFailed
+                    cellOpExecutionEvent = new CellValueWasMissingWhenExecutingCellOpEvent(this.timestampUtc, ex.CellLocator, ex.Message);
                 }
+                catch (CellNotFoundException ex)
+                {
+                    cellOpExecutionEvent = new CellNotFoundWhenExecutingCellOpEvent(this.timestampUtc, ex.CellLocator, ex.Message);
+                }
+                catch (OpExecutionAbortedExceptionBase ex)
+                {
+                    cellOpExecutionEvent = new ExecutionOfCellOpAbortedEvent(this.timestampUtc, ex.ToString());
+                }
+                catch (OpExecutionFailedExceptionBase ex)
+                {
+                    // Redundant; this does the same thing as catching Exception below.
+                    // Just noting that the "proper" exception for a protocol to throw is an OpExecutionFailedExceptionBase.
+                    // Protocol authors might not comply.
+                    cellOpExecutionEvent = new FailedToExecuteCellOpEvent(this.timestampUtc, ex.ToString());
+                }
+                catch (Exception ex)
+                {
+                    cellOpExecutionEvent = new FailedToExecuteCellOpEvent(this.timestampUtc, ex.ToString());
+                }
+
+                cell.RecordExecution(cellOpExecutionEvent);
+            }
+            else if (cell.CellOpExecutionEvent.TimestampUtc != this.timestampUtc)
+            {
+                throw new InvalidOperationException("Something went wrong.  The operation was executed, but the recorded timestamp doesn't match this timestamp.");
             }
         }
 
         private async Task ExecuteOperationCellIfNecessaryAsync(
             IOperationOutputCell<TValue> cell)
         {
-            if ((cell.CellOpExecutedEvent == null) || (cell.CellOpExecutedEvent.TimestampUtc != this.timestampUtc))
+            // NOTE: THIS CODE IS A NEAR DUPLICATE OF THE SYNC METHOD ABOVE; NO GOOD WAY TO D.R.Y. IT OUT
+            if (cell.CellOpExecutionEvent == null)
             {
-                var operationResult = await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync<TValue>(cell.Operation);
+                CellOpExecutionEventBase cellOpExecutionEvent;
 
-                var cellOpExecutedEvent = new CellOpExecutedEvent<TValue>(this.timestampUtc, operationResult);
+                try
+                {
+                    var operationResult = await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync<TValue>(cell.Operation);
 
-                cell.RecordExecution(cellOpExecutedEvent);
+                    cellOpExecutionEvent = new SucceededInExecutingCellOpEvent<TValue>(this.timestampUtc, null, operationResult);
+                }
+                catch (CellValueMissingException ex)
+                {
+                    cellOpExecutionEvent = new CellValueWasMissingWhenExecutingCellOpEvent(this.timestampUtc, ex.CellLocator, ex.Message);
+                }
+                catch (CellNotFoundException ex)
+                {
+                    cellOpExecutionEvent = new CellNotFoundWhenExecutingCellOpEvent(this.timestampUtc, ex.CellLocator, ex.Message);
+                }
+                catch (OpExecutionAbortedExceptionBase ex)
+                {
+                    cellOpExecutionEvent = new ExecutionOfCellOpAbortedEvent(this.timestampUtc, ex.ToString());
+                }
+                catch (OpExecutionFailedExceptionBase ex)
+                {
+                    // Redundant; this does the same thing as catching Exception below.
+                    // Just noting that the "proper" exception for a protocol to throw is an OpExecutionFailedExceptionBase.
+                    // Protocol authors might not comply.
+                    cellOpExecutionEvent = new FailedToExecuteCellOpEvent(this.timestampUtc, ex.ToString());
+                }
+                catch (Exception ex)
+                {
+                    cellOpExecutionEvent = new FailedToExecuteCellOpEvent(this.timestampUtc, ex.ToString());
+                }
+
+                cell.RecordExecution(cellOpExecutionEvent);
+            }
+            else if (cell.CellOpExecutionEvent.TimestampUtc != this.timestampUtc)
+            {
+                throw new InvalidOperationException("Something went wrong.  The operation was executed, but the recorded timestamp doesn't match this timestamp.");
             }
         }
     }

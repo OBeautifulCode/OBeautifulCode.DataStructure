@@ -20,45 +20,21 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Initializes a new instance of the <see cref="GetCellValueOp{TValue}"/> class.
         /// </summary>
-        /// <param name="sectionId">The id of the section that contains the cell.</param>
-        /// <param name="cellId">The id of the cell.</param>
-        /// <param name="slotId">OPTIONAL id of the slot to use -OR- null if not addressing an <see cref="ISlottedCell"/>.  DEFAULT is to address an <see cref="INotSlottedCell"/>.</param>
-        /// <param name="slotSelectionStrategy">OPTIONAL strategy to use to select a slot if addressing an <see cref="ISlottedCell"/>.  DEFAULT is to throw if addressing an <see cref="ISlottedCell"/> -AND- <paramref name="slotId"/> is not specified.</param>
+        /// <param name="cellLocator">A cell locator.</param>
         public GetCellValueOp(
-            string sectionId,
-            string cellId,
-            string slotId = null,
-            SlotSelectionStrategy slotSelectionStrategy = SlotSelectionStrategy.ThrowIfSlotIdNotSpecified)
+            CellLocator cellLocator)
         {
-            if (slotSelectionStrategy == SlotSelectionStrategy.Unknown)
+            if (cellLocator == null)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentNullException(nameof(cellLocator));
             }
 
-            this.CellId = cellId;
-            this.SlotId = slotId;
-            this.SectionId = sectionId;
-            this.SlotSelectionStrategy = slotSelectionStrategy;
+            this.CellLocator = cellLocator;
         }
 
         /// <summary>
-        /// Gets the id of the section that contains the cell.
+        /// Gets the cell locator.
         /// </summary>
-        public string SectionId { get; private set; }
-
-        /// <summary>
-        /// Gets the id of the cell.
-        /// </summary>
-        public string CellId { get; private set; }
-
-        /// <summary>
-        /// Gets the id of the slot to use -OR- null if not addressing an <see cref="ISlottedCell"/>.
-        /// </summary>
-        public string SlotId { get; private set; }
-
-        /// <summary>
-        /// Gets the strategy to use to select a slot if addressing an <see cref="ISlottedCell"/>.
-        /// </summary>
-        public SlotSelectionStrategy SlotSelectionStrategy { get; private set; }
+        public CellLocator CellLocator { get; private set; }
     }
 }

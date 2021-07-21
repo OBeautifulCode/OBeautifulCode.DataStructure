@@ -46,7 +46,7 @@ namespace OBeautifulCode.DataStructure
 
             if (!treeTable.GetCellIdToCellMap().TryGetValue(cellId, out var cell))
             {
-                throw new ArgumentException(Invariant($"There is no cell with id '{cellId}'."));
+                throw new InvalidOperationException(Invariant($"There is no cell with id '{cellId}'."));
             }
 
             ICell result;
@@ -65,12 +65,12 @@ namespace OBeautifulCode.DataStructure
                     }
                     else
                     {
-                        throw new ArgumentException(Invariant($"Slot id '{slotId}' was specified, but the addressed cell ('{cellId}') does not contain a slot having that id."));
+                        throw new InvalidOperationException(Invariant($"Slot id '{slotId}' was specified, but the addressed cell ('{cellId}') does not contain a slot having that id."));
                     }
                 }
                 else
                 {
-                    throw new ArgumentException(Invariant($"Slot id '{slotId}' was specified, but the addressed cell ('{cellId}') is not a slotted cell"));
+                    throw new InvalidOperationException(Invariant($"Slot id '{slotId}' was specified, but the addressed cell ('{cellId}') is not a slotted cell"));
                 }
             }
 

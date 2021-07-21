@@ -72,8 +72,8 @@
     <Reference Include="OBeautifulCode.Serialization.PropertyBag, Version=1.0.109.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\OBeautifulCode.Serialization.PropertyBag.1.0.109\lib\net462\OBeautifulCode.Serialization.PropertyBag.dll</HintPath>
     </Reference>
-    <Reference Include="OBeautifulCode.Type, Version=1.0.92.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OBeautifulCode.Type.1.0.92\lib\net462\OBeautifulCode.Type.dll</HintPath>
+    <Reference Include="OBeautifulCode.Type, Version=1.0.97.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Type.1.0.97\lib\net462\OBeautifulCode.Type.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
@@ -194,7 +194,6 @@
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
     <Compile Include="Expressions\ExpressionTest.cs" />
     <Compile Include="Expressions\Protocols.cs" />
-    <Compile Include="Expressions\Operations.cs" />
     <Compile Include="DataStructureDummyFactoryTest.designer.cs">
       <DependentUpon>DataStructureDummyFactoryTest.cs</DependentUpon>
     </Compile>

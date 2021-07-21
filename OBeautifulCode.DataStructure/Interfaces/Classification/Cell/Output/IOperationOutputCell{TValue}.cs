@@ -22,12 +22,12 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Gets the result of executing the operation.
         /// </summary>
-        CellOpExecutedEvent<TValue> CellOpExecutedEvent { get; }
+        CellOpExecutionEventBase CellOpExecutionEvent { get; }
 
         /// <summary>
         /// Records the execution of the <see cref="Operation"/>.
         /// </summary>
-        /// <param name="cellOpExecutedEvent">The result of executing the operation.</param>
-        void RecordExecution(CellOpExecutedEvent<TValue> cellOpExecutedEvent);
+        /// <param name="cellOpExecutionEvent">The result of executing the operation.</param>
+        void RecordExecution(CellOpExecutionEventBase cellOpExecutionEvent);
     }
 }

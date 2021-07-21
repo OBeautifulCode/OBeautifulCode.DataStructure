@@ -41,7 +41,9 @@ namespace OBeautifulCode.DataStructure
                     string slotId = null,
                     SlotSelectionStrategy slotSelectionStrategy = SlotSelectionStrategy.ThrowIfSlotIdNotSpecified)
                 {
-                    var result = new GetCellValueOp<NamedDecimalSet>(sectionId, cellId, slotId, slotSelectionStrategy);
+                    var cellLocator = new CellLocator(sectionId, cellId, slotId, slotSelectionStrategy);
+
+                    var result = new GetCellValueOp<NamedDecimalSet>(cellLocator);
 
                     return result;
                 }
@@ -62,7 +64,9 @@ namespace OBeautifulCode.DataStructure
                     string slotId = null,
                     SlotSelectionStrategy slotSelectionStrategy = SlotSelectionStrategy.ThrowIfSlotIdNotSpecified)
                 {
-                    var result = new GetCellValueOp<int>(sectionId, cellId, slotId, slotSelectionStrategy);
+                    var cellLocator = new CellLocator(sectionId, cellId, slotId, slotSelectionStrategy);
+
+                    var result = new GetCellValueOp<int>(cellLocator);
 
                     return result;
                 }
@@ -83,7 +87,9 @@ namespace OBeautifulCode.DataStructure
                     string slotId = null,
                     SlotSelectionStrategy slotSelectionStrategy = SlotSelectionStrategy.ThrowIfSlotIdNotSpecified)
                 {
-                    var result = new GetCellValueOp<decimal>(sectionId, cellId, slotId, slotSelectionStrategy);
+                    var cellLocator = new CellLocator(sectionId, cellId, slotId, slotSelectionStrategy);
+
+                    var result = new GetCellValueOp<decimal>(cellLocator);
 
                     return result;
                 }
@@ -104,7 +110,9 @@ namespace OBeautifulCode.DataStructure
                     string slotId = null,
                     SlotSelectionStrategy slotSelectionStrategy = SlotSelectionStrategy.ThrowIfSlotIdNotSpecified)
                 {
-                    var result = new GetCellValueOp<bool>(sectionId, cellId, slotId, slotSelectionStrategy);
+                    var cellLocator = new CellLocator(sectionId, cellId, slotId, slotSelectionStrategy);
+
+                    var result = new GetCellValueOp<bool>(cellLocator);
 
                     return result;
                 }
@@ -125,7 +133,7 @@ namespace OBeautifulCode.DataStructure
                 /// Builds an <see cref="IOperationOutputCell{TValue}"/> for a decimal named vector.
                 /// </summary>
                 /// <param name="operation">The operation.</param>
-                /// <param name="cellOpExecutedEvent">OPTIONAL result of executing the operation.  DEFAULT is a cell who's operation has not yet been executed.</param>
+                /// <param name="cellOpExecutionEvent">OPTIONAL result of executing the operation.  DEFAULT is a cell who's operation has not yet been executed.</param>
                 /// <param name="id">OPTIONAL unique identifier of the cell.  DEFAULT is a cell with no unique identifier.</param>
                 /// <param name="columnsSpanned">OPTIONAL number of columns spanned or null if none (cell occupies a single column).  DEFAULT is none.</param>
                 /// <param name="format">OPTIONAL format to apply to the cell.  DEFAULT is to leave the format unchanged.</param>
@@ -136,14 +144,14 @@ namespace OBeautifulCode.DataStructure
                 /// </returns>
                 public static OperationCell<NamedDecimalSet> NamedDecimalSet(
                     IReturningOperation<NamedDecimalSet> operation,
-                    CellOpExecutedEvent<NamedDecimalSet> cellOpExecutedEvent = null,
+                    CellOpExecutionEventBase cellOpExecutionEvent = null,
                     string id = null,
                     int? columnsSpanned = null,
                     CellFormat format = null,
                     IHoverOver hoverOver = null,
                     ILink link = null)
                 {
-                    var result = new OperationCell<NamedDecimalSet>(operation, cellOpExecutedEvent, id, columnsSpanned, format, hoverOver, link);
+                    var result = new OperationCell<NamedDecimalSet>(operation, cellOpExecutionEvent, id, columnsSpanned, format, hoverOver, link);
 
                     return result;
                 }
@@ -152,7 +160,7 @@ namespace OBeautifulCode.DataStructure
                 /// Builds an <see cref="IOperationOutputCell{TValue}"/> for an integer.
                 /// </summary>
                 /// <param name="operation">The operation.</param>
-                /// <param name="cellOpExecutedEvent">OPTIONAL result of executing the operation.  DEFAULT is a cell who's operation has not yet been executed.</param>
+                /// <param name="cellOpExecutionEvent">OPTIONAL result of executing the operation.  DEFAULT is a cell who's operation has not yet been executed.</param>
                 /// <param name="id">OPTIONAL unique identifier of the cell.  DEFAULT is a cell with no unique identifier.</param>
                 /// <param name="columnsSpanned">OPTIONAL number of columns spanned or null if none (cell occupies a single column).  DEFAULT is none.</param>
                 /// <param name="format">OPTIONAL format to apply to the cell.  DEFAULT is to leave the format unchanged.</param>
@@ -163,14 +171,14 @@ namespace OBeautifulCode.DataStructure
                 /// </returns>
                 public static OperationCell<int> Int(
                     IReturningOperation<int> operation,
-                    CellOpExecutedEvent<int> cellOpExecutedEvent = null,
+                    CellOpExecutionEventBase cellOpExecutionEvent = null,
                     string id = null,
                     int? columnsSpanned = null,
                     CellFormat format = null,
                     IHoverOver hoverOver = null,
                     ILink link = null)
                 {
-                    var result = new OperationCell<int>(operation, cellOpExecutedEvent, id, columnsSpanned, format, hoverOver, link);
+                    var result = new OperationCell<int>(operation, cellOpExecutionEvent, id, columnsSpanned, format, hoverOver, link);
 
                     return result;
                 }
@@ -179,7 +187,7 @@ namespace OBeautifulCode.DataStructure
                 /// Builds an <see cref="IOperationOutputCell{TValue}"/> for a decimal.
                 /// </summary>
                 /// <param name="operation">The operation.</param>
-                /// <param name="cellOpExecutedEvent">OPTIONAL result of executing the operation.  DEFAULT is a cell who's operation has not yet been executed.</param>
+                /// <param name="cellOpExecutionEvent">OPTIONAL result of executing the operation.  DEFAULT is a cell who's operation has not yet been executed.</param>
                 /// <param name="id">OPTIONAL unique identifier of the cell.  DEFAULT is a cell with no unique identifier.</param>
                 /// <param name="columnsSpanned">OPTIONAL number of columns spanned or null if none (cell occupies a single column).  DEFAULT is none.</param>
                 /// <param name="format">OPTIONAL format to apply to the cell.  DEFAULT is to leave the format unchanged.</param>
@@ -190,14 +198,14 @@ namespace OBeautifulCode.DataStructure
                 /// </returns>
                 public static OperationCell<decimal> Decimal(
                     IReturningOperation<decimal> operation,
-                    CellOpExecutedEvent<decimal> cellOpExecutedEvent = null,
+                    CellOpExecutionEventBase cellOpExecutionEvent = null,
                     string id = null,
                     int? columnsSpanned = null,
                     CellFormat format = null,
                     IHoverOver hoverOver = null,
                     ILink link = null)
                 {
-                    var result = new OperationCell<decimal>(operation, cellOpExecutedEvent, id, columnsSpanned, format, hoverOver, link);
+                    var result = new OperationCell<decimal>(operation, cellOpExecutionEvent, id, columnsSpanned, format, hoverOver, link);
 
                     return result;
                 }
@@ -206,7 +214,7 @@ namespace OBeautifulCode.DataStructure
                 /// Builds an <see cref="IOperationOutputCell{TValue}"/> for a boolean.
                 /// </summary>
                 /// <param name="operation">The operation.</param>
-                /// <param name="cellOpExecutedEvent">OPTIONAL result of executing the operation.  DEFAULT is a cell who's operation has not yet been executed.</param>
+                /// <param name="cellOpExecutionEvent">OPTIONAL result of executing the operation.  DEFAULT is a cell who's operation has not yet been executed.</param>
                 /// <param name="id">OPTIONAL unique identifier of the cell.  DEFAULT is a cell with no unique identifier.</param>
                 /// <param name="columnsSpanned">OPTIONAL number of columns spanned or null if none (cell occupies a single column).  DEFAULT is none.</param>
                 /// <param name="format">OPTIONAL format to apply to the cell.  DEFAULT is to leave the format unchanged.</param>
@@ -217,14 +225,14 @@ namespace OBeautifulCode.DataStructure
                 /// </returns>
                 public static OperationCell<bool> Bool(
                     IReturningOperation<bool> operation,
-                    CellOpExecutedEvent<bool> cellOpExecutedEvent = null,
+                    CellOpExecutionEventBase cellOpExecutionEvent = null,
                     string id = null,
                     int? columnsSpanned = null,
                     CellFormat format = null,
                     IHoverOver hoverOver = null,
                     ILink link = null)
                 {
-                    var result = new OperationCell<bool>(operation, cellOpExecutedEvent, id, columnsSpanned, format, hoverOver, link);
+                    var result = new OperationCell<bool>(operation, cellOpExecutionEvent, id, columnsSpanned, format, hoverOver, link);
 
                     return result;
                 }

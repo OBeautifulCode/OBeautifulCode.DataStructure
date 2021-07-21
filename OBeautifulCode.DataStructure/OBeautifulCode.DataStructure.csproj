@@ -37,8 +37,8 @@
     <DocumentationFile>bin\Release\OBeautifulCode.DataStructure.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="OBeautifulCode.Type, Version=1.0.92.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OBeautifulCode.Type.1.0.92\lib\net462\OBeautifulCode.Type.dll</HintPath>
+    <Reference Include="OBeautifulCode.Type, Version=1.0.97.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Type.1.0.97\lib\net462\OBeautifulCode.Type.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
@@ -64,8 +64,15 @@
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringReadableOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringXmlDocOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
+    <Compile Include="Events\CellOpExecutionEventBase.cs" />
+    <Compile Include="Events\CellOpExecution\CellNotFoundWhenExecutingCellOpEvent.cs" />
+    <Compile Include="Events\CellOpExecution\CellValueWasMissingWhenExecutingCellOpEvent.cs" />
+    <Compile Include="Events\CellOpExecution\ExecutionOfCellOpAbortedEvent.cs" />
     <Compile Include="Events\InputAppliedToCellEvent{TValue}.cs" />
-    <Compile Include="Events\CellOpExecutedEvent{TResult}.cs" />
+    <Compile Include="Events\CellOpExecution\FailedToExecuteCellOpEvent.cs" />
+    <Compile Include="Events\CellOpExecution\SucceededInExecutingCellOpEvent{TResult}.cs" />
+    <Compile Include="Exception\CellValueMissingException.cs" />
+    <Compile Include="Exception\CellNotFoundException.cs" />
     <Compile Include="Interfaces\Behavior\IClearCellValue.cs" />
     <Compile Include="Interfaces\Behavior\IGetCellValue.cs" />
     <Compile Include="Interfaces\Behavior\IGetCellValue{TValue}.cs" />
@@ -200,6 +207,7 @@
     <Compile Include="Models\Classes\Link\SimpleLink.designer.cs">
       <DependentUpon>SimpleLink.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\Classes\Report\CellLocator.cs" />
     <Compile Include="Models\Classes\Report\Report.designer.cs">
       <DependentUpon>Report.cs</DependentUpon>
     </Compile>
@@ -255,7 +263,6 @@
     <Compile Include="Models\Classes\HoverOver\StringHoverOver.cs" />
     <Compile Include="Models\Enums\Operations\SlotSelectionStrategy.cs" />
     <Compile Include="Operations\ExecuteOperationCellIfNecessaryOp{TValue}.cs" />
-    <Compile Include="Operations\GetCellValueByCellReferenceOp{TValue}.cs" />
     <Compile Include="Operations\HasCellValueOp.cs" />
     <Compile Include="Operations\GetConstValueOp{TValue}.cs" />
     <Compile Include="Operations\GetCellValueOp{TValue}.cs" />

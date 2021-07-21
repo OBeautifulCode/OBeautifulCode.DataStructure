@@ -21,12 +21,12 @@ namespace OBeautifulCode.DataStructure
         /// Initializes a new instance of the <see cref="OperationOutputCellBase{TValue}"/> class.
         /// </summary>
         /// <param name="operation">The operation.</param>
-        /// <param name="cellOpExecutedEvent">The result of executing the operation.</param>
+        /// <param name="cellOpExecutionEvent">The result of executing the operation.</param>
         /// <param name="id">The cell's unique identifier.</param>
         /// <param name="columnsSpanned">The number of columns spanned or null if none (cell occupies a single column).</param>
         protected OperationOutputCellBase(
             IReturningOperation<TValue> operation,
-            CellOpExecutedEvent<TValue> cellOpExecutedEvent,
+            CellOpExecutionEventBase cellOpExecutionEvent,
             string id,
             int? columnsSpanned)
             : base(id, columnsSpanned)
@@ -37,42 +37,47 @@ namespace OBeautifulCode.DataStructure
             }
 
             this.Operation = operation;
-            this.CellOpExecutedEvent = cellOpExecutedEvent;
+            this.CellOpExecutionEvent = cellOpExecutionEvent;
         }
 
         /// <inheritdoc />
         public IReturningOperation<TValue> Operation { get; private set; }
 
         /// <inheritdoc />
-        public CellOpExecutedEvent<TValue> CellOpExecutedEvent { get; private set; }
+        public CellOpExecutionEventBase CellOpExecutionEvent { get; private set; }
 
         /// <inheritdoc />
         public void RecordExecution(
-            CellOpExecutedEvent<TValue> cellOpExecutedEvent)
+            CellOpExecutionEventBase cellOpExecutionEvent)
         {
-            if (cellOpExecutedEvent == null)
+            if (cellOpExecutionEvent == null)
             {
-                throw new ArgumentNullException(nameof(cellOpExecutedEvent));
+                throw new ArgumentNullException(nameof(cellOpExecutionEvent));
             }
 
-            this.CellOpExecutedEvent = cellOpExecutedEvent;
+            this.CellOpExecutionEvent = cellOpExecutionEvent;
         }
 
         /// <inheritdoc />
         public void ClearCellValue()
         {
-            this.CellOpExecutedEvent = null;
+            this.CellOpExecutionEvent = null;
         }
 
         /// <inheritdoc />
         public override TValue GetCellValue()
         {
-            if (this.CellOpExecutedEvent == null)
+            if (!this.HasCellValue())
             {
                 throw new InvalidOperationException("The operation hasn't been executed.");
             }
 
-            var result = this.CellOpExecutedEvent.Result;
+            if (!(this.CellOpExecutionEvent is SucceededInExecutingCellOpEvent<TValue> succeededInExecutingCellOpEvent))
+            {
+                throw new InvalidOperationException("The operation failed or was aborted while executing.");
+            }
+
+            var result = succeededInExecutingCellOpEvent.Result;
 
             return result;
         }
@@ -88,5 +93,8 @@ namespace OBeautifulCode.DataStructure
 
         /// <inheritdoc />
         public override Type GetValueTypeOrNull() => typeof(TValue);
+
+        /// <inheritdoc />
+        public override bool HasCellValue() => (this.CellOpExecutionEvent != null) && (this.CellOpExecutionEvent is SucceededInExecutingCellOpEvent<TValue>);
     }
 }
