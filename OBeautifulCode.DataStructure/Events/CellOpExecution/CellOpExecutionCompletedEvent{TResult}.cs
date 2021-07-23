@@ -15,26 +15,26 @@ namespace OBeautifulCode.DataStructure
     /// </summary>
     /// <typeparam name="TResult">The type returned when the operation was executed.</typeparam>
     // ReSharper disable once RedundantExtendsListEntry
-    public class CellOpExecutionCompletedEvent<TResult> : CellOpExecutionEventBase, IModelViaCodeGen
+    public partial class CellOpExecutionCompletedEvent<TResult> : CellOpExecutionEventBase, IModelViaCodeGen
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CellOpExecutionCompletedEvent{TResult}"/> class.
         /// </summary>
         /// <param name="timestampUtc">The timestamp.</param>
         /// <param name="details">Details about the completed execution.</param>
-        /// <param name="result">The result of executing the operation.</param>
+        /// <param name="executionResult">The result of executing the operation.</param>
         public CellOpExecutionCompletedEvent(
             DateTime timestampUtc,
             string details,
-            TResult result)
+            TResult executionResult)
             : base(timestampUtc, details)
         {
-            this.Result = result;
+            this.ExecutionResult = executionResult;
         }
 
         /// <summary>
         /// Gets the result of executing the operation.
         /// </summary>
-        public TResult Result { get; private set; }
+        public TResult ExecutionResult { get; private set; }
     }
 }

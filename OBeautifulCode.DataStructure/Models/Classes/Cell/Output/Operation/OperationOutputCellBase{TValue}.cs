@@ -77,7 +77,7 @@ namespace OBeautifulCode.DataStructure
                 throw new InvalidOperationException("The operation failed or was aborted while executing.");
             }
 
-            var result = succeededInExecutingCellOpEvent.Result;
+            var result = succeededInExecutingCellOpEvent.ExecutionResult;
 
             return result;
         }

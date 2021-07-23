@@ -14,7 +14,7 @@ namespace OBeautifulCode.DataStructure
     /// Executing an <see cref="IOperationOutputCell{TResult}"/>'s <see cref="IOperationOutputCell{TResult}.Operation"/> failed.
     /// </summary>
     // ReSharper disable once RedundantExtendsListEntry
-    public class CellOpExecutionFailedWithCellNotFoundEvent : CellOpExecutionEventBase, IModelViaCodeGen
+    public partial class CellOpExecutionFailedWithCellNotFoundEvent : CellOpExecutionEventBase, IModelViaCodeGen
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CellOpExecutionFailedWithCellNotFoundEvent"/> class.

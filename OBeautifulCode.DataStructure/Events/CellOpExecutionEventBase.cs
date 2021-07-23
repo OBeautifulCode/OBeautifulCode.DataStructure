@@ -14,7 +14,7 @@ namespace OBeautifulCode.DataStructure
     /// Base class for events that record the execution of an <see cref="IOperationOutputCell{TResult}"/>'s <see cref="IOperationOutputCell{TResult}.Operation"/>.
     /// </summary>
     // ReSharper disable once RedundantExtendsListEntry
-    public abstract class CellOpExecutionEventBase : EventBase, IHaveDetails, IModelViaCodeGen
+    public abstract partial class CellOpExecutionEventBase : EventBase, IHaveDetails, IModelViaCodeGen
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CellOpExecutionEventBase"/> class.
