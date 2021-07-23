@@ -193,6 +193,10 @@
       <DependentUpon>MultiCellRegionFormatBase.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Classes\Format\Region\RegionFormatBase.cs" />
+    <Compile Include="Models\Classes\Format\FontFormat.cs" />
+    <Compile Include="Models\Classes\Format\Region\RegionFormatBase.designer.cs">
+      <DependentUpon>RegionFormatBase.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Classes\Format\Region\Regions\CellFormat.designer.cs">
       <DependentUpon>CellFormat.cs</DependentUpon>
     </Compile>
@@ -202,11 +206,7 @@
     <Compile Include="Models\Classes\Format\Region\Regions\DataRowsFormat.designer.cs">
       <DependentUpon>DataRowsFormat.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Classes\Format\FontFormat.cs" />
     <Compile Include="Models\Classes\Format\Region\Regions\HeaderRowsFormat.cs" />
-    <Compile Include="Models\Classes\Format\Region\RegionFormatBase.designer.cs">
-      <DependentUpon>RegionFormatBase.cs</DependentUpon>
-    </Compile>
     <Compile Include="Models\Classes\Format\Region\Regions\HeaderRowsFormat.designer.cs">
       <DependentUpon>HeaderRowsFormat.cs</DependentUpon>
     </Compile>
@@ -291,10 +291,10 @@
     </Compile>
     <Compile Include="Models\Classes\Row\TableRows.cs" />
     <Compile Include="Models\Classes\Row\HeaderRows.cs" />
+    <Compile Include="Models\Classes\Report\Report.cs" />
     <Compile Include="Models\Classes\Row\TableRows.designer.cs">
       <DependentUpon>TableRows.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Classes\Report\Report.cs" />
     <Compile Include="Models\Classes\TreeTable.designer.cs">
       <DependentUpon>TreeTable.cs</DependentUpon>
     </Compile>
