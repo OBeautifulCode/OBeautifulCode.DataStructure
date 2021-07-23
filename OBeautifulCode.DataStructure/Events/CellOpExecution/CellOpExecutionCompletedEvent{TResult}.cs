@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SucceededInExecutingCellOpEvent{TResult}.cs" company="OBeautifulCode">
+// <copyright file="CellOpExecutionCompletedEvent{TResult}.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -15,15 +15,15 @@ namespace OBeautifulCode.DataStructure
     /// </summary>
     /// <typeparam name="TResult">The type returned when the operation was executed.</typeparam>
     // ReSharper disable once RedundantExtendsListEntry
-    public class SucceededInExecutingCellOpEvent<TResult> : CellOpExecutionEventBase, IModelViaCodeGen
+    public class CellOpExecutionCompletedEvent<TResult> : CellOpExecutionEventBase, IModelViaCodeGen
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="SucceededInExecutingCellOpEvent{TResult}"/> class.
+        /// Initializes a new instance of the <see cref="CellOpExecutionCompletedEvent{TResult}"/> class.
         /// </summary>
         /// <param name="timestampUtc">The timestamp.</param>
         /// <param name="details">Details about the completed execution.</param>
         /// <param name="result">The result of executing the operation.</param>
-        public SucceededInExecutingCellOpEvent(
+        public CellOpExecutionCompletedEvent(
             DateTime timestampUtc,
             string details,
             TResult result)

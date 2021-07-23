@@ -93,7 +93,10 @@ namespace OBeautifulCode.DataStructure
         private static readonly ConcurrentDictionary<Type, ConstructorInfo> CachedTypeToExecuteOperationCellIfNecessaryOpConstructorInfoMap =
             new ConcurrentDictionary<Type, ConstructorInfo>();
 
-        private static readonly ConcurrentDictionary<Type, ConstructorInfo> CachedTypeToDataStructureCellProtocolsConstructorInfoMap =
+        private static readonly ConcurrentDictionary<Type, ConstructorInfo> CachedTypeToCellProtocolsConstructorInfoMap =
+            new ConcurrentDictionary<Type, ConstructorInfo>();
+
+        private static readonly ConcurrentDictionary<Type, ConstructorInfo> CachedTypeToConvenienceProtocolsConstructorInfoMap =
             new ConcurrentDictionary<Type, ConstructorInfo>();
 
         /// <summary>
@@ -278,28 +281,27 @@ namespace OBeautifulCode.DataStructure
                 result.AddToEndOfChain(protocolFactoryFunc(result));
             }
 
-            // Add DataStructureCellProtocols{TValue} to chain of responsibility.
+            // Add DataStructureCellProtocols{TValue} and DataStructureConvenienceProtocols{TResult} to chain of responsibility.
             var typesForCoreCellOps = DefaultTypesSupportedForCoreCellOps
                 .Concat(additionalTypesForCoreCellOps)
                 .ToList();
 
-            var dataStructureCellProtocolsFactory = new ProtocolFactory();
+            var coreProtocolsFactory = new ProtocolFactory();
+
+            ConstructorInfo GetCellProtocolsFunc(Type type) => typeof(DataStructureCellProtocols<>).MakeGenericType(type).GetConstructors().Single();
+            ConstructorInfo GetConvenienceProtocolsFunc(Type type) => typeof(DataStructureConvenienceProtocols<>).MakeGenericType(type).GetConstructors().Single();
+
+            var cellProtocolsConstructorInfoParams = new object[] { report, result, timestampUtc };
+            var convenienceProtocolsConstructorInfoParams = new object[] { result };
 
             foreach (var typeForCoreCellOps in typesForCoreCellOps)
             {
-                if (!CachedTypeToDataStructureCellProtocolsConstructorInfoMap.TryGetValue(typeForCoreCellOps, out var dataStructureCellProtocolsConstructorInfo))
-                {
-                    dataStructureCellProtocolsConstructorInfo = typeof(DataStructureCellProtocols<>).MakeGenericType(typeForCoreCellOps).GetConstructors().Single();
+                RegisterProtocols(typeForCoreCellOps, CachedTypeToCellProtocolsConstructorInfoMap, coreProtocolsFactory, GetCellProtocolsFunc, cellProtocolsConstructorInfoParams);
 
-                    CachedTypeToDataStructureCellProtocolsConstructorInfoMap.TryAdd(typeForCoreCellOps, dataStructureCellProtocolsConstructorInfo);
-                }
-
-                var protocol = (IProtocol)dataStructureCellProtocolsConstructorInfo.Invoke(new object[] { report, result, timestampUtc });
-
-                dataStructureCellProtocolsFactory.RegisterProtocolForSupportedOperations(protocol.GetType(), () => protocol, ProtocolAlreadyRegisteredForOperationStrategy.Skip);
+                RegisterProtocols(typeForCoreCellOps, CachedTypeToConvenienceProtocolsConstructorInfoMap, coreProtocolsFactory, GetConvenienceProtocolsFunc, convenienceProtocolsConstructorInfoParams);
             }
 
-            result.AddToEndOfChain(dataStructureCellProtocolsFactory);
+            result.AddToEndOfChain(coreProtocolsFactory);
 
             return result;
         }
@@ -337,6 +339,25 @@ namespace OBeautifulCode.DataStructure
             var result = (IOperation)executeOperationCellIfNecessaryOpConstructorInfo.Invoke(new[] { operationCell });
 
             return result;
+        }
+
+        private static void RegisterProtocols(
+            Type typeForCoreCellOps,
+            ConcurrentDictionary<Type, ConstructorInfo> typeToConstructorInfoCache,
+            ProtocolFactory protocolFactory,
+            Func<Type, ConstructorInfo> getConstructorInfoFunc,
+            object[] constructorInfoParamsToInvoke)
+        {
+            if (!typeToConstructorInfoCache.TryGetValue(typeForCoreCellOps, out var constructorInfo))
+            {
+                constructorInfo = getConstructorInfoFunc(typeForCoreCellOps);
+
+                typeToConstructorInfoCache.TryAdd(typeForCoreCellOps, constructorInfo);
+            }
+
+            var protocol = (IProtocol)constructorInfo.Invoke(constructorInfoParamsToInvoke);
+
+            protocolFactory.RegisterProtocolForSupportedOperations(protocol.GetType(), () => protocol, ProtocolAlreadyRegisteredForOperationStrategy.Skip);
         }
     }
 }

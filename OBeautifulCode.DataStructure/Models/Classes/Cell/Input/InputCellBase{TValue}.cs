@@ -77,6 +77,10 @@ namespace OBeautifulCode.DataStructure
 
         /// <inheritdoc />
         public override Type GetValueTypeOrNull() => typeof(TValue);
+
+        /// <inheritdoc />
+        public bool HasCellValue() => this.InputAppliedToCellEvent != null;
+
         /// <inheritdoc />
         public object GetCellObjectValue() => this.GetCellValue();
     }

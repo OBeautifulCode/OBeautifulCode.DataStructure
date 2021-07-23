@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="CellNotFoundWhenExecutingCellOpEvent.cs" company="OBeautifulCode">
+// <copyright file="HasCellValueOp.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -11,22 +11,16 @@ namespace OBeautifulCode.DataStructure
     using OBeautifulCode.Type;
 
     /// <summary>
-    /// Executing an <see cref="IOperationOutputCell{TResult}"/>'s <see cref="IOperationOutputCell{TResult}.Operation"/> failed.
+    /// Determines if a cell has a value.
     /// </summary>
-    // ReSharper disable once RedundantExtendsListEntry
-    public class CellNotFoundWhenExecutingCellOpEvent : CellOpExecutionEventBase, IModelViaCodeGen
+    public partial class HasCellValueOp : ReturningOperationBase<bool>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="CellNotFoundWhenExecutingCellOpEvent"/> class.
+        /// Initializes a new instance of the <see cref="HasCellValueOp"/> class.
         /// </summary>
-        /// <param name="timestampUtc">The timestamp.</param>
         /// <param name="cellLocator">The cell locator.</param>
-        /// <param name="details">Details about the attempt to find the cell.</param>
-        public CellNotFoundWhenExecutingCellOpEvent(
-            DateTime timestampUtc,
-            CellLocator cellLocator,
-            string details)
-            : base(timestampUtc, details)
+        public HasCellValueOp(
+            CellLocator cellLocator)
         {
             if (cellLocator == null)
             {

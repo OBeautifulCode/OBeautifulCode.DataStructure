@@ -8,235 +8,136 @@ namespace OBeautifulCode.DataStructure
 {
     using OBeautifulCode.Type;
 
-    using NamedDecimalSet = System.Collections.Generic.IReadOnlyList<OBeautifulCode.Type.NamedValue<decimal>>;
-
     /// <summary>
     /// Builder methods related to cells.
     /// </summary>
     public static class Cell
     {
         /// <summary>
-        /// Builder methods to get cell properties.
+        /// Builds an operation that determines whether a cell has a value.
         /// </summary>
-        public static class Get
+        /// <param name="sectionId">The id of the section that contains the cell.</param>
+        /// <param name="cellId">The id of the cell.</param>
+        /// <param name="slotId">OPTIONAL id of the slot to use -OR- null if not addressing an <see cref="ISlottedCell"/>.  DEFAULT is to address an <see cref="INotSlottedCell"/>.</param>
+        /// <param name="slotSelectionStrategy">OPTIONAL strategy to use to select a slot if addressing an <see cref="ISlottedCell"/>.  DEFAULT is to throw if addressing an <see cref="ISlottedCell"/> -AND- <paramref name="slotId"/> is not specified.</param>
+        /// <returns>
+        /// The operation.
+        /// </returns>
+        public static HasCellValueOp HasValue(
+            string sectionId,
+            string cellId,
+            string slotId = null,
+            SlotSelectionStrategy slotSelectionStrategy = SlotSelectionStrategy.ThrowIfSlotIdNotSpecified)
         {
-            /// <summary>
-            /// Builder methods to get the value of a cell.
-            /// </summary>
-            public static class ValueOf
-            {
-                /// <summary>
-                /// Builds an operation that gets the value of a cell that contains a decimal named vector.
-                /// </summary>
-                /// <param name="sectionId">The id of the section that contains the cell.</param>
-                /// <param name="cellId">The id of the cell.</param>
-                /// <param name="slotId">OPTIONAL id of the slot to use -OR- null if not addressing an <see cref="ISlottedCell"/>.  DEFAULT is to address an <see cref="INotSlottedCell"/>.</param>
-                /// <param name="slotSelectionStrategy">OPTIONAL strategy to use to select a slot if addressing an <see cref="ISlottedCell"/>.  DEFAULT is to throw if addressing an <see cref="ISlottedCell"/> -AND- <paramref name="slotId"/> is not specified.</param>
-                /// <returns>
-                /// The operation.
-                /// </returns>
-                public static GetCellValueOp<NamedDecimalSet> NamedDecimalSet(
-                    string sectionId,
-                    string cellId,
-                    string slotId = null,
-                    SlotSelectionStrategy slotSelectionStrategy = SlotSelectionStrategy.ThrowIfSlotIdNotSpecified)
-                {
-                    var cellLocator = new CellLocator(sectionId, cellId, slotId, slotSelectionStrategy);
+            var cellLocator = new CellLocator(sectionId, cellId, slotId, slotSelectionStrategy);
 
-                    var result = new GetCellValueOp<NamedDecimalSet>(cellLocator);
+            var result = new HasCellValueOp(cellLocator);
 
-                    return result;
-                }
-
-                /// <summary>
-                /// Builds an operation that gets the value of a cell that contains an integer.
-                /// </summary>
-                /// <param name="sectionId">The id of the section that contains the cell.</param>
-                /// <param name="cellId">The id of the cell.</param>
-                /// <param name="slotId">OPTIONAL id of the slot to use -OR- null if not addressing an <see cref="ISlottedCell"/>.  DEFAULT is to address an <see cref="INotSlottedCell"/>.</param>
-                /// <param name="slotSelectionStrategy">OPTIONAL strategy to use to select a slot if addressing an <see cref="ISlottedCell"/>.  DEFAULT is to throw if addressing an <see cref="ISlottedCell"/> -AND- <paramref name="slotId"/> is not specified.</param>
-                /// <returns>
-                /// The operation.
-                /// </returns>
-                public static GetCellValueOp<int> Int(
-                    string sectionId,
-                    string cellId,
-                    string slotId = null,
-                    SlotSelectionStrategy slotSelectionStrategy = SlotSelectionStrategy.ThrowIfSlotIdNotSpecified)
-                {
-                    var cellLocator = new CellLocator(sectionId, cellId, slotId, slotSelectionStrategy);
-
-                    var result = new GetCellValueOp<int>(cellLocator);
-
-                    return result;
-                }
-
-                /// <summary>
-                /// Builds an operation that gets the value of a cell that contains a decimal.
-                /// </summary>
-                /// <param name="sectionId">The id of the section that contains the cell.</param>
-                /// <param name="cellId">The id of the cell.</param>
-                /// <param name="slotId">OPTIONAL id of the slot to use -OR- null if not addressing an <see cref="ISlottedCell"/>.  DEFAULT is to address an <see cref="INotSlottedCell"/>.</param>
-                /// <param name="slotSelectionStrategy">OPTIONAL strategy to use to select a slot if addressing an <see cref="ISlottedCell"/>.  DEFAULT is to throw if addressing an <see cref="ISlottedCell"/> -AND- <paramref name="slotId"/> is not specified.</param>
-                /// <returns>
-                /// The operation.
-                /// </returns>
-                public static GetCellValueOp<decimal> Decimal(
-                    string sectionId,
-                    string cellId,
-                    string slotId = null,
-                    SlotSelectionStrategy slotSelectionStrategy = SlotSelectionStrategy.ThrowIfSlotIdNotSpecified)
-                {
-                    var cellLocator = new CellLocator(sectionId, cellId, slotId, slotSelectionStrategy);
-
-                    var result = new GetCellValueOp<decimal>(cellLocator);
-
-                    return result;
-                }
-
-                /// <summary>
-                /// Builds an operation that gets the value of a cell that contains a boolean.
-                /// </summary>
-                /// <param name="sectionId">The id of the section that contains the cell.</param>
-                /// <param name="cellId">The id of the cell.</param>
-                /// <param name="slotId">OPTIONAL id of the slot to use -OR- null if not addressing an <see cref="ISlottedCell"/>.  DEFAULT is to address an <see cref="INotSlottedCell"/>.</param>
-                /// <param name="slotSelectionStrategy">OPTIONAL strategy to use to select a slot if addressing an <see cref="ISlottedCell"/>.  DEFAULT is to throw if addressing an <see cref="ISlottedCell"/> -AND- <paramref name="slotId"/> is not specified.</param>
-                /// <returns>
-                /// The operation.
-                /// </returns>
-                public static GetCellValueOp<bool> Bool(
-                    string sectionId,
-                    string cellId,
-                    string slotId = null,
-                    SlotSelectionStrategy slotSelectionStrategy = SlotSelectionStrategy.ThrowIfSlotIdNotSpecified)
-                {
-                    var cellLocator = new CellLocator(sectionId, cellId, slotId, slotSelectionStrategy);
-
-                    var result = new GetCellValueOp<bool>(cellLocator);
-
-                    return result;
-                }
-            }
+            return result;
         }
 
         /// <summary>
-        /// Builder methods to construct cells.
+        /// Builds an operation that gets the value of a cell.
         /// </summary>
-        public static class Make
+        /// <typeparam name="TValue">The type of value.</typeparam>
+        /// <param name="sectionId">The id of the section that contains the cell.</param>
+        /// <param name="cellId">The id of the cell.</param>
+        /// <param name="slotId">OPTIONAL id of the slot to use -OR- null if not addressing an <see cref="ISlottedCell"/>.  DEFAULT is to address an <see cref="INotSlottedCell"/>.</param>
+        /// <param name="slotSelectionStrategy">OPTIONAL strategy to use to select a slot if addressing an <see cref="ISlottedCell"/>.  DEFAULT is to throw if addressing an <see cref="ISlottedCell"/> -AND- <paramref name="slotId"/> is not specified.</param>
+        /// <returns>
+        /// The operation.
+        /// </returns>
+        public static GetCellValueOp<TValue> GetValue<TValue>(
+            string sectionId,
+            string cellId,
+            string slotId = null,
+            SlotSelectionStrategy slotSelectionStrategy = SlotSelectionStrategy.ThrowIfSlotIdNotSpecified)
         {
-            /// <summary>
-            /// Builder methods to construct <see cref="IOperationOutputCell{TValue}"/>.
-            /// </summary>
-            public static class ForOperationOf
-            {
-                /// <summary>
-                /// Builds an <see cref="IOperationOutputCell{TValue}"/> for a decimal named vector.
-                /// </summary>
-                /// <param name="operation">The operation.</param>
-                /// <param name="cellOpExecutionEvent">OPTIONAL result of executing the operation.  DEFAULT is a cell who's operation has not yet been executed.</param>
-                /// <param name="id">OPTIONAL unique identifier of the cell.  DEFAULT is a cell with no unique identifier.</param>
-                /// <param name="columnsSpanned">OPTIONAL number of columns spanned or null if none (cell occupies a single column).  DEFAULT is none.</param>
-                /// <param name="format">OPTIONAL format to apply to the cell.  DEFAULT is to leave the format unchanged.</param>
-                /// <param name="hoverOver">OPTIONAL hover-over for the cell.  DEFAULT is no hover-over.</param>
-                /// <param name="link">OPTIONAL link to some resource.  DEFAULT is no link.</param>
-                /// <returns>
-                /// The cell.
-                /// </returns>
-                public static OperationCell<NamedDecimalSet> NamedDecimalSet(
-                    IReturningOperation<NamedDecimalSet> operation,
-                    CellOpExecutionEventBase cellOpExecutionEvent = null,
-                    string id = null,
-                    int? columnsSpanned = null,
-                    CellFormat format = null,
-                    IHoverOver hoverOver = null,
-                    ILink link = null)
-                {
-                    var result = new OperationCell<NamedDecimalSet>(operation, cellOpExecutionEvent, id, columnsSpanned, format, hoverOver, link);
+            var cellLocator = new CellLocator(sectionId, cellId, slotId, slotSelectionStrategy);
 
-                    return result;
-                }
+            var result = new GetCellValueOp<TValue>(cellLocator);
 
-                /// <summary>
-                /// Builds an <see cref="IOperationOutputCell{TValue}"/> for an integer.
-                /// </summary>
-                /// <param name="operation">The operation.</param>
-                /// <param name="cellOpExecutionEvent">OPTIONAL result of executing the operation.  DEFAULT is a cell who's operation has not yet been executed.</param>
-                /// <param name="id">OPTIONAL unique identifier of the cell.  DEFAULT is a cell with no unique identifier.</param>
-                /// <param name="columnsSpanned">OPTIONAL number of columns spanned or null if none (cell occupies a single column).  DEFAULT is none.</param>
-                /// <param name="format">OPTIONAL format to apply to the cell.  DEFAULT is to leave the format unchanged.</param>
-                /// <param name="hoverOver">OPTIONAL hover-over for the cell.  DEFAULT is no hover-over.</param>
-                /// <param name="link">OPTIONAL link to some resource.  DEFAULT is no link.</param>
-                /// <returns>
-                /// The cell.
-                /// </returns>
-                public static OperationCell<int> Int(
-                    IReturningOperation<int> operation,
-                    CellOpExecutionEventBase cellOpExecutionEvent = null,
-                    string id = null,
-                    int? columnsSpanned = null,
-                    CellFormat format = null,
-                    IHoverOver hoverOver = null,
-                    ILink link = null)
-                {
-                    var result = new OperationCell<int>(operation, cellOpExecutionEvent, id, columnsSpanned, format, hoverOver, link);
+            return result;
+        }
 
-                    return result;
-                }
+        /// <summary>
+        /// Builds an <see cref="IOperationOutputCell{TValue}"/>.
+        /// </summary>
+        /// <typeparam name="TValue">The type of value.</typeparam>
+        /// <param name="operation">The operation.</param>
+        /// <param name="cellOpExecutionEvent">OPTIONAL result of executing the operation.  DEFAULT is a cell who's operation has not yet been executed.</param>
+        /// <param name="id">OPTIONAL unique identifier of the cell.  DEFAULT is a cell with no unique identifier.</param>
+        /// <param name="columnsSpanned">OPTIONAL number of columns spanned or null if none (cell occupies a single column).  DEFAULT is none.</param>
+        /// <param name="format">OPTIONAL format to apply to the cell.  DEFAULT is to leave the format unchanged.</param>
+        /// <param name="hoverOver">OPTIONAL hover-over for the cell.  DEFAULT is no hover-over.</param>
+        /// <param name="link">OPTIONAL link to some resource.  DEFAULT is no link.</param>
+        /// <returns>
+        /// The cell.
+        /// </returns>
+        public static OperationCell<TValue> CreateOp<TValue>(
+            IReturningOperation<TValue> operation,
+            CellOpExecutionEventBase cellOpExecutionEvent = null,
+            string id = null,
+            int? columnsSpanned = null,
+            CellFormat format = null,
+            IHoverOver hoverOver = null,
+            ILink link = null)
+        {
+            var result = new OperationCell<TValue>(operation, cellOpExecutionEvent, id, columnsSpanned, format, hoverOver, link);
 
-                /// <summary>
-                /// Builds an <see cref="IOperationOutputCell{TValue}"/> for a decimal.
-                /// </summary>
-                /// <param name="operation">The operation.</param>
-                /// <param name="cellOpExecutionEvent">OPTIONAL result of executing the operation.  DEFAULT is a cell who's operation has not yet been executed.</param>
-                /// <param name="id">OPTIONAL unique identifier of the cell.  DEFAULT is a cell with no unique identifier.</param>
-                /// <param name="columnsSpanned">OPTIONAL number of columns spanned or null if none (cell occupies a single column).  DEFAULT is none.</param>
-                /// <param name="format">OPTIONAL format to apply to the cell.  DEFAULT is to leave the format unchanged.</param>
-                /// <param name="hoverOver">OPTIONAL hover-over for the cell.  DEFAULT is no hover-over.</param>
-                /// <param name="link">OPTIONAL link to some resource.  DEFAULT is no link.</param>
-                /// <returns>
-                /// The cell.
-                /// </returns>
-                public static OperationCell<decimal> Decimal(
-                    IReturningOperation<decimal> operation,
-                    CellOpExecutionEventBase cellOpExecutionEvent = null,
-                    string id = null,
-                    int? columnsSpanned = null,
-                    CellFormat format = null,
-                    IHoverOver hoverOver = null,
-                    ILink link = null)
-                {
-                    var result = new OperationCell<decimal>(operation, cellOpExecutionEvent, id, columnsSpanned, format, hoverOver, link);
+            return result;
+        }
 
-                    return result;
-                }
+        /// <summary>
+        /// Builds an <see cref="IConstOutputCell{TValue}"/>.
+        /// </summary>
+        /// <typeparam name="TValue">The type of value.</typeparam>
+        /// <param name="value">The value.</param>
+        /// <param name="id">OPTIONAL unique identifier of the cell.  DEFAULT is a cell with no unique identifier.</param>
+        /// <param name="columnsSpanned">OPTIONAL number of columns spanned or null if none (cell occupies a single column).  DEFAULT is none.</param>
+        /// <param name="format">OPTIONAL format to apply to the cell.  DEFAULT is to leave the format unchanged.</param>
+        /// <param name="hoverOver">OPTIONAL hover-over for the cell.  DEFAULT is no hover-over.</param>
+        /// <param name="link">OPTIONAL link to some resource.  DEFAULT is no link.</param>
+        /// <returns>
+        /// The cell.
+        /// </returns>
+        public static ConstCell<TValue> CreateConst<TValue>(
+            TValue value,
+            string id = null,
+            int? columnsSpanned = null,
+            CellFormat format = null,
+            IHoverOver hoverOver = null,
+            ILink link = null)
+        {
+            var result = new ConstCell<TValue>(value, id, columnsSpanned, format, hoverOver, link);
 
-                /// <summary>
-                /// Builds an <see cref="IOperationOutputCell{TValue}"/> for a boolean.
-                /// </summary>
-                /// <param name="operation">The operation.</param>
-                /// <param name="cellOpExecutionEvent">OPTIONAL result of executing the operation.  DEFAULT is a cell who's operation has not yet been executed.</param>
-                /// <param name="id">OPTIONAL unique identifier of the cell.  DEFAULT is a cell with no unique identifier.</param>
-                /// <param name="columnsSpanned">OPTIONAL number of columns spanned or null if none (cell occupies a single column).  DEFAULT is none.</param>
-                /// <param name="format">OPTIONAL format to apply to the cell.  DEFAULT is to leave the format unchanged.</param>
-                /// <param name="hoverOver">OPTIONAL hover-over for the cell.  DEFAULT is no hover-over.</param>
-                /// <param name="link">OPTIONAL link to some resource.  DEFAULT is no link.</param>
-                /// <returns>
-                /// The cell.
-                /// </returns>
-                public static OperationCell<bool> Bool(
-                    IReturningOperation<bool> operation,
-                    CellOpExecutionEventBase cellOpExecutionEvent = null,
-                    string id = null,
-                    int? columnsSpanned = null,
-                    CellFormat format = null,
-                    IHoverOver hoverOver = null,
-                    ILink link = null)
-                {
-                    var result = new OperationCell<bool>(operation, cellOpExecutionEvent, id, columnsSpanned, format, hoverOver, link);
+            return result;
+        }
 
-                    return result;
-                }
-            }
+        /// <summary>
+        /// Builds an <see cref="IConstOutputCell{TValue}"/>.
+        /// </summary>
+        /// <typeparam name="TValue">The type of value.</typeparam>
+        /// <param name="inputAppliedToCellEvent">OPTIONAL input that was applied to the cell.  DEFAULT is a cell with no inputted value.</param>
+        /// <param name="id">OPTIONAL unique identifier of the cell.  DEFAULT is a cell with no unique identifier.</param>
+        /// <param name="columnsSpanned">OPTIONAL number of columns spanned or null if none (cell occupies a single column).  DEFAULT is none.</param>
+        /// <param name="format">OPTIONAL format to apply to the cell.  DEFAULT is to leave the format unchanged.</param>
+        /// <param name="hoverOver">OPTIONAL hover-over for the cell.  DEFAULT is no hover-over.</param>
+        /// <param name="link">OPTIONAL link to some resource.  DEFAULT is no link.</param>
+        /// <returns>
+        /// The cell.
+        /// </returns>
+        public static InputCell<TValue> CreateInput<TValue>(
+            InputAppliedToCellEvent<TValue> inputAppliedToCellEvent = null,
+            string id = null,
+            int? columnsSpanned = null,
+            CellFormat format = null,
+            IHoverOver hoverOver = null,
+            ILink link = null)
+        {
+            var result = new InputCell<TValue>(inputAppliedToCellEvent, id, columnsSpanned, format, hoverOver, link);
+
+            return result;
         }
     }
 }

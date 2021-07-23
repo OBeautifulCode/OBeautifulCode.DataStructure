@@ -16,7 +16,7 @@ namespace OBeautifulCode.DataStructure
     /// </summary>
     /// <typeparam name="TValue">The type of value contained in the cell.</typeparam>
     // ReSharper disable once RedundantExtendsListEntry
-    public class ExecuteOperationCellIfNecessaryOp<TValue> : VoidOperationBase, IModelViaCodeGen
+    public partial class ExecuteOperationCellIfNecessaryOp<TValue> : VoidOperationBase, IModelViaCodeGen
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ExecuteOperationCellIfNecessaryOp{TValue}"/> class.

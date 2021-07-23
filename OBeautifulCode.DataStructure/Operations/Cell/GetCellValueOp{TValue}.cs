@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="HasCellValueOp.cs" company="OBeautifulCode">
+// <copyright file="GetCellValueOp{TValue}.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -11,15 +11,17 @@ namespace OBeautifulCode.DataStructure
     using OBeautifulCode.Type;
 
     /// <summary>
-    /// Determines if a cell has a value.
+    /// Gets the value of a cell.
     /// </summary>
-    public class HasCellValueOp : IReturningOperation<bool>
+    /// <typeparam name="TValue">The type of value.</typeparam>
+    // ReSharper disable once RedundantExtendsListEntry
+    public partial class GetCellValueOp<TValue> : ReturningOperationBase<TValue>, IModelViaCodeGen
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="HasCellValueOp"/> class.
+        /// Initializes a new instance of the <see cref="GetCellValueOp{TValue}"/> class.
         /// </summary>
-        /// <param name="cellLocator">The cell locator.</param>
-        public HasCellValueOp(
+        /// <param name="cellLocator">A cell locator.</param>
+        public GetCellValueOp(
             CellLocator cellLocator)
         {
             if (cellLocator == null)

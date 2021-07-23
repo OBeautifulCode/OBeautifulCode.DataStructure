@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="GetCellValueOp{TValue}.cs" company="OBeautifulCode">
+// <copyright file="CellOpExecutionFailedWithMissingCellValueEvent.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -11,18 +11,22 @@ namespace OBeautifulCode.DataStructure
     using OBeautifulCode.Type;
 
     /// <summary>
-    /// Gets the value of a cell.
+    /// Executing an <see cref="IOperationOutputCell{TResult}"/>'s <see cref="IOperationOutputCell{TResult}.Operation"/> failed.
     /// </summary>
-    /// <typeparam name="TValue">The type of value.</typeparam>
     // ReSharper disable once RedundantExtendsListEntry
-    public class GetCellValueOp<TValue> : ReturningOperationBase<TValue>, IModelViaCodeGen
+    public class CellOpExecutionFailedWithMissingCellValueEvent : CellOpExecutionEventBase, IModelViaCodeGen
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="GetCellValueOp{TValue}"/> class.
+        /// Initializes a new instance of the <see cref="CellOpExecutionFailedWithMissingCellValueEvent"/> class.
         /// </summary>
-        /// <param name="cellLocator">A cell locator.</param>
-        public GetCellValueOp(
-            CellLocator cellLocator)
+        /// <param name="timestampUtc">The timestamp.</param>
+        /// <param name="cellLocator">The cell locator.</param>
+        /// <param name="details">Details about the missing value.</param>
+        public CellOpExecutionFailedWithMissingCellValueEvent(
+            DateTime timestampUtc,
+            CellLocator cellLocator,
+            string details)
+            : base(timestampUtc, details)
         {
             if (cellLocator == null)
             {

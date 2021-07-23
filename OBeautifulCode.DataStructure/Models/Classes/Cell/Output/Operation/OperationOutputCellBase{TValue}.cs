@@ -72,7 +72,7 @@ namespace OBeautifulCode.DataStructure
                 throw new InvalidOperationException("The operation hasn't been executed.");
             }
 
-            if (!(this.CellOpExecutionEvent is SucceededInExecutingCellOpEvent<TValue> succeededInExecutingCellOpEvent))
+            if (!(this.CellOpExecutionEvent is CellOpExecutionCompletedEvent<TValue> succeededInExecutingCellOpEvent))
             {
                 throw new InvalidOperationException("The operation failed or was aborted while executing.");
             }
@@ -95,6 +95,6 @@ namespace OBeautifulCode.DataStructure
         public override Type GetValueTypeOrNull() => typeof(TValue);
 
         /// <inheritdoc />
-        public override bool HasCellValue() => (this.CellOpExecutionEvent != null) && (this.CellOpExecutionEvent is SucceededInExecutingCellOpEvent<TValue>);
+        public override bool HasCellValue() => (this.CellOpExecutionEvent != null) && (this.CellOpExecutionEvent is CellOpExecutionCompletedEvent<TValue>);
     }
 }

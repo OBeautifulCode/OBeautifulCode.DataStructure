@@ -21,8 +21,9 @@ namespace OBeautifulCode.DataStructure
     public class DataStructureCellProtocols<TValue> :
           ISyncAndAsyncReturningProtocol<GetCellValueOp<TValue>, TValue>,
           ISyncAndAsyncVoidProtocol<ExecuteOperationCellIfNecessaryOp<TValue>>,
-          ISyncAndAsyncReturningProtocol<GetConstValueOp<TValue>, TValue>,
-          ISyncAndAsyncReturningProtocol<HasCellValueOp, bool>
+          ISyncAndAsyncReturningProtocol<GetConstOp<TValue>, TValue>,
+          ISyncAndAsyncReturningProtocol<HasCellValueOp, bool>,
+          ISyncAndAsyncReturningProtocol<ThrowOpExecutionAbortedExceptionOp<TValue>, TValue>
     {
         private readonly Report report;
 
@@ -147,7 +148,7 @@ namespace OBeautifulCode.DataStructure
 
         /// <inheritdoc />
         public TValue Execute(
-            GetConstValueOp<TValue> operation)
+            GetConstOp<TValue> operation)
         {
             if (operation == null)
             {
@@ -161,7 +162,7 @@ namespace OBeautifulCode.DataStructure
 
         /// <inheritdoc />
         public async Task<TValue> ExecuteAsync(
-            GetConstValueOp<TValue> operation)
+            GetConstOp<TValue> operation)
         {
             if (operation == null)
             {
@@ -203,6 +204,32 @@ namespace OBeautifulCode.DataStructure
             var result = await Task.FromResult(cell.HasCellValue());
 
             return result;
+        }
+
+        /// <inheritdoc />
+        public TValue Execute(
+            ThrowOpExecutionAbortedExceptionOp<TValue> operation)
+        {
+            if (operation == null)
+            {
+                throw new ArgumentNullException(nameof(operation));
+            }
+
+            throw new OpExecutionAbortedException(operation.Details, abortingOperation: operation);
+        }
+
+        /// <inheritdoc />
+        public async Task<TValue> ExecuteAsync(
+            ThrowOpExecutionAbortedExceptionOp<TValue> operation)
+        {
+            if (operation == null)
+            {
+                throw new ArgumentNullException(nameof(operation));
+            }
+
+            await Task.FromResult(0);
+
+            throw new OpExecutionAbortedException(operation.Details, abortingOperation: operation);
         }
 
         private IGetCellValue<TValue> GetCellHavingTypedValue(
@@ -273,30 +300,30 @@ namespace OBeautifulCode.DataStructure
                 {
                     var operationResult = this.protocolFactory.GetProtocolAndExecuteViaReflection<TValue>(cell.Operation);
 
-                    cellOpExecutionEvent = new SucceededInExecutingCellOpEvent<TValue>(this.timestampUtc, null, operationResult);
+                    cellOpExecutionEvent = new CellOpExecutionCompletedEvent<TValue>(this.timestampUtc, null, operationResult);
                 }
                 catch (CellValueMissingException ex)
                 {
-                    cellOpExecutionEvent = new CellValueWasMissingWhenExecutingCellOpEvent(this.timestampUtc, ex.CellLocator, ex.Message);
+                    cellOpExecutionEvent = new CellOpExecutionFailedWithMissingCellValueEvent(this.timestampUtc, ex.CellLocator, ex.Message);
                 }
                 catch (CellNotFoundException ex)
                 {
-                    cellOpExecutionEvent = new CellNotFoundWhenExecutingCellOpEvent(this.timestampUtc, ex.CellLocator, ex.Message);
+                    cellOpExecutionEvent = new CellOpExecutionFailedWithCellNotFoundEvent(this.timestampUtc, ex.CellLocator, ex.Message);
                 }
                 catch (OpExecutionAbortedExceptionBase ex)
                 {
-                    cellOpExecutionEvent = new ExecutionOfCellOpAbortedEvent(this.timestampUtc, ex.ToString());
+                    cellOpExecutionEvent = new CellOpExecutionAbortedEvent(this.timestampUtc, ex.ToString());
                 }
                 catch (OpExecutionFailedExceptionBase ex)
                 {
                     // Redundant; this does the same thing as catching Exception below.
                     // Just noting that the "proper" exception for a protocol to throw is an OpExecutionFailedExceptionBase.
                     // Protocol authors might not comply.
-                    cellOpExecutionEvent = new FailedToExecuteCellOpEvent(this.timestampUtc, ex.ToString());
+                    cellOpExecutionEvent = new CellOpExecutionFailedWithExceptionEvent(this.timestampUtc, ex.ToString());
                 }
                 catch (Exception ex)
                 {
-                    cellOpExecutionEvent = new FailedToExecuteCellOpEvent(this.timestampUtc, ex.ToString());
+                    cellOpExecutionEvent = new CellOpExecutionFailedWithExceptionEvent(this.timestampUtc, ex.ToString());
                 }
 
                 cell.RecordExecution(cellOpExecutionEvent);
@@ -319,30 +346,30 @@ namespace OBeautifulCode.DataStructure
                 {
                     var operationResult = await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync<TValue>(cell.Operation);
 
-                    cellOpExecutionEvent = new SucceededInExecutingCellOpEvent<TValue>(this.timestampUtc, null, operationResult);
+                    cellOpExecutionEvent = new CellOpExecutionCompletedEvent<TValue>(this.timestampUtc, null, operationResult);
                 }
                 catch (CellValueMissingException ex)
                 {
-                    cellOpExecutionEvent = new CellValueWasMissingWhenExecutingCellOpEvent(this.timestampUtc, ex.CellLocator, ex.Message);
+                    cellOpExecutionEvent = new CellOpExecutionFailedWithMissingCellValueEvent(this.timestampUtc, ex.CellLocator, ex.Message);
                 }
                 catch (CellNotFoundException ex)
                 {
-                    cellOpExecutionEvent = new CellNotFoundWhenExecutingCellOpEvent(this.timestampUtc, ex.CellLocator, ex.Message);
+                    cellOpExecutionEvent = new CellOpExecutionFailedWithCellNotFoundEvent(this.timestampUtc, ex.CellLocator, ex.Message);
                 }
                 catch (OpExecutionAbortedExceptionBase ex)
                 {
-                    cellOpExecutionEvent = new ExecutionOfCellOpAbortedEvent(this.timestampUtc, ex.ToString());
+                    cellOpExecutionEvent = new CellOpExecutionAbortedEvent(this.timestampUtc, ex.ToString());
                 }
                 catch (OpExecutionFailedExceptionBase ex)
                 {
                     // Redundant; this does the same thing as catching Exception below.
                     // Just noting that the "proper" exception for a protocol to throw is an OpExecutionFailedExceptionBase.
                     // Protocol authors might not comply.
-                    cellOpExecutionEvent = new FailedToExecuteCellOpEvent(this.timestampUtc, ex.ToString());
+                    cellOpExecutionEvent = new CellOpExecutionFailedWithExceptionEvent(this.timestampUtc, ex.ToString());
                 }
                 catch (Exception ex)
                 {
-                    cellOpExecutionEvent = new FailedToExecuteCellOpEvent(this.timestampUtc, ex.ToString());
+                    cellOpExecutionEvent = new CellOpExecutionFailedWithExceptionEvent(this.timestampUtc, ex.ToString());
                 }
 
                 cell.RecordExecution(cellOpExecutionEvent);
