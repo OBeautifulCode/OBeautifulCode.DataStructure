@@ -69,7 +69,7 @@ namespace OBeautifulCode.DataStructure
         {
             if (!this.HasCellValue())
             {
-                throw new InvalidOperationException("The operation hasn't been executed.");
+                throw new InvalidOperationException("The operation hasn't been executed to completion.");
             }
 
             if (!(this.CellOpExecutionEvent is CellOpExecutionCompletedEvent<TValue> succeededInExecutingCellOpEvent))

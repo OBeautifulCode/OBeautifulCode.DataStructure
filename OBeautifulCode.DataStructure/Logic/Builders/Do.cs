@@ -17,12 +17,12 @@ namespace OBeautifulCode.DataStructure
         /// Builds an operation that throws a <see cref="OpExecutionAbortedException"/>.
         /// </summary>
         /// <typeparam name="TValue">The type of value.</typeparam>
-        /// <param name="details">The details to use with the exception.</param>
+        /// <param name="details">OPTIONAL details to use with the exception.  DEFAULT is to omit details.</param>
         /// <returns>
         /// The operation.
         /// </returns>
         public static ThrowOpExecutionAbortedExceptionOp<TValue> Stop<TValue>(
-            string details)
+            string details = null)
         {
             var result = new ThrowOpExecutionAbortedExceptionOp<TValue>(details);
 
@@ -66,21 +66,6 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <summary>
-        /// Builds an <see cref="AndOp"/>.
-        /// </summary>
-        /// <param name="statements">The statements.</param>
-        /// <returns>
-        /// The operation.
-        /// </returns>
-        public static AndOp And(
-            params IReturningOperation<bool>[] statements)
-        {
-            var result = new AndOp(statements);
-
-            return result;
-        }
-
-        /// <summary>
         /// Builds an <see cref="AndAlsoOp"/>.
         /// </summary>
         /// <param name="statements">The statements.</param>
@@ -91,21 +76,6 @@ namespace OBeautifulCode.DataStructure
             params IReturningOperation<bool>[] statements)
         {
             var result = new AndAlsoOp(statements);
-
-            return result;
-        }
-
-        /// <summary>
-        /// Builds an <see cref="OrOp"/>.
-        /// </summary>
-        /// <param name="statements">The statements.</param>
-        /// <returns>
-        /// The operation.
-        /// </returns>
-        public static OrOp Or(
-            params IReturningOperation<bool>[] statements)
-        {
-            var result = new OrOp(statements);
 
             return result;
         }
@@ -136,6 +106,21 @@ namespace OBeautifulCode.DataStructure
             IReturningOperation<bool> statement)
         {
             var result = new NotOp(statement);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Builds an <see cref="SumOp"/>.
+        /// </summary>
+        /// <param name="statements">The statements.</param>
+        /// <returns>
+        /// The operation.
+        /// </returns>
+        public static SumOp Sum(
+            params IReturningOperation<decimal>[] statements)
+        {
+            var result = new SumOp(statements);
 
             return result;
         }

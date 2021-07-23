@@ -15,7 +15,7 @@ namespace OBeautifulCode.DataStructure
     /// <summary>
     /// Locates an <see cref="ICell"/> in a report.
     /// </summary>
-    public class CellLocator : IModelViaCodeGen
+    public partial class CellLocator : IModelViaCodeGen
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CellLocator"/> class.

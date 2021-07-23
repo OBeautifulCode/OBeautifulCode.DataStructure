@@ -86,7 +86,14 @@ namespace OBeautifulCode.DataStructure
             }
             catch (Exception ex)
             {
-                throw new CellValueMissingException(ex.Message, operation.CellLocator);
+                if (operation.DefaultValue == null)
+                {
+                    throw new CellValueMissingException(ex.Message, operation.CellLocator);
+                }
+                else
+                {
+                    result = this.protocolFactory.GetProtocolAndExecuteViaReflection<TValue>(operation.DefaultValue);
+                }
             }
 
             return result;
@@ -116,7 +123,14 @@ namespace OBeautifulCode.DataStructure
             }
             catch (Exception ex)
             {
-                throw new CellValueMissingException(ex.Message, operation.CellLocator);
+                if (operation.DefaultValue == null)
+                {
+                    throw new CellValueMissingException(ex.Message, operation.CellLocator);
+                }
+                else
+                {
+                    result = await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync<TValue>(operation.DefaultValue);
+                }
             }
 
             return result;

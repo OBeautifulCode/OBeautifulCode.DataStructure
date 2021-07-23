@@ -65,12 +65,33 @@
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringXmlDocOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
     <Compile Include="Events\CellOpExecutionEventBase.cs" />
+    <Compile Include="Events\CellOpExecutionEventBase.designer.cs">
+      <DependentUpon>CellOpExecutionEventBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Events\CellOpExecution\CellOpExecutionAbortedEvent.designer.cs">
+      <DependentUpon>CellOpExecutionAbortedEvent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Events\CellOpExecution\CellOpExecutionCompletedEvent{TResult}.designer.cs">
+      <DependentUpon>CellOpExecutionCompletedEvent{TResult}.cs</DependentUpon>
+    </Compile>
     <Compile Include="Events\CellOpExecution\CellOpExecutionFailedWithCellNotFoundEvent.cs" />
+    <Compile Include="Events\CellOpExecution\CellOpExecutionFailedWithCellNotFoundEvent.designer.cs">
+      <DependentUpon>CellOpExecutionFailedWithCellNotFoundEvent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Events\CellOpExecution\CellOpExecutionFailedWithExceptionEvent.designer.cs">
+      <DependentUpon>CellOpExecutionFailedWithExceptionEvent.cs</DependentUpon>
+    </Compile>
     <Compile Include="Events\CellOpExecution\CellOpExecutionFailedWithMissingCellValueEvent.cs" />
     <Compile Include="Events\CellOpExecution\CellOpExecutionAbortedEvent.cs" />
+    <Compile Include="Events\CellOpExecution\CellOpExecutionFailedWithMissingCellValueEvent.designer.cs">
+      <DependentUpon>CellOpExecutionFailedWithMissingCellValueEvent.cs</DependentUpon>
+    </Compile>
     <Compile Include="Events\InputAppliedToCellEvent{TValue}.cs" />
     <Compile Include="Events\CellOpExecution\CellOpExecutionFailedWithExceptionEvent.cs" />
     <Compile Include="Events\CellOpExecution\CellOpExecutionCompletedEvent{TResult}.cs" />
+    <Compile Include="Events\InputAppliedToCellEvent{TValue}.designer.cs">
+      <DependentUpon>InputAppliedToCellEvent{TValue}.cs</DependentUpon>
+    </Compile>
     <Compile Include="Exception\CellValueMissingException.cs" />
     <Compile Include="Exception\CellNotFoundException.cs" />
     <Compile Include="Interfaces\Behavior\IClearCellValue.cs" />
@@ -97,18 +118,51 @@
     <Compile Include="Models\Classes\CellValue\MediaReference.designer.cs">
       <DependentUpon>MediaReference.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\Classes\Cell\CellBase.designer.cs">
+      <DependentUpon>CellBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Cell\Input\InputCellBase{TValue}.designer.cs">
+      <DependentUpon>InputCellBase{TValue}.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Classes\Cell\Input\InputCell{TValue}.cs" />
     <Compile Include="Models\Classes\Cell\Input\InputCellBase{TValue}.cs" />
+    <Compile Include="Models\Classes\Cell\Input\InputCell{TValue}.designer.cs">
+      <DependentUpon>InputCell{TValue}.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Cell\Null\NullCell.designer.cs">
+      <DependentUpon>NullCell.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Cell\Null\NullCellBase.designer.cs">
+      <DependentUpon>NullCellBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Cell\Output\Const\ConstCell{TValue}.designer.cs">
+      <DependentUpon>ConstCell{TValue}.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Cell\Output\Const\ConstOutputCellBase{TValue}.designer.cs">
+      <DependentUpon>ConstOutputCellBase{TValue}.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Cell\Output\Operation\OperationCell{TValue}.designer.cs">
+      <DependentUpon>OperationCell{TValue}.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Classes\Cell\Output\Operation\OperationOutputCellBase{TValue}.cs" />
     <Compile Include="Models\Classes\Cell\Output\Const\ConstOutputCellBase{TValue}.cs" />
+    <Compile Include="Models\Classes\Cell\Output\Operation\OperationOutputCellBase{TValue}.designer.cs">
+      <DependentUpon>OperationOutputCellBase{TValue}.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Classes\Cell\Output\OutputCellBase{TValue}.cs" />
     <Compile Include="Models\Classes\Cell\Output\Operation\OperationCell{TValue}.cs" />
     <Compile Include="Models\Classes\Cell\Output\Const\ConstCell{TValue}.cs" />
     <Compile Include="Models\Classes\Cell\CellBase.cs" />
     <Compile Include="Models\Classes\Cell\Null\NullCellBase.cs" />
+    <Compile Include="Models\Classes\Cell\Output\OutputCellBase{TValue}.designer.cs">
+      <DependentUpon>OutputCellBase{TValue}.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Classes\Cell\Slotted\SlottedCell.cs" />
     <Compile Include="Models\Classes\Cell\Null\NullCell.cs" />
     <Compile Include="Interfaces\Property\IHaveHoverOver.cs" />
+    <Compile Include="Models\Classes\Cell\Slotted\SlottedCell.designer.cs">
+      <DependentUpon>SlottedCell.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Classes\Column\Column.designer.cs">
       <DependentUpon>Column.cs</DependentUpon>
     </Compile>
@@ -210,6 +264,9 @@
       <DependentUpon>SimpleLink.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Classes\Report\CellLocator.cs" />
+    <Compile Include="Models\Classes\Report\CellLocator.designer.cs">
+      <DependentUpon>CellLocator.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Classes\Report\Report.designer.cs">
       <DependentUpon>Report.cs</DependentUpon>
     </Compile>
@@ -265,10 +322,39 @@
     <Compile Include="Models\Classes\HoverOver\StringHoverOver.cs" />
     <Compile Include="Models\Enums\Operations\SlotSelectionStrategy.cs" />
     <Compile Include="Operations\Bool\AndAlsoOp.cs" />
+    <Compile Include="Operations\Bool\AndAlsoOp.designer.cs">
+      <DependentUpon>AndAlsoOp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Operations\Bool\NotOp.designer.cs">
+      <DependentUpon>NotOp.cs</DependentUpon>
+    </Compile>
     <Compile Include="Operations\Bool\OrElseOp.cs" />
     <Compile Include="Operations\Bool\NotOp.cs" />
-    <Compile Include="Operations\Bool\OrOp.cs" />
-    <Compile Include="Operations\Bool\AndOp.cs" />
+    <Compile Include="Operations\Bool\OrElseOp.designer.cs">
+      <DependentUpon>OrElseOp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Operations\Branch\IfThenElseOp{TResult}.designer.cs">
+      <DependentUpon>IfThenElseOp{TResult}.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Operations\Cell\ExecuteOperationCellIfNecessaryOp{TValue}.designer.cs">
+      <DependentUpon>ExecuteOperationCellIfNecessaryOp{TValue}.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Operations\Cell\GetCellValueOp{TValue}.designer.cs">
+      <DependentUpon>GetCellValueOp{TValue}.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Operations\Cell\HasCellValueOp.designer.cs">
+      <DependentUpon>HasCellValueOp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Operations\Decimal\SumOp.cs" />
+    <Compile Include="Operations\Decimal\SumOp.designer.cs">
+      <DependentUpon>SumOp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Operations\GetConstOp{TValue}.designer.cs">
+      <DependentUpon>GetConstOp{TValue}.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Operations\MultiStatementOpBase{TStatement,TResult}.designer.cs">
+      <DependentUpon>MultiStatementOpBase{TStatement,TResult}.cs</DependentUpon>
+    </Compile>
     <Compile Include="Operations\SingleStatementOpBase{TStatement,TResult}.cs" />
     <Compile Include="Operations\MultiStatementOpBase{TStatement,TResult}.cs" />
     <Compile Include="Operations\Cell\ExecuteOperationCellIfNecessaryOp{TValue}.cs" />
@@ -276,6 +362,9 @@
     <Compile Include="Operations\Cell\HasCellValueOp.cs" />
     <Compile Include="Operations\GetConstOp{TValue}.cs" />
     <Compile Include="Operations\Cell\GetCellValueOp{TValue}.cs" />
+    <Compile Include="Operations\SingleStatementOpBase{TStatement,TResult}.designer.cs">
+      <DependentUpon>SingleStatementOpBase{TStatement,TResult}.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\GlobalSuppressions.cs" />
     <Compile Include="Models\Classes\Row\FlatRow.cs" />
@@ -299,9 +388,7 @@
     <Content Include=".analyzers\dictionary.xml" />
     <None Include="nuget-icon.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Operations\Decimal\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\OBeautifulCode.Build.Analyzers.1.1.136\build\OBeautifulCode.Build.Analyzers.targets" Condition="Exists('..\packages\OBeautifulCode.Build.Analyzers.1.1.136\build\OBeautifulCode.Build.Analyzers.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

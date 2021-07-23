@@ -1,4 +1,10 @@
-﻿namespace OBeautifulCode.DataStructure.Test
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Protocols.cs" company="OBeautifulCode">
+//   Copyright (c) OBeautifulCode 2018. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace OBeautifulCode.DataStructure.Test
 {
     using System;
     using System.Collections.Generic;
@@ -8,14 +14,50 @@
 
     using OBeautifulCode.Type;
 
-    public partial class DataStructureCalculationProtocols : ISyncReturningProtocol<TileOp, IReadOnlyList<NamedValue<decimal>>>
+    public partial class MyProprietaryProtocols
+    {
+        public MyProprietaryProtocols(
+            IProtocolFactory protocolFactory)
+        {
+            this.ProtocolFactory = protocolFactory;
+        }
+
+        public ISyncReturningProtocol<GetProtocolOp, IProtocol> ProtocolFactory { get; private set; }
+    }
+
+    public class TileOp : IReturningOperation<IReadOnlyList<NamedValue<decimal>>>
+    {
+        public TileOp(
+            IReturningOperation<IReadOnlyList<NamedValue<decimal>>> setOp,
+            IReturningOperation<int> numberOfTilesOp)
+        {
+            if (setOp == null)
+            {
+                throw new ArgumentNullException(nameof(setOp));
+            }
+
+            if (numberOfTilesOp == null)
+            {
+                throw new ArgumentNullException(nameof(numberOfTilesOp));
+            }
+
+            this.SetOp = setOp;
+            this.NumberOfTilesOp = numberOfTilesOp;
+        }
+
+        public IReturningOperation<int> NumberOfTilesOp { get; private set; }
+
+        public IReturningOperation<IReadOnlyList<NamedValue<decimal>>> SetOp { get; private set; }
+    }
+
+    public partial class MyProprietaryProtocols : ISyncReturningProtocol<TileOp, IReadOnlyList<NamedValue<decimal>>>
     {
         public IReadOnlyList<NamedValue<decimal>> Execute(
             TileOp operation)
         {
-            var set = this.ProtocolFactory.GetProtocolAndExecuteViaReflection<IReadOnlyList<NamedValue<decimal>>>(operation.Set);
+            var set = this.ProtocolFactory.GetProtocolAndExecuteViaReflection<IReadOnlyList<NamedValue<decimal>>>(operation.SetOp);
 
-            var tiles = this.ProtocolFactory.GetProtocolAndExecuteViaReflection<int>(operation.NumberOfTiles);
+            var tiles = this.ProtocolFactory.GetProtocolAndExecuteViaReflection<int>(operation.NumberOfTilesOp);
 
             if (tiles != 4)
             {
@@ -36,48 +78,6 @@
                 new NamedValue<decimal>("median", Convert.ToDecimal(median)),
                 new NamedValue<decimal>("upper-quartile", Convert.ToDecimal(upperQuartile)),
             };
-
-            return result;
-        }
-    }
-
-    public partial class DataStructureCalculationProtocols : ISyncReturningProtocol<GetIntOp, int>
-    {
-        public int Execute(GetIntOp operation)
-        {
-            return operation.Value;
-        }
-    }
-
-    public partial class DataStructureCalculationProtocols : ISyncReturningProtocol<GetCellValueOp<IReadOnlyList<NamedValue<decimal>>>, IReadOnlyList<NamedValue<decimal>>>
-    {
-        public DataStructureCalculationProtocols(
-            Report report,
-            IProtocolFactory protocolFactory)
-        {
-            this.Report = report;
-            this.ProtocolFactory = protocolFactory;
-        }
-
-        public IProtocolFactory ProtocolFactory { get; private set; }
-
-        public Report Report { get; set; }
-
-        public IReadOnlyList<NamedValue<decimal>> Execute(
-            GetCellValueOp<IReadOnlyList<NamedValue<decimal>>> operation)
-        {
-            var result = this.Report.GetCellValue<IReadOnlyList<NamedValue<decimal>>>(operation.SectionId ?? this.Report.Sections.Single().Id, operation.CellId);
-
-            return result;
-        }
-    }
-
-    public partial class DataStructureCalculationProtocols : ISyncReturningProtocol<GetCellValueOp<int>, int>
-    {
-        public int Execute(
-            GetCellValueOp<int> operation)
-        {
-            var result = this.Report.GetCellValue<int>(operation.SectionId ?? this.Report.Sections.Single().Id, operation.CellId);
 
             return result;
         }

@@ -7,6 +7,7 @@
 namespace OBeautifulCode.DataStructure
 {
     using System;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using OBeautifulCode.Type;
@@ -16,7 +17,11 @@ namespace OBeautifulCode.DataStructure
     /// </summary>
     /// <typeparam name="TResult">The type of value.</typeparam>
     public class DataStructureConvenienceProtocols<TResult> :
-          ISyncAndAsyncReturningProtocol<IfThenElseOp<TResult>, TResult>
+          ISyncAndAsyncReturningProtocol<IfThenElseOp<TResult>, TResult>,
+          ISyncAndAsyncReturningProtocol<AndAlsoOp, bool>,
+          ISyncAndAsyncReturningProtocol<OrElseOp, bool>,
+          ISyncAndAsyncReturningProtocol<NotOp, bool>,
+          ISyncAndAsyncReturningProtocol<SumOp, decimal>
     {
         private readonly IProtocolFactory protocolFactory;
 
@@ -78,6 +83,152 @@ namespace OBeautifulCode.DataStructure
             else
             {
                 result = await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync<TResult>(operation.ElseStatement);
+            }
+
+            return result;
+        }
+
+        /// <inheritdoc />
+        public bool Execute(
+            AndAlsoOp operation)
+        {
+            if (operation == null)
+            {
+                throw new ArgumentNullException(nameof(operation));
+            }
+
+            foreach (var statement in operation.Statements)
+            {
+                if (!this.protocolFactory.GetProtocolAndExecuteViaReflection<bool>(statement))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        /// <inheritdoc />
+        public async Task<bool> ExecuteAsync(
+            AndAlsoOp operation)
+        {
+            if (operation == null)
+            {
+                throw new ArgumentNullException(nameof(operation));
+            }
+
+            foreach (var statement in operation.Statements)
+            {
+                if (!(await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync<bool>(statement)))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        /// <inheritdoc />
+        public bool Execute(
+            OrElseOp operation)
+        {
+            if (operation == null)
+            {
+                throw new ArgumentNullException(nameof(operation));
+            }
+
+            foreach (var statement in operation.Statements)
+            {
+                if (this.protocolFactory.GetProtocolAndExecuteViaReflection<bool>(statement))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <inheritdoc />
+        public async Task<bool> ExecuteAsync(
+            OrElseOp operation)
+        {
+            if (operation == null)
+            {
+                throw new ArgumentNullException(nameof(operation));
+            }
+
+            foreach (var statement in operation.Statements)
+            {
+                if (await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync<bool>(statement))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <inheritdoc />
+        public bool Execute(
+            NotOp operation)
+        {
+            if (operation == null)
+            {
+                throw new ArgumentNullException(nameof(operation));
+            }
+
+            var result = !this.protocolFactory.GetProtocolAndExecuteViaReflection<bool>(operation.Statement);
+
+            return result;
+        }
+
+        /// <inheritdoc />
+        public async Task<bool> ExecuteAsync(
+            NotOp operation)
+        {
+            if (operation == null)
+            {
+                throw new ArgumentNullException(nameof(operation));
+            }
+
+            var result = !(await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync<bool>(operation.Statement));
+
+            return result;
+        }
+
+        /// <inheritdoc />
+        public decimal Execute(
+            SumOp operation)
+        {
+            if (operation == null)
+            {
+                throw new ArgumentNullException(nameof(operation));
+            }
+
+            var result = operation.Statements.Sum(_ => this.protocolFactory.GetProtocolAndExecuteViaReflection<decimal>(_));
+
+            return result;
+        }
+
+        /// <inheritdoc />
+        public async Task<decimal> ExecuteAsync(
+            SumOp operation)
+        {
+            if (operation == null)
+            {
+                throw new ArgumentNullException(nameof(operation));
+            }
+
+            if (operation == null)
+            {
+                throw new ArgumentNullException(nameof(operation));
+            }
+
+            var result = 0m;
+
+            foreach (var statement in operation.Statements)
+            {
+                result = result + await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync<decimal>(statement);
             }
 
             return result;

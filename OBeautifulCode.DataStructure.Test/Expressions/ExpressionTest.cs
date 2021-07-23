@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ExpressionTestOp.cs" company="OBeautifulCode">
+// <copyright file="ExpressionTest.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -7,23 +7,35 @@
 namespace OBeautifulCode.DataStructure.Test
 {
     using System;
-    using System.Collections.Generic;
 
     using OBeautifulCode.Type;
 
     using Xunit;
+
+    using NamedDecimalSet = System.Collections.Generic.IReadOnlyList<OBeautifulCode.Type.NamedValue<decimal>>;
 
     public partial class ExpressionTestOp
     {
         [Fact]
         public static void Test()
         {
-            // Scenario 1:  Input is NamedElementList of coscores and output is NamedElementList of set of typical entities
-            // Scenario 2: Input is NamedElementList of Sales Growth and output is the median Sales Growth
-            // Scenario 3: If has sales growth then sales growth over time
             const string sectionId = "section-id";
 
-            var coscoresCell = new ConstCell<IReadOnlyList<NamedValue<decimal>>>(
+            var numberOfSalesFteCell = Cell.CreateInput<decimal>(id: "sales-fte");
+
+            var numberOfWarehouseFteCell = Cell.CreateInput<decimal>(id: "warehouse-fte");
+
+            var numberOfTotalFte = Cell.CreateOp(
+                Do.IfThenElse(
+                    Do.AndAlso(
+                        Cell.HasValue(sectionId, numberOfSalesFteCell.Id),
+                        Cell.HasValue(sectionId, numberOfWarehouseFteCell.Id)),
+                    Do.Sum(
+                        Cell.GetValue<decimal>(sectionId, numberOfSalesFteCell.Id),
+                        Cell.GetValue<decimal>(sectionId, numberOfWarehouseFteCell.Id)),
+                    Do.Stop<decimal>()));
+
+            var coscoresCell = new ConstCell<NamedDecimalSet>(
                 new[]
                 {
                     new NamedValue<decimal>("bob", 1),
@@ -41,18 +53,26 @@ namespace OBeautifulCode.DataStructure.Test
                 },
                 id: "coscores");
 
+            var coscoreCellsCopy = Cell.CreateOp(
+                Cell.GetValue<NamedDecimalSet>(sectionId, "coscores"),
+                id: "coscores-copy");
+
             var intConstCell = new ConstCell<int>(4, id: "int-const");
 
-            var quartileCell = Cell.Make.ForOperationOf.NamedDecimalSet(
+            var quartileCell = Cell.CreateOp(
                 new TileOp(
-                    Cell.Get.ValueOf.NamedDecimalSet(sectionId, "coscores"),
-                    Cell.Get.ValueOf.Int(sectionId, "int-const")),
+                    Cell.GetValue<NamedDecimalSet>(sectionId, "coscores-copy"),
+                    Cell.GetValue<int>(sectionId, "int-const")),
                 null,
                 id: "quartiles");
 
             var rows = new[]
             {
+                new Row(new[] { numberOfSalesFteCell }),
+                new Row(new[] { numberOfWarehouseFteCell }),
+                new Row(new[] { numberOfTotalFte }),
                 new Row(new[] { intConstCell }),
+                new Row(new[] { coscoreCellsCopy }),
                 new Row(new[] { coscoresCell }),
                 new Row(new[] { quartileCell }),
             };
@@ -79,16 +99,22 @@ namespace OBeautifulCode.DataStructure.Test
 
             var report = new Report("report-id", sections);
 
-            var protocolFactory = new ProtocolFactory();
+            report.SetInputCellValue(2.2m, DateTime.UtcNow, sectionId, numberOfSalesFteCell.Id);
+            report.SetInputCellValue(1.1m, DateTime.UtcNow, sectionId, numberOfWarehouseFteCell.Id);
 
-            var dataStructureCalculationProtocols = new DataStructureCalculationProtocols(report, protocolFactory);
+            report.ExecuteAllOperationsAndRecordResults(
+                DateTime.UtcNow,
+                new Func<IProtocolFactory, IProtocolFactory>[]
+                {
+                    frameworkFactory => new MyProprietaryProtocols(frameworkFactory).ToProtocolFactory(),
+                });
 
-            protocolFactory.RegisterProtocol(typeof(DataStructureCalculationProtocols), () => dataStructureCalculationProtocols);
+            var quartiles = quartileCell.GetCellValue();
 
-            var quartiles = protocolFactory.GetProtocolAndExecuteViaReflection<IReadOnlyList<NamedValue<decimal>>>(quartileCell.Operation);
+            var fte = numberOfTotalFte.GetCellValue();
 
-            // todo: layer-in recalc-all
-            quartileCell.RecordExecution(new CellOpExecutedEvent<IReadOnlyList<NamedValue<decimal>>>(DateTime.UtcNow, quartiles));
+            // var quartiles = protocolFactory.GetProtocolAndExecuteViaReflection<IReadOnlyList<NamedValue<decimal>>>(quartileCell.Operation);
+            // quartileCell.RecordExecution(new CellOpExecutedEvent<IReadOnlyList<NamedValue<decimal>>>(DateTime.UtcNow, quartiles));
         }
     }
 }

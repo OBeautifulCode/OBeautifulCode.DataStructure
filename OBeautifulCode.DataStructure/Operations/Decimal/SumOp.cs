@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="OrOp.cs" company="OBeautifulCode">
+// <copyright file="SumOp.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -11,17 +11,17 @@ namespace OBeautifulCode.DataStructure
     using OBeautifulCode.Type;
 
     /// <summary>
-    /// Performs an OR (|).
+    /// Performs a sum (addition).
     /// </summary>
     // ReSharper disable once RedundantExtendsListEntry
-    public partial class OrOp : MultiStatementOpBase<bool, bool>, IModelViaCodeGen
+    public partial class SumOp : MultiStatementOpBase<decimal, decimal>, IModelViaCodeGen
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="OrOp"/> class.
+        /// Initializes a new instance of the <see cref="SumOp"/> class.
         /// </summary>
         /// <param name="statements">The statements.</param>
-        public OrOp(
-            IReadOnlyCollection<IReturningOperation<bool>> statements)
+        public SumOp(
+            IReadOnlyCollection<IReturningOperation<decimal>> statements)
             : base(statements)
         {
         }
