@@ -11,7 +11,7 @@ namespace OBeautifulCode.DataStructure
     using OBeautifulCode.Type;
 
     /// <summary>
-    /// Executing an <see cref="IOperationOutputCell{TResult}"/>'s <see cref="IOperationOutputCell{TResult}.Operation"/> failed.
+    /// The execution of an <see cref="IOperationOutputCell{TResult}"/>'s <see cref="IOperationOutputCell{TResult}.Operation"/> failed because a referenced cell was not found.
     /// </summary>
     // ReSharper disable once RedundantExtendsListEntry
     public partial class CellOpExecutionFailedWithCellNotFoundEvent : CellOpExecutionEventBase, IModelViaCodeGen

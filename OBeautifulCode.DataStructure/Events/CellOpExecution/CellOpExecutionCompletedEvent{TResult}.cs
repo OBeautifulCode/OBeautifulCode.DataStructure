@@ -11,7 +11,7 @@ namespace OBeautifulCode.DataStructure
     using OBeautifulCode.Type;
 
     /// <summary>
-    /// An <see cref="IOperationOutputCell{TResult}"/>'s <see cref="IOperationOutputCell{TResult}.Operation"/> has been executed.
+    /// The execution of an <see cref="IOperationOutputCell{TResult}"/>'s <see cref="IOperationOutputCell{TResult}.Operation"/> completed.
     /// </summary>
     /// <typeparam name="TResult">The type returned when the operation was executed.</typeparam>
     // ReSharper disable once RedundantExtendsListEntry
