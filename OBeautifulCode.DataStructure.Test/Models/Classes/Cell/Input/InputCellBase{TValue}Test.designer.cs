@@ -57,6 +57,8 @@ namespace OBeautifulCode.DataStructure.Test
                         // (InputCellBase<Version>)ReferenceObjectForEquatableTestScenarios.DeepCloneWithColumnsSpanned(A.Dummy<InputCellBase<Version>>().Whose(_ => !_.ColumnsSpanned.IsEqualTo(ReferenceObjectForEquatableTestScenarios.ColumnsSpanned)).ColumnsSpanned),
                         // (InputCellBase<Version>)ReferenceObjectForEquatableTestScenarios.DeepCloneWithDetails(A.Dummy<InputCellBase<Version>>().Whose(_ => !_.Details.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Details)).Details),
                         // ReferenceObjectForEquatableTestScenarios.DeepCloneWithInputAppliedToCellEvent(A.Dummy<InputCellBase<Version>>().Whose(_ => !_.InputAppliedToCellEvent.IsEqualTo(ReferenceObjectForEquatableTestScenarios.InputAppliedToCellEvent)).InputAppliedToCellEvent),
+                        // ReferenceObjectForEquatableTestScenarios.DeepCloneWithValidationConditions(A.Dummy<InputCellBase<Version>>().Whose(_ => !_.ValidationConditions.IsEqualTo(ReferenceObjectForEquatableTestScenarios.ValidationConditions)).ValidationConditions),
+                        // ReferenceObjectForEquatableTestScenarios.DeepCloneWithCellValidationEvent(A.Dummy<InputCellBase<Version>>().Whose(_ => !_.CellValidationEvent.IsEqualTo(ReferenceObjectForEquatableTestScenarios.CellValidationEvent)).CellValidationEvent),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
                     {
@@ -199,6 +201,30 @@ namespace OBeautifulCode.DataStructure.Test
                     // The object could be a boxed value type, which will fail this asseration because
                     // a deep clone of a value type object is the same object.
                     actual.InputAppliedToCellEvent.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.InputAppliedToCellEvent);
+                }
+
+                if (systemUnderTest.ValidationConditions == null)
+                {
+                    actual.ValidationConditions.AsTest().Must().BeNull();
+                }
+                else if (!actual.ValidationConditions.GetType().IsValueType)
+                {
+                    // When the declared type is a reference type, we still have to check the runtime type.
+                    // The object could be a boxed value type, which will fail this asseration because
+                    // a deep clone of a value type object is the same object.
+                    actual.ValidationConditions.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.ValidationConditions);
+                }
+
+                if (systemUnderTest.CellValidationEvent == null)
+                {
+                    actual.CellValidationEvent.AsTest().Must().BeNull();
+                }
+                else if (!actual.CellValidationEvent.GetType().IsValueType)
+                {
+                    // When the declared type is a reference type, we still have to check the runtime type.
+                    // The object could be a boxed value type, which will fail this asseration because
+                    // a deep clone of a value type object is the same object.
+                    actual.CellValidationEvent.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.CellValidationEvent);
                 }
             }
         }

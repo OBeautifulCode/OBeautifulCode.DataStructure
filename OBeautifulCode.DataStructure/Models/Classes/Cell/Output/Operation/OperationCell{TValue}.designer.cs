@@ -74,6 +74,8 @@ namespace OBeautifulCode.DataStructure
                       && this.Details.IsEqualTo(other.Details, StringComparer.Ordinal)
                       && this.Operation.IsEqualTo(other.Operation)
                       && this.CellOpExecutionEvent.IsEqualTo(other.CellOpExecutionEvent)
+                      && this.ValidationConditions.IsEqualTo(other.ValidationConditions)
+                      && this.CellValidationEvent.IsEqualTo(other.CellValidationEvent)
                       && this.Format.IsEqualTo(other.Format)
                       && this.HoverOver.IsEqualTo(other.HoverOver)
                       && this.Link.IsEqualTo(other.Link);
@@ -91,6 +93,8 @@ namespace OBeautifulCode.DataStructure
             .Hash(this.Details)
             .Hash(this.Operation)
             .Hash(this.CellOpExecutionEvent)
+            .Hash(this.ValidationConditions)
+            .Hash(this.CellValidationEvent)
             .Hash(this.Format)
             .Hash(this.HoverOver)
             .Hash(this.Link)
@@ -122,6 +126,8 @@ namespace OBeautifulCode.DataStructure
             var result = new OperationCell<TValue>(
                                  this.Operation?.DeepClone(),
                                  this.CellOpExecutionEvent?.DeepClone(),
+                                 this.ValidationConditions?.DeepClone(),
+                                 this.CellValidationEvent?.DeepClone(),
                                  id,
                                  this.ColumnsSpanned?.DeepClone(),
                                  this.Details?.DeepClone(),
@@ -155,6 +161,8 @@ namespace OBeautifulCode.DataStructure
             var result = new OperationCell<TValue>(
                                  this.Operation?.DeepClone(),
                                  this.CellOpExecutionEvent?.DeepClone(),
+                                 this.ValidationConditions?.DeepClone(),
+                                 this.CellValidationEvent?.DeepClone(),
                                  this.Id?.DeepClone(),
                                  columnsSpanned,
                                  this.Details?.DeepClone(),
@@ -188,6 +196,8 @@ namespace OBeautifulCode.DataStructure
             var result = new OperationCell<TValue>(
                                  this.Operation?.DeepClone(),
                                  this.CellOpExecutionEvent?.DeepClone(),
+                                 this.ValidationConditions?.DeepClone(),
+                                 this.CellValidationEvent?.DeepClone(),
                                  this.Id?.DeepClone(),
                                  this.ColumnsSpanned?.DeepClone(),
                                  details,
@@ -221,6 +231,8 @@ namespace OBeautifulCode.DataStructure
             var result = new OperationCell<TValue>(
                                  operation,
                                  this.CellOpExecutionEvent?.DeepClone(),
+                                 this.ValidationConditions?.DeepClone(),
+                                 this.CellValidationEvent?.DeepClone(),
                                  this.Id?.DeepClone(),
                                  this.ColumnsSpanned?.DeepClone(),
                                  this.Details?.DeepClone(),
@@ -254,6 +266,78 @@ namespace OBeautifulCode.DataStructure
             var result = new OperationCell<TValue>(
                                  this.Operation?.DeepClone(),
                                  cellOpExecutionEvent,
+                                 this.ValidationConditions?.DeepClone(),
+                                 this.CellValidationEvent?.DeepClone(),
+                                 this.Id?.DeepClone(),
+                                 this.ColumnsSpanned?.DeepClone(),
+                                 this.Details?.DeepClone(),
+                                 this.Format?.DeepClone(),
+                                 this.HoverOver?.DeepClone(),
+                                 this.Link?.DeepClone());
+
+            return result;
+        }
+
+        /// <inheritdoc />
+        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
+        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
+        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
+        public override OperationOutputCellBase<TValue> DeepCloneWithValidationConditions(ValidationConditions validationConditions)
+        {
+            var result = new OperationCell<TValue>(
+                                 this.Operation?.DeepClone(),
+                                 this.CellOpExecutionEvent?.DeepClone(),
+                                 validationConditions,
+                                 this.CellValidationEvent?.DeepClone(),
+                                 this.Id?.DeepClone(),
+                                 this.ColumnsSpanned?.DeepClone(),
+                                 this.Details?.DeepClone(),
+                                 this.Format?.DeepClone(),
+                                 this.HoverOver?.DeepClone(),
+                                 this.Link?.DeepClone());
+
+            return result;
+        }
+
+        /// <inheritdoc />
+        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
+        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
+        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
+        public override OperationOutputCellBase<TValue> DeepCloneWithCellValidationEvent(CellValidationEventBase cellValidationEvent)
+        {
+            var result = new OperationCell<TValue>(
+                                 this.Operation?.DeepClone(),
+                                 this.CellOpExecutionEvent?.DeepClone(),
+                                 this.ValidationConditions?.DeepClone(),
+                                 cellValidationEvent,
                                  this.Id?.DeepClone(),
                                  this.ColumnsSpanned?.DeepClone(),
                                  this.Details?.DeepClone(),
@@ -291,6 +375,8 @@ namespace OBeautifulCode.DataStructure
             var result = new OperationCell<TValue>(
                                  this.Operation?.DeepClone(),
                                  this.CellOpExecutionEvent?.DeepClone(),
+                                 this.ValidationConditions?.DeepClone(),
+                                 this.CellValidationEvent?.DeepClone(),
                                  this.Id?.DeepClone(),
                                  this.ColumnsSpanned?.DeepClone(),
                                  this.Details?.DeepClone(),
@@ -328,6 +414,8 @@ namespace OBeautifulCode.DataStructure
             var result = new OperationCell<TValue>(
                                  this.Operation?.DeepClone(),
                                  this.CellOpExecutionEvent?.DeepClone(),
+                                 this.ValidationConditions?.DeepClone(),
+                                 this.CellValidationEvent?.DeepClone(),
                                  this.Id?.DeepClone(),
                                  this.ColumnsSpanned?.DeepClone(),
                                  this.Details?.DeepClone(),
@@ -365,6 +453,8 @@ namespace OBeautifulCode.DataStructure
             var result = new OperationCell<TValue>(
                                  this.Operation?.DeepClone(),
                                  this.CellOpExecutionEvent?.DeepClone(),
+                                 this.ValidationConditions?.DeepClone(),
+                                 this.CellValidationEvent?.DeepClone(),
                                  this.Id?.DeepClone(),
                                  this.ColumnsSpanned?.DeepClone(),
                                  this.Details?.DeepClone(),
@@ -382,6 +472,8 @@ namespace OBeautifulCode.DataStructure
             var result = new OperationCell<TValue>(
                                  this.Operation?.DeepClone(),
                                  this.CellOpExecutionEvent?.DeepClone(),
+                                 this.ValidationConditions?.DeepClone(),
+                                 this.CellValidationEvent?.DeepClone(),
                                  this.Id?.DeepClone(),
                                  this.ColumnsSpanned?.DeepClone(),
                                  this.Details?.DeepClone(),
@@ -396,7 +488,7 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"OBeautifulCode.DataStructure.{this.GetType().ToStringReadable()}: Id = {this.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, ColumnsSpanned = {this.ColumnsSpanned?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Details = {this.Details?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Operation = {this.Operation?.ToString() ?? "<null>"}, CellOpExecutionEvent = {this.CellOpExecutionEvent?.ToString() ?? "<null>"}, Format = {this.Format?.ToString() ?? "<null>"}, HoverOver = {this.HoverOver?.ToString() ?? "<null>"}, Link = {this.Link?.ToString() ?? "<null>"}.");
+            var result = Invariant($"OBeautifulCode.DataStructure.{this.GetType().ToStringReadable()}: Id = {this.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, ColumnsSpanned = {this.ColumnsSpanned?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Details = {this.Details?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Operation = {this.Operation?.ToString() ?? "<null>"}, CellOpExecutionEvent = {this.CellOpExecutionEvent?.ToString() ?? "<null>"}, ValidationConditions = {this.ValidationConditions?.ToString() ?? "<null>"}, CellValidationEvent = {this.CellValidationEvent?.ToString() ?? "<null>"}, Format = {this.Format?.ToString() ?? "<null>"}, HoverOver = {this.HoverOver?.ToString() ?? "<null>"}, Link = {this.Link?.ToString() ?? "<null>"}.");
 
             return result;
         }

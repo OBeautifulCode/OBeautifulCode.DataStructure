@@ -22,12 +22,16 @@ namespace OBeautifulCode.DataStructure
         /// </summary>
         /// <param name="operation">The operation.</param>
         /// <param name="cellOpExecutionEvent">The result of executing the operation.</param>
+        /// <param name="validationConditions">A list of conditions that determine the validity of the cell's value.</param>
+        /// <param name="cellValidationEvent">The result of validating the cell's value.</param>
         /// <param name="id">The cell's unique identifier.</param>
         /// <param name="columnsSpanned">The number of columns spanned or null if none (cell occupies a single column).</param>
         /// <param name="details">Details about the cell.</param>
         protected OperationOutputCellBase(
             IReturningOperation<TValue> operation,
             CellOpExecutionEventBase cellOpExecutionEvent,
+            ValidationConditions validationConditions,
+            CellValidationEventBase cellValidationEvent,
             string id,
             int? columnsSpanned,
             string details)
@@ -40,6 +44,8 @@ namespace OBeautifulCode.DataStructure
 
             this.Operation = operation;
             this.CellOpExecutionEvent = cellOpExecutionEvent;
+            this.ValidationConditions = validationConditions;
+            this.CellValidationEvent = cellValidationEvent;
         }
 
         /// <inheritdoc />
@@ -47,6 +53,12 @@ namespace OBeautifulCode.DataStructure
 
         /// <inheritdoc />
         public CellOpExecutionEventBase CellOpExecutionEvent { get; private set; }
+
+        /// <inheritdoc />
+        public ValidationConditions ValidationConditions { get; private set; }
+
+        /// <inheritdoc />
+        public CellValidationEventBase CellValidationEvent { get; private set; }
 
         /// <inheritdoc />
         public void RecordExecution(
@@ -82,6 +94,30 @@ namespace OBeautifulCode.DataStructure
             var result = succeededInExecutingCellOpEvent.ExecutionResult;
 
             return result;
+        }
+
+        /// <inheritdoc />
+        public ValidationStatus GetValidationStatus()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc />
+        public void RecordValidation(
+            CellValidationEventBase cellValidationEvent)
+        {
+            if (cellValidationEvent == null)
+            {
+                throw new ArgumentNullException(nameof(cellValidationEvent));
+            }
+
+            this.CellValidationEvent = cellValidationEvent;
+        }
+
+        /// <inheritdoc />
+        public void ClearValidation()
+        {
+            this.CellValidationEvent = null;
         }
 
         /// <inheritdoc />

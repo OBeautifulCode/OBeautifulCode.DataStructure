@@ -66,6 +66,8 @@ namespace OBeautifulCode.DataStructure
         /// <typeparam name="TValue">The type of value.</typeparam>
         /// <param name="operation">The operation.</param>
         /// <param name="cellOpExecutionEvent">OPTIONAL result of executing the operation.  DEFAULT is a cell who's operation has not yet been executed.</param>
+        /// <param name="validationConditions">OPTIONAL list of conditions that determine the validity of the cell's value.  DEFAULT is to omit validation.</param>
+        /// <param name="cellValidationEvent">OPTIONAL result of validating the cell's value.  DEFAULT is a cell that has not yet been validated.</param>
         /// <param name="id">OPTIONAL unique identifier of the cell.  DEFAULT is a cell with no unique identifier.</param>
         /// <param name="columnsSpanned">OPTIONAL number of columns spanned or null if none (cell occupies a single column).  DEFAULT is none.</param>
         /// <param name="details">OPTIONAL details about the cell.  DEFAULT is to omit any details.</param>
@@ -78,6 +80,8 @@ namespace OBeautifulCode.DataStructure
         public static OperationCell<TValue> CreateOp<TValue>(
             IReturningOperation<TValue> operation,
             CellOpExecutionEventBase cellOpExecutionEvent = null,
+            ValidationConditions validationConditions = null,
+            CellValidationEventBase cellValidationEvent = null,
             string id = null,
             int? columnsSpanned = null,
             string details = null,
@@ -85,7 +89,7 @@ namespace OBeautifulCode.DataStructure
             IHoverOver hoverOver = null,
             ILink link = null)
         {
-            var result = new OperationCell<TValue>(operation, cellOpExecutionEvent, id, columnsSpanned, details, format, hoverOver, link);
+            var result = new OperationCell<TValue>(operation, cellOpExecutionEvent, validationConditions, cellValidationEvent, id, columnsSpanned, details, format, hoverOver, link);
 
             return result;
         }
@@ -123,6 +127,8 @@ namespace OBeautifulCode.DataStructure
         /// </summary>
         /// <typeparam name="TValue">The type of value.</typeparam>
         /// <param name="inputAppliedToCellEvent">OPTIONAL input that was applied to the cell.  DEFAULT is a cell with no inputted value.</param>
+        /// <param name="validationConditions">OPTIONAL list of conditions that determine the validity of the cell's value.  DEFAULT is to omit validation.</param>
+        /// <param name="cellValidationEvent">OPTIONAL result of validating the cell's value.  DEFAULT is a cell that has not yet been validated.</param>
         /// <param name="id">OPTIONAL unique identifier of the cell.  DEFAULT is a cell with no unique identifier.</param>
         /// <param name="columnsSpanned">OPTIONAL number of columns spanned or null if none (cell occupies a single column).  DEFAULT is none.</param>
         /// <param name="details">OPTIONAL details about the cell.  DEFAULT is to omit any details.</param>
@@ -134,6 +140,8 @@ namespace OBeautifulCode.DataStructure
         /// </returns>
         public static InputCell<TValue> CreateInput<TValue>(
             InputAppliedToCellEvent<TValue> inputAppliedToCellEvent = null,
+            ValidationConditions validationConditions = null,
+            CellValidationEventBase cellValidationEvent = null,
             string id = null,
             int? columnsSpanned = null,
             string details = null,
@@ -141,7 +149,7 @@ namespace OBeautifulCode.DataStructure
             IHoverOver hoverOver = null,
             ILink link = null)
         {
-            var result = new InputCell<TValue>(inputAppliedToCellEvent, id, columnsSpanned, details, format, hoverOver, link);
+            var result = new InputCell<TValue>(inputAppliedToCellEvent, validationConditions, cellValidationEvent, id, columnsSpanned, details, format, hoverOver, link);
 
             return result;
         }

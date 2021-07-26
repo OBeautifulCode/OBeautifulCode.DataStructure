@@ -13,12 +13,14 @@ namespace OBeautifulCode.DataStructure
     /// </summary>
     /// <typeparam name="TValue">The type of input value.</typeparam>
     // ReSharper disable once RedundantExtendsListEntry
-    public partial class InputCell<TValue> : InputCellBase<TValue>, IHaveStandardFeatures, IModelViaCodeGen
+    public partial class InputCell<TValue> : InputCellBase<TValue>, IHaveStandardCellFeatures, IModelViaCodeGen
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="InputCell{TValue}"/> class.
         /// </summary>
         /// <param name="inputAppliedToCellEvent">OPTIONAL input that was applied to the cell.  DEFAULT is a cell with no inputted value.</param>
+        /// <param name="validationConditions">OPTIONAL list of conditions that determine the validity of the cell's value.  DEFAULT is to omit validation.</param>
+        /// <param name="cellValidationEvent">OPTIONAL result of validating the cell's value.  DEFAULT is a cell that has not yet been validated.</param>
         /// <param name="id">OPTIONAL unique identifier of the cell.  DEFAULT is a cell with no unique identifier.</param>
         /// <param name="columnsSpanned">OPTIONAL number of columns spanned or null if none (cell occupies a single column).  DEFAULT is none.</param>
         /// <param name="details">OPTIONAL details about the cell.  DEFAULT is to omit any details.</param>
@@ -27,13 +29,15 @@ namespace OBeautifulCode.DataStructure
         /// <param name="link">OPTIONAL link to some resource.  DEFAULT is no link.</param>
         public InputCell(
             InputAppliedToCellEvent<TValue> inputAppliedToCellEvent = null,
+            ValidationConditions validationConditions = null,
+            CellValidationEventBase cellValidationEvent = null,
             string id = null,
             int? columnsSpanned = null,
             string details = null,
             CellFormat format = null,
             IHoverOver hoverOver = null,
             ILink link = null)
-            : base(inputAppliedToCellEvent, id, columnsSpanned, details)
+            : base(inputAppliedToCellEvent, validationConditions, cellValidationEvent, id, columnsSpanned, details)
         {
             this.Format = format;
             this.HoverOver = hoverOver;

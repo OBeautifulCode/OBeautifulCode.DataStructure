@@ -13,7 +13,7 @@ namespace OBeautifulCode.DataStructure
     /// </summary>
     /// <typeparam name="TValue">The type of output value.</typeparam>
     // ReSharper disable once RedundantExtendsListEntry
-    public partial class ConstCell<TValue> : ConstOutputCellBase<TValue>, IHaveStandardFeatures, IModelViaCodeGen
+    public partial class ConstCell<TValue> : ConstOutputCellBase<TValue>, IHaveStandardCellFeatures, IModelViaCodeGen
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ConstCell{TValue}"/> class.

@@ -197,6 +197,10 @@
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringReadableOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringXmlDocOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
+    <Compile Include="Events\CellValidationEventBaseTest.cs" />
+    <Compile Include="Events\CellValidationEventBaseTest.designer.cs">
+      <DependentUpon>CellValidationEventBaseTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="DataStructureDummyFactory.designer.cs">
       <DependentUpon>DataStructureDummyFactory.cs</DependentUpon>
     </Compile>

@@ -99,6 +99,8 @@ namespace OBeautifulCode.DataStructure.Test
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new InputCell<Version>(
                                  A.Dummy<InputAppliedToCellEvent<Version>>(),
+                                 A.Dummy<ValidationConditions>(),
+                                 A.Dummy<CellValidationEventBase>(),
                                  A.Dummy<string>(),
                                  A.Dummy<int?>(),
                                  A.Dummy<string>(),
@@ -179,6 +181,8 @@ namespace OBeautifulCode.DataStructure.Test
                 () => new OperationCell<Version>(
                                  A.Dummy<IReturningOperation<Version>>(),
                                  A.Dummy<CellOpExecutionEventBase>(),
+                                 A.Dummy<ValidationConditions>(),
+                                 A.Dummy<CellValidationEventBase>(),
                                  A.Dummy<string>(),
                                  A.Dummy<int?>(),
                                  A.Dummy<string>(),

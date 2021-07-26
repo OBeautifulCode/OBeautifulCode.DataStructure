@@ -10,7 +10,7 @@ namespace OBeautifulCode.DataStructure
     /// A cell whose value can be inputted with a specified type of value.
     /// </summary>
     /// <typeparam name="TValue">The type of inputted value.</typeparam>
-    public interface IInputCell<TValue> : INotSlottedCell, IGetCellValue<TValue>, IClearCellValue
+    public interface IInputCell<TValue> : INotSlottedCell, IGetCellValue<TValue>, IClearCellValue, IValidateCellValue, IHaveCellValidationConditions
     {
         /// <summary>
         /// Gets the input that was applied to the cell.
