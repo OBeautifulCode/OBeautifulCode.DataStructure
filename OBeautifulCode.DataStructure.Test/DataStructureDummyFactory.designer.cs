@@ -101,6 +101,7 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<InputAppliedToCellEvent<Version>>(),
                                  A.Dummy<string>(),
                                  A.Dummy<int?>(),
+                                 A.Dummy<string>(),
                                  A.Dummy<CellFormat>(),
                                  A.Dummy<IHoverOver>(),
                                  A.Dummy<ILink>()));
@@ -180,6 +181,7 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<CellOpExecutionEventBase>(),
                                  A.Dummy<string>(),
                                  A.Dummy<int?>(),
+                                 A.Dummy<string>(),
                                  A.Dummy<CellFormat>(),
                                  A.Dummy<IHoverOver>(),
                                  A.Dummy<ILink>()));
@@ -189,6 +191,7 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<Version>(),
                                  A.Dummy<string>(),
                                  A.Dummy<int?>(),
+                                 A.Dummy<string>(),
                                  A.Dummy<CellFormat>(),
                                  A.Dummy<IHoverOver>(),
                                  A.Dummy<ILink>()));
@@ -236,12 +239,14 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<IReadOnlyDictionary<string, INotSlottedCell>>(),
                                  A.Dummy<string>(),
                                  A.Dummy<string>(),
-                                 A.Dummy<int?>()));
+                                 A.Dummy<int?>(),
+                                 A.Dummy<string>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new NullCell(
                                  A.Dummy<string>(),
                                  A.Dummy<int?>(),
+                                 A.Dummy<string>(),
                                  A.Dummy<CellFormat>(),
                                  A.Dummy<IHoverOver>(),
                                  A.Dummy<ILink>()));
@@ -462,6 +467,18 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<IReadOnlyCollection<Section>>(),
                                  A.Dummy<string>(),
                                  A.Dummy<ReportFormat>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new Validation(
+                                 A.Dummy<IReadOnlyList<ValidationCondition>>(),
+                                 A.Dummy<string>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new ValidationCondition(
+                                 A.Dummy<IReturningOperation<bool>>(),
+                                 A.Dummy<ValidationConditionKind>(),
+                                 A.Dummy<IReturningOperation<string>>(),
+                                 A.Dummy<string>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new DataRowsFormat(

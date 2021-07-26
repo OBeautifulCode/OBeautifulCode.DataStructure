@@ -197,87 +197,68 @@
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringReadableOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringXmlDocOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
-    <Compile Include="Operations\Bool\AndAlsoOpTest.cs" />
-    <Compile Include="Operations\Bool\AndAlsoOpTest.designer.cs">
-      <DependentUpon>AndAlsoOpTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Report\CellLocatorTest.cs" />
-    <Compile Include="Models\Classes\Report\CellLocatorTest.designer.cs">
-      <DependentUpon>CellLocatorTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Events\CellOpExecution\CellOpExecutionAbortedEventTest.cs" />
-    <Compile Include="Events\CellOpExecution\CellOpExecutionAbortedEventTest.designer.cs">
-      <DependentUpon>CellOpExecutionAbortedEventTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Events\CellOpExecution\CellOpExecutionCompletedEvent{TResult}Test.cs" />
-    <Compile Include="Events\CellOpExecution\CellOpExecutionCompletedEvent{TResult}Test.designer.cs">
-      <DependentUpon>CellOpExecutionCompletedEvent{TResult}Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Events\CellOpExecutionEventBaseTest.cs" />
-    <Compile Include="Events\CellOpExecutionEventBaseTest.designer.cs">
-      <DependentUpon>CellOpExecutionEventBaseTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Events\CellOpExecution\CellOpExecutionFailedWithCellNotFoundEventTest.cs" />
-    <Compile Include="Events\CellOpExecution\CellOpExecutionFailedWithCellNotFoundEventTest.designer.cs">
-      <DependentUpon>CellOpExecutionFailedWithCellNotFoundEventTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Events\CellOpExecution\CellOpExecutionFailedWithExceptionEventTest.cs" />
-    <Compile Include="Events\CellOpExecution\CellOpExecutionFailedWithExceptionEventTest.designer.cs">
-      <DependentUpon>CellOpExecutionFailedWithExceptionEventTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Events\CellOpExecution\CellOpExecutionFailedWithMissingCellValueEventTest.cs" />
-    <Compile Include="Events\CellOpExecution\CellOpExecutionFailedWithMissingCellValueEventTest.designer.cs">
-      <DependentUpon>CellOpExecutionFailedWithMissingCellValueEventTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Cell\Output\Const\ConstCell{TValue}Test.cs" />
-    <Compile Include="Models\Classes\Cell\Output\Const\ConstCell{TValue}Test.designer.cs">
-      <DependentUpon>ConstCell{TValue}Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Cell\Output\Const\ConstOutputCellBase{TValue}Test.cs" />
-    <Compile Include="Models\Classes\Cell\Output\Const\ConstOutputCellBase{TValue}Test.designer.cs">
-      <DependentUpon>ConstOutputCellBase{TValue}Test.cs</DependentUpon>
-    </Compile>
     <Compile Include="DataStructureDummyFactory.designer.cs">
       <DependentUpon>DataStructureDummyFactory.cs</DependentUpon>
     </Compile>
-    <Compile Include="Operations\Cell\ExecuteOperationCellIfNecessaryOp{TValue}Test.cs" />
-    <Compile Include="Operations\Cell\ExecuteOperationCellIfNecessaryOp{TValue}Test.designer.cs">
-      <DependentUpon>ExecuteOperationCellIfNecessaryOp{TValue}Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ExpressionTest.cs" />
     <Compile Include="DataStructureDummyFactoryTest.designer.cs">
       <DependentUpon>DataStructureDummyFactoryTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Operations\Cell\GetCellValueOp{TValue}Test.cs" />
-    <Compile Include="Operations\Cell\GetCellValueOp{TValue}Test.designer.cs">
-      <DependentUpon>GetCellValueOp{TValue}Test.cs</DependentUpon>
+    <Compile Include="Events\CellOpExecutionEventBaseTest.designer.cs">
+      <DependentUpon>CellOpExecutionEventBaseTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Operations\GetConstOp{TValue}Test.cs" />
-    <Compile Include="Operations\GetConstOp{TValue}Test.designer.cs">
-      <DependentUpon>GetConstOp{TValue}Test.cs</DependentUpon>
+    <Compile Include="Events\CellOpExecution\CellOpExecutionAbortedEventTest.designer.cs">
+      <DependentUpon>CellOpExecutionAbortedEventTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Operations\Cell\HasCellValueOpTest.cs" />
-    <Compile Include="Operations\Cell\HasCellValueOpTest.designer.cs">
-      <DependentUpon>HasCellValueOpTest.cs</DependentUpon>
+    <Compile Include="Events\CellOpExecution\CellOpExecutionCompletedEvent{TResult}Test.designer.cs">
+      <DependentUpon>CellOpExecutionCompletedEvent{TResult}Test.cs</DependentUpon>
     </Compile>
-    <Compile Include="Operations\Branch\IfThenElseOp{TResult}Test.cs" />
-    <Compile Include="Operations\Branch\IfThenElseOp{TResult}Test.designer.cs">
-      <DependentUpon>IfThenElseOp{TResult}Test.cs</DependentUpon>
+    <Compile Include="Events\CellOpExecution\CellOpExecutionFailedWithCellNotFoundEventTest.designer.cs">
+      <DependentUpon>CellOpExecutionFailedWithCellNotFoundEventTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Events\InputAppliedToCellEvent{TValue}Test.cs" />
+    <Compile Include="Events\CellOpExecution\CellOpExecutionFailedWithExceptionEventTest.designer.cs">
+      <DependentUpon>CellOpExecutionFailedWithExceptionEventTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Events\CellOpExecution\CellOpExecutionFailedWithMissingCellValueEventTest.designer.cs">
+      <DependentUpon>CellOpExecutionFailedWithMissingCellValueEventTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Events\InputAppliedToCellEvent{TValue}Test.designer.cs">
       <DependentUpon>InputAppliedToCellEvent{TValue}Test.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Classes\Cell\Input\InputCellBase{TValue}Test.cs" />
-    <Compile Include="Models\Classes\Cell\Input\InputCellBase{TValue}Test.designer.cs">
-      <DependentUpon>InputCellBase{TValue}Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Cell\Input\InputCell{TValue}Test.cs" />
     <Compile Include="Models\Classes\CellValue\MediaReferenceTest.designer.cs">
       <DependentUpon>MediaReferenceTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Classes\Cell\CellBaseTest.designer.cs">
       <DependentUpon>CellBaseTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Cell\Input\InputCellBase{TValue}Test.designer.cs">
+      <DependentUpon>InputCellBase{TValue}Test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Cell\Input\InputCell{TValue}Test.designer.cs">
+      <DependentUpon>InputCell{TValue}Test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Cell\Null\NullCellBaseTest.designer.cs">
+      <DependentUpon>NullCellBaseTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Cell\Null\NullCellTest.designer.cs">
+      <DependentUpon>NullCellTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Cell\Output\Const\ConstCell{TValue}Test.designer.cs">
+      <DependentUpon>ConstCell{TValue}Test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Cell\Output\Const\ConstOutputCellBase{TValue}Test.designer.cs">
+      <DependentUpon>ConstOutputCellBase{TValue}Test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Cell\Output\Operation\OperationCell{TValue}Test.designer.cs">
+      <DependentUpon>OperationCell{TValue}Test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Cell\Output\Operation\OperationOutputCellBase{TValue}Test.designer.cs">
+      <DependentUpon>OperationOutputCellBase{TValue}Test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Cell\Output\OutputCellBase{TValue}Test.designer.cs">
+      <DependentUpon>OutputCellBase{TValue}Test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Cell\Slotted\SlottedCellTest.designer.cs">
+      <DependentUpon>SlottedCellTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Classes\Column\ColumnTest.designer.cs">
       <DependentUpon>ColumnTest.cs</DependentUpon>
@@ -357,6 +338,9 @@
     <Compile Include="Models\Classes\Link\SimpleLinkTest.designer.cs">
       <DependentUpon>SimpleLinkTest.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\Classes\Report\CellLocatorTest.designer.cs">
+      <DependentUpon>CellLocatorTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Classes\Report\ReportTest.designer.cs">
       <DependentUpon>ReportTest.cs</DependentUpon>
     </Compile>
@@ -384,13 +368,67 @@
     <Compile Include="Models\Classes\TreeTableTest.designer.cs">
       <DependentUpon>TreeTableTest.cs</DependentUpon>
     </Compile>
+    <Compile Include="Operations\Bool\AndAlsoOpTest.cs" />
+    <Compile Include="Models\Classes\Report\CellLocatorTest.cs" />
+    <Compile Include="Events\CellOpExecution\CellOpExecutionAbortedEventTest.cs" />
+    <Compile Include="Events\CellOpExecution\CellOpExecutionCompletedEvent{TResult}Test.cs" />
+    <Compile Include="Events\CellOpExecutionEventBaseTest.cs" />
+    <Compile Include="Events\CellOpExecution\CellOpExecutionFailedWithCellNotFoundEventTest.cs" />
+    <Compile Include="Events\CellOpExecution\CellOpExecutionFailedWithExceptionEventTest.cs" />
+    <Compile Include="Events\CellOpExecution\CellOpExecutionFailedWithMissingCellValueEventTest.cs" />
+    <Compile Include="Models\Classes\Cell\Output\Const\ConstCell{TValue}Test.cs" />
+    <Compile Include="Models\Classes\Cell\Output\Const\ConstOutputCellBase{TValue}Test.cs" />
+    <Compile Include="Operations\Bool\AndAlsoOpTest.designer.cs">
+      <DependentUpon>AndAlsoOpTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Operations\Bool\NotOpTest.designer.cs">
+      <DependentUpon>NotOpTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Operations\Bool\OrElseOpTest.designer.cs">
+      <DependentUpon>OrElseOpTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Operations\Branch\IfThenElseOp{TResult}Test.designer.cs">
+      <DependentUpon>IfThenElseOp{TResult}Test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Operations\Cell\ExecuteOperationCellIfNecessaryOp{TValue}Test.cs" />
+    <Compile Include="ExpressionTest.cs" />
+    <Compile Include="Operations\Cell\ExecuteOperationCellIfNecessaryOp{TValue}Test.designer.cs">
+      <DependentUpon>ExecuteOperationCellIfNecessaryOp{TValue}Test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Operations\Cell\GetCellValueOp{TValue}Test.cs" />
+    <Compile Include="Operations\Cell\GetCellValueOp{TValue}Test.designer.cs">
+      <DependentUpon>GetCellValueOp{TValue}Test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Operations\Cell\HasCellValueOpTest.designer.cs">
+      <DependentUpon>HasCellValueOpTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Operations\Decimal\SumOpTest.designer.cs">
       <DependentUpon>SumOpTest.cs</DependentUpon>
     </Compile>
-    <None Include="Logic\Extensions\RowExtensionsTest.cs" />
-    <Compile Include="Models\Classes\Cell\Input\InputCell{TValue}Test.designer.cs">
-      <DependentUpon>InputCell{TValue}Test.cs</DependentUpon>
+    <Compile Include="Operations\GetConstOp{TValue}Test.cs" />
+    <Compile Include="Operations\Cell\HasCellValueOpTest.cs" />
+    <Compile Include="Operations\Branch\IfThenElseOp{TResult}Test.cs" />
+    <Compile Include="Events\InputAppliedToCellEvent{TValue}Test.cs" />
+    <Compile Include="Models\Classes\Cell\Input\InputCellBase{TValue}Test.cs" />
+    <Compile Include="Models\Classes\Cell\Input\InputCell{TValue}Test.cs" />
+    <Compile Include="Operations\GetConstOp{TValue}Test.designer.cs">
+      <DependentUpon>GetConstOp{TValue}Test.cs</DependentUpon>
     </Compile>
+    <Compile Include="Operations\MultiStatementOpBase{TStatement,TResult}Test.designer.cs">
+      <DependentUpon>MultiStatementOpBase{TStatement,TResult}Test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Operations\SingleStatementOpBase{TStatement,TResult}Test.designer.cs">
+      <DependentUpon>SingleStatementOpBase{TStatement,TResult}Test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Validation\ValidationConditionTest.cs" />
+    <Compile Include="Models\Classes\Validation\ValidationConditionTest.designer.cs">
+      <DependentUpon>ValidationConditionTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Validation\ValidationTest.cs" />
+    <Compile Include="Models\Classes\Validation\ValidationTest.designer.cs">
+      <DependentUpon>ValidationTest.cs</DependentUpon>
+    </Compile>
+    <None Include="Logic\Extensions\RowExtensionsTest.cs" />
     <Compile Include="Logic\Extensions\TreeTableExtensionsTest.cs" />
     <Compile Include="Models\Classes\CellValue\MediaReferenceTest.cs" />
     <Compile Include="Models\Classes\Cell\CellBaseTest.cs" />
@@ -430,50 +468,20 @@
     <Compile Include="Models\Classes\Row\TableRowsTest.cs" />
     <None Include="Models\Classes\TreeTableTest.cs" />
     <Compile Include="Operations\MultiStatementOpBase{TStatement,TResult}Test.cs" />
-    <Compile Include="Operations\MultiStatementOpBase{TStatement,TResult}Test.designer.cs">
-      <DependentUpon>MultiStatementOpBase{TStatement,TResult}Test.cs</DependentUpon>
-    </Compile>
     <Compile Include="Operations\Bool\NotOpTest.cs" />
-    <Compile Include="Operations\Bool\NotOpTest.designer.cs">
-      <DependentUpon>NotOpTest.cs</DependentUpon>
-    </Compile>
     <Compile Include="Models\Classes\Cell\Null\NullCellBaseTest.cs" />
-    <Compile Include="Models\Classes\Cell\Null\NullCellBaseTest.designer.cs">
-      <DependentUpon>NullCellBaseTest.cs</DependentUpon>
-    </Compile>
     <Compile Include="Models\Classes\Cell\Null\NullCellTest.cs" />
-    <Compile Include="Models\Classes\Cell\Null\NullCellTest.designer.cs">
-      <DependentUpon>NullCellTest.cs</DependentUpon>
-    </Compile>
     <Compile Include="Models\Classes\Cell\Output\Operation\OperationCell{TValue}Test.cs" />
-    <Compile Include="Models\Classes\Cell\Output\Operation\OperationCell{TValue}Test.designer.cs">
-      <DependentUpon>OperationCell{TValue}Test.cs</DependentUpon>
-    </Compile>
     <Compile Include="Models\Classes\Cell\Output\Operation\OperationOutputCellBase{TValue}Test.cs" />
-    <Compile Include="Models\Classes\Cell\Output\Operation\OperationOutputCellBase{TValue}Test.designer.cs">
-      <DependentUpon>OperationOutputCellBase{TValue}Test.cs</DependentUpon>
-    </Compile>
     <Compile Include="Operations\Bool\OrElseOpTest.cs" />
-    <Compile Include="Operations\Bool\OrElseOpTest.designer.cs">
-      <DependentUpon>OrElseOpTest.cs</DependentUpon>
-    </Compile>
     <Compile Include="Models\Classes\Cell\Output\OutputCellBase{TValue}Test.cs" />
-    <Compile Include="Models\Classes\Cell\Output\OutputCellBase{TValue}Test.designer.cs">
-      <DependentUpon>OutputCellBase{TValue}Test.cs</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\GlobalSuppressions.cs" />
     <Compile Include="DataStructureDummyFactory.cs" />
     <Compile Include="DataStructureDummyFactoryTest.cs" />
     <AdditionalFiles Include=".analyzers\stylecop.json" />
     <Compile Include="Operations\SingleStatementOpBase{TStatement,TResult}Test.cs" />
-    <Compile Include="Operations\SingleStatementOpBase{TStatement,TResult}Test.designer.cs">
-      <DependentUpon>SingleStatementOpBase{TStatement,TResult}Test.cs</DependentUpon>
-    </Compile>
     <Compile Include="Models\Classes\Cell\Slotted\SlottedCellTest.cs" />
-    <Compile Include="Models\Classes\Cell\Slotted\SlottedCellTest.designer.cs">
-      <DependentUpon>SlottedCellTest.cs</DependentUpon>
-    </Compile>
     <Compile Include="Operations\Decimal\SumOpTest.cs" />
     <None Include=".analyzers\test.ruleset" />
     <None Include="DummyFactory.recipe-nuspec" />

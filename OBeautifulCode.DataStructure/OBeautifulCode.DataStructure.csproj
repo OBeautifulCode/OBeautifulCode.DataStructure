@@ -298,6 +298,12 @@
     <Compile Include="Models\Classes\TreeTable.designer.cs">
       <DependentUpon>TreeTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\Classes\Validation\Validation.designer.cs">
+      <DependentUpon>Validation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Validation\ValidationCondition.designer.cs">
+      <DependentUpon>ValidationCondition.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Enums\Validation\ValidationConditionKind.cs" />
     <Compile Include="Models\Classes\Validation\Validation.cs" />
     <Compile Include="Models\Classes\Validation\ValidationCondition.cs" />

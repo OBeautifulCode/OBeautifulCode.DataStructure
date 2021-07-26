@@ -47,7 +47,7 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new SystemUnderTestExpectedStringRepresentation<NullCell>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.NullCell: Id = {systemUnderTest.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, ColumnsSpanned = {systemUnderTest.ColumnsSpanned?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Format = {systemUnderTest.Format?.ToString() ?? "<null>"}, HoverOver = {systemUnderTest.HoverOver?.ToString() ?? "<null>"}, Link = {systemUnderTest.Link?.ToString() ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.NullCell: Id = {systemUnderTest.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, ColumnsSpanned = {systemUnderTest.ColumnsSpanned?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Details = {systemUnderTest.Details?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Format = {systemUnderTest.Format?.ToString() ?? "<null>"}, HoverOver = {systemUnderTest.HoverOver?.ToString() ?? "<null>"}, Link = {systemUnderTest.Link?.ToString() ?? "<null>"}."),
                         };
 
                         return result;
@@ -66,6 +66,7 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new NullCell(
                                              null,
                                              referenceObject.ColumnsSpanned,
+                                             referenceObject.Details,
                                              referenceObject.Format,
                                              referenceObject.HoverOver,
                                              referenceObject.Link);
@@ -86,6 +87,7 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new NullCell(
                                              Invariant($"  {Environment.NewLine}  "),
                                              referenceObject.ColumnsSpanned,
+                                             referenceObject.Details,
                                              referenceObject.Format,
                                              referenceObject.HoverOver,
                                              referenceObject.Link);
@@ -98,6 +100,48 @@ namespace OBeautifulCode.DataStructure.Test
             .AddScenario(() =>
                 new ConstructorArgumentValidationTestScenario<NullCell>
                 {
+                    Name = "constructor should throw ArgumentNullException when parameter 'details' is null scenario",
+                    ConstructionFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<NullCell>();
+
+                        var result = new NullCell(
+                                             referenceObject.Id,
+                                             referenceObject.ColumnsSpanned,
+                                             null,
+                                             referenceObject.Format,
+                                             referenceObject.HoverOver,
+                                             referenceObject.Link);
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentNullException),
+                    ExpectedExceptionMessageContains = new[] { "details", },
+                })
+            .AddScenario(() =>
+                new ConstructorArgumentValidationTestScenario<NullCell>
+                {
+                    Name = "constructor should throw ArgumentException when parameter 'details' is white space scenario",
+                    ConstructionFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<NullCell>();
+
+                        var result = new NullCell(
+                                             referenceObject.Id,
+                                             referenceObject.ColumnsSpanned,
+                                             Invariant($"  {Environment.NewLine}  "),
+                                             referenceObject.Format,
+                                             referenceObject.HoverOver,
+                                             referenceObject.Link);
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentException),
+                    ExpectedExceptionMessageContains = new[] { "details", "white space", },
+                })
+            .AddScenario(() =>
+                new ConstructorArgumentValidationTestScenario<NullCell>
+                {
                     Name = "constructor should throw ArgumentNullException when parameter 'format' is null scenario",
                     ConstructionFunc = () =>
                     {
@@ -106,6 +150,7 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new NullCell(
                                              referenceObject.Id,
                                              referenceObject.ColumnsSpanned,
+                                             referenceObject.Details,
                                              null,
                                              referenceObject.HoverOver,
                                              referenceObject.Link);
@@ -126,6 +171,7 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new NullCell(
                                              referenceObject.Id,
                                              referenceObject.ColumnsSpanned,
+                                             referenceObject.Details,
                                              referenceObject.Format,
                                              null,
                                              referenceObject.Link);
@@ -146,6 +192,7 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new NullCell(
                                              referenceObject.Id,
                                              referenceObject.ColumnsSpanned,
+                                             referenceObject.Details,
                                              referenceObject.Format,
                                              referenceObject.HoverOver,
                                              null);
@@ -170,6 +217,7 @@ namespace OBeautifulCode.DataStructure.Test
                             SystemUnderTest = new NullCell(
                                                       referenceObject.Id,
                                                       referenceObject.ColumnsSpanned,
+                                                      referenceObject.Details,
                                                       referenceObject.Format,
                                                       referenceObject.HoverOver,
                                                       referenceObject.Link),
@@ -193,6 +241,7 @@ namespace OBeautifulCode.DataStructure.Test
                             SystemUnderTest = new NullCell(
                                                       referenceObject.Id,
                                                       referenceObject.ColumnsSpanned,
+                                                      referenceObject.Details,
                                                       referenceObject.Format,
                                                       referenceObject.HoverOver,
                                                       referenceObject.Link),
@@ -202,6 +251,30 @@ namespace OBeautifulCode.DataStructure.Test
                         return result;
                     },
                     PropertyName = "ColumnsSpanned",
+                })
+            .AddScenario(() =>
+                new ConstructorPropertyAssignmentTestScenario<NullCell>
+                {
+                    Name = "Details should return same 'details' parameter passed to constructor when getting",
+                    SystemUnderTestExpectedPropertyValueFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<NullCell>();
+
+                        var result = new SystemUnderTestExpectedPropertyValue<NullCell>
+                        {
+                            SystemUnderTest = new NullCell(
+                                                      referenceObject.Id,
+                                                      referenceObject.ColumnsSpanned,
+                                                      referenceObject.Details,
+                                                      referenceObject.Format,
+                                                      referenceObject.HoverOver,
+                                                      referenceObject.Link),
+                            ExpectedPropertyValue = referenceObject.Details,
+                        };
+
+                        return result;
+                    },
+                    PropertyName = "Details",
                 })
             .AddScenario(() =>
                 new ConstructorPropertyAssignmentTestScenario<NullCell>
@@ -216,6 +289,7 @@ namespace OBeautifulCode.DataStructure.Test
                             SystemUnderTest = new NullCell(
                                                       referenceObject.Id,
                                                       referenceObject.ColumnsSpanned,
+                                                      referenceObject.Details,
                                                       referenceObject.Format,
                                                       referenceObject.HoverOver,
                                                       referenceObject.Link),
@@ -239,6 +313,7 @@ namespace OBeautifulCode.DataStructure.Test
                             SystemUnderTest = new NullCell(
                                                       referenceObject.Id,
                                                       referenceObject.ColumnsSpanned,
+                                                      referenceObject.Details,
                                                       referenceObject.Format,
                                                       referenceObject.HoverOver,
                                                       referenceObject.Link),
@@ -262,6 +337,7 @@ namespace OBeautifulCode.DataStructure.Test
                             SystemUnderTest = new NullCell(
                                                       referenceObject.Id,
                                                       referenceObject.ColumnsSpanned,
+                                                      referenceObject.Details,
                                                       referenceObject.Format,
                                                       referenceObject.HoverOver,
                                                       referenceObject.Link),
@@ -309,6 +385,26 @@ namespace OBeautifulCode.DataStructure.Test
                         {
                             SystemUnderTest = systemUnderTest,
                             DeepCloneWithValue = referenceObject.ColumnsSpanned,
+                        };
+
+                        return result;
+                    },
+                })
+            .AddScenario(() =>
+                new DeepCloneWithTestScenario<NullCell>
+                {
+                    Name = "DeepCloneWithDetails should deep clone object and replace Details with the provided details",
+                    WithPropertyName = "Details",
+                    SystemUnderTestDeepCloneWithValueFunc = () =>
+                    {
+                        var systemUnderTest = A.Dummy<NullCell>();
+
+                        var referenceObject = A.Dummy<NullCell>().ThatIs(_ => !systemUnderTest.Details.IsEqualTo(_.Details));
+
+                        var result = new SystemUnderTestDeepCloneWithValue<NullCell>
+                        {
+                            SystemUnderTest = systemUnderTest,
+                            DeepCloneWithValue = referenceObject.Details,
                         };
 
                         return result;
@@ -388,6 +484,7 @@ namespace OBeautifulCode.DataStructure.Test
                         new NullCell(
                                 ReferenceObjectForEquatableTestScenarios.Id,
                                 ReferenceObjectForEquatableTestScenarios.ColumnsSpanned,
+                                ReferenceObjectForEquatableTestScenarios.Details,
                                 ReferenceObjectForEquatableTestScenarios.Format,
                                 ReferenceObjectForEquatableTestScenarios.HoverOver,
                                 ReferenceObjectForEquatableTestScenarios.Link),
@@ -397,30 +494,42 @@ namespace OBeautifulCode.DataStructure.Test
                         new NullCell(
                                 A.Dummy<NullCell>().Whose(_ => !_.Id.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Id)).Id,
                                 ReferenceObjectForEquatableTestScenarios.ColumnsSpanned,
+                                ReferenceObjectForEquatableTestScenarios.Details,
                                 ReferenceObjectForEquatableTestScenarios.Format,
                                 ReferenceObjectForEquatableTestScenarios.HoverOver,
                                 ReferenceObjectForEquatableTestScenarios.Link),
                         new NullCell(
                                 ReferenceObjectForEquatableTestScenarios.Id,
                                 A.Dummy<NullCell>().Whose(_ => !_.ColumnsSpanned.IsEqualTo(ReferenceObjectForEquatableTestScenarios.ColumnsSpanned)).ColumnsSpanned,
+                                ReferenceObjectForEquatableTestScenarios.Details,
                                 ReferenceObjectForEquatableTestScenarios.Format,
                                 ReferenceObjectForEquatableTestScenarios.HoverOver,
                                 ReferenceObjectForEquatableTestScenarios.Link),
                         new NullCell(
                                 ReferenceObjectForEquatableTestScenarios.Id,
                                 ReferenceObjectForEquatableTestScenarios.ColumnsSpanned,
+                                A.Dummy<NullCell>().Whose(_ => !_.Details.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Details)).Details,
+                                ReferenceObjectForEquatableTestScenarios.Format,
+                                ReferenceObjectForEquatableTestScenarios.HoverOver,
+                                ReferenceObjectForEquatableTestScenarios.Link),
+                        new NullCell(
+                                ReferenceObjectForEquatableTestScenarios.Id,
+                                ReferenceObjectForEquatableTestScenarios.ColumnsSpanned,
+                                ReferenceObjectForEquatableTestScenarios.Details,
                                 A.Dummy<NullCell>().Whose(_ => !_.Format.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Format)).Format,
                                 ReferenceObjectForEquatableTestScenarios.HoverOver,
                                 ReferenceObjectForEquatableTestScenarios.Link),
                         new NullCell(
                                 ReferenceObjectForEquatableTestScenarios.Id,
                                 ReferenceObjectForEquatableTestScenarios.ColumnsSpanned,
+                                ReferenceObjectForEquatableTestScenarios.Details,
                                 ReferenceObjectForEquatableTestScenarios.Format,
                                 A.Dummy<NullCell>().Whose(_ => !_.HoverOver.IsEqualTo(ReferenceObjectForEquatableTestScenarios.HoverOver)).HoverOver,
                                 ReferenceObjectForEquatableTestScenarios.Link),
                         new NullCell(
                                 ReferenceObjectForEquatableTestScenarios.Id,
                                 ReferenceObjectForEquatableTestScenarios.ColumnsSpanned,
+                                ReferenceObjectForEquatableTestScenarios.Details,
                                 ReferenceObjectForEquatableTestScenarios.Format,
                                 ReferenceObjectForEquatableTestScenarios.HoverOver,
                                 A.Dummy<NullCell>().Whose(_ => !_.Link.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Link)).Link),
@@ -740,7 +849,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "Id", "ColumnsSpanned", "Format", "HoverOver", "Link" };
+                var propertyNames = new string[] { "Id", "ColumnsSpanned", "Details", "Format", "HoverOver", "Link" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 

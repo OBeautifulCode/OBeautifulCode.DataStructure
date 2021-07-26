@@ -55,6 +55,7 @@ namespace OBeautifulCode.DataStructure.Test
                         // We do not know in advance if this will happen.  As such, the following objects are commented out.
                         // ReferenceObjectForEquatableTestScenarios.DeepCloneWithId(A.Dummy<CellBase>().Whose(_ => !_.Id.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Id)).Id),
                         // ReferenceObjectForEquatableTestScenarios.DeepCloneWithColumnsSpanned(A.Dummy<CellBase>().Whose(_ => !_.ColumnsSpanned.IsEqualTo(ReferenceObjectForEquatableTestScenarios.ColumnsSpanned)).ColumnsSpanned),
+                        // ReferenceObjectForEquatableTestScenarios.DeepCloneWithDetails(A.Dummy<CellBase>().Whose(_ => !_.Details.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Details)).Details),
                     },
                     ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject = new CellBase[]
                     {

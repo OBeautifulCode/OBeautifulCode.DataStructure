@@ -47,7 +47,7 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new SystemUnderTestExpectedStringRepresentation<SlottedCell>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.SlottedCell: Id = {systemUnderTest.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, ColumnsSpanned = {systemUnderTest.ColumnsSpanned?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, SlotIdToCellMap = {systemUnderTest.SlotIdToCellMap?.ToString() ?? "<null>"}, DefaultSlotId = {systemUnderTest.DefaultSlotId?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.SlottedCell: Id = {systemUnderTest.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, ColumnsSpanned = {systemUnderTest.ColumnsSpanned?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Details = {systemUnderTest.Details?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, SlotIdToCellMap = {systemUnderTest.SlotIdToCellMap?.ToString() ?? "<null>"}, DefaultSlotId = {systemUnderTest.DefaultSlotId?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}."),
                         };
 
                         return result;
@@ -67,7 +67,8 @@ namespace OBeautifulCode.DataStructure.Test
                                              null,
                                              referenceObject.DefaultSlotId,
                                              referenceObject.Id,
-                                             referenceObject.ColumnsSpanned);
+                                             referenceObject.ColumnsSpanned,
+                                             referenceObject.Details);
 
                         return result;
                     },
@@ -86,7 +87,8 @@ namespace OBeautifulCode.DataStructure.Test
                                              new Dictionary<string, INotSlottedCell>(),
                                              referenceObject.DefaultSlotId,
                                              referenceObject.Id,
-                                             referenceObject.ColumnsSpanned);
+                                             referenceObject.ColumnsSpanned,
+                                             referenceObject.Details);
 
                         return result;
                     },
@@ -111,7 +113,8 @@ namespace OBeautifulCode.DataStructure.Test
                                              dictionaryWithNullValue,
                                              referenceObject.DefaultSlotId,
                                              referenceObject.Id,
-                                             referenceObject.ColumnsSpanned);
+                                             referenceObject.ColumnsSpanned,
+                                             referenceObject.Details);
 
                         return result;
                     },
@@ -130,7 +133,8 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.SlotIdToCellMap,
                                              null,
                                              referenceObject.Id,
-                                             referenceObject.ColumnsSpanned);
+                                             referenceObject.ColumnsSpanned,
+                                             referenceObject.Details);
 
                         return result;
                     },
@@ -149,7 +153,8 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.SlotIdToCellMap,
                                              Invariant($"  {Environment.NewLine}  "),
                                              referenceObject.Id,
-                                             referenceObject.ColumnsSpanned);
+                                             referenceObject.ColumnsSpanned,
+                                             referenceObject.Details);
 
                         return result;
                     },
@@ -168,7 +173,8 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.SlotIdToCellMap,
                                              referenceObject.DefaultSlotId,
                                              null,
-                                             referenceObject.ColumnsSpanned);
+                                             referenceObject.ColumnsSpanned,
+                                             referenceObject.Details);
 
                         return result;
                     },
@@ -187,12 +193,53 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.SlotIdToCellMap,
                                              referenceObject.DefaultSlotId,
                                              Invariant($"  {Environment.NewLine}  "),
-                                             referenceObject.ColumnsSpanned);
+                                             referenceObject.ColumnsSpanned,
+                                             referenceObject.Details);
 
                         return result;
                     },
                     ExpectedExceptionType = typeof(ArgumentException),
                     ExpectedExceptionMessageContains = new[] { "id", "white space", },
+                })
+            .AddScenario(() =>
+                new ConstructorArgumentValidationTestScenario<SlottedCell>
+                {
+                    Name = "constructor should throw ArgumentNullException when parameter 'details' is null scenario",
+                    ConstructionFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<SlottedCell>();
+
+                        var result = new SlottedCell(
+                                             referenceObject.SlotIdToCellMap,
+                                             referenceObject.DefaultSlotId,
+                                             referenceObject.Id,
+                                             referenceObject.ColumnsSpanned,
+                                             null);
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentNullException),
+                    ExpectedExceptionMessageContains = new[] { "details", },
+                })
+            .AddScenario(() =>
+                new ConstructorArgumentValidationTestScenario<SlottedCell>
+                {
+                    Name = "constructor should throw ArgumentException when parameter 'details' is white space scenario",
+                    ConstructionFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<SlottedCell>();
+
+                        var result = new SlottedCell(
+                                             referenceObject.SlotIdToCellMap,
+                                             referenceObject.DefaultSlotId,
+                                             referenceObject.Id,
+                                             referenceObject.ColumnsSpanned,
+                                             Invariant($"  {Environment.NewLine}  "));
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentException),
+                    ExpectedExceptionMessageContains = new[] { "details", "white space", },
                 });
 
         private static readonly ConstructorPropertyAssignmentTestScenarios<SlottedCell> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<SlottedCell>()
@@ -210,7 +257,8 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.SlotIdToCellMap,
                                                       referenceObject.DefaultSlotId,
                                                       referenceObject.Id,
-                                                      referenceObject.ColumnsSpanned),
+                                                      referenceObject.ColumnsSpanned,
+                                                      referenceObject.Details),
                             ExpectedPropertyValue = referenceObject.SlotIdToCellMap,
                         };
 
@@ -232,7 +280,8 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.SlotIdToCellMap,
                                                       referenceObject.DefaultSlotId,
                                                       referenceObject.Id,
-                                                      referenceObject.ColumnsSpanned),
+                                                      referenceObject.ColumnsSpanned,
+                                                      referenceObject.Details),
                             ExpectedPropertyValue = referenceObject.DefaultSlotId,
                         };
 
@@ -254,7 +303,8 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.SlotIdToCellMap,
                                                       referenceObject.DefaultSlotId,
                                                       referenceObject.Id,
-                                                      referenceObject.ColumnsSpanned),
+                                                      referenceObject.ColumnsSpanned,
+                                                      referenceObject.Details),
                             ExpectedPropertyValue = referenceObject.Id,
                         };
 
@@ -276,13 +326,37 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.SlotIdToCellMap,
                                                       referenceObject.DefaultSlotId,
                                                       referenceObject.Id,
-                                                      referenceObject.ColumnsSpanned),
+                                                      referenceObject.ColumnsSpanned,
+                                                      referenceObject.Details),
                             ExpectedPropertyValue = referenceObject.ColumnsSpanned,
                         };
 
                         return result;
                     },
                     PropertyName = "ColumnsSpanned",
+                })
+            .AddScenario(() =>
+                new ConstructorPropertyAssignmentTestScenario<SlottedCell>
+                {
+                    Name = "Details should return same 'details' parameter passed to constructor when getting",
+                    SystemUnderTestExpectedPropertyValueFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<SlottedCell>();
+
+                        var result = new SystemUnderTestExpectedPropertyValue<SlottedCell>
+                        {
+                            SystemUnderTest = new SlottedCell(
+                                                      referenceObject.SlotIdToCellMap,
+                                                      referenceObject.DefaultSlotId,
+                                                      referenceObject.Id,
+                                                      referenceObject.ColumnsSpanned,
+                                                      referenceObject.Details),
+                            ExpectedPropertyValue = referenceObject.Details,
+                        };
+
+                        return result;
+                    },
+                    PropertyName = "Details",
                 });
 
         private static readonly DeepCloneWithTestScenarios<SlottedCell> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<SlottedCell>()
@@ -321,6 +395,26 @@ namespace OBeautifulCode.DataStructure.Test
                         {
                             SystemUnderTest = systemUnderTest,
                             DeepCloneWithValue = referenceObject.ColumnsSpanned,
+                        };
+
+                        return result;
+                    },
+                })
+            .AddScenario(() =>
+                new DeepCloneWithTestScenario<SlottedCell>
+                {
+                    Name = "DeepCloneWithDetails should deep clone object and replace Details with the provided details",
+                    WithPropertyName = "Details",
+                    SystemUnderTestDeepCloneWithValueFunc = () =>
+                    {
+                        var systemUnderTest = A.Dummy<SlottedCell>();
+
+                        var referenceObject = A.Dummy<SlottedCell>().ThatIs(_ => !systemUnderTest.Details.IsEqualTo(_.Details));
+
+                        var result = new SystemUnderTestDeepCloneWithValue<SlottedCell>
+                        {
+                            SystemUnderTest = systemUnderTest,
+                            DeepCloneWithValue = referenceObject.Details,
                         };
 
                         return result;
@@ -381,7 +475,8 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.SlotIdToCellMap,
                                 ReferenceObjectForEquatableTestScenarios.DefaultSlotId,
                                 ReferenceObjectForEquatableTestScenarios.Id,
-                                ReferenceObjectForEquatableTestScenarios.ColumnsSpanned),
+                                ReferenceObjectForEquatableTestScenarios.ColumnsSpanned,
+                                ReferenceObjectForEquatableTestScenarios.Details),
                     },
                     ObjectsThatAreNotEqualToReferenceObject = new SlottedCell[]
                     {
@@ -389,22 +484,32 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.SlotIdToCellMap,
                                 ReferenceObjectForEquatableTestScenarios.DefaultSlotId,
                                 A.Dummy<SlottedCell>().Whose(_ => !_.Id.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Id)).Id,
-                                ReferenceObjectForEquatableTestScenarios.ColumnsSpanned),
+                                ReferenceObjectForEquatableTestScenarios.ColumnsSpanned,
+                                ReferenceObjectForEquatableTestScenarios.Details),
                         new SlottedCell(
                                 ReferenceObjectForEquatableTestScenarios.SlotIdToCellMap,
                                 ReferenceObjectForEquatableTestScenarios.DefaultSlotId,
                                 ReferenceObjectForEquatableTestScenarios.Id,
-                                A.Dummy<SlottedCell>().Whose(_ => !_.ColumnsSpanned.IsEqualTo(ReferenceObjectForEquatableTestScenarios.ColumnsSpanned)).ColumnsSpanned),
+                                A.Dummy<SlottedCell>().Whose(_ => !_.ColumnsSpanned.IsEqualTo(ReferenceObjectForEquatableTestScenarios.ColumnsSpanned)).ColumnsSpanned,
+                                ReferenceObjectForEquatableTestScenarios.Details),
+                        new SlottedCell(
+                                ReferenceObjectForEquatableTestScenarios.SlotIdToCellMap,
+                                ReferenceObjectForEquatableTestScenarios.DefaultSlotId,
+                                ReferenceObjectForEquatableTestScenarios.Id,
+                                ReferenceObjectForEquatableTestScenarios.ColumnsSpanned,
+                                A.Dummy<SlottedCell>().Whose(_ => !_.Details.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Details)).Details),
                         new SlottedCell(
                                 A.Dummy<SlottedCell>().Whose(_ => !_.SlotIdToCellMap.IsEqualTo(ReferenceObjectForEquatableTestScenarios.SlotIdToCellMap)).SlotIdToCellMap,
                                 ReferenceObjectForEquatableTestScenarios.DefaultSlotId,
                                 ReferenceObjectForEquatableTestScenarios.Id,
-                                ReferenceObjectForEquatableTestScenarios.ColumnsSpanned),
+                                ReferenceObjectForEquatableTestScenarios.ColumnsSpanned,
+                                ReferenceObjectForEquatableTestScenarios.Details),
                         new SlottedCell(
                                 ReferenceObjectForEquatableTestScenarios.SlotIdToCellMap,
                                 A.Dummy<SlottedCell>().Whose(_ => !_.DefaultSlotId.IsEqualTo(ReferenceObjectForEquatableTestScenarios.DefaultSlotId)).DefaultSlotId,
                                 ReferenceObjectForEquatableTestScenarios.Id,
-                                ReferenceObjectForEquatableTestScenarios.ColumnsSpanned),
+                                ReferenceObjectForEquatableTestScenarios.ColumnsSpanned,
+                                ReferenceObjectForEquatableTestScenarios.Details),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
                     {
@@ -697,7 +802,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "Id", "ColumnsSpanned", "SlotIdToCellMap", "DefaultSlotId" };
+                var propertyNames = new string[] { "Id", "ColumnsSpanned", "Details", "SlotIdToCellMap", "DefaultSlotId" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 

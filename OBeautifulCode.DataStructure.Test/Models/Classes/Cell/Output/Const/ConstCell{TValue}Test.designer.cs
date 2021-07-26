@@ -47,7 +47,7 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new SystemUnderTestExpectedStringRepresentation<ConstCell<Version>>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.ConstCell<Version>: Id = {systemUnderTest.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, ColumnsSpanned = {systemUnderTest.ColumnsSpanned?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Value = {systemUnderTest.Value?.ToString() ?? "<null>"}, Format = {systemUnderTest.Format?.ToString() ?? "<null>"}, HoverOver = {systemUnderTest.HoverOver?.ToString() ?? "<null>"}, Link = {systemUnderTest.Link?.ToString() ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.ConstCell<Version>: Id = {systemUnderTest.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, ColumnsSpanned = {systemUnderTest.ColumnsSpanned?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Details = {systemUnderTest.Details?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Value = {systemUnderTest.Value?.ToString() ?? "<null>"}, Format = {systemUnderTest.Format?.ToString() ?? "<null>"}, HoverOver = {systemUnderTest.HoverOver?.ToString() ?? "<null>"}, Link = {systemUnderTest.Link?.ToString() ?? "<null>"}."),
                         };
 
                         return result;
@@ -67,6 +67,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              null,
                                              referenceObject.Id,
                                              referenceObject.ColumnsSpanned,
+                                             referenceObject.Details,
                                              referenceObject.Format,
                                              referenceObject.HoverOver,
                                              referenceObject.Link);
@@ -88,6 +89,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Value,
                                              null,
                                              referenceObject.ColumnsSpanned,
+                                             referenceObject.Details,
                                              referenceObject.Format,
                                              referenceObject.HoverOver,
                                              referenceObject.Link);
@@ -109,6 +111,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Value,
                                              Invariant($"  {Environment.NewLine}  "),
                                              referenceObject.ColumnsSpanned,
+                                             referenceObject.Details,
                                              referenceObject.Format,
                                              referenceObject.HoverOver,
                                              referenceObject.Link);
@@ -117,6 +120,50 @@ namespace OBeautifulCode.DataStructure.Test
                     },
                     ExpectedExceptionType = typeof(ArgumentException),
                     ExpectedExceptionMessageContains = new[] { "id", "white space", },
+                })
+            .AddScenario(() =>
+                new ConstructorArgumentValidationTestScenario<ConstCell<Version>>
+                {
+                    Name = "constructor should throw ArgumentNullException when parameter 'details' is null scenario",
+                    ConstructionFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<ConstCell<Version>>();
+
+                        var result = new ConstCell<Version>(
+                                             referenceObject.Value,
+                                             referenceObject.Id,
+                                             referenceObject.ColumnsSpanned,
+                                             null,
+                                             referenceObject.Format,
+                                             referenceObject.HoverOver,
+                                             referenceObject.Link);
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentNullException),
+                    ExpectedExceptionMessageContains = new[] { "details", },
+                })
+            .AddScenario(() =>
+                new ConstructorArgumentValidationTestScenario<ConstCell<Version>>
+                {
+                    Name = "constructor should throw ArgumentException when parameter 'details' is white space scenario",
+                    ConstructionFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<ConstCell<Version>>();
+
+                        var result = new ConstCell<Version>(
+                                             referenceObject.Value,
+                                             referenceObject.Id,
+                                             referenceObject.ColumnsSpanned,
+                                             Invariant($"  {Environment.NewLine}  "),
+                                             referenceObject.Format,
+                                             referenceObject.HoverOver,
+                                             referenceObject.Link);
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentException),
+                    ExpectedExceptionMessageContains = new[] { "details", "white space", },
                 })
             .AddScenario(() =>
                 new ConstructorArgumentValidationTestScenario<ConstCell<Version>>
@@ -130,6 +177,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Value,
                                              referenceObject.Id,
                                              referenceObject.ColumnsSpanned,
+                                             referenceObject.Details,
                                              null,
                                              referenceObject.HoverOver,
                                              referenceObject.Link);
@@ -151,6 +199,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Value,
                                              referenceObject.Id,
                                              referenceObject.ColumnsSpanned,
+                                             referenceObject.Details,
                                              referenceObject.Format,
                                              null,
                                              referenceObject.Link);
@@ -172,6 +221,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Value,
                                              referenceObject.Id,
                                              referenceObject.ColumnsSpanned,
+                                             referenceObject.Details,
                                              referenceObject.Format,
                                              referenceObject.HoverOver,
                                              null);
@@ -197,6 +247,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Value,
                                                       referenceObject.Id,
                                                       referenceObject.ColumnsSpanned,
+                                                      referenceObject.Details,
                                                       referenceObject.Format,
                                                       referenceObject.HoverOver,
                                                       referenceObject.Link),
@@ -221,6 +272,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Value,
                                                       referenceObject.Id,
                                                       referenceObject.ColumnsSpanned,
+                                                      referenceObject.Details,
                                                       referenceObject.Format,
                                                       referenceObject.HoverOver,
                                                       referenceObject.Link),
@@ -245,6 +297,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Value,
                                                       referenceObject.Id,
                                                       referenceObject.ColumnsSpanned,
+                                                      referenceObject.Details,
                                                       referenceObject.Format,
                                                       referenceObject.HoverOver,
                                                       referenceObject.Link),
@@ -254,6 +307,31 @@ namespace OBeautifulCode.DataStructure.Test
                         return result;
                     },
                     PropertyName = "ColumnsSpanned",
+                })
+            .AddScenario(() =>
+                new ConstructorPropertyAssignmentTestScenario<ConstCell<Version>>
+                {
+                    Name = "Details should return same 'details' parameter passed to constructor when getting",
+                    SystemUnderTestExpectedPropertyValueFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<ConstCell<Version>>();
+
+                        var result = new SystemUnderTestExpectedPropertyValue<ConstCell<Version>>
+                        {
+                            SystemUnderTest = new ConstCell<Version>(
+                                                      referenceObject.Value,
+                                                      referenceObject.Id,
+                                                      referenceObject.ColumnsSpanned,
+                                                      referenceObject.Details,
+                                                      referenceObject.Format,
+                                                      referenceObject.HoverOver,
+                                                      referenceObject.Link),
+                            ExpectedPropertyValue = referenceObject.Details,
+                        };
+
+                        return result;
+                    },
+                    PropertyName = "Details",
                 })
             .AddScenario(() =>
                 new ConstructorPropertyAssignmentTestScenario<ConstCell<Version>>
@@ -269,6 +347,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Value,
                                                       referenceObject.Id,
                                                       referenceObject.ColumnsSpanned,
+                                                      referenceObject.Details,
                                                       referenceObject.Format,
                                                       referenceObject.HoverOver,
                                                       referenceObject.Link),
@@ -293,6 +372,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Value,
                                                       referenceObject.Id,
                                                       referenceObject.ColumnsSpanned,
+                                                      referenceObject.Details,
                                                       referenceObject.Format,
                                                       referenceObject.HoverOver,
                                                       referenceObject.Link),
@@ -317,6 +397,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Value,
                                                       referenceObject.Id,
                                                       referenceObject.ColumnsSpanned,
+                                                      referenceObject.Details,
                                                       referenceObject.Format,
                                                       referenceObject.HoverOver,
                                                       referenceObject.Link),
@@ -364,6 +445,26 @@ namespace OBeautifulCode.DataStructure.Test
                         {
                             SystemUnderTest = systemUnderTest,
                             DeepCloneWithValue = referenceObject.ColumnsSpanned,
+                        };
+
+                        return result;
+                    },
+                })
+            .AddScenario(() =>
+                new DeepCloneWithTestScenario<ConstCell<Version>>
+                {
+                    Name = "DeepCloneWithDetails should deep clone object and replace Details with the provided details",
+                    WithPropertyName = "Details",
+                    SystemUnderTestDeepCloneWithValueFunc = () =>
+                    {
+                        var systemUnderTest = A.Dummy<ConstCell<Version>>();
+
+                        var referenceObject = A.Dummy<ConstCell<Version>>().ThatIs(_ => !systemUnderTest.Details.IsEqualTo(_.Details));
+
+                        var result = new SystemUnderTestDeepCloneWithValue<ConstCell<Version>>
+                        {
+                            SystemUnderTest = systemUnderTest,
+                            DeepCloneWithValue = referenceObject.Details,
                         };
 
                         return result;
@@ -464,6 +565,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.Value,
                                 ReferenceObjectForEquatableTestScenarios.Id,
                                 ReferenceObjectForEquatableTestScenarios.ColumnsSpanned,
+                                ReferenceObjectForEquatableTestScenarios.Details,
                                 ReferenceObjectForEquatableTestScenarios.Format,
                                 ReferenceObjectForEquatableTestScenarios.HoverOver,
                                 ReferenceObjectForEquatableTestScenarios.Link),
@@ -474,6 +576,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.Value,
                                 A.Dummy<ConstCell<Version>>().Whose(_ => !_.Id.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Id)).Id,
                                 ReferenceObjectForEquatableTestScenarios.ColumnsSpanned,
+                                ReferenceObjectForEquatableTestScenarios.Details,
                                 ReferenceObjectForEquatableTestScenarios.Format,
                                 ReferenceObjectForEquatableTestScenarios.HoverOver,
                                 ReferenceObjectForEquatableTestScenarios.Link),
@@ -481,6 +584,15 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.Value,
                                 ReferenceObjectForEquatableTestScenarios.Id,
                                 A.Dummy<ConstCell<Version>>().Whose(_ => !_.ColumnsSpanned.IsEqualTo(ReferenceObjectForEquatableTestScenarios.ColumnsSpanned)).ColumnsSpanned,
+                                ReferenceObjectForEquatableTestScenarios.Details,
+                                ReferenceObjectForEquatableTestScenarios.Format,
+                                ReferenceObjectForEquatableTestScenarios.HoverOver,
+                                ReferenceObjectForEquatableTestScenarios.Link),
+                        new ConstCell<Version>(
+                                ReferenceObjectForEquatableTestScenarios.Value,
+                                ReferenceObjectForEquatableTestScenarios.Id,
+                                ReferenceObjectForEquatableTestScenarios.ColumnsSpanned,
+                                A.Dummy<ConstCell<Version>>().Whose(_ => !_.Details.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Details)).Details,
                                 ReferenceObjectForEquatableTestScenarios.Format,
                                 ReferenceObjectForEquatableTestScenarios.HoverOver,
                                 ReferenceObjectForEquatableTestScenarios.Link),
@@ -488,6 +600,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 A.Dummy<ConstCell<Version>>().Whose(_ => !_.Value.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Value)).Value,
                                 ReferenceObjectForEquatableTestScenarios.Id,
                                 ReferenceObjectForEquatableTestScenarios.ColumnsSpanned,
+                                ReferenceObjectForEquatableTestScenarios.Details,
                                 ReferenceObjectForEquatableTestScenarios.Format,
                                 ReferenceObjectForEquatableTestScenarios.HoverOver,
                                 ReferenceObjectForEquatableTestScenarios.Link),
@@ -495,6 +608,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.Value,
                                 ReferenceObjectForEquatableTestScenarios.Id,
                                 ReferenceObjectForEquatableTestScenarios.ColumnsSpanned,
+                                ReferenceObjectForEquatableTestScenarios.Details,
                                 A.Dummy<ConstCell<Version>>().Whose(_ => !_.Format.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Format)).Format,
                                 ReferenceObjectForEquatableTestScenarios.HoverOver,
                                 ReferenceObjectForEquatableTestScenarios.Link),
@@ -502,6 +616,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.Value,
                                 ReferenceObjectForEquatableTestScenarios.Id,
                                 ReferenceObjectForEquatableTestScenarios.ColumnsSpanned,
+                                ReferenceObjectForEquatableTestScenarios.Details,
                                 ReferenceObjectForEquatableTestScenarios.Format,
                                 A.Dummy<ConstCell<Version>>().Whose(_ => !_.HoverOver.IsEqualTo(ReferenceObjectForEquatableTestScenarios.HoverOver)).HoverOver,
                                 ReferenceObjectForEquatableTestScenarios.Link),
@@ -509,6 +624,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.Value,
                                 ReferenceObjectForEquatableTestScenarios.Id,
                                 ReferenceObjectForEquatableTestScenarios.ColumnsSpanned,
+                                ReferenceObjectForEquatableTestScenarios.Details,
                                 ReferenceObjectForEquatableTestScenarios.Format,
                                 ReferenceObjectForEquatableTestScenarios.HoverOver,
                                 A.Dummy<ConstCell<Version>>().Whose(_ => !_.Link.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Link)).Link),
@@ -840,7 +956,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "Id", "ColumnsSpanned", "Value", "Format", "HoverOver", "Link" };
+                var propertyNames = new string[] { "Id", "ColumnsSpanned", "Details", "Value", "Format", "HoverOver", "Link" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 

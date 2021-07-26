@@ -23,15 +23,15 @@ namespace OBeautifulCode.DataStructure
     using static global::System.FormattableString;
 
     [Serializable]
-    public partial class SlottedCell : IModel<SlottedCell>
+    public partial class ValidationCondition : IModel<ValidationCondition>
     {
         /// <summary>
-        /// Determines whether two objects of type <see cref="SlottedCell"/> are equal.
+        /// Determines whether two objects of type <see cref="ValidationCondition"/> are equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are equal; otherwise false.</returns>
-        public static bool operator ==(SlottedCell left, SlottedCell right)
+        public static bool operator ==(ValidationCondition left, ValidationCondition right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -49,15 +49,15 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <summary>
-        /// Determines whether two objects of type <see cref="SlottedCell"/> are not equal.
+        /// Determines whether two objects of type <see cref="ValidationCondition"/> are not equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are not equal; otherwise false.</returns>
-        public static bool operator !=(SlottedCell left, SlottedCell right) => !(left == right);
+        public static bool operator !=(ValidationCondition left, ValidationCondition right) => !(left == right);
 
         /// <inheritdoc />
-        public bool Equals(SlottedCell other)
+        public bool Equals(ValidationCondition other)
         {
             if (ReferenceEquals(this, other))
             {
@@ -69,61 +69,45 @@ namespace OBeautifulCode.DataStructure
                 return false;
             }
 
-            var result = this.Id.IsEqualTo(other.Id, StringComparer.Ordinal)
-                      && this.ColumnsSpanned.IsEqualTo(other.ColumnsSpanned)
-                      && this.Details.IsEqualTo(other.Details, StringComparer.Ordinal)
-                      && this.SlotIdToCellMap.IsEqualTo(other.SlotIdToCellMap)
-                      && this.DefaultSlotId.IsEqualTo(other.DefaultSlotId, StringComparer.Ordinal);
+            var result = this.Operation.IsEqualTo(other.Operation)
+                      && this.Kind.IsEqualTo(other.Kind)
+                      && this.FailureMessageOp.IsEqualTo(other.FailureMessageOp)
+                      && this.Details.IsEqualTo(other.Details, StringComparer.Ordinal);
 
             return result;
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => this == (obj as SlottedCell);
+        public override bool Equals(object obj) => this == (obj as ValidationCondition);
 
         /// <inheritdoc />
         public override int GetHashCode() => HashCodeHelper.Initialize()
-            .Hash(this.Id)
-            .Hash(this.ColumnsSpanned)
+            .Hash(this.Operation)
+            .Hash(this.Kind)
+            .Hash(this.FailureMessageOp)
             .Hash(this.Details)
-            .Hash(this.SlotIdToCellMap)
-            .Hash(this.DefaultSlotId)
             .Value;
 
         /// <inheritdoc />
-        public new SlottedCell DeepClone() => (SlottedCell)this.DeepCloneInternal();
+        public object Clone() => this.DeepClone();
 
         /// <inheritdoc />
-        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
-        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
-        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
-        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public override CellBase DeepCloneWithId(string id)
+        public ValidationCondition DeepClone()
         {
-            var result = new SlottedCell(
-                                 this.SlotIdToCellMap?.DeepClone(),
-                                 this.DefaultSlotId?.DeepClone(),
-                                 id,
-                                 this.ColumnsSpanned?.DeepClone(),
+            var result = new ValidationCondition(
+                                 this.Operation?.DeepClone(),
+                                 this.Kind.DeepClone(),
+                                 this.FailureMessageOp?.DeepClone(),
                                  this.Details?.DeepClone());
 
             return result;
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Deep clones this object with a new <see cref="Operation" />.
+        /// </summary>
+        /// <param name="operation">The new <see cref="Operation" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="ValidationCondition" /> using the specified <paramref name="operation" /> for <see cref="Operation" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -141,19 +125,22 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public override CellBase DeepCloneWithColumnsSpanned(int? columnsSpanned)
+        public ValidationCondition DeepCloneWithOperation(IReturningOperation<bool> operation)
         {
-            var result = new SlottedCell(
-                                 this.SlotIdToCellMap?.DeepClone(),
-                                 this.DefaultSlotId?.DeepClone(),
-                                 this.Id?.DeepClone(),
-                                 columnsSpanned,
+            var result = new ValidationCondition(
+                                 operation,
+                                 this.Kind.DeepClone(),
+                                 this.FailureMessageOp?.DeepClone(),
                                  this.Details?.DeepClone());
 
             return result;
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Deep clones this object with a new <see cref="Kind" />.
+        /// </summary>
+        /// <param name="kind">The new <see cref="Kind" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="ValidationCondition" /> using the specified <paramref name="kind" /> for <see cref="Kind" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -171,96 +158,79 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public override CellBase DeepCloneWithDetails(string details)
+        public ValidationCondition DeepCloneWithKind(ValidationConditionKind kind)
         {
-            var result = new SlottedCell(
-                                 this.SlotIdToCellMap?.DeepClone(),
-                                 this.DefaultSlotId?.DeepClone(),
-                                 this.Id?.DeepClone(),
-                                 this.ColumnsSpanned?.DeepClone(),
+            var result = new ValidationCondition(
+                                 this.Operation?.DeepClone(),
+                                 kind,
+                                 this.FailureMessageOp?.DeepClone(),
+                                 this.Details?.DeepClone());
+
+            return result;
+        }
+
+        /// <summary>
+        /// Deep clones this object with a new <see cref="FailureMessageOp" />.
+        /// </summary>
+        /// <param name="failureMessageOp">The new <see cref="FailureMessageOp" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="ValidationCondition" /> using the specified <paramref name="failureMessageOp" /> for <see cref="FailureMessageOp" /> and a deep clone of every other property.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
+        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
+        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
+        public ValidationCondition DeepCloneWithFailureMessageOp(IReturningOperation<string> failureMessageOp)
+        {
+            var result = new ValidationCondition(
+                                 this.Operation?.DeepClone(),
+                                 this.Kind.DeepClone(),
+                                 failureMessageOp,
+                                 this.Details?.DeepClone());
+
+            return result;
+        }
+
+        /// <summary>
+        /// Deep clones this object with a new <see cref="Details" />.
+        /// </summary>
+        /// <param name="details">The new <see cref="Details" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="ValidationCondition" /> using the specified <paramref name="details" /> for <see cref="Details" /> and a deep clone of every other property.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
+        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
+        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
+        public ValidationCondition DeepCloneWithDetails(string details)
+        {
+            var result = new ValidationCondition(
+                                 this.Operation?.DeepClone(),
+                                 this.Kind.DeepClone(),
+                                 this.FailureMessageOp?.DeepClone(),
                                  details);
-
-            return result;
-        }
-
-        /// <summary>
-        /// Deep clones this object with a new <see cref="SlotIdToCellMap" />.
-        /// </summary>
-        /// <param name="slotIdToCellMap">The new <see cref="SlotIdToCellMap" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="SlottedCell" /> using the specified <paramref name="slotIdToCellMap" /> for <see cref="SlotIdToCellMap" /> and a deep clone of every other property.</returns>
-        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
-        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
-        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
-        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public SlottedCell DeepCloneWithSlotIdToCellMap(IReadOnlyDictionary<string, INotSlottedCell> slotIdToCellMap)
-        {
-            var result = new SlottedCell(
-                                 slotIdToCellMap,
-                                 this.DefaultSlotId?.DeepClone(),
-                                 this.Id?.DeepClone(),
-                                 this.ColumnsSpanned?.DeepClone(),
-                                 this.Details?.DeepClone());
-
-            return result;
-        }
-
-        /// <summary>
-        /// Deep clones this object with a new <see cref="DefaultSlotId" />.
-        /// </summary>
-        /// <param name="defaultSlotId">The new <see cref="DefaultSlotId" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="SlottedCell" /> using the specified <paramref name="defaultSlotId" /> for <see cref="DefaultSlotId" /> and a deep clone of every other property.</returns>
-        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
-        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
-        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
-        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public SlottedCell DeepCloneWithDefaultSlotId(string defaultSlotId)
-        {
-            var result = new SlottedCell(
-                                 this.SlotIdToCellMap?.DeepClone(),
-                                 defaultSlotId,
-                                 this.Id?.DeepClone(),
-                                 this.ColumnsSpanned?.DeepClone(),
-                                 this.Details?.DeepClone());
-
-            return result;
-        }
-
-        /// <inheritdoc />
-        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
-        protected override CellBase DeepCloneInternal()
-        {
-            var result = new SlottedCell(
-                                 this.SlotIdToCellMap?.DeepClone(),
-                                 this.DefaultSlotId?.DeepClone(),
-                                 this.Id?.DeepClone(),
-                                 this.ColumnsSpanned?.DeepClone(),
-                                 this.Details?.DeepClone());
 
             return result;
         }
@@ -269,7 +239,7 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"OBeautifulCode.DataStructure.SlottedCell: Id = {this.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, ColumnsSpanned = {this.ColumnsSpanned?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Details = {this.Details?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, SlotIdToCellMap = {this.SlotIdToCellMap?.ToString() ?? "<null>"}, DefaultSlotId = {this.DefaultSlotId?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}.");
+            var result = Invariant($"OBeautifulCode.DataStructure.ValidationCondition: Operation = {this.Operation?.ToString() ?? "<null>"}, Kind = {this.Kind.ToString() ?? "<null>"}, FailureMessageOp = {this.FailureMessageOp?.ToString() ?? "<null>"}, Details = {this.Details?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}.");
 
             return result;
         }

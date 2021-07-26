@@ -45,7 +45,7 @@ namespace OBeautifulCode.DataStructure
         public int? ColumnsSpanned { get; private set; }
 
         /// <inheritdoc />
-        public string Details { get; set; }
+        public string Details { get; private set; }
 
         /// <inheritdoc />
         public abstract bool IsConstCell();
