@@ -75,7 +75,7 @@ namespace OBeautifulCode.DataStructure
 
             if (cell is IOperationOutputCell<TValue> operationCell)
             {
-                this.ExecuteOperationCellIfNecessary(operationCell);
+                this.protocolFactory.GetProtocolAndExecuteViaReflection(new ExecuteOperationCellIfNecessaryOp<TValue>(operationCell));
             }
 
             TValue result;
@@ -112,7 +112,7 @@ namespace OBeautifulCode.DataStructure
 
             if (cell is IOperationOutputCell<TValue> operationCell)
             {
-                await this.ExecuteOperationCellIfNecessaryAsync(operationCell);
+                await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync(new ExecuteOperationCellIfNecessaryOp<TValue>(operationCell));
             }
 
             TValue result;
@@ -140,24 +140,108 @@ namespace OBeautifulCode.DataStructure
         public void Execute(
             ExecuteOperationCellIfNecessaryOp<TValue> operation)
         {
+            // NOTE: THIS CODE IS A NEAR DUPLICATE OF THE ASYNC METHOD BELOW; NO GOOD WAY TO D.R.Y. IT OUT
             if (operation == null)
             {
                 throw new ArgumentNullException(nameof(operation));
             }
 
-            this.ExecuteOperationCellIfNecessary(operation.Cell);
+            var cell = operation.Cell;
+
+            if (cell.CellOpExecutionEvent == null)
+            {
+                CellOpExecutionEventBase cellOpExecutionEvent;
+
+                try
+                {
+                    var operationResult = this.protocolFactory.GetProtocolAndExecuteViaReflection<TValue>(cell.Operation);
+
+                    cellOpExecutionEvent = new CellOpExecutionCompletedEvent<TValue>(this.timestampUtc, null, operationResult);
+                }
+                catch (CellValueMissingException ex)
+                {
+                    cellOpExecutionEvent = new CellOpExecutionFailedWithMissingCellValueEvent(this.timestampUtc, ex.CellLocator, ex.Message);
+                }
+                catch (CellNotFoundException ex)
+                {
+                    cellOpExecutionEvent = new CellOpExecutionFailedWithCellNotFoundEvent(this.timestampUtc, ex.CellLocator, ex.Message);
+                }
+                catch (OpExecutionAbortedExceptionBase ex)
+                {
+                    cellOpExecutionEvent = new CellOpExecutionAbortedEvent(this.timestampUtc, ex.ToString());
+                }
+                catch (OpExecutionFailedExceptionBase ex)
+                {
+                    // Redundant; this does the same thing as catching Exception below.
+                    // Just noting that the "proper" exception for a protocol to throw is an OpExecutionFailedExceptionBase.
+                    // Protocol authors might not comply.
+                    cellOpExecutionEvent = new CellOpExecutionFailedWithExceptionEvent(this.timestampUtc, ex.ToString());
+                }
+                catch (Exception ex)
+                {
+                    cellOpExecutionEvent = new CellOpExecutionFailedWithExceptionEvent(this.timestampUtc, ex.ToString());
+                }
+
+                cell.RecordExecution(cellOpExecutionEvent);
+            }
+            else if (cell.CellOpExecutionEvent.TimestampUtc != this.timestampUtc)
+            {
+                throw new InvalidOperationException("Something went wrong.  The operation was executed, but the recorded timestamp doesn't match this timestamp.");
+            }
         }
 
         /// <inheritdoc />
         public async Task ExecuteAsync(
             ExecuteOperationCellIfNecessaryOp<TValue> operation)
         {
+            // NOTE: THIS CODE IS A NEAR DUPLICATE OF THE SYNC METHOD ABOVE; NO GOOD WAY TO D.R.Y. IT OUT
             if (operation == null)
             {
                 throw new ArgumentNullException(nameof(operation));
             }
 
-            await this.ExecuteOperationCellIfNecessaryAsync(operation.Cell);
+            var cell = operation.Cell;
+
+            if (cell.CellOpExecutionEvent == null)
+            {
+                CellOpExecutionEventBase cellOpExecutionEvent;
+
+                try
+                {
+                    var operationResult = await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync<TValue>(cell.Operation);
+
+                    cellOpExecutionEvent = new CellOpExecutionCompletedEvent<TValue>(this.timestampUtc, null, operationResult);
+                }
+                catch (CellValueMissingException ex)
+                {
+                    cellOpExecutionEvent = new CellOpExecutionFailedWithMissingCellValueEvent(this.timestampUtc, ex.CellLocator, ex.Message);
+                }
+                catch (CellNotFoundException ex)
+                {
+                    cellOpExecutionEvent = new CellOpExecutionFailedWithCellNotFoundEvent(this.timestampUtc, ex.CellLocator, ex.Message);
+                }
+                catch (OpExecutionAbortedExceptionBase ex)
+                {
+                    cellOpExecutionEvent = new CellOpExecutionAbortedEvent(this.timestampUtc, ex.ToString());
+                }
+                catch (OpExecutionFailedExceptionBase ex)
+                {
+                    // Redundant; this does the same thing as catching Exception below.
+                    // Just noting that the "proper" exception for a protocol to throw is an OpExecutionFailedExceptionBase.
+                    // Protocol authors might not comply.
+                    cellOpExecutionEvent = new CellOpExecutionFailedWithExceptionEvent(this.timestampUtc, ex.ToString());
+                }
+                catch (Exception ex)
+                {
+                    cellOpExecutionEvent = new CellOpExecutionFailedWithExceptionEvent(this.timestampUtc, ex.ToString());
+                }
+
+                cell.RecordExecution(cellOpExecutionEvent);
+            }
+            else if (cell.CellOpExecutionEvent.TimestampUtc != this.timestampUtc)
+            {
+                throw new InvalidOperationException("Something went wrong.  The operation was executed, but the recorded timestamp doesn't match this timestamp.");
+            }
         }
 
         /// <inheritdoc />
@@ -300,98 +384,6 @@ namespace OBeautifulCode.DataStructure
             }
 
             return result;
-        }
-
-        private void ExecuteOperationCellIfNecessary(
-            IOperationOutputCell<TValue> cell)
-        {
-            // NOTE: THIS CODE IS A NEAR DUPLICATE OF THE ASYNC METHOD BELOW; NO GOOD WAY TO D.R.Y. IT OUT
-            if (cell.CellOpExecutionEvent == null)
-            {
-                CellOpExecutionEventBase cellOpExecutionEvent;
-
-                try
-                {
-                    var operationResult = this.protocolFactory.GetProtocolAndExecuteViaReflection<TValue>(cell.Operation);
-
-                    cellOpExecutionEvent = new CellOpExecutionCompletedEvent<TValue>(this.timestampUtc, null, operationResult);
-                }
-                catch (CellValueMissingException ex)
-                {
-                    cellOpExecutionEvent = new CellOpExecutionFailedWithMissingCellValueEvent(this.timestampUtc, ex.CellLocator, ex.Message);
-                }
-                catch (CellNotFoundException ex)
-                {
-                    cellOpExecutionEvent = new CellOpExecutionFailedWithCellNotFoundEvent(this.timestampUtc, ex.CellLocator, ex.Message);
-                }
-                catch (OpExecutionAbortedExceptionBase ex)
-                {
-                    cellOpExecutionEvent = new CellOpExecutionAbortedEvent(this.timestampUtc, ex.ToString());
-                }
-                catch (OpExecutionFailedExceptionBase ex)
-                {
-                    // Redundant; this does the same thing as catching Exception below.
-                    // Just noting that the "proper" exception for a protocol to throw is an OpExecutionFailedExceptionBase.
-                    // Protocol authors might not comply.
-                    cellOpExecutionEvent = new CellOpExecutionFailedWithExceptionEvent(this.timestampUtc, ex.ToString());
-                }
-                catch (Exception ex)
-                {
-                    cellOpExecutionEvent = new CellOpExecutionFailedWithExceptionEvent(this.timestampUtc, ex.ToString());
-                }
-
-                cell.RecordExecution(cellOpExecutionEvent);
-            }
-            else if (cell.CellOpExecutionEvent.TimestampUtc != this.timestampUtc)
-            {
-                throw new InvalidOperationException("Something went wrong.  The operation was executed, but the recorded timestamp doesn't match this timestamp.");
-            }
-        }
-
-        private async Task ExecuteOperationCellIfNecessaryAsync(
-            IOperationOutputCell<TValue> cell)
-        {
-            // NOTE: THIS CODE IS A NEAR DUPLICATE OF THE SYNC METHOD ABOVE; NO GOOD WAY TO D.R.Y. IT OUT
-            if (cell.CellOpExecutionEvent == null)
-            {
-                CellOpExecutionEventBase cellOpExecutionEvent;
-
-                try
-                {
-                    var operationResult = await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync<TValue>(cell.Operation);
-
-                    cellOpExecutionEvent = new CellOpExecutionCompletedEvent<TValue>(this.timestampUtc, null, operationResult);
-                }
-                catch (CellValueMissingException ex)
-                {
-                    cellOpExecutionEvent = new CellOpExecutionFailedWithMissingCellValueEvent(this.timestampUtc, ex.CellLocator, ex.Message);
-                }
-                catch (CellNotFoundException ex)
-                {
-                    cellOpExecutionEvent = new CellOpExecutionFailedWithCellNotFoundEvent(this.timestampUtc, ex.CellLocator, ex.Message);
-                }
-                catch (OpExecutionAbortedExceptionBase ex)
-                {
-                    cellOpExecutionEvent = new CellOpExecutionAbortedEvent(this.timestampUtc, ex.ToString());
-                }
-                catch (OpExecutionFailedExceptionBase ex)
-                {
-                    // Redundant; this does the same thing as catching Exception below.
-                    // Just noting that the "proper" exception for a protocol to throw is an OpExecutionFailedExceptionBase.
-                    // Protocol authors might not comply.
-                    cellOpExecutionEvent = new CellOpExecutionFailedWithExceptionEvent(this.timestampUtc, ex.ToString());
-                }
-                catch (Exception ex)
-                {
-                    cellOpExecutionEvent = new CellOpExecutionFailedWithExceptionEvent(this.timestampUtc, ex.ToString());
-                }
-
-                cell.RecordExecution(cellOpExecutionEvent);
-            }
-            else if (cell.CellOpExecutionEvent.TimestampUtc != this.timestampUtc)
-            {
-                throw new InvalidOperationException("Something went wrong.  The operation was executed, but the recorded timestamp doesn't match this timestamp.");
-            }
         }
     }
 }
