@@ -15,16 +15,18 @@ namespace OBeautifulCode.DataStructure
     /// <summary>
     /// Base implementation of <see cref="ICell"/>.
     /// </summary>
-    public abstract partial class CellBase : ICell, IModelViaCodeGen
+    public abstract partial class CellBase : ICell, IHaveDetails, IModelViaCodeGen
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CellBase"/> class.
         /// </summary>
         /// <param name="id">The cell's unique identifier.</param>
         /// <param name="columnsSpanned">The number of columns spanned or null if none (cell occupies a single column).</param>
+        /// <param name="details">Details about the cell.</param>
         protected CellBase(
             string id,
-            int? columnsSpanned)
+            int? columnsSpanned,
+            string details)
         {
             if ((columnsSpanned != null) && (columnsSpanned < 1))
             {
@@ -33,6 +35,7 @@ namespace OBeautifulCode.DataStructure
 
             this.Id = id;
             this.ColumnsSpanned = columnsSpanned;
+            this.Details = details;
         }
 
         /// <inheritdoc />
@@ -40,6 +43,9 @@ namespace OBeautifulCode.DataStructure
 
         /// <inheritdoc />
         public int? ColumnsSpanned { get; private set; }
+
+        /// <inheritdoc />
+        public string Details { get; set; }
 
         /// <inheritdoc />
         public abstract bool IsConstCell();

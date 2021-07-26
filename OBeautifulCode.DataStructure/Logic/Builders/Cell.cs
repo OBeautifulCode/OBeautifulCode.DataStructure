@@ -68,6 +68,7 @@ namespace OBeautifulCode.DataStructure
         /// <param name="cellOpExecutionEvent">OPTIONAL result of executing the operation.  DEFAULT is a cell who's operation has not yet been executed.</param>
         /// <param name="id">OPTIONAL unique identifier of the cell.  DEFAULT is a cell with no unique identifier.</param>
         /// <param name="columnsSpanned">OPTIONAL number of columns spanned or null if none (cell occupies a single column).  DEFAULT is none.</param>
+        /// <param name="details">OPTIONAL details about the cell.  DEFAULT is to omit any details.</param>
         /// <param name="format">OPTIONAL format to apply to the cell.  DEFAULT is to leave the format unchanged.</param>
         /// <param name="hoverOver">OPTIONAL hover-over for the cell.  DEFAULT is no hover-over.</param>
         /// <param name="link">OPTIONAL link to some resource.  DEFAULT is no link.</param>
@@ -79,11 +80,12 @@ namespace OBeautifulCode.DataStructure
             CellOpExecutionEventBase cellOpExecutionEvent = null,
             string id = null,
             int? columnsSpanned = null,
+            string details = null,
             CellFormat format = null,
             IHoverOver hoverOver = null,
             ILink link = null)
         {
-            var result = new OperationCell<TValue>(operation, cellOpExecutionEvent, id, columnsSpanned, format, hoverOver, link);
+            var result = new OperationCell<TValue>(operation, cellOpExecutionEvent, id, columnsSpanned, details, format, hoverOver, link);
 
             return result;
         }
@@ -95,6 +97,7 @@ namespace OBeautifulCode.DataStructure
         /// <param name="value">The value.</param>
         /// <param name="id">OPTIONAL unique identifier of the cell.  DEFAULT is a cell with no unique identifier.</param>
         /// <param name="columnsSpanned">OPTIONAL number of columns spanned or null if none (cell occupies a single column).  DEFAULT is none.</param>
+        /// <param name="details">OPTIONAL details about the cell.  DEFAULT is to omit any details.</param>
         /// <param name="format">OPTIONAL format to apply to the cell.  DEFAULT is to leave the format unchanged.</param>
         /// <param name="hoverOver">OPTIONAL hover-over for the cell.  DEFAULT is no hover-over.</param>
         /// <param name="link">OPTIONAL link to some resource.  DEFAULT is no link.</param>
@@ -105,11 +108,12 @@ namespace OBeautifulCode.DataStructure
             TValue value,
             string id = null,
             int? columnsSpanned = null,
+            string details = null,
             CellFormat format = null,
             IHoverOver hoverOver = null,
             ILink link = null)
         {
-            var result = new ConstCell<TValue>(value, id, columnsSpanned, format, hoverOver, link);
+            var result = new ConstCell<TValue>(value, id, columnsSpanned, details, format, hoverOver, link);
 
             return result;
         }
@@ -121,6 +125,7 @@ namespace OBeautifulCode.DataStructure
         /// <param name="inputAppliedToCellEvent">OPTIONAL input that was applied to the cell.  DEFAULT is a cell with no inputted value.</param>
         /// <param name="id">OPTIONAL unique identifier of the cell.  DEFAULT is a cell with no unique identifier.</param>
         /// <param name="columnsSpanned">OPTIONAL number of columns spanned or null if none (cell occupies a single column).  DEFAULT is none.</param>
+        /// <param name="details">OPTIONAL details about the cell.  DEFAULT is to omit any details.</param>
         /// <param name="format">OPTIONAL format to apply to the cell.  DEFAULT is to leave the format unchanged.</param>
         /// <param name="hoverOver">OPTIONAL hover-over for the cell.  DEFAULT is no hover-over.</param>
         /// <param name="link">OPTIONAL link to some resource.  DEFAULT is no link.</param>
@@ -131,11 +136,12 @@ namespace OBeautifulCode.DataStructure
             InputAppliedToCellEvent<TValue> inputAppliedToCellEvent = null,
             string id = null,
             int? columnsSpanned = null,
+            string details = null,
             CellFormat format = null,
             IHoverOver hoverOver = null,
             ILink link = null)
         {
-            var result = new InputCell<TValue>(inputAppliedToCellEvent, id, columnsSpanned, format, hoverOver, link);
+            var result = new InputCell<TValue>(inputAppliedToCellEvent, id, columnsSpanned, details, format, hoverOver, link);
 
             return result;
         }

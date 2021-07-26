@@ -17,12 +17,14 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Initializes a new instance of the <see cref="NullCellBase"/> class.
         /// </summary>
-        /// <param name="id">OPTIONAL unique identifier of the cell.  DEFAULT is a cell with no unique identifier.</param>
-        /// <param name="columnsSpanned">OPTIONAL number of columns spanned or null if none (cell occupies a single column).  DEFAULT is none.</param>
+        /// <param name="id">Unique identifier of the cell.</param>
+        /// <param name="columnsSpanned">Number of columns spanned or null if none (cell occupies a single column).</param>
+        /// <param name="details">Details about the cell.</param>
         protected NullCellBase(
-            string id = null,
-            int? columnsSpanned = null)
-            : base(id, columnsSpanned)
+            string id,
+            int? columnsSpanned,
+            string details)
+            : base(id, columnsSpanned, details)
         {
         }
     }

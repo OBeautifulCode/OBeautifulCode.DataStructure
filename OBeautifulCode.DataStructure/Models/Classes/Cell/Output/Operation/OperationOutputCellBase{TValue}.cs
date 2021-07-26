@@ -24,12 +24,14 @@ namespace OBeautifulCode.DataStructure
         /// <param name="cellOpExecutionEvent">The result of executing the operation.</param>
         /// <param name="id">The cell's unique identifier.</param>
         /// <param name="columnsSpanned">The number of columns spanned or null if none (cell occupies a single column).</param>
+        /// <param name="details">Details about the cell.</param>
         protected OperationOutputCellBase(
             IReturningOperation<TValue> operation,
             CellOpExecutionEventBase cellOpExecutionEvent,
             string id,
-            int? columnsSpanned)
-            : base(id, columnsSpanned)
+            int? columnsSpanned,
+            string details)
+            : base(id, columnsSpanned, details)
         {
             if (operation == null)
             {
