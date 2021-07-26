@@ -16,7 +16,7 @@ namespace OBeautifulCode.DataStructure
     /// A condition is evaluated in context of a <see cref="Validation"/>
     /// and determines the validity of a subject along single dimension.
     /// </summary>
-    public class ValidationCondition : IHaveDetails, IModelViaCodeGen
+    public partial class ValidationCondition : IHaveDetails, IModelViaCodeGen
     {
         /// <summary>
         /// The default operation to use when a condition fails to be met.
