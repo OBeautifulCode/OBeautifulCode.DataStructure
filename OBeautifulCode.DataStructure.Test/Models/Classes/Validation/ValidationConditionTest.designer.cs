@@ -47,7 +47,7 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new SystemUnderTestExpectedStringRepresentation<ValidationCondition>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.ValidationCondition: Operation = {systemUnderTest.Operation?.ToString() ?? "<null>"}, Kind = {systemUnderTest.Kind.ToString() ?? "<null>"}, FailureMessageOp = {systemUnderTest.FailureMessageOp?.ToString() ?? "<null>"}, Details = {systemUnderTest.Details?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.ValidationCondition: Operation = {systemUnderTest.Operation?.ToString() ?? "<null>"}, FailureMessageOp = {systemUnderTest.FailureMessageOp?.ToString() ?? "<null>"}, Kind = {systemUnderTest.Kind.ToString() ?? "<null>"}, Details = {systemUnderTest.Details?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}."),
                         };
 
                         return result;
@@ -65,8 +65,8 @@ namespace OBeautifulCode.DataStructure.Test
 
                         var result = new ValidationCondition(
                                              null,
-                                             referenceObject.Kind,
                                              referenceObject.FailureMessageOp,
+                                             referenceObject.Kind,
                                              referenceObject.Details);
 
                         return result;
@@ -84,8 +84,8 @@ namespace OBeautifulCode.DataStructure.Test
 
                         var result = new ValidationCondition(
                                              referenceObject.Operation,
-                                             referenceObject.Kind,
                                              null,
+                                             referenceObject.Kind,
                                              referenceObject.Details);
 
                         return result;
@@ -103,8 +103,8 @@ namespace OBeautifulCode.DataStructure.Test
 
                         var result = new ValidationCondition(
                                              referenceObject.Operation,
-                                             referenceObject.Kind,
                                              referenceObject.FailureMessageOp,
+                                             referenceObject.Kind,
                                              null);
 
                         return result;
@@ -122,8 +122,8 @@ namespace OBeautifulCode.DataStructure.Test
 
                         var result = new ValidationCondition(
                                              referenceObject.Operation,
-                                             referenceObject.Kind,
                                              referenceObject.FailureMessageOp,
+                                             referenceObject.Kind,
                                              Invariant($"  {Environment.NewLine}  "));
 
                         return result;
@@ -145,8 +145,8 @@ namespace OBeautifulCode.DataStructure.Test
                         {
                             SystemUnderTest = new ValidationCondition(
                                                       referenceObject.Operation,
-                                                      referenceObject.Kind,
                                                       referenceObject.FailureMessageOp,
+                                                      referenceObject.Kind,
                                                       referenceObject.Details),
                             ExpectedPropertyValue = referenceObject.Operation,
                         };
@@ -154,28 +154,6 @@ namespace OBeautifulCode.DataStructure.Test
                         return result;
                     },
                     PropertyName = "Operation",
-                })
-            .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<ValidationCondition>
-                {
-                    Name = "Kind should return same 'kind' parameter passed to constructor when getting",
-                    SystemUnderTestExpectedPropertyValueFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<ValidationCondition>();
-
-                        var result = new SystemUnderTestExpectedPropertyValue<ValidationCondition>
-                        {
-                            SystemUnderTest = new ValidationCondition(
-                                                      referenceObject.Operation,
-                                                      referenceObject.Kind,
-                                                      referenceObject.FailureMessageOp,
-                                                      referenceObject.Details),
-                            ExpectedPropertyValue = referenceObject.Kind,
-                        };
-
-                        return result;
-                    },
-                    PropertyName = "Kind",
                 })
             .AddScenario(() =>
                 new ConstructorPropertyAssignmentTestScenario<ValidationCondition>
@@ -189,8 +167,8 @@ namespace OBeautifulCode.DataStructure.Test
                         {
                             SystemUnderTest = new ValidationCondition(
                                                       referenceObject.Operation,
-                                                      referenceObject.Kind,
                                                       referenceObject.FailureMessageOp,
+                                                      referenceObject.Kind,
                                                       referenceObject.Details),
                             ExpectedPropertyValue = referenceObject.FailureMessageOp,
                         };
@@ -198,6 +176,28 @@ namespace OBeautifulCode.DataStructure.Test
                         return result;
                     },
                     PropertyName = "FailureMessageOp",
+                })
+            .AddScenario(() =>
+                new ConstructorPropertyAssignmentTestScenario<ValidationCondition>
+                {
+                    Name = "Kind should return same 'kind' parameter passed to constructor when getting",
+                    SystemUnderTestExpectedPropertyValueFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<ValidationCondition>();
+
+                        var result = new SystemUnderTestExpectedPropertyValue<ValidationCondition>
+                        {
+                            SystemUnderTest = new ValidationCondition(
+                                                      referenceObject.Operation,
+                                                      referenceObject.FailureMessageOp,
+                                                      referenceObject.Kind,
+                                                      referenceObject.Details),
+                            ExpectedPropertyValue = referenceObject.Kind,
+                        };
+
+                        return result;
+                    },
+                    PropertyName = "Kind",
                 })
             .AddScenario(() =>
                 new ConstructorPropertyAssignmentTestScenario<ValidationCondition>
@@ -211,8 +211,8 @@ namespace OBeautifulCode.DataStructure.Test
                         {
                             SystemUnderTest = new ValidationCondition(
                                                       referenceObject.Operation,
-                                                      referenceObject.Kind,
                                                       referenceObject.FailureMessageOp,
+                                                      referenceObject.Kind,
                                                       referenceObject.Details),
                             ExpectedPropertyValue = referenceObject.Details,
                         };
@@ -246,26 +246,6 @@ namespace OBeautifulCode.DataStructure.Test
             .AddScenario(() =>
                 new DeepCloneWithTestScenario<ValidationCondition>
                 {
-                    Name = "DeepCloneWithKind should deep clone object and replace Kind with the provided kind",
-                    WithPropertyName = "Kind",
-                    SystemUnderTestDeepCloneWithValueFunc = () =>
-                    {
-                        var systemUnderTest = A.Dummy<ValidationCondition>();
-
-                        var referenceObject = A.Dummy<ValidationCondition>().ThatIs(_ => !systemUnderTest.Kind.IsEqualTo(_.Kind));
-
-                        var result = new SystemUnderTestDeepCloneWithValue<ValidationCondition>
-                        {
-                            SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.Kind,
-                        };
-
-                        return result;
-                    },
-                })
-            .AddScenario(() =>
-                new DeepCloneWithTestScenario<ValidationCondition>
-                {
                     Name = "DeepCloneWithFailureMessageOp should deep clone object and replace FailureMessageOp with the provided failureMessageOp",
                     WithPropertyName = "FailureMessageOp",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
@@ -278,6 +258,26 @@ namespace OBeautifulCode.DataStructure.Test
                         {
                             SystemUnderTest = systemUnderTest,
                             DeepCloneWithValue = referenceObject.FailureMessageOp,
+                        };
+
+                        return result;
+                    },
+                })
+            .AddScenario(() =>
+                new DeepCloneWithTestScenario<ValidationCondition>
+                {
+                    Name = "DeepCloneWithKind should deep clone object and replace Kind with the provided kind",
+                    WithPropertyName = "Kind",
+                    SystemUnderTestDeepCloneWithValueFunc = () =>
+                    {
+                        var systemUnderTest = A.Dummy<ValidationCondition>();
+
+                        var referenceObject = A.Dummy<ValidationCondition>().ThatIs(_ => !systemUnderTest.Kind.IsEqualTo(_.Kind));
+
+                        var result = new SystemUnderTestDeepCloneWithValue<ValidationCondition>
+                        {
+                            SystemUnderTest = systemUnderTest,
+                            DeepCloneWithValue = referenceObject.Kind,
                         };
 
                         return result;
@@ -316,31 +316,31 @@ namespace OBeautifulCode.DataStructure.Test
                     {
                         new ValidationCondition(
                                 ReferenceObjectForEquatableTestScenarios.Operation,
-                                ReferenceObjectForEquatableTestScenarios.Kind,
                                 ReferenceObjectForEquatableTestScenarios.FailureMessageOp,
+                                ReferenceObjectForEquatableTestScenarios.Kind,
                                 ReferenceObjectForEquatableTestScenarios.Details),
                     },
                     ObjectsThatAreNotEqualToReferenceObject = new ValidationCondition[]
                     {
                         new ValidationCondition(
                                 A.Dummy<ValidationCondition>().Whose(_ => !_.Operation.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Operation)).Operation,
-                                ReferenceObjectForEquatableTestScenarios.Kind,
                                 ReferenceObjectForEquatableTestScenarios.FailureMessageOp,
+                                ReferenceObjectForEquatableTestScenarios.Kind,
                                 ReferenceObjectForEquatableTestScenarios.Details),
                         new ValidationCondition(
                                 ReferenceObjectForEquatableTestScenarios.Operation,
-                                A.Dummy<ValidationCondition>().Whose(_ => !_.Kind.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Kind)).Kind,
-                                ReferenceObjectForEquatableTestScenarios.FailureMessageOp,
-                                ReferenceObjectForEquatableTestScenarios.Details),
-                        new ValidationCondition(
-                                ReferenceObjectForEquatableTestScenarios.Operation,
-                                ReferenceObjectForEquatableTestScenarios.Kind,
                                 A.Dummy<ValidationCondition>().Whose(_ => !_.FailureMessageOp.IsEqualTo(ReferenceObjectForEquatableTestScenarios.FailureMessageOp)).FailureMessageOp,
+                                ReferenceObjectForEquatableTestScenarios.Kind,
                                 ReferenceObjectForEquatableTestScenarios.Details),
                         new ValidationCondition(
                                 ReferenceObjectForEquatableTestScenarios.Operation,
-                                ReferenceObjectForEquatableTestScenarios.Kind,
                                 ReferenceObjectForEquatableTestScenarios.FailureMessageOp,
+                                A.Dummy<ValidationCondition>().Whose(_ => !_.Kind.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Kind)).Kind,
+                                ReferenceObjectForEquatableTestScenarios.Details),
+                        new ValidationCondition(
+                                ReferenceObjectForEquatableTestScenarios.Operation,
+                                ReferenceObjectForEquatableTestScenarios.FailureMessageOp,
+                                ReferenceObjectForEquatableTestScenarios.Kind,
                                 A.Dummy<ValidationCondition>().Whose(_ => !_.Details.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Details)).Details),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
@@ -642,7 +642,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "Operation", "Kind", "FailureMessageOp", "Details" };
+                var propertyNames = new string[] { "Operation", "FailureMessageOp", "Kind", "Details" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 

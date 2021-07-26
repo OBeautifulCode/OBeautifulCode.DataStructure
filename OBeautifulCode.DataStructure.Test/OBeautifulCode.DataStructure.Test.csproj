@@ -368,6 +368,12 @@
     <Compile Include="Models\Classes\TreeTableTest.designer.cs">
       <DependentUpon>TreeTableTest.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\Classes\Validation\ValidationConditionsTest.designer.cs">
+      <DependentUpon>ValidationConditionsTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Validation\ValidationConditionTest.designer.cs">
+      <DependentUpon>ValidationConditionTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Operations\Bool\AndAlsoOpTest.cs" />
     <Compile Include="Models\Classes\Report\CellLocatorTest.cs" />
     <Compile Include="Events\CellOpExecution\CellOpExecutionAbortedEventTest.cs" />
@@ -411,23 +417,8 @@
     <Compile Include="Events\InputAppliedToCellEvent{TValue}Test.cs" />
     <Compile Include="Models\Classes\Cell\Input\InputCellBase{TValue}Test.cs" />
     <Compile Include="Models\Classes\Cell\Input\InputCell{TValue}Test.cs" />
-    <Compile Include="Operations\GetConstOp{TValue}Test.designer.cs">
-      <DependentUpon>GetConstOp{TValue}Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Operations\MultiStatementOpBase{TStatement,TResult}Test.designer.cs">
-      <DependentUpon>MultiStatementOpBase{TStatement,TResult}Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Operations\SingleStatementOpBase{TStatement,TResult}Test.designer.cs">
-      <DependentUpon>SingleStatementOpBase{TStatement,TResult}Test.cs</DependentUpon>
-    </Compile>
     <Compile Include="Models\Classes\Validation\ValidationConditionTest.cs" />
-    <Compile Include="Models\Classes\Validation\ValidationConditionTest.designer.cs">
-      <DependentUpon>ValidationConditionTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Validation\ValidationTest.cs" />
-    <Compile Include="Models\Classes\Validation\ValidationTest.designer.cs">
-      <DependentUpon>ValidationTest.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Models\Classes\Validation\ValidationConditionsTest.cs" />
     <None Include="Logic\Extensions\RowExtensionsTest.cs" />
     <Compile Include="Logic\Extensions\TreeTableExtensionsTest.cs" />
     <Compile Include="Models\Classes\CellValue\MediaReferenceTest.cs" />
@@ -467,6 +458,9 @@
     <Compile Include="Models\Classes\Row\RowTest.cs" />
     <Compile Include="Models\Classes\Row\TableRowsTest.cs" />
     <None Include="Models\Classes\TreeTableTest.cs" />
+    <Compile Include="Operations\GetConstOp{TValue}Test.designer.cs">
+      <DependentUpon>GetConstOp{TValue}Test.cs</DependentUpon>
+    </Compile>
     <Compile Include="Operations\MultiStatementOpBase{TStatement,TResult}Test.cs" />
     <Compile Include="Operations\Bool\NotOpTest.cs" />
     <Compile Include="Models\Classes\Cell\Null\NullCellBaseTest.cs" />
@@ -475,6 +469,12 @@
     <Compile Include="Models\Classes\Cell\Output\Operation\OperationOutputCellBase{TValue}Test.cs" />
     <Compile Include="Operations\Bool\OrElseOpTest.cs" />
     <Compile Include="Models\Classes\Cell\Output\OutputCellBase{TValue}Test.cs" />
+    <Compile Include="Operations\MultiStatementOpBase{TStatement,TResult}Test.designer.cs">
+      <DependentUpon>MultiStatementOpBase{TStatement,TResult}Test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Operations\SingleStatementOpBase{TStatement,TResult}Test.designer.cs">
+      <DependentUpon>SingleStatementOpBase{TStatement,TResult}Test.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\GlobalSuppressions.cs" />
     <Compile Include="DataStructureDummyFactory.cs" />

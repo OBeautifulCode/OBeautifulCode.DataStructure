@@ -17,9 +17,9 @@ namespace OBeautifulCode.DataStructure
         Unknown,
 
         /// <summary>
-        /// There is no validation specified for the subject.
+        /// There are no validation conditions for the subject.
         /// </summary>
-        NoValidation,
+        NoConditions,
 
         /// <summary>
         /// A validation condition was aborted when executing.

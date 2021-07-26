@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Validation.cs" company="OBeautifulCode">
+// <copyright file="ValidationConditions.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -20,14 +20,14 @@ namespace OBeautifulCode.DataStructure
     /// <remarks>
     /// The conditions are evaluated in order; so if one of them fails, the others are not evaluated.
     /// </remarks>
-    public partial class Validation : IHaveDetails, IModelViaCodeGen
+    public partial class ValidationConditions : IHaveDetails, IModelViaCodeGen
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Validation"/> class.
+        /// Initializes a new instance of the <see cref="ValidationConditions"/> class.
         /// </summary>
         /// <param name="conditions">The conditions.</param>
         /// <param name="details">OPTIONAL details about the validation.  DEFAULT is to omit any details.</param>
-        public Validation(
+        public ValidationConditions(
             IReadOnlyList<ValidationCondition> conditions,
             string details = null)
         {

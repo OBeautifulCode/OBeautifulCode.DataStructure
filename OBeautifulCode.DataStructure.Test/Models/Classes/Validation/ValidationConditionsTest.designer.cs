@@ -33,37 +33,37 @@ namespace OBeautifulCode.DataStructure.Test
 
     using static global::System.FormattableString;
 
-    public static partial class ValidationTest
+    public static partial class ValidationConditionsTest
     {
-        private static readonly StringRepresentationTestScenarios<Validation> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<Validation>()
+        private static readonly StringRepresentationTestScenarios<ValidationConditions> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<ValidationConditions>()
             .AddScenario(() =>
-                new StringRepresentationTestScenario<Validation>
+                new StringRepresentationTestScenario<ValidationConditions>
                 {
                     Name = "Default Code Generated Scenario",
                     SystemUnderTestExpectedStringRepresentationFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<Validation>();
+                        var systemUnderTest = A.Dummy<ValidationConditions>();
 
-                        var result = new SystemUnderTestExpectedStringRepresentation<Validation>
+                        var result = new SystemUnderTestExpectedStringRepresentation<ValidationConditions>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.Validation: Conditions = {systemUnderTest.Conditions?.ToString() ?? "<null>"}, Details = {systemUnderTest.Details?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.ValidationConditions: Conditions = {systemUnderTest.Conditions?.ToString() ?? "<null>"}, Details = {systemUnderTest.Details?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}."),
                         };
 
                         return result;
                     },
                 });
 
-        private static readonly ConstructorArgumentValidationTestScenarios<Validation> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<Validation>()
+        private static readonly ConstructorArgumentValidationTestScenarios<ValidationConditions> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<ValidationConditions>()
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<Validation>
+                new ConstructorArgumentValidationTestScenario<ValidationConditions>
                 {
                     Name = "constructor should throw ArgumentNullException when parameter 'conditions' is null scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<Validation>();
+                        var referenceObject = A.Dummy<ValidationConditions>();
 
-                        var result = new Validation(
+                        var result = new ValidationConditions(
                                              null,
                                              referenceObject.Details);
 
@@ -73,14 +73,14 @@ namespace OBeautifulCode.DataStructure.Test
                     ExpectedExceptionMessageContains = new[] { "conditions", },
                 })
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<Validation>
+                new ConstructorArgumentValidationTestScenario<ValidationConditions>
                 {
                     Name = "constructor should throw ArgumentException when parameter 'conditions' is an empty enumerable scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<Validation>();
+                        var referenceObject = A.Dummy<ValidationConditions>();
 
-                        var result = new Validation(
+                        var result = new ValidationConditions(
                                              new List<ValidationCondition>(),
                                              referenceObject.Details);
 
@@ -90,14 +90,14 @@ namespace OBeautifulCode.DataStructure.Test
                     ExpectedExceptionMessageContains = new[] { "conditions", "is an empty enumerable", },
                 })
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<Validation>
+                new ConstructorArgumentValidationTestScenario<ValidationConditions>
                 {
                     Name = "constructor should throw ArgumentException when parameter 'conditions' contains a null element scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<Validation>();
+                        var referenceObject = A.Dummy<ValidationConditions>();
 
-                        var result = new Validation(
+                        var result = new ValidationConditions(
                                              new ValidationCondition[0].Concat(referenceObject.Conditions).Concat(new ValidationCondition[] { null }).Concat(referenceObject.Conditions).ToList(),
                                              referenceObject.Details);
 
@@ -107,14 +107,14 @@ namespace OBeautifulCode.DataStructure.Test
                     ExpectedExceptionMessageContains = new[] { "conditions", "contains at least one null element", },
                 })
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<Validation>
+                new ConstructorArgumentValidationTestScenario<ValidationConditions>
                 {
                     Name = "constructor should throw ArgumentNullException when parameter 'details' is null scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<Validation>();
+                        var referenceObject = A.Dummy<ValidationConditions>();
 
-                        var result = new Validation(
+                        var result = new ValidationConditions(
                                              referenceObject.Conditions,
                                              null);
 
@@ -124,14 +124,14 @@ namespace OBeautifulCode.DataStructure.Test
                     ExpectedExceptionMessageContains = new[] { "details", },
                 })
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<Validation>
+                new ConstructorArgumentValidationTestScenario<ValidationConditions>
                 {
                     Name = "constructor should throw ArgumentException when parameter 'details' is white space scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<Validation>();
+                        var referenceObject = A.Dummy<ValidationConditions>();
 
-                        var result = new Validation(
+                        var result = new ValidationConditions(
                                              referenceObject.Conditions,
                                              Invariant($"  {Environment.NewLine}  "));
 
@@ -141,18 +141,18 @@ namespace OBeautifulCode.DataStructure.Test
                     ExpectedExceptionMessageContains = new[] { "details", "white space", },
                 });
 
-        private static readonly ConstructorPropertyAssignmentTestScenarios<Validation> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<Validation>()
+        private static readonly ConstructorPropertyAssignmentTestScenarios<ValidationConditions> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<ValidationConditions>()
             .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<Validation>
+                new ConstructorPropertyAssignmentTestScenario<ValidationConditions>
                 {
                     Name = "Conditions should return same 'conditions' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
-                        var referenceObject = A.Dummy<Validation>();
+                        var referenceObject = A.Dummy<ValidationConditions>();
 
-                        var result = new SystemUnderTestExpectedPropertyValue<Validation>
+                        var result = new SystemUnderTestExpectedPropertyValue<ValidationConditions>
                         {
-                            SystemUnderTest = new Validation(
+                            SystemUnderTest = new ValidationConditions(
                                                       referenceObject.Conditions,
                                                       referenceObject.Details),
                             ExpectedPropertyValue = referenceObject.Conditions,
@@ -163,16 +163,16 @@ namespace OBeautifulCode.DataStructure.Test
                     PropertyName = "Conditions",
                 })
             .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<Validation>
+                new ConstructorPropertyAssignmentTestScenario<ValidationConditions>
                 {
                     Name = "Details should return same 'details' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
-                        var referenceObject = A.Dummy<Validation>();
+                        var referenceObject = A.Dummy<ValidationConditions>();
 
-                        var result = new SystemUnderTestExpectedPropertyValue<Validation>
+                        var result = new SystemUnderTestExpectedPropertyValue<ValidationConditions>
                         {
-                            SystemUnderTest = new Validation(
+                            SystemUnderTest = new ValidationConditions(
                                                       referenceObject.Conditions,
                                                       referenceObject.Details),
                             ExpectedPropertyValue = referenceObject.Details,
@@ -183,19 +183,19 @@ namespace OBeautifulCode.DataStructure.Test
                     PropertyName = "Details",
                 });
 
-        private static readonly DeepCloneWithTestScenarios<Validation> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<Validation>()
+        private static readonly DeepCloneWithTestScenarios<ValidationConditions> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<ValidationConditions>()
             .AddScenario(() =>
-                new DeepCloneWithTestScenario<Validation>
+                new DeepCloneWithTestScenario<ValidationConditions>
                 {
                     Name = "DeepCloneWithConditions should deep clone object and replace Conditions with the provided conditions",
                     WithPropertyName = "Conditions",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<Validation>();
+                        var systemUnderTest = A.Dummy<ValidationConditions>();
 
-                        var referenceObject = A.Dummy<Validation>().ThatIs(_ => !systemUnderTest.Conditions.IsEqualTo(_.Conditions));
+                        var referenceObject = A.Dummy<ValidationConditions>().ThatIs(_ => !systemUnderTest.Conditions.IsEqualTo(_.Conditions));
 
-                        var result = new SystemUnderTestDeepCloneWithValue<Validation>
+                        var result = new SystemUnderTestDeepCloneWithValue<ValidationConditions>
                         {
                             SystemUnderTest = systemUnderTest,
                             DeepCloneWithValue = referenceObject.Conditions,
@@ -205,17 +205,17 @@ namespace OBeautifulCode.DataStructure.Test
                     },
                 })
             .AddScenario(() =>
-                new DeepCloneWithTestScenario<Validation>
+                new DeepCloneWithTestScenario<ValidationConditions>
                 {
                     Name = "DeepCloneWithDetails should deep clone object and replace Details with the provided details",
                     WithPropertyName = "Details",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<Validation>();
+                        var systemUnderTest = A.Dummy<ValidationConditions>();
 
-                        var referenceObject = A.Dummy<Validation>().ThatIs(_ => !systemUnderTest.Details.IsEqualTo(_.Details));
+                        var referenceObject = A.Dummy<ValidationConditions>().ThatIs(_ => !systemUnderTest.Details.IsEqualTo(_.Details));
 
-                        var result = new SystemUnderTestDeepCloneWithValue<Validation>
+                        var result = new SystemUnderTestDeepCloneWithValue<ValidationConditions>
                         {
                             SystemUnderTest = systemUnderTest,
                             DeepCloneWithValue = referenceObject.Details,
@@ -225,28 +225,28 @@ namespace OBeautifulCode.DataStructure.Test
                     },
                 });
 
-        private static readonly Validation ReferenceObjectForEquatableTestScenarios = A.Dummy<Validation>();
+        private static readonly ValidationConditions ReferenceObjectForEquatableTestScenarios = A.Dummy<ValidationConditions>();
 
-        private static readonly EquatableTestScenarios<Validation> EquatableTestScenarios = new EquatableTestScenarios<Validation>()
+        private static readonly EquatableTestScenarios<ValidationConditions> EquatableTestScenarios = new EquatableTestScenarios<ValidationConditions>()
             .AddScenario(() =>
-                new EquatableTestScenario<Validation>
+                new EquatableTestScenario<ValidationConditions>
                 {
                     Name = "Default Code Generated Scenario",
                     ReferenceObject = ReferenceObjectForEquatableTestScenarios,
-                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new Validation[]
+                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new ValidationConditions[]
                     {
-                        new Validation(
+                        new ValidationConditions(
                                 ReferenceObjectForEquatableTestScenarios.Conditions,
                                 ReferenceObjectForEquatableTestScenarios.Details),
                     },
-                    ObjectsThatAreNotEqualToReferenceObject = new Validation[]
+                    ObjectsThatAreNotEqualToReferenceObject = new ValidationConditions[]
                     {
-                        new Validation(
-                                A.Dummy<Validation>().Whose(_ => !_.Conditions.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Conditions)).Conditions,
+                        new ValidationConditions(
+                                A.Dummy<ValidationConditions>().Whose(_ => !_.Conditions.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Conditions)).Conditions,
                                 ReferenceObjectForEquatableTestScenarios.Details),
-                        new Validation(
+                        new ValidationConditions(
                                 ReferenceObjectForEquatableTestScenarios.Conditions,
-                                A.Dummy<Validation>().Whose(_ => !_.Details.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Details)).Details),
+                                A.Dummy<ValidationConditions>().Whose(_ => !_.Details.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Details)).Details),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
                     {
@@ -276,12 +276,12 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Validation___Should_implement_IModel_of_Validation___When_reflecting()
+            public static void ValidationConditions___Should_implement_IModel_of_ValidationConditions___When_reflecting()
             {
                 // Arrange
-                var type = typeof(Validation);
+                var type = typeof(ValidationConditions);
 
-                var expectedModelMethods = typeof(IModel<Validation>).GetInterfaceDeclaredAndImplementedMethods();
+                var expectedModelMethods = typeof(IModel<ValidationConditions>).GetInterfaceDeclaredAndImplementedMethods();
 
                 var expectedModelMethodHashes = expectedModelMethods.Select(_ => _.GetSignatureHash());
 
@@ -291,7 +291,7 @@ namespace OBeautifulCode.DataStructure.Test
                 var actualModelMethodHashes = actualModelMethods.Select(_ => _.GetSignatureHash());
 
                 // Assert
-                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<Validation>));
+                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<ValidationConditions>));
                 expectedModelMethodHashes.Except(actualModelMethodHashes).AsTest().Must().BeEmptyEnumerable();
             }
 
@@ -309,10 +309,10 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Validation___Should_be_attributed_with_Serializable____When_reflecting()
+            public static void ValidationConditions___Should_be_attributed_with_Serializable____When_reflecting()
             {
                 // Arrange
-                var type = typeof(Validation);
+                var type = typeof(ValidationConditions);
 
                 // Act
                 var actualAttributes = type.GetCustomAttributes(typeof(SerializableAttribute), false);
@@ -470,10 +470,10 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Clone___Should_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<Validation>();
+                var systemUnderTest = A.Dummy<ValidationConditions>();
 
                 // Act
-                var actual = (Validation)systemUnderTest.Clone();
+                var actual = (ValidationConditions)systemUnderTest.Clone();
 
                 // Assert
                 actual.AsTest().Must().BeEqualTo(systemUnderTest);
@@ -497,7 +497,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void DeepClone___Should_deep_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<Validation>();
+                var systemUnderTest = A.Dummy<ValidationConditions>();
 
                 // Act
                 var actual = systemUnderTest.DeepClone();
@@ -548,12 +548,12 @@ namespace OBeautifulCode.DataStructure.Test
                     }
 
                     // Act
-                    var actual = (Validation)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
+                    var actual = (ValidationConditions)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
 
                     // Assert
                     foreach(var propertyName in propertyNames)
                     {
-                        var propertyInfo = typeof(Validation).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
+                        var propertyInfo = typeof(ValidationConditions).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
 
                         var actualPropertyValue = propertyInfo.GetValue(actual);
 
@@ -615,7 +615,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<Validation>();
+                var expected = A.Dummy<ValidationConditions>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -644,7 +644,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<Validation>();
+                var expected = A.Dummy<ValidationConditions>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -673,7 +673,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<Validation>();
+                var expected = A.Dummy<ValidationConditions>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -702,7 +702,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<Validation>();
+                var expected = A.Dummy<ValidationConditions>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -736,8 +736,8 @@ namespace OBeautifulCode.DataStructure.Test
             public static void EqualsOperator___Should_return_true___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                Validation systemUnderTest1 = null;
-                Validation systemUnderTest2 = null;
+                ValidationConditions systemUnderTest1 = null;
+                ValidationConditions systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 == systemUnderTest2;
@@ -767,7 +767,7 @@ namespace OBeautifulCode.DataStructure.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    Validation systemUnderTest = null;
+                    ValidationConditions systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest == scenario.ReferenceObject;
@@ -916,8 +916,8 @@ namespace OBeautifulCode.DataStructure.Test
             public static void NotEqualsOperator___Should_return_false___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                Validation systemUnderTest1 = null;
-                Validation systemUnderTest2 = null;
+                ValidationConditions systemUnderTest1 = null;
+                ValidationConditions systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 != systemUnderTest2;
@@ -947,7 +947,7 @@ namespace OBeautifulCode.DataStructure.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    Validation systemUnderTest = null;
+                    ValidationConditions systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest != scenario.ReferenceObject;
@@ -1093,14 +1093,14 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_Validation___Should_return_false___When_parameter_other_is_null()
+            public static void Equals_with_ValidationConditions___Should_return_false___When_parameter_other_is_null()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    Validation systemUnderTest = null;
+                    ValidationConditions systemUnderTest = null;
 
                     // Act
                     var actual = scenario.ReferenceObject.Equals(systemUnderTest);
@@ -1124,7 +1124,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_Validation___Should_return_true___When_parameter_other_is_same_object()
+            public static void Equals_with_ValidationConditions___Should_return_true___When_parameter_other_is_same_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1152,7 +1152,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_Validation___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
+            public static void Equals_with_ValidationConditions___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1180,7 +1180,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_Validation___Should_return_false___When_objects_being_compared_have_different_property_values()
+            public static void Equals_with_ValidationConditions___Should_return_false___When_objects_being_compared_have_different_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1208,7 +1208,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_Validation___Should_return_true___When_objects_being_compared_have_same_property_values()
+            public static void Equals_with_ValidationConditions___Should_return_true___When_objects_being_compared_have_same_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 

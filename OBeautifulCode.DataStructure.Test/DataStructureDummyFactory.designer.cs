@@ -469,15 +469,15 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<ReportFormat>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new Validation(
+                () => new ValidationConditions(
                                  A.Dummy<IReadOnlyList<ValidationCondition>>(),
                                  A.Dummy<string>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new ValidationCondition(
                                  A.Dummy<IReturningOperation<bool>>(),
-                                 A.Dummy<ValidationConditionKind>(),
                                  A.Dummy<IReturningOperation<string>>(),
+                                 A.Dummy<ValidationConditionKind>(),
                                  A.Dummy<string>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(

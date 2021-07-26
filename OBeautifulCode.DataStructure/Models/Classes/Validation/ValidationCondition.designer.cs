@@ -70,8 +70,8 @@ namespace OBeautifulCode.DataStructure
             }
 
             var result = this.Operation.IsEqualTo(other.Operation)
-                      && this.Kind.IsEqualTo(other.Kind)
                       && this.FailureMessageOp.IsEqualTo(other.FailureMessageOp)
+                      && this.Kind.IsEqualTo(other.Kind)
                       && this.Details.IsEqualTo(other.Details, StringComparer.Ordinal);
 
             return result;
@@ -83,8 +83,8 @@ namespace OBeautifulCode.DataStructure
         /// <inheritdoc />
         public override int GetHashCode() => HashCodeHelper.Initialize()
             .Hash(this.Operation)
-            .Hash(this.Kind)
             .Hash(this.FailureMessageOp)
+            .Hash(this.Kind)
             .Hash(this.Details)
             .Value;
 
@@ -96,8 +96,8 @@ namespace OBeautifulCode.DataStructure
         {
             var result = new ValidationCondition(
                                  this.Operation?.DeepClone(),
-                                 this.Kind.DeepClone(),
                                  this.FailureMessageOp?.DeepClone(),
+                                 this.Kind.DeepClone(),
                                  this.Details?.DeepClone());
 
             return result;
@@ -129,41 +129,8 @@ namespace OBeautifulCode.DataStructure
         {
             var result = new ValidationCondition(
                                  operation,
+                                 this.FailureMessageOp?.DeepClone(),
                                  this.Kind.DeepClone(),
-                                 this.FailureMessageOp?.DeepClone(),
-                                 this.Details?.DeepClone());
-
-            return result;
-        }
-
-        /// <summary>
-        /// Deep clones this object with a new <see cref="Kind" />.
-        /// </summary>
-        /// <param name="kind">The new <see cref="Kind" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="ValidationCondition" /> using the specified <paramref name="kind" /> for <see cref="Kind" /> and a deep clone of every other property.</returns>
-        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
-        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
-        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
-        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public ValidationCondition DeepCloneWithKind(ValidationConditionKind kind)
-        {
-            var result = new ValidationCondition(
-                                 this.Operation?.DeepClone(),
-                                 kind,
-                                 this.FailureMessageOp?.DeepClone(),
                                  this.Details?.DeepClone());
 
             return result;
@@ -195,8 +162,41 @@ namespace OBeautifulCode.DataStructure
         {
             var result = new ValidationCondition(
                                  this.Operation?.DeepClone(),
-                                 this.Kind.DeepClone(),
                                  failureMessageOp,
+                                 this.Kind.DeepClone(),
+                                 this.Details?.DeepClone());
+
+            return result;
+        }
+
+        /// <summary>
+        /// Deep clones this object with a new <see cref="Kind" />.
+        /// </summary>
+        /// <param name="kind">The new <see cref="Kind" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="ValidationCondition" /> using the specified <paramref name="kind" /> for <see cref="Kind" /> and a deep clone of every other property.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
+        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
+        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
+        public ValidationCondition DeepCloneWithKind(ValidationConditionKind kind)
+        {
+            var result = new ValidationCondition(
+                                 this.Operation?.DeepClone(),
+                                 this.FailureMessageOp?.DeepClone(),
+                                 kind,
                                  this.Details?.DeepClone());
 
             return result;
@@ -228,8 +228,8 @@ namespace OBeautifulCode.DataStructure
         {
             var result = new ValidationCondition(
                                  this.Operation?.DeepClone(),
-                                 this.Kind.DeepClone(),
                                  this.FailureMessageOp?.DeepClone(),
+                                 this.Kind.DeepClone(),
                                  details);
 
             return result;
@@ -239,7 +239,7 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"OBeautifulCode.DataStructure.ValidationCondition: Operation = {this.Operation?.ToString() ?? "<null>"}, Kind = {this.Kind.ToString() ?? "<null>"}, FailureMessageOp = {this.FailureMessageOp?.ToString() ?? "<null>"}, Details = {this.Details?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}.");
+            var result = Invariant($"OBeautifulCode.DataStructure.ValidationCondition: Operation = {this.Operation?.ToString() ?? "<null>"}, FailureMessageOp = {this.FailureMessageOp?.ToString() ?? "<null>"}, Kind = {this.Kind.ToString() ?? "<null>"}, Details = {this.Details?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}.");
 
             return result;
         }
