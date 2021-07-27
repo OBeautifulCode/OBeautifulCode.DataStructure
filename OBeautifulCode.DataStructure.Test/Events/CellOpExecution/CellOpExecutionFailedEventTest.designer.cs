@@ -33,57 +33,38 @@ namespace OBeautifulCode.DataStructure.Test
 
     using static global::System.FormattableString;
 
-    public static partial class CellOpExecutionFailedWithCellNotFoundEventTest
+    public static partial class CellOpExecutionFailedEventTest
     {
-        private static readonly StringRepresentationTestScenarios<CellOpExecutionFailedWithCellNotFoundEvent> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<CellOpExecutionFailedWithCellNotFoundEvent>()
+        private static readonly StringRepresentationTestScenarios<CellOpExecutionFailedEvent> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<CellOpExecutionFailedEvent>()
             .AddScenario(() =>
-                new StringRepresentationTestScenario<CellOpExecutionFailedWithCellNotFoundEvent>
+                new StringRepresentationTestScenario<CellOpExecutionFailedEvent>
                 {
                     Name = "Default Code Generated Scenario",
                     SystemUnderTestExpectedStringRepresentationFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<CellOpExecutionFailedWithCellNotFoundEvent>();
+                        var systemUnderTest = A.Dummy<CellOpExecutionFailedEvent>();
 
-                        var result = new SystemUnderTestExpectedStringRepresentation<CellOpExecutionFailedWithCellNotFoundEvent>
+                        var result = new SystemUnderTestExpectedStringRepresentation<CellOpExecutionFailedEvent>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.CellOpExecutionFailedWithCellNotFoundEvent: TimestampUtc = {systemUnderTest.TimestampUtc.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Details = {systemUnderTest.Details?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, CellLocator = {systemUnderTest.CellLocator?.ToString() ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.CellOpExecutionFailedEvent: TimestampUtc = {systemUnderTest.TimestampUtc.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Details = {systemUnderTest.Details?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}."),
                         };
 
                         return result;
                     },
                 });
 
-        private static readonly ConstructorArgumentValidationTestScenarios<CellOpExecutionFailedWithCellNotFoundEvent> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<CellOpExecutionFailedWithCellNotFoundEvent>()
+        private static readonly ConstructorArgumentValidationTestScenarios<CellOpExecutionFailedEvent> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<CellOpExecutionFailedEvent>()
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<CellOpExecutionFailedWithCellNotFoundEvent>
-                {
-                    Name = "constructor should throw ArgumentNullException when parameter 'cellLocator' is null scenario",
-                    ConstructionFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<CellOpExecutionFailedWithCellNotFoundEvent>();
-
-                        var result = new CellOpExecutionFailedWithCellNotFoundEvent(
-                                             referenceObject.TimestampUtc,
-                                             null,
-                                             referenceObject.Details);
-
-                        return result;
-                    },
-                    ExpectedExceptionType = typeof(ArgumentNullException),
-                    ExpectedExceptionMessageContains = new[] { "cellLocator", },
-                })
-            .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<CellOpExecutionFailedWithCellNotFoundEvent>
+                new ConstructorArgumentValidationTestScenario<CellOpExecutionFailedEvent>
                 {
                     Name = "constructor should throw ArgumentNullException when parameter 'details' is null scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<CellOpExecutionFailedWithCellNotFoundEvent>();
+                        var referenceObject = A.Dummy<CellOpExecutionFailedEvent>();
 
-                        var result = new CellOpExecutionFailedWithCellNotFoundEvent(
+                        var result = new CellOpExecutionFailedEvent(
                                              referenceObject.TimestampUtc,
-                                             referenceObject.CellLocator,
                                              null);
 
                         return result;
@@ -92,16 +73,15 @@ namespace OBeautifulCode.DataStructure.Test
                     ExpectedExceptionMessageContains = new[] { "details", },
                 })
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<CellOpExecutionFailedWithCellNotFoundEvent>
+                new ConstructorArgumentValidationTestScenario<CellOpExecutionFailedEvent>
                 {
                     Name = "constructor should throw ArgumentException when parameter 'details' is white space scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<CellOpExecutionFailedWithCellNotFoundEvent>();
+                        var referenceObject = A.Dummy<CellOpExecutionFailedEvent>();
 
-                        var result = new CellOpExecutionFailedWithCellNotFoundEvent(
+                        var result = new CellOpExecutionFailedEvent(
                                              referenceObject.TimestampUtc,
-                                             referenceObject.CellLocator,
                                              Invariant($"  {Environment.NewLine}  "));
 
                         return result;
@@ -110,20 +90,19 @@ namespace OBeautifulCode.DataStructure.Test
                     ExpectedExceptionMessageContains = new[] { "details", "white space", },
                 });
 
-        private static readonly ConstructorPropertyAssignmentTestScenarios<CellOpExecutionFailedWithCellNotFoundEvent> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<CellOpExecutionFailedWithCellNotFoundEvent>()
+        private static readonly ConstructorPropertyAssignmentTestScenarios<CellOpExecutionFailedEvent> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<CellOpExecutionFailedEvent>()
             .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<CellOpExecutionFailedWithCellNotFoundEvent>
+                new ConstructorPropertyAssignmentTestScenario<CellOpExecutionFailedEvent>
                 {
                     Name = "TimestampUtc should return same 'timestampUtc' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
-                        var referenceObject = A.Dummy<CellOpExecutionFailedWithCellNotFoundEvent>();
+                        var referenceObject = A.Dummy<CellOpExecutionFailedEvent>();
 
-                        var result = new SystemUnderTestExpectedPropertyValue<CellOpExecutionFailedWithCellNotFoundEvent>
+                        var result = new SystemUnderTestExpectedPropertyValue<CellOpExecutionFailedEvent>
                         {
-                            SystemUnderTest = new CellOpExecutionFailedWithCellNotFoundEvent(
+                            SystemUnderTest = new CellOpExecutionFailedEvent(
                                                       referenceObject.TimestampUtc,
-                                                      referenceObject.CellLocator,
                                                       referenceObject.Details),
                             ExpectedPropertyValue = referenceObject.TimestampUtc,
                         };
@@ -133,39 +112,17 @@ namespace OBeautifulCode.DataStructure.Test
                     PropertyName = "TimestampUtc",
                 })
             .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<CellOpExecutionFailedWithCellNotFoundEvent>
-                {
-                    Name = "CellLocator should return same 'cellLocator' parameter passed to constructor when getting",
-                    SystemUnderTestExpectedPropertyValueFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<CellOpExecutionFailedWithCellNotFoundEvent>();
-
-                        var result = new SystemUnderTestExpectedPropertyValue<CellOpExecutionFailedWithCellNotFoundEvent>
-                        {
-                            SystemUnderTest = new CellOpExecutionFailedWithCellNotFoundEvent(
-                                                      referenceObject.TimestampUtc,
-                                                      referenceObject.CellLocator,
-                                                      referenceObject.Details),
-                            ExpectedPropertyValue = referenceObject.CellLocator,
-                        };
-
-                        return result;
-                    },
-                    PropertyName = "CellLocator",
-                })
-            .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<CellOpExecutionFailedWithCellNotFoundEvent>
+                new ConstructorPropertyAssignmentTestScenario<CellOpExecutionFailedEvent>
                 {
                     Name = "Details should return same 'details' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
-                        var referenceObject = A.Dummy<CellOpExecutionFailedWithCellNotFoundEvent>();
+                        var referenceObject = A.Dummy<CellOpExecutionFailedEvent>();
 
-                        var result = new SystemUnderTestExpectedPropertyValue<CellOpExecutionFailedWithCellNotFoundEvent>
+                        var result = new SystemUnderTestExpectedPropertyValue<CellOpExecutionFailedEvent>
                         {
-                            SystemUnderTest = new CellOpExecutionFailedWithCellNotFoundEvent(
+                            SystemUnderTest = new CellOpExecutionFailedEvent(
                                                       referenceObject.TimestampUtc,
-                                                      referenceObject.CellLocator,
                                                       referenceObject.Details),
                             ExpectedPropertyValue = referenceObject.Details,
                         };
@@ -175,19 +132,19 @@ namespace OBeautifulCode.DataStructure.Test
                     PropertyName = "Details",
                 });
 
-        private static readonly DeepCloneWithTestScenarios<CellOpExecutionFailedWithCellNotFoundEvent> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<CellOpExecutionFailedWithCellNotFoundEvent>()
+        private static readonly DeepCloneWithTestScenarios<CellOpExecutionFailedEvent> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<CellOpExecutionFailedEvent>()
             .AddScenario(() =>
-                new DeepCloneWithTestScenario<CellOpExecutionFailedWithCellNotFoundEvent>
+                new DeepCloneWithTestScenario<CellOpExecutionFailedEvent>
                 {
                     Name = "DeepCloneWithTimestampUtc should deep clone object and replace TimestampUtc with the provided timestampUtc",
                     WithPropertyName = "TimestampUtc",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<CellOpExecutionFailedWithCellNotFoundEvent>();
+                        var systemUnderTest = A.Dummy<CellOpExecutionFailedEvent>();
 
-                        var referenceObject = A.Dummy<CellOpExecutionFailedWithCellNotFoundEvent>().ThatIs(_ => !systemUnderTest.TimestampUtc.IsEqualTo(_.TimestampUtc));
+                        var referenceObject = A.Dummy<CellOpExecutionFailedEvent>().ThatIs(_ => !systemUnderTest.TimestampUtc.IsEqualTo(_.TimestampUtc));
 
-                        var result = new SystemUnderTestDeepCloneWithValue<CellOpExecutionFailedWithCellNotFoundEvent>
+                        var result = new SystemUnderTestDeepCloneWithValue<CellOpExecutionFailedEvent>
                         {
                             SystemUnderTest = systemUnderTest,
                             DeepCloneWithValue = referenceObject.TimestampUtc,
@@ -197,17 +154,17 @@ namespace OBeautifulCode.DataStructure.Test
                     },
                 })
             .AddScenario(() =>
-                new DeepCloneWithTestScenario<CellOpExecutionFailedWithCellNotFoundEvent>
+                new DeepCloneWithTestScenario<CellOpExecutionFailedEvent>
                 {
                     Name = "DeepCloneWithDetails should deep clone object and replace Details with the provided details",
                     WithPropertyName = "Details",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<CellOpExecutionFailedWithCellNotFoundEvent>();
+                        var systemUnderTest = A.Dummy<CellOpExecutionFailedEvent>();
 
-                        var referenceObject = A.Dummy<CellOpExecutionFailedWithCellNotFoundEvent>().ThatIs(_ => !systemUnderTest.Details.IsEqualTo(_.Details));
+                        var referenceObject = A.Dummy<CellOpExecutionFailedEvent>().ThatIs(_ => !systemUnderTest.Details.IsEqualTo(_.Details));
 
-                        var result = new SystemUnderTestDeepCloneWithValue<CellOpExecutionFailedWithCellNotFoundEvent>
+                        var result = new SystemUnderTestDeepCloneWithValue<CellOpExecutionFailedEvent>
                         {
                             SystemUnderTest = systemUnderTest,
                             DeepCloneWithValue = referenceObject.Details,
@@ -215,57 +172,30 @@ namespace OBeautifulCode.DataStructure.Test
 
                         return result;
                     },
-                })
-            .AddScenario(() =>
-                new DeepCloneWithTestScenario<CellOpExecutionFailedWithCellNotFoundEvent>
-                {
-                    Name = "DeepCloneWithCellLocator should deep clone object and replace CellLocator with the provided cellLocator",
-                    WithPropertyName = "CellLocator",
-                    SystemUnderTestDeepCloneWithValueFunc = () =>
-                    {
-                        var systemUnderTest = A.Dummy<CellOpExecutionFailedWithCellNotFoundEvent>();
-
-                        var referenceObject = A.Dummy<CellOpExecutionFailedWithCellNotFoundEvent>().ThatIs(_ => !systemUnderTest.CellLocator.IsEqualTo(_.CellLocator));
-
-                        var result = new SystemUnderTestDeepCloneWithValue<CellOpExecutionFailedWithCellNotFoundEvent>
-                        {
-                            SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.CellLocator,
-                        };
-
-                        return result;
-                    },
                 });
 
-        private static readonly CellOpExecutionFailedWithCellNotFoundEvent ReferenceObjectForEquatableTestScenarios = A.Dummy<CellOpExecutionFailedWithCellNotFoundEvent>();
+        private static readonly CellOpExecutionFailedEvent ReferenceObjectForEquatableTestScenarios = A.Dummy<CellOpExecutionFailedEvent>();
 
-        private static readonly EquatableTestScenarios<CellOpExecutionFailedWithCellNotFoundEvent> EquatableTestScenarios = new EquatableTestScenarios<CellOpExecutionFailedWithCellNotFoundEvent>()
+        private static readonly EquatableTestScenarios<CellOpExecutionFailedEvent> EquatableTestScenarios = new EquatableTestScenarios<CellOpExecutionFailedEvent>()
             .AddScenario(() =>
-                new EquatableTestScenario<CellOpExecutionFailedWithCellNotFoundEvent>
+                new EquatableTestScenario<CellOpExecutionFailedEvent>
                 {
                     Name = "Default Code Generated Scenario",
                     ReferenceObject = ReferenceObjectForEquatableTestScenarios,
-                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new CellOpExecutionFailedWithCellNotFoundEvent[]
+                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new CellOpExecutionFailedEvent[]
                     {
-                        new CellOpExecutionFailedWithCellNotFoundEvent(
+                        new CellOpExecutionFailedEvent(
                                 ReferenceObjectForEquatableTestScenarios.TimestampUtc,
-                                ReferenceObjectForEquatableTestScenarios.CellLocator,
                                 ReferenceObjectForEquatableTestScenarios.Details),
                     },
-                    ObjectsThatAreNotEqualToReferenceObject = new CellOpExecutionFailedWithCellNotFoundEvent[]
+                    ObjectsThatAreNotEqualToReferenceObject = new CellOpExecutionFailedEvent[]
                     {
-                        new CellOpExecutionFailedWithCellNotFoundEvent(
-                                A.Dummy<CellOpExecutionFailedWithCellNotFoundEvent>().Whose(_ => !_.TimestampUtc.IsEqualTo(ReferenceObjectForEquatableTestScenarios.TimestampUtc)).TimestampUtc,
-                                ReferenceObjectForEquatableTestScenarios.CellLocator,
+                        new CellOpExecutionFailedEvent(
+                                A.Dummy<CellOpExecutionFailedEvent>().Whose(_ => !_.TimestampUtc.IsEqualTo(ReferenceObjectForEquatableTestScenarios.TimestampUtc)).TimestampUtc,
                                 ReferenceObjectForEquatableTestScenarios.Details),
-                        new CellOpExecutionFailedWithCellNotFoundEvent(
+                        new CellOpExecutionFailedEvent(
                                 ReferenceObjectForEquatableTestScenarios.TimestampUtc,
-                                ReferenceObjectForEquatableTestScenarios.CellLocator,
-                                A.Dummy<CellOpExecutionFailedWithCellNotFoundEvent>().Whose(_ => !_.Details.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Details)).Details),
-                        new CellOpExecutionFailedWithCellNotFoundEvent(
-                                ReferenceObjectForEquatableTestScenarios.TimestampUtc,
-                                A.Dummy<CellOpExecutionFailedWithCellNotFoundEvent>().Whose(_ => !_.CellLocator.IsEqualTo(ReferenceObjectForEquatableTestScenarios.CellLocator)).CellLocator,
-                                ReferenceObjectForEquatableTestScenarios.Details),
+                                A.Dummy<CellOpExecutionFailedEvent>().Whose(_ => !_.Details.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Details)).Details),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
                     {
@@ -274,10 +204,8 @@ namespace OBeautifulCode.DataStructure.Test
                         A.Dummy<int>(),
                         A.Dummy<int?>(),
                         A.Dummy<Guid>(),
-                        A.Dummy<CellOpExecutionFailedWithMissingCellValueEvent>(),
                         A.Dummy<CellOpExecutionAbortedEvent>(),
                         A.Dummy<InputAppliedToCellEvent<Version>>(),
-                        A.Dummy<CellOpExecutionFailedWithExceptionEvent>(),
                         A.Dummy<CellOpExecutionCompletedEvent<Version>>(),
                     },
                 });
@@ -300,12 +228,12 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void CellOpExecutionFailedWithCellNotFoundEvent___Should_implement_IModel_of_CellOpExecutionFailedWithCellNotFoundEvent___When_reflecting()
+            public static void CellOpExecutionFailedEvent___Should_implement_IModel_of_CellOpExecutionFailedEvent___When_reflecting()
             {
                 // Arrange
-                var type = typeof(CellOpExecutionFailedWithCellNotFoundEvent);
+                var type = typeof(CellOpExecutionFailedEvent);
 
-                var expectedModelMethods = typeof(IModel<CellOpExecutionFailedWithCellNotFoundEvent>).GetInterfaceDeclaredAndImplementedMethods();
+                var expectedModelMethods = typeof(IModel<CellOpExecutionFailedEvent>).GetInterfaceDeclaredAndImplementedMethods();
 
                 var expectedModelMethodHashes = expectedModelMethods.Select(_ => _.GetSignatureHash());
 
@@ -315,7 +243,7 @@ namespace OBeautifulCode.DataStructure.Test
                 var actualModelMethodHashes = actualModelMethods.Select(_ => _.GetSignatureHash());
 
                 // Assert
-                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<CellOpExecutionFailedWithCellNotFoundEvent>));
+                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<CellOpExecutionFailedEvent>));
                 expectedModelMethodHashes.Except(actualModelMethodHashes).AsTest().Must().BeEmptyEnumerable();
             }
 
@@ -333,10 +261,10 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void CellOpExecutionFailedWithCellNotFoundEvent___Should_be_attributed_with_Serializable____When_reflecting()
+            public static void CellOpExecutionFailedEvent___Should_be_attributed_with_Serializable____When_reflecting()
             {
                 // Arrange
-                var type = typeof(CellOpExecutionFailedWithCellNotFoundEvent);
+                var type = typeof(CellOpExecutionFailedEvent);
 
                 // Act
                 var actualAttributes = type.GetCustomAttributes(typeof(SerializableAttribute), false);
@@ -494,10 +422,10 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Clone___Should_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<CellOpExecutionFailedWithCellNotFoundEvent>();
+                var systemUnderTest = A.Dummy<CellOpExecutionFailedEvent>();
 
                 // Act
-                var actual = (CellOpExecutionFailedWithCellNotFoundEvent)systemUnderTest.Clone();
+                var actual = (CellOpExecutionFailedEvent)systemUnderTest.Clone();
 
                 // Assert
                 actual.AsTest().Must().BeEqualTo(systemUnderTest);
@@ -521,7 +449,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void DeepClone___Should_deep_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<CellOpExecutionFailedWithCellNotFoundEvent>();
+                var systemUnderTest = A.Dummy<CellOpExecutionFailedEvent>();
 
                 // Act
                 var actual = systemUnderTest.DeepClone();
@@ -529,18 +457,6 @@ namespace OBeautifulCode.DataStructure.Test
                 // Assert
                 actual.AsTest().Must().BeEqualTo(systemUnderTest);
                 actual.AsTest().Must().NotBeSameReferenceAs(systemUnderTest);
-
-                if (systemUnderTest.CellLocator == null)
-                {
-                    actual.CellLocator.AsTest().Must().BeNull();
-                }
-                else if (!actual.CellLocator.GetType().IsValueType)
-                {
-                    // When the declared type is a reference type, we still have to check the runtime type.
-                    // The object could be a boxed value type, which will fail this asseration because
-                    // a deep clone of a value type object is the same object.
-                    actual.CellLocator.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.CellLocator);
-                }
             }
 
             [Fact]
@@ -559,7 +475,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "TimestampUtc", "Details", "CellLocator" };
+                var propertyNames = new string[] { "TimestampUtc", "Details" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 
@@ -572,12 +488,12 @@ namespace OBeautifulCode.DataStructure.Test
                     }
 
                     // Act
-                    var actual = (CellOpExecutionFailedWithCellNotFoundEvent)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
+                    var actual = (CellOpExecutionFailedEvent)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
 
                     // Assert
                     foreach(var propertyName in propertyNames)
                     {
-                        var propertyInfo = typeof(CellOpExecutionFailedWithCellNotFoundEvent).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
+                        var propertyInfo = typeof(CellOpExecutionFailedEvent).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
 
                         var actualPropertyValue = propertyInfo.GetValue(actual);
 
@@ -639,7 +555,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<CellOpExecutionFailedWithCellNotFoundEvent>();
+                var expected = A.Dummy<CellOpExecutionFailedEvent>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -668,7 +584,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<CellOpExecutionFailedWithCellNotFoundEvent>();
+                var expected = A.Dummy<CellOpExecutionFailedEvent>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -697,7 +613,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<CellOpExecutionFailedWithCellNotFoundEvent>();
+                var expected = A.Dummy<CellOpExecutionFailedEvent>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -726,7 +642,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<CellOpExecutionFailedWithCellNotFoundEvent>();
+                var expected = A.Dummy<CellOpExecutionFailedEvent>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -760,8 +676,8 @@ namespace OBeautifulCode.DataStructure.Test
             public static void EqualsOperator___Should_return_true___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                CellOpExecutionFailedWithCellNotFoundEvent systemUnderTest1 = null;
-                CellOpExecutionFailedWithCellNotFoundEvent systemUnderTest2 = null;
+                CellOpExecutionFailedEvent systemUnderTest1 = null;
+                CellOpExecutionFailedEvent systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 == systemUnderTest2;
@@ -791,7 +707,7 @@ namespace OBeautifulCode.DataStructure.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    CellOpExecutionFailedWithCellNotFoundEvent systemUnderTest = null;
+                    CellOpExecutionFailedEvent systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest == scenario.ReferenceObject;
@@ -940,8 +856,8 @@ namespace OBeautifulCode.DataStructure.Test
             public static void NotEqualsOperator___Should_return_false___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                CellOpExecutionFailedWithCellNotFoundEvent systemUnderTest1 = null;
-                CellOpExecutionFailedWithCellNotFoundEvent systemUnderTest2 = null;
+                CellOpExecutionFailedEvent systemUnderTest1 = null;
+                CellOpExecutionFailedEvent systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 != systemUnderTest2;
@@ -971,7 +887,7 @@ namespace OBeautifulCode.DataStructure.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    CellOpExecutionFailedWithCellNotFoundEvent systemUnderTest = null;
+                    CellOpExecutionFailedEvent systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest != scenario.ReferenceObject;
@@ -1403,14 +1319,14 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_CellOpExecutionFailedWithCellNotFoundEvent___Should_return_false___When_parameter_other_is_null()
+            public static void Equals_with_CellOpExecutionFailedEvent___Should_return_false___When_parameter_other_is_null()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    CellOpExecutionFailedWithCellNotFoundEvent systemUnderTest = null;
+                    CellOpExecutionFailedEvent systemUnderTest = null;
 
                     // Act
                     var actual = scenario.ReferenceObject.Equals(systemUnderTest);
@@ -1434,7 +1350,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_CellOpExecutionFailedWithCellNotFoundEvent___Should_return_true___When_parameter_other_is_same_object()
+            public static void Equals_with_CellOpExecutionFailedEvent___Should_return_true___When_parameter_other_is_same_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1462,7 +1378,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_CellOpExecutionFailedWithCellNotFoundEvent___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
+            public static void Equals_with_CellOpExecutionFailedEvent___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1490,7 +1406,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_CellOpExecutionFailedWithCellNotFoundEvent___Should_return_false___When_objects_being_compared_have_different_property_values()
+            public static void Equals_with_CellOpExecutionFailedEvent___Should_return_false___When_objects_being_compared_have_different_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1518,7 +1434,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_CellOpExecutionFailedWithCellNotFoundEvent___Should_return_true___When_objects_being_compared_have_same_property_values()
+            public static void Equals_with_CellOpExecutionFailedEvent___Should_return_true___When_objects_being_compared_have_same_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 

@@ -73,25 +73,21 @@
     <Compile Include="Events\CellOpExecution\CellOpExecutionCompletedEvent{TResult}.designer.cs">
       <DependentUpon>CellOpExecutionCompletedEvent{TResult}.cs</DependentUpon>
     </Compile>
-    <Compile Include="Events\CellOpExecution\CellOpExecutionFailedWithCellNotFoundEvent.designer.cs">
-      <DependentUpon>CellOpExecutionFailedWithCellNotFoundEvent.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Events\CellOpExecution\CellOpExecutionFailedWithExceptionEvent.designer.cs">
-      <DependentUpon>CellOpExecutionFailedWithExceptionEvent.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Events\CellOpExecution\CellOpExecutionFailedWithMissingCellValueEvent.designer.cs">
-      <DependentUpon>CellOpExecutionFailedWithMissingCellValueEvent.cs</DependentUpon>
+    <Compile Include="Events\CellOpExecution\CellOpExecutionFailedEvent.designer.cs">
+      <DependentUpon>CellOpExecutionFailedEvent.cs</DependentUpon>
     </Compile>
     <Compile Include="Events\CellValidationEventBase.cs" />
     <Compile Include="Events\CellOpExecutionEventBase.cs" />
-    <Compile Include="Events\CellOpExecution\CellOpExecutionFailedWithCellNotFoundEvent.cs" />
-    <Compile Include="Events\CellOpExecution\CellOpExecutionFailedWithMissingCellValueEvent.cs" />
     <Compile Include="Events\CellOpExecution\CellOpExecutionAbortedEvent.cs" />
     <Compile Include="Events\CellValidationEventBase.designer.cs">
       <DependentUpon>CellValidationEventBase.cs</DependentUpon>
     </Compile>
+    <Compile Include="Events\CellValidation\CellValidationFailedEvent.cs" />
+    <Compile Include="Events\CellValidation\CellValidationAbortedEvent.cs" />
+    <Compile Include="Events\CellValidation\CellValidationFailedToMeetConditionEvent.cs" />
+    <Compile Include="Events\CellValidation\CellValidationCompletedEvent.cs" />
     <Compile Include="Events\InputAppliedToCellEvent{TValue}.cs" />
-    <Compile Include="Events\CellOpExecution\CellOpExecutionFailedWithExceptionEvent.cs" />
+    <Compile Include="Events\CellOpExecution\CellOpExecutionFailedEvent.cs" />
     <Compile Include="Events\CellOpExecution\CellOpExecutionCompletedEvent{TResult}.cs" />
     <Compile Include="Events\InputAppliedToCellEvent{TValue}.designer.cs">
       <DependentUpon>InputAppliedToCellEvent{TValue}.cs</DependentUpon>
@@ -102,6 +98,7 @@
     <Compile Include="Interfaces\Behavior\IValidateCellValue.cs" />
     <Compile Include="Interfaces\Behavior\IGetCellValue.cs" />
     <Compile Include="Interfaces\Behavior\IGetCellValue{TValue}.cs" />
+    <Compile Include="Interfaces\Classification\Cell\IValidateableCell.cs" />
     <Compile Include="Interfaces\Classification\Cell\INotSlottedCell.cs" />
     <Compile Include="Interfaces\Classification\Cell\Output\IConstOutputCell{TValue}.cs" />
     <Compile Include="Interfaces\Classification\Cell\Null\INullCell.cs" />
@@ -116,6 +113,7 @@
     <Compile Include="Interfaces\Classification\Resource\ILink.cs" />
     <Compile Include="Logic\Builders\Do.cs" />
     <Compile Include="Logic\Builders\Cell.cs" />
+    <Compile Include="Logic\Extensions\CellExtensions.cs" />
     <Compile Include="Logic\Extensions\TreeTableExtensions.cs" />
     <Compile Include="Logic\Extensions\ReportExtensions.cs" />
     <Compile Include="Logic\Protocols\DataStructureConvenienceProtocols{TResult}.cs" />
@@ -352,6 +350,7 @@
     <Compile Include="Operations\Branch\IfThenElseOp{TResult}.designer.cs">
       <DependentUpon>IfThenElseOp{TResult}.cs</DependentUpon>
     </Compile>
+    <Compile Include="Operations\Cell\ValidateCellOp.cs" />
     <Compile Include="Operations\Cell\ExecuteOperationCellIfNecessaryOp{TValue}.designer.cs">
       <DependentUpon>ExecuteOperationCellIfNecessaryOp{TValue}.cs</DependentUpon>
     </Compile>
@@ -404,9 +403,7 @@
     <Content Include=".analyzers\dictionary.xml" />
     <None Include="nuget-icon.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Events\CellValidation\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\OBeautifulCode.Build.Analyzers.1.1.136\build\OBeautifulCode.Build.Analyzers.targets" Condition="Exists('..\packages\OBeautifulCode.Build.Analyzers.1.1.136\build\OBeautifulCode.Build.Analyzers.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

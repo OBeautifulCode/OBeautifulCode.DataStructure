@@ -22,9 +22,11 @@ namespace OBeautifulCode.DataStructure
     /// </summary>
     public partial class TreeTable : IModelViaCodeGen
     {
-        private IReadOnlyDictionary<string, ICell> cellIdToCellMap;
+        private readonly IReadOnlyDictionary<string, ICell> cellIdToCellMap;
 
-        private IReadOnlyCollection<ICell> operationCells;
+        private readonly IReadOnlyCollection<ICell> operationCells;
+
+        private readonly IReadOnlyCollection<IValidateableCell> cellsNeedingValidation;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TreeTable"/> class.
@@ -97,6 +99,7 @@ namespace OBeautifulCode.DataStructure
 
             this.cellIdToCellMap = allCellsWithIds.ToDictionary(_ => _.Id, _ => _);
             this.operationCells = allCells.Where(_ => _.IsOperationCell()).ToList();
+            this.cellsNeedingValidation = allCells.OfType<IValidateableCell>().Where(_ => _.ValidationConditions != null).ToList();
 
             this.TableColumns = tableColumns;
             this.TableRows = tableRows;
@@ -127,11 +130,19 @@ namespace OBeautifulCode.DataStructure
         public IReadOnlyDictionary<string, ICell> GetCellIdToCellMap() => this.cellIdToCellMap;
 
         /// <summary>
-        /// Gets all <see cref="ICell"/>s.
+        /// Gets all <see cref="IOperationOutputCell{TValue}"/>s.
         /// </summary>
         /// <returns>
-        /// All <see cref="ICell"/>s in the tree table.
+        /// All <see cref="IOperationOutputCell{TValue}"/>s in the tree table.
         /// </returns>
         public IReadOnlyCollection<ICell> GetOperationCells() => this.operationCells;
+
+        /// <summary>
+        /// Gets all <see cref="IValidateableCell"/>s.
+        /// </summary>
+        /// <returns>
+        /// All <see cref="IValidateableCell"/>s in the tree table.
+        /// </returns>
+        public IReadOnlyCollection<IValidateableCell> GetCellsNeedingValidation() => this.cellsNeedingValidation;
     }
 }

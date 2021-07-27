@@ -25,7 +25,13 @@ namespace OBeautifulCode.DataStructure.Test
         {
             const string sectionId = "section-id";
 
-            var numberOfSalesFteCell = Cell.CreateInput<decimal>(id: "sales-fte");
+            var numberOfSalesFteCell = Cell.CreateInput<decimal>(
+                id: "sales-fte",
+                validationConditions: new ValidationConditions(
+                    new[]
+                    {
+                        new ValidationCondition(Cell.HasValue(sectionId, "sales-fte"), Do.Value("input required")),
+                    }));
 
             var numberOfWarehouseFteCell = Cell.CreateInput<decimal>(id: "warehouse-fte");
 
@@ -37,9 +43,9 @@ namespace OBeautifulCode.DataStructure.Test
                     Do.Sum(
                         Cell.GetValue<decimal>(sectionId, numberOfSalesFteCell.Id),
                         Cell.GetValue<decimal>(sectionId, numberOfWarehouseFteCell.Id)),
-                    Do.Stop<decimal>()));
+                    Do.Stop<decimal>("cannot perform sum")));
 
-            var coscoresCell = new ConstCell<NamedDecimalSet>(
+            var coscoresCell = Cell.CreateConst<NamedDecimalSet>(
                 new[]
                 {
                     new NamedValue<decimal>("bob", 1),
@@ -103,10 +109,17 @@ namespace OBeautifulCode.DataStructure.Test
 
             var report = new Report("report-id", sections);
 
+            report.ReCalc(
+                DateTime.UtcNow,
+                new Func<IProtocolFactory, IProtocolFactory>[]
+                {
+                    frameworkFactory => new MyProprietaryProtocols(frameworkFactory).ToProtocolFactory(),
+                });
+
             report.SetInputCellValue(2.2m, DateTime.UtcNow, sectionId, numberOfSalesFteCell.Id);
             report.SetInputCellValue(1.1m, DateTime.UtcNow, sectionId, numberOfWarehouseFteCell.Id);
 
-            report.ExecuteAllOperationsAndRecordResults(
+            report.ReCalc(
                 DateTime.UtcNow,
                 new Func<IProtocolFactory, IProtocolFactory>[]
                 {

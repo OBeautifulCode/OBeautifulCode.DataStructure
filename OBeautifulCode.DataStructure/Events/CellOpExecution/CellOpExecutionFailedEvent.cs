@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="CellOpExecutionFailedWithExceptionEvent.cs" company="OBeautifulCode">
+// <copyright file="CellOpExecutionFailedEvent.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -11,17 +11,17 @@ namespace OBeautifulCode.DataStructure
     using OBeautifulCode.Type;
 
     /// <summary>
-    /// The execution of an <see cref="IOperationOutputCell{TResult}"/>'s <see cref="IOperationOutputCell{TResult}.Operation"/> failed because an exception was thrown.
+    /// The execution of an <see cref="IOperationOutputCell{TResult}"/>'s <see cref="IOperationOutputCell{TResult}.Operation"/> failed; an exception was thrown.
     /// </summary>
     // ReSharper disable once RedundantExtendsListEntry
-    public partial class CellOpExecutionFailedWithExceptionEvent : CellOpExecutionEventBase, IModelViaCodeGen
+    public partial class CellOpExecutionFailedEvent : CellOpExecutionEventBase, IModelViaCodeGen
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="CellOpExecutionFailedWithExceptionEvent"/> class.
+        /// Initializes a new instance of the <see cref="CellOpExecutionFailedEvent"/> class.
         /// </summary>
         /// <param name="timestampUtc">The timestamp.</param>
         /// <param name="details">Details about the failed execution.</param>
-        public CellOpExecutionFailedWithExceptionEvent(
+        public CellOpExecutionFailedEvent(
             DateTime timestampUtc,
             string details)
             : base(timestampUtc, details)

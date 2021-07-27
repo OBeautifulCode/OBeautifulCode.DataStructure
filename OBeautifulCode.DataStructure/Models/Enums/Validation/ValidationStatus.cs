@@ -22,14 +22,19 @@ namespace OBeautifulCode.DataStructure
         NoConditions,
 
         /// <summary>
+        /// The validation was not run.
+        /// </summary>
+        NotValidated,
+
+        /// <summary>
         /// A validation condition was aborted when executing.
         /// </summary>
-        ConditionExecutionAborted,
+        Aborted,
 
         /// <summary>
         /// A validation condition failed to be executed.
         /// </summary>
-        ConditionExecutionFailed,
+        Failed,
 
         /// <summary>
         /// The subject is valid (all conditions pass/are met).

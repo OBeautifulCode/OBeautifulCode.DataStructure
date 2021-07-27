@@ -86,20 +86,9 @@ namespace OBeautifulCode.DataStructure
                 throw new InvalidOperationException("The operation hasn't been executed to completion.");
             }
 
-            if (!(this.CellOpExecutionEvent is CellOpExecutionCompletedEvent<TValue> succeededInExecutingCellOpEvent))
-            {
-                throw new InvalidOperationException("The operation failed or was aborted while executing.");
-            }
-
-            var result = succeededInExecutingCellOpEvent.ExecutionResult;
+            var result = ((CellOpExecutionCompletedEvent<TValue>)this.CellOpExecutionEvent).ExecutionResult;
 
             return result;
-        }
-
-        /// <inheritdoc />
-        public ValidationStatus GetValidationStatus()
-        {
-            throw new NotImplementedException();
         }
 
         /// <inheritdoc />

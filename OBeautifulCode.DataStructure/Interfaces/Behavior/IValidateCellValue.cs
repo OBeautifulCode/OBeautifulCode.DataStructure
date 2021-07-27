@@ -13,14 +13,6 @@ namespace OBeautifulCode.DataStructure
     public interface IValidateCellValue
     {
         /// <summary>
-        /// Gets the cell's validation status.
-        /// </summary>
-        /// <returns>
-        /// The validation status of the cell.
-        /// </returns>
-        ValidationStatus GetValidationStatus();
-
-        /// <summary>
         /// Records validation that has been performed on a cell.
         /// </summary>
         /// <param name="cellValidationEvent">The result of validating the cell.</param>

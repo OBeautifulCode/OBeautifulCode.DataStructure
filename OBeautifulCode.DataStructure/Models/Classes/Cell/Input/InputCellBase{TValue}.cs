@@ -81,12 +81,6 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <inheritdoc />
-        public ValidationStatus GetValidationStatus()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc />
         public void RecordValidation(
             CellValidationEventBase cellValidationEvent)
         {

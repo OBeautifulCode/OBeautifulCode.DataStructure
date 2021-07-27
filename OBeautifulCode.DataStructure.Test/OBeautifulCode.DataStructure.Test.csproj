@@ -216,14 +216,8 @@
     <Compile Include="Events\CellOpExecution\CellOpExecutionCompletedEvent{TResult}Test.designer.cs">
       <DependentUpon>CellOpExecutionCompletedEvent{TResult}Test.cs</DependentUpon>
     </Compile>
-    <Compile Include="Events\CellOpExecution\CellOpExecutionFailedWithCellNotFoundEventTest.designer.cs">
-      <DependentUpon>CellOpExecutionFailedWithCellNotFoundEventTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Events\CellOpExecution\CellOpExecutionFailedWithExceptionEventTest.designer.cs">
-      <DependentUpon>CellOpExecutionFailedWithExceptionEventTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Events\CellOpExecution\CellOpExecutionFailedWithMissingCellValueEventTest.designer.cs">
-      <DependentUpon>CellOpExecutionFailedWithMissingCellValueEventTest.cs</DependentUpon>
+    <Compile Include="Events\CellOpExecution\CellOpExecutionFailedEventTest.designer.cs">
+      <DependentUpon>CellOpExecutionFailedEventTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Events\InputAppliedToCellEvent{TValue}Test.designer.cs">
       <DependentUpon>InputAppliedToCellEvent{TValue}Test.cs</DependentUpon>
@@ -383,9 +377,7 @@
     <Compile Include="Events\CellOpExecution\CellOpExecutionAbortedEventTest.cs" />
     <Compile Include="Events\CellOpExecution\CellOpExecutionCompletedEvent{TResult}Test.cs" />
     <Compile Include="Events\CellOpExecutionEventBaseTest.cs" />
-    <Compile Include="Events\CellOpExecution\CellOpExecutionFailedWithCellNotFoundEventTest.cs" />
-    <Compile Include="Events\CellOpExecution\CellOpExecutionFailedWithExceptionEventTest.cs" />
-    <Compile Include="Events\CellOpExecution\CellOpExecutionFailedWithMissingCellValueEventTest.cs" />
+    <Compile Include="Events\CellOpExecution\CellOpExecutionFailedEventTest.cs" />
     <Compile Include="Models\Classes\Cell\Output\Const\ConstCell{TValue}Test.cs" />
     <Compile Include="Models\Classes\Cell\Output\Const\ConstOutputCellBase{TValue}Test.cs" />
     <Compile Include="Operations\Bool\AndAlsoOpTest.designer.cs">

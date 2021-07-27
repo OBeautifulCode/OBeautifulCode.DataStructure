@@ -141,7 +141,7 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <summary>
-        /// Sets the value of an input cell.
+        /// Executes all cell operations and validations and records the results.
         /// </summary>
         /// <param name="report">The report.</param>
         /// <param name="timestampUtc">The timestamp (in UTC) to use when recording a <see cref="CellOpExecutionEventBase"/> with an <see cref="IOperationOutputCell{TValue}"/>.</param>
@@ -157,26 +157,17 @@ namespace OBeautifulCode.DataStructure
         /// OPTIONAL types in addition to <see cref="DefaultTypesSupportedForCoreCellOps"/> that should be supported
         /// when executing the core cell operations (e.g. <see cref="GetCellValueOp{TValue}"/>) .
         /// </param>
-        public static void ExecuteAllOperationsAndRecordResults(
+        public static void ReCalc(
             this Report report,
             DateTime timestampUtc,
             IReadOnlyCollection<Func<IProtocolFactory, IProtocolFactory>> protocolFactoryFuncs = null,
             IReadOnlyCollection<Type> additionalTypesForCoreCellOps = null)
         {
-            var protocolFactory = report.BuildProtocolFactoryToExecuteAllOperations(timestampUtc, protocolFactoryFuncs, additionalTypesForCoreCellOps);
-
-            var operationCells = report.GetClearedOperationCells();
-
-            foreach (var operationCell in operationCells)
-            {
-                var executeOperationCellIfNecessaryOp = operationCell.BuildExecuteOperationCellIfNecessaryOp();
-
-                protocolFactory.GetProtocolAndExecuteViaReflection(executeOperationCellIfNecessaryOp);
-            }
+            report.ExecuteAllOperationsAndValidationsAndRecordResults(timestampUtc, protocolFactoryFuncs, additionalTypesForCoreCellOps);
         }
 
         /// <summary>
-        /// Sets the value of an input cell.
+        /// Executes all cell operations and validations and records the results.
         /// </summary>
         /// <param name="report">The report.</param>
         /// <param name="timestampUtc">The timestamp (in UTC) to use when recording a <see cref="CellOpExecutionEventBase"/> with an <see cref="IOperationOutputCell{TValue}"/>.</param>
@@ -195,7 +186,80 @@ namespace OBeautifulCode.DataStructure
         /// <returns>
         /// A task.
         /// </returns>
-        public static async Task ExecuteAllOperationsAndRecordResultsAsync(
+        public static async Task ReCalcAsync(
+            this Report report,
+            DateTime timestampUtc,
+            IReadOnlyCollection<Func<IProtocolFactory, IProtocolFactory>> protocolFactoryFuncs = null,
+            IReadOnlyCollection<Type> additionalTypesForCoreCellOps = null)
+        {
+            await report.ExecuteAllOperationsAndValidationsAndRecordResultsAsync(timestampUtc, protocolFactoryFuncs, additionalTypesForCoreCellOps);
+        }
+
+        /// <summary>
+        /// Executes all cell operations and validations and records the results.
+        /// </summary>
+        /// <param name="report">The report.</param>
+        /// <param name="timestampUtc">The timestamp (in UTC) to use when recording a <see cref="CellOpExecutionEventBase"/> with an <see cref="IOperationOutputCell{TValue}"/>.</param>
+        /// <param name="protocolFactoryFuncs">
+        /// OPTIONAL protocol factory chain-of-responsibility for protocols needed to execute the operations for all <see cref="IOperationOutputCell{TValue}"/>.
+        /// Each func takes, as input, the protocol factory that should be used when these protocols need to execute other operations
+        /// (e.g. MyOperation requires an int and declares it as an IReturningOperation{int} to enable others to "plug-in"
+        /// any source of an int - perhaps the value of another cell or the output of some other calculation).
+        /// Each func should return a protocol factory that gets protocols for the operations in-use by the <see cref="IOperationOutputCell{TValue}"/>s.
+        /// DEFAULT is not to "plug-in" any additional protocols.
+        /// </param>
+        /// <param name="additionalTypesForCoreCellOps">
+        /// OPTIONAL types in addition to <see cref="DefaultTypesSupportedForCoreCellOps"/> that should be supported
+        /// when executing the core cell operations (e.g. <see cref="GetCellValueOp{TValue}"/>) .
+        /// </param>
+        public static void ExecuteAllOperationsAndValidationsAndRecordResults(
+            this Report report,
+            DateTime timestampUtc,
+            IReadOnlyCollection<Func<IProtocolFactory, IProtocolFactory>> protocolFactoryFuncs = null,
+            IReadOnlyCollection<Type> additionalTypesForCoreCellOps = null)
+        {
+            var protocolFactory = report.BuildProtocolFactoryToExecuteAllOperations(timestampUtc, protocolFactoryFuncs, additionalTypesForCoreCellOps);
+
+            var operationCells = report.GetClearedOperationCells();
+
+            foreach (var operationCell in operationCells)
+            {
+                var executeOperationCellIfNecessaryOp = operationCell.BuildExecuteOperationCellIfNecessaryOp();
+
+                protocolFactory.GetProtocolAndExecuteViaReflection(executeOperationCellIfNecessaryOp);
+            }
+
+            var validateableCells = report.GetClearedValidateableCells();
+
+            foreach (var validateableCell in validateableCells)
+            {
+                var validateCellOp = new ValidateCellOp(validateableCell);
+
+                protocolFactory.GetProtocolAndExecuteViaReflection(validateCellOp);
+            }
+        }
+
+        /// <summary>
+        /// Executes all cell operations and validations and records the results.
+        /// </summary>
+        /// <param name="report">The report.</param>
+        /// <param name="timestampUtc">The timestamp (in UTC) to use when recording a <see cref="CellOpExecutionEventBase"/> with an <see cref="IOperationOutputCell{TValue}"/>.</param>
+        /// <param name="protocolFactoryFuncs">
+        /// OPTIONAL protocol factory chain-of-responsibility for protocols needed to execute the operations for all <see cref="IOperationOutputCell{TValue}"/>.
+        /// Each func takes, as input, the protocol factory that should be used when these protocols need to execute other operations
+        /// (e.g. MyOperation requires an int and declares it as an IReturningOperation{int} to enable others to "plug-in"
+        /// any source of an int - perhaps the value of another cell or the output of some other calculation).
+        /// Each func should return a protocol factory that gets protocols for the operations in-use by the <see cref="IOperationOutputCell{TValue}"/>s.
+        /// DEFAULT is not to "plug-in" any additional protocols.
+        /// </param>
+        /// <param name="additionalTypesForCoreCellOps">
+        /// OPTIONAL types in addition to <see cref="DefaultTypesSupportedForCoreCellOps"/> that should be supported
+        /// when executing the core cell operations (e.g. <see cref="GetCellValueOp{TValue}"/>) .
+        /// </param>
+        /// <returns>
+        /// A task.
+        /// </returns>
+        public static async Task ExecuteAllOperationsAndValidationsAndRecordResultsAsync(
             this Report report,
             DateTime timestampUtc,
             IReadOnlyCollection<Func<IProtocolFactory, IProtocolFactory>> protocolFactoryFuncs = null,
@@ -210,6 +274,15 @@ namespace OBeautifulCode.DataStructure
                 var executeOperationCellIfNecessaryOp = operationCell.BuildExecuteOperationCellIfNecessaryOp();
 
                 await protocolFactory.GetProtocolAndExecuteViaReflectionAsync(executeOperationCellIfNecessaryOp);
+            }
+
+            var validateableCells = report.GetClearedValidateableCells();
+
+            foreach (var validateableCell in validateableCells)
+            {
+                var validateCellOp = new ValidateCellOp(validateableCell);
+
+                await protocolFactory.GetProtocolAndExecuteViaReflectionAsync(validateCellOp);
             }
         }
 
@@ -314,6 +387,19 @@ namespace OBeautifulCode.DataStructure
             foreach (var operationCell in result)
             {
                 ((IClearCellValue)operationCell).ClearCellValue();
+            }
+
+            return result;
+        }
+
+        private static IReadOnlyCollection<IValidateableCell> GetClearedValidateableCells(
+            this Report report)
+        {
+            var result = report.Sections.SelectMany(_ => _.TreeTable.GetCellsNeedingValidation()).ToList();
+
+            foreach (var cell in result)
+            {
+                cell.ClearValidation();
             }
 
             return result;

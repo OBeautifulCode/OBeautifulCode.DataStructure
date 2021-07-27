@@ -41,10 +41,8 @@ namespace OBeautifulCode.DataStructure.Test
                 {
                     var availableTypes = new[]
                     {
-                        typeof(CellOpExecutionFailedWithCellNotFoundEvent),
-                        typeof(CellOpExecutionFailedWithMissingCellValueEvent),
                         typeof(CellOpExecutionAbortedEvent),
-                        typeof(CellOpExecutionFailedWithExceptionEvent),
+                        typeof(CellOpExecutionFailedEvent),
                         typeof(CellOpExecutionCompletedEvent<Version>)
                     };
 
@@ -58,18 +56,6 @@ namespace OBeautifulCode.DataStructure.Test
                 });
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new CellOpExecutionFailedWithCellNotFoundEvent(
-                                 A.Dummy<DateTime>(),
-                                 A.Dummy<CellLocator>(),
-                                 A.Dummy<string>()));
-
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new CellOpExecutionFailedWithMissingCellValueEvent(
-                                 A.Dummy<DateTime>(),
-                                 A.Dummy<CellLocator>(),
-                                 A.Dummy<string>()));
-
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new CellOpExecutionAbortedEvent(
                                  A.Dummy<DateTime>(),
                                  A.Dummy<string>()));
@@ -80,7 +66,7 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<Version>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new CellOpExecutionFailedWithExceptionEvent(
+                () => new CellOpExecutionFailedEvent(
                                  A.Dummy<DateTime>(),
                                  A.Dummy<string>()));
 
