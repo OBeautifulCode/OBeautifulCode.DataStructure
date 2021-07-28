@@ -197,9 +197,34 @@
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringReadableOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringXmlDocOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
+    <Compile Include="Models\Classes\Format\CellValue\CellValueFormatBase{TValue}Test.cs" />
+    <Compile Include="Models\Classes\Format\CellValue\CellValueFormatBase{TValue}Test.designer.cs">
+      <DependentUpon>CellValueFormatBase{TValue}Test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataStructureDummyFactory.designer.cs">
+      <DependentUpon>DataStructureDummyFactory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataStructureDummyFactoryTest.designer.cs">
+      <DependentUpon>DataStructureDummyFactoryTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Events\CellOpExecutionEventBaseTest.designer.cs">
+      <DependentUpon>CellOpExecutionEventBaseTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Events\CellOpExecution\CellOpExecutionAbortedEventTest.designer.cs">
+      <DependentUpon>CellOpExecutionAbortedEventTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Events\CellOpExecution\CellOpExecutionCompletedEvent{TResult}Test.designer.cs">
+      <DependentUpon>CellOpExecutionCompletedEvent{TResult}Test.cs</DependentUpon>
+    </Compile>
     <Compile Include="Events\CellOpExecution\CellOpExecutionDeemedNotApplicableEventTest.cs" />
     <Compile Include="Events\CellOpExecution\CellOpExecutionDeemedNotApplicableEventTest.designer.cs">
       <DependentUpon>CellOpExecutionDeemedNotApplicableEventTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Events\CellOpExecution\CellOpExecutionFailedEventTest.designer.cs">
+      <DependentUpon>CellOpExecutionFailedEventTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Events\CellValidationEventBaseTest.designer.cs">
+      <DependentUpon>CellValidationEventBaseTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Events\CellValidation\CellValidationAbortedEventTest.cs" />
     <Compile Include="Events\CellValidation\CellValidationAbortedEventTest.designer.cs">
@@ -220,32 +245,6 @@
     <Compile Include="Events\CellValidation\CellValidationFailedEventTest.cs" />
     <Compile Include="Events\CellValidation\CellValidationFailedEventTest.designer.cs">
       <DependentUpon>CellValidationFailedEventTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Operations\Bool\CompareOpTest.cs" />
-    <Compile Include="Operations\Bool\CompareOpTest.designer.cs">
-      <DependentUpon>CompareOpTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Events\CellValidationEventBaseTest.cs" />
-    <Compile Include="Events\CellValidationEventBaseTest.designer.cs">
-      <DependentUpon>CellValidationEventBaseTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DataStructureDummyFactory.designer.cs">
-      <DependentUpon>DataStructureDummyFactory.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DataStructureDummyFactoryTest.designer.cs">
-      <DependentUpon>DataStructureDummyFactoryTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Events\CellOpExecutionEventBaseTest.designer.cs">
-      <DependentUpon>CellOpExecutionEventBaseTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Events\CellOpExecution\CellOpExecutionAbortedEventTest.designer.cs">
-      <DependentUpon>CellOpExecutionAbortedEventTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Events\CellOpExecution\CellOpExecutionCompletedEvent{TResult}Test.designer.cs">
-      <DependentUpon>CellOpExecutionCompletedEvent{TResult}Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Events\CellOpExecution\CellOpExecutionFailedEventTest.designer.cs">
-      <DependentUpon>CellOpExecutionFailedEventTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Events\InputAppliedToCellEvent{TValue}Test.designer.cs">
       <DependentUpon>InputAppliedToCellEvent{TValue}Test.cs</DependentUpon>
@@ -400,6 +399,11 @@
     <Compile Include="Models\Classes\Validation\ValidationConditionTest.designer.cs">
       <DependentUpon>ValidationConditionTest.cs</DependentUpon>
     </Compile>
+    <Compile Include="Operations\Bool\AndAlsoOpTest.designer.cs">
+      <DependentUpon>AndAlsoOpTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Operations\Bool\CompareOpTest.cs" />
+    <Compile Include="Events\CellValidationEventBaseTest.cs" />
     <Compile Include="Operations\Bool\AndAlsoOpTest.cs" />
     <Compile Include="Models\Classes\Report\CellLocatorTest.cs" />
     <Compile Include="Events\CellOpExecution\CellOpExecutionAbortedEventTest.cs" />
@@ -408,8 +412,8 @@
     <Compile Include="Events\CellOpExecution\CellOpExecutionFailedEventTest.cs" />
     <Compile Include="Models\Classes\Cell\Output\Const\ConstCell{TValue}Test.cs" />
     <Compile Include="Models\Classes\Cell\Output\Const\ConstOutputCellBase{TValue}Test.cs" />
-    <Compile Include="Operations\Bool\AndAlsoOpTest.designer.cs">
-      <DependentUpon>AndAlsoOpTest.cs</DependentUpon>
+    <Compile Include="Operations\Bool\CompareOpTest.designer.cs">
+      <DependentUpon>CompareOpTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Operations\Bool\NotOpTest.designer.cs">
       <DependentUpon>NotOpTest.cs</DependentUpon>
@@ -432,6 +436,9 @@
     <Compile Include="Operations\Cell\HasCellValueOpTest.designer.cs">
       <DependentUpon>HasCellValueOpTest.cs</DependentUpon>
     </Compile>
+    <Compile Include="Operations\Cell\ValidateCellOpTest.designer.cs">
+      <DependentUpon>ValidateCellOpTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Operations\Decimal\SumOpTest.designer.cs">
       <DependentUpon>SumOpTest.cs</DependentUpon>
     </Compile>
@@ -444,9 +451,6 @@
     <Compile Include="Models\Classes\Validation\ValidationConditionTest.cs" />
     <Compile Include="Models\Classes\Validation\ValidationConditionsTest.cs" />
     <Compile Include="Operations\Cell\ValidateCellOpTest.cs" />
-    <Compile Include="Operations\Cell\ValidateCellOpTest.designer.cs">
-      <DependentUpon>ValidateCellOpTest.cs</DependentUpon>
-    </Compile>
     <None Include="Logic\Extensions\RowExtensionsTest.cs" />
     <Compile Include="Logic\Extensions\TreeTableExtensionsTest.cs" />
     <Compile Include="Models\Classes\CellValue\MediaReferenceTest.cs" />

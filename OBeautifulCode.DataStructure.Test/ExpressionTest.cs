@@ -161,12 +161,7 @@ namespace OBeautifulCode.DataStructure.Test
                     frameworkFactory => new MyProprietaryProtocols(frameworkFactory).ToProtocolFactory(),
                 });
 
-            var quartiles = quartileCell.GetCellValue();
-
-            var fte = numberOfTotalFte.GetCellValue();
-
-            // var quartiles = protocolFactory.GetProtocolAndExecuteViaReflection<IReadOnlyList<NamedValue<decimal>>>(quartileCell.Operation);
-            // quartileCell.RecordExecution(new CellOpExecutedEvent<IReadOnlyList<NamedValue<decimal>>>(DateTime.UtcNow, quartiles));
+            // todo: code up not applicable validaition (like if some cell is true, then don't validate)
         }
     }
 
