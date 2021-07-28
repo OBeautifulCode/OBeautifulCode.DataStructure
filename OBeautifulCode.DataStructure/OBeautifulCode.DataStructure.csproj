@@ -74,6 +74,9 @@
     <Compile Include="Events\CellOpExecution\CellOpExecutionCompletedEvent{TResult}.designer.cs">
       <DependentUpon>CellOpExecutionCompletedEvent{TResult}.cs</DependentUpon>
     </Compile>
+    <Compile Include="Events\CellOpExecution\CellOpExecutionDeemedNotApplicableEvent.designer.cs">
+      <DependentUpon>CellOpExecutionDeemedNotApplicableEvent.cs</DependentUpon>
+    </Compile>
     <Compile Include="Events\CellOpExecution\CellOpExecutionFailedEvent.designer.cs">
       <DependentUpon>CellOpExecutionFailedEvent.cs</DependentUpon>
     </Compile>
@@ -83,11 +86,26 @@
     <Compile Include="Events\CellValidationEventBase.designer.cs">
       <DependentUpon>CellValidationEventBase.cs</DependentUpon>
     </Compile>
+    <Compile Include="Events\CellValidation\CellValidationAbortedEvent.designer.cs">
+      <DependentUpon>CellValidationAbortedEvent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Events\CellValidation\CellValidationCompletedEvent.designer.cs">
+      <DependentUpon>CellValidationCompletedEvent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Events\CellValidation\CellValidationConditionUnmetEvent.designer.cs">
+      <DependentUpon>CellValidationConditionUnmetEvent.cs</DependentUpon>
+    </Compile>
     <Compile Include="Events\CellValidation\CellValidationDeemedNotApplicableEvent.cs" />
+    <Compile Include="Events\CellValidation\CellValidationDeemedNotApplicableEvent.designer.cs">
+      <DependentUpon>CellValidationDeemedNotApplicableEvent.cs</DependentUpon>
+    </Compile>
     <Compile Include="Events\CellValidation\CellValidationFailedEvent.cs" />
     <Compile Include="Events\CellValidation\CellValidationAbortedEvent.cs" />
     <Compile Include="Events\CellValidation\CellValidationConditionUnmetEvent.cs" />
     <Compile Include="Events\CellValidation\CellValidationCompletedEvent.cs" />
+    <Compile Include="Events\CellValidation\CellValidationFailedEvent.designer.cs">
+      <DependentUpon>CellValidationFailedEvent.cs</DependentUpon>
+    </Compile>
     <Compile Include="Events\InputAppliedToCellEvent{TValue}.cs" />
     <Compile Include="Events\CellOpExecution\CellOpExecutionFailedEvent.cs" />
     <Compile Include="Events\CellOpExecution\CellOpExecutionCompletedEvent{TResult}.cs" />
@@ -316,6 +334,12 @@
     <Compile Include="Models\Classes\Validation\ValidationConditions.cs" />
     <Compile Include="Models\Classes\Validation\ValidationCondition.cs" />
     <Compile Include="Models\Enums\Validation\ValidationStatus.cs" />
+    <Compile Include="Operations\Classes\Bool\CompareOp.designer.cs">
+      <DependentUpon>CompareOp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Operations\Classes\Cell\ValidateCellOp.designer.cs">
+      <DependentUpon>ValidateCellOp.cs</DependentUpon>
+    </Compile>
     <Compile Include="Operations\Enums\CompareOperator.cs" />
     <Compile Include="Models\Enums\Formatting\FontFormatOptions.cs" />
     <Compile Include="Models\Enums\Linking\BytesPayloadLinkedResourceKind.cs" />
