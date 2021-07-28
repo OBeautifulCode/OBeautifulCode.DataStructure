@@ -19,7 +19,7 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// There are no validation conditions for the subject.
         /// </summary>
-        NoConditions,
+        Unconditioned,
 
         /// <summary>
         /// The validation was not run.

@@ -34,7 +34,7 @@ namespace OBeautifulCode.DataStructure
 
             if (cell.ValidationConditions == null)
             {
-                result = ValidationStatus.NoConditions;
+                result = ValidationStatus.Unconditioned;
             }
             else if (cell.CellValidationEvent == null)
             {
