@@ -21,10 +21,26 @@ namespace OBeautifulCode.DataStructure
         /// <returns>
         /// The operation.
         /// </returns>
-        public static ThrowOpExecutionAbortedExceptionOp<TValue> Stop<TValue>(
+        public static ThrowOpExecutionAbortedExceptionOp<TValue> Abort<TValue>(
             string details = null)
         {
             var result = new ThrowOpExecutionAbortedExceptionOp<TValue>(details);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Builds an operation that throws a <see cref="OpExecutionDeemedNotApplicableException"/>.
+        /// </summary>
+        /// <typeparam name="TValue">The type of value.</typeparam>
+        /// <param name="details">OPTIONAL details to use with the exception.  DEFAULT is to omit details.</param>
+        /// <returns>
+        /// The operation.
+        /// </returns>
+        public static ThrowOpExecutionDeemedNotApplicableExceptionOp<TValue> NotApplicable<TValue>(
+            string details = null)
+        {
+            var result = new ThrowOpExecutionDeemedNotApplicableExceptionOp<TValue>(details);
 
             return result;
         }

@@ -38,7 +38,18 @@ namespace OBeautifulCode.DataStructure.Test
                             Do.Value("must be >= 0")),
                     }));
 
-            var numberOfWarehouseFteCell = Cell.CreateInput<decimal>(id: "warehouse-fte");
+            var numberOfWarehouseFteCell = Cell.CreateInput<decimal>(
+                id: "warehouse-fte",
+                validationConditions: new ValidationConditions(
+                    new[]
+                    {
+                        new ValidationCondition(Cell.HasValue(sectionId, "warehouse-fte"), Do.Value("input required")),
+                        new ValidationCondition(
+                            Do.IsGreaterThanOrEqualTo(
+                                Cell.GetValue<decimal>(sectionId, "warehouse-fte"),
+                                Do.Value(0m)),
+                            Do.Value("must be >= 0")),
+                    }));
 
             var numberOfTotalFte = Cell.CreateOp(
                     id: "total-fte",
@@ -50,7 +61,7 @@ namespace OBeautifulCode.DataStructure.Test
                             Do.Sum(
                                 Cell.GetValue<decimal>(sectionId, numberOfSalesFteCell.Id),
                                 Cell.GetValue<decimal>(sectionId, numberOfWarehouseFteCell.Id)),
-                            Do.Stop<decimal>("cannot perform sum")),
+                            Do.Abort<decimal>("cannot perform sum")),
                     validationConditions: new ValidationConditions(
                         new[]
                         {
@@ -60,7 +71,7 @@ namespace OBeautifulCode.DataStructure.Test
                                         Cell.HasValue(sectionId, numberOfSalesFteCell.Id),
                                         Cell.HasValue(sectionId, numberOfWarehouseFteCell.Id)),
                                     Do.Value(true),
-                                    Do.Stop<bool>()),
+                                    Do.Abort<bool>()),
                                 Do.Value("never-hit")),
                             new ValidationCondition(
                                 Do.IsGreaterThan(

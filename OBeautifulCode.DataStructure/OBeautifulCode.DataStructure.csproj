@@ -37,8 +37,8 @@
     <DocumentationFile>bin\Release\OBeautifulCode.DataStructure.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="OBeautifulCode.Type, Version=1.0.100.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OBeautifulCode.Type.1.0.100\lib\net462\OBeautifulCode.Type.dll</HintPath>
+    <Reference Include="OBeautifulCode.Type, Version=1.0.102.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Type.1.0.102\lib\net462\OBeautifulCode.Type.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
@@ -67,6 +67,7 @@
     <Compile Include="Events\CellOpExecutionEventBase.designer.cs">
       <DependentUpon>CellOpExecutionEventBase.cs</DependentUpon>
     </Compile>
+    <Compile Include="Events\CellOpExecution\CellOpExecutionDeemedNotApplicableEvent.cs" />
     <Compile Include="Events\CellOpExecution\CellOpExecutionAbortedEvent.designer.cs">
       <DependentUpon>CellOpExecutionAbortedEvent.cs</DependentUpon>
     </Compile>
@@ -82,6 +83,7 @@
     <Compile Include="Events\CellValidationEventBase.designer.cs">
       <DependentUpon>CellValidationEventBase.cs</DependentUpon>
     </Compile>
+    <Compile Include="Events\CellValidation\CellValidationDeemedNotApplicableEvent.cs" />
     <Compile Include="Events\CellValidation\CellValidationFailedEvent.cs" />
     <Compile Include="Events\CellValidation\CellValidationAbortedEvent.cs" />
     <Compile Include="Events\CellValidation\CellValidationFailedToMeetConditionEvent.cs" />
@@ -309,6 +311,7 @@
       <DependentUpon>ValidationConditions.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Enums\Cell\MediaReferenceKind.cs" />
+    <Compile Include="Models\Enums\Cell\CellOpExecutionStatus.cs" />
     <Compile Include="Models\Enums\Validation\ValidationConditionKind.cs" />
     <Compile Include="Models\Classes\Validation\ValidationConditions.cs" />
     <Compile Include="Models\Classes\Validation\ValidationCondition.cs" />

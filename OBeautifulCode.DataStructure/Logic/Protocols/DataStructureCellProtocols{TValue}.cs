@@ -24,7 +24,8 @@ namespace OBeautifulCode.DataStructure
           ISyncAndAsyncReturningProtocol<GetConstOp<TValue>, TValue>,
           ISyncAndAsyncReturningProtocol<HasCellValueOp, bool>,
           ISyncAndAsyncReturningProtocol<ThrowOpExecutionAbortedExceptionOp<TValue>, TValue>,
-          ISyncAndAsyncVoidProtocol<ValidateCellOp>
+          ISyncAndAsyncVoidProtocol<ValidateCellOp>,
+          ISyncAndAsyncReturningProtocol<ThrowOpExecutionDeemedNotApplicableExceptionOp<TValue>, TValue>
     {
         private readonly Report report;
 
@@ -163,6 +164,10 @@ namespace OBeautifulCode.DataStructure
                 {
                     cellOpExecutionEvent = new CellOpExecutionAbortedEvent(this.timestampUtc, ex.ToString());
                 }
+                catch (OpExecutionDeemedNotApplicableExceptionBase ex)
+                {
+                    cellOpExecutionEvent = new CellOpExecutionDeemedNotApplicableEvent(this.timestampUtc, ex.ToString());
+                }
                 catch (Exception ex)
                 {
                     // The "proper" exception for a protocol to throw is an OpExecutionFailedExceptionBase.
@@ -203,6 +208,10 @@ namespace OBeautifulCode.DataStructure
                 catch (OpExecutionAbortedExceptionBase ex)
                 {
                     cellOpExecutionEvent = new CellOpExecutionAbortedEvent(this.timestampUtc, ex.ToString());
+                }
+                catch (OpExecutionDeemedNotApplicableExceptionBase ex)
+                {
+                    cellOpExecutionEvent = new CellOpExecutionDeemedNotApplicableEvent(this.timestampUtc, ex.ToString());
                 }
                 catch (Exception ex)
                 {
@@ -263,6 +272,10 @@ namespace OBeautifulCode.DataStructure
                     {
                         cellValidationEvent = new CellValidationAbortedEvent(this.timestampUtc, ex.ToString());
                     }
+                    catch (OpExecutionDeemedNotApplicableExceptionBase ex)
+                    {
+                        cellValidationEvent = new CellValidationDeemedNotApplicableEvent(this.timestampUtc, ex.ToString());
+                    }
                     catch (Exception ex)
                     {
                         // The "proper" exception for a protocol to throw is an OpExecutionFailedExceptionBase.
@@ -322,6 +335,10 @@ namespace OBeautifulCode.DataStructure
                     catch (OpExecutionAbortedExceptionBase ex)
                     {
                         cellValidationEvent = new CellValidationAbortedEvent(this.timestampUtc, ex.ToString());
+                    }
+                    catch (OpExecutionDeemedNotApplicableExceptionBase ex)
+                    {
+                        cellValidationEvent = new CellValidationDeemedNotApplicableEvent(this.timestampUtc, ex.ToString());
                     }
                     catch (Exception ex)
                     {
@@ -423,6 +440,32 @@ namespace OBeautifulCode.DataStructure
             await Task.FromResult(0);
 
             throw new OpExecutionAbortedException(operation.Details, abortingOperation: operation);
+        }
+
+        /// <inheritdoc />
+        public TValue Execute(
+            ThrowOpExecutionDeemedNotApplicableExceptionOp<TValue> operation)
+        {
+            if (operation == null)
+            {
+                throw new ArgumentNullException(nameof(operation));
+            }
+
+            throw new OpExecutionDeemedNotApplicableException(operation.Details, operation);
+        }
+
+        /// <inheritdoc />
+        public async Task<TValue> ExecuteAsync(
+            ThrowOpExecutionDeemedNotApplicableExceptionOp<TValue> operation)
+        {
+            if (operation == null)
+            {
+                throw new ArgumentNullException(nameof(operation));
+            }
+
+            await Task.FromResult(0);
+
+            throw new OpExecutionDeemedNotApplicableException(operation.Details, operation);
         }
 
         private static bool WasConditionMet(
