@@ -86,7 +86,7 @@
     <Compile Include="Events\CellValidation\CellValidationDeemedNotApplicableEvent.cs" />
     <Compile Include="Events\CellValidation\CellValidationFailedEvent.cs" />
     <Compile Include="Events\CellValidation\CellValidationAbortedEvent.cs" />
-    <Compile Include="Events\CellValidation\CellValidationFailedToMeetConditionEvent.cs" />
+    <Compile Include="Events\CellValidation\CellValidationConditionUnmetEvent.cs" />
     <Compile Include="Events\CellValidation\CellValidationCompletedEvent.cs" />
     <Compile Include="Events\InputAppliedToCellEvent{TValue}.cs" />
     <Compile Include="Events\CellOpExecution\CellOpExecutionFailedEvent.cs" />

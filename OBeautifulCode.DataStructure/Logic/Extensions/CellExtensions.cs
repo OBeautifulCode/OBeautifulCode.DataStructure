@@ -38,11 +38,11 @@ namespace OBeautifulCode.DataStructure
             }
             else if (cell.CellValidationEvent == null)
             {
-                result = ValidationStatus.NotValidated;
+                result = ValidationStatus.Unvalidated;
             }
             else if (cell.CellValidationEvent is CellValidationDeemedNotApplicableEvent)
             {
-                result = ValidationStatus.NotApplicable;
+                result = ValidationStatus.DeemedNotApplicable;
             }
             else if (cell.CellValidationEvent is CellValidationAbortedEvent)
             {
@@ -56,7 +56,7 @@ namespace OBeautifulCode.DataStructure
             {
                 result = ValidationStatus.Failed;
             }
-            else if (cell.CellValidationEvent is CellValidationFailedToMeetConditionEvent)
+            else if (cell.CellValidationEvent is CellValidationConditionUnmetEvent)
             {
                 result = ValidationStatus.Invalid;
             }

@@ -258,7 +258,7 @@ namespace OBeautifulCode.DataStructure
                             {
                                 var failureMessage = this.protocolFactory.GetProtocolAndExecuteViaReflection<string>(validationCondition.FailureMessageOp);
 
-                                cellValidationEvent = new CellValidationFailedToMeetConditionEvent(failureMessage, this.timestampUtc, validationCondition.Details);
+                                cellValidationEvent = new CellValidationConditionUnmetEvent(failureMessage, this.timestampUtc, validationCondition.Details);
 
                                 cell.RecordValidation(cellValidationEvent);
 
@@ -322,7 +322,7 @@ namespace OBeautifulCode.DataStructure
                             {
                                 var failureMessage = await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync<string>(validationCondition.FailureMessageOp);
 
-                                cellValidationEvent = new CellValidationFailedToMeetConditionEvent(failureMessage, this.timestampUtc, validationCondition.Details);
+                                cellValidationEvent = new CellValidationConditionUnmetEvent(failureMessage, this.timestampUtc, validationCondition.Details);
 
                                 cell.RecordValidation(cellValidationEvent);
 

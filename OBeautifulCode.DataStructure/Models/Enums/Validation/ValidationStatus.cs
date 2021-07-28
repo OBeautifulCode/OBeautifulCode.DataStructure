@@ -24,12 +24,12 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// The validation was not run.
         /// </summary>
-        NotValidated,
+        Unvalidated,
 
         /// <summary>
         /// A validation condition deemed the validation not applicable.
         /// </summary>
-        NotApplicable,
+        DeemedNotApplicable,
 
         /// <summary>
         /// A validation condition was aborted when executing.
