@@ -308,11 +308,12 @@
     <Compile Include="Models\Classes\Validation\ValidationConditions.designer.cs">
       <DependentUpon>ValidationConditions.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\Enums\Cell\MediaReferenceKind.cs" />
     <Compile Include="Models\Enums\Validation\ValidationConditionKind.cs" />
     <Compile Include="Models\Classes\Validation\ValidationConditions.cs" />
     <Compile Include="Models\Classes\Validation\ValidationCondition.cs" />
     <Compile Include="Models\Enums\Validation\ValidationStatus.cs" />
-    <Compile Include="Models\Enums\Cell\MediaReferenceKind.cs" />
+    <Compile Include="Operations\Enums\CompareOperator.cs" />
     <Compile Include="Models\Enums\Formatting\FontFormatOptions.cs" />
     <Compile Include="Models\Enums\Linking\BytesPayloadLinkedResourceKind.cs" />
     <Compile Include="Models\Enums\Linking\StringPayloadLinkedResourceKind.cs" />
@@ -335,49 +336,50 @@
     <Compile Include="Models\Classes\HoverOver\HtmlHoverOver.cs" />
     <Compile Include="Models\Classes\HoverOver\StringHoverOver.cs" />
     <Compile Include="Models\Enums\Operations\SlotSelectionStrategy.cs" />
-    <Compile Include="Operations\Bool\AndAlsoOp.cs" />
-    <Compile Include="Operations\Bool\AndAlsoOp.designer.cs">
+    <Compile Include="Operations\Classes\Bool\CompareOp.cs" />
+    <Compile Include="Operations\Classes\Bool\AndAlsoOp.cs" />
+    <Compile Include="Operations\Classes\Bool\AndAlsoOp.designer.cs">
       <DependentUpon>AndAlsoOp.cs</DependentUpon>
     </Compile>
-    <Compile Include="Operations\Bool\NotOp.designer.cs">
+    <Compile Include="Operations\Classes\Bool\NotOp.designer.cs">
       <DependentUpon>NotOp.cs</DependentUpon>
     </Compile>
-    <Compile Include="Operations\Bool\OrElseOp.cs" />
-    <Compile Include="Operations\Bool\NotOp.cs" />
-    <Compile Include="Operations\Bool\OrElseOp.designer.cs">
+    <Compile Include="Operations\Classes\Bool\OrElseOp.cs" />
+    <Compile Include="Operations\Classes\Bool\NotOp.cs" />
+    <Compile Include="Operations\Classes\Bool\OrElseOp.designer.cs">
       <DependentUpon>OrElseOp.cs</DependentUpon>
     </Compile>
-    <Compile Include="Operations\Branch\IfThenElseOp{TResult}.designer.cs">
+    <Compile Include="Operations\Classes\Branch\IfThenElseOp{TResult}.designer.cs">
       <DependentUpon>IfThenElseOp{TResult}.cs</DependentUpon>
     </Compile>
-    <Compile Include="Operations\Cell\ValidateCellOp.cs" />
-    <Compile Include="Operations\Cell\ExecuteOperationCellIfNecessaryOp{TValue}.designer.cs">
+    <Compile Include="Operations\Classes\Cell\ValidateCellOp.cs" />
+    <Compile Include="Operations\Classes\Cell\ExecuteOperationCellIfNecessaryOp{TValue}.designer.cs">
       <DependentUpon>ExecuteOperationCellIfNecessaryOp{TValue}.cs</DependentUpon>
     </Compile>
-    <Compile Include="Operations\Cell\GetCellValueOp{TValue}.designer.cs">
+    <Compile Include="Operations\Classes\Cell\GetCellValueOp{TValue}.designer.cs">
       <DependentUpon>GetCellValueOp{TValue}.cs</DependentUpon>
     </Compile>
-    <Compile Include="Operations\Cell\HasCellValueOp.designer.cs">
+    <Compile Include="Operations\Classes\Cell\HasCellValueOp.designer.cs">
       <DependentUpon>HasCellValueOp.cs</DependentUpon>
     </Compile>
-    <Compile Include="Operations\Decimal\SumOp.cs" />
-    <Compile Include="Operations\Decimal\SumOp.designer.cs">
+    <Compile Include="Operations\Classes\Decimal\SumOp.cs" />
+    <Compile Include="Operations\Classes\Decimal\SumOp.designer.cs">
       <DependentUpon>SumOp.cs</DependentUpon>
     </Compile>
-    <Compile Include="Operations\GetConstOp{TValue}.designer.cs">
+    <Compile Include="Operations\Classes\GetConstOp{TValue}.designer.cs">
       <DependentUpon>GetConstOp{TValue}.cs</DependentUpon>
     </Compile>
-    <Compile Include="Operations\MultiStatementOpBase{TStatement,TResult}.designer.cs">
+    <Compile Include="Operations\Classes\MultiStatementOpBase{TStatement,TResult}.designer.cs">
       <DependentUpon>MultiStatementOpBase{TStatement,TResult}.cs</DependentUpon>
     </Compile>
-    <Compile Include="Operations\SingleStatementOpBase{TStatement,TResult}.cs" />
-    <Compile Include="Operations\MultiStatementOpBase{TStatement,TResult}.cs" />
-    <Compile Include="Operations\Cell\ExecuteOperationCellIfNecessaryOp{TValue}.cs" />
-    <Compile Include="Operations\Branch\IfThenElseOp{TResult}.cs" />
-    <Compile Include="Operations\Cell\HasCellValueOp.cs" />
-    <Compile Include="Operations\GetConstOp{TValue}.cs" />
-    <Compile Include="Operations\Cell\GetCellValueOp{TValue}.cs" />
-    <Compile Include="Operations\SingleStatementOpBase{TStatement,TResult}.designer.cs">
+    <Compile Include="Operations\Classes\SingleStatementOpBase{TStatement,TResult}.cs" />
+    <Compile Include="Operations\Classes\MultiStatementOpBase{TStatement,TResult}.cs" />
+    <Compile Include="Operations\Classes\Cell\ExecuteOperationCellIfNecessaryOp{TValue}.cs" />
+    <Compile Include="Operations\Classes\Branch\IfThenElseOp{TResult}.cs" />
+    <Compile Include="Operations\Classes\Cell\HasCellValueOp.cs" />
+    <Compile Include="Operations\Classes\GetConstOp{TValue}.cs" />
+    <Compile Include="Operations\Classes\Cell\GetCellValueOp{TValue}.cs" />
+    <Compile Include="Operations\Classes\SingleStatementOpBase{TStatement,TResult}.designer.cs">
       <DependentUpon>SingleStatementOpBase{TStatement,TResult}.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

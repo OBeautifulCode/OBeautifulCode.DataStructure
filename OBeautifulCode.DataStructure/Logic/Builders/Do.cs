@@ -124,5 +124,73 @@ namespace OBeautifulCode.DataStructure
 
             return result;
         }
+
+        /// <summary>
+        /// Builds an <see cref="SumOp"/>.
+        /// </summary>
+        /// <param name="left">The value to the left of the greater-than operator.</param>
+        /// <param name="right">The value to the right of the greater-than operator.</param>
+        /// <returns>
+        /// The operation.
+        /// </returns>
+        public static CompareOp IsGreaterThan(
+            IReturningOperation<decimal> left,
+            IReturningOperation<decimal> right)
+        {
+            var result = new CompareOp(left, CompareOperator.GreaterThan, right);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Builds an <see cref="SumOp"/>.
+        /// </summary>
+        /// <param name="left">The value to the left of the greater-than-or-equal-to operator.</param>
+        /// <param name="right">The value to the right of the greater-than-or-equal-to operator.</param>
+        /// <returns>
+        /// The operation.
+        /// </returns>
+        public static CompareOp IsGreaterThanOrEqualTo(
+            IReturningOperation<decimal> left,
+            IReturningOperation<decimal> right)
+        {
+            var result = new CompareOp(left, CompareOperator.GreaterThanOrEqualTo, right);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Builds an <see cref="SumOp"/>.
+        /// </summary>
+        /// <param name="left">The value to the left of the less-than operator.</param>
+        /// <param name="right">The value to the right of the less-than operator.</param>
+        /// <returns>
+        /// The operation.
+        /// </returns>
+        public static CompareOp IsLessThan(
+            IReturningOperation<decimal> left,
+            IReturningOperation<decimal> right)
+        {
+            var result = new CompareOp(left, CompareOperator.LessThan, right);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Builds an <see cref="SumOp"/>.
+        /// </summary>
+        /// <param name="left">The value to the left of the less-than-or-equal-to operator.</param>
+        /// <param name="right">The value to the right of the less-than-or-equal-to operator.</param>
+        /// <returns>
+        /// The operation.
+        /// </returns>
+        public static CompareOp IsLessThanOrEqualTo(
+            IReturningOperation<decimal> left,
+            IReturningOperation<decimal> right)
+        {
+            var result = new CompareOp(left, CompareOperator.LessThanOrEqualTo, right);
+
+            return result;
+        }
     }
 }

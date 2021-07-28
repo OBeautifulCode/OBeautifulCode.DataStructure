@@ -31,19 +31,43 @@ namespace OBeautifulCode.DataStructure.Test
                     new[]
                     {
                         new ValidationCondition(Cell.HasValue(sectionId, "sales-fte"), Do.Value("input required")),
+                        new ValidationCondition(
+                            Do.IsGreaterThanOrEqualTo(
+                                Cell.GetValue<decimal>(sectionId, "sales-fte"),
+                                Do.Value(0m)),
+                            Do.Value("must be >= 0")),
                     }));
 
             var numberOfWarehouseFteCell = Cell.CreateInput<decimal>(id: "warehouse-fte");
 
             var numberOfTotalFte = Cell.CreateOp(
-                Do.IfThenElse(
-                    Do.AndAlso(
-                        Cell.HasValue(sectionId, numberOfSalesFteCell.Id),
-                        Cell.HasValue(sectionId, numberOfWarehouseFteCell.Id)),
-                    Do.Sum(
-                        Cell.GetValue<decimal>(sectionId, numberOfSalesFteCell.Id),
-                        Cell.GetValue<decimal>(sectionId, numberOfWarehouseFteCell.Id)),
-                    Do.Stop<decimal>("cannot perform sum")));
+                    id: "total-fte",
+                    operation:
+                        Do.IfThenElse(
+                            Do.AndAlso(
+                                Cell.HasValue(sectionId, numberOfSalesFteCell.Id),
+                                Cell.HasValue(sectionId, numberOfWarehouseFteCell.Id)),
+                            Do.Sum(
+                                Cell.GetValue<decimal>(sectionId, numberOfSalesFteCell.Id),
+                                Cell.GetValue<decimal>(sectionId, numberOfWarehouseFteCell.Id)),
+                            Do.Stop<decimal>("cannot perform sum")),
+                    validationConditions: new ValidationConditions(
+                        new[]
+                        {
+                            new ValidationCondition(
+                                Do.IfThenElse(
+                                    Do.AndAlso(
+                                        Cell.HasValue(sectionId, numberOfSalesFteCell.Id),
+                                        Cell.HasValue(sectionId, numberOfWarehouseFteCell.Id)),
+                                    Do.Value(true),
+                                    Do.Stop<bool>()),
+                                Do.Value("never-hit")),
+                            new ValidationCondition(
+                                Do.IsGreaterThan(
+                                    Cell.GetValue<decimal>(sectionId, "total-fte"),
+                                    Do.Value(0m)),
+                                Do.Value("must be >= 0")),
+                        }));
 
             var coscoresCell = Cell.CreateConst<NamedDecimalSet>(
                 new[]

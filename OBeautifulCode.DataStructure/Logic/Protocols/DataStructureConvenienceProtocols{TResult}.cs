@@ -12,6 +12,8 @@ namespace OBeautifulCode.DataStructure
 
     using OBeautifulCode.Type;
 
+    using static System.FormattableString;
+
     /// <summary>
     /// Some protocols for convenience.
     /// </summary>
@@ -21,7 +23,8 @@ namespace OBeautifulCode.DataStructure
           ISyncAndAsyncReturningProtocol<AndAlsoOp, bool>,
           ISyncAndAsyncReturningProtocol<OrElseOp, bool>,
           ISyncAndAsyncReturningProtocol<NotOp, bool>,
-          ISyncAndAsyncReturningProtocol<SumOp, decimal>
+          ISyncAndAsyncReturningProtocol<SumOp, decimal>,
+          ISyncAndAsyncReturningProtocol<CompareOp, bool>
     {
         private readonly IProtocolFactory protocolFactory;
 
@@ -229,6 +232,70 @@ namespace OBeautifulCode.DataStructure
             foreach (var statement in operation.Statements)
             {
                 result = result + await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync<decimal>(statement);
+            }
+
+            return result;
+        }
+
+        /// <inheritdoc />
+        public bool Execute(
+            CompareOp operation)
+        {
+            if (operation == null)
+            {
+                throw new ArgumentNullException(nameof(operation));
+            }
+
+            var left = this.protocolFactory.GetProtocolAndExecuteViaReflection<decimal>(operation.Left);
+
+            var right = this.protocolFactory.GetProtocolAndExecuteViaReflection<decimal>(operation.Right);
+
+            var result = Compare(left, operation.Operator, right);
+
+            return result;
+        }
+
+        /// <inheritdoc />
+        public async Task<bool> ExecuteAsync(
+            CompareOp operation)
+        {
+            if (operation == null)
+            {
+                throw new ArgumentNullException(nameof(operation));
+            }
+
+            var left = await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync<decimal>(operation.Left);
+
+            var right = await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync<decimal>(operation.Right);
+
+            var result = Compare(left, operation.Operator, right);
+
+            return result;
+        }
+
+        private static bool Compare(
+            decimal left,
+            CompareOperator @operator,
+            decimal right)
+        {
+            bool result;
+
+            switch (@operator)
+            {
+                case CompareOperator.GreaterThan:
+                    result = left > right;
+                    break;
+                case CompareOperator.GreaterThanOrEqualTo:
+                    result = left >= right;
+                    break;
+                case CompareOperator.LessThan:
+                    result = left < right;
+                    break;
+                case CompareOperator.LessThanOrEqualTo:
+                    result = left <= right;
+                    break;
+                default:
+                    throw new NotSupportedException(Invariant($"This {nameof(CompareOperator)} is not supported: {@operator}."));
             }
 
             return result;
