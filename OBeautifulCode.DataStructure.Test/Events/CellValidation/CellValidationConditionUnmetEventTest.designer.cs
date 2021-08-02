@@ -293,6 +293,7 @@ namespace OBeautifulCode.DataStructure.Test
                         A.Dummy<int?>(),
                         A.Dummy<Guid>(),
                         A.Dummy<CellOpExecutionAbortedEvent>(),
+                        A.Dummy<CellOpExecutionClearedEvent>(),
                         A.Dummy<CellOpExecutionCompletedEvent<Version>>(),
                         A.Dummy<CellOpExecutionDeemedNotApplicableEvent>(),
                         A.Dummy<CellOpExecutionFailedEvent>(),

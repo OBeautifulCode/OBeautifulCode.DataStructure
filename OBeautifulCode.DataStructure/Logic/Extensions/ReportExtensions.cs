@@ -220,7 +220,7 @@ namespace OBeautifulCode.DataStructure
         {
             var protocolFactory = report.BuildProtocolFactoryToExecuteAllOperations(timestampUtc, protocolFactoryFuncs, additionalTypesForCoreCellOps);
 
-            var operationCells = report.GetClearedOperationCells();
+            var operationCells = report.GetClearedOperationCells(timestampUtc);
 
             foreach (var operationCell in operationCells)
             {
@@ -267,7 +267,7 @@ namespace OBeautifulCode.DataStructure
         {
             var protocolFactory = report.BuildProtocolFactoryToExecuteAllOperations(timestampUtc, protocolFactoryFuncs, additionalTypesForCoreCellOps);
 
-            var operationCells = report.GetClearedOperationCells();
+            var operationCells = report.GetClearedOperationCells(timestampUtc);
 
             foreach (var operationCell in operationCells)
             {
@@ -380,13 +380,14 @@ namespace OBeautifulCode.DataStructure
         }
 
         private static IReadOnlyCollection<ICell> GetClearedOperationCells(
-            this Report report)
+            this Report report,
+            DateTime timestampUtc)
         {
             var result = report.Sections.SelectMany(_ => _.TreeTable.GetOperationCells()).ToList();
 
             foreach (var operationCell in result)
             {
-                ((IClearCellValue)operationCell).ClearCellValue();
+                ((IClearCellValue)operationCell).ClearCellValue(timestampUtc, Invariant($"Value cleared by {nameof(ReportExtensions)}.{nameof(ExecuteAllOperationsAndValidationsAndRecordResults)} or async overload."));
             }
 
             return result;

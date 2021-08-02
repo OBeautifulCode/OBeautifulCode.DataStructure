@@ -57,7 +57,7 @@ namespace OBeautifulCode.DataStructure.Test
                         // (OperationOutputCellBase<Version>)ReferenceObjectForEquatableTestScenarios.DeepCloneWithColumnsSpanned(A.Dummy<OperationOutputCellBase<Version>>().Whose(_ => !_.ColumnsSpanned.IsEqualTo(ReferenceObjectForEquatableTestScenarios.ColumnsSpanned)).ColumnsSpanned),
                         // (OperationOutputCellBase<Version>)ReferenceObjectForEquatableTestScenarios.DeepCloneWithDetails(A.Dummy<OperationOutputCellBase<Version>>().Whose(_ => !_.Details.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Details)).Details),
                         // ReferenceObjectForEquatableTestScenarios.DeepCloneWithOperation(A.Dummy<OperationOutputCellBase<Version>>().Whose(_ => !_.Operation.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Operation)).Operation),
-                        // ReferenceObjectForEquatableTestScenarios.DeepCloneWithCellOpExecutionEvent(A.Dummy<OperationOutputCellBase<Version>>().Whose(_ => !_.CellOpExecutionEvent.IsEqualTo(ReferenceObjectForEquatableTestScenarios.CellOpExecutionEvent)).CellOpExecutionEvent),
+                        // ReferenceObjectForEquatableTestScenarios.DeepCloneWithCellOpExecutionEvents(A.Dummy<OperationOutputCellBase<Version>>().Whose(_ => !_.CellOpExecutionEvents.IsEqualTo(ReferenceObjectForEquatableTestScenarios.CellOpExecutionEvents)).CellOpExecutionEvents),
                         // ReferenceObjectForEquatableTestScenarios.DeepCloneWithValidationConditions(A.Dummy<OperationOutputCellBase<Version>>().Whose(_ => !_.ValidationConditions.IsEqualTo(ReferenceObjectForEquatableTestScenarios.ValidationConditions)).ValidationConditions),
                         // ReferenceObjectForEquatableTestScenarios.DeepCloneWithCellValidationEvent(A.Dummy<OperationOutputCellBase<Version>>().Whose(_ => !_.CellValidationEvent.IsEqualTo(ReferenceObjectForEquatableTestScenarios.CellValidationEvent)).CellValidationEvent),
                     },
@@ -204,16 +204,16 @@ namespace OBeautifulCode.DataStructure.Test
                     actual.Operation.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.Operation);
                 }
 
-                if (systemUnderTest.CellOpExecutionEvent == null)
+                if (systemUnderTest.CellOpExecutionEvents == null)
                 {
-                    actual.CellOpExecutionEvent.AsTest().Must().BeNull();
+                    actual.CellOpExecutionEvents.AsTest().Must().BeNull();
                 }
-                else if (!actual.CellOpExecutionEvent.GetType().IsValueType)
+                else if (!actual.CellOpExecutionEvents.GetType().IsValueType)
                 {
                     // When the declared type is a reference type, we still have to check the runtime type.
                     // The object could be a boxed value type, which will fail this asseration because
                     // a deep clone of a value type object is the same object.
-                    actual.CellOpExecutionEvent.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.CellOpExecutionEvent);
+                    actual.CellOpExecutionEvents.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.CellOpExecutionEvents);
                 }
 
                 if (systemUnderTest.ValidationConditions == null)

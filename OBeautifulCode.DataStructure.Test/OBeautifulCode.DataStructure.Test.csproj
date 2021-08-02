@@ -197,6 +197,10 @@
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringReadableOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringXmlDocOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
+    <Compile Include="Events\CellOpExecution\CellOpExecutionClearedEventTest.cs" />
+    <Compile Include="Events\CellOpExecution\CellOpExecutionClearedEventTest.designer.cs">
+      <DependentUpon>CellOpExecutionClearedEventTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Classes\Format\Region\Regions\FooterRowsFormatTest.cs" />
     <Compile Include="Models\Classes\Format\Region\Regions\FooterRowsFormatTest.designer.cs">
       <DependentUpon>FooterRowsFormatTest.cs</DependentUpon>

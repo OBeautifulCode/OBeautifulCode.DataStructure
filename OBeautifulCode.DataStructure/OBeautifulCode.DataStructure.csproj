@@ -67,8 +67,12 @@
     <Compile Include="Events\CellOpExecutionEventBase.designer.cs">
       <DependentUpon>CellOpExecutionEventBase.cs</DependentUpon>
     </Compile>
+    <Compile Include="Events\CellOpExecution\CellOpExecutionClearedEvent.cs" />
     <Compile Include="Events\CellOpExecution\CellOpExecutionAbortedEvent.designer.cs">
       <DependentUpon>CellOpExecutionAbortedEvent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Events\CellOpExecution\CellOpExecutionClearedEvent.designer.cs">
+      <DependentUpon>CellOpExecutionClearedEvent.cs</DependentUpon>
     </Compile>
     <Compile Include="Events\CellOpExecution\CellOpExecutionCompletedEvent{TResult}.designer.cs">
       <DependentUpon>CellOpExecutionCompletedEvent{TResult}.cs</DependentUpon>

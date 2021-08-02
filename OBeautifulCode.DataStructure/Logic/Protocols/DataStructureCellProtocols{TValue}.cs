@@ -7,6 +7,7 @@
 namespace OBeautifulCode.DataStructure
 {
     using System;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using OBeautifulCode.Type;
@@ -150,7 +151,7 @@ namespace OBeautifulCode.DataStructure
 
             var cell = operation.Cell;
 
-            if (cell.CellOpExecutionEvent == null)
+            if (cell.GetExecutionStatus() == CellOpExecutionStatus.NotExecuted)
             {
                 CellOpExecutionEventBase cellOpExecutionEvent;
 
@@ -177,7 +178,7 @@ namespace OBeautifulCode.DataStructure
 
                 cell.RecordExecution(cellOpExecutionEvent);
             }
-            else if (cell.CellOpExecutionEvent.TimestampUtc != this.timestampUtc)
+            else if (cell.CellOpExecutionEvents.Last().TimestampUtc != this.timestampUtc)
             {
                 throw new InvalidOperationException("Something went wrong.  The operation was executed, but the recorded timestamp doesn't match this timestamp.");
             }
@@ -195,7 +196,7 @@ namespace OBeautifulCode.DataStructure
 
             var cell = operation.Cell;
 
-            if (cell.CellOpExecutionEvent == null)
+            if (cell.GetExecutionStatus() == CellOpExecutionStatus.NotExecuted)
             {
                 CellOpExecutionEventBase cellOpExecutionEvent;
 
@@ -222,7 +223,7 @@ namespace OBeautifulCode.DataStructure
 
                 cell.RecordExecution(cellOpExecutionEvent);
             }
-            else if (cell.CellOpExecutionEvent.TimestampUtc != this.timestampUtc)
+            else if (cell.CellOpExecutionEvents.Last().TimestampUtc != this.timestampUtc)
             {
                 throw new InvalidOperationException("Something went wrong.  The operation was executed, but the recorded timestamp doesn't match this timestamp.");
             }

@@ -6,6 +6,8 @@
 
 namespace OBeautifulCode.DataStructure
 {
+    using System.Collections.Generic;
+
     using OBeautifulCode.Type;
 
     /// <summary>
@@ -65,7 +67,7 @@ namespace OBeautifulCode.DataStructure
         /// </summary>
         /// <typeparam name="TValue">The type of value.</typeparam>
         /// <param name="operation">The operation.</param>
-        /// <param name="cellOpExecutionEvent">OPTIONAL result of executing the operation.  DEFAULT is a cell who's operation has not yet been executed.</param>
+        /// <param name="cellOpExecutionEvents">OPTIONAL results of executing the operation.  DEFAULT is a cell who's operation has not yet been executed.</param>
         /// <param name="validationConditions">OPTIONAL list of conditions that determine the validity of the cell's value.  DEFAULT is to omit validation.</param>
         /// <param name="cellValidationEvent">OPTIONAL result of validating the cell's value.  DEFAULT is a cell that has not yet been validated.</param>
         /// <param name="id">OPTIONAL unique identifier of the cell.  DEFAULT is a cell with no unique identifier.</param>
@@ -80,7 +82,7 @@ namespace OBeautifulCode.DataStructure
         /// </returns>
         public static OperationCell<TValue> CreateOp<TValue>(
             IReturningOperation<TValue> operation,
-            CellOpExecutionEventBase cellOpExecutionEvent = null,
+            IReadOnlyList<CellOpExecutionEventBase> cellOpExecutionEvents = null,
             ValidationConditions validationConditions = null,
             CellValidationEventBase cellValidationEvent = null,
             string id = null,
@@ -91,7 +93,7 @@ namespace OBeautifulCode.DataStructure
             IHoverOver hoverOver = null,
             ILink link = null)
         {
-            var result = new OperationCell<TValue>(operation, cellOpExecutionEvent, validationConditions, cellValidationEvent, id, columnsSpanned, details, valueFormat, format, hoverOver, link);
+            var result = new OperationCell<TValue>(operation, cellOpExecutionEvents, validationConditions, cellValidationEvent, id, columnsSpanned, details, valueFormat, format, hoverOver, link);
 
             return result;
         }

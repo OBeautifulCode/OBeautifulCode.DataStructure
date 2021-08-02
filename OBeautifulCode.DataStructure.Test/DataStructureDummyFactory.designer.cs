@@ -119,6 +119,11 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<string>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new CellOpExecutionClearedEvent(
+                                 A.Dummy<DateTime>(),
+                                 A.Dummy<string>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new CellOpExecutionCompletedEvent<Version>(
                                  A.Dummy<DateTime>(),
                                  A.Dummy<string>(),
@@ -135,6 +140,7 @@ namespace OBeautifulCode.DataStructure.Test
                     var availableTypes = new[]
                     {
                         typeof(CellOpExecutionAbortedEvent),
+                        typeof(CellOpExecutionClearedEvent),
                         typeof(CellOpExecutionCompletedEvent<Version>),
                         typeof(CellOpExecutionDeemedNotApplicableEvent),
                         typeof(CellOpExecutionFailedEvent)
@@ -516,7 +522,7 @@ namespace OBeautifulCode.DataStructure.Test
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new OperationCell<Version>(
                                  A.Dummy<IReturningOperation<Version>>(),
-                                 A.Dummy<CellOpExecutionEventBase>(),
+                                 A.Dummy<IReadOnlyList<CellOpExecutionEventBase>>(),
                                  A.Dummy<ValidationConditions>(),
                                  A.Dummy<CellValidationEventBase>(),
                                  A.Dummy<string>(),

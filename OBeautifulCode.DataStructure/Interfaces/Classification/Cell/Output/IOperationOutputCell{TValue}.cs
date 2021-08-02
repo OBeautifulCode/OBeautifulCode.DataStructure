@@ -6,6 +6,8 @@
 
 namespace OBeautifulCode.DataStructure
 {
+    using System.Collections.Generic;
+
     using OBeautifulCode.Type;
 
     /// <summary>
@@ -20,9 +22,9 @@ namespace OBeautifulCode.DataStructure
         IReturningOperation<TValue> Operation { get; }
 
         /// <summary>
-        /// Gets the result of executing the operation.
+        /// Gets the results of executing the operation.
         /// </summary>
-        CellOpExecutionEventBase CellOpExecutionEvent { get; }
+        IReadOnlyList<CellOpExecutionEventBase> CellOpExecutionEvents { get; }
 
         /// <summary>
         /// Records the execution of the <see cref="Operation"/>.

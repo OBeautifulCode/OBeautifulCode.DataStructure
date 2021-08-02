@@ -104,10 +104,10 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <summary>
-        /// Deep clones this object with a new <see cref="CellOpExecutionEvent" />.
+        /// Deep clones this object with a new <see cref="CellOpExecutionEvents" />.
         /// </summary>
-        /// <param name="cellOpExecutionEvent">The new <see cref="CellOpExecutionEvent" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="OperationOutputCellBase{TValue}" /> using the specified <paramref name="cellOpExecutionEvent" /> for <see cref="CellOpExecutionEvent" /> and a deep clone of every other property.</returns>
+        /// <param name="cellOpExecutionEvents">The new <see cref="CellOpExecutionEvents" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="OperationOutputCellBase{TValue}" /> using the specified <paramref name="cellOpExecutionEvents" /> for <see cref="CellOpExecutionEvents" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -125,7 +125,7 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public virtual OperationOutputCellBase<TValue> DeepCloneWithCellOpExecutionEvent(CellOpExecutionEventBase cellOpExecutionEvent)
+        public virtual OperationOutputCellBase<TValue> DeepCloneWithCellOpExecutionEvents(IReadOnlyList<CellOpExecutionEventBase> cellOpExecutionEvents)
         {
             throw new NotImplementedException("This method should be abstract.  It was generated as virtual so that you aren't forced to override it when you create a new model that derives from this model.  It will be overridden in the generated designer file.");
         }
