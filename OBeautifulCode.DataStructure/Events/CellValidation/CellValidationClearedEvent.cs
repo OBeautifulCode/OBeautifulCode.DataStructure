@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="CellInputEventBase.cs" company="OBeautifulCode">
+// <copyright file="CellValidationClearedEvent.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -11,25 +11,21 @@ namespace OBeautifulCode.DataStructure
     using OBeautifulCode.Type;
 
     /// <summary>
-    /// Base class for events that record the manipulation of an <see cref="IInputCell{TValue}"/>'s value.
+    /// Validation performed on a cell has been cleared out.
     /// </summary>
     // ReSharper disable once RedundantExtendsListEntry
-    public abstract partial class CellInputEventBase : EventBase, IHaveDetails, IModelViaCodeGen
+    public partial class CellValidationClearedEvent : CellValidationEventBase, IModelViaCodeGen
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="CellInputEventBase"/> class.
+        /// Initializes a new instance of the <see cref="CellValidationClearedEvent"/> class.
         /// </summary>
         /// <param name="timestampUtc">The timestamp.</param>
-        /// <param name="details">Details about the event.</param>
-        protected CellInputEventBase(
+        /// <param name="details">Details about the condition that aborted the validation.</param>
+        public CellValidationClearedEvent(
             DateTime timestampUtc,
             string details)
-            : base(timestampUtc)
+            : base(timestampUtc, details)
         {
-            this.Details = details;
         }
-
-        /// <inheritdoc />
-        public string Details { get; private set; }
     }
 }

@@ -11,7 +11,7 @@ namespace OBeautifulCode.DataStructure
     using OBeautifulCode.Type;
 
     /// <summary>
-    /// Base class for events that record validation of a cell.
+    /// Base class for events that record the validation of a cell.
     /// </summary>
     // ReSharper disable once RedundantExtendsListEntry
     public abstract partial class CellValidationEventBase : EventBase, IHaveDetails, IModelViaCodeGen

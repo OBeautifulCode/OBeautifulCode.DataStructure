@@ -59,7 +59,7 @@ namespace OBeautifulCode.DataStructure.Test
                         // ReferenceObjectForEquatableTestScenarios.DeepCloneWithOperation(A.Dummy<OperationOutputCellBase<Version>>().Whose(_ => !_.Operation.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Operation)).Operation),
                         // ReferenceObjectForEquatableTestScenarios.DeepCloneWithCellOpExecutionEvents(A.Dummy<OperationOutputCellBase<Version>>().Whose(_ => !_.CellOpExecutionEvents.IsEqualTo(ReferenceObjectForEquatableTestScenarios.CellOpExecutionEvents)).CellOpExecutionEvents),
                         // ReferenceObjectForEquatableTestScenarios.DeepCloneWithValidationConditions(A.Dummy<OperationOutputCellBase<Version>>().Whose(_ => !_.ValidationConditions.IsEqualTo(ReferenceObjectForEquatableTestScenarios.ValidationConditions)).ValidationConditions),
-                        // ReferenceObjectForEquatableTestScenarios.DeepCloneWithCellValidationEvent(A.Dummy<OperationOutputCellBase<Version>>().Whose(_ => !_.CellValidationEvent.IsEqualTo(ReferenceObjectForEquatableTestScenarios.CellValidationEvent)).CellValidationEvent),
+                        // ReferenceObjectForEquatableTestScenarios.DeepCloneWithCellValidationEvents(A.Dummy<OperationOutputCellBase<Version>>().Whose(_ => !_.CellValidationEvents.IsEqualTo(ReferenceObjectForEquatableTestScenarios.CellValidationEvents)).CellValidationEvents),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
                     {
@@ -228,16 +228,16 @@ namespace OBeautifulCode.DataStructure.Test
                     actual.ValidationConditions.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.ValidationConditions);
                 }
 
-                if (systemUnderTest.CellValidationEvent == null)
+                if (systemUnderTest.CellValidationEvents == null)
                 {
-                    actual.CellValidationEvent.AsTest().Must().BeNull();
+                    actual.CellValidationEvents.AsTest().Must().BeNull();
                 }
-                else if (!actual.CellValidationEvent.GetType().IsValueType)
+                else if (!actual.CellValidationEvents.GetType().IsValueType)
                 {
                     // When the declared type is a reference type, we still have to check the runtime type.
                     // The object could be a boxed value type, which will fail this asseration because
                     // a deep clone of a value type object is the same object.
-                    actual.CellValidationEvent.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.CellValidationEvent);
+                    actual.CellValidationEvents.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.CellValidationEvents);
                 }
             }
         }

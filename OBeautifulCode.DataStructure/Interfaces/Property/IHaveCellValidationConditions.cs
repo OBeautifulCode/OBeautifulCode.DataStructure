@@ -6,6 +6,8 @@
 
 namespace OBeautifulCode.DataStructure
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// Specifies validation conditions for a cell.
     /// </summary>
@@ -17,8 +19,8 @@ namespace OBeautifulCode.DataStructure
         ValidationConditions ValidationConditions { get; }
 
         /// <summary>
-        /// Gets the result of validating the cell's value.
+        /// Gets the events that record the validation of this cell's value.
         /// </summary>
-        CellValidationEventBase CellValidationEvent { get; }
+        IReadOnlyList<CellValidationEventBase> CellValidationEvents { get; }
     }
 }

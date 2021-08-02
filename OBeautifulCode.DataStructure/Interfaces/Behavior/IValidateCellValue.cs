@@ -6,6 +6,8 @@
 
 namespace OBeautifulCode.DataStructure
 {
+    using System;
+
     /// <summary>
     /// Validates a cell's value.
     /// </summary>
@@ -13,14 +15,16 @@ namespace OBeautifulCode.DataStructure
     public interface IValidateCellValue
     {
         /// <summary>
-        /// Records validation that has been performed on a cell.
+        /// Records a <see cref="CellValidationEventBase"/>.
         /// </summary>
         /// <param name="cellValidationEvent">The result of validating the cell.</param>
-        void RecordValidation(CellValidationEventBase cellValidationEvent);
+        void Record(CellValidationEventBase cellValidationEvent);
 
         /// <summary>
         /// Clears any validation that has been performed.
         /// </summary>
-        void ClearValidation();
+        /// <param name="timestampUtc">The timestamp (in UTC) to use on the event that records the clearing-out of a cell's validation.</param>
+        /// <param name="details">OPTIONAL details related to clearing the cell's validation.  DEFAULT is to omit any details.</param>
+        void ClearValidation(DateTime timestampUtc, string details);
     }
 }

@@ -195,6 +195,11 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<string>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new CellValidationClearedEvent(
+                                 A.Dummy<DateTime>(),
+                                 A.Dummy<string>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new CellValidationCompletedEvent(
                                  A.Dummy<DateTime>(),
                                  A.Dummy<string>()));
@@ -216,6 +221,7 @@ namespace OBeautifulCode.DataStructure.Test
                     var availableTypes = new[]
                     {
                         typeof(CellValidationAbortedEvent),
+                        typeof(CellValidationClearedEvent),
                         typeof(CellValidationCompletedEvent),
                         typeof(CellValidationConditionUnmetEvent),
                         typeof(CellValidationDeemedNotApplicableEvent),
@@ -424,7 +430,7 @@ namespace OBeautifulCode.DataStructure.Test
                 () => new InputCell<Version>(
                                  A.Dummy<IReadOnlyList<CellInputEventBase>>(),
                                  A.Dummy<ValidationConditions>(),
-                                 A.Dummy<CellValidationEventBase>(),
+                                 A.Dummy<IReadOnlyList<CellValidationEventBase>>(),
                                  A.Dummy<string>(),
                                  A.Dummy<int?>(),
                                  A.Dummy<string>(),
@@ -548,7 +554,7 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<IReturningOperation<Version>>(),
                                  A.Dummy<IReadOnlyList<CellOpExecutionEventBase>>(),
                                  A.Dummy<ValidationConditions>(),
-                                 A.Dummy<CellValidationEventBase>(),
+                                 A.Dummy<IReadOnlyList<CellValidationEventBase>>(),
                                  A.Dummy<string>(),
                                  A.Dummy<int?>(),
                                  A.Dummy<string>(),

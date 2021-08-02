@@ -300,6 +300,7 @@ namespace OBeautifulCode.DataStructure.Test
                         A.Dummy<CellOpExecutionDeemedNotApplicableEvent>(),
                         A.Dummy<CellOpExecutionFailedEvent>(),
                         A.Dummy<CellValidationAbortedEvent>(),
+                        A.Dummy<CellValidationClearedEvent>(),
                         A.Dummy<CellValidationCompletedEvent>(),
                         A.Dummy<CellValidationDeemedNotApplicableEvent>(),
                         A.Dummy<CellValidationFailedEvent>(),

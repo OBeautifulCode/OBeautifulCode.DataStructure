@@ -25,9 +25,9 @@ namespace OBeautifulCode.DataStructure
         /// Initializes a new instance of the <see cref="OperationOutputCellBase{TValue}"/> class.
         /// </summary>
         /// <param name="operation">The operation.</param>
-        /// <param name="cellOpExecutionEvents">The results of executing the operation.</param>
+        /// <param name="cellOpExecutionEvents">The events that record the execution of <paramref name="operation"/>.</param>
         /// <param name="validationConditions">A list of conditions that determine the validity of the cell's value.</param>
-        /// <param name="cellValidationEvent">The result of validating the cell's value.</param>
+        /// <param name="cellValidationEvents">The events that record the validation of this cell's value.</param>
         /// <param name="id">The cell's unique identifier.</param>
         /// <param name="columnsSpanned">The number of columns spanned or null if none (cell occupies a single column).</param>
         /// <param name="details">Details about the cell.</param>
@@ -35,7 +35,7 @@ namespace OBeautifulCode.DataStructure
             IReturningOperation<TValue> operation,
             IReadOnlyList<CellOpExecutionEventBase> cellOpExecutionEvents,
             ValidationConditions validationConditions,
-            CellValidationEventBase cellValidationEvent,
+            IReadOnlyList<CellValidationEventBase> cellValidationEvents,
             string id,
             int? columnsSpanned,
             string details)
@@ -51,10 +51,15 @@ namespace OBeautifulCode.DataStructure
                 throw new ArgumentException(Invariant($"{nameof(cellOpExecutionEvents)} contains a null element."));
             }
 
+            if ((cellValidationEvents != null) && cellValidationEvents.Any(_ => _ == null))
+            {
+                throw new ArgumentException(Invariant($"{nameof(cellValidationEvents)} contains a null element."));
+            }
+
             this.Operation = operation;
             this.CellOpExecutionEvents = cellOpExecutionEvents;
             this.ValidationConditions = validationConditions;
-            this.CellValidationEvent = cellValidationEvent;
+            this.CellValidationEvents = cellValidationEvents;
         }
 
         /// <inheritdoc />
@@ -67,7 +72,7 @@ namespace OBeautifulCode.DataStructure
         public ValidationConditions ValidationConditions { get; private set; }
 
         /// <inheritdoc />
-        public CellValidationEventBase CellValidationEvent { get; private set; }
+        public IReadOnlyList<CellValidationEventBase> CellValidationEvents { get; private set; }
 
         /// <inheritdoc />
         public void Record(
@@ -108,7 +113,7 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <inheritdoc />
-        public void RecordValidation(
+        public void Record(
             CellValidationEventBase cellValidationEvent)
         {
             if (cellValidationEvent == null)
@@ -116,13 +121,20 @@ namespace OBeautifulCode.DataStructure
                 throw new ArgumentNullException(nameof(cellValidationEvent));
             }
 
-            this.CellValidationEvent = cellValidationEvent;
+            this.CellValidationEvents = new CellValidationEventBase[0]
+                .Concat(this.CellValidationEvents ?? new CellValidationEventBase[0])
+                .Concat(new[] { cellValidationEvent })
+                .ToList();
         }
 
         /// <inheritdoc />
-        public void ClearValidation()
+        public void ClearValidation(
+            DateTime timestampUtc,
+            string details)
         {
-            this.CellValidationEvent = null;
+            var cellValidationClearedEvent = new CellValidationClearedEvent(timestampUtc, details);
+
+            this.Record(cellValidationClearedEvent);
         }
 
         /// <inheritdoc />

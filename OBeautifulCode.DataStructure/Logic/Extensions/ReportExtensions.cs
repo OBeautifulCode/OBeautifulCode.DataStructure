@@ -229,7 +229,7 @@ namespace OBeautifulCode.DataStructure
                 protocolFactory.GetProtocolAndExecuteViaReflection(executeOperationCellIfNecessaryOp);
             }
 
-            var validateableCells = report.GetClearedValidateableCells();
+            var validateableCells = report.GetClearedValidateableCells(timestampUtc);
 
             foreach (var validateableCell in validateableCells)
             {
@@ -276,7 +276,7 @@ namespace OBeautifulCode.DataStructure
                 await protocolFactory.GetProtocolAndExecuteViaReflectionAsync(executeOperationCellIfNecessaryOp);
             }
 
-            var validateableCells = report.GetClearedValidateableCells();
+            var validateableCells = report.GetClearedValidateableCells(timestampUtc);
 
             foreach (var validateableCell in validateableCells)
             {
@@ -387,22 +387,27 @@ namespace OBeautifulCode.DataStructure
         {
             var result = report.Sections.SelectMany(_ => _.TreeTable.GetOperationCells()).ToList();
 
+            var details = Invariant($"Value cleared by {nameof(ReportExtensions)}.{nameof(ExecuteAllOperationsAndValidationsAndRecordResults)} or async overload.");
+
             foreach (var operationCell in result)
             {
-                ((IClearCellValue)operationCell).ClearCellValue(timestampUtc, Invariant($"Value cleared by {nameof(ReportExtensions)}.{nameof(ExecuteAllOperationsAndValidationsAndRecordResults)} or async overload."));
+                ((IClearCellValue)operationCell).ClearCellValue(timestampUtc, details);
             }
 
             return result;
         }
 
         private static IReadOnlyCollection<IValidateableCell> GetClearedValidateableCells(
-            this Report report)
+            this Report report,
+            DateTime timestampUtc)
         {
             var result = report.Sections.SelectMany(_ => _.TreeTable.GetCellsNeedingValidation()).ToList();
 
+            var details = Invariant($"Validation cleared by {nameof(ReportExtensions)}.{nameof(ExecuteAllOperationsAndValidationsAndRecordResults)} or async overload.");
+
             foreach (var cell in result)
             {
-                cell.ClearValidation();
+                cell.ClearValidation(timestampUtc, details);
             }
 
             return result;

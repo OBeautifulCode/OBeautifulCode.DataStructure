@@ -85,31 +85,37 @@ namespace OBeautifulCode.DataStructure
 
             ValidationStatus result;
 
+            var lastCellValidationEvent = cell.CellValidationEvents?.LastOrDefault();
+
             if (cell.ValidationConditions == null)
             {
                 result = ValidationStatus.Unconditioned;
             }
-            else if (cell.CellValidationEvent == null)
+            else if (lastCellValidationEvent == null)
             {
                 result = ValidationStatus.Unvalidated;
             }
-            else if (cell.CellValidationEvent is CellValidationDeemedNotApplicableEvent)
+            else if (lastCellValidationEvent is CellValidationClearedEvent)
+            {
+                result = ValidationStatus.Unvalidated;
+            }
+            else if (lastCellValidationEvent is CellValidationDeemedNotApplicableEvent)
             {
                 result = ValidationStatus.DeemedNotApplicable;
             }
-            else if (cell.CellValidationEvent is CellValidationAbortedEvent)
+            else if (lastCellValidationEvent is CellValidationAbortedEvent)
             {
                 result = ValidationStatus.Aborted;
             }
-            else if (cell.CellValidationEvent is CellValidationCompletedEvent)
+            else if (lastCellValidationEvent is CellValidationCompletedEvent)
             {
                 result = ValidationStatus.Valid;
             }
-            else if (cell.CellValidationEvent is CellValidationFailedEvent)
+            else if (lastCellValidationEvent is CellValidationFailedEvent)
             {
                 result = ValidationStatus.Failed;
             }
-            else if (cell.CellValidationEvent is CellValidationConditionUnmetEvent)
+            else if (lastCellValidationEvent is CellValidationConditionUnmetEvent)
             {
                 result = ValidationStatus.Invalid;
             }

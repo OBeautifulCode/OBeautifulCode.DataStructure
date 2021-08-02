@@ -15,12 +15,12 @@ namespace OBeautifulCode.DataStructure
     public interface IInputCell<TValue> : INotSlottedCell, IGetCellValue<TValue>, IClearCellValue, IValidateableCell
     {
         /// <summary>
-        /// Gets the events that track the manipulation of this cell's value.
+        /// Gets the events that record the manipulation of this cell's value.
         /// </summary>
         IReadOnlyList<CellInputEventBase> CellInputEvents { get; }
 
         /// <summary>
-        /// Records an <see cref="CellInputEventBase"/>.
+        /// Records a <see cref="CellInputEventBase"/>.
         /// </summary>
         /// <param name="cellInputEvent">The event to record.</param>
         void Record(CellInputEventBase cellInputEvent);

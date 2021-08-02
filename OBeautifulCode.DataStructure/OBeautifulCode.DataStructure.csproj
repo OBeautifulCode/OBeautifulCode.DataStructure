@@ -96,8 +96,12 @@
     <Compile Include="Events\CellValidationEventBase.designer.cs">
       <DependentUpon>CellValidationEventBase.cs</DependentUpon>
     </Compile>
+    <Compile Include="Events\CellValidation\CellValidationClearedEvent.cs" />
     <Compile Include="Events\CellValidation\CellValidationAbortedEvent.designer.cs">
       <DependentUpon>CellValidationAbortedEvent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Events\CellValidation\CellValidationClearedEvent.designer.cs">
+      <DependentUpon>CellValidationClearedEvent.cs</DependentUpon>
     </Compile>
     <Compile Include="Events\CellValidation\CellValidationCompletedEvent.designer.cs">
       <DependentUpon>CellValidationCompletedEvent.cs</DependentUpon>

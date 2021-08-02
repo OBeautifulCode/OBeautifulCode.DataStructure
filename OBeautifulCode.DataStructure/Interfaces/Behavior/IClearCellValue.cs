@@ -17,8 +17,8 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Clears the value of a cell.
         /// </summary>
-        /// <param name="timestampUtc">The timestamp (in UTC) to use when recording a <see cref="CellOpExecutionClearedEvent"/>.</param>
-        /// <param name="details">OPTIONAL details related to clearing the cell.  DEFAULT is to omit any details.</param>
+        /// <param name="timestampUtc">The timestamp (in UTC) to use on the event that records the clearing-out of a cell's value.</param>
+        /// <param name="details">OPTIONAL details related to clearing the cell's value.  DEFAULT is to omit any details.</param>
         void ClearCellValue(
             DateTime timestampUtc,
             string details = null);

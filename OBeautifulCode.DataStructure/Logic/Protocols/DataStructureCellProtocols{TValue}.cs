@@ -241,7 +241,13 @@ namespace OBeautifulCode.DataStructure
 
             var cell = operation.Cell;
 
-            if (cell.CellValidationEvent == null)
+            var validationStatus = cell.GetValidationStatus();
+
+            if (validationStatus == ValidationStatus.Unconditioned)
+            {
+                // no-op
+            }
+            else if (validationStatus == ValidationStatus.Unvalidated)
             {
                 if (cell.ValidationConditions != null)
                 {
@@ -261,7 +267,7 @@ namespace OBeautifulCode.DataStructure
 
                                 cellValidationEvent = new CellValidationConditionUnmetEvent(failureMessage, this.timestampUtc, validationCondition.Details);
 
-                                cell.RecordValidation(cellValidationEvent);
+                                cell.Record(cellValidationEvent);
 
                                 return;
                             }
@@ -284,10 +290,10 @@ namespace OBeautifulCode.DataStructure
                         cellValidationEvent = new CellValidationFailedEvent(this.timestampUtc, ex.ToString());
                     }
 
-                    cell.RecordValidation(cellValidationEvent);
+                    cell.Record(cellValidationEvent);
                 }
             }
-            else if (cell.CellValidationEvent.TimestampUtc != this.timestampUtc)
+            else if (cell.CellValidationEvents.Last().TimestampUtc != this.timestampUtc)
             {
                 throw new InvalidOperationException("Something went wrong.  The cell was validated, but the recorded timestamp doesn't match this timestamp.");
             }
@@ -305,7 +311,13 @@ namespace OBeautifulCode.DataStructure
 
             var cell = operation.Cell;
 
-            if (cell.CellValidationEvent == null)
+            var validationStatus = cell.GetValidationStatus();
+
+            if (validationStatus == ValidationStatus.Unconditioned)
+            {
+                // no-op
+            }
+            else if (validationStatus == ValidationStatus.Unvalidated)
             {
                 if (cell.ValidationConditions != null)
                 {
@@ -325,7 +337,7 @@ namespace OBeautifulCode.DataStructure
 
                                 cellValidationEvent = new CellValidationConditionUnmetEvent(failureMessage, this.timestampUtc, validationCondition.Details);
 
-                                cell.RecordValidation(cellValidationEvent);
+                                cell.Record(cellValidationEvent);
 
                                 return;
                             }
@@ -348,10 +360,10 @@ namespace OBeautifulCode.DataStructure
                         cellValidationEvent = new CellValidationFailedEvent(this.timestampUtc, ex.ToString());
                     }
 
-                    cell.RecordValidation(cellValidationEvent);
+                    cell.Record(cellValidationEvent);
                 }
             }
-            else if (cell.CellValidationEvent.TimestampUtc != this.timestampUtc)
+            else if (cell.CellValidationEvents.Last().TimestampUtc != this.timestampUtc)
             {
                 throw new InvalidOperationException("Something went wrong.  The cell was validated, but the recorded timestamp doesn't match this timestamp.");
             }

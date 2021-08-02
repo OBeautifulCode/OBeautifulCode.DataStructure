@@ -22,12 +22,12 @@ namespace OBeautifulCode.DataStructure
         IReturningOperation<TValue> Operation { get; }
 
         /// <summary>
-        /// Gets the results of executing the operation.
+        /// Gets the events that record the execution of <see cref="Operation"/>.
         /// </summary>
         IReadOnlyList<CellOpExecutionEventBase> CellOpExecutionEvents { get; }
 
         /// <summary>
-        /// Records an <see cref="CellOpExecutionEventBase"/>.
+        /// Records a <see cref="CellOpExecutionEventBase"/>.
         /// </summary>
         /// <param name="cellOpExecutionEvent">The event to record.</param>
         void Record(CellOpExecutionEventBase cellOpExecutionEvent);

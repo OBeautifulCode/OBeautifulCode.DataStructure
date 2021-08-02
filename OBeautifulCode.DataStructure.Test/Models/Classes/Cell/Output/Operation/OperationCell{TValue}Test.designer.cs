@@ -47,7 +47,7 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new SystemUnderTestExpectedStringRepresentation<OperationCell<Version>>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.OperationCell<Version>: Id = {systemUnderTest.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, ColumnsSpanned = {systemUnderTest.ColumnsSpanned?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Details = {systemUnderTest.Details?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Operation = {systemUnderTest.Operation?.ToString() ?? "<null>"}, CellOpExecutionEvents = {systemUnderTest.CellOpExecutionEvents?.ToString() ?? "<null>"}, ValidationConditions = {systemUnderTest.ValidationConditions?.ToString() ?? "<null>"}, CellValidationEvent = {systemUnderTest.CellValidationEvent?.ToString() ?? "<null>"}, ValueFormat = {systemUnderTest.ValueFormat?.ToString() ?? "<null>"}, Format = {systemUnderTest.Format?.ToString() ?? "<null>"}, HoverOver = {systemUnderTest.HoverOver?.ToString() ?? "<null>"}, Link = {systemUnderTest.Link?.ToString() ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.OperationCell<Version>: Id = {systemUnderTest.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, ColumnsSpanned = {systemUnderTest.ColumnsSpanned?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Details = {systemUnderTest.Details?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Operation = {systemUnderTest.Operation?.ToString() ?? "<null>"}, CellOpExecutionEvents = {systemUnderTest.CellOpExecutionEvents?.ToString() ?? "<null>"}, ValidationConditions = {systemUnderTest.ValidationConditions?.ToString() ?? "<null>"}, CellValidationEvents = {systemUnderTest.CellValidationEvents?.ToString() ?? "<null>"}, ValueFormat = {systemUnderTest.ValueFormat?.ToString() ?? "<null>"}, Format = {systemUnderTest.Format?.ToString() ?? "<null>"}, HoverOver = {systemUnderTest.HoverOver?.ToString() ?? "<null>"}, Link = {systemUnderTest.Link?.ToString() ?? "<null>"}."),
                         };
 
                         return result;
@@ -67,7 +67,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              null,
                                              referenceObject.CellOpExecutionEvents,
                                              referenceObject.ValidationConditions,
-                                             referenceObject.CellValidationEvent,
+                                             referenceObject.CellValidationEvents,
                                              referenceObject.Id,
                                              referenceObject.ColumnsSpanned,
                                              referenceObject.Details,
@@ -93,7 +93,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Operation,
                                              null,
                                              referenceObject.ValidationConditions,
-                                             referenceObject.CellValidationEvent,
+                                             referenceObject.CellValidationEvents,
                                              referenceObject.Id,
                                              referenceObject.ColumnsSpanned,
                                              referenceObject.Details,
@@ -119,7 +119,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Operation,
                                              new List<CellOpExecutionEventBase>(),
                                              referenceObject.ValidationConditions,
-                                             referenceObject.CellValidationEvent,
+                                             referenceObject.CellValidationEvents,
                                              referenceObject.Id,
                                              referenceObject.ColumnsSpanned,
                                              referenceObject.Details,
@@ -145,7 +145,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Operation,
                                              new CellOpExecutionEventBase[0].Concat(referenceObject.CellOpExecutionEvents).Concat(new CellOpExecutionEventBase[] { null }).Concat(referenceObject.CellOpExecutionEvents).ToList(),
                                              referenceObject.ValidationConditions,
-                                             referenceObject.CellValidationEvent,
+                                             referenceObject.CellValidationEvents,
                                              referenceObject.Id,
                                              referenceObject.ColumnsSpanned,
                                              referenceObject.Details,
@@ -171,7 +171,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Operation,
                                              referenceObject.CellOpExecutionEvents,
                                              null,
-                                             referenceObject.CellValidationEvent,
+                                             referenceObject.CellValidationEvents,
                                              referenceObject.Id,
                                              referenceObject.ColumnsSpanned,
                                              referenceObject.Details,
@@ -188,7 +188,7 @@ namespace OBeautifulCode.DataStructure.Test
             .AddScenario(() =>
                 new ConstructorArgumentValidationTestScenario<OperationCell<Version>>
                 {
-                    Name = "constructor should throw ArgumentNullException when parameter 'cellValidationEvent' is null scenario",
+                    Name = "constructor should throw ArgumentNullException when parameter 'cellValidationEvents' is null scenario",
                     ConstructionFunc = () =>
                     {
                         var referenceObject = A.Dummy<OperationCell<Version>>();
@@ -209,7 +209,59 @@ namespace OBeautifulCode.DataStructure.Test
                         return result;
                     },
                     ExpectedExceptionType = typeof(ArgumentNullException),
-                    ExpectedExceptionMessageContains = new[] { "cellValidationEvent", },
+                    ExpectedExceptionMessageContains = new[] { "cellValidationEvents", },
+                })
+            .AddScenario(() =>
+                new ConstructorArgumentValidationTestScenario<OperationCell<Version>>
+                {
+                    Name = "constructor should throw ArgumentException when parameter 'cellValidationEvents' is an empty enumerable scenario",
+                    ConstructionFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<OperationCell<Version>>();
+
+                        var result = new OperationCell<Version>(
+                                             referenceObject.Operation,
+                                             referenceObject.CellOpExecutionEvents,
+                                             referenceObject.ValidationConditions,
+                                             new List<CellValidationEventBase>(),
+                                             referenceObject.Id,
+                                             referenceObject.ColumnsSpanned,
+                                             referenceObject.Details,
+                                             referenceObject.ValueFormat,
+                                             referenceObject.Format,
+                                             referenceObject.HoverOver,
+                                             referenceObject.Link);
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentException),
+                    ExpectedExceptionMessageContains = new[] { "cellValidationEvents", "is an empty enumerable", },
+                })
+            .AddScenario(() =>
+                new ConstructorArgumentValidationTestScenario<OperationCell<Version>>
+                {
+                    Name = "constructor should throw ArgumentException when parameter 'cellValidationEvents' contains a null element scenario",
+                    ConstructionFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<OperationCell<Version>>();
+
+                        var result = new OperationCell<Version>(
+                                             referenceObject.Operation,
+                                             referenceObject.CellOpExecutionEvents,
+                                             referenceObject.ValidationConditions,
+                                             new CellValidationEventBase[0].Concat(referenceObject.CellValidationEvents).Concat(new CellValidationEventBase[] { null }).Concat(referenceObject.CellValidationEvents).ToList(),
+                                             referenceObject.Id,
+                                             referenceObject.ColumnsSpanned,
+                                             referenceObject.Details,
+                                             referenceObject.ValueFormat,
+                                             referenceObject.Format,
+                                             referenceObject.HoverOver,
+                                             referenceObject.Link);
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentException),
+                    ExpectedExceptionMessageContains = new[] { "cellValidationEvents", "contains at least one null element", },
                 })
             .AddScenario(() =>
                 new ConstructorArgumentValidationTestScenario<OperationCell<Version>>
@@ -223,7 +275,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Operation,
                                              referenceObject.CellOpExecutionEvents,
                                              referenceObject.ValidationConditions,
-                                             referenceObject.CellValidationEvent,
+                                             referenceObject.CellValidationEvents,
                                              null,
                                              referenceObject.ColumnsSpanned,
                                              referenceObject.Details,
@@ -249,7 +301,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Operation,
                                              referenceObject.CellOpExecutionEvents,
                                              referenceObject.ValidationConditions,
-                                             referenceObject.CellValidationEvent,
+                                             referenceObject.CellValidationEvents,
                                              Invariant($"  {Environment.NewLine}  "),
                                              referenceObject.ColumnsSpanned,
                                              referenceObject.Details,
@@ -275,7 +327,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Operation,
                                              referenceObject.CellOpExecutionEvents,
                                              referenceObject.ValidationConditions,
-                                             referenceObject.CellValidationEvent,
+                                             referenceObject.CellValidationEvents,
                                              referenceObject.Id,
                                              referenceObject.ColumnsSpanned,
                                              null,
@@ -301,7 +353,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Operation,
                                              referenceObject.CellOpExecutionEvents,
                                              referenceObject.ValidationConditions,
-                                             referenceObject.CellValidationEvent,
+                                             referenceObject.CellValidationEvents,
                                              referenceObject.Id,
                                              referenceObject.ColumnsSpanned,
                                              Invariant($"  {Environment.NewLine}  "),
@@ -327,7 +379,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Operation,
                                              referenceObject.CellOpExecutionEvents,
                                              referenceObject.ValidationConditions,
-                                             referenceObject.CellValidationEvent,
+                                             referenceObject.CellValidationEvents,
                                              referenceObject.Id,
                                              referenceObject.ColumnsSpanned,
                                              referenceObject.Details,
@@ -353,7 +405,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Operation,
                                              referenceObject.CellOpExecutionEvents,
                                              referenceObject.ValidationConditions,
-                                             referenceObject.CellValidationEvent,
+                                             referenceObject.CellValidationEvents,
                                              referenceObject.Id,
                                              referenceObject.ColumnsSpanned,
                                              referenceObject.Details,
@@ -379,7 +431,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Operation,
                                              referenceObject.CellOpExecutionEvents,
                                              referenceObject.ValidationConditions,
-                                             referenceObject.CellValidationEvent,
+                                             referenceObject.CellValidationEvents,
                                              referenceObject.Id,
                                              referenceObject.ColumnsSpanned,
                                              referenceObject.Details,
@@ -405,7 +457,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Operation,
                                              referenceObject.CellOpExecutionEvents,
                                              referenceObject.ValidationConditions,
-                                             referenceObject.CellValidationEvent,
+                                             referenceObject.CellValidationEvents,
                                              referenceObject.Id,
                                              referenceObject.ColumnsSpanned,
                                              referenceObject.Details,
@@ -435,7 +487,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Operation,
                                                       referenceObject.CellOpExecutionEvents,
                                                       referenceObject.ValidationConditions,
-                                                      referenceObject.CellValidationEvent,
+                                                      referenceObject.CellValidationEvents,
                                                       referenceObject.Id,
                                                       referenceObject.ColumnsSpanned,
                                                       referenceObject.Details,
@@ -464,7 +516,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Operation,
                                                       referenceObject.CellOpExecutionEvents,
                                                       referenceObject.ValidationConditions,
-                                                      referenceObject.CellValidationEvent,
+                                                      referenceObject.CellValidationEvents,
                                                       referenceObject.Id,
                                                       referenceObject.ColumnsSpanned,
                                                       referenceObject.Details,
@@ -493,7 +545,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Operation,
                                                       referenceObject.CellOpExecutionEvents,
                                                       referenceObject.ValidationConditions,
-                                                      referenceObject.CellValidationEvent,
+                                                      referenceObject.CellValidationEvents,
                                                       referenceObject.Id,
                                                       referenceObject.ColumnsSpanned,
                                                       referenceObject.Details,
@@ -511,7 +563,7 @@ namespace OBeautifulCode.DataStructure.Test
             .AddScenario(() =>
                 new ConstructorPropertyAssignmentTestScenario<OperationCell<Version>>
                 {
-                    Name = "CellValidationEvent should return same 'cellValidationEvent' parameter passed to constructor when getting",
+                    Name = "CellValidationEvents should return same 'cellValidationEvents' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
                         var referenceObject = A.Dummy<OperationCell<Version>>();
@@ -522,7 +574,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Operation,
                                                       referenceObject.CellOpExecutionEvents,
                                                       referenceObject.ValidationConditions,
-                                                      referenceObject.CellValidationEvent,
+                                                      referenceObject.CellValidationEvents,
                                                       referenceObject.Id,
                                                       referenceObject.ColumnsSpanned,
                                                       referenceObject.Details,
@@ -530,12 +582,12 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Format,
                                                       referenceObject.HoverOver,
                                                       referenceObject.Link),
-                            ExpectedPropertyValue = referenceObject.CellValidationEvent,
+                            ExpectedPropertyValue = referenceObject.CellValidationEvents,
                         };
 
                         return result;
                     },
-                    PropertyName = "CellValidationEvent",
+                    PropertyName = "CellValidationEvents",
                 })
             .AddScenario(() =>
                 new ConstructorPropertyAssignmentTestScenario<OperationCell<Version>>
@@ -551,7 +603,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Operation,
                                                       referenceObject.CellOpExecutionEvents,
                                                       referenceObject.ValidationConditions,
-                                                      referenceObject.CellValidationEvent,
+                                                      referenceObject.CellValidationEvents,
                                                       referenceObject.Id,
                                                       referenceObject.ColumnsSpanned,
                                                       referenceObject.Details,
@@ -580,7 +632,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Operation,
                                                       referenceObject.CellOpExecutionEvents,
                                                       referenceObject.ValidationConditions,
-                                                      referenceObject.CellValidationEvent,
+                                                      referenceObject.CellValidationEvents,
                                                       referenceObject.Id,
                                                       referenceObject.ColumnsSpanned,
                                                       referenceObject.Details,
@@ -609,7 +661,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Operation,
                                                       referenceObject.CellOpExecutionEvents,
                                                       referenceObject.ValidationConditions,
-                                                      referenceObject.CellValidationEvent,
+                                                      referenceObject.CellValidationEvents,
                                                       referenceObject.Id,
                                                       referenceObject.ColumnsSpanned,
                                                       referenceObject.Details,
@@ -638,7 +690,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Operation,
                                                       referenceObject.CellOpExecutionEvents,
                                                       referenceObject.ValidationConditions,
-                                                      referenceObject.CellValidationEvent,
+                                                      referenceObject.CellValidationEvents,
                                                       referenceObject.Id,
                                                       referenceObject.ColumnsSpanned,
                                                       referenceObject.Details,
@@ -667,7 +719,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Operation,
                                                       referenceObject.CellOpExecutionEvents,
                                                       referenceObject.ValidationConditions,
-                                                      referenceObject.CellValidationEvent,
+                                                      referenceObject.CellValidationEvents,
                                                       referenceObject.Id,
                                                       referenceObject.ColumnsSpanned,
                                                       referenceObject.Details,
@@ -696,7 +748,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Operation,
                                                       referenceObject.CellOpExecutionEvents,
                                                       referenceObject.ValidationConditions,
-                                                      referenceObject.CellValidationEvent,
+                                                      referenceObject.CellValidationEvents,
                                                       referenceObject.Id,
                                                       referenceObject.ColumnsSpanned,
                                                       referenceObject.Details,
@@ -725,7 +777,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Operation,
                                                       referenceObject.CellOpExecutionEvents,
                                                       referenceObject.ValidationConditions,
-                                                      referenceObject.CellValidationEvent,
+                                                      referenceObject.CellValidationEvents,
                                                       referenceObject.Id,
                                                       referenceObject.ColumnsSpanned,
                                                       referenceObject.Details,
@@ -865,18 +917,18 @@ namespace OBeautifulCode.DataStructure.Test
             .AddScenario(() =>
                 new DeepCloneWithTestScenario<OperationCell<Version>>
                 {
-                    Name = "DeepCloneWithCellValidationEvent should deep clone object and replace CellValidationEvent with the provided cellValidationEvent",
-                    WithPropertyName = "CellValidationEvent",
+                    Name = "DeepCloneWithCellValidationEvents should deep clone object and replace CellValidationEvents with the provided cellValidationEvents",
+                    WithPropertyName = "CellValidationEvents",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
                         var systemUnderTest = A.Dummy<OperationCell<Version>>();
 
-                        var referenceObject = A.Dummy<OperationCell<Version>>().ThatIs(_ => !systemUnderTest.CellValidationEvent.IsEqualTo(_.CellValidationEvent));
+                        var referenceObject = A.Dummy<OperationCell<Version>>().ThatIs(_ => !systemUnderTest.CellValidationEvents.IsEqualTo(_.CellValidationEvents));
 
                         var result = new SystemUnderTestDeepCloneWithValue<OperationCell<Version>>
                         {
                             SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.CellValidationEvent,
+                            DeepCloneWithValue = referenceObject.CellValidationEvents,
                         };
 
                         return result;
@@ -977,7 +1029,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.Operation,
                                 ReferenceObjectForEquatableTestScenarios.CellOpExecutionEvents,
                                 ReferenceObjectForEquatableTestScenarios.ValidationConditions,
-                                ReferenceObjectForEquatableTestScenarios.CellValidationEvent,
+                                ReferenceObjectForEquatableTestScenarios.CellValidationEvents,
                                 ReferenceObjectForEquatableTestScenarios.Id,
                                 ReferenceObjectForEquatableTestScenarios.ColumnsSpanned,
                                 ReferenceObjectForEquatableTestScenarios.Details,
@@ -992,7 +1044,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.Operation,
                                 ReferenceObjectForEquatableTestScenarios.CellOpExecutionEvents,
                                 ReferenceObjectForEquatableTestScenarios.ValidationConditions,
-                                ReferenceObjectForEquatableTestScenarios.CellValidationEvent,
+                                ReferenceObjectForEquatableTestScenarios.CellValidationEvents,
                                 A.Dummy<OperationCell<Version>>().Whose(_ => !_.Id.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Id)).Id,
                                 ReferenceObjectForEquatableTestScenarios.ColumnsSpanned,
                                 ReferenceObjectForEquatableTestScenarios.Details,
@@ -1004,7 +1056,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.Operation,
                                 ReferenceObjectForEquatableTestScenarios.CellOpExecutionEvents,
                                 ReferenceObjectForEquatableTestScenarios.ValidationConditions,
-                                ReferenceObjectForEquatableTestScenarios.CellValidationEvent,
+                                ReferenceObjectForEquatableTestScenarios.CellValidationEvents,
                                 ReferenceObjectForEquatableTestScenarios.Id,
                                 A.Dummy<OperationCell<Version>>().Whose(_ => !_.ColumnsSpanned.IsEqualTo(ReferenceObjectForEquatableTestScenarios.ColumnsSpanned)).ColumnsSpanned,
                                 ReferenceObjectForEquatableTestScenarios.Details,
@@ -1016,7 +1068,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.Operation,
                                 ReferenceObjectForEquatableTestScenarios.CellOpExecutionEvents,
                                 ReferenceObjectForEquatableTestScenarios.ValidationConditions,
-                                ReferenceObjectForEquatableTestScenarios.CellValidationEvent,
+                                ReferenceObjectForEquatableTestScenarios.CellValidationEvents,
                                 ReferenceObjectForEquatableTestScenarios.Id,
                                 ReferenceObjectForEquatableTestScenarios.ColumnsSpanned,
                                 A.Dummy<OperationCell<Version>>().Whose(_ => !_.Details.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Details)).Details,
@@ -1028,7 +1080,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 A.Dummy<OperationCell<Version>>().Whose(_ => !_.Operation.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Operation)).Operation,
                                 ReferenceObjectForEquatableTestScenarios.CellOpExecutionEvents,
                                 ReferenceObjectForEquatableTestScenarios.ValidationConditions,
-                                ReferenceObjectForEquatableTestScenarios.CellValidationEvent,
+                                ReferenceObjectForEquatableTestScenarios.CellValidationEvents,
                                 ReferenceObjectForEquatableTestScenarios.Id,
                                 ReferenceObjectForEquatableTestScenarios.ColumnsSpanned,
                                 ReferenceObjectForEquatableTestScenarios.Details,
@@ -1040,7 +1092,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.Operation,
                                 A.Dummy<OperationCell<Version>>().Whose(_ => !_.CellOpExecutionEvents.IsEqualTo(ReferenceObjectForEquatableTestScenarios.CellOpExecutionEvents)).CellOpExecutionEvents,
                                 ReferenceObjectForEquatableTestScenarios.ValidationConditions,
-                                ReferenceObjectForEquatableTestScenarios.CellValidationEvent,
+                                ReferenceObjectForEquatableTestScenarios.CellValidationEvents,
                                 ReferenceObjectForEquatableTestScenarios.Id,
                                 ReferenceObjectForEquatableTestScenarios.ColumnsSpanned,
                                 ReferenceObjectForEquatableTestScenarios.Details,
@@ -1052,7 +1104,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.Operation,
                                 ReferenceObjectForEquatableTestScenarios.CellOpExecutionEvents,
                                 A.Dummy<OperationCell<Version>>().Whose(_ => !_.ValidationConditions.IsEqualTo(ReferenceObjectForEquatableTestScenarios.ValidationConditions)).ValidationConditions,
-                                ReferenceObjectForEquatableTestScenarios.CellValidationEvent,
+                                ReferenceObjectForEquatableTestScenarios.CellValidationEvents,
                                 ReferenceObjectForEquatableTestScenarios.Id,
                                 ReferenceObjectForEquatableTestScenarios.ColumnsSpanned,
                                 ReferenceObjectForEquatableTestScenarios.Details,
@@ -1064,7 +1116,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.Operation,
                                 ReferenceObjectForEquatableTestScenarios.CellOpExecutionEvents,
                                 ReferenceObjectForEquatableTestScenarios.ValidationConditions,
-                                A.Dummy<OperationCell<Version>>().Whose(_ => !_.CellValidationEvent.IsEqualTo(ReferenceObjectForEquatableTestScenarios.CellValidationEvent)).CellValidationEvent,
+                                A.Dummy<OperationCell<Version>>().Whose(_ => !_.CellValidationEvents.IsEqualTo(ReferenceObjectForEquatableTestScenarios.CellValidationEvents)).CellValidationEvents,
                                 ReferenceObjectForEquatableTestScenarios.Id,
                                 ReferenceObjectForEquatableTestScenarios.ColumnsSpanned,
                                 ReferenceObjectForEquatableTestScenarios.Details,
@@ -1076,7 +1128,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.Operation,
                                 ReferenceObjectForEquatableTestScenarios.CellOpExecutionEvents,
                                 ReferenceObjectForEquatableTestScenarios.ValidationConditions,
-                                ReferenceObjectForEquatableTestScenarios.CellValidationEvent,
+                                ReferenceObjectForEquatableTestScenarios.CellValidationEvents,
                                 ReferenceObjectForEquatableTestScenarios.Id,
                                 ReferenceObjectForEquatableTestScenarios.ColumnsSpanned,
                                 ReferenceObjectForEquatableTestScenarios.Details,
@@ -1088,7 +1140,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.Operation,
                                 ReferenceObjectForEquatableTestScenarios.CellOpExecutionEvents,
                                 ReferenceObjectForEquatableTestScenarios.ValidationConditions,
-                                ReferenceObjectForEquatableTestScenarios.CellValidationEvent,
+                                ReferenceObjectForEquatableTestScenarios.CellValidationEvents,
                                 ReferenceObjectForEquatableTestScenarios.Id,
                                 ReferenceObjectForEquatableTestScenarios.ColumnsSpanned,
                                 ReferenceObjectForEquatableTestScenarios.Details,
@@ -1100,7 +1152,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.Operation,
                                 ReferenceObjectForEquatableTestScenarios.CellOpExecutionEvents,
                                 ReferenceObjectForEquatableTestScenarios.ValidationConditions,
-                                ReferenceObjectForEquatableTestScenarios.CellValidationEvent,
+                                ReferenceObjectForEquatableTestScenarios.CellValidationEvents,
                                 ReferenceObjectForEquatableTestScenarios.Id,
                                 ReferenceObjectForEquatableTestScenarios.ColumnsSpanned,
                                 ReferenceObjectForEquatableTestScenarios.Details,
@@ -1112,7 +1164,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.Operation,
                                 ReferenceObjectForEquatableTestScenarios.CellOpExecutionEvents,
                                 ReferenceObjectForEquatableTestScenarios.ValidationConditions,
-                                ReferenceObjectForEquatableTestScenarios.CellValidationEvent,
+                                ReferenceObjectForEquatableTestScenarios.CellValidationEvents,
                                 ReferenceObjectForEquatableTestScenarios.Id,
                                 ReferenceObjectForEquatableTestScenarios.ColumnsSpanned,
                                 ReferenceObjectForEquatableTestScenarios.Details,
@@ -1419,16 +1471,16 @@ namespace OBeautifulCode.DataStructure.Test
                     actual.ValidationConditions.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.ValidationConditions);
                 }
 
-                if (systemUnderTest.CellValidationEvent == null)
+                if (systemUnderTest.CellValidationEvents == null)
                 {
-                    actual.CellValidationEvent.AsTest().Must().BeNull();
+                    actual.CellValidationEvents.AsTest().Must().BeNull();
                 }
-                else if (!actual.CellValidationEvent.GetType().IsValueType)
+                else if (!actual.CellValidationEvents.GetType().IsValueType)
                 {
                     // When the declared type is a reference type, we still have to check the runtime type.
                     // The object could be a boxed value type, which will fail this asseration because
                     // a deep clone of a value type object is the same object.
-                    actual.CellValidationEvent.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.CellValidationEvent);
+                    actual.CellValidationEvents.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.CellValidationEvents);
                 }
 
                 if (systemUnderTest.ValueFormat == null)
@@ -1496,7 +1548,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "Id", "ColumnsSpanned", "Details", "Operation", "CellOpExecutionEvents", "ValidationConditions", "CellValidationEvent", "ValueFormat", "Format", "HoverOver", "Link" };
+                var propertyNames = new string[] { "Id", "ColumnsSpanned", "Details", "Operation", "CellOpExecutionEvents", "ValidationConditions", "CellValidationEvents", "ValueFormat", "Format", "HoverOver", "Link" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 
