@@ -176,7 +176,7 @@ namespace OBeautifulCode.DataStructure
                     cellOpExecutionEvent = new CellOpExecutionFailedEvent(this.timestampUtc, ex.ToString());
                 }
 
-                cell.RecordExecution(cellOpExecutionEvent);
+                cell.Record(cellOpExecutionEvent);
             }
             else if (cell.CellOpExecutionEvents.Last().TimestampUtc != this.timestampUtc)
             {
@@ -221,7 +221,7 @@ namespace OBeautifulCode.DataStructure
                     cellOpExecutionEvent = new CellOpExecutionFailedEvent(this.timestampUtc, ex.ToString());
                 }
 
-                cell.RecordExecution(cellOpExecutionEvent);
+                cell.Record(cellOpExecutionEvent);
             }
             else if (cell.CellOpExecutionEvents.Last().TimestampUtc != this.timestampUtc)
             {

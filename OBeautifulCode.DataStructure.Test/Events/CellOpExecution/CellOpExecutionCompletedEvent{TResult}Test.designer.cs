@@ -274,6 +274,8 @@ namespace OBeautifulCode.DataStructure.Test
                         A.Dummy<int>(),
                         A.Dummy<int?>(),
                         A.Dummy<Guid>(),
+                        A.Dummy<CellInputAppliedEvent<Version>>(),
+                        A.Dummy<CellInputClearedEvent>(),
                         A.Dummy<CellOpExecutionAbortedEvent>(),
                         A.Dummy<CellOpExecutionClearedEvent>(),
                         A.Dummy<CellOpExecutionDeemedNotApplicableEvent>(),
@@ -283,7 +285,6 @@ namespace OBeautifulCode.DataStructure.Test
                         A.Dummy<CellValidationConditionUnmetEvent>(),
                         A.Dummy<CellValidationDeemedNotApplicableEvent>(),
                         A.Dummy<CellValidationFailedEvent>(),
-                        A.Dummy<InputAppliedToCellEvent<Version>>(),
                     },
                 });
 

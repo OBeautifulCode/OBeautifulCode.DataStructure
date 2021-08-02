@@ -47,7 +47,7 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new SystemUnderTestExpectedStringRepresentation<InputCell<Version>>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.InputCell<Version>: Id = {systemUnderTest.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, ColumnsSpanned = {systemUnderTest.ColumnsSpanned?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Details = {systemUnderTest.Details?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, InputAppliedToCellEvent = {systemUnderTest.InputAppliedToCellEvent?.ToString() ?? "<null>"}, ValidationConditions = {systemUnderTest.ValidationConditions?.ToString() ?? "<null>"}, CellValidationEvent = {systemUnderTest.CellValidationEvent?.ToString() ?? "<null>"}, ValueFormat = {systemUnderTest.ValueFormat?.ToString() ?? "<null>"}, Format = {systemUnderTest.Format?.ToString() ?? "<null>"}, HoverOver = {systemUnderTest.HoverOver?.ToString() ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.InputCell<Version>: Id = {systemUnderTest.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, ColumnsSpanned = {systemUnderTest.ColumnsSpanned?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Details = {systemUnderTest.Details?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, CellInputEvents = {systemUnderTest.CellInputEvents?.ToString() ?? "<null>"}, ValidationConditions = {systemUnderTest.ValidationConditions?.ToString() ?? "<null>"}, CellValidationEvent = {systemUnderTest.CellValidationEvent?.ToString() ?? "<null>"}, ValueFormat = {systemUnderTest.ValueFormat?.ToString() ?? "<null>"}, Format = {systemUnderTest.Format?.ToString() ?? "<null>"}, HoverOver = {systemUnderTest.HoverOver?.ToString() ?? "<null>"}."),
                         };
 
                         return result;
@@ -58,7 +58,7 @@ namespace OBeautifulCode.DataStructure.Test
             .AddScenario(() =>
                 new ConstructorArgumentValidationTestScenario<InputCell<Version>>
                 {
-                    Name = "constructor should throw ArgumentNullException when parameter 'inputAppliedToCellEvent' is null scenario",
+                    Name = "constructor should throw ArgumentNullException when parameter 'cellInputEvents' is null scenario",
                     ConstructionFunc = () =>
                     {
                         var referenceObject = A.Dummy<InputCell<Version>>();
@@ -77,7 +77,55 @@ namespace OBeautifulCode.DataStructure.Test
                         return result;
                     },
                     ExpectedExceptionType = typeof(ArgumentNullException),
-                    ExpectedExceptionMessageContains = new[] { "inputAppliedToCellEvent", },
+                    ExpectedExceptionMessageContains = new[] { "cellInputEvents", },
+                })
+            .AddScenario(() =>
+                new ConstructorArgumentValidationTestScenario<InputCell<Version>>
+                {
+                    Name = "constructor should throw ArgumentException when parameter 'cellInputEvents' is an empty enumerable scenario",
+                    ConstructionFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<InputCell<Version>>();
+
+                        var result = new InputCell<Version>(
+                                             new List<CellInputEventBase>(),
+                                             referenceObject.ValidationConditions,
+                                             referenceObject.CellValidationEvent,
+                                             referenceObject.Id,
+                                             referenceObject.ColumnsSpanned,
+                                             referenceObject.Details,
+                                             referenceObject.ValueFormat,
+                                             referenceObject.Format,
+                                             referenceObject.HoverOver);
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentException),
+                    ExpectedExceptionMessageContains = new[] { "cellInputEvents", "is an empty enumerable", },
+                })
+            .AddScenario(() =>
+                new ConstructorArgumentValidationTestScenario<InputCell<Version>>
+                {
+                    Name = "constructor should throw ArgumentException when parameter 'cellInputEvents' contains a null element scenario",
+                    ConstructionFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<InputCell<Version>>();
+
+                        var result = new InputCell<Version>(
+                                             new CellInputEventBase[0].Concat(referenceObject.CellInputEvents).Concat(new CellInputEventBase[] { null }).Concat(referenceObject.CellInputEvents).ToList(),
+                                             referenceObject.ValidationConditions,
+                                             referenceObject.CellValidationEvent,
+                                             referenceObject.Id,
+                                             referenceObject.ColumnsSpanned,
+                                             referenceObject.Details,
+                                             referenceObject.ValueFormat,
+                                             referenceObject.Format,
+                                             referenceObject.HoverOver);
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentException),
+                    ExpectedExceptionMessageContains = new[] { "cellInputEvents", "contains at least one null element", },
                 })
             .AddScenario(() =>
                 new ConstructorArgumentValidationTestScenario<InputCell<Version>>
@@ -88,7 +136,7 @@ namespace OBeautifulCode.DataStructure.Test
                         var referenceObject = A.Dummy<InputCell<Version>>();
 
                         var result = new InputCell<Version>(
-                                             referenceObject.InputAppliedToCellEvent,
+                                             referenceObject.CellInputEvents,
                                              null,
                                              referenceObject.CellValidationEvent,
                                              referenceObject.Id,
@@ -112,7 +160,7 @@ namespace OBeautifulCode.DataStructure.Test
                         var referenceObject = A.Dummy<InputCell<Version>>();
 
                         var result = new InputCell<Version>(
-                                             referenceObject.InputAppliedToCellEvent,
+                                             referenceObject.CellInputEvents,
                                              referenceObject.ValidationConditions,
                                              null,
                                              referenceObject.Id,
@@ -136,7 +184,7 @@ namespace OBeautifulCode.DataStructure.Test
                         var referenceObject = A.Dummy<InputCell<Version>>();
 
                         var result = new InputCell<Version>(
-                                             referenceObject.InputAppliedToCellEvent,
+                                             referenceObject.CellInputEvents,
                                              referenceObject.ValidationConditions,
                                              referenceObject.CellValidationEvent,
                                              null,
@@ -160,7 +208,7 @@ namespace OBeautifulCode.DataStructure.Test
                         var referenceObject = A.Dummy<InputCell<Version>>();
 
                         var result = new InputCell<Version>(
-                                             referenceObject.InputAppliedToCellEvent,
+                                             referenceObject.CellInputEvents,
                                              referenceObject.ValidationConditions,
                                              referenceObject.CellValidationEvent,
                                              Invariant($"  {Environment.NewLine}  "),
@@ -184,7 +232,7 @@ namespace OBeautifulCode.DataStructure.Test
                         var referenceObject = A.Dummy<InputCell<Version>>();
 
                         var result = new InputCell<Version>(
-                                             referenceObject.InputAppliedToCellEvent,
+                                             referenceObject.CellInputEvents,
                                              referenceObject.ValidationConditions,
                                              referenceObject.CellValidationEvent,
                                              referenceObject.Id,
@@ -208,7 +256,7 @@ namespace OBeautifulCode.DataStructure.Test
                         var referenceObject = A.Dummy<InputCell<Version>>();
 
                         var result = new InputCell<Version>(
-                                             referenceObject.InputAppliedToCellEvent,
+                                             referenceObject.CellInputEvents,
                                              referenceObject.ValidationConditions,
                                              referenceObject.CellValidationEvent,
                                              referenceObject.Id,
@@ -232,7 +280,7 @@ namespace OBeautifulCode.DataStructure.Test
                         var referenceObject = A.Dummy<InputCell<Version>>();
 
                         var result = new InputCell<Version>(
-                                             referenceObject.InputAppliedToCellEvent,
+                                             referenceObject.CellInputEvents,
                                              referenceObject.ValidationConditions,
                                              referenceObject.CellValidationEvent,
                                              referenceObject.Id,
@@ -256,7 +304,7 @@ namespace OBeautifulCode.DataStructure.Test
                         var referenceObject = A.Dummy<InputCell<Version>>();
 
                         var result = new InputCell<Version>(
-                                             referenceObject.InputAppliedToCellEvent,
+                                             referenceObject.CellInputEvents,
                                              referenceObject.ValidationConditions,
                                              referenceObject.CellValidationEvent,
                                              referenceObject.Id,
@@ -280,7 +328,7 @@ namespace OBeautifulCode.DataStructure.Test
                         var referenceObject = A.Dummy<InputCell<Version>>();
 
                         var result = new InputCell<Version>(
-                                             referenceObject.InputAppliedToCellEvent,
+                                             referenceObject.CellInputEvents,
                                              referenceObject.ValidationConditions,
                                              referenceObject.CellValidationEvent,
                                              referenceObject.Id,
@@ -300,7 +348,7 @@ namespace OBeautifulCode.DataStructure.Test
             .AddScenario(() =>
                 new ConstructorPropertyAssignmentTestScenario<InputCell<Version>>
                 {
-                    Name = "InputAppliedToCellEvent should return same 'inputAppliedToCellEvent' parameter passed to constructor when getting",
+                    Name = "CellInputEvents should return same 'cellInputEvents' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
                         var referenceObject = A.Dummy<InputCell<Version>>();
@@ -308,7 +356,7 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new SystemUnderTestExpectedPropertyValue<InputCell<Version>>
                         {
                             SystemUnderTest = new InputCell<Version>(
-                                                      referenceObject.InputAppliedToCellEvent,
+                                                      referenceObject.CellInputEvents,
                                                       referenceObject.ValidationConditions,
                                                       referenceObject.CellValidationEvent,
                                                       referenceObject.Id,
@@ -317,12 +365,12 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.ValueFormat,
                                                       referenceObject.Format,
                                                       referenceObject.HoverOver),
-                            ExpectedPropertyValue = referenceObject.InputAppliedToCellEvent,
+                            ExpectedPropertyValue = referenceObject.CellInputEvents,
                         };
 
                         return result;
                     },
-                    PropertyName = "InputAppliedToCellEvent",
+                    PropertyName = "CellInputEvents",
                 })
             .AddScenario(() =>
                 new ConstructorPropertyAssignmentTestScenario<InputCell<Version>>
@@ -335,7 +383,7 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new SystemUnderTestExpectedPropertyValue<InputCell<Version>>
                         {
                             SystemUnderTest = new InputCell<Version>(
-                                                      referenceObject.InputAppliedToCellEvent,
+                                                      referenceObject.CellInputEvents,
                                                       referenceObject.ValidationConditions,
                                                       referenceObject.CellValidationEvent,
                                                       referenceObject.Id,
@@ -362,7 +410,7 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new SystemUnderTestExpectedPropertyValue<InputCell<Version>>
                         {
                             SystemUnderTest = new InputCell<Version>(
-                                                      referenceObject.InputAppliedToCellEvent,
+                                                      referenceObject.CellInputEvents,
                                                       referenceObject.ValidationConditions,
                                                       referenceObject.CellValidationEvent,
                                                       referenceObject.Id,
@@ -389,7 +437,7 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new SystemUnderTestExpectedPropertyValue<InputCell<Version>>
                         {
                             SystemUnderTest = new InputCell<Version>(
-                                                      referenceObject.InputAppliedToCellEvent,
+                                                      referenceObject.CellInputEvents,
                                                       referenceObject.ValidationConditions,
                                                       referenceObject.CellValidationEvent,
                                                       referenceObject.Id,
@@ -416,7 +464,7 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new SystemUnderTestExpectedPropertyValue<InputCell<Version>>
                         {
                             SystemUnderTest = new InputCell<Version>(
-                                                      referenceObject.InputAppliedToCellEvent,
+                                                      referenceObject.CellInputEvents,
                                                       referenceObject.ValidationConditions,
                                                       referenceObject.CellValidationEvent,
                                                       referenceObject.Id,
@@ -443,7 +491,7 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new SystemUnderTestExpectedPropertyValue<InputCell<Version>>
                         {
                             SystemUnderTest = new InputCell<Version>(
-                                                      referenceObject.InputAppliedToCellEvent,
+                                                      referenceObject.CellInputEvents,
                                                       referenceObject.ValidationConditions,
                                                       referenceObject.CellValidationEvent,
                                                       referenceObject.Id,
@@ -470,7 +518,7 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new SystemUnderTestExpectedPropertyValue<InputCell<Version>>
                         {
                             SystemUnderTest = new InputCell<Version>(
-                                                      referenceObject.InputAppliedToCellEvent,
+                                                      referenceObject.CellInputEvents,
                                                       referenceObject.ValidationConditions,
                                                       referenceObject.CellValidationEvent,
                                                       referenceObject.Id,
@@ -497,7 +545,7 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new SystemUnderTestExpectedPropertyValue<InputCell<Version>>
                         {
                             SystemUnderTest = new InputCell<Version>(
-                                                      referenceObject.InputAppliedToCellEvent,
+                                                      referenceObject.CellInputEvents,
                                                       referenceObject.ValidationConditions,
                                                       referenceObject.CellValidationEvent,
                                                       referenceObject.Id,
@@ -524,7 +572,7 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new SystemUnderTestExpectedPropertyValue<InputCell<Version>>
                         {
                             SystemUnderTest = new InputCell<Version>(
-                                                      referenceObject.InputAppliedToCellEvent,
+                                                      referenceObject.CellInputEvents,
                                                       referenceObject.ValidationConditions,
                                                       referenceObject.CellValidationEvent,
                                                       referenceObject.Id,
@@ -605,18 +653,18 @@ namespace OBeautifulCode.DataStructure.Test
             .AddScenario(() =>
                 new DeepCloneWithTestScenario<InputCell<Version>>
                 {
-                    Name = "DeepCloneWithInputAppliedToCellEvent should deep clone object and replace InputAppliedToCellEvent with the provided inputAppliedToCellEvent",
-                    WithPropertyName = "InputAppliedToCellEvent",
+                    Name = "DeepCloneWithCellInputEvents should deep clone object and replace CellInputEvents with the provided cellInputEvents",
+                    WithPropertyName = "CellInputEvents",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
                         var systemUnderTest = A.Dummy<InputCell<Version>>();
 
-                        var referenceObject = A.Dummy<InputCell<Version>>().ThatIs(_ => !systemUnderTest.InputAppliedToCellEvent.IsEqualTo(_.InputAppliedToCellEvent));
+                        var referenceObject = A.Dummy<InputCell<Version>>().ThatIs(_ => !systemUnderTest.CellInputEvents.IsEqualTo(_.CellInputEvents));
 
                         var result = new SystemUnderTestDeepCloneWithValue<InputCell<Version>>
                         {
                             SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.InputAppliedToCellEvent,
+                            DeepCloneWithValue = referenceObject.CellInputEvents,
                         };
 
                         return result;
@@ -734,7 +782,7 @@ namespace OBeautifulCode.DataStructure.Test
                     ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new InputCell<Version>[]
                     {
                         new InputCell<Version>(
-                                ReferenceObjectForEquatableTestScenarios.InputAppliedToCellEvent,
+                                ReferenceObjectForEquatableTestScenarios.CellInputEvents,
                                 ReferenceObjectForEquatableTestScenarios.ValidationConditions,
                                 ReferenceObjectForEquatableTestScenarios.CellValidationEvent,
                                 ReferenceObjectForEquatableTestScenarios.Id,
@@ -747,7 +795,7 @@ namespace OBeautifulCode.DataStructure.Test
                     ObjectsThatAreNotEqualToReferenceObject = new InputCell<Version>[]
                     {
                         new InputCell<Version>(
-                                ReferenceObjectForEquatableTestScenarios.InputAppliedToCellEvent,
+                                ReferenceObjectForEquatableTestScenarios.CellInputEvents,
                                 ReferenceObjectForEquatableTestScenarios.ValidationConditions,
                                 ReferenceObjectForEquatableTestScenarios.CellValidationEvent,
                                 A.Dummy<InputCell<Version>>().Whose(_ => !_.Id.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Id)).Id,
@@ -757,7 +805,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.Format,
                                 ReferenceObjectForEquatableTestScenarios.HoverOver),
                         new InputCell<Version>(
-                                ReferenceObjectForEquatableTestScenarios.InputAppliedToCellEvent,
+                                ReferenceObjectForEquatableTestScenarios.CellInputEvents,
                                 ReferenceObjectForEquatableTestScenarios.ValidationConditions,
                                 ReferenceObjectForEquatableTestScenarios.CellValidationEvent,
                                 ReferenceObjectForEquatableTestScenarios.Id,
@@ -767,7 +815,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.Format,
                                 ReferenceObjectForEquatableTestScenarios.HoverOver),
                         new InputCell<Version>(
-                                ReferenceObjectForEquatableTestScenarios.InputAppliedToCellEvent,
+                                ReferenceObjectForEquatableTestScenarios.CellInputEvents,
                                 ReferenceObjectForEquatableTestScenarios.ValidationConditions,
                                 ReferenceObjectForEquatableTestScenarios.CellValidationEvent,
                                 ReferenceObjectForEquatableTestScenarios.Id,
@@ -777,7 +825,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.Format,
                                 ReferenceObjectForEquatableTestScenarios.HoverOver),
                         new InputCell<Version>(
-                                A.Dummy<InputCell<Version>>().Whose(_ => !_.InputAppliedToCellEvent.IsEqualTo(ReferenceObjectForEquatableTestScenarios.InputAppliedToCellEvent)).InputAppliedToCellEvent,
+                                A.Dummy<InputCell<Version>>().Whose(_ => !_.CellInputEvents.IsEqualTo(ReferenceObjectForEquatableTestScenarios.CellInputEvents)).CellInputEvents,
                                 ReferenceObjectForEquatableTestScenarios.ValidationConditions,
                                 ReferenceObjectForEquatableTestScenarios.CellValidationEvent,
                                 ReferenceObjectForEquatableTestScenarios.Id,
@@ -787,7 +835,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.Format,
                                 ReferenceObjectForEquatableTestScenarios.HoverOver),
                         new InputCell<Version>(
-                                ReferenceObjectForEquatableTestScenarios.InputAppliedToCellEvent,
+                                ReferenceObjectForEquatableTestScenarios.CellInputEvents,
                                 A.Dummy<InputCell<Version>>().Whose(_ => !_.ValidationConditions.IsEqualTo(ReferenceObjectForEquatableTestScenarios.ValidationConditions)).ValidationConditions,
                                 ReferenceObjectForEquatableTestScenarios.CellValidationEvent,
                                 ReferenceObjectForEquatableTestScenarios.Id,
@@ -797,7 +845,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.Format,
                                 ReferenceObjectForEquatableTestScenarios.HoverOver),
                         new InputCell<Version>(
-                                ReferenceObjectForEquatableTestScenarios.InputAppliedToCellEvent,
+                                ReferenceObjectForEquatableTestScenarios.CellInputEvents,
                                 ReferenceObjectForEquatableTestScenarios.ValidationConditions,
                                 A.Dummy<InputCell<Version>>().Whose(_ => !_.CellValidationEvent.IsEqualTo(ReferenceObjectForEquatableTestScenarios.CellValidationEvent)).CellValidationEvent,
                                 ReferenceObjectForEquatableTestScenarios.Id,
@@ -807,7 +855,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.Format,
                                 ReferenceObjectForEquatableTestScenarios.HoverOver),
                         new InputCell<Version>(
-                                ReferenceObjectForEquatableTestScenarios.InputAppliedToCellEvent,
+                                ReferenceObjectForEquatableTestScenarios.CellInputEvents,
                                 ReferenceObjectForEquatableTestScenarios.ValidationConditions,
                                 ReferenceObjectForEquatableTestScenarios.CellValidationEvent,
                                 ReferenceObjectForEquatableTestScenarios.Id,
@@ -817,7 +865,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.Format,
                                 ReferenceObjectForEquatableTestScenarios.HoverOver),
                         new InputCell<Version>(
-                                ReferenceObjectForEquatableTestScenarios.InputAppliedToCellEvent,
+                                ReferenceObjectForEquatableTestScenarios.CellInputEvents,
                                 ReferenceObjectForEquatableTestScenarios.ValidationConditions,
                                 ReferenceObjectForEquatableTestScenarios.CellValidationEvent,
                                 ReferenceObjectForEquatableTestScenarios.Id,
@@ -827,7 +875,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 A.Dummy<InputCell<Version>>().Whose(_ => !_.Format.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Format)).Format,
                                 ReferenceObjectForEquatableTestScenarios.HoverOver),
                         new InputCell<Version>(
-                                ReferenceObjectForEquatableTestScenarios.InputAppliedToCellEvent,
+                                ReferenceObjectForEquatableTestScenarios.CellInputEvents,
                                 ReferenceObjectForEquatableTestScenarios.ValidationConditions,
                                 ReferenceObjectForEquatableTestScenarios.CellValidationEvent,
                                 ReferenceObjectForEquatableTestScenarios.Id,
@@ -1099,16 +1147,16 @@ namespace OBeautifulCode.DataStructure.Test
                 actual.AsTest().Must().BeEqualTo(systemUnderTest);
                 actual.AsTest().Must().NotBeSameReferenceAs(systemUnderTest);
 
-                if (systemUnderTest.InputAppliedToCellEvent == null)
+                if (systemUnderTest.CellInputEvents == null)
                 {
-                    actual.InputAppliedToCellEvent.AsTest().Must().BeNull();
+                    actual.CellInputEvents.AsTest().Must().BeNull();
                 }
-                else if (!actual.InputAppliedToCellEvent.GetType().IsValueType)
+                else if (!actual.CellInputEvents.GetType().IsValueType)
                 {
                     // When the declared type is a reference type, we still have to check the runtime type.
                     // The object could be a boxed value type, which will fail this asseration because
                     // a deep clone of a value type object is the same object.
-                    actual.InputAppliedToCellEvent.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.InputAppliedToCellEvent);
+                    actual.CellInputEvents.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.CellInputEvents);
                 }
 
                 if (systemUnderTest.ValidationConditions == null)
@@ -1188,7 +1236,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "Id", "ColumnsSpanned", "Details", "InputAppliedToCellEvent", "ValidationConditions", "CellValidationEvent", "ValueFormat", "Format", "HoverOver" };
+                var propertyNames = new string[] { "Id", "ColumnsSpanned", "Details", "CellInputEvents", "ValidationConditions", "CellValidationEvent", "ValueFormat", "Format", "HoverOver" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 

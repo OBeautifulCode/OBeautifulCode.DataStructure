@@ -70,7 +70,7 @@ namespace OBeautifulCode.DataStructure
         public CellValidationEventBase CellValidationEvent { get; private set; }
 
         /// <inheritdoc />
-        public void RecordExecution(
+        public void Record(
             CellOpExecutionEventBase cellOpExecutionEvent)
         {
             if (cellOpExecutionEvent == null)
@@ -91,7 +91,7 @@ namespace OBeautifulCode.DataStructure
         {
             var cellOpExecutionClearedEvent = new CellOpExecutionClearedEvent(timestampUtc, details);
 
-            this.RecordExecution(cellOpExecutionClearedEvent);
+            this.Record(cellOpExecutionClearedEvent);
         }
 
         /// <inheritdoc />

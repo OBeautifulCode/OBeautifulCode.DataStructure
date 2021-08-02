@@ -296,13 +296,15 @@ namespace OBeautifulCode.DataStructure
         /// <param name="sectionId">The id of the section that contains the cell.</param>
         /// <param name="cellId">The id of the cell.</param>
         /// <param name="slotId">OPTIONAL id of the slot to use -OR- null if not addressing an <see cref="ISlottedCell"/>.  DEFAULT is to address an <see cref="INotSlottedCell"/>.</param>
+        /// <param name="details">OPTIONAL details about inputting a value.  DEFAULT is to omit any details.</param>
         public static void SetInputCellValue<TValue>(
             this Report report,
             TValue value,
             DateTime timestampUtc,
             string sectionId,
             string cellId,
-            string slotId = null)
+            string slotId = null,
+            string details = null)
         {
             var cell = report.GetCell(sectionId, cellId, slotId);
 
@@ -311,9 +313,9 @@ namespace OBeautifulCode.DataStructure
                 throw new ArgumentException("The specified cell is not an input cell.");
             }
 
-            var inputAppliedToCellEvent = new InputAppliedToCellEvent<TValue>(timestampUtc, value);
+            var inputAppliedToCellEvent = new CellInputAppliedEvent<TValue>(timestampUtc, value, details);
 
-            inputCell.RecordInput(inputAppliedToCellEvent);
+            inputCell.Record(inputAppliedToCellEvent);
         }
 
         private static ChainOfResponsibilityProtocolFactory BuildProtocolFactoryToExecuteAllOperations(

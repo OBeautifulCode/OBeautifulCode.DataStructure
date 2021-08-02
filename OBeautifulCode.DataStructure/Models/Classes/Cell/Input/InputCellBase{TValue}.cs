@@ -7,8 +7,12 @@
 namespace OBeautifulCode.DataStructure
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
     using OBeautifulCode.Type;
+
+    using static System.FormattableString;
 
     /// <summary>
     /// Base implementation of <see cref="IInputCell{TValue}"/>.
@@ -20,14 +24,14 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Initializes a new instance of the <see cref="InputCellBase{TValue}"/> class.
         /// </summary>
-        /// <param name="inputAppliedToCellEvent">The input that was applied to the cell.</param>
+        /// <param name="cellInputEvents">The events that track the manipulation of this cell's value.</param>
         /// <param name="validationConditions">A list of conditions that determine the validity of the cell's value.</param>
         /// <param name="cellValidationEvent">The result of validating the cell's value.</param>
         /// <param name="id">The cell's unique identifier.</param>
         /// <param name="columnsSpanned">The number of columns spanned or null if none (cell occupies a single column).</param>
         /// <param name="details">Details about the cell.</param>
         protected InputCellBase(
-            InputAppliedToCellEvent<TValue> inputAppliedToCellEvent,
+            IReadOnlyList<CellInputEventBase> cellInputEvents,
             ValidationConditions validationConditions,
             CellValidationEventBase cellValidationEvent,
             string id,
@@ -35,13 +39,18 @@ namespace OBeautifulCode.DataStructure
             string details)
             : base(id, columnsSpanned, details)
         {
-            this.InputAppliedToCellEvent = inputAppliedToCellEvent;
+            if ((cellInputEvents != null) && cellInputEvents.Any(_ => _ == null))
+            {
+                throw new ArgumentException(Invariant($"{nameof(cellInputEvents)} contains a null element."));
+            }
+
+            this.CellInputEvents = cellInputEvents;
             this.ValidationConditions = validationConditions;
             this.CellValidationEvent = cellValidationEvent;
         }
 
         /// <inheritdoc />
-        public InputAppliedToCellEvent<TValue> InputAppliedToCellEvent { get; private set; }
+        public IReadOnlyList<CellInputEventBase> CellInputEvents { get; private set; }
 
         /// <inheritdoc />
         public ValidationConditions ValidationConditions { get; private set; }
@@ -50,34 +59,41 @@ namespace OBeautifulCode.DataStructure
         public CellValidationEventBase CellValidationEvent { get; private set; }
 
         /// <inheritdoc />
-        public void RecordInput(
-            InputAppliedToCellEvent<TValue> inputAppliedToCellEvent)
+        public void Record(
+            CellInputEventBase cellInputEvent)
         {
-            if (inputAppliedToCellEvent == null)
+            if (cellInputEvent == null)
             {
-                throw new ArgumentNullException(nameof(inputAppliedToCellEvent));
+                throw new ArgumentNullException(nameof(cellInputEvent));
             }
 
-            this.InputAppliedToCellEvent = inputAppliedToCellEvent;
+            this.CellInputEvents = new CellInputEventBase[0]
+                .Concat(this.CellInputEvents ?? new CellInputEventBase[0])
+                .Concat(new[] { cellInputEvent })
+                .ToList();
         }
 
         /// <inheritdoc />
         public TValue GetCellValue()
         {
-            if (this.InputAppliedToCellEvent == null)
+            if (!this.HasCellValue())
             {
                 throw new InvalidOperationException("No input has been applied to the cell.");
             }
 
-            var result = this.InputAppliedToCellEvent.Value;
+            var result = ((CellInputAppliedEvent<TValue>)this.CellInputEvents.Last()).Value;
 
             return result;
         }
 
         /// <inheritdoc />
-        public void ClearCellValue()
+        public void ClearCellValue(
+            DateTime timestampUtc,
+            string details)
         {
-            this.InputAppliedToCellEvent = null;
+            var inputClearedFromCellEvent = new CellInputClearedEvent(timestampUtc, details);
+
+            this.Record(inputClearedFromCellEvent);
         }
 
         /// <inheritdoc />
@@ -111,7 +127,7 @@ namespace OBeautifulCode.DataStructure
         public override Type GetValueTypeOrNull() => typeof(TValue);
 
         /// <inheritdoc />
-        public bool HasCellValue() => this.InputAppliedToCellEvent != null;
+        public bool HasCellValue() => this.CellInputEvents?.LastOrDefault() is CellInputAppliedEvent<TValue>;
 
         /// <inheritdoc />
         public object GetCellObjectValue() => this.GetCellValue();

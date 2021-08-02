@@ -107,6 +107,35 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<CellFormatOptions?>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new CellInputAppliedEvent<Version>(
+                                 A.Dummy<DateTime>(),
+                                 A.Dummy<Version>(),
+                                 A.Dummy<string>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new CellInputClearedEvent(
+                                 A.Dummy<DateTime>(),
+                                 A.Dummy<string>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var availableTypes = new[]
+                    {
+                        typeof(CellInputAppliedEvent<Version>),
+                        typeof(CellInputClearedEvent)
+                    };
+
+                    var randomIndex = ThreadSafeRandom.Next(0, availableTypes.Length);
+
+                    var randomType = availableTypes[randomIndex];
+
+                    var result = (CellInputEventBase)AD.ummy(randomType);
+
+                    return result;
+                });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new CellLocator(
                                  A.Dummy<string>(),
                                  A.Dummy<string>(),
@@ -392,13 +421,8 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<InnerBorderEdges>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new InputAppliedToCellEvent<Version>(
-                                 A.Dummy<DateTime>(),
-                                 A.Dummy<Version>()));
-
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new InputCell<Version>(
-                                 A.Dummy<InputAppliedToCellEvent<Version>>(),
+                                 A.Dummy<IReadOnlyList<CellInputEventBase>>(),
                                  A.Dummy<ValidationConditions>(),
                                  A.Dummy<CellValidationEventBase>(),
                                  A.Dummy<string>(),

@@ -27,9 +27,9 @@ namespace OBeautifulCode.DataStructure
         IReadOnlyList<CellOpExecutionEventBase> CellOpExecutionEvents { get; }
 
         /// <summary>
-        /// Records the execution of the <see cref="Operation"/>.
+        /// Records an <see cref="CellOpExecutionEventBase"/>.
         /// </summary>
-        /// <param name="cellOpExecutionEvent">The result of executing the operation.</param>
-        void RecordExecution(CellOpExecutionEventBase cellOpExecutionEvent);
+        /// <param name="cellOpExecutionEvent">The event to record.</param>
+        void Record(CellOpExecutionEventBase cellOpExecutionEvent);
     }
 }

@@ -77,10 +77,10 @@ namespace OBeautifulCode.DataStructure
         public new InputCellBase<TValue> DeepClone() => (InputCellBase<TValue>)this.DeepCloneInternal();
 
         /// <summary>
-        /// Deep clones this object with a new <see cref="InputAppliedToCellEvent" />.
+        /// Deep clones this object with a new <see cref="CellInputEvents" />.
         /// </summary>
-        /// <param name="inputAppliedToCellEvent">The new <see cref="InputAppliedToCellEvent" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="InputCellBase{TValue}" /> using the specified <paramref name="inputAppliedToCellEvent" /> for <see cref="InputAppliedToCellEvent" /> and a deep clone of every other property.</returns>
+        /// <param name="cellInputEvents">The new <see cref="CellInputEvents" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="InputCellBase{TValue}" /> using the specified <paramref name="cellInputEvents" /> for <see cref="CellInputEvents" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -98,7 +98,7 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public virtual InputCellBase<TValue> DeepCloneWithInputAppliedToCellEvent(InputAppliedToCellEvent<TValue> inputAppliedToCellEvent)
+        public virtual InputCellBase<TValue> DeepCloneWithCellInputEvents(IReadOnlyList<CellInputEventBase> cellInputEvents)
         {
             throw new NotImplementedException("This method should be abstract.  It was generated as virtual so that you aren't forced to override it when you create a new model that derives from this model.  It will be overridden in the generated designer file.");
         }

@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="InputAppliedToCellEvent{TValue}.cs" company="OBeautifulCode">
+// <copyright file="CellInputEventBase.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -11,28 +11,25 @@ namespace OBeautifulCode.DataStructure
     using OBeautifulCode.Type;
 
     /// <summary>
-    /// Input has been applied to an <see cref="IInputCell{TValue}"/>.
+    /// Base class for events that track the manipulation of an <see cref="IInputCell{TValue}"/>'s value.
     /// </summary>
-    /// <typeparam name="TValue">The type of inputted value.</typeparam>
     // ReSharper disable once RedundantExtendsListEntry
-    public partial class InputAppliedToCellEvent<TValue> : EventBase, IModelViaCodeGen
+    public abstract partial class CellInputEventBase : EventBase, IHaveDetails, IModelViaCodeGen
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="InputAppliedToCellEvent{TValue}"/> class.
+        /// Initializes a new instance of the <see cref="CellInputEventBase"/> class.
         /// </summary>
         /// <param name="timestampUtc">The timestamp.</param>
-        /// <param name="value">The inputted value.</param>
-        public InputAppliedToCellEvent(
+        /// <param name="details">Details about the event.</param>
+        protected CellInputEventBase(
             DateTime timestampUtc,
-            TValue value)
+            string details)
             : base(timestampUtc)
         {
-            this.Value = value;
+            this.Details = details;
         }
 
-        /// <summary>
-        /// Gets the inputted value.
-        /// </summary>
-        public TValue Value { get; private set; }
+        /// <inheritdoc />
+        public string Details { get; private set; }
     }
 }

@@ -6,6 +6,8 @@
 
 namespace OBeautifulCode.DataStructure
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// A cell whose value can be inputted with a specified type of value.
     /// </summary>
@@ -13,14 +15,14 @@ namespace OBeautifulCode.DataStructure
     public interface IInputCell<TValue> : INotSlottedCell, IGetCellValue<TValue>, IClearCellValue, IValidateableCell
     {
         /// <summary>
-        /// Gets the input that was applied to the cell.
+        /// Gets the events that track the manipulation of this cell's value.
         /// </summary>
-        InputAppliedToCellEvent<TValue> InputAppliedToCellEvent { get; }
+        IReadOnlyList<CellInputEventBase> CellInputEvents { get; }
 
         /// <summary>
-        /// Records input.
+        /// Records an <see cref="CellInputEventBase"/>.
         /// </summary>
-        /// <param name="inputAppliedToCellEvent">The result of executing the operation.</param>
-        void RecordInput(InputAppliedToCellEvent<TValue> inputAppliedToCellEvent);
+        /// <param name="cellInputEvent">The event to record.</param>
+        void Record(CellInputEventBase cellInputEvent);
     }
 }

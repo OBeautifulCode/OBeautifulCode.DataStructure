@@ -132,7 +132,7 @@ namespace OBeautifulCode.DataStructure
         /// Builds an <see cref="IConstOutputCell{TValue}"/>.
         /// </summary>
         /// <typeparam name="TValue">The type of value.</typeparam>
-        /// <param name="inputAppliedToCellEvent">OPTIONAL input that was applied to the cell.  DEFAULT is a cell with no inputted value.</param>
+        /// <param name="cellInputEvents">OPTIONAL events that track the manipulation of this cell's value.  DEFAULT is a cell with no inputted value.</param>
         /// <param name="validationConditions">OPTIONAL list of conditions that determine the validity of the cell's value.  DEFAULT is to omit validation.</param>
         /// <param name="cellValidationEvent">OPTIONAL result of validating the cell's value.  DEFAULT is a cell that has not yet been validated.</param>
         /// <param name="id">OPTIONAL unique identifier of the cell.  DEFAULT is a cell with no unique identifier.</param>
@@ -145,7 +145,7 @@ namespace OBeautifulCode.DataStructure
         /// The cell.
         /// </returns>
         public static InputCell<TValue> CreateInput<TValue>(
-            InputAppliedToCellEvent<TValue> inputAppliedToCellEvent = null,
+            IReadOnlyList<CellInputEventBase> cellInputEvents = null,
             ValidationConditions validationConditions = null,
             CellValidationEventBase cellValidationEvent = null,
             string id = null,
@@ -155,7 +155,7 @@ namespace OBeautifulCode.DataStructure
             CellFormat format = null,
             IHoverOver hoverOver = null)
         {
-            var result = new InputCell<TValue>(inputAppliedToCellEvent, validationConditions, cellValidationEvent, id, columnsSpanned, details, valueFormat, format, hoverOver);
+            var result = new InputCell<TValue>(cellInputEvents, validationConditions, cellValidationEvent, id, columnsSpanned, details, valueFormat, format, hoverOver);
 
             return result;
         }

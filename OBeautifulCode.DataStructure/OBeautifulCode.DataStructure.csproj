@@ -64,6 +64,12 @@
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringReadableOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringXmlDocOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
+    <Compile Include="Events\CellInputEventBase.designer.cs">
+      <DependentUpon>CellInputEventBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Events\CellInput\CellInputClearedEvent.designer.cs">
+      <DependentUpon>CellInputClearedEvent.cs</DependentUpon>
+    </Compile>
     <Compile Include="Events\CellOpExecutionEventBase.designer.cs">
       <DependentUpon>CellOpExecutionEventBase.cs</DependentUpon>
     </Compile>
@@ -110,11 +116,13 @@
     <Compile Include="Events\CellValidation\CellValidationFailedEvent.designer.cs">
       <DependentUpon>CellValidationFailedEvent.cs</DependentUpon>
     </Compile>
-    <Compile Include="Events\InputAppliedToCellEvent{TValue}.cs" />
+    <Compile Include="Events\CellInputEventBase.cs" />
+    <Compile Include="Events\CellInput\CellInputClearedEvent.cs" />
+    <Compile Include="Events\CellInput\CellInputAppliedEvent{TValue}.cs" />
     <Compile Include="Events\CellOpExecution\CellOpExecutionFailedEvent.cs" />
     <Compile Include="Events\CellOpExecution\CellOpExecutionCompletedEvent{TResult}.cs" />
-    <Compile Include="Events\InputAppliedToCellEvent{TValue}.designer.cs">
-      <DependentUpon>InputAppliedToCellEvent{TValue}.cs</DependentUpon>
+    <Compile Include="Events\CellInput\CellInputAppliedEvent{TValue}.designer.cs">
+      <DependentUpon>CellInputAppliedEvent{TValue}.cs</DependentUpon>
     </Compile>
     <Compile Include="Exception\CellValueMissingException.cs" />
     <Compile Include="Exception\CellNotFoundException.cs" />
