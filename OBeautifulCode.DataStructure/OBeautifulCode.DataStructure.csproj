@@ -265,6 +265,10 @@
     <Compile Include="Models\Classes\Format\Region\Regions\DataRowsFormat.designer.cs">
       <DependentUpon>DataRowsFormat.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\Classes\Format\Region\Regions\FooterRowsFormat.cs" />
+    <Compile Include="Models\Classes\Format\Region\Regions\FooterRowsFormat.designer.cs">
+      <DependentUpon>FooterRowsFormat.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Classes\Format\Region\Regions\HeaderRowsFormat.cs" />
     <Compile Include="Models\Classes\Format\Region\Regions\HeaderRowsFormat.designer.cs">
       <DependentUpon>HeaderRowsFormat.cs</DependentUpon>
@@ -338,6 +342,10 @@
     </Compile>
     <Compile Include="Models\Classes\Row\FlatRow.designer.cs">
       <DependentUpon>FlatRow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Row\FooterRows.cs" />
+    <Compile Include="Models\Classes\Row\FooterRows.designer.cs">
+      <DependentUpon>FooterRows.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Classes\Row\HeaderRows.designer.cs">
       <DependentUpon>HeaderRows.cs</DependentUpon>

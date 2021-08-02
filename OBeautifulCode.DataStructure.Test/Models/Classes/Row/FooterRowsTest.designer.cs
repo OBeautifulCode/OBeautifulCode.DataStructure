@@ -12,7 +12,6 @@ namespace OBeautifulCode.DataStructure.Test
     using global::System.Collections.Generic;
     using global::System.Collections.ObjectModel;
     using global::System.Diagnostics.CodeAnalysis;
-    using global::System.Drawing;
     using global::System.Globalization;
     using global::System.Linq;
     using global::System.Reflection;
@@ -34,610 +33,203 @@ namespace OBeautifulCode.DataStructure.Test
 
     using static global::System.FormattableString;
 
-    public static partial class CellFormatTest
+    public static partial class FooterRowsTest
     {
-        private static readonly StringRepresentationTestScenarios<CellFormat> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<CellFormat>()
+        private static readonly StringRepresentationTestScenarios<FooterRows> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<FooterRows>()
             .AddScenario(() =>
-                new StringRepresentationTestScenario<CellFormat>
+                new StringRepresentationTestScenario<FooterRows>
                 {
                     Name = "Default Code Generated Scenario",
                     SystemUnderTestExpectedStringRepresentationFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<CellFormat>();
+                        var systemUnderTest = A.Dummy<FooterRows>();
 
-                        var result = new SystemUnderTestExpectedStringRepresentation<CellFormat>
+                        var result = new SystemUnderTestExpectedStringRepresentation<FooterRows>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.CellFormat: OuterBorders = {systemUnderTest.OuterBorders?.ToString() ?? "<null>"}, FontFormat = {systemUnderTest.FontFormat?.ToString() ?? "<null>"}, BackgroundColor = {systemUnderTest.BackgroundColor?.ToString() ?? "<null>"}, VerticalAlignment = {systemUnderTest.VerticalAlignment?.ToString() ?? "<null>"}, HorizontalAlignment = {systemUnderTest.HorizontalAlignment?.ToString() ?? "<null>"}, FontRotationAngle = {systemUnderTest.FontRotationAngle?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, FillPattern = {systemUnderTest.FillPattern?.ToString() ?? "<null>"}, Options = {systemUnderTest.Options?.ToString() ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.FooterRows: Rows = {systemUnderTest.Rows?.ToString() ?? "<null>"}, Format = {systemUnderTest.Format?.ToString() ?? "<null>"}."),
                         };
 
                         return result;
                     },
                 });
 
-        private static readonly ConstructorArgumentValidationTestScenarios<CellFormat> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<CellFormat>()
+        private static readonly ConstructorArgumentValidationTestScenarios<FooterRows> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<FooterRows>()
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<CellFormat>
+                new ConstructorArgumentValidationTestScenario<FooterRows>
                 {
-                    Name = "constructor should throw ArgumentNullException when parameter 'outerBorders' is null scenario",
+                    Name = "constructor should throw ArgumentNullException when parameter 'rows' is null scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<CellFormat>();
+                        var referenceObject = A.Dummy<FooterRows>();
 
-                        var result = new CellFormat(
+                        var result = new FooterRows(
                                              null,
-                                             referenceObject.FontFormat,
-                                             referenceObject.BackgroundColor,
-                                             referenceObject.VerticalAlignment,
-                                             referenceObject.HorizontalAlignment,
-                                             referenceObject.FontRotationAngle,
-                                             referenceObject.FillPattern,
-                                             referenceObject.Options);
+                                             referenceObject.Format);
 
                         return result;
                     },
                     ExpectedExceptionType = typeof(ArgumentNullException),
-                    ExpectedExceptionMessageContains = new[] { "outerBorders", },
+                    ExpectedExceptionMessageContains = new[] { "rows", },
                 })
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<CellFormat>
+                new ConstructorArgumentValidationTestScenario<FooterRows>
                 {
-                    Name = "constructor should throw ArgumentException when parameter 'outerBorders' is an empty enumerable scenario",
+                    Name = "constructor should throw ArgumentException when parameter 'rows' is an empty enumerable scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<CellFormat>();
+                        var referenceObject = A.Dummy<FooterRows>();
 
-                        var result = new CellFormat(
-                                             new List<OuterBorder>(),
-                                             referenceObject.FontFormat,
-                                             referenceObject.BackgroundColor,
-                                             referenceObject.VerticalAlignment,
-                                             referenceObject.HorizontalAlignment,
-                                             referenceObject.FontRotationAngle,
-                                             referenceObject.FillPattern,
-                                             referenceObject.Options);
+                        var result = new FooterRows(
+                                             new List<FlatRow>(),
+                                             referenceObject.Format);
 
                         return result;
                     },
                     ExpectedExceptionType = typeof(ArgumentException),
-                    ExpectedExceptionMessageContains = new[] { "outerBorders", "is an empty enumerable", },
+                    ExpectedExceptionMessageContains = new[] { "rows", "is an empty enumerable", },
                 })
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<CellFormat>
+                new ConstructorArgumentValidationTestScenario<FooterRows>
                 {
-                    Name = "constructor should throw ArgumentException when parameter 'outerBorders' contains a null element scenario",
+                    Name = "constructor should throw ArgumentException when parameter 'rows' contains a null element scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<CellFormat>();
+                        var referenceObject = A.Dummy<FooterRows>();
 
-                        var result = new CellFormat(
-                                             new OuterBorder[0].Concat(referenceObject.OuterBorders).Concat(new OuterBorder[] { null }).Concat(referenceObject.OuterBorders).ToList(),
-                                             referenceObject.FontFormat,
-                                             referenceObject.BackgroundColor,
-                                             referenceObject.VerticalAlignment,
-                                             referenceObject.HorizontalAlignment,
-                                             referenceObject.FontRotationAngle,
-                                             referenceObject.FillPattern,
-                                             referenceObject.Options);
+                        var result = new FooterRows(
+                                             new FlatRow[0].Concat(referenceObject.Rows).Concat(new FlatRow[] { null }).Concat(referenceObject.Rows).ToList(),
+                                             referenceObject.Format);
 
                         return result;
                     },
                     ExpectedExceptionType = typeof(ArgumentException),
-                    ExpectedExceptionMessageContains = new[] { "outerBorders", "contains at least one null element", },
+                    ExpectedExceptionMessageContains = new[] { "rows", "contains at least one null element", },
                 })
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<CellFormat>
+                new ConstructorArgumentValidationTestScenario<FooterRows>
                 {
-                    Name = "constructor should throw ArgumentNullException when parameter 'fontFormat' is null scenario",
+                    Name = "constructor should throw ArgumentNullException when parameter 'format' is null scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<CellFormat>();
+                        var referenceObject = A.Dummy<FooterRows>();
 
-                        var result = new CellFormat(
-                                             referenceObject.OuterBorders,
-                                             null,
-                                             referenceObject.BackgroundColor,
-                                             referenceObject.VerticalAlignment,
-                                             referenceObject.HorizontalAlignment,
-                                             referenceObject.FontRotationAngle,
-                                             referenceObject.FillPattern,
-                                             referenceObject.Options);
+                        var result = new FooterRows(
+                                             referenceObject.Rows,
+                                             null);
 
                         return result;
                     },
                     ExpectedExceptionType = typeof(ArgumentNullException),
-                    ExpectedExceptionMessageContains = new[] { "fontFormat", },
-                })
-            .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<CellFormat>
-                {
-                    Name = "constructor should throw ArgumentNullException when parameter 'fillPattern' is null scenario",
-                    ConstructionFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<CellFormat>();
-
-                        var result = new CellFormat(
-                                             referenceObject.OuterBorders,
-                                             referenceObject.FontFormat,
-                                             referenceObject.BackgroundColor,
-                                             referenceObject.VerticalAlignment,
-                                             referenceObject.HorizontalAlignment,
-                                             referenceObject.FontRotationAngle,
-                                             null,
-                                             referenceObject.Options);
-
-                        return result;
-                    },
-                    ExpectedExceptionType = typeof(ArgumentNullException),
-                    ExpectedExceptionMessageContains = new[] { "fillPattern", },
+                    ExpectedExceptionMessageContains = new[] { "format", },
                 });
 
-        private static readonly ConstructorPropertyAssignmentTestScenarios<CellFormat> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<CellFormat>()
+        private static readonly ConstructorPropertyAssignmentTestScenarios<FooterRows> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<FooterRows>()
             .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<CellFormat>
+                new ConstructorPropertyAssignmentTestScenario<FooterRows>
                 {
-                    Name = "OuterBorders should return same 'outerBorders' parameter passed to constructor when getting",
+                    Name = "Rows should return same 'rows' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
-                        var referenceObject = A.Dummy<CellFormat>();
+                        var referenceObject = A.Dummy<FooterRows>();
 
-                        var result = new SystemUnderTestExpectedPropertyValue<CellFormat>
+                        var result = new SystemUnderTestExpectedPropertyValue<FooterRows>
                         {
-                            SystemUnderTest = new CellFormat(
-                                                      referenceObject.OuterBorders,
-                                                      referenceObject.FontFormat,
-                                                      referenceObject.BackgroundColor,
-                                                      referenceObject.VerticalAlignment,
-                                                      referenceObject.HorizontalAlignment,
-                                                      referenceObject.FontRotationAngle,
-                                                      referenceObject.FillPattern,
-                                                      referenceObject.Options),
-                            ExpectedPropertyValue = referenceObject.OuterBorders,
+                            SystemUnderTest = new FooterRows(
+                                                      referenceObject.Rows,
+                                                      referenceObject.Format),
+                            ExpectedPropertyValue = referenceObject.Rows,
                         };
 
                         return result;
                     },
-                    PropertyName = "OuterBorders",
+                    PropertyName = "Rows",
                 })
             .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<CellFormat>
+                new ConstructorPropertyAssignmentTestScenario<FooterRows>
                 {
-                    Name = "FontFormat should return same 'fontFormat' parameter passed to constructor when getting",
+                    Name = "Format should return same 'format' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
-                        var referenceObject = A.Dummy<CellFormat>();
+                        var referenceObject = A.Dummy<FooterRows>();
 
-                        var result = new SystemUnderTestExpectedPropertyValue<CellFormat>
+                        var result = new SystemUnderTestExpectedPropertyValue<FooterRows>
                         {
-                            SystemUnderTest = new CellFormat(
-                                                      referenceObject.OuterBorders,
-                                                      referenceObject.FontFormat,
-                                                      referenceObject.BackgroundColor,
-                                                      referenceObject.VerticalAlignment,
-                                                      referenceObject.HorizontalAlignment,
-                                                      referenceObject.FontRotationAngle,
-                                                      referenceObject.FillPattern,
-                                                      referenceObject.Options),
-                            ExpectedPropertyValue = referenceObject.FontFormat,
+                            SystemUnderTest = new FooterRows(
+                                                      referenceObject.Rows,
+                                                      referenceObject.Format),
+                            ExpectedPropertyValue = referenceObject.Format,
                         };
 
                         return result;
                     },
-                    PropertyName = "FontFormat",
-                })
-            .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<CellFormat>
-                {
-                    Name = "BackgroundColor should return same 'backgroundColor' parameter passed to constructor when getting",
-                    SystemUnderTestExpectedPropertyValueFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<CellFormat>();
-
-                        var result = new SystemUnderTestExpectedPropertyValue<CellFormat>
-                        {
-                            SystemUnderTest = new CellFormat(
-                                                      referenceObject.OuterBorders,
-                                                      referenceObject.FontFormat,
-                                                      referenceObject.BackgroundColor,
-                                                      referenceObject.VerticalAlignment,
-                                                      referenceObject.HorizontalAlignment,
-                                                      referenceObject.FontRotationAngle,
-                                                      referenceObject.FillPattern,
-                                                      referenceObject.Options),
-                            ExpectedPropertyValue = referenceObject.BackgroundColor,
-                        };
-
-                        return result;
-                    },
-                    PropertyName = "BackgroundColor",
-                })
-            .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<CellFormat>
-                {
-                    Name = "VerticalAlignment should return same 'verticalAlignment' parameter passed to constructor when getting",
-                    SystemUnderTestExpectedPropertyValueFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<CellFormat>();
-
-                        var result = new SystemUnderTestExpectedPropertyValue<CellFormat>
-                        {
-                            SystemUnderTest = new CellFormat(
-                                                      referenceObject.OuterBorders,
-                                                      referenceObject.FontFormat,
-                                                      referenceObject.BackgroundColor,
-                                                      referenceObject.VerticalAlignment,
-                                                      referenceObject.HorizontalAlignment,
-                                                      referenceObject.FontRotationAngle,
-                                                      referenceObject.FillPattern,
-                                                      referenceObject.Options),
-                            ExpectedPropertyValue = referenceObject.VerticalAlignment,
-                        };
-
-                        return result;
-                    },
-                    PropertyName = "VerticalAlignment",
-                })
-            .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<CellFormat>
-                {
-                    Name = "HorizontalAlignment should return same 'horizontalAlignment' parameter passed to constructor when getting",
-                    SystemUnderTestExpectedPropertyValueFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<CellFormat>();
-
-                        var result = new SystemUnderTestExpectedPropertyValue<CellFormat>
-                        {
-                            SystemUnderTest = new CellFormat(
-                                                      referenceObject.OuterBorders,
-                                                      referenceObject.FontFormat,
-                                                      referenceObject.BackgroundColor,
-                                                      referenceObject.VerticalAlignment,
-                                                      referenceObject.HorizontalAlignment,
-                                                      referenceObject.FontRotationAngle,
-                                                      referenceObject.FillPattern,
-                                                      referenceObject.Options),
-                            ExpectedPropertyValue = referenceObject.HorizontalAlignment,
-                        };
-
-                        return result;
-                    },
-                    PropertyName = "HorizontalAlignment",
-                })
-            .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<CellFormat>
-                {
-                    Name = "FontRotationAngle should return same 'fontRotationAngle' parameter passed to constructor when getting",
-                    SystemUnderTestExpectedPropertyValueFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<CellFormat>();
-
-                        var result = new SystemUnderTestExpectedPropertyValue<CellFormat>
-                        {
-                            SystemUnderTest = new CellFormat(
-                                                      referenceObject.OuterBorders,
-                                                      referenceObject.FontFormat,
-                                                      referenceObject.BackgroundColor,
-                                                      referenceObject.VerticalAlignment,
-                                                      referenceObject.HorizontalAlignment,
-                                                      referenceObject.FontRotationAngle,
-                                                      referenceObject.FillPattern,
-                                                      referenceObject.Options),
-                            ExpectedPropertyValue = referenceObject.FontRotationAngle,
-                        };
-
-                        return result;
-                    },
-                    PropertyName = "FontRotationAngle",
-                })
-            .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<CellFormat>
-                {
-                    Name = "FillPattern should return same 'fillPattern' parameter passed to constructor when getting",
-                    SystemUnderTestExpectedPropertyValueFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<CellFormat>();
-
-                        var result = new SystemUnderTestExpectedPropertyValue<CellFormat>
-                        {
-                            SystemUnderTest = new CellFormat(
-                                                      referenceObject.OuterBorders,
-                                                      referenceObject.FontFormat,
-                                                      referenceObject.BackgroundColor,
-                                                      referenceObject.VerticalAlignment,
-                                                      referenceObject.HorizontalAlignment,
-                                                      referenceObject.FontRotationAngle,
-                                                      referenceObject.FillPattern,
-                                                      referenceObject.Options),
-                            ExpectedPropertyValue = referenceObject.FillPattern,
-                        };
-
-                        return result;
-                    },
-                    PropertyName = "FillPattern",
-                })
-            .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<CellFormat>
-                {
-                    Name = "Options should return same 'options' parameter passed to constructor when getting",
-                    SystemUnderTestExpectedPropertyValueFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<CellFormat>();
-
-                        var result = new SystemUnderTestExpectedPropertyValue<CellFormat>
-                        {
-                            SystemUnderTest = new CellFormat(
-                                                      referenceObject.OuterBorders,
-                                                      referenceObject.FontFormat,
-                                                      referenceObject.BackgroundColor,
-                                                      referenceObject.VerticalAlignment,
-                                                      referenceObject.HorizontalAlignment,
-                                                      referenceObject.FontRotationAngle,
-                                                      referenceObject.FillPattern,
-                                                      referenceObject.Options),
-                            ExpectedPropertyValue = referenceObject.Options,
-                        };
-
-                        return result;
-                    },
-                    PropertyName = "Options",
+                    PropertyName = "Format",
                 });
 
-        private static readonly DeepCloneWithTestScenarios<CellFormat> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<CellFormat>()
+        private static readonly DeepCloneWithTestScenarios<FooterRows> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<FooterRows>()
             .AddScenario(() =>
-                new DeepCloneWithTestScenario<CellFormat>
+                new DeepCloneWithTestScenario<FooterRows>
                 {
-                    Name = "DeepCloneWithOuterBorders should deep clone object and replace OuterBorders with the provided outerBorders",
-                    WithPropertyName = "OuterBorders",
+                    Name = "DeepCloneWithRows should deep clone object and replace Rows with the provided rows",
+                    WithPropertyName = "Rows",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<CellFormat>();
+                        var systemUnderTest = A.Dummy<FooterRows>();
 
-                        var referenceObject = A.Dummy<CellFormat>().ThatIs(_ => !systemUnderTest.OuterBorders.IsEqualTo(_.OuterBorders));
+                        var referenceObject = A.Dummy<FooterRows>().ThatIs(_ => !systemUnderTest.Rows.IsEqualTo(_.Rows));
 
-                        var result = new SystemUnderTestDeepCloneWithValue<CellFormat>
+                        var result = new SystemUnderTestDeepCloneWithValue<FooterRows>
                         {
                             SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.OuterBorders,
+                            DeepCloneWithValue = referenceObject.Rows,
                         };
 
                         return result;
                     },
                 })
             .AddScenario(() =>
-                new DeepCloneWithTestScenario<CellFormat>
+                new DeepCloneWithTestScenario<FooterRows>
                 {
-                    Name = "DeepCloneWithFontFormat should deep clone object and replace FontFormat with the provided fontFormat",
-                    WithPropertyName = "FontFormat",
+                    Name = "DeepCloneWithFormat should deep clone object and replace Format with the provided format",
+                    WithPropertyName = "Format",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<CellFormat>();
+                        var systemUnderTest = A.Dummy<FooterRows>();
 
-                        var referenceObject = A.Dummy<CellFormat>().ThatIs(_ => !systemUnderTest.FontFormat.IsEqualTo(_.FontFormat));
+                        var referenceObject = A.Dummy<FooterRows>().ThatIs(_ => !systemUnderTest.Format.IsEqualTo(_.Format));
 
-                        var result = new SystemUnderTestDeepCloneWithValue<CellFormat>
+                        var result = new SystemUnderTestDeepCloneWithValue<FooterRows>
                         {
                             SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.FontFormat,
-                        };
-
-                        return result;
-                    },
-                })
-            .AddScenario(() =>
-                new DeepCloneWithTestScenario<CellFormat>
-                {
-                    Name = "DeepCloneWithBackgroundColor should deep clone object and replace BackgroundColor with the provided backgroundColor",
-                    WithPropertyName = "BackgroundColor",
-                    SystemUnderTestDeepCloneWithValueFunc = () =>
-                    {
-                        var systemUnderTest = A.Dummy<CellFormat>();
-
-                        var referenceObject = A.Dummy<CellFormat>().ThatIs(_ => !systemUnderTest.BackgroundColor.IsEqualTo(_.BackgroundColor));
-
-                        var result = new SystemUnderTestDeepCloneWithValue<CellFormat>
-                        {
-                            SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.BackgroundColor,
-                        };
-
-                        return result;
-                    },
-                })
-            .AddScenario(() =>
-                new DeepCloneWithTestScenario<CellFormat>
-                {
-                    Name = "DeepCloneWithVerticalAlignment should deep clone object and replace VerticalAlignment with the provided verticalAlignment",
-                    WithPropertyName = "VerticalAlignment",
-                    SystemUnderTestDeepCloneWithValueFunc = () =>
-                    {
-                        var systemUnderTest = A.Dummy<CellFormat>();
-
-                        var referenceObject = A.Dummy<CellFormat>().ThatIs(_ => !systemUnderTest.VerticalAlignment.IsEqualTo(_.VerticalAlignment));
-
-                        var result = new SystemUnderTestDeepCloneWithValue<CellFormat>
-                        {
-                            SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.VerticalAlignment,
-                        };
-
-                        return result;
-                    },
-                })
-            .AddScenario(() =>
-                new DeepCloneWithTestScenario<CellFormat>
-                {
-                    Name = "DeepCloneWithHorizontalAlignment should deep clone object and replace HorizontalAlignment with the provided horizontalAlignment",
-                    WithPropertyName = "HorizontalAlignment",
-                    SystemUnderTestDeepCloneWithValueFunc = () =>
-                    {
-                        var systemUnderTest = A.Dummy<CellFormat>();
-
-                        var referenceObject = A.Dummy<CellFormat>().ThatIs(_ => !systemUnderTest.HorizontalAlignment.IsEqualTo(_.HorizontalAlignment));
-
-                        var result = new SystemUnderTestDeepCloneWithValue<CellFormat>
-                        {
-                            SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.HorizontalAlignment,
-                        };
-
-                        return result;
-                    },
-                })
-            .AddScenario(() =>
-                new DeepCloneWithTestScenario<CellFormat>
-                {
-                    Name = "DeepCloneWithFontRotationAngle should deep clone object and replace FontRotationAngle with the provided fontRotationAngle",
-                    WithPropertyName = "FontRotationAngle",
-                    SystemUnderTestDeepCloneWithValueFunc = () =>
-                    {
-                        var systemUnderTest = A.Dummy<CellFormat>();
-
-                        var referenceObject = A.Dummy<CellFormat>().ThatIs(_ => !systemUnderTest.FontRotationAngle.IsEqualTo(_.FontRotationAngle));
-
-                        var result = new SystemUnderTestDeepCloneWithValue<CellFormat>
-                        {
-                            SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.FontRotationAngle,
-                        };
-
-                        return result;
-                    },
-                })
-            .AddScenario(() =>
-                new DeepCloneWithTestScenario<CellFormat>
-                {
-                    Name = "DeepCloneWithFillPattern should deep clone object and replace FillPattern with the provided fillPattern",
-                    WithPropertyName = "FillPattern",
-                    SystemUnderTestDeepCloneWithValueFunc = () =>
-                    {
-                        var systemUnderTest = A.Dummy<CellFormat>();
-
-                        var referenceObject = A.Dummy<CellFormat>().ThatIs(_ => !systemUnderTest.FillPattern.IsEqualTo(_.FillPattern));
-
-                        var result = new SystemUnderTestDeepCloneWithValue<CellFormat>
-                        {
-                            SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.FillPattern,
-                        };
-
-                        return result;
-                    },
-                })
-            .AddScenario(() =>
-                new DeepCloneWithTestScenario<CellFormat>
-                {
-                    Name = "DeepCloneWithOptions should deep clone object and replace Options with the provided options",
-                    WithPropertyName = "Options",
-                    SystemUnderTestDeepCloneWithValueFunc = () =>
-                    {
-                        var systemUnderTest = A.Dummy<CellFormat>();
-
-                        var referenceObject = A.Dummy<CellFormat>().ThatIs(_ => !systemUnderTest.Options.IsEqualTo(_.Options));
-
-                        var result = new SystemUnderTestDeepCloneWithValue<CellFormat>
-                        {
-                            SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.Options,
+                            DeepCloneWithValue = referenceObject.Format,
                         };
 
                         return result;
                     },
                 });
 
-        private static readonly CellFormat ReferenceObjectForEquatableTestScenarios = A.Dummy<CellFormat>();
+        private static readonly FooterRows ReferenceObjectForEquatableTestScenarios = A.Dummy<FooterRows>();
 
-        private static readonly EquatableTestScenarios<CellFormat> EquatableTestScenarios = new EquatableTestScenarios<CellFormat>()
+        private static readonly EquatableTestScenarios<FooterRows> EquatableTestScenarios = new EquatableTestScenarios<FooterRows>()
             .AddScenario(() =>
-                new EquatableTestScenario<CellFormat>
+                new EquatableTestScenario<FooterRows>
                 {
                     Name = "Default Code Generated Scenario",
                     ReferenceObject = ReferenceObjectForEquatableTestScenarios,
-                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new CellFormat[]
+                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new FooterRows[]
                     {
-                        new CellFormat(
-                                ReferenceObjectForEquatableTestScenarios.OuterBorders,
-                                ReferenceObjectForEquatableTestScenarios.FontFormat,
-                                ReferenceObjectForEquatableTestScenarios.BackgroundColor,
-                                ReferenceObjectForEquatableTestScenarios.VerticalAlignment,
-                                ReferenceObjectForEquatableTestScenarios.HorizontalAlignment,
-                                ReferenceObjectForEquatableTestScenarios.FontRotationAngle,
-                                ReferenceObjectForEquatableTestScenarios.FillPattern,
-                                ReferenceObjectForEquatableTestScenarios.Options),
+                        new FooterRows(
+                                ReferenceObjectForEquatableTestScenarios.Rows,
+                                ReferenceObjectForEquatableTestScenarios.Format),
                     },
-                    ObjectsThatAreNotEqualToReferenceObject = new CellFormat[]
+                    ObjectsThatAreNotEqualToReferenceObject = new FooterRows[]
                     {
-                        new CellFormat(
-                                A.Dummy<CellFormat>().Whose(_ => !_.OuterBorders.IsEqualTo(ReferenceObjectForEquatableTestScenarios.OuterBorders)).OuterBorders,
-                                ReferenceObjectForEquatableTestScenarios.FontFormat,
-                                ReferenceObjectForEquatableTestScenarios.BackgroundColor,
-                                ReferenceObjectForEquatableTestScenarios.VerticalAlignment,
-                                ReferenceObjectForEquatableTestScenarios.HorizontalAlignment,
-                                ReferenceObjectForEquatableTestScenarios.FontRotationAngle,
-                                ReferenceObjectForEquatableTestScenarios.FillPattern,
-                                ReferenceObjectForEquatableTestScenarios.Options),
-                        new CellFormat(
-                                ReferenceObjectForEquatableTestScenarios.OuterBorders,
-                                A.Dummy<CellFormat>().Whose(_ => !_.FontFormat.IsEqualTo(ReferenceObjectForEquatableTestScenarios.FontFormat)).FontFormat,
-                                ReferenceObjectForEquatableTestScenarios.BackgroundColor,
-                                ReferenceObjectForEquatableTestScenarios.VerticalAlignment,
-                                ReferenceObjectForEquatableTestScenarios.HorizontalAlignment,
-                                ReferenceObjectForEquatableTestScenarios.FontRotationAngle,
-                                ReferenceObjectForEquatableTestScenarios.FillPattern,
-                                ReferenceObjectForEquatableTestScenarios.Options),
-                        new CellFormat(
-                                ReferenceObjectForEquatableTestScenarios.OuterBorders,
-                                ReferenceObjectForEquatableTestScenarios.FontFormat,
-                                A.Dummy<CellFormat>().Whose(_ => !_.BackgroundColor.IsEqualTo(ReferenceObjectForEquatableTestScenarios.BackgroundColor)).BackgroundColor,
-                                ReferenceObjectForEquatableTestScenarios.VerticalAlignment,
-                                ReferenceObjectForEquatableTestScenarios.HorizontalAlignment,
-                                ReferenceObjectForEquatableTestScenarios.FontRotationAngle,
-                                ReferenceObjectForEquatableTestScenarios.FillPattern,
-                                ReferenceObjectForEquatableTestScenarios.Options),
-                        new CellFormat(
-                                ReferenceObjectForEquatableTestScenarios.OuterBorders,
-                                ReferenceObjectForEquatableTestScenarios.FontFormat,
-                                ReferenceObjectForEquatableTestScenarios.BackgroundColor,
-                                A.Dummy<CellFormat>().Whose(_ => !_.VerticalAlignment.IsEqualTo(ReferenceObjectForEquatableTestScenarios.VerticalAlignment)).VerticalAlignment,
-                                ReferenceObjectForEquatableTestScenarios.HorizontalAlignment,
-                                ReferenceObjectForEquatableTestScenarios.FontRotationAngle,
-                                ReferenceObjectForEquatableTestScenarios.FillPattern,
-                                ReferenceObjectForEquatableTestScenarios.Options),
-                        new CellFormat(
-                                ReferenceObjectForEquatableTestScenarios.OuterBorders,
-                                ReferenceObjectForEquatableTestScenarios.FontFormat,
-                                ReferenceObjectForEquatableTestScenarios.BackgroundColor,
-                                ReferenceObjectForEquatableTestScenarios.VerticalAlignment,
-                                A.Dummy<CellFormat>().Whose(_ => !_.HorizontalAlignment.IsEqualTo(ReferenceObjectForEquatableTestScenarios.HorizontalAlignment)).HorizontalAlignment,
-                                ReferenceObjectForEquatableTestScenarios.FontRotationAngle,
-                                ReferenceObjectForEquatableTestScenarios.FillPattern,
-                                ReferenceObjectForEquatableTestScenarios.Options),
-                        new CellFormat(
-                                ReferenceObjectForEquatableTestScenarios.OuterBorders,
-                                ReferenceObjectForEquatableTestScenarios.FontFormat,
-                                ReferenceObjectForEquatableTestScenarios.BackgroundColor,
-                                ReferenceObjectForEquatableTestScenarios.VerticalAlignment,
-                                ReferenceObjectForEquatableTestScenarios.HorizontalAlignment,
-                                A.Dummy<CellFormat>().Whose(_ => !_.FontRotationAngle.IsEqualTo(ReferenceObjectForEquatableTestScenarios.FontRotationAngle)).FontRotationAngle,
-                                ReferenceObjectForEquatableTestScenarios.FillPattern,
-                                ReferenceObjectForEquatableTestScenarios.Options),
-                        new CellFormat(
-                                ReferenceObjectForEquatableTestScenarios.OuterBorders,
-                                ReferenceObjectForEquatableTestScenarios.FontFormat,
-                                ReferenceObjectForEquatableTestScenarios.BackgroundColor,
-                                ReferenceObjectForEquatableTestScenarios.VerticalAlignment,
-                                ReferenceObjectForEquatableTestScenarios.HorizontalAlignment,
-                                ReferenceObjectForEquatableTestScenarios.FontRotationAngle,
-                                A.Dummy<CellFormat>().Whose(_ => !_.FillPattern.IsEqualTo(ReferenceObjectForEquatableTestScenarios.FillPattern)).FillPattern,
-                                ReferenceObjectForEquatableTestScenarios.Options),
-                        new CellFormat(
-                                ReferenceObjectForEquatableTestScenarios.OuterBorders,
-                                ReferenceObjectForEquatableTestScenarios.FontFormat,
-                                ReferenceObjectForEquatableTestScenarios.BackgroundColor,
-                                ReferenceObjectForEquatableTestScenarios.VerticalAlignment,
-                                ReferenceObjectForEquatableTestScenarios.HorizontalAlignment,
-                                ReferenceObjectForEquatableTestScenarios.FontRotationAngle,
-                                ReferenceObjectForEquatableTestScenarios.FillPattern,
-                                A.Dummy<CellFormat>().Whose(_ => !_.Options.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Options)).Options),
+                        new FooterRows(
+                                A.Dummy<FooterRows>().Whose(_ => !_.Rows.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Rows)).Rows,
+                                ReferenceObjectForEquatableTestScenarios.Format),
+                        new FooterRows(
+                                ReferenceObjectForEquatableTestScenarios.Rows,
+                                A.Dummy<FooterRows>().Whose(_ => !_.Format.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Format)).Format),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
                     {
@@ -646,12 +238,6 @@ namespace OBeautifulCode.DataStructure.Test
                         A.Dummy<int>(),
                         A.Dummy<int?>(),
                         A.Dummy<Guid>(),
-                        A.Dummy<ColumnFormat>(),
-                        A.Dummy<DataRowsFormat>(),
-                        A.Dummy<FooterRowsFormat>(),
-                        A.Dummy<HeaderRowsFormat>(),
-                        A.Dummy<RowFormat>(),
-                        A.Dummy<TableFormat>(),
                     },
                 });
 
@@ -673,12 +259,12 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void CellFormat___Should_implement_IModel_of_CellFormat___When_reflecting()
+            public static void FooterRows___Should_implement_IModel_of_FooterRows___When_reflecting()
             {
                 // Arrange
-                var type = typeof(CellFormat);
+                var type = typeof(FooterRows);
 
-                var expectedModelMethods = typeof(IModel<CellFormat>).GetInterfaceDeclaredAndImplementedMethods();
+                var expectedModelMethods = typeof(IModel<FooterRows>).GetInterfaceDeclaredAndImplementedMethods();
 
                 var expectedModelMethodHashes = expectedModelMethods.Select(_ => _.GetSignatureHash());
 
@@ -688,7 +274,7 @@ namespace OBeautifulCode.DataStructure.Test
                 var actualModelMethodHashes = actualModelMethods.Select(_ => _.GetSignatureHash());
 
                 // Assert
-                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<CellFormat>));
+                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<FooterRows>));
                 expectedModelMethodHashes.Except(actualModelMethodHashes).AsTest().Must().BeEmptyEnumerable();
             }
 
@@ -706,10 +292,10 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void CellFormat___Should_be_attributed_with_Serializable____When_reflecting()
+            public static void FooterRows___Should_be_attributed_with_Serializable____When_reflecting()
             {
                 // Arrange
-                var type = typeof(CellFormat);
+                var type = typeof(FooterRows);
 
                 // Act
                 var actualAttributes = type.GetCustomAttributes(typeof(SerializableAttribute), false);
@@ -867,10 +453,10 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Clone___Should_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<CellFormat>();
+                var systemUnderTest = A.Dummy<FooterRows>();
 
                 // Act
-                var actual = (CellFormat)systemUnderTest.Clone();
+                var actual = (FooterRows)systemUnderTest.Clone();
 
                 // Assert
                 actual.AsTest().Must().BeEqualTo(systemUnderTest);
@@ -894,7 +480,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void DeepClone___Should_deep_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<CellFormat>();
+                var systemUnderTest = A.Dummy<FooterRows>();
 
                 // Act
                 var actual = systemUnderTest.DeepClone();
@@ -903,40 +489,28 @@ namespace OBeautifulCode.DataStructure.Test
                 actual.AsTest().Must().BeEqualTo(systemUnderTest);
                 actual.AsTest().Must().NotBeSameReferenceAs(systemUnderTest);
 
-                if (systemUnderTest.OuterBorders == null)
+                if (systemUnderTest.Rows == null)
                 {
-                    actual.OuterBorders.AsTest().Must().BeNull();
+                    actual.Rows.AsTest().Must().BeNull();
                 }
-                else if (!actual.OuterBorders.GetType().IsValueType)
+                else if (!actual.Rows.GetType().IsValueType)
                 {
                     // When the declared type is a reference type, we still have to check the runtime type.
                     // The object could be a boxed value type, which will fail this asseration because
                     // a deep clone of a value type object is the same object.
-                    actual.OuterBorders.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.OuterBorders);
+                    actual.Rows.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.Rows);
                 }
 
-                if (systemUnderTest.FontFormat == null)
+                if (systemUnderTest.Format == null)
                 {
-                    actual.FontFormat.AsTest().Must().BeNull();
+                    actual.Format.AsTest().Must().BeNull();
                 }
-                else if (!actual.FontFormat.GetType().IsValueType)
+                else if (!actual.Format.GetType().IsValueType)
                 {
                     // When the declared type is a reference type, we still have to check the runtime type.
                     // The object could be a boxed value type, which will fail this asseration because
                     // a deep clone of a value type object is the same object.
-                    actual.FontFormat.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.FontFormat);
-                }
-
-                if (systemUnderTest.FillPattern == null)
-                {
-                    actual.FillPattern.AsTest().Must().BeNull();
-                }
-                else if (!actual.FillPattern.GetType().IsValueType)
-                {
-                    // When the declared type is a reference type, we still have to check the runtime type.
-                    // The object could be a boxed value type, which will fail this asseration because
-                    // a deep clone of a value type object is the same object.
-                    actual.FillPattern.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.FillPattern);
+                    actual.Format.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.Format);
                 }
             }
 
@@ -956,7 +530,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "OuterBorders", "FontFormat", "BackgroundColor", "VerticalAlignment", "HorizontalAlignment", "FontRotationAngle", "FillPattern", "Options" };
+                var propertyNames = new string[] { "Rows", "Format" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 
@@ -969,12 +543,12 @@ namespace OBeautifulCode.DataStructure.Test
                     }
 
                     // Act
-                    var actual = (CellFormat)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
+                    var actual = (FooterRows)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
 
                     // Assert
                     foreach(var propertyName in propertyNames)
                     {
-                        var propertyInfo = typeof(CellFormat).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
+                        var propertyInfo = typeof(FooterRows).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
 
                         var actualPropertyValue = propertyInfo.GetValue(actual);
 
@@ -1036,7 +610,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<CellFormat>();
+                var expected = A.Dummy<FooterRows>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -1065,7 +639,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<CellFormat>();
+                var expected = A.Dummy<FooterRows>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -1094,7 +668,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<CellFormat>();
+                var expected = A.Dummy<FooterRows>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -1123,7 +697,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<CellFormat>();
+                var expected = A.Dummy<FooterRows>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -1157,8 +731,8 @@ namespace OBeautifulCode.DataStructure.Test
             public static void EqualsOperator___Should_return_true___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                CellFormat systemUnderTest1 = null;
-                CellFormat systemUnderTest2 = null;
+                FooterRows systemUnderTest1 = null;
+                FooterRows systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 == systemUnderTest2;
@@ -1188,7 +762,7 @@ namespace OBeautifulCode.DataStructure.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    CellFormat systemUnderTest = null;
+                    FooterRows systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest == scenario.ReferenceObject;
@@ -1337,8 +911,8 @@ namespace OBeautifulCode.DataStructure.Test
             public static void NotEqualsOperator___Should_return_false___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                CellFormat systemUnderTest1 = null;
-                CellFormat systemUnderTest2 = null;
+                FooterRows systemUnderTest1 = null;
+                FooterRows systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 != systemUnderTest2;
@@ -1368,7 +942,7 @@ namespace OBeautifulCode.DataStructure.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    CellFormat systemUnderTest = null;
+                    FooterRows systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest != scenario.ReferenceObject;
@@ -1514,157 +1088,14 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_RegionFormatBase___Should_return_false___When_parameter_other_is_null()
+            public static void Equals_with_FooterRows___Should_return_false___When_parameter_other_is_null()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    RegionFormatBase systemUnderTest = null;
-
-                    // Act
-                    var actual = scenario.ReferenceObject.Equals((RegionFormatBase)systemUnderTest);
-
-                    // Assert
-                    actual.AsTest().Must().BeFalse(because: scenario.Id);
-                }
-            }
-
-            [Fact]
-            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_RegionFormatBase___Should_return_true___When_parameter_other_is_same_object()
-            {
-                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
-
-                foreach (var scenario in scenarios)
-                {
-                    // Arrange, Act
-                    var actual = scenario.ReferenceObject.Equals((RegionFormatBase)scenario.ReferenceObject);
-
-                    // Assert
-                    actual.AsTest().Must().BeTrue(because: scenario.Id);
-                }
-            }
-
-            [Fact]
-            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_RegionFormatBase___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
-            {
-                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
-
-                foreach (var scenario in scenarios)
-                {
-                    // Arrange, Act
-                    var actuals = scenario.ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((RegionFormatBase)_)).ToList();
-
-                    // Assert
-                    actuals.AsTest().Must().Each().BeFalse(because: scenario.Id);
-                }
-            }
-
-            [Fact]
-            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_RegionFormatBase___Should_return_false___When_objects_being_compared_have_different_property_values()
-            {
-                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
-
-                foreach (var scenario in scenarios)
-                {
-                    // Arrange, Act
-                    var actuals = scenario.ObjectsThatAreNotEqualToReferenceObject.Select(_ => scenario.ReferenceObject.Equals((RegionFormatBase)_)).ToList();
-
-                    // Assert
-                    actuals.AsTest().Must().Each().BeFalse(because: scenario.Id);
-                }
-            }
-
-            [Fact]
-            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_RegionFormatBase___Should_return_true___When_objects_being_compared_have_same_property_values()
-            {
-                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
-
-                foreach (var scenario in scenarios)
-                {
-                    // Arrange, Act
-                    var actuals = scenario.ObjectsThatAreEqualToButNotTheSameAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((RegionFormatBase)_)).ToList();
-
-                    // Assert
-                    actuals.AsTest().Must().Each().BeTrue(because: scenario.Id);
-                }
-            }
-
-            [Fact]
-            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_CellFormat___Should_return_false___When_parameter_other_is_null()
-            {
-                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
-
-                foreach (var scenario in scenarios)
-                {
-                    // Arrange
-                    CellFormat systemUnderTest = null;
+                    FooterRows systemUnderTest = null;
 
                     // Act
                     var actual = scenario.ReferenceObject.Equals(systemUnderTest);
@@ -1688,7 +1119,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_CellFormat___Should_return_true___When_parameter_other_is_same_object()
+            public static void Equals_with_FooterRows___Should_return_true___When_parameter_other_is_same_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1716,7 +1147,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_CellFormat___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
+            public static void Equals_with_FooterRows___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1744,7 +1175,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_CellFormat___Should_return_false___When_objects_being_compared_have_different_property_values()
+            public static void Equals_with_FooterRows___Should_return_false___When_objects_being_compared_have_different_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1772,7 +1203,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_CellFormat___Should_return_true___When_objects_being_compared_have_same_property_values()
+            public static void Equals_with_FooterRows___Should_return_true___When_objects_being_compared_have_same_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 

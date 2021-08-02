@@ -63,6 +63,11 @@ namespace OBeautifulCode.DataStructure
                 result.AddRange(GetAllDataRowsInOrder(tableRows.DataRows.Rows));
             }
 
+            if (tableRows.FooterRows != null)
+            {
+                result.AddRange(tableRows.FooterRows.Rows);
+            }
+
             return result;
         }
 

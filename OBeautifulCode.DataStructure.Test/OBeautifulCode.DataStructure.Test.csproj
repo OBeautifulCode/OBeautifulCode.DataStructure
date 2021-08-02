@@ -197,6 +197,14 @@
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringReadableOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringXmlDocOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
+    <Compile Include="Models\Classes\Format\Region\Regions\FooterRowsFormatTest.cs" />
+    <Compile Include="Models\Classes\Format\Region\Regions\FooterRowsFormatTest.designer.cs">
+      <DependentUpon>FooterRowsFormatTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Row\FooterRowsTest.cs" />
+    <Compile Include="Models\Classes\Row\FooterRowsTest.designer.cs">
+      <DependentUpon>FooterRowsTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Classes\Format\CellValue\Concrete\BooleanCellValueFormatTest.cs" />
     <Compile Include="Models\Classes\Format\CellValue\Concrete\BooleanCellValueFormatTest.designer.cs">
       <DependentUpon>BooleanCellValueFormatTest.cs</DependentUpon>

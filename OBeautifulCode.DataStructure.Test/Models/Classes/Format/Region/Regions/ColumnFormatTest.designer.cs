@@ -543,6 +543,7 @@ namespace OBeautifulCode.DataStructure.Test
                         A.Dummy<Guid>(),
                         A.Dummy<CellFormat>(),
                         A.Dummy<DataRowsFormat>(),
+                        A.Dummy<FooterRowsFormat>(),
                         A.Dummy<HeaderRowsFormat>(),
                         A.Dummy<RowFormat>(),
                         A.Dummy<TableFormat>(),

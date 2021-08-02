@@ -47,7 +47,7 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new SystemUnderTestExpectedStringRepresentation<TableRows>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.TableRows: HeaderRows = {systemUnderTest.HeaderRows?.ToString() ?? "<null>"}, DataRows = {systemUnderTest.DataRows?.ToString() ?? "<null>"}, RowsFormat = {systemUnderTest.RowsFormat?.ToString() ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.TableRows: HeaderRows = {systemUnderTest.HeaderRows?.ToString() ?? "<null>"}, DataRows = {systemUnderTest.DataRows?.ToString() ?? "<null>"}, FooterRows = {systemUnderTest.FooterRows?.ToString() ?? "<null>"}, RowsFormat = {systemUnderTest.RowsFormat?.ToString() ?? "<null>"}."),
                         };
 
                         return result;
@@ -66,6 +66,7 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new TableRows(
                                              null,
                                              referenceObject.DataRows,
+                                             referenceObject.FooterRows,
                                              referenceObject.RowsFormat);
 
                         return result;
@@ -84,12 +85,32 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new TableRows(
                                              referenceObject.HeaderRows,
                                              null,
+                                             referenceObject.FooterRows,
                                              referenceObject.RowsFormat);
 
                         return result;
                     },
                     ExpectedExceptionType = typeof(ArgumentNullException),
                     ExpectedExceptionMessageContains = new[] { "dataRows", },
+                })
+            .AddScenario(() =>
+                new ConstructorArgumentValidationTestScenario<TableRows>
+                {
+                    Name = "constructor should throw ArgumentNullException when parameter 'footerRows' is null scenario",
+                    ConstructionFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<TableRows>();
+
+                        var result = new TableRows(
+                                             referenceObject.HeaderRows,
+                                             referenceObject.DataRows,
+                                             null,
+                                             referenceObject.RowsFormat);
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentNullException),
+                    ExpectedExceptionMessageContains = new[] { "footerRows", },
                 })
             .AddScenario(() =>
                 new ConstructorArgumentValidationTestScenario<TableRows>
@@ -102,6 +123,7 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new TableRows(
                                              referenceObject.HeaderRows,
                                              referenceObject.DataRows,
+                                             referenceObject.FooterRows,
                                              null);
 
                         return result;
@@ -124,6 +146,7 @@ namespace OBeautifulCode.DataStructure.Test
                             SystemUnderTest = new TableRows(
                                                       referenceObject.HeaderRows,
                                                       referenceObject.DataRows,
+                                                      referenceObject.FooterRows,
                                                       referenceObject.RowsFormat),
                             ExpectedPropertyValue = referenceObject.HeaderRows,
                         };
@@ -145,6 +168,7 @@ namespace OBeautifulCode.DataStructure.Test
                             SystemUnderTest = new TableRows(
                                                       referenceObject.HeaderRows,
                                                       referenceObject.DataRows,
+                                                      referenceObject.FooterRows,
                                                       referenceObject.RowsFormat),
                             ExpectedPropertyValue = referenceObject.DataRows,
                         };
@@ -152,6 +176,28 @@ namespace OBeautifulCode.DataStructure.Test
                         return result;
                     },
                     PropertyName = "DataRows",
+                })
+            .AddScenario(() =>
+                new ConstructorPropertyAssignmentTestScenario<TableRows>
+                {
+                    Name = "FooterRows should return same 'footerRows' parameter passed to constructor when getting",
+                    SystemUnderTestExpectedPropertyValueFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<TableRows>();
+
+                        var result = new SystemUnderTestExpectedPropertyValue<TableRows>
+                        {
+                            SystemUnderTest = new TableRows(
+                                                      referenceObject.HeaderRows,
+                                                      referenceObject.DataRows,
+                                                      referenceObject.FooterRows,
+                                                      referenceObject.RowsFormat),
+                            ExpectedPropertyValue = referenceObject.FooterRows,
+                        };
+
+                        return result;
+                    },
+                    PropertyName = "FooterRows",
                 })
             .AddScenario(() =>
                 new ConstructorPropertyAssignmentTestScenario<TableRows>
@@ -166,6 +212,7 @@ namespace OBeautifulCode.DataStructure.Test
                             SystemUnderTest = new TableRows(
                                                       referenceObject.HeaderRows,
                                                       referenceObject.DataRows,
+                                                      referenceObject.FooterRows,
                                                       referenceObject.RowsFormat),
                             ExpectedPropertyValue = referenceObject.RowsFormat,
                         };
@@ -219,6 +266,26 @@ namespace OBeautifulCode.DataStructure.Test
             .AddScenario(() =>
                 new DeepCloneWithTestScenario<TableRows>
                 {
+                    Name = "DeepCloneWithFooterRows should deep clone object and replace FooterRows with the provided footerRows",
+                    WithPropertyName = "FooterRows",
+                    SystemUnderTestDeepCloneWithValueFunc = () =>
+                    {
+                        var systemUnderTest = A.Dummy<TableRows>();
+
+                        var referenceObject = A.Dummy<TableRows>().ThatIs(_ => !systemUnderTest.FooterRows.IsEqualTo(_.FooterRows));
+
+                        var result = new SystemUnderTestDeepCloneWithValue<TableRows>
+                        {
+                            SystemUnderTest = systemUnderTest,
+                            DeepCloneWithValue = referenceObject.FooterRows,
+                        };
+
+                        return result;
+                    },
+                })
+            .AddScenario(() =>
+                new DeepCloneWithTestScenario<TableRows>
+                {
                     Name = "DeepCloneWithRowsFormat should deep clone object and replace RowsFormat with the provided rowsFormat",
                     WithPropertyName = "RowsFormat",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
@@ -250,6 +317,7 @@ namespace OBeautifulCode.DataStructure.Test
                         new TableRows(
                                 ReferenceObjectForEquatableTestScenarios.HeaderRows,
                                 ReferenceObjectForEquatableTestScenarios.DataRows,
+                                ReferenceObjectForEquatableTestScenarios.FooterRows,
                                 ReferenceObjectForEquatableTestScenarios.RowsFormat),
                     },
                     ObjectsThatAreNotEqualToReferenceObject = new TableRows[]
@@ -257,14 +325,22 @@ namespace OBeautifulCode.DataStructure.Test
                         new TableRows(
                                 A.Dummy<TableRows>().Whose(_ => !_.HeaderRows.IsEqualTo(ReferenceObjectForEquatableTestScenarios.HeaderRows)).HeaderRows,
                                 ReferenceObjectForEquatableTestScenarios.DataRows,
+                                ReferenceObjectForEquatableTestScenarios.FooterRows,
                                 ReferenceObjectForEquatableTestScenarios.RowsFormat),
                         new TableRows(
                                 ReferenceObjectForEquatableTestScenarios.HeaderRows,
                                 A.Dummy<TableRows>().Whose(_ => !_.DataRows.IsEqualTo(ReferenceObjectForEquatableTestScenarios.DataRows)).DataRows,
+                                ReferenceObjectForEquatableTestScenarios.FooterRows,
                                 ReferenceObjectForEquatableTestScenarios.RowsFormat),
                         new TableRows(
                                 ReferenceObjectForEquatableTestScenarios.HeaderRows,
                                 ReferenceObjectForEquatableTestScenarios.DataRows,
+                                A.Dummy<TableRows>().Whose(_ => !_.FooterRows.IsEqualTo(ReferenceObjectForEquatableTestScenarios.FooterRows)).FooterRows,
+                                ReferenceObjectForEquatableTestScenarios.RowsFormat),
+                        new TableRows(
+                                ReferenceObjectForEquatableTestScenarios.HeaderRows,
+                                ReferenceObjectForEquatableTestScenarios.DataRows,
+                                ReferenceObjectForEquatableTestScenarios.FooterRows,
                                 A.Dummy<TableRows>().Whose(_ => !_.RowsFormat.IsEqualTo(ReferenceObjectForEquatableTestScenarios.RowsFormat)).RowsFormat),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
@@ -549,6 +625,18 @@ namespace OBeautifulCode.DataStructure.Test
                     actual.DataRows.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.DataRows);
                 }
 
+                if (systemUnderTest.FooterRows == null)
+                {
+                    actual.FooterRows.AsTest().Must().BeNull();
+                }
+                else if (!actual.FooterRows.GetType().IsValueType)
+                {
+                    // When the declared type is a reference type, we still have to check the runtime type.
+                    // The object could be a boxed value type, which will fail this asseration because
+                    // a deep clone of a value type object is the same object.
+                    actual.FooterRows.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.FooterRows);
+                }
+
                 if (systemUnderTest.RowsFormat == null)
                 {
                     actual.RowsFormat.AsTest().Must().BeNull();
@@ -578,7 +666,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "HeaderRows", "DataRows", "RowsFormat" };
+                var propertyNames = new string[] { "HeaderRows", "DataRows", "FooterRows", "RowsFormat" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 

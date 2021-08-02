@@ -18,14 +18,17 @@ namespace OBeautifulCode.DataStructure
         /// </summary>
         /// <param name="headerRows">OPTIONAL header rows.  DEFAULT is no headers rows.</param>
         /// <param name="dataRows">OPTIONAL data rows.  DEFAULT is no data rows.</param>
+        /// <param name="footerRows">OPTIONAL footer rows.  DEFAULT is no footer rows.</param>
         /// <param name="rowsFormat">OPTIONAL format to apply to all rows, individually.  DEFAULT is to leave the format unchanged.</param>
         public TableRows(
             HeaderRows headerRows = null,
             DataRows dataRows = null,
+            FooterRows footerRows = null,
             RowFormat rowsFormat = null)
         {
             this.HeaderRows = headerRows;
             this.DataRows = dataRows;
+            this.FooterRows = footerRows;
             this.RowsFormat = rowsFormat;
         }
 
@@ -38,6 +41,11 @@ namespace OBeautifulCode.DataStructure
         /// Gets the data rows.
         /// </summary>
         public DataRows DataRows { get; private set; }
+
+        /// <summary>
+        /// Gets the footer rows.
+        /// </summary>
+        public FooterRows FooterRows { get; private set; }
 
         /// <summary>
         /// Gets the format to apply to all rows, individually.

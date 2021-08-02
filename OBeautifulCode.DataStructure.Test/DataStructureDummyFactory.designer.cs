@@ -312,6 +312,17 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<FontFormatOptions?>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new FooterRows(
+                                 A.Dummy<IReadOnlyList<FlatRow>>(),
+                                 A.Dummy<FooterRowsFormat>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new FooterRowsFormat(
+                                 A.Dummy<IReadOnlyList<OuterBorder>>(),
+                                 A.Dummy<IReadOnlyList<InnerBorder>>(),
+                                 A.Dummy<RowFormat>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new GetCellValueOp<Version>(
                                  A.Dummy<CellLocator>(),
                                  A.Dummy<IReturningOperation<Version>>()));
@@ -458,6 +469,7 @@ namespace OBeautifulCode.DataStructure.Test
                     {
                         typeof(ColumnFormat),
                         typeof(DataRowsFormat),
+                        typeof(FooterRowsFormat),
                         typeof(HeaderRowsFormat),
                         typeof(RowFormat),
                         typeof(TableFormat)
@@ -580,6 +592,7 @@ namespace OBeautifulCode.DataStructure.Test
                         typeof(CellFormat),
                         typeof(ColumnFormat),
                         typeof(DataRowsFormat),
+                        typeof(FooterRowsFormat),
                         typeof(HeaderRowsFormat),
                         typeof(RowFormat),
                         typeof(TableFormat)
@@ -708,6 +721,7 @@ namespace OBeautifulCode.DataStructure.Test
                 () => new TableRows(
                                  A.Dummy<HeaderRows>(),
                                  A.Dummy<DataRows>(),
+                                 A.Dummy<FooterRows>(),
                                  A.Dummy<RowFormat>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(

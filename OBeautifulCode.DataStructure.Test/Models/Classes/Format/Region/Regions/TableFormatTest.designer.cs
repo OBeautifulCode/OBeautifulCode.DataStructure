@@ -349,6 +349,7 @@ namespace OBeautifulCode.DataStructure.Test
                         A.Dummy<CellFormat>(),
                         A.Dummy<ColumnFormat>(),
                         A.Dummy<DataRowsFormat>(),
+                        A.Dummy<FooterRowsFormat>(),
                         A.Dummy<HeaderRowsFormat>(),
                         A.Dummy<RowFormat>(),
                     },
