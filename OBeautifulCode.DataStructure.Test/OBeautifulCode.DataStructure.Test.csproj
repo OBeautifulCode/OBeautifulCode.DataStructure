@@ -197,6 +197,22 @@
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringReadableOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringXmlDocOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
+    <Compile Include="Models\Classes\Format\CellValue\Concrete\BooleanCellValueFormatTest.cs" />
+    <Compile Include="Models\Classes\Format\CellValue\Concrete\BooleanCellValueFormatTest.designer.cs">
+      <DependentUpon>BooleanCellValueFormatTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Format\CellValue\Concrete\CategoricalCellValueFormat{TValue}Test.cs" />
+    <Compile Include="Models\Classes\Format\CellValue\Concrete\CategoricalCellValueFormat{TValue}Test.designer.cs">
+      <DependentUpon>CategoricalCellValueFormat{TValue}Test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Format\CellValue\Concrete\DecimalCellValueFormatTest.cs" />
+    <Compile Include="Models\Classes\Format\CellValue\Concrete\DecimalCellValueFormatTest.designer.cs">
+      <DependentUpon>DecimalCellValueFormatTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Format\CellValue\Concrete\HtmlCellValueFormatTest.cs" />
+    <Compile Include="Models\Classes\Format\CellValue\Concrete\HtmlCellValueFormatTest.designer.cs">
+      <DependentUpon>HtmlCellValueFormatTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Classes\Format\CellValue\CellValueFormatBase{TValue}Test.cs" />
     <Compile Include="Models\Classes\Format\CellValue\CellValueFormatBase{TValue}Test.designer.cs">
       <DependentUpon>CellValueFormatBase{TValue}Test.cs</DependentUpon>
@@ -399,6 +415,10 @@
     <Compile Include="Models\Classes\Validation\ValidationConditionTest.designer.cs">
       <DependentUpon>ValidationConditionTest.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\Classes\Format\CellValue\NumberCellFormatBase{TValue}Test.cs" />
+    <Compile Include="Models\Classes\Format\CellValue\NumberCellFormatBase{TValue}Test.designer.cs">
+      <DependentUpon>NumberCellFormatBase{TValue}Test.cs</DependentUpon>
+    </Compile>
     <Compile Include="Operations\Bool\AndAlsoOpTest.designer.cs">
       <DependentUpon>AndAlsoOpTest.cs</DependentUpon>
     </Compile>
@@ -451,6 +471,10 @@
     <Compile Include="Models\Classes\Validation\ValidationConditionTest.cs" />
     <Compile Include="Models\Classes\Validation\ValidationConditionsTest.cs" />
     <Compile Include="Operations\Cell\ValidateCellOpTest.cs" />
+    <Compile Include="Models\Classes\Format\CellValue\StandardCellValueFormatBase{TValue}Test.cs" />
+    <Compile Include="Models\Classes\Format\CellValue\StandardCellValueFormatBase{TValue}Test.designer.cs">
+      <DependentUpon>StandardCellValueFormatBase{TValue}Test.cs</DependentUpon>
+    </Compile>
     <None Include="Logic\Extensions\RowExtensionsTest.cs" />
     <Compile Include="Logic\Extensions\TreeTableExtensionsTest.cs" />
     <Compile Include="Models\Classes\CellValue\MediaReferenceTest.cs" />
@@ -506,6 +530,10 @@
     </Compile>
     <Compile Include="Operations\SingleStatementOpBase{TStatement,TResult}Test.designer.cs">
       <DependentUpon>SingleStatementOpBase{TStatement,TResult}Test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Format\CellValue\Concrete\PercentCellValueFormatTest.cs" />
+    <Compile Include="Models\Classes\Format\CellValue\Concrete\PercentCellValueFormatTest.designer.cs">
+      <DependentUpon>PercentCellValueFormatTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\GlobalSuppressions.cs" />

@@ -208,9 +208,37 @@
     <Compile Include="Models\Classes\Format\Border\OuterBorder.designer.cs">
       <DependentUpon>OuterBorder.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\Classes\Format\CellValue\Concrete\BooleanCellValueFormat.designer.cs">
+      <DependentUpon>BooleanCellValueFormat.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Format\CellValue\Concrete\CategoricalCellValueFormat{TValue}.designer.cs">
+      <DependentUpon>CategoricalCellValueFormat{TValue}.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Format\CellValue\Concrete\DecimalCellValueFormat.designer.cs">
+      <DependentUpon>DecimalCellValueFormat.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Format\CellValue\Concrete\HtmlCellValueFormat.cs" />
+    <Compile Include="Models\Classes\Format\CellValue\Concrete\HtmlCellValueFormat.designer.cs">
+      <DependentUpon>HtmlCellValueFormat.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Format\CellValue\Concrete\PercentCellValueFormat.cs" />
+    <Compile Include="Models\Classes\Format\CellValue\Concrete\DecimalCellValueFormat.cs" />
+    <Compile Include="Models\Classes\Format\CellValue\Concrete\CategoricalCellValueFormat{TValue}.cs" />
+    <Compile Include="Models\Classes\Format\CellValue\Concrete\BooleanCellValueFormat.cs" />
+    <Compile Include="Models\Classes\Format\CellValue\Concrete\PercentCellValueFormat.designer.cs">
+      <DependentUpon>PercentCellValueFormat.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Format\CellValue\NumberCellFormatBase{TValue}.cs" />
+    <Compile Include="Models\Classes\Format\CellValue\NumberCellFormatBase{TValue}.designer.cs">
+      <DependentUpon>NumberCellFormatBase{TValue}.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Format\CellValue\StandardCellValueFormatBase{TValue}.cs" />
     <Compile Include="Models\Classes\Format\CellValue\CellValueFormatBase{TValue}.cs" />
     <Compile Include="Models\Classes\Format\CellValue\CellValueFormatBase{TValue}.designer.cs">
       <DependentUpon>CellValueFormatBase{TValue}.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Format\CellValue\StandardCellValueFormatBase{TValue}.designer.cs">
+      <DependentUpon>StandardCellValueFormatBase{TValue}.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Classes\Format\Fill\FillPattern.cs" />
     <Compile Include="Models\Classes\Format\Fill\FillPattern.designer.cs">
@@ -337,6 +365,9 @@
     </Compile>
     <Compile Include="Models\Enums\Cell\MediaReferenceKind.cs" />
     <Compile Include="Models\Enums\Cell\CellOpExecutionStatus.cs" />
+    <Compile Include="Models\Enums\Formatting\NumberFormat\NumberFormatPercentDisplayKind.cs" />
+    <Compile Include="Models\Enums\Formatting\NumberFormat\NumberFormatNegativeDisplayKind.cs" />
+    <Compile Include="Models\Enums\Formatting\NumberFormat\NumberFormatDigitGroupKind.cs" />
     <Compile Include="Models\Enums\Validation\ValidationConditionKind.cs" />
     <Compile Include="Models\Classes\Validation\ValidationConditions.cs" />
     <Compile Include="Models\Classes\Validation\ValidationCondition.cs" />

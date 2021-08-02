@@ -41,6 +41,12 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<IReadOnlyCollection<IReturningOperation<bool>>>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new BooleanCellValueFormat(
+                                 A.Dummy<string>(),
+                                 A.Dummy<string>(),
+                                 A.Dummy<string>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () =>
                 {
                     var availableTypes = new[]
@@ -62,6 +68,11 @@ namespace OBeautifulCode.DataStructure.Test
                 () => new BytesPayloadLinkedResource(
                                  A.Dummy<byte[]>(),
                                  A.Dummy<BytesPayloadLinkedResourceKind>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new CategoricalCellValueFormat<Version>(
+                                 A.Dummy<IReadOnlyDictionary<Version, string>>(),
+                                 A.Dummy<string>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () =>
@@ -191,6 +202,23 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<string>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var availableTypes = new[]
+                    {
+                        typeof(CategoricalCellValueFormat<Version>)
+                    };
+
+                    var randomIndex = ThreadSafeRandom.Next(0, availableTypes.Length);
+
+                    var randomType = availableTypes[randomIndex];
+
+                    var result = (CellValueFormatBase<Version>)AD.ummy(randomType);
+
+                    return result;
+                });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new Column(
                                  A.Dummy<string>(),
                                  A.Dummy<ColumnFormat>()));
@@ -249,6 +277,17 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<IReadOnlyList<InnerBorder>>(),
                                  A.Dummy<RowFormat>(),
                                  A.Dummy<IReadOnlyList<RowFormat>>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new DecimalCellValueFormat(
+                                 A.Dummy<string>(),
+                                 A.Dummy<string>(),
+                                 A.Dummy<int?>(),
+                                 A.Dummy<char?>(),
+                                 A.Dummy<NumberFormatDigitGroupKind?>(),
+                                 A.Dummy<char?>(),
+                                 A.Dummy<NumberFormatNegativeDisplayKind?>(),
+                                 A.Dummy<string>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new ExecuteOperationCellIfNecessaryOp<Version>(
@@ -313,6 +352,10 @@ namespace OBeautifulCode.DataStructure.Test
 
                     return result;
                 });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new HtmlCellValueFormat(
+                                 A.Dummy<string>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new HtmlHoverOver(
@@ -520,6 +563,16 @@ namespace OBeautifulCode.DataStructure.Test
                 });
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new PercentCellValueFormat(
+                                 A.Dummy<NumberFormatPercentDisplayKind?>(),
+                                 A.Dummy<int?>(),
+                                 A.Dummy<char?>(),
+                                 A.Dummy<NumberFormatDigitGroupKind?>(),
+                                 A.Dummy<char?>(),
+                                 A.Dummy<NumberFormatNegativeDisplayKind?>(),
+                                 A.Dummy<string>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () =>
                 {
                     var availableTypes = new[]
@@ -609,6 +662,23 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<string>(),
                                  A.Dummy<int?>(),
                                  A.Dummy<string>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var availableTypes = new[]
+                    {
+                        typeof(CategoricalCellValueFormat<Version>)
+                    };
+
+                    var randomIndex = ThreadSafeRandom.Next(0, availableTypes.Length);
+
+                    var randomType = availableTypes[randomIndex];
+
+                    var result = (StandardCellValueFormatBase<Version>)AD.ummy(randomType);
+
+                    return result;
+                });
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new StringHoverOver(
