@@ -77,8 +77,7 @@ namespace OBeautifulCode.DataStructure
                       && this.CellValidationEvent.IsEqualTo(other.CellValidationEvent)
                       && this.ValueFormat.IsEqualTo(other.ValueFormat)
                       && this.Format.IsEqualTo(other.Format)
-                      && this.HoverOver.IsEqualTo(other.HoverOver)
-                      && this.Link.IsEqualTo(other.Link);
+                      && this.HoverOver.IsEqualTo(other.HoverOver);
 
             return result;
         }
@@ -97,7 +96,6 @@ namespace OBeautifulCode.DataStructure
             .Hash(this.ValueFormat)
             .Hash(this.Format)
             .Hash(this.HoverOver)
-            .Hash(this.Link)
             .Value;
 
         /// <inheritdoc />
@@ -132,8 +130,7 @@ namespace OBeautifulCode.DataStructure
                                  this.Details?.DeepClone(),
                                  this.ValueFormat?.DeepClone(),
                                  this.Format?.DeepClone(),
-                                 this.HoverOver?.DeepClone(),
-                                 this.Link?.DeepClone());
+                                 this.HoverOver?.DeepClone());
 
             return result;
         }
@@ -167,8 +164,7 @@ namespace OBeautifulCode.DataStructure
                                  this.Details?.DeepClone(),
                                  this.ValueFormat?.DeepClone(),
                                  this.Format?.DeepClone(),
-                                 this.HoverOver?.DeepClone(),
-                                 this.Link?.DeepClone());
+                                 this.HoverOver?.DeepClone());
 
             return result;
         }
@@ -202,8 +198,7 @@ namespace OBeautifulCode.DataStructure
                                  details,
                                  this.ValueFormat?.DeepClone(),
                                  this.Format?.DeepClone(),
-                                 this.HoverOver?.DeepClone(),
-                                 this.Link?.DeepClone());
+                                 this.HoverOver?.DeepClone());
 
             return result;
         }
@@ -237,8 +232,7 @@ namespace OBeautifulCode.DataStructure
                                  this.Details?.DeepClone(),
                                  this.ValueFormat?.DeepClone(),
                                  this.Format?.DeepClone(),
-                                 this.HoverOver?.DeepClone(),
-                                 this.Link?.DeepClone());
+                                 this.HoverOver?.DeepClone());
 
             return result;
         }
@@ -272,8 +266,7 @@ namespace OBeautifulCode.DataStructure
                                  this.Details?.DeepClone(),
                                  this.ValueFormat?.DeepClone(),
                                  this.Format?.DeepClone(),
-                                 this.HoverOver?.DeepClone(),
-                                 this.Link?.DeepClone());
+                                 this.HoverOver?.DeepClone());
 
             return result;
         }
@@ -307,8 +300,7 @@ namespace OBeautifulCode.DataStructure
                                  this.Details?.DeepClone(),
                                  this.ValueFormat?.DeepClone(),
                                  this.Format?.DeepClone(),
-                                 this.HoverOver?.DeepClone(),
-                                 this.Link?.DeepClone());
+                                 this.HoverOver?.DeepClone());
 
             return result;
         }
@@ -346,8 +338,7 @@ namespace OBeautifulCode.DataStructure
                                  this.Details?.DeepClone(),
                                  valueFormat,
                                  this.Format?.DeepClone(),
-                                 this.HoverOver?.DeepClone(),
-                                 this.Link?.DeepClone());
+                                 this.HoverOver?.DeepClone());
 
             return result;
         }
@@ -385,8 +376,7 @@ namespace OBeautifulCode.DataStructure
                                  this.Details?.DeepClone(),
                                  this.ValueFormat?.DeepClone(),
                                  format,
-                                 this.HoverOver?.DeepClone(),
-                                 this.Link?.DeepClone());
+                                 this.HoverOver?.DeepClone());
 
             return result;
         }
@@ -424,47 +414,7 @@ namespace OBeautifulCode.DataStructure
                                  this.Details?.DeepClone(),
                                  this.ValueFormat?.DeepClone(),
                                  this.Format?.DeepClone(),
-                                 hoverOver,
-                                 this.Link?.DeepClone());
-
-            return result;
-        }
-
-        /// <summary>
-        /// Deep clones this object with a new <see cref="Link" />.
-        /// </summary>
-        /// <param name="link">The new <see cref="Link" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="InputCell{TValue}" /> using the specified <paramref name="link" /> for <see cref="Link" /> and a deep clone of every other property.</returns>
-        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
-        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
-        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
-        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public InputCell<TValue> DeepCloneWithLink(ILink link)
-        {
-            var result = new InputCell<TValue>(
-                                 this.InputAppliedToCellEvent?.DeepClone(),
-                                 this.ValidationConditions?.DeepClone(),
-                                 this.CellValidationEvent?.DeepClone(),
-                                 this.Id?.DeepClone(),
-                                 this.ColumnsSpanned?.DeepClone(),
-                                 this.Details?.DeepClone(),
-                                 this.ValueFormat?.DeepClone(),
-                                 this.Format?.DeepClone(),
-                                 this.HoverOver?.DeepClone(),
-                                 link);
+                                 hoverOver);
 
             return result;
         }
@@ -482,8 +432,7 @@ namespace OBeautifulCode.DataStructure
                                  this.Details?.DeepClone(),
                                  this.ValueFormat?.DeepClone(),
                                  this.Format?.DeepClone(),
-                                 this.HoverOver?.DeepClone(),
-                                 this.Link?.DeepClone());
+                                 this.HoverOver?.DeepClone());
 
             return result;
         }
@@ -492,7 +441,7 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"OBeautifulCode.DataStructure.{this.GetType().ToStringReadable()}: Id = {this.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, ColumnsSpanned = {this.ColumnsSpanned?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Details = {this.Details?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, InputAppliedToCellEvent = {this.InputAppliedToCellEvent?.ToString() ?? "<null>"}, ValidationConditions = {this.ValidationConditions?.ToString() ?? "<null>"}, CellValidationEvent = {this.CellValidationEvent?.ToString() ?? "<null>"}, ValueFormat = {this.ValueFormat?.ToString() ?? "<null>"}, Format = {this.Format?.ToString() ?? "<null>"}, HoverOver = {this.HoverOver?.ToString() ?? "<null>"}, Link = {this.Link?.ToString() ?? "<null>"}.");
+            var result = Invariant($"OBeautifulCode.DataStructure.{this.GetType().ToStringReadable()}: Id = {this.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, ColumnsSpanned = {this.ColumnsSpanned?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Details = {this.Details?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, InputAppliedToCellEvent = {this.InputAppliedToCellEvent?.ToString() ?? "<null>"}, ValidationConditions = {this.ValidationConditions?.ToString() ?? "<null>"}, CellValidationEvent = {this.CellValidationEvent?.ToString() ?? "<null>"}, ValueFormat = {this.ValueFormat?.ToString() ?? "<null>"}, Format = {this.Format?.ToString() ?? "<null>"}, HoverOver = {this.HoverOver?.ToString() ?? "<null>"}.");
 
             return result;
         }

@@ -400,8 +400,7 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<string>(),
                                  A.Dummy<ICellValueFormat<Version>>(),
                                  A.Dummy<CellFormat>(),
-                                 A.Dummy<IHoverOver>(),
-                                 A.Dummy<ILink>()));
+                                 A.Dummy<IHoverOver>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () =>

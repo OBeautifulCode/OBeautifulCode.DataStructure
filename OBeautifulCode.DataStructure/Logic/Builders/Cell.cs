@@ -139,7 +139,6 @@ namespace OBeautifulCode.DataStructure
         /// <param name="valueFormat">OPTIONAL format to apply to the cell value.  DEFAULT is to leave the format unchanged.</param>
         /// <param name="format">OPTIONAL format to apply to the cell.  DEFAULT is to leave the format unchanged.</param>
         /// <param name="hoverOver">OPTIONAL hover-over for the cell.  DEFAULT is no hover-over.</param>
-        /// <param name="link">OPTIONAL link to some resource.  DEFAULT is no link.</param>
         /// <returns>
         /// The cell.
         /// </returns>
@@ -152,10 +151,9 @@ namespace OBeautifulCode.DataStructure
             string details = null,
             ICellValueFormat<TValue> valueFormat = null,
             CellFormat format = null,
-            IHoverOver hoverOver = null,
-            ILink link = null)
+            IHoverOver hoverOver = null)
         {
-            var result = new InputCell<TValue>(inputAppliedToCellEvent, validationConditions, cellValidationEvent, id, columnsSpanned, details, valueFormat, format, hoverOver, link);
+            var result = new InputCell<TValue>(inputAppliedToCellEvent, validationConditions, cellValidationEvent, id, columnsSpanned, details, valueFormat, format, hoverOver);
 
             return result;
         }

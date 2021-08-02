@@ -14,7 +14,7 @@ namespace OBeautifulCode.DataStructure
     /// Implementation of <see cref="INullCell"/> with a standard set of features.
     /// </summary>
     // ReSharper disable once RedundantExtendsListEntry
-    public partial class NullCell : NullCellBase, IHaveStandardCellFeatures, IModelViaCodeGen
+    public partial class NullCell : NullCellBase, IHaveStandardCellFeatures, IHaveLink, IModelViaCodeGen
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="NullCell"/> class.

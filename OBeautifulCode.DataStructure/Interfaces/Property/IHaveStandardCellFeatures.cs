@@ -9,7 +9,7 @@ namespace OBeautifulCode.DataStructure
     /// <summary>
     /// Specifies a cell having a standardized set of features.
     /// </summary>
-    public interface IHaveStandardCellFeatures : IHaveCellFormat, IHaveHoverOver, IHaveLink
+    public interface IHaveStandardCellFeatures : IHaveCellFormat, IHaveHoverOver
     {
     }
 }
