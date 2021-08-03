@@ -410,6 +410,12 @@ namespace OBeautifulCode.DataStructure
 
             var cell = this.GetCellHavingValue(operation.CellLocator);
 
+            // This is necessary because we can't simply use new ExecuteOperationCellIfNecessaryOp<TValue>()
+            // TValue is the TValue of THIS protocol factory.
+            // HasCellValueOp does not have TValue in it's generic arguments; ALL instances of
+            // DataStructureCellProtocols can execute that operation and the chain-of-responsibility
+            // protocol factory will simply use the first instance of DataStructureCellProtocols that is registered.
+            // So TValue of this factory might be int whereas the cell's TValue is a decimal.
             var executeOperationCellIfNecessaryOp = this.GetExecuteOperationCellIfNecessaryOpOrNull((ICell)cell);
 
             if (executeOperationCellIfNecessaryOp != null)
@@ -433,6 +439,12 @@ namespace OBeautifulCode.DataStructure
 
             var cell = this.GetCellHavingValue(operation.CellLocator);
 
+            // This is necessary because we can't simply use new ExecuteOperationCellIfNecessaryOp<TValue>()
+            // TValue is the TValue of THIS protocol factory.
+            // HasCellValueOp does not have TValue in it's generic arguments; ALL instances of
+            // DataStructureCellProtocols can execute that operation and the chain-of-responsibility
+            // protocol factory will simply use the first instance of DataStructureCellProtocols that is registered.
+            // So TValue of this factory might be int whereas the cell's TValue is a decimal.
             var executeOperationCellIfNecessaryOp = this.GetExecuteOperationCellIfNecessaryOpOrNull((ICell)cell);
 
             if (executeOperationCellIfNecessaryOp != null)
