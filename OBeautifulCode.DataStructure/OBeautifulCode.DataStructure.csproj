@@ -429,6 +429,7 @@
     <Compile Include="Operations\Classes\GetConstOp{TValue}.designer.cs">
       <DependentUpon>GetConstOp{TValue}.cs</DependentUpon>
     </Compile>
+    <Compile Include="Operations\Classes\Integer\GetNumberOfSignificantDigitsOp.cs" />
     <Compile Include="Operations\Classes\MultiStatementOpBase{TStatement,TResult}.designer.cs">
       <DependentUpon>MultiStatementOpBase{TStatement,TResult}.cs</DependentUpon>
     </Compile>

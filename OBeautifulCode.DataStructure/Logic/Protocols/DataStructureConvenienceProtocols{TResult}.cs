@@ -24,7 +24,8 @@ namespace OBeautifulCode.DataStructure
           ISyncAndAsyncReturningProtocol<OrElseOp, bool>,
           ISyncAndAsyncReturningProtocol<NotOp, bool>,
           ISyncAndAsyncReturningProtocol<SumOp, decimal>,
-          ISyncAndAsyncReturningProtocol<CompareOp, bool>
+          ISyncAndAsyncReturningProtocol<CompareOp, bool>,
+          ISyncAndAsyncReturningProtocol<GetNumberOfSignificantDigitsOp, int>
     {
         private readonly IProtocolFactory protocolFactory;
 
@@ -273,6 +274,38 @@ namespace OBeautifulCode.DataStructure
             return result;
         }
 
+        /// <inheritdoc />
+        public int Execute(
+            GetNumberOfSignificantDigitsOp operation)
+        {
+            if (operation == null)
+            {
+                throw new ArgumentNullException(nameof(operation));
+            }
+
+            var value = this.protocolFactory.GetProtocolAndExecuteViaReflection<decimal>(operation.Statement);
+
+            var result = GetNumberOfSignificantDigit(value);
+
+            return result;
+        }
+
+        /// <inheritdoc />
+        public async Task<int> ExecuteAsync(
+            GetNumberOfSignificantDigitsOp operation)
+        {
+            if (operation == null)
+            {
+                throw new ArgumentNullException(nameof(operation));
+            }
+
+            var value = await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync<decimal>(operation.Statement);
+
+            var result = GetNumberOfSignificantDigit(value);
+
+            return result;
+        }
+
         private static bool Compare(
             decimal left,
             CompareOperator @operator,
@@ -296,6 +329,24 @@ namespace OBeautifulCode.DataStructure
                     break;
                 default:
                     throw new NotSupportedException(Invariant($"This {nameof(CompareOperator)} is not supported: {@operator}."));
+            }
+
+            return result;
+        }
+
+        private static int GetNumberOfSignificantDigit(
+            decimal value)
+        {
+            // adapted from: https://stackoverflow.com/a/42265036/356790
+            var n = value / 1.000000000000000000000000000000m;
+
+            var bits = decimal.GetBits(n);
+
+            var result = bits[3] >> 16 & 255;
+
+            if (result < 0)
+            {
+                throw new InvalidOperationException("Expected result to be >= 0.");
             }
 
             return result;
