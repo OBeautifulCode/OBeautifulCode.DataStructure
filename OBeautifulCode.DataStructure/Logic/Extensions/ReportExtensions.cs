@@ -397,7 +397,7 @@ namespace OBeautifulCode.DataStructure
             return result;
         }
 
-        private static IReadOnlyCollection<IValidateableCell> GetClearedValidateableCells(
+        private static IReadOnlyCollection<ICanBeValidated> GetClearedValidateableCells(
             this Report report,
             DateTime timestampUtc)
         {

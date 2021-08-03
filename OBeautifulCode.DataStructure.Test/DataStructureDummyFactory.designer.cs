@@ -772,7 +772,7 @@ namespace OBeautifulCode.DataStructure.Test
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new ValidateCellOp(
-                                 A.Dummy<IValidateableCell>()));
+                                 A.Dummy<ICanBeValidated>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new ValidationCondition(

@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IValidateableCell.cs" company="OBeautifulCode">
+// <copyright file="ICanBeValidated.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -7,7 +7,7 @@
 namespace OBeautifulCode.DataStructure
 {
     /// <summary>
-    /// A cell in a tree table.
+    /// A cell with the necessary properties and methods to be validated.
     /// </summary>
     /// <remarks>
     /// This interface is a convenience for addressing the properties and methods required to
@@ -17,7 +17,7 @@ namespace OBeautifulCode.DataStructure
     /// <see cref="IConstOutputCell{TValue}"/> and mark it with this interface, the cell WILL NOT
     /// get validated.
     /// </remarks>
-    public interface IValidateableCell : IHaveCellValidationConditions, IValidateCellValue
+    public interface ICanBeValidated : IHaveCellValidationConditions, IValidateCellValue
     {
     }
 }

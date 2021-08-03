@@ -107,7 +107,7 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public ValidateCellOp DeepCloneWithCell(IValidateableCell cell)
+        public ValidateCellOp DeepCloneWithCell(ICanBeValidated cell)
         {
             var result = new ValidateCellOp(
                                  cell);

@@ -134,7 +134,7 @@
     <Compile Include="Interfaces\Behavior\IValidateCellValue.cs" />
     <Compile Include="Interfaces\Behavior\IGetCellValue.cs" />
     <Compile Include="Interfaces\Behavior\IGetCellValue{TValue}.cs" />
-    <Compile Include="Interfaces\Classification\Cell\Convenience\IValidateableCell.cs" />
+    <Compile Include="Interfaces\Convenience\ICanBeValidated.cs" />
     <Compile Include="Interfaces\Classification\Cell\INotSlottedCell.cs" />
     <Compile Include="Interfaces\Classification\Cell\Output\IConstOutputCell{TValue}.cs" />
     <Compile Include="Interfaces\Classification\Cell\Null\INullCell.cs" />

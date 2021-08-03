@@ -76,7 +76,7 @@ namespace OBeautifulCode.DataStructure
         /// The validation status of the specified cell.
         /// </returns>
         public static ValidationStatus GetValidationStatus(
-            this IValidateableCell cell)
+            this ICanBeValidated cell)
         {
             if (cell == null)
             {
