@@ -222,14 +222,14 @@ namespace OBeautifulCode.DataStructure
 
             var operationCells = report.GetClearedOperationCells(timestampUtc);
 
+            var validateableCells = report.GetClearedValidateableCells(timestampUtc);
+
             foreach (var operationCell in operationCells)
             {
                 var executeOperationCellIfNecessaryOp = operationCell.BuildExecuteOperationCellIfNecessaryOp();
 
                 protocolFactory.GetProtocolAndExecuteViaReflection(executeOperationCellIfNecessaryOp);
             }
-
-            var validateableCells = report.GetClearedValidateableCells(timestampUtc);
 
             foreach (var validateableCell in validateableCells)
             {
@@ -269,14 +269,14 @@ namespace OBeautifulCode.DataStructure
 
             var operationCells = report.GetClearedOperationCells(timestampUtc);
 
+            var validateableCells = report.GetClearedValidateableCells(timestampUtc);
+
             foreach (var operationCell in operationCells)
             {
                 var executeOperationCellIfNecessaryOp = operationCell.BuildExecuteOperationCellIfNecessaryOp();
 
                 await protocolFactory.GetProtocolAndExecuteViaReflectionAsync(executeOperationCellIfNecessaryOp);
             }
-
-            var validateableCells = report.GetClearedValidateableCells(timestampUtc);
 
             foreach (var validateableCell in validateableCells)
             {
