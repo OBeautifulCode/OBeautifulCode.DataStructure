@@ -7,7 +7,9 @@
 namespace OBeautifulCode.DataStructure
 {
     using System;
+    using System.Collections.Concurrent;
     using System.Linq;
+    using System.Reflection;
     using System.Threading.Tasks;
 
     using OBeautifulCode.Type;
@@ -28,6 +30,10 @@ namespace OBeautifulCode.DataStructure
           ISyncAndAsyncVoidProtocol<ValidateCellOp>,
           ISyncAndAsyncReturningProtocol<ThrowOpExecutionDeemedNotApplicableExceptionOp<TValue>, TValue>
     {
+        // ReSharper disable once StaticMemberInGenericType
+        private static readonly ConcurrentDictionary<Type, ConstructorInfo> CachedTypeToExecuteOperationCellIfNecessaryOpConstructorInfoMap =
+            new ConcurrentDictionary<Type, ConstructorInfo>();
+
         private readonly Report report;
 
         private readonly IProtocolFactory protocolFactory;
@@ -74,29 +80,27 @@ namespace OBeautifulCode.DataStructure
                 throw new ArgumentNullException(nameof(operation));
             }
 
-            var cell = this.GetCellHavingTypedValue(operation.CellLocator);
+            // This will force the execution of an operation cell if it hasn't been executed yet.
+            var hasCellValueOp = new HasCellValueOp(operation.CellLocator);
 
-            if (cell is IOperationOutputCell<TValue> operationCell)
-            {
-                this.protocolFactory.GetProtocolAndExecuteViaReflection(new ExecuteOperationCellIfNecessaryOp<TValue>(operationCell));
-            }
+            var hasCellValue = this.protocolFactory.GetProtocolAndExecuteViaReflection<bool>(hasCellValueOp);
 
             TValue result;
 
-            try
+            if (hasCellValue)
             {
+                var cell = this.GetCellHavingTypedValue(operation.CellLocator);
+
                 result = cell.GetCellValue();
             }
-            catch (Exception ex)
+            else
             {
                 if (operation.DefaultValue == null)
                 {
-                    throw new CellValueMissingException(ex.Message, operation.CellLocator);
+                    throw new CellValueMissingException(operation.CellLocator);
                 }
-                else
-                {
-                    result = this.protocolFactory.GetProtocolAndExecuteViaReflection<TValue>(operation.DefaultValue);
-                }
+
+                result = this.protocolFactory.GetProtocolAndExecuteViaReflection<TValue>(operation.DefaultValue);
             }
 
             return result;
@@ -111,29 +115,27 @@ namespace OBeautifulCode.DataStructure
                 throw new ArgumentNullException(nameof(operation));
             }
 
-            var cell = this.GetCellHavingTypedValue(operation.CellLocator);
+            // This will force the execution of an operation cell if it hasn't been executed yet.
+            var hasCellValueOp = new HasCellValueOp(operation.CellLocator);
 
-            if (cell is IOperationOutputCell<TValue> operationCell)
-            {
-                await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync(new ExecuteOperationCellIfNecessaryOp<TValue>(operationCell));
-            }
+            var hasCellValue = await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync<bool>(hasCellValueOp);
 
             TValue result;
 
-            try
+            if (hasCellValue)
             {
+                var cell = this.GetCellHavingTypedValue(operation.CellLocator);
+
                 result = cell.GetCellValue();
             }
-            catch (Exception ex)
+            else
             {
                 if (operation.DefaultValue == null)
                 {
-                    throw new CellValueMissingException(ex.Message, operation.CellLocator);
+                    throw new CellValueMissingException(operation.CellLocator);
                 }
-                else
-                {
-                    result = await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync<TValue>(operation.DefaultValue);
-                }
+
+                result = this.protocolFactory.GetProtocolAndExecuteViaReflection<TValue>(operation.DefaultValue);
             }
 
             return result;
@@ -408,6 +410,13 @@ namespace OBeautifulCode.DataStructure
 
             var cell = this.GetCellHavingValue(operation.CellLocator);
 
+            var executeOperationCellIfNecessaryOp = this.GetExecuteOperationCellIfNecessaryOpOrNull((ICell)cell);
+
+            if (executeOperationCellIfNecessaryOp != null)
+            {
+                this.protocolFactory.GetProtocolAndExecuteViaReflection(executeOperationCellIfNecessaryOp);
+            }
+
             var result = cell.HasCellValue();
 
             return result;
@@ -424,7 +433,14 @@ namespace OBeautifulCode.DataStructure
 
             var cell = this.GetCellHavingValue(operation.CellLocator);
 
-            var result = await Task.FromResult(cell.HasCellValue());
+            var executeOperationCellIfNecessaryOp = this.GetExecuteOperationCellIfNecessaryOpOrNull((ICell)cell);
+
+            if (executeOperationCellIfNecessaryOp != null)
+            {
+                await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync(executeOperationCellIfNecessaryOp);
+            }
+
+            var result = cell.HasCellValue();
 
             return result;
         }
@@ -559,6 +575,29 @@ namespace OBeautifulCode.DataStructure
             if (!(cell is IGetCellValue result))
             {
                 throw new CellNotFoundException(Invariant($"The operation addresses a cell whose type is not an {typeof(IGetCellValue).ToStringReadable()}: {cell.GetType().ToStringReadable()}."), cellLocator);
+            }
+
+            return result;
+        }
+
+        private IOperation GetExecuteOperationCellIfNecessaryOpOrNull(
+            ICell cell)
+        {
+            IOperation result = null;
+
+            if (cell.IsOperationCell())
+            {
+                var valueType = cell.GetValueTypeOrNull();
+
+                if (!CachedTypeToExecuteOperationCellIfNecessaryOpConstructorInfoMap.TryGetValue(valueType, out var constructorInfo))
+                {
+                    constructorInfo = typeof(ExecuteOperationCellIfNecessaryOp<>).MakeGenericType(cell.GetValueTypeOrNull()).GetConstructors().Single();
+
+                    CachedTypeToExecuteOperationCellIfNecessaryOpConstructorInfoMap.TryAdd(valueType, constructorInfo);
+                }
+
+                // ReSharper disable once CoVariantArrayConversion
+                result = (IOperation)constructorInfo.Invoke(new[] { cell });
             }
 
             return result;
