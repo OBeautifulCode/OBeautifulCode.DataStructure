@@ -168,6 +168,7 @@ namespace OBeautifulCode.DataStructure.Test
                         A.Dummy<int>(),
                         A.Dummy<int?>(),
                         A.Dummy<Guid>(),
+                        A.Dummy<CheckAvailabilityOfCellOp>(),
                         A.Dummy<ExecuteOperationCellIfNecessaryOp<Version>>(),
                         A.Dummy<GetCellValueOp<Version>>(),
                         A.Dummy<GetConstOp<Version>>(),

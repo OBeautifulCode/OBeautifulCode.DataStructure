@@ -47,7 +47,7 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new SystemUnderTestExpectedStringRepresentation<InputCell<Version>>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.InputCell<Version>: Id = {systemUnderTest.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, ColumnsSpanned = {systemUnderTest.ColumnsSpanned?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Details = {systemUnderTest.Details?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Validation = {systemUnderTest.Validation?.ToString() ?? "<null>"}, ValidationEvents = {systemUnderTest.ValidationEvents?.ToString() ?? "<null>"}, InputEvents = {systemUnderTest.InputEvents?.ToString() ?? "<null>"}, ValueFormat = {systemUnderTest.ValueFormat?.ToString() ?? "<null>"}, Format = {systemUnderTest.Format?.ToString() ?? "<null>"}, HoverOver = {systemUnderTest.HoverOver?.ToString() ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.InputCell<Version>: Id = {systemUnderTest.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, ColumnsSpanned = {systemUnderTest.ColumnsSpanned?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Details = {systemUnderTest.Details?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Validation = {systemUnderTest.Validation?.ToString() ?? "<null>"}, ValidationEvents = {systemUnderTest.ValidationEvents?.ToString() ?? "<null>"}, AvailabilityCheckEvents = {systemUnderTest.AvailabilityCheckEvents?.ToString() ?? "<null>"}, AvailabilityCheck = {systemUnderTest.AvailabilityCheck?.ToString() ?? "<null>"}, InputEvents = {systemUnderTest.InputEvents?.ToString() ?? "<null>"}, ValueFormat = {systemUnderTest.ValueFormat?.ToString() ?? "<null>"}, Format = {systemUnderTest.Format?.ToString() ?? "<null>"}, HoverOver = {systemUnderTest.HoverOver?.ToString() ?? "<null>"}."),
                         };
 
                         return result;
@@ -69,6 +69,8 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Details,
                                              referenceObject.Validation,
                                              referenceObject.ValidationEvents,
+                                             referenceObject.AvailabilityCheck,
+                                             referenceObject.AvailabilityCheckEvents,
                                              referenceObject.InputEvents,
                                              referenceObject.ValueFormat,
                                              referenceObject.Format,
@@ -93,6 +95,8 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Details,
                                              referenceObject.Validation,
                                              referenceObject.ValidationEvents,
+                                             referenceObject.AvailabilityCheck,
+                                             referenceObject.AvailabilityCheckEvents,
                                              referenceObject.InputEvents,
                                              referenceObject.ValueFormat,
                                              referenceObject.Format,
@@ -117,6 +121,8 @@ namespace OBeautifulCode.DataStructure.Test
                                              null,
                                              referenceObject.Validation,
                                              referenceObject.ValidationEvents,
+                                             referenceObject.AvailabilityCheck,
+                                             referenceObject.AvailabilityCheckEvents,
                                              referenceObject.InputEvents,
                                              referenceObject.ValueFormat,
                                              referenceObject.Format,
@@ -141,6 +147,8 @@ namespace OBeautifulCode.DataStructure.Test
                                              Invariant($"  {Environment.NewLine}  "),
                                              referenceObject.Validation,
                                              referenceObject.ValidationEvents,
+                                             referenceObject.AvailabilityCheck,
+                                             referenceObject.AvailabilityCheckEvents,
                                              referenceObject.InputEvents,
                                              referenceObject.ValueFormat,
                                              referenceObject.Format,
@@ -165,6 +173,8 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Details,
                                              null,
                                              referenceObject.ValidationEvents,
+                                             referenceObject.AvailabilityCheck,
+                                             referenceObject.AvailabilityCheckEvents,
                                              referenceObject.InputEvents,
                                              referenceObject.ValueFormat,
                                              referenceObject.Format,
@@ -189,6 +199,8 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Details,
                                              referenceObject.Validation,
                                              null,
+                                             referenceObject.AvailabilityCheck,
+                                             referenceObject.AvailabilityCheckEvents,
                                              referenceObject.InputEvents,
                                              referenceObject.ValueFormat,
                                              referenceObject.Format,
@@ -213,6 +225,8 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Details,
                                              referenceObject.Validation,
                                              new List<CellValidationEventBase>(),
+                                             referenceObject.AvailabilityCheck,
+                                             referenceObject.AvailabilityCheckEvents,
                                              referenceObject.InputEvents,
                                              referenceObject.ValueFormat,
                                              referenceObject.Format,
@@ -237,6 +251,8 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Details,
                                              referenceObject.Validation,
                                              new CellValidationEventBase[0].Concat(referenceObject.ValidationEvents).Concat(new CellValidationEventBase[] { null }).Concat(referenceObject.ValidationEvents).ToList(),
+                                             referenceObject.AvailabilityCheck,
+                                             referenceObject.AvailabilityCheckEvents,
                                              referenceObject.InputEvents,
                                              referenceObject.ValueFormat,
                                              referenceObject.Format,
@@ -246,6 +262,110 @@ namespace OBeautifulCode.DataStructure.Test
                     },
                     ExpectedExceptionType = typeof(ArgumentException),
                     ExpectedExceptionMessageContains = new[] { "validationEvents", "contains at least one null element", },
+                })
+            .AddScenario(() =>
+                new ConstructorArgumentValidationTestScenario<InputCell<Version>>
+                {
+                    Name = "constructor should throw ArgumentNullException when parameter 'availabilityCheck' is null scenario",
+                    ConstructionFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<InputCell<Version>>();
+
+                        var result = new InputCell<Version>(
+                                             referenceObject.Id,
+                                             referenceObject.ColumnsSpanned,
+                                             referenceObject.Details,
+                                             referenceObject.Validation,
+                                             referenceObject.ValidationEvents,
+                                             null,
+                                             referenceObject.AvailabilityCheckEvents,
+                                             referenceObject.InputEvents,
+                                             referenceObject.ValueFormat,
+                                             referenceObject.Format,
+                                             referenceObject.HoverOver);
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentNullException),
+                    ExpectedExceptionMessageContains = new[] { "availabilityCheck", },
+                })
+            .AddScenario(() =>
+                new ConstructorArgumentValidationTestScenario<InputCell<Version>>
+                {
+                    Name = "constructor should throw ArgumentNullException when parameter 'availabilityCheckEvents' is null scenario",
+                    ConstructionFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<InputCell<Version>>();
+
+                        var result = new InputCell<Version>(
+                                             referenceObject.Id,
+                                             referenceObject.ColumnsSpanned,
+                                             referenceObject.Details,
+                                             referenceObject.Validation,
+                                             referenceObject.ValidationEvents,
+                                             referenceObject.AvailabilityCheck,
+                                             null,
+                                             referenceObject.InputEvents,
+                                             referenceObject.ValueFormat,
+                                             referenceObject.Format,
+                                             referenceObject.HoverOver);
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentNullException),
+                    ExpectedExceptionMessageContains = new[] { "availabilityCheckEvents", },
+                })
+            .AddScenario(() =>
+                new ConstructorArgumentValidationTestScenario<InputCell<Version>>
+                {
+                    Name = "constructor should throw ArgumentException when parameter 'availabilityCheckEvents' is an empty enumerable scenario",
+                    ConstructionFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<InputCell<Version>>();
+
+                        var result = new InputCell<Version>(
+                                             referenceObject.Id,
+                                             referenceObject.ColumnsSpanned,
+                                             referenceObject.Details,
+                                             referenceObject.Validation,
+                                             referenceObject.ValidationEvents,
+                                             referenceObject.AvailabilityCheck,
+                                             new List<CellAvailabilityCheckEventBase>(),
+                                             referenceObject.InputEvents,
+                                             referenceObject.ValueFormat,
+                                             referenceObject.Format,
+                                             referenceObject.HoverOver);
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentException),
+                    ExpectedExceptionMessageContains = new[] { "availabilityCheckEvents", "is an empty enumerable", },
+                })
+            .AddScenario(() =>
+                new ConstructorArgumentValidationTestScenario<InputCell<Version>>
+                {
+                    Name = "constructor should throw ArgumentException when parameter 'availabilityCheckEvents' contains a null element scenario",
+                    ConstructionFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<InputCell<Version>>();
+
+                        var result = new InputCell<Version>(
+                                             referenceObject.Id,
+                                             referenceObject.ColumnsSpanned,
+                                             referenceObject.Details,
+                                             referenceObject.Validation,
+                                             referenceObject.ValidationEvents,
+                                             referenceObject.AvailabilityCheck,
+                                             new CellAvailabilityCheckEventBase[0].Concat(referenceObject.AvailabilityCheckEvents).Concat(new CellAvailabilityCheckEventBase[] { null }).Concat(referenceObject.AvailabilityCheckEvents).ToList(),
+                                             referenceObject.InputEvents,
+                                             referenceObject.ValueFormat,
+                                             referenceObject.Format,
+                                             referenceObject.HoverOver);
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentException),
+                    ExpectedExceptionMessageContains = new[] { "availabilityCheckEvents", "contains at least one null element", },
                 })
             .AddScenario(() =>
                 new ConstructorArgumentValidationTestScenario<InputCell<Version>>
@@ -261,6 +381,8 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Details,
                                              referenceObject.Validation,
                                              referenceObject.ValidationEvents,
+                                             referenceObject.AvailabilityCheck,
+                                             referenceObject.AvailabilityCheckEvents,
                                              null,
                                              referenceObject.ValueFormat,
                                              referenceObject.Format,
@@ -285,6 +407,8 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Details,
                                              referenceObject.Validation,
                                              referenceObject.ValidationEvents,
+                                             referenceObject.AvailabilityCheck,
+                                             referenceObject.AvailabilityCheckEvents,
                                              new List<CellInputEventBase>(),
                                              referenceObject.ValueFormat,
                                              referenceObject.Format,
@@ -309,6 +433,8 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Details,
                                              referenceObject.Validation,
                                              referenceObject.ValidationEvents,
+                                             referenceObject.AvailabilityCheck,
+                                             referenceObject.AvailabilityCheckEvents,
                                              new CellInputEventBase[0].Concat(referenceObject.InputEvents).Concat(new CellInputEventBase[] { null }).Concat(referenceObject.InputEvents).ToList(),
                                              referenceObject.ValueFormat,
                                              referenceObject.Format,
@@ -333,6 +459,8 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Details,
                                              referenceObject.Validation,
                                              referenceObject.ValidationEvents,
+                                             referenceObject.AvailabilityCheck,
+                                             referenceObject.AvailabilityCheckEvents,
                                              referenceObject.InputEvents,
                                              null,
                                              referenceObject.Format,
@@ -357,6 +485,8 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Details,
                                              referenceObject.Validation,
                                              referenceObject.ValidationEvents,
+                                             referenceObject.AvailabilityCheck,
+                                             referenceObject.AvailabilityCheckEvents,
                                              referenceObject.InputEvents,
                                              referenceObject.ValueFormat,
                                              null,
@@ -381,6 +511,8 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Details,
                                              referenceObject.Validation,
                                              referenceObject.ValidationEvents,
+                                             referenceObject.AvailabilityCheck,
+                                             referenceObject.AvailabilityCheckEvents,
                                              referenceObject.InputEvents,
                                              referenceObject.ValueFormat,
                                              referenceObject.Format,
@@ -409,6 +541,8 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Details,
                                                       referenceObject.Validation,
                                                       referenceObject.ValidationEvents,
+                                                      referenceObject.AvailabilityCheck,
+                                                      referenceObject.AvailabilityCheckEvents,
                                                       referenceObject.InputEvents,
                                                       referenceObject.ValueFormat,
                                                       referenceObject.Format,
@@ -436,6 +570,8 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Details,
                                                       referenceObject.Validation,
                                                       referenceObject.ValidationEvents,
+                                                      referenceObject.AvailabilityCheck,
+                                                      referenceObject.AvailabilityCheckEvents,
                                                       referenceObject.InputEvents,
                                                       referenceObject.ValueFormat,
                                                       referenceObject.Format,
@@ -463,6 +599,8 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Details,
                                                       referenceObject.Validation,
                                                       referenceObject.ValidationEvents,
+                                                      referenceObject.AvailabilityCheck,
+                                                      referenceObject.AvailabilityCheckEvents,
                                                       referenceObject.InputEvents,
                                                       referenceObject.ValueFormat,
                                                       referenceObject.Format,
@@ -490,6 +628,8 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Details,
                                                       referenceObject.Validation,
                                                       referenceObject.ValidationEvents,
+                                                      referenceObject.AvailabilityCheck,
+                                                      referenceObject.AvailabilityCheckEvents,
                                                       referenceObject.InputEvents,
                                                       referenceObject.ValueFormat,
                                                       referenceObject.Format,
@@ -517,6 +657,8 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Details,
                                                       referenceObject.Validation,
                                                       referenceObject.ValidationEvents,
+                                                      referenceObject.AvailabilityCheck,
+                                                      referenceObject.AvailabilityCheckEvents,
                                                       referenceObject.InputEvents,
                                                       referenceObject.ValueFormat,
                                                       referenceObject.Format,
@@ -527,6 +669,64 @@ namespace OBeautifulCode.DataStructure.Test
                         return result;
                     },
                     PropertyName = "ValidationEvents",
+                })
+            .AddScenario(() =>
+                new ConstructorPropertyAssignmentTestScenario<InputCell<Version>>
+                {
+                    Name = "AvailabilityCheck should return same 'availabilityCheck' parameter passed to constructor when getting",
+                    SystemUnderTestExpectedPropertyValueFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<InputCell<Version>>();
+
+                        var result = new SystemUnderTestExpectedPropertyValue<InputCell<Version>>
+                        {
+                            SystemUnderTest = new InputCell<Version>(
+                                                      referenceObject.Id,
+                                                      referenceObject.ColumnsSpanned,
+                                                      referenceObject.Details,
+                                                      referenceObject.Validation,
+                                                      referenceObject.ValidationEvents,
+                                                      referenceObject.AvailabilityCheck,
+                                                      referenceObject.AvailabilityCheckEvents,
+                                                      referenceObject.InputEvents,
+                                                      referenceObject.ValueFormat,
+                                                      referenceObject.Format,
+                                                      referenceObject.HoverOver),
+                            ExpectedPropertyValue = referenceObject.AvailabilityCheck,
+                        };
+
+                        return result;
+                    },
+                    PropertyName = "AvailabilityCheck",
+                })
+            .AddScenario(() =>
+                new ConstructorPropertyAssignmentTestScenario<InputCell<Version>>
+                {
+                    Name = "AvailabilityCheckEvents should return same 'availabilityCheckEvents' parameter passed to constructor when getting",
+                    SystemUnderTestExpectedPropertyValueFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<InputCell<Version>>();
+
+                        var result = new SystemUnderTestExpectedPropertyValue<InputCell<Version>>
+                        {
+                            SystemUnderTest = new InputCell<Version>(
+                                                      referenceObject.Id,
+                                                      referenceObject.ColumnsSpanned,
+                                                      referenceObject.Details,
+                                                      referenceObject.Validation,
+                                                      referenceObject.ValidationEvents,
+                                                      referenceObject.AvailabilityCheck,
+                                                      referenceObject.AvailabilityCheckEvents,
+                                                      referenceObject.InputEvents,
+                                                      referenceObject.ValueFormat,
+                                                      referenceObject.Format,
+                                                      referenceObject.HoverOver),
+                            ExpectedPropertyValue = referenceObject.AvailabilityCheckEvents,
+                        };
+
+                        return result;
+                    },
+                    PropertyName = "AvailabilityCheckEvents",
                 })
             .AddScenario(() =>
                 new ConstructorPropertyAssignmentTestScenario<InputCell<Version>>
@@ -544,6 +744,8 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Details,
                                                       referenceObject.Validation,
                                                       referenceObject.ValidationEvents,
+                                                      referenceObject.AvailabilityCheck,
+                                                      referenceObject.AvailabilityCheckEvents,
                                                       referenceObject.InputEvents,
                                                       referenceObject.ValueFormat,
                                                       referenceObject.Format,
@@ -571,6 +773,8 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Details,
                                                       referenceObject.Validation,
                                                       referenceObject.ValidationEvents,
+                                                      referenceObject.AvailabilityCheck,
+                                                      referenceObject.AvailabilityCheckEvents,
                                                       referenceObject.InputEvents,
                                                       referenceObject.ValueFormat,
                                                       referenceObject.Format,
@@ -598,6 +802,8 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Details,
                                                       referenceObject.Validation,
                                                       referenceObject.ValidationEvents,
+                                                      referenceObject.AvailabilityCheck,
+                                                      referenceObject.AvailabilityCheckEvents,
                                                       referenceObject.InputEvents,
                                                       referenceObject.ValueFormat,
                                                       referenceObject.Format,
@@ -625,6 +831,8 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Details,
                                                       referenceObject.Validation,
                                                       referenceObject.ValidationEvents,
+                                                      referenceObject.AvailabilityCheck,
+                                                      referenceObject.AvailabilityCheckEvents,
                                                       referenceObject.InputEvents,
                                                       referenceObject.ValueFormat,
                                                       referenceObject.Format,
@@ -741,6 +949,46 @@ namespace OBeautifulCode.DataStructure.Test
             .AddScenario(() =>
                 new DeepCloneWithTestScenario<InputCell<Version>>
                 {
+                    Name = "DeepCloneWithAvailabilityCheckEvents should deep clone object and replace AvailabilityCheckEvents with the provided availabilityCheckEvents",
+                    WithPropertyName = "AvailabilityCheckEvents",
+                    SystemUnderTestDeepCloneWithValueFunc = () =>
+                    {
+                        var systemUnderTest = A.Dummy<InputCell<Version>>();
+
+                        var referenceObject = A.Dummy<InputCell<Version>>().ThatIs(_ => !systemUnderTest.AvailabilityCheckEvents.IsEqualTo(_.AvailabilityCheckEvents));
+
+                        var result = new SystemUnderTestDeepCloneWithValue<InputCell<Version>>
+                        {
+                            SystemUnderTest = systemUnderTest,
+                            DeepCloneWithValue = referenceObject.AvailabilityCheckEvents,
+                        };
+
+                        return result;
+                    },
+                })
+            .AddScenario(() =>
+                new DeepCloneWithTestScenario<InputCell<Version>>
+                {
+                    Name = "DeepCloneWithAvailabilityCheck should deep clone object and replace AvailabilityCheck with the provided availabilityCheck",
+                    WithPropertyName = "AvailabilityCheck",
+                    SystemUnderTestDeepCloneWithValueFunc = () =>
+                    {
+                        var systemUnderTest = A.Dummy<InputCell<Version>>();
+
+                        var referenceObject = A.Dummy<InputCell<Version>>().ThatIs(_ => !systemUnderTest.AvailabilityCheck.IsEqualTo(_.AvailabilityCheck));
+
+                        var result = new SystemUnderTestDeepCloneWithValue<InputCell<Version>>
+                        {
+                            SystemUnderTest = systemUnderTest,
+                            DeepCloneWithValue = referenceObject.AvailabilityCheck,
+                        };
+
+                        return result;
+                    },
+                })
+            .AddScenario(() =>
+                new DeepCloneWithTestScenario<InputCell<Version>>
+                {
                     Name = "DeepCloneWithInputEvents should deep clone object and replace InputEvents with the provided inputEvents",
                     WithPropertyName = "InputEvents",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
@@ -835,6 +1083,8 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.Details,
                                 ReferenceObjectForEquatableTestScenarios.Validation,
                                 ReferenceObjectForEquatableTestScenarios.ValidationEvents,
+                                ReferenceObjectForEquatableTestScenarios.AvailabilityCheck,
+                                ReferenceObjectForEquatableTestScenarios.AvailabilityCheckEvents,
                                 ReferenceObjectForEquatableTestScenarios.InputEvents,
                                 ReferenceObjectForEquatableTestScenarios.ValueFormat,
                                 ReferenceObjectForEquatableTestScenarios.Format,
@@ -848,6 +1098,8 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.Details,
                                 ReferenceObjectForEquatableTestScenarios.Validation,
                                 ReferenceObjectForEquatableTestScenarios.ValidationEvents,
+                                ReferenceObjectForEquatableTestScenarios.AvailabilityCheck,
+                                ReferenceObjectForEquatableTestScenarios.AvailabilityCheckEvents,
                                 ReferenceObjectForEquatableTestScenarios.InputEvents,
                                 ReferenceObjectForEquatableTestScenarios.ValueFormat,
                                 ReferenceObjectForEquatableTestScenarios.Format,
@@ -858,6 +1110,8 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.Details,
                                 ReferenceObjectForEquatableTestScenarios.Validation,
                                 ReferenceObjectForEquatableTestScenarios.ValidationEvents,
+                                ReferenceObjectForEquatableTestScenarios.AvailabilityCheck,
+                                ReferenceObjectForEquatableTestScenarios.AvailabilityCheckEvents,
                                 ReferenceObjectForEquatableTestScenarios.InputEvents,
                                 ReferenceObjectForEquatableTestScenarios.ValueFormat,
                                 ReferenceObjectForEquatableTestScenarios.Format,
@@ -868,6 +1122,8 @@ namespace OBeautifulCode.DataStructure.Test
                                 A.Dummy<InputCell<Version>>().Whose(_ => !_.Details.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Details)).Details,
                                 ReferenceObjectForEquatableTestScenarios.Validation,
                                 ReferenceObjectForEquatableTestScenarios.ValidationEvents,
+                                ReferenceObjectForEquatableTestScenarios.AvailabilityCheck,
+                                ReferenceObjectForEquatableTestScenarios.AvailabilityCheckEvents,
                                 ReferenceObjectForEquatableTestScenarios.InputEvents,
                                 ReferenceObjectForEquatableTestScenarios.ValueFormat,
                                 ReferenceObjectForEquatableTestScenarios.Format,
@@ -878,6 +1134,8 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.Details,
                                 A.Dummy<InputCell<Version>>().Whose(_ => !_.Validation.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Validation)).Validation,
                                 ReferenceObjectForEquatableTestScenarios.ValidationEvents,
+                                ReferenceObjectForEquatableTestScenarios.AvailabilityCheck,
+                                ReferenceObjectForEquatableTestScenarios.AvailabilityCheckEvents,
                                 ReferenceObjectForEquatableTestScenarios.InputEvents,
                                 ReferenceObjectForEquatableTestScenarios.ValueFormat,
                                 ReferenceObjectForEquatableTestScenarios.Format,
@@ -888,6 +1146,8 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.Details,
                                 ReferenceObjectForEquatableTestScenarios.Validation,
                                 A.Dummy<InputCell<Version>>().Whose(_ => !_.ValidationEvents.IsEqualTo(ReferenceObjectForEquatableTestScenarios.ValidationEvents)).ValidationEvents,
+                                ReferenceObjectForEquatableTestScenarios.AvailabilityCheck,
+                                ReferenceObjectForEquatableTestScenarios.AvailabilityCheckEvents,
                                 ReferenceObjectForEquatableTestScenarios.InputEvents,
                                 ReferenceObjectForEquatableTestScenarios.ValueFormat,
                                 ReferenceObjectForEquatableTestScenarios.Format,
@@ -898,6 +1158,32 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.Details,
                                 ReferenceObjectForEquatableTestScenarios.Validation,
                                 ReferenceObjectForEquatableTestScenarios.ValidationEvents,
+                                ReferenceObjectForEquatableTestScenarios.AvailabilityCheck,
+                                A.Dummy<InputCell<Version>>().Whose(_ => !_.AvailabilityCheckEvents.IsEqualTo(ReferenceObjectForEquatableTestScenarios.AvailabilityCheckEvents)).AvailabilityCheckEvents,
+                                ReferenceObjectForEquatableTestScenarios.InputEvents,
+                                ReferenceObjectForEquatableTestScenarios.ValueFormat,
+                                ReferenceObjectForEquatableTestScenarios.Format,
+                                ReferenceObjectForEquatableTestScenarios.HoverOver),
+                        new InputCell<Version>(
+                                ReferenceObjectForEquatableTestScenarios.Id,
+                                ReferenceObjectForEquatableTestScenarios.ColumnsSpanned,
+                                ReferenceObjectForEquatableTestScenarios.Details,
+                                ReferenceObjectForEquatableTestScenarios.Validation,
+                                ReferenceObjectForEquatableTestScenarios.ValidationEvents,
+                                A.Dummy<InputCell<Version>>().Whose(_ => !_.AvailabilityCheck.IsEqualTo(ReferenceObjectForEquatableTestScenarios.AvailabilityCheck)).AvailabilityCheck,
+                                ReferenceObjectForEquatableTestScenarios.AvailabilityCheckEvents,
+                                ReferenceObjectForEquatableTestScenarios.InputEvents,
+                                ReferenceObjectForEquatableTestScenarios.ValueFormat,
+                                ReferenceObjectForEquatableTestScenarios.Format,
+                                ReferenceObjectForEquatableTestScenarios.HoverOver),
+                        new InputCell<Version>(
+                                ReferenceObjectForEquatableTestScenarios.Id,
+                                ReferenceObjectForEquatableTestScenarios.ColumnsSpanned,
+                                ReferenceObjectForEquatableTestScenarios.Details,
+                                ReferenceObjectForEquatableTestScenarios.Validation,
+                                ReferenceObjectForEquatableTestScenarios.ValidationEvents,
+                                ReferenceObjectForEquatableTestScenarios.AvailabilityCheck,
+                                ReferenceObjectForEquatableTestScenarios.AvailabilityCheckEvents,
                                 A.Dummy<InputCell<Version>>().Whose(_ => !_.InputEvents.IsEqualTo(ReferenceObjectForEquatableTestScenarios.InputEvents)).InputEvents,
                                 ReferenceObjectForEquatableTestScenarios.ValueFormat,
                                 ReferenceObjectForEquatableTestScenarios.Format,
@@ -908,6 +1194,8 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.Details,
                                 ReferenceObjectForEquatableTestScenarios.Validation,
                                 ReferenceObjectForEquatableTestScenarios.ValidationEvents,
+                                ReferenceObjectForEquatableTestScenarios.AvailabilityCheck,
+                                ReferenceObjectForEquatableTestScenarios.AvailabilityCheckEvents,
                                 ReferenceObjectForEquatableTestScenarios.InputEvents,
                                 A.Dummy<InputCell<Version>>().Whose(_ => !_.ValueFormat.IsEqualTo(ReferenceObjectForEquatableTestScenarios.ValueFormat)).ValueFormat,
                                 ReferenceObjectForEquatableTestScenarios.Format,
@@ -918,6 +1206,8 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.Details,
                                 ReferenceObjectForEquatableTestScenarios.Validation,
                                 ReferenceObjectForEquatableTestScenarios.ValidationEvents,
+                                ReferenceObjectForEquatableTestScenarios.AvailabilityCheck,
+                                ReferenceObjectForEquatableTestScenarios.AvailabilityCheckEvents,
                                 ReferenceObjectForEquatableTestScenarios.InputEvents,
                                 ReferenceObjectForEquatableTestScenarios.ValueFormat,
                                 A.Dummy<InputCell<Version>>().Whose(_ => !_.Format.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Format)).Format,
@@ -928,6 +1218,8 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.Details,
                                 ReferenceObjectForEquatableTestScenarios.Validation,
                                 ReferenceObjectForEquatableTestScenarios.ValidationEvents,
+                                ReferenceObjectForEquatableTestScenarios.AvailabilityCheck,
+                                ReferenceObjectForEquatableTestScenarios.AvailabilityCheckEvents,
                                 ReferenceObjectForEquatableTestScenarios.InputEvents,
                                 ReferenceObjectForEquatableTestScenarios.ValueFormat,
                                 ReferenceObjectForEquatableTestScenarios.Format,
@@ -1219,6 +1511,30 @@ namespace OBeautifulCode.DataStructure.Test
                     actual.ValidationEvents.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.ValidationEvents);
                 }
 
+                if (systemUnderTest.AvailabilityCheckEvents == null)
+                {
+                    actual.AvailabilityCheckEvents.AsTest().Must().BeNull();
+                }
+                else if (!actual.AvailabilityCheckEvents.GetType().IsValueType)
+                {
+                    // When the declared type is a reference type, we still have to check the runtime type.
+                    // The object could be a boxed value type, which will fail this asseration because
+                    // a deep clone of a value type object is the same object.
+                    actual.AvailabilityCheckEvents.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.AvailabilityCheckEvents);
+                }
+
+                if (systemUnderTest.AvailabilityCheck == null)
+                {
+                    actual.AvailabilityCheck.AsTest().Must().BeNull();
+                }
+                else if (!actual.AvailabilityCheck.GetType().IsValueType)
+                {
+                    // When the declared type is a reference type, we still have to check the runtime type.
+                    // The object could be a boxed value type, which will fail this asseration because
+                    // a deep clone of a value type object is the same object.
+                    actual.AvailabilityCheck.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.AvailabilityCheck);
+                }
+
                 if (systemUnderTest.InputEvents == null)
                 {
                     actual.InputEvents.AsTest().Must().BeNull();
@@ -1284,7 +1600,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "Id", "ColumnsSpanned", "Details", "Validation", "ValidationEvents", "InputEvents", "ValueFormat", "Format", "HoverOver" };
+                var propertyNames = new string[] { "Id", "ColumnsSpanned", "Details", "Validation", "ValidationEvents", "AvailabilityCheckEvents", "AvailabilityCheck", "InputEvents", "ValueFormat", "Format", "HoverOver" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 

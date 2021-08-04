@@ -85,43 +85,90 @@ namespace OBeautifulCode.DataStructure
 
             ValidationStatus result;
 
-            var lastCellValidationEvent = cell.ValidationEvents?.LastOrDefault();
+            var lastValidationEvent = cell.ValidationEvents?.LastOrDefault();
 
             if (cell.Validation == null)
             {
                 result = ValidationStatus.ValidationMissing;
             }
-            else if (lastCellValidationEvent == null)
+            else if (lastValidationEvent == null)
             {
                 result = ValidationStatus.Unvalidated;
             }
-            else if (lastCellValidationEvent is CellValidationClearedEvent)
+            else if (lastValidationEvent is CellValidationClearedEvent)
             {
                 result = ValidationStatus.Unvalidated;
             }
-            else if (lastCellValidationEvent is CellValidationDeemedNotApplicableEvent)
+            else if (lastValidationEvent is CellValidationDeemedNotApplicableEvent)
             {
                 result = ValidationStatus.DeemedNotApplicable;
             }
-            else if (lastCellValidationEvent is CellValidationAbortedEvent)
+            else if (lastValidationEvent is CellValidationAbortedEvent)
             {
                 result = ValidationStatus.Aborted;
             }
-            else if (lastCellValidationEvent is CellValidationDeterminedCellValidEvent)
+            else if (lastValidationEvent is CellValidationDeterminedCellValidEvent)
             {
                 result = ValidationStatus.Valid;
             }
-            else if (lastCellValidationEvent is CellValidationFailedEvent)
+            else if (lastValidationEvent is CellValidationFailedEvent)
             {
                 result = ValidationStatus.Failed;
             }
-            else if (lastCellValidationEvent is CellValidationDeterminedCellInvalidEvent)
+            else if (lastValidationEvent is CellValidationDeterminedCellInvalidEvent)
             {
                 result = ValidationStatus.Invalid;
             }
             else
             {
                 throw new InvalidOperationException(Invariant($"Cannot determine the {nameof(ValidationStatus)} of the specified cell."));
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Gets the availability check status of a specified cell.
+        /// </summary>
+        /// <param name="cell">The cell.</param>
+        /// <returns>
+        /// The availability check status of the specified cell.
+        /// </returns>
+        public static AvailabilityCheckStatus GetAvailabilityCheckStatus(
+            this IAvailabilityCheckCell cell)
+        {
+            if (cell == null)
+            {
+                throw new ArgumentNullException(nameof(cell));
+            }
+
+            AvailabilityCheckStatus result;
+
+            var lastAvailabilityCheckEvent = cell.AvailabilityCheckEvents?.LastOrDefault();
+
+            if (cell.AvailabilityCheck == null)
+            {
+                result = AvailabilityCheckStatus.AvailabilityCheckMissing;
+            }
+            else if (lastAvailabilityCheckEvent == null)
+            {
+                result = AvailabilityCheckStatus.Unchecked;
+            }
+            else if (lastAvailabilityCheckEvent is CellAvailabilityCheckDeterminedCellEnabledEvent)
+            {
+                result = AvailabilityCheckStatus.Enabled;
+            }
+            else if (lastAvailabilityCheckEvent is CellAvailabilityCheckDeterminedCellDisabledEvent)
+            {
+                result = AvailabilityCheckStatus.Disabled;
+            }
+            else if (lastAvailabilityCheckEvent is CellAvailabilityCheckFailedEvent)
+            {
+                result = AvailabilityCheckStatus.Failed;
+            }
+            else
+            {
+                throw new InvalidOperationException(Invariant($"Cannot determine the {nameof(AvailabilityCheckStatus)} of the specified cell."));
             }
 
             return result;

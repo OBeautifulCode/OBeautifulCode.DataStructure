@@ -64,8 +64,20 @@
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringReadableOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringXmlDocOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
-    <Compile Include="Events\CellAvailabilityEventBase.designer.cs">
-      <DependentUpon>CellAvailabilityEventBase.cs</DependentUpon>
+    <Compile Include="Events\CellAvailabilityCheckEventBase.designer.cs">
+      <DependentUpon>CellAvailabilityCheckEventBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Events\CellAvailabilityCheck\CellAvailabilityCheckDeterminedCellDisabledEvent.cs" />
+    <Compile Include="Events\CellAvailabilityCheck\CellAvailabilityCheckDeterminedCellDisabledEvent.designer.cs">
+      <DependentUpon>CellAvailabilityCheckDeterminedCellDisabledEvent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Events\CellAvailabilityCheck\CellAvailabilityCheckDeterminedCellEnabledEvent.cs" />
+    <Compile Include="Events\CellAvailabilityCheck\CellAvailabilityCheckDeterminedCellEnabledEvent.designer.cs">
+      <DependentUpon>CellAvailabilityCheckDeterminedCellEnabledEvent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Events\CellAvailabilityCheck\CellAvailabilityCheckFailedEvent.cs" />
+    <Compile Include="Events\CellAvailabilityCheck\CellAvailabilityCheckFailedEvent.designer.cs">
+      <DependentUpon>CellAvailabilityCheckFailedEvent.cs</DependentUpon>
     </Compile>
     <Compile Include="Events\CellInputEventBase.designer.cs">
       <DependentUpon>CellInputEventBase.cs</DependentUpon>
@@ -93,7 +105,7 @@
     <Compile Include="Events\CellOpExecution\CellOpExecutionFailedEvent.designer.cs">
       <DependentUpon>CellOpExecutionFailedEvent.cs</DependentUpon>
     </Compile>
-    <Compile Include="Events\CellAvailabilityEventBase.cs" />
+    <Compile Include="Events\CellAvailabilityCheckEventBase.cs" />
     <Compile Include="Events\CellValidationEventBase.cs" />
     <Compile Include="Events\CellOpExecutionEventBase.cs" />
     <Compile Include="Events\CellOpExecution\CellOpExecutionAbortedEvent.cs" />
@@ -137,7 +149,7 @@
     <Compile Include="Interfaces\Behavior\IClearCellValue.cs" />
     <Compile Include="Interfaces\Behavior\IGetCellValue.cs" />
     <Compile Include="Interfaces\Behavior\IGetCellValue{TValue}.cs" />
-    <Compile Include="Interfaces\Classification\Cell\Feature\IAvailabilityCell.cs" />
+    <Compile Include="Interfaces\Classification\Cell\Feature\IAvailabilityCheckCell.cs" />
     <Compile Include="Interfaces\Classification\Cell\Feature\IValidationCell.cs" />
     <Compile Include="Interfaces\Classification\Cell\INotSlottedCell.cs" />
     <Compile Include="Interfaces\Classification\Cell\Output\IConstOutputCell{TValue}.cs" />
@@ -160,6 +172,14 @@
     <Compile Include="Logic\Extensions\ReportExtensions.cs" />
     <Compile Include="Logic\Protocols\DataStructureConvenienceProtocols{TResult}.cs" />
     <Compile Include="Logic\Protocols\DataStructureCellProtocols{TValue}.cs" />
+    <Compile Include="Models\Classes\AvailabilityCheck\AvailabilityCheck.cs" />
+    <Compile Include="Models\Classes\AvailabilityCheck\AvailabilityCheck.designer.cs">
+      <DependentUpon>AvailabilityCheck.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\AvailabilityCheck\AvailabilityCheckResult.cs" />
+    <Compile Include="Models\Classes\AvailabilityCheck\AvailabilityCheckResult.designer.cs">
+      <DependentUpon>AvailabilityCheckResult.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Classes\CellValue\MediaReference.cs" />
     <Compile Include="Models\Classes\CellValue\MediaReference.designer.cs">
       <DependentUpon>MediaReference.cs</DependentUpon>
@@ -405,6 +425,8 @@
     <Compile Include="Models\Enums\Formatting\NumberFormat\NumberFormatNegativeDisplayKind.cs" />
     <Compile Include="Models\Enums\Formatting\NumberFormat\NumberFormatDigitGroupKind.cs" />
     <Compile Include="Models\Classes\Validation\Validation.cs" />
+    <Compile Include="Models\Enums\Availability\AvailabilityCheckStatus.cs" />
+    <Compile Include="Models\Enums\Availability\Availability.cs" />
     <Compile Include="Models\Enums\Validation\ValidationConditionKind.cs" />
     <Compile Include="Models\Enums\Validation\Validity.cs" />
     <Compile Include="Models\Enums\Validation\ValidationStatus.cs" />
@@ -423,6 +445,9 @@
     <Compile Include="Operations\Classes\Branch\IfThenElseOp{TResult}.designer.cs">
       <DependentUpon>IfThenElseOp{TResult}.cs</DependentUpon>
     </Compile>
+    <Compile Include="Operations\Classes\Cell\CheckAvailabilityOfCellOp.designer.cs">
+      <DependentUpon>CheckAvailabilityOfCellOp.cs</DependentUpon>
+    </Compile>
     <Compile Include="Operations\Classes\Cell\ExecuteOperationCellIfNecessaryOp{TValue}.designer.cs">
       <DependentUpon>ExecuteOperationCellIfNecessaryOp{TValue}.cs</DependentUpon>
     </Compile>
@@ -432,6 +457,7 @@
     <Compile Include="Operations\Classes\Cell\HasCellValueOp.designer.cs">
       <DependentUpon>HasCellValueOp.cs</DependentUpon>
     </Compile>
+    <Compile Include="Operations\Classes\Cell\CheckAvailabilityOfCellOp.cs" />
     <Compile Include="Operations\Classes\Cell\ValidateCellOp.designer.cs">
       <DependentUpon>ValidateCellOp.cs</DependentUpon>
     </Compile>
@@ -514,9 +540,7 @@
     <Content Include=".analyzers\dictionary.xml" />
     <None Include="nuget-icon.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Events\CellAvailability\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\OBeautifulCode.Build.Analyzers.1.1.136\build\OBeautifulCode.Build.Analyzers.targets" Condition="Exists('..\packages\OBeautifulCode.Build.Analyzers.1.1.136\build\OBeautifulCode.Build.Analyzers.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

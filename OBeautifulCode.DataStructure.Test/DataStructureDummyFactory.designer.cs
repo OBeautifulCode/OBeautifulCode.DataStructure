@@ -41,6 +41,16 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<IReadOnlyCollection<IReturningOperation<bool>>>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new AvailabilityCheck(
+                                 A.Dummy<IReturningOperation<AvailabilityCheckResult>>(),
+                                 A.Dummy<string>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new AvailabilityCheckResult(
+                                 A.Dummy<Availability>(),
+                                 A.Dummy<IReturningOperation<string>>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new BooleanCellValueFormat(
                                  A.Dummy<string>(),
                                  A.Dummy<string>(),
@@ -72,6 +82,42 @@ namespace OBeautifulCode.DataStructure.Test
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new CategoricalCellValueFormat<Version>(
                                  A.Dummy<IReadOnlyDictionary<Version, string>>(),
+                                 A.Dummy<string>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new CellAvailabilityCheckDeterminedCellDisabledEvent(
+                                 A.Dummy<DateTime>(),
+                                 A.Dummy<string>(),
+                                 A.Dummy<string>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new CellAvailabilityCheckDeterminedCellEnabledEvent(
+                                 A.Dummy<DateTime>(),
+                                 A.Dummy<string>(),
+                                 A.Dummy<string>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var availableTypes = new[]
+                    {
+                        typeof(CellAvailabilityCheckDeterminedCellDisabledEvent),
+                        typeof(CellAvailabilityCheckDeterminedCellEnabledEvent),
+                        typeof(CellAvailabilityCheckFailedEvent)
+                    };
+
+                    var randomIndex = ThreadSafeRandom.Next(0, availableTypes.Length);
+
+                    var randomType = availableTypes[randomIndex];
+
+                    var result = (CellAvailabilityCheckEventBase)AD.ummy(randomType);
+
+                    return result;
+                });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new CellAvailabilityCheckFailedEvent(
+                                 A.Dummy<DateTime>(),
                                  A.Dummy<string>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
@@ -262,6 +308,10 @@ namespace OBeautifulCode.DataStructure.Test
                 });
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new CheckAvailabilityOfCellOp(
+                                 A.Dummy<IAvailabilityCheckCell>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new Column(
                                  A.Dummy<string>(),
                                  A.Dummy<ColumnFormat>()));
@@ -289,6 +339,8 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<string>(),
                                  A.Dummy<Validation>(),
                                  A.Dummy<IReadOnlyList<CellValidationEventBase>>(),
+                                 A.Dummy<AvailabilityCheck>(),
+                                 A.Dummy<IReadOnlyList<CellAvailabilityCheckEventBase>>(),
                                  A.Dummy<ICellValueFormat<Version>>(),
                                  A.Dummy<CellFormat>(),
                                  A.Dummy<IHoverOver>(),
@@ -441,6 +493,8 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<string>(),
                                  A.Dummy<Validation>(),
                                  A.Dummy<IReadOnlyList<CellValidationEventBase>>(),
+                                 A.Dummy<AvailabilityCheck>(),
+                                 A.Dummy<IReadOnlyList<CellAvailabilityCheckEventBase>>(),
                                  A.Dummy<IReadOnlyList<CellInputEventBase>>(),
                                  A.Dummy<ICellValueFormat<Version>>(),
                                  A.Dummy<CellFormat>(),
@@ -559,6 +613,8 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<string>(),
                                  A.Dummy<Validation>(),
                                  A.Dummy<IReadOnlyList<CellValidationEventBase>>(),
+                                 A.Dummy<AvailabilityCheck>(),
+                                 A.Dummy<IReadOnlyList<CellAvailabilityCheckEventBase>>(),
                                  A.Dummy<CellFormat>(),
                                  A.Dummy<IHoverOver>(),
                                  A.Dummy<ILink>()));
@@ -589,6 +645,8 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<string>(),
                                  A.Dummy<Validation>(),
                                  A.Dummy<IReadOnlyList<CellValidationEventBase>>(),
+                                 A.Dummy<AvailabilityCheck>(),
+                                 A.Dummy<IReadOnlyList<CellAvailabilityCheckEventBase>>(),
                                  A.Dummy<IReadOnlyList<CellOpExecutionEventBase>>(),
                                  A.Dummy<ICellValueFormat<Version>>(),
                                  A.Dummy<CellFormat>(),

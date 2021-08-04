@@ -28,7 +28,8 @@ namespace OBeautifulCode.DataStructure
           ISyncAndAsyncReturningProtocol<HasCellValueOp, bool>,
           ISyncAndAsyncReturningProtocol<ThrowOpExecutionAbortedExceptionOp<TValue>, TValue>,
           ISyncAndAsyncVoidProtocol<ValidateCellOp>,
-          ISyncAndAsyncReturningProtocol<ThrowOpExecutionDeemedNotApplicableExceptionOp<TValue>, TValue>
+          ISyncAndAsyncReturningProtocol<ThrowOpExecutionDeemedNotApplicableExceptionOp<TValue>, TValue>,
+          ISyncAndAsyncVoidProtocol<CheckAvailabilityOfCellOp>
     {
         // ReSharper disable once StaticMemberInGenericType
         private static readonly ConcurrentDictionary<Type, ConstructorInfo> CachedTypeToExecuteOperationCellIfNecessaryOpConstructorInfoMap =
@@ -382,6 +383,136 @@ namespace OBeautifulCode.DataStructure
             else if (cell.ValidationEvents.Last().TimestampUtc != this.timestampUtc)
             {
                 throw new InvalidOperationException("Something went wrong.  The cell was validated, but the recorded timestamp doesn't match this timestamp.");
+            }
+        }
+
+        /// <inheritdoc />
+        public void Execute(
+            CheckAvailabilityOfCellOp operation)
+        {
+            // NOTE: THIS CODE IS A NEAR DUPLICATE OF THE ASYNC METHOD BELOW; NO GOOD WAY TO D.R.Y. IT OUT
+            if (operation == null)
+            {
+                throw new ArgumentNullException(nameof(operation));
+            }
+
+            var cell = operation.Cell;
+
+            var availabilityCheckStatus = cell.GetAvailabilityCheckStatus();
+
+            if (availabilityCheckStatus == AvailabilityCheckStatus.AvailabilityCheckMissing)
+            {
+                // no-op
+            }
+            else if (availabilityCheckStatus == AvailabilityCheckStatus.Unchecked)
+            {
+                CellAvailabilityCheckEventBase availabilityCheckEvent;
+
+                try
+                {
+                    var availabilityCheck = cell.AvailabilityCheck;
+
+                    var availabilityCheckResult = this.protocolFactory.GetProtocolAndExecuteViaReflection<AvailabilityCheckResult>(availabilityCheck.Operation);
+
+                    string message = null;
+
+                    if (availabilityCheckResult.MessageOp != null)
+                    {
+                        message = this.protocolFactory.GetProtocolAndExecuteViaReflection<string>(availabilityCheckResult.MessageOp);
+                    }
+
+                    var availability = availabilityCheckResult.Availability;
+
+                    if (availability == Availability.Disabled)
+                    {
+                        availabilityCheckEvent = new CellAvailabilityCheckDeterminedCellDisabledEvent(this.timestampUtc, null, message);
+                    }
+                    else if (availability == Availability.Enabled)
+                    {
+                        availabilityCheckEvent = new CellAvailabilityCheckDeterminedCellEnabledEvent(this.timestampUtc, null, message);
+                    }
+                    else
+                    {
+                        throw new NotSupportedException(Invariant($"This {nameof(Availability)} is not supported: {availability}."));
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // The "proper" exception for a protocol to throw is an OpExecutionFailedExceptionBase.
+                    // Protocol authors might not comply.
+                    availabilityCheckEvent = new CellAvailabilityCheckFailedEvent(this.timestampUtc, ex.ToString());
+                }
+
+                cell.Record(availabilityCheckEvent);
+            }
+            else if (cell.AvailabilityCheckEvents.Last().TimestampUtc != this.timestampUtc)
+            {
+                throw new InvalidOperationException("Something went wrong.  The cell was checked for availability, but the recorded timestamp doesn't match this timestamp.");
+            }
+        }
+
+        /// <inheritdoc />
+        public async Task ExecuteAsync(
+            CheckAvailabilityOfCellOp operation)
+        {
+            // NOTE: THIS CODE IS A NEAR DUPLICATE OF THE SYNC METHOD ABOVE; NO GOOD WAY TO D.R.Y. IT OUT
+            if (operation == null)
+            {
+                throw new ArgumentNullException(nameof(operation));
+            }
+
+            var cell = operation.Cell;
+
+            var availabilityCheckStatus = cell.GetAvailabilityCheckStatus();
+
+            if (availabilityCheckStatus == AvailabilityCheckStatus.AvailabilityCheckMissing)
+            {
+                // no-op
+            }
+            else if (availabilityCheckStatus == AvailabilityCheckStatus.Unchecked)
+            {
+                CellAvailabilityCheckEventBase availabilityCheckEvent;
+
+                try
+                {
+                    var availabilityCheck = cell.AvailabilityCheck;
+
+                    var availabilityCheckResult = await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync<AvailabilityCheckResult>(availabilityCheck.Operation);
+
+                    string message = null;
+
+                    if (availabilityCheckResult.MessageOp != null)
+                    {
+                        message = await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync<string>(availabilityCheckResult.MessageOp);
+                    }
+
+                    var availability = availabilityCheckResult.Availability;
+
+                    if (availability == Availability.Disabled)
+                    {
+                        availabilityCheckEvent = new CellAvailabilityCheckDeterminedCellDisabledEvent(this.timestampUtc, null, message);
+                    }
+                    else if (availability == Availability.Enabled)
+                    {
+                        availabilityCheckEvent = new CellAvailabilityCheckDeterminedCellEnabledEvent(this.timestampUtc, null, message);
+                    }
+                    else
+                    {
+                        throw new NotSupportedException(Invariant($"This {nameof(Availability)} is not supported: {availability}."));
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // The "proper" exception for a protocol to throw is an OpExecutionFailedExceptionBase.
+                    // Protocol authors might not comply.
+                    availabilityCheckEvent = new CellAvailabilityCheckFailedEvent(this.timestampUtc, ex.ToString());
+                }
+
+                cell.Record(availabilityCheckEvent);
+            }
+            else if (cell.AvailabilityCheckEvents.Last().TimestampUtc != this.timestampUtc)
+            {
+                throw new InvalidOperationException("Something went wrong.  The cell was checked for availability, but the recorded timestamp doesn't match this timestamp.");
             }
         }
 

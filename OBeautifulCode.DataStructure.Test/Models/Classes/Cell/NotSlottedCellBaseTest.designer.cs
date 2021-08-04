@@ -58,6 +58,8 @@ namespace OBeautifulCode.DataStructure.Test
                         // (NotSlottedCellBase)ReferenceObjectForEquatableTestScenarios.DeepCloneWithDetails(A.Dummy<NotSlottedCellBase>().Whose(_ => !_.Details.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Details)).Details),
                         // ReferenceObjectForEquatableTestScenarios.DeepCloneWithValidation(A.Dummy<NotSlottedCellBase>().Whose(_ => !_.Validation.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Validation)).Validation),
                         // ReferenceObjectForEquatableTestScenarios.DeepCloneWithValidationEvents(A.Dummy<NotSlottedCellBase>().Whose(_ => !_.ValidationEvents.IsEqualTo(ReferenceObjectForEquatableTestScenarios.ValidationEvents)).ValidationEvents),
+                        // ReferenceObjectForEquatableTestScenarios.DeepCloneWithAvailabilityCheckEvents(A.Dummy<NotSlottedCellBase>().Whose(_ => !_.AvailabilityCheckEvents.IsEqualTo(ReferenceObjectForEquatableTestScenarios.AvailabilityCheckEvents)).AvailabilityCheckEvents),
+                        // ReferenceObjectForEquatableTestScenarios.DeepCloneWithAvailabilityCheck(A.Dummy<NotSlottedCellBase>().Whose(_ => !_.AvailabilityCheck.IsEqualTo(ReferenceObjectForEquatableTestScenarios.AvailabilityCheck)).AvailabilityCheck),
                     },
                     ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject = new NotSlottedCellBase[]
                     {
@@ -216,6 +218,30 @@ namespace OBeautifulCode.DataStructure.Test
                     // The object could be a boxed value type, which will fail this asseration because
                     // a deep clone of a value type object is the same object.
                     actual.ValidationEvents.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.ValidationEvents);
+                }
+
+                if (systemUnderTest.AvailabilityCheckEvents == null)
+                {
+                    actual.AvailabilityCheckEvents.AsTest().Must().BeNull();
+                }
+                else if (!actual.AvailabilityCheckEvents.GetType().IsValueType)
+                {
+                    // When the declared type is a reference type, we still have to check the runtime type.
+                    // The object could be a boxed value type, which will fail this asseration because
+                    // a deep clone of a value type object is the same object.
+                    actual.AvailabilityCheckEvents.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.AvailabilityCheckEvents);
+                }
+
+                if (systemUnderTest.AvailabilityCheck == null)
+                {
+                    actual.AvailabilityCheck.AsTest().Must().BeNull();
+                }
+                else if (!actual.AvailabilityCheck.GetType().IsValueType)
+                {
+                    // When the declared type is a reference type, we still have to check the runtime type.
+                    // The object could be a boxed value type, which will fail this asseration because
+                    // a deep clone of a value type object is the same object.
+                    actual.AvailabilityCheck.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.AvailabilityCheck);
                 }
             }
         }

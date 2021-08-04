@@ -26,6 +26,8 @@ namespace OBeautifulCode.DataStructure
         /// <param name="details">OPTIONAL details about the cell.  DEFAULT is to omit any details.</param>
         /// <param name="validation">OPTIONAL validation to perform.  DEFAULT is no validation.</param>
         /// <param name="validationEvents">OPTIONAL events that record the validation of this cell.  DEFAULT is a cell that has not yet been validated.</param>
+        /// <param name="availabilityCheck">OPTIONAL availability check to perform.  DEFAULT is a cell with no availability check.</param>
+        /// <param name="availabilityCheckEvents">OPTIONAL events that record the availability checks on this cell.  DEFAULT is a cell that has not yet had an availability check.</param>
         /// <param name="operationExecutionEvents">OPTIONAL events that record the execution of <paramref name="operation"/>.  DEFAULT is a cell who's operation has not yet been executed.</param>
         /// <param name="valueFormat">OPTIONAL format to apply to the cell value.  DEFAULT is to leave the format unchanged.</param>
         /// <param name="format">OPTIONAL format to apply to the cell.  DEFAULT is to leave the format unchanged.</param>
@@ -38,12 +40,14 @@ namespace OBeautifulCode.DataStructure
             string details = null,
             Validation validation = null,
             IReadOnlyList<CellValidationEventBase> validationEvents = null,
+            AvailabilityCheck availabilityCheck = null,
+            IReadOnlyList<CellAvailabilityCheckEventBase> availabilityCheckEvents = null,
             IReadOnlyList<CellOpExecutionEventBase> operationExecutionEvents = null,
             ICellValueFormat<TValue> valueFormat = null,
             CellFormat format = null,
             IHoverOver hoverOver = null,
             ILink link = null)
-            : base(id, columnsSpanned, details, validation, validationEvents, operation, operationExecutionEvents)
+            : base(id, columnsSpanned, details, validation, validationEvents, availabilityCheck, availabilityCheckEvents, operation, operationExecutionEvents)
         {
             this.ValueFormat = valueFormat;
             this.Format = format;

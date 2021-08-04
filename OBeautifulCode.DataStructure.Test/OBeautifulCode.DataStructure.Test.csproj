@@ -197,9 +197,33 @@
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringReadableOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringXmlDocOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
-    <Compile Include="Events\CellAvailabilityEventBaseTest.cs" />
-    <Compile Include="Events\CellAvailabilityEventBaseTest.designer.cs">
-      <DependentUpon>CellAvailabilityEventBaseTest.cs</DependentUpon>
+    <Compile Include="Events\CellAvailability\CellAvailabilityCheckDeterminedCellDisabledEventTest.cs" />
+    <Compile Include="Events\CellAvailability\CellAvailabilityCheckDeterminedCellDisabledEventTest.designer.cs">
+      <DependentUpon>CellAvailabilityCheckDeterminedCellDisabledEventTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Events\CellAvailability\CellAvailabilityCheckDeterminedCellEnabledEventTest.cs" />
+    <Compile Include="Events\CellAvailability\CellAvailabilityCheckDeterminedCellEnabledEventTest.designer.cs">
+      <DependentUpon>CellAvailabilityCheckDeterminedCellEnabledEventTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Events\CellAvailability\CellAvailabilityCheckFailedEventTest.cs" />
+    <Compile Include="Events\CellAvailability\CellAvailabilityCheckFailedEventTest.designer.cs">
+      <DependentUpon>CellAvailabilityCheckFailedEventTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Operations\Cell\CheckAvailabilityOfCellOpTest.cs" />
+    <Compile Include="Operations\Cell\CheckAvailabilityOfCellOpTest.designer.cs">
+      <DependentUpon>CheckAvailabilityOfCellOpTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\AvailabilityCheck\AvailabilityCheckResultTest.cs" />
+    <Compile Include="Models\Classes\AvailabilityCheck\AvailabilityCheckResultTest.designer.cs">
+      <DependentUpon>AvailabilityCheckResultTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\AvailabilityCheck\AvailabilityCheckTest.cs" />
+    <Compile Include="Models\Classes\AvailabilityCheck\AvailabilityCheckTest.designer.cs">
+      <DependentUpon>AvailabilityCheckTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Events\CellAvailabilityCheckEventBaseTest.cs" />
+    <Compile Include="Events\CellAvailabilityCheckEventBaseTest.designer.cs">
+      <DependentUpon>CellAvailabilityCheckEventBaseTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Events\CellValidation\CellValidationDeterminedCellInvalidEventTest.cs" />
     <Compile Include="Events\CellValidation\CellValidationDeterminedCellInvalidEventTest.designer.cs">

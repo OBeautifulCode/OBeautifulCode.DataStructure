@@ -74,6 +74,8 @@ namespace OBeautifulCode.DataStructure
                       && this.Details.IsEqualTo(other.Details, StringComparer.Ordinal)
                       && this.Validation.IsEqualTo(other.Validation)
                       && this.ValidationEvents.IsEqualTo(other.ValidationEvents)
+                      && this.AvailabilityCheckEvents.IsEqualTo(other.AvailabilityCheckEvents)
+                      && this.AvailabilityCheck.IsEqualTo(other.AvailabilityCheck)
                       && this.InputEvents.IsEqualTo(other.InputEvents)
                       && this.ValueFormat.IsEqualTo(other.ValueFormat)
                       && this.Format.IsEqualTo(other.Format)
@@ -92,6 +94,8 @@ namespace OBeautifulCode.DataStructure
             .Hash(this.Details)
             .Hash(this.Validation)
             .Hash(this.ValidationEvents)
+            .Hash(this.AvailabilityCheckEvents)
+            .Hash(this.AvailabilityCheck)
             .Hash(this.InputEvents)
             .Hash(this.ValueFormat)
             .Hash(this.Format)
@@ -127,6 +131,8 @@ namespace OBeautifulCode.DataStructure
                                  this.Details?.DeepClone(),
                                  this.Validation?.DeepClone(),
                                  this.ValidationEvents?.DeepClone(),
+                                 this.AvailabilityCheck?.DeepClone(),
+                                 this.AvailabilityCheckEvents?.DeepClone(),
                                  this.InputEvents?.DeepClone(),
                                  this.ValueFormat?.DeepClone(),
                                  this.Format?.DeepClone(),
@@ -161,6 +167,8 @@ namespace OBeautifulCode.DataStructure
                                  this.Details?.DeepClone(),
                                  this.Validation?.DeepClone(),
                                  this.ValidationEvents?.DeepClone(),
+                                 this.AvailabilityCheck?.DeepClone(),
+                                 this.AvailabilityCheckEvents?.DeepClone(),
                                  this.InputEvents?.DeepClone(),
                                  this.ValueFormat?.DeepClone(),
                                  this.Format?.DeepClone(),
@@ -195,6 +203,8 @@ namespace OBeautifulCode.DataStructure
                                  details,
                                  this.Validation?.DeepClone(),
                                  this.ValidationEvents?.DeepClone(),
+                                 this.AvailabilityCheck?.DeepClone(),
+                                 this.AvailabilityCheckEvents?.DeepClone(),
                                  this.InputEvents?.DeepClone(),
                                  this.ValueFormat?.DeepClone(),
                                  this.Format?.DeepClone(),
@@ -229,6 +239,8 @@ namespace OBeautifulCode.DataStructure
                                  this.Details?.DeepClone(),
                                  validation,
                                  this.ValidationEvents?.DeepClone(),
+                                 this.AvailabilityCheck?.DeepClone(),
+                                 this.AvailabilityCheckEvents?.DeepClone(),
                                  this.InputEvents?.DeepClone(),
                                  this.ValueFormat?.DeepClone(),
                                  this.Format?.DeepClone(),
@@ -263,6 +275,80 @@ namespace OBeautifulCode.DataStructure
                                  this.Details?.DeepClone(),
                                  this.Validation?.DeepClone(),
                                  validationEvents,
+                                 this.AvailabilityCheck?.DeepClone(),
+                                 this.AvailabilityCheckEvents?.DeepClone(),
+                                 this.InputEvents?.DeepClone(),
+                                 this.ValueFormat?.DeepClone(),
+                                 this.Format?.DeepClone(),
+                                 this.HoverOver?.DeepClone());
+
+            return result;
+        }
+
+        /// <inheritdoc />
+        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
+        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
+        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
+        public override NotSlottedCellBase DeepCloneWithAvailabilityCheckEvents(IReadOnlyList<CellAvailabilityCheckEventBase> availabilityCheckEvents)
+        {
+            var result = new InputCell<TValue>(
+                                 this.Id?.DeepClone(),
+                                 this.ColumnsSpanned?.DeepClone(),
+                                 this.Details?.DeepClone(),
+                                 this.Validation?.DeepClone(),
+                                 this.ValidationEvents?.DeepClone(),
+                                 this.AvailabilityCheck?.DeepClone(),
+                                 availabilityCheckEvents,
+                                 this.InputEvents?.DeepClone(),
+                                 this.ValueFormat?.DeepClone(),
+                                 this.Format?.DeepClone(),
+                                 this.HoverOver?.DeepClone());
+
+            return result;
+        }
+
+        /// <inheritdoc />
+        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
+        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
+        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
+        public override NotSlottedCellBase DeepCloneWithAvailabilityCheck(AvailabilityCheck availabilityCheck)
+        {
+            var result = new InputCell<TValue>(
+                                 this.Id?.DeepClone(),
+                                 this.ColumnsSpanned?.DeepClone(),
+                                 this.Details?.DeepClone(),
+                                 this.Validation?.DeepClone(),
+                                 this.ValidationEvents?.DeepClone(),
+                                 availabilityCheck,
+                                 this.AvailabilityCheckEvents?.DeepClone(),
                                  this.InputEvents?.DeepClone(),
                                  this.ValueFormat?.DeepClone(),
                                  this.Format?.DeepClone(),
@@ -297,6 +383,8 @@ namespace OBeautifulCode.DataStructure
                                  this.Details?.DeepClone(),
                                  this.Validation?.DeepClone(),
                                  this.ValidationEvents?.DeepClone(),
+                                 this.AvailabilityCheck?.DeepClone(),
+                                 this.AvailabilityCheckEvents?.DeepClone(),
                                  inputEvents,
                                  this.ValueFormat?.DeepClone(),
                                  this.Format?.DeepClone(),
@@ -335,6 +423,8 @@ namespace OBeautifulCode.DataStructure
                                  this.Details?.DeepClone(),
                                  this.Validation?.DeepClone(),
                                  this.ValidationEvents?.DeepClone(),
+                                 this.AvailabilityCheck?.DeepClone(),
+                                 this.AvailabilityCheckEvents?.DeepClone(),
                                  this.InputEvents?.DeepClone(),
                                  valueFormat,
                                  this.Format?.DeepClone(),
@@ -373,6 +463,8 @@ namespace OBeautifulCode.DataStructure
                                  this.Details?.DeepClone(),
                                  this.Validation?.DeepClone(),
                                  this.ValidationEvents?.DeepClone(),
+                                 this.AvailabilityCheck?.DeepClone(),
+                                 this.AvailabilityCheckEvents?.DeepClone(),
                                  this.InputEvents?.DeepClone(),
                                  this.ValueFormat?.DeepClone(),
                                  format,
@@ -411,6 +503,8 @@ namespace OBeautifulCode.DataStructure
                                  this.Details?.DeepClone(),
                                  this.Validation?.DeepClone(),
                                  this.ValidationEvents?.DeepClone(),
+                                 this.AvailabilityCheck?.DeepClone(),
+                                 this.AvailabilityCheckEvents?.DeepClone(),
                                  this.InputEvents?.DeepClone(),
                                  this.ValueFormat?.DeepClone(),
                                  this.Format?.DeepClone(),
@@ -429,6 +523,8 @@ namespace OBeautifulCode.DataStructure
                                  this.Details?.DeepClone(),
                                  this.Validation?.DeepClone(),
                                  this.ValidationEvents?.DeepClone(),
+                                 this.AvailabilityCheck?.DeepClone(),
+                                 this.AvailabilityCheckEvents?.DeepClone(),
                                  this.InputEvents?.DeepClone(),
                                  this.ValueFormat?.DeepClone(),
                                  this.Format?.DeepClone(),
@@ -441,7 +537,7 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"OBeautifulCode.DataStructure.{this.GetType().ToStringReadable()}: Id = {this.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, ColumnsSpanned = {this.ColumnsSpanned?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Details = {this.Details?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Validation = {this.Validation?.ToString() ?? "<null>"}, ValidationEvents = {this.ValidationEvents?.ToString() ?? "<null>"}, InputEvents = {this.InputEvents?.ToString() ?? "<null>"}, ValueFormat = {this.ValueFormat?.ToString() ?? "<null>"}, Format = {this.Format?.ToString() ?? "<null>"}, HoverOver = {this.HoverOver?.ToString() ?? "<null>"}.");
+            var result = Invariant($"OBeautifulCode.DataStructure.{this.GetType().ToStringReadable()}: Id = {this.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, ColumnsSpanned = {this.ColumnsSpanned?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Details = {this.Details?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Validation = {this.Validation?.ToString() ?? "<null>"}, ValidationEvents = {this.ValidationEvents?.ToString() ?? "<null>"}, AvailabilityCheckEvents = {this.AvailabilityCheckEvents?.ToString() ?? "<null>"}, AvailabilityCheck = {this.AvailabilityCheck?.ToString() ?? "<null>"}, InputEvents = {this.InputEvents?.ToString() ?? "<null>"}, ValueFormat = {this.ValueFormat?.ToString() ?? "<null>"}, Format = {this.Format?.ToString() ?? "<null>"}, HoverOver = {this.HoverOver?.ToString() ?? "<null>"}.");
 
             return result;
         }

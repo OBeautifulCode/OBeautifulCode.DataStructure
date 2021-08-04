@@ -25,6 +25,8 @@ namespace OBeautifulCode.DataStructure
         /// <param name="details">OPTIONAL details about the cell.  DEFAULT is to omit any details.</param>
         /// <param name="validation">OPTIONAL validation to perform.  DEFAULT is no validation.</param>
         /// <param name="validationEvents">OPTIONAL events that record the validation of this cell.  DEFAULT is a cell that has not yet been validated.</param>
+        /// <param name="availabilityCheck">OPTIONAL availability check to perform.  DEFAULT is a cell with no availability check.</param>
+        /// <param name="availabilityCheckEvents">OPTIONAL events that record the availability checks on this cell.  DEFAULT is a cell that has not yet had an availability check.</param>
         /// <param name="format">OPTIONAL format to apply to the cell.  DEFAULT is to leave the format unchanged.</param>
         /// <param name="hoverOver">OPTIONAL hover-over for the cell.  DEFAULT is no hover-over.</param>
         /// <param name="link">OPTIONAL link to some resource.  DEFAULT is no link.</param>
@@ -34,10 +36,12 @@ namespace OBeautifulCode.DataStructure
             string details = null,
             Validation validation = null,
             IReadOnlyList<CellValidationEventBase> validationEvents = null,
+            AvailabilityCheck availabilityCheck = null,
+            IReadOnlyList<CellAvailabilityCheckEventBase> availabilityCheckEvents = null,
             CellFormat format = null,
             IHoverOver hoverOver = null,
             ILink link = null)
-            : base(id, columnsSpanned, details, validation, validationEvents)
+            : base(id, columnsSpanned, details, validation, validationEvents, availabilityCheck, availabilityCheckEvents)
         {
             this.Format = format;
             this.HoverOver = hoverOver;

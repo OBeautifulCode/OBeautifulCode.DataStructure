@@ -35,7 +35,7 @@ namespace OBeautifulCode.DataStructure.Test
              * ))
              */
 
-            var numberOfSalesFteCell = Cell.CreateInput<decimal>(
+            var numberOfSalesFteCell = Cell.CreateEnabledInput<decimal>(
                 id: "sales-fte",
                 validation: Cell.CreateValidation(Op.ValidateUsingConditions(
                     new[]
@@ -48,7 +48,7 @@ namespace OBeautifulCode.DataStructure.Test
                             Op.Const("must be >= 0")),
                     })));
 
-            var numberOfWarehouseFteCell = Cell.CreateInput<decimal>(
+            var numberOfWarehouseFteCell = Cell.CreateEnabledInput<decimal>(
                 id: "warehouse-fte",
                 validation: Cell.CreateValidation(Op.ValidateUsingConditions(
                     new[]

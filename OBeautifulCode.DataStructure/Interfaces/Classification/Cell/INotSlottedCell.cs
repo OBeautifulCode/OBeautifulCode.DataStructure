@@ -10,7 +10,7 @@ namespace OBeautifulCode.DataStructure
     /// A cell that is not slotted.
     /// </summary>
     // ReSharper disable once RedundantExtendsListEntry
-    public interface INotSlottedCell : ICell, IValidationCell
+    public interface INotSlottedCell : ICell, IValidationCell, IAvailabilityCheckCell
     {
     }
 }

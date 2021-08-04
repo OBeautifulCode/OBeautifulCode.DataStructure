@@ -23,15 +23,15 @@ namespace OBeautifulCode.DataStructure
     using static global::System.FormattableString;
 
     [Serializable]
-    public partial class CellAvailabilityEventBase : IModel<CellAvailabilityEventBase>
+    public partial class CellAvailabilityCheckEventBase : IModel<CellAvailabilityCheckEventBase>
     {
         /// <summary>
-        /// Determines whether two objects of type <see cref="CellAvailabilityEventBase"/> are equal.
+        /// Determines whether two objects of type <see cref="CellAvailabilityCheckEventBase"/> are equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are equal; otherwise false.</returns>
-        public static bool operator ==(CellAvailabilityEventBase left, CellAvailabilityEventBase right)
+        public static bool operator ==(CellAvailabilityCheckEventBase left, CellAvailabilityCheckEventBase right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -49,15 +49,15 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <summary>
-        /// Determines whether two objects of type <see cref="CellAvailabilityEventBase"/> are not equal.
+        /// Determines whether two objects of type <see cref="CellAvailabilityCheckEventBase"/> are not equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are not equal; otherwise false.</returns>
-        public static bool operator !=(CellAvailabilityEventBase left, CellAvailabilityEventBase right) => !(left == right);
+        public static bool operator !=(CellAvailabilityCheckEventBase left, CellAvailabilityCheckEventBase right) => !(left == right);
 
         /// <inheritdoc />
-        public bool Equals(CellAvailabilityEventBase other) => this == other;
+        public bool Equals(CellAvailabilityCheckEventBase other) => this == other;
 
         /// <inheritdoc />
         [SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]
@@ -74,13 +74,13 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <inheritdoc />
-        public new CellAvailabilityEventBase DeepClone() => (CellAvailabilityEventBase)this.DeepCloneInternal();
+        public new CellAvailabilityCheckEventBase DeepClone() => (CellAvailabilityCheckEventBase)this.DeepCloneInternal();
 
         /// <summary>
         /// Deep clones this object with a new <see cref="Details" />.
         /// </summary>
         /// <param name="details">The new <see cref="Details" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="CellAvailabilityEventBase" /> using the specified <paramref name="details" /> for <see cref="Details" /> and a deep clone of every other property.</returns>
+        /// <returns>New <see cref="CellAvailabilityCheckEventBase" /> using the specified <paramref name="details" /> for <see cref="Details" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -98,7 +98,7 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public virtual CellAvailabilityEventBase DeepCloneWithDetails(string details)
+        public virtual CellAvailabilityCheckEventBase DeepCloneWithDetails(string details)
         {
             throw new NotImplementedException("This method should be abstract.  It was generated as virtual so that you aren't forced to override it when you create a new model that derives from this model.  It will be overridden in the generated designer file.");
         }

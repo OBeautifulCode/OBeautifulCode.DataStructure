@@ -26,6 +26,8 @@ namespace OBeautifulCode.DataStructure
         /// <param name="details">Details about the cell.</param>
         /// <param name="validation">The validation to perform.</param>
         /// <param name="validationEvents">The events that record the validation of this cell.</param>
+        /// <param name="availabilityCheck">The availability check to perform.</param>
+        /// <param name="availabilityCheckEvents">The events that record the availability checks on this cell.</param>
         /// <param name="value">The cell's value.</param>
         protected ConstOutputCellBase(
             string id,
@@ -33,8 +35,10 @@ namespace OBeautifulCode.DataStructure
             string details,
             Validation validation,
             IReadOnlyList<CellValidationEventBase> validationEvents,
+            AvailabilityCheck availabilityCheck,
+            IReadOnlyList<CellAvailabilityCheckEventBase> availabilityCheckEvents,
             TValue value)
-            : base(id, columnsSpanned, details, validation, validationEvents)
+            : base(id, columnsSpanned, details, validation, validationEvents, availabilityCheck, availabilityCheckEvents)
         {
             this.Value = value;
         }
