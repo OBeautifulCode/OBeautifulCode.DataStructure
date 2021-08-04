@@ -128,6 +128,37 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <summary>
+        /// Gets the validity of a specified cell.
+        /// </summary>
+        /// <param name="cell">The cell.</param>
+        /// <returns>
+        /// The validity of the specified cell.
+        /// </returns>
+        public static Validity GetValidity(
+            this IValidationCell cell)
+        {
+            if (cell == null)
+            {
+                throw new ArgumentNullException(nameof(cell));
+            }
+
+            var validationStatus = cell.GetValidationStatus();
+
+            switch (validationStatus)
+            {
+                case ValidationStatus.ValidationMissing:
+                case ValidationStatus.Valid:
+                    return Validity.Valid;
+                case ValidationStatus.DeemedNotApplicable:
+                    return Validity.NotApplicable;
+                case ValidationStatus.Invalid:
+                    return Validity.Invalid;
+                default:
+                    return Validity.Unknown;
+            }
+        }
+
+        /// <summary>
         /// Gets the availability check status of a specified cell.
         /// </summary>
         /// <param name="cell">The cell.</param>
@@ -172,6 +203,38 @@ namespace OBeautifulCode.DataStructure
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Gets the availability of a specified cell.
+        /// </summary>
+        /// <param name="cell">The cell.</param>
+        /// <returns>
+        /// The availability of the specified cell.
+        /// </returns>
+        public static Availability GetAvailability(
+            this IAvailabilityCheckCell cell)
+        {
+            if (cell == null)
+            {
+                throw new ArgumentNullException(nameof(cell));
+            }
+
+            var availabilityCheckStatus = cell.GetAvailabilityCheckStatus();
+
+            // Note that we are purposely mapping Unchecked to Unknown here.
+            // At time t=0 when the report is loaded and there is no user input,
+            // the caller should perform a recalc, which will execute the availbility check.
+            switch (availabilityCheckStatus)
+            {
+                case AvailabilityCheckStatus.AvailabilityCheckMissing:
+                case AvailabilityCheckStatus.Enabled:
+                    return Availability.Enabled;
+                case AvailabilityCheckStatus.Disabled:
+                    return Availability.Disabled;
+                default:
+                    return Availability.Unknown;
+            }
         }
     }
 }

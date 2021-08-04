@@ -24,9 +24,13 @@ namespace OBeautifulCode.DataStructure
     {
         private readonly IReadOnlyDictionary<string, ICell> cellIdToCellMap;
 
-        private readonly IReadOnlyCollection<ICell> operationCells;
+        private readonly IReadOnlyCollection<INotSlottedCell> operationCells;
 
         private readonly IReadOnlyCollection<IValidationCell> validationCells;
+
+        private readonly IReadOnlyCollection<IAvailabilityCheckCell> availabilityCheckCells;
+
+        private readonly IReadOnlyCollection<INotSlottedCell> inputCells;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TreeTable"/> class.
@@ -98,8 +102,10 @@ namespace OBeautifulCode.DataStructure
             }
 
             this.cellIdToCellMap = allCellsWithIds.ToDictionary(_ => _.Id, _ => _);
-            this.operationCells = allCells.Where(_ => _.IsOperationCell()).ToList();
+            this.operationCells = allCells.Where(_ => _.IsOperationCell()).Cast<INotSlottedCell>().ToList();
+            this.inputCells = allCells.Where(_ => _.IsInputCell()).Cast<INotSlottedCell>().ToList();
             this.validationCells = allCells.OfType<IValidationCell>().ToList();
+            this.availabilityCheckCells = allCells.OfType<IAvailabilityCheckCell>().ToList();
 
             this.TableColumns = tableColumns;
             this.TableRows = tableRows;
@@ -130,12 +136,28 @@ namespace OBeautifulCode.DataStructure
         public IReadOnlyDictionary<string, ICell> GetCellIdToCellMap() => this.cellIdToCellMap;
 
         /// <summary>
+        /// Gets all <see cref="IAvailabilityCheckCell"/>s.
+        /// </summary>
+        /// <returns>
+        /// All <see cref="IAvailabilityCheckCell"/>s in the tree table.
+        /// </returns>
+        public IReadOnlyCollection<IAvailabilityCheckCell> GetAvailabilityCheckCells() => this.availabilityCheckCells;
+
+        /// <summary>
+        /// Gets all <see cref="IInputCell{TValue}"/>s.
+        /// </summary>
+        /// <returns>
+        /// All <see cref="IInputCell{TValue}"/>s in the tree table.
+        /// </returns>
+        public IReadOnlyCollection<INotSlottedCell> GetInputCells() => this.inputCells;
+
+        /// <summary>
         /// Gets all <see cref="IOperationOutputCell{TValue}"/>s.
         /// </summary>
         /// <returns>
         /// All <see cref="IOperationOutputCell{TValue}"/>s in the tree table.
         /// </returns>
-        public IReadOnlyCollection<ICell> GetOperationCells() => this.operationCells;
+        public IReadOnlyCollection<INotSlottedCell> GetOperationCells() => this.operationCells;
 
         /// <summary>
         /// Gets all <see cref="IValidationCell"/>s.

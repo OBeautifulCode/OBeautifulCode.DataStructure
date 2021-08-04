@@ -141,7 +141,7 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <summary>
-        /// Executes all cell operations and validations and records the results.
+        /// Executes all cell operations, validations, and availability checks, and records the results.
         /// </summary>
         /// <param name="report">The report.</param>
         /// <param name="timestampUtc">The timestamp (in UTC) to use when recording a <see cref="CellOpExecutionEventBase"/> with an <see cref="IOperationOutputCell{TValue}"/>.</param>
@@ -163,11 +163,44 @@ namespace OBeautifulCode.DataStructure
             IReadOnlyCollection<Func<IProtocolFactory, IProtocolFactory>> protocolFactoryFuncs = null,
             IReadOnlyCollection<Type> additionalTypesForCoreCellOps = null)
         {
-            report.ExecuteAllOperationsAndValidationsAndRecordResults(timestampUtc, protocolFactoryFuncs, additionalTypesForCoreCellOps);
+            // NOTE: THIS CODE IS A NEAR DUPLICATE OF THE ASYNC METHOD BELOW; NO GOOD WAY TO D.R.Y. IT OUT
+            var protocolFactory = report.BuildProtocolFactoryToExecuteAllOperations(timestampUtc, protocolFactoryFuncs, additionalTypesForCoreCellOps);
+
+            var operationCells = report.GetClearedOperationCells(timestampUtc);
+
+            var validationCells = report.GetClearedValidationCells(timestampUtc);
+
+            var availabilityCheckCells = report.GetAvailabilityCheckCells();
+
+            foreach (var cell in operationCells)
+            {
+                var executeOperationCellIfNecessaryOp = cell.BuildExecuteOperationCellIfNecessaryOp();
+
+                protocolFactory.GetProtocolAndExecuteViaReflection(executeOperationCellIfNecessaryOp);
+            }
+
+            foreach (var cell in validationCells)
+            {
+                var validateCellOp = new ValidateCellOp(cell);
+
+                protocolFactory.GetProtocolAndExecuteViaReflection(validateCellOp);
+            }
+
+            foreach (var cell in availabilityCheckCells)
+            {
+                var checkAvailabilityOfCellOp = new CheckAvailabilityOfCellOp(cell);
+
+                protocolFactory.GetProtocolAndExecuteViaReflection(checkAvailabilityOfCellOp);
+            }
+
+            if (report.PrepareToRerunRecalc(timestampUtc, validationCells, availabilityCheckCells))
+            {
+                report.ReCalc(timestampUtc, protocolFactoryFuncs, additionalTypesForCoreCellOps);
+            }
         }
 
         /// <summary>
-        /// Executes all cell operations and validations and records the results.
+        /// Executes all cell operations, validations, and availability checks and records the results.
         /// </summary>
         /// <param name="report">The report.</param>
         /// <param name="timestampUtc">The timestamp (in UTC) to use when recording a <see cref="CellOpExecutionEventBase"/> with an <see cref="IOperationOutputCell{TValue}"/>.</param>
@@ -192,97 +225,39 @@ namespace OBeautifulCode.DataStructure
             IReadOnlyCollection<Func<IProtocolFactory, IProtocolFactory>> protocolFactoryFuncs = null,
             IReadOnlyCollection<Type> additionalTypesForCoreCellOps = null)
         {
-            await report.ExecuteAllOperationsAndValidationsAndRecordResultsAsync(timestampUtc, protocolFactoryFuncs, additionalTypesForCoreCellOps);
-        }
-
-        /// <summary>
-        /// Executes all cell operations and validations and records the results.
-        /// </summary>
-        /// <param name="report">The report.</param>
-        /// <param name="timestampUtc">The timestamp (in UTC) to use when recording a <see cref="CellOpExecutionEventBase"/> with an <see cref="IOperationOutputCell{TValue}"/>.</param>
-        /// <param name="protocolFactoryFuncs">
-        /// OPTIONAL protocol factory chain-of-responsibility for protocols needed to execute the operations for all <see cref="IOperationOutputCell{TValue}"/>.
-        /// Each func takes, as input, the protocol factory that should be used when these protocols need to execute other operations
-        /// (e.g. MyOperation requires an int and declares it as an IReturningOperation{int} to enable others to "plug-in"
-        /// any source of an int - perhaps the value of another cell or the output of some other calculation).
-        /// Each func should return a protocol factory that gets protocols for the operations in-use by the <see cref="IOperationOutputCell{TValue}"/>s.
-        /// DEFAULT is not to "plug-in" any additional protocols.
-        /// </param>
-        /// <param name="additionalTypesForCoreCellOps">
-        /// OPTIONAL types in addition to <see cref="DefaultTypesSupportedForCoreCellOps"/> that should be supported
-        /// when executing the core cell operations (e.g. <see cref="GetCellValueOp{TValue}"/>) .
-        /// </param>
-        public static void ExecuteAllOperationsAndValidationsAndRecordResults(
-            this Report report,
-            DateTime timestampUtc,
-            IReadOnlyCollection<Func<IProtocolFactory, IProtocolFactory>> protocolFactoryFuncs = null,
-            IReadOnlyCollection<Type> additionalTypesForCoreCellOps = null)
-        {
+            // NOTE: THIS CODE IS A NEAR DUPLICATE OF THE SYNC METHOD ABOVE; NO GOOD WAY TO D.R.Y. IT OUT
             var protocolFactory = report.BuildProtocolFactoryToExecuteAllOperations(timestampUtc, protocolFactoryFuncs, additionalTypesForCoreCellOps);
 
             var operationCells = report.GetClearedOperationCells(timestampUtc);
 
             var validationCells = report.GetClearedValidationCells(timestampUtc);
 
-            foreach (var operationCell in operationCells)
+            var availabilityCheckCells = report.GetAvailabilityCheckCells();
+
+            foreach (var cell in operationCells)
             {
-                var executeOperationCellIfNecessaryOp = operationCell.BuildExecuteOperationCellIfNecessaryOp();
-
-                protocolFactory.GetProtocolAndExecuteViaReflection(executeOperationCellIfNecessaryOp);
-            }
-
-            foreach (var validationCell in validationCells)
-            {
-                var validateCellOp = new ValidateCellOp(validationCell);
-
-                protocolFactory.GetProtocolAndExecuteViaReflection(validateCellOp);
-            }
-        }
-
-        /// <summary>
-        /// Executes all cell operations and validations and records the results.
-        /// </summary>
-        /// <param name="report">The report.</param>
-        /// <param name="timestampUtc">The timestamp (in UTC) to use when recording a <see cref="CellOpExecutionEventBase"/> with an <see cref="IOperationOutputCell{TValue}"/>.</param>
-        /// <param name="protocolFactoryFuncs">
-        /// OPTIONAL protocol factory chain-of-responsibility for protocols needed to execute the operations for all <see cref="IOperationOutputCell{TValue}"/>.
-        /// Each func takes, as input, the protocol factory that should be used when these protocols need to execute other operations
-        /// (e.g. MyOperation requires an int and declares it as an IReturningOperation{int} to enable others to "plug-in"
-        /// any source of an int - perhaps the value of another cell or the output of some other calculation).
-        /// Each func should return a protocol factory that gets protocols for the operations in-use by the <see cref="IOperationOutputCell{TValue}"/>s.
-        /// DEFAULT is not to "plug-in" any additional protocols.
-        /// </param>
-        /// <param name="additionalTypesForCoreCellOps">
-        /// OPTIONAL types in addition to <see cref="DefaultTypesSupportedForCoreCellOps"/> that should be supported
-        /// when executing the core cell operations (e.g. <see cref="GetCellValueOp{TValue}"/>) .
-        /// </param>
-        /// <returns>
-        /// A task.
-        /// </returns>
-        public static async Task ExecuteAllOperationsAndValidationsAndRecordResultsAsync(
-            this Report report,
-            DateTime timestampUtc,
-            IReadOnlyCollection<Func<IProtocolFactory, IProtocolFactory>> protocolFactoryFuncs = null,
-            IReadOnlyCollection<Type> additionalTypesForCoreCellOps = null)
-        {
-            var protocolFactory = report.BuildProtocolFactoryToExecuteAllOperations(timestampUtc, protocolFactoryFuncs, additionalTypesForCoreCellOps);
-
-            var operationCells = report.GetClearedOperationCells(timestampUtc);
-
-            var validationCells = report.GetClearedValidationCells(timestampUtc);
-
-            foreach (var operationCell in operationCells)
-            {
-                var executeOperationCellIfNecessaryOp = operationCell.BuildExecuteOperationCellIfNecessaryOp();
+                var executeOperationCellIfNecessaryOp = cell.BuildExecuteOperationCellIfNecessaryOp();
 
                 await protocolFactory.GetProtocolAndExecuteViaReflectionAsync(executeOperationCellIfNecessaryOp);
             }
 
-            foreach (var validationCell in validationCells)
+            foreach (var cell in validationCells)
             {
-                var validateCellOp = new ValidateCellOp(validationCell);
+                var validateCellOp = new ValidateCellOp(cell);
 
                 await protocolFactory.GetProtocolAndExecuteViaReflectionAsync(validateCellOp);
+            }
+
+            foreach (var cell in availabilityCheckCells)
+            {
+                var checkAvailabilityOfCellOp = new CheckAvailabilityOfCellOp(cell);
+
+                await protocolFactory.GetProtocolAndExecuteViaReflectionAsync(checkAvailabilityOfCellOp);
+            }
+
+            if (report.PrepareToRerunRecalc(timestampUtc, validationCells, availabilityCheckCells))
+            {
+                await report.ReCalcAsync(timestampUtc, protocolFactoryFuncs, additionalTypesForCoreCellOps);
             }
         }
 
@@ -387,7 +362,7 @@ namespace OBeautifulCode.DataStructure
         {
             var result = report.Sections.SelectMany(_ => _.TreeTable.GetOperationCells()).ToList();
 
-            var details = Invariant($"Value cleared by {nameof(ReportExtensions)}.{nameof(ExecuteAllOperationsAndValidationsAndRecordResults)} or async overload.");
+            var details = Invariant($"Value cleared by {nameof(ReportExtensions)}.{nameof(ReCalc)} or async overload.");
 
             foreach (var operationCell in result)
             {
@@ -403,11 +378,63 @@ namespace OBeautifulCode.DataStructure
         {
             var result = report.Sections.SelectMany(_ => _.TreeTable.GetValidationCells()).Where(_ => _.Validation != null).ToList();
 
-            var details = Invariant($"Validation cleared by {nameof(ReportExtensions)}.{nameof(ExecuteAllOperationsAndValidationsAndRecordResults)} or async overload.");
+            var details = Invariant($"Validation cleared by {nameof(ReportExtensions)}.{nameof(ReCalc)} or async overload.");
 
             foreach (var cell in result)
             {
                 cell.ClearValidation(timestampUtc, details);
+            }
+
+            return result;
+        }
+
+        private static IReadOnlyCollection<IAvailabilityCheckCell> GetAvailabilityCheckCells(
+            this Report report)
+        {
+            var result = report.Sections.SelectMany(_ => _.TreeTable.GetAvailabilityCheckCells()).Where(_ => _.AvailabilityCheck != null).ToList();
+
+            return result;
+        }
+
+        private static bool PrepareToRerunRecalc(
+            this Report report,
+            DateTime timestampUtc,
+            IReadOnlyCollection<IValidationCell> validationCells,
+            IReadOnlyCollection<IAvailabilityCheckCell> availabilityCheckCells)
+        {
+            var hasValidationFailure = validationCells.Any(_ => _.GetValidationStatus() == ValidationStatus.Failed);
+
+            var hasAvailabilityCheckFailure = availabilityCheckCells.Any(_ => _.GetAvailabilityCheckStatus() == AvailabilityCheckStatus.Failed);
+
+            bool result;
+
+            if (hasValidationFailure || hasAvailabilityCheckFailure)
+            {
+                result = false;
+            }
+            else
+            {
+                var disabledInputCellsWithValues = report
+                    .Sections
+                    .SelectMany(_ => _.TreeTable.GetInputCells())
+                    .Where(_ => _.GetAvailability() == Availability.Disabled)
+                    .Where(_ => ((IGetCellValue)_).HasCellValue())
+                    .Cast<IClearCellValue>()
+                    .ToList();
+
+                if (disabledInputCellsWithValues.Any())
+                {
+                    foreach (var cell in disabledInputCellsWithValues)
+                    {
+                        cell.ClearCellValue(timestampUtc, Invariant($"{nameof(ReportExtensions)}.{nameof(ReCalc)} found this disabled input cell having a value.  Clearing the value and will re-run recalc."));
+                    }
+
+                    result = true;
+                }
+                else
+                {
+                    result = false;
+                }
             }
 
             return result;
@@ -430,6 +457,7 @@ namespace OBeautifulCode.DataStructure
                 CachedTypeToExecuteOperationCellIfNecessaryOpConstructorInfoMap.TryAdd(valueType, executeOperationCellIfNecessaryOpConstructorInfo);
             }
 
+            // ReSharper disable once CoVariantArrayConversion
             var result = (IOperation)executeOperationCellIfNecessaryOpConstructorInfo.Invoke(new[] { operationCell });
 
             return result;
