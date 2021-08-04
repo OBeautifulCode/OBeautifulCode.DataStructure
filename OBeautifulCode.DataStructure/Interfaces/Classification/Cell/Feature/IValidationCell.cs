@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IValidateCellValue.cs" company="OBeautifulCode">
+// <copyright file="IValidationCell.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -7,18 +7,28 @@
 namespace OBeautifulCode.DataStructure
 {
     using System;
+    using System.Collections.Generic;
 
     /// <summary>
-    /// Validates a cell's value.
+    /// A cell having validation.
     /// </summary>
-    // ReSharper disable once TypeParameterCanBeVariant
-    public interface IValidateCellValue
+    public interface IValidationCell : ICell
     {
+        /// <summary>
+        /// Gets the validation to perform.
+        /// </summary>
+        Validation Validation { get; }
+
+        /// <summary>
+        /// Gets the events that record the validation of this cell.
+        /// </summary>
+        IReadOnlyList<CellValidationEventBase> ValidationEvents { get; }
+
         /// <summary>
         /// Records a <see cref="CellValidationEventBase"/>.
         /// </summary>
-        /// <param name="cellValidationEvent">The result of validating the cell.</param>
-        void Record(CellValidationEventBase cellValidationEvent);
+        /// <param name="validationEvent">The result of validating the cell.</param>
+        void Record(CellValidationEventBase validationEvent);
 
         /// <summary>
         /// Clears any validation that has been performed.

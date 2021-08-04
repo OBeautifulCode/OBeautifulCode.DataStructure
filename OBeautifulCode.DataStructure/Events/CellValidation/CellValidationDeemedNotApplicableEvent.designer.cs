@@ -70,7 +70,8 @@ namespace OBeautifulCode.DataStructure
             }
 
             var result = this.TimestampUtc.IsEqualTo(other.TimestampUtc)
-                      && this.Details.IsEqualTo(other.Details, StringComparer.Ordinal);
+                      && this.Details.IsEqualTo(other.Details, StringComparer.Ordinal)
+                      && this.Message.IsEqualTo(other.Message, StringComparer.Ordinal);
 
             return result;
         }
@@ -82,6 +83,7 @@ namespace OBeautifulCode.DataStructure
         public override int GetHashCode() => HashCodeHelper.Initialize()
             .Hash(this.TimestampUtc)
             .Hash(this.Details)
+            .Hash(this.Message)
             .Value;
 
         /// <inheritdoc />
@@ -109,7 +111,8 @@ namespace OBeautifulCode.DataStructure
         {
             var result = new CellValidationDeemedNotApplicableEvent(
                                  timestampUtc,
-                                 this.Details?.DeepClone());
+                                 this.Details?.DeepClone(),
+                                 this.Message?.DeepClone());
 
             return result;
         }
@@ -136,7 +139,40 @@ namespace OBeautifulCode.DataStructure
         {
             var result = new CellValidationDeemedNotApplicableEvent(
                                  this.TimestampUtc.DeepClone(),
-                                 details);
+                                 details,
+                                 this.Message?.DeepClone());
+
+            return result;
+        }
+
+        /// <summary>
+        /// Deep clones this object with a new <see cref="Message" />.
+        /// </summary>
+        /// <param name="message">The new <see cref="Message" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="CellValidationDeemedNotApplicableEvent" /> using the specified <paramref name="message" /> for <see cref="Message" /> and a deep clone of every other property.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
+        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
+        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
+        public CellValidationDeemedNotApplicableEvent DeepCloneWithMessage(string message)
+        {
+            var result = new CellValidationDeemedNotApplicableEvent(
+                                 this.TimestampUtc.DeepClone(),
+                                 this.Details?.DeepClone(),
+                                 message);
 
             return result;
         }
@@ -147,7 +183,8 @@ namespace OBeautifulCode.DataStructure
         {
             var result = new CellValidationDeemedNotApplicableEvent(
                                  this.TimestampUtc.DeepClone(),
-                                 this.Details?.DeepClone());
+                                 this.Details?.DeepClone(),
+                                 this.Message?.DeepClone());
 
             return result;
         }
@@ -156,7 +193,7 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"OBeautifulCode.DataStructure.CellValidationDeemedNotApplicableEvent: TimestampUtc = {this.TimestampUtc.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Details = {this.Details?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}.");
+            var result = Invariant($"OBeautifulCode.DataStructure.CellValidationDeemedNotApplicableEvent: TimestampUtc = {this.TimestampUtc.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Details = {this.Details?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Message = {this.Message?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}.");
 
             return result;
         }

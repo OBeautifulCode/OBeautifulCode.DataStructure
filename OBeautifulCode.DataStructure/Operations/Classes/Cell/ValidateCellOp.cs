@@ -21,7 +21,7 @@ namespace OBeautifulCode.DataStructure
         /// </summary>
         /// <param name="cell">The cell.</param>
         public ValidateCellOp(
-            ICanBeValidated cell)
+            IValidationCell cell)
         {
             if (cell == null)
             {
@@ -34,6 +34,6 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Gets the cell.
         /// </summary>
-        public ICanBeValidated Cell { get; private set; }
+        public IValidationCell Cell { get; private set; }
     }
 }

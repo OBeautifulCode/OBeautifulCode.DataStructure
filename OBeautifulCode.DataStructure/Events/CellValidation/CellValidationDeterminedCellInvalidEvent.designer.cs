@@ -23,15 +23,15 @@ namespace OBeautifulCode.DataStructure
     using static global::System.FormattableString;
 
     [Serializable]
-    public partial class CellValidationConditionUnmetEvent : IModel<CellValidationConditionUnmetEvent>
+    public partial class CellValidationDeterminedCellInvalidEvent : IModel<CellValidationDeterminedCellInvalidEvent>
     {
         /// <summary>
-        /// Determines whether two objects of type <see cref="CellValidationConditionUnmetEvent"/> are equal.
+        /// Determines whether two objects of type <see cref="CellValidationDeterminedCellInvalidEvent"/> are equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are equal; otherwise false.</returns>
-        public static bool operator ==(CellValidationConditionUnmetEvent left, CellValidationConditionUnmetEvent right)
+        public static bool operator ==(CellValidationDeterminedCellInvalidEvent left, CellValidationDeterminedCellInvalidEvent right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -49,15 +49,15 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <summary>
-        /// Determines whether two objects of type <see cref="CellValidationConditionUnmetEvent"/> are not equal.
+        /// Determines whether two objects of type <see cref="CellValidationDeterminedCellInvalidEvent"/> are not equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are not equal; otherwise false.</returns>
-        public static bool operator !=(CellValidationConditionUnmetEvent left, CellValidationConditionUnmetEvent right) => !(left == right);
+        public static bool operator !=(CellValidationDeterminedCellInvalidEvent left, CellValidationDeterminedCellInvalidEvent right) => !(left == right);
 
         /// <inheritdoc />
-        public bool Equals(CellValidationConditionUnmetEvent other)
+        public bool Equals(CellValidationDeterminedCellInvalidEvent other)
         {
             if (ReferenceEquals(this, other))
             {
@@ -71,23 +71,23 @@ namespace OBeautifulCode.DataStructure
 
             var result = this.TimestampUtc.IsEqualTo(other.TimestampUtc)
                       && this.Details.IsEqualTo(other.Details, StringComparer.Ordinal)
-                      && this.FailureMessage.IsEqualTo(other.FailureMessage, StringComparer.Ordinal);
+                      && this.Message.IsEqualTo(other.Message, StringComparer.Ordinal);
 
             return result;
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => this == (obj as CellValidationConditionUnmetEvent);
+        public override bool Equals(object obj) => this == (obj as CellValidationDeterminedCellInvalidEvent);
 
         /// <inheritdoc />
         public override int GetHashCode() => HashCodeHelper.Initialize()
             .Hash(this.TimestampUtc)
             .Hash(this.Details)
-            .Hash(this.FailureMessage)
+            .Hash(this.Message)
             .Value;
 
         /// <inheritdoc />
-        public new CellValidationConditionUnmetEvent DeepClone() => (CellValidationConditionUnmetEvent)this.DeepCloneInternal();
+        public new CellValidationDeterminedCellInvalidEvent DeepClone() => (CellValidationDeterminedCellInvalidEvent)this.DeepCloneInternal();
 
         /// <inheritdoc />
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
@@ -109,10 +109,10 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         public override EventBase DeepCloneWithTimestampUtc(DateTime timestampUtc)
         {
-            var result = new CellValidationConditionUnmetEvent(
-                                 this.FailureMessage?.DeepClone(),
+            var result = new CellValidationDeterminedCellInvalidEvent(
                                  timestampUtc,
-                                 this.Details?.DeepClone());
+                                 this.Details?.DeepClone(),
+                                 this.Message?.DeepClone());
 
             return result;
         }
@@ -137,19 +137,19 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         public override CellValidationEventBase DeepCloneWithDetails(string details)
         {
-            var result = new CellValidationConditionUnmetEvent(
-                                 this.FailureMessage?.DeepClone(),
+            var result = new CellValidationDeterminedCellInvalidEvent(
                                  this.TimestampUtc.DeepClone(),
-                                 details);
+                                 details,
+                                 this.Message?.DeepClone());
 
             return result;
         }
 
         /// <summary>
-        /// Deep clones this object with a new <see cref="FailureMessage" />.
+        /// Deep clones this object with a new <see cref="Message" />.
         /// </summary>
-        /// <param name="failureMessage">The new <see cref="FailureMessage" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="CellValidationConditionUnmetEvent" /> using the specified <paramref name="failureMessage" /> for <see cref="FailureMessage" /> and a deep clone of every other property.</returns>
+        /// <param name="message">The new <see cref="Message" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="CellValidationDeterminedCellInvalidEvent" /> using the specified <paramref name="message" /> for <see cref="Message" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -167,12 +167,12 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public CellValidationConditionUnmetEvent DeepCloneWithFailureMessage(string failureMessage)
+        public CellValidationDeterminedCellInvalidEvent DeepCloneWithMessage(string message)
         {
-            var result = new CellValidationConditionUnmetEvent(
-                                 failureMessage,
+            var result = new CellValidationDeterminedCellInvalidEvent(
                                  this.TimestampUtc.DeepClone(),
-                                 this.Details?.DeepClone());
+                                 this.Details?.DeepClone(),
+                                 message);
 
             return result;
         }
@@ -181,10 +181,10 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         protected override EventBase DeepCloneInternal()
         {
-            var result = new CellValidationConditionUnmetEvent(
-                                 this.FailureMessage?.DeepClone(),
+            var result = new CellValidationDeterminedCellInvalidEvent(
                                  this.TimestampUtc.DeepClone(),
-                                 this.Details?.DeepClone());
+                                 this.Details?.DeepClone(),
+                                 this.Message?.DeepClone());
 
             return result;
         }
@@ -193,7 +193,7 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"OBeautifulCode.DataStructure.CellValidationConditionUnmetEvent: TimestampUtc = {this.TimestampUtc.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Details = {this.Details?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, FailureMessage = {this.FailureMessage?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}.");
+            var result = Invariant($"OBeautifulCode.DataStructure.CellValidationDeterminedCellInvalidEvent: TimestampUtc = {this.TimestampUtc.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Details = {this.Details?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Message = {this.Message?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}.");
 
             return result;
         }

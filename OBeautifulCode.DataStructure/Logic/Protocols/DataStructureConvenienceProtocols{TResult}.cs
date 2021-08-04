@@ -25,7 +25,8 @@ namespace OBeautifulCode.DataStructure
           ISyncAndAsyncReturningProtocol<NotOp, bool>,
           ISyncAndAsyncReturningProtocol<SumOp, decimal>,
           ISyncAndAsyncReturningProtocol<CompareOp, bool>,
-          ISyncAndAsyncReturningProtocol<GetNumberOfSignificantDigitsOp, int>
+          ISyncAndAsyncReturningProtocol<GetNumberOfSignificantDigitsOp, int>,
+          ISyncAndAsyncReturningProtocol<ValidateUsingConditionsOp, ValidationResult>
     {
         private readonly IProtocolFactory protocolFactory;
 
@@ -306,6 +307,64 @@ namespace OBeautifulCode.DataStructure
             return result;
         }
 
+        /// <inheritdoc />
+        public ValidationResult Execute(
+            ValidateUsingConditionsOp operation)
+        {
+            // NOTE: THIS CODE IS A NEAR DUPLICATE OF THE ASYNC METHOD BELOW; NO GOOD WAY TO D.R.Y. IT OUT
+            ValidationResult result = null;
+
+            foreach (var condition in operation.Conditions)
+            {
+                var conditionResult = this.protocolFactory.GetProtocolAndExecuteViaReflection<bool>(condition.Operation);
+
+                var conditionWasMet = WasConditionMet(conditionResult, condition.Kind);
+
+                if (!conditionWasMet)
+                {
+                    result = new ValidationResult(Validity.Invalid, condition.FailureMessageOp);
+
+                    break;
+                }
+            }
+
+            if (result == null)
+            {
+                result = new ValidationResult(Validity.Valid);
+            }
+
+            return result;
+        }
+
+        /// <inheritdoc />
+        public async Task<ValidationResult> ExecuteAsync(
+            ValidateUsingConditionsOp operation)
+        {
+            // NOTE: THIS CODE IS A NEAR DUPLICATE OF THE SYNC METHOD ABOVE; NO GOOD WAY TO D.R.Y. IT OUT
+            ValidationResult result = null;
+
+            foreach (var condition in operation.Conditions)
+            {
+                var conditionResult = await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync<bool>(condition.Operation);
+
+                var conditionWasMet = WasConditionMet(conditionResult, condition.Kind);
+
+                if (!conditionWasMet)
+                {
+                    result = new ValidationResult(Validity.Invalid, condition.FailureMessageOp);
+
+                    break;
+                }
+            }
+
+            if (result == null)
+            {
+                result = new ValidationResult(Validity.Valid);
+            }
+
+            return result;
+        }
+
         private static bool Compare(
             decimal left,
             CompareOperator @operator,
@@ -347,6 +406,33 @@ namespace OBeautifulCode.DataStructure
             if (result < 0)
             {
                 throw new InvalidOperationException("Expected result to be >= 0.");
+            }
+
+            return result;
+        }
+
+        private static bool WasConditionMet(
+            bool operationResult,
+            ValidationConditionKind validationConditionKind)
+        {
+            bool result;
+
+            switch (validationConditionKind)
+            {
+                case ValidationConditionKind.PassWhenTrue:
+                    result = operationResult;
+                    break;
+                case ValidationConditionKind.PassWhenFalse:
+                    result = !operationResult;
+                    break;
+                case ValidationConditionKind.FailWhenTrue:
+                    result = !operationResult;
+                    break;
+                case ValidationConditionKind.FailWhenFalse:
+                    result = operationResult;
+                    break;
+                default:
+                    throw new NotSupportedException(Invariant($"This {nameof(ValidationConditionKind)} is not supported: {validationConditionKind}."));
             }
 
             return result;

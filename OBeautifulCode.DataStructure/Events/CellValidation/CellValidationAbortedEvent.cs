@@ -11,7 +11,7 @@ namespace OBeautifulCode.DataStructure
     using OBeautifulCode.Type;
 
     /// <summary>
-    /// A validation condition aborted the validation.
+    /// The validation of a cell was aborted.
     /// </summary>
     // ReSharper disable once RedundantExtendsListEntry
     public partial class CellValidationAbortedEvent : CellValidationEventBase, IModelViaCodeGen
@@ -20,7 +20,7 @@ namespace OBeautifulCode.DataStructure
         /// Initializes a new instance of the <see cref="CellValidationAbortedEvent"/> class.
         /// </summary>
         /// <param name="timestampUtc">The timestamp.</param>
-        /// <param name="details">Details about the condition that aborted the validation.</param>
+        /// <param name="details">Details about the aborted validation.</param>
         public CellValidationAbortedEvent(
             DateTime timestampUtc,
             string details)

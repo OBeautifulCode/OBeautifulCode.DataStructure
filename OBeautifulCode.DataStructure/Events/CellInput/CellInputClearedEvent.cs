@@ -11,7 +11,7 @@ namespace OBeautifulCode.DataStructure
     using OBeautifulCode.Type;
 
     /// <summary>
-    /// Input has been cleared from an <see cref="IInputCell{TValue}"/>.
+    /// Input has been cleared-out from an <see cref="IInputCell{TValue}"/>.
     /// </summary>
     // ReSharper disable once RedundantExtendsListEntry
     public partial class CellInputClearedEvent : CellInputEventBase, IModelViaCodeGen
@@ -20,7 +20,7 @@ namespace OBeautifulCode.DataStructure
         /// Initializes a new instance of the <see cref="CellInputClearedEvent"/> class.
         /// </summary>
         /// <param name="timestampUtc">The timestamp.</param>
-        /// <param name="details">OPTIONAL details about input that was cleared from the cell.  DEFAULT is to omit any details.</param>
+        /// <param name="details">OPTIONAL details about input that was cleared-out from the cell.  DEFAULT is to omit any details.</param>
         public CellInputClearedEvent(
             DateTime timestampUtc,
             string details)

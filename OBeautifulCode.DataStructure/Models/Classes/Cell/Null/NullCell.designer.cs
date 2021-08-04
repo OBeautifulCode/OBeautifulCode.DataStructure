@@ -72,6 +72,8 @@ namespace OBeautifulCode.DataStructure
             var result = this.Id.IsEqualTo(other.Id, StringComparer.Ordinal)
                       && this.ColumnsSpanned.IsEqualTo(other.ColumnsSpanned)
                       && this.Details.IsEqualTo(other.Details, StringComparer.Ordinal)
+                      && this.Validation.IsEqualTo(other.Validation)
+                      && this.ValidationEvents.IsEqualTo(other.ValidationEvents)
                       && this.Format.IsEqualTo(other.Format)
                       && this.HoverOver.IsEqualTo(other.HoverOver)
                       && this.Link.IsEqualTo(other.Link);
@@ -87,6 +89,8 @@ namespace OBeautifulCode.DataStructure
             .Hash(this.Id)
             .Hash(this.ColumnsSpanned)
             .Hash(this.Details)
+            .Hash(this.Validation)
+            .Hash(this.ValidationEvents)
             .Hash(this.Format)
             .Hash(this.HoverOver)
             .Hash(this.Link)
@@ -119,6 +123,8 @@ namespace OBeautifulCode.DataStructure
                                  id,
                                  this.ColumnsSpanned?.DeepClone(),
                                  this.Details?.DeepClone(),
+                                 this.Validation?.DeepClone(),
+                                 this.ValidationEvents?.DeepClone(),
                                  this.Format?.DeepClone(),
                                  this.HoverOver?.DeepClone(),
                                  this.Link?.DeepClone());
@@ -150,6 +156,8 @@ namespace OBeautifulCode.DataStructure
                                  this.Id?.DeepClone(),
                                  columnsSpanned,
                                  this.Details?.DeepClone(),
+                                 this.Validation?.DeepClone(),
+                                 this.ValidationEvents?.DeepClone(),
                                  this.Format?.DeepClone(),
                                  this.HoverOver?.DeepClone(),
                                  this.Link?.DeepClone());
@@ -181,6 +189,74 @@ namespace OBeautifulCode.DataStructure
                                  this.Id?.DeepClone(),
                                  this.ColumnsSpanned?.DeepClone(),
                                  details,
+                                 this.Validation?.DeepClone(),
+                                 this.ValidationEvents?.DeepClone(),
+                                 this.Format?.DeepClone(),
+                                 this.HoverOver?.DeepClone(),
+                                 this.Link?.DeepClone());
+
+            return result;
+        }
+
+        /// <inheritdoc />
+        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
+        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
+        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
+        public override NotSlottedCellBase DeepCloneWithValidation(Validation validation)
+        {
+            var result = new NullCell(
+                                 this.Id?.DeepClone(),
+                                 this.ColumnsSpanned?.DeepClone(),
+                                 this.Details?.DeepClone(),
+                                 validation,
+                                 this.ValidationEvents?.DeepClone(),
+                                 this.Format?.DeepClone(),
+                                 this.HoverOver?.DeepClone(),
+                                 this.Link?.DeepClone());
+
+            return result;
+        }
+
+        /// <inheritdoc />
+        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
+        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
+        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
+        public override NotSlottedCellBase DeepCloneWithValidationEvents(IReadOnlyList<CellValidationEventBase> validationEvents)
+        {
+            var result = new NullCell(
+                                 this.Id?.DeepClone(),
+                                 this.ColumnsSpanned?.DeepClone(),
+                                 this.Details?.DeepClone(),
+                                 this.Validation?.DeepClone(),
+                                 validationEvents,
                                  this.Format?.DeepClone(),
                                  this.HoverOver?.DeepClone(),
                                  this.Link?.DeepClone());
@@ -216,6 +292,8 @@ namespace OBeautifulCode.DataStructure
                                  this.Id?.DeepClone(),
                                  this.ColumnsSpanned?.DeepClone(),
                                  this.Details?.DeepClone(),
+                                 this.Validation?.DeepClone(),
+                                 this.ValidationEvents?.DeepClone(),
                                  format,
                                  this.HoverOver?.DeepClone(),
                                  this.Link?.DeepClone());
@@ -251,6 +329,8 @@ namespace OBeautifulCode.DataStructure
                                  this.Id?.DeepClone(),
                                  this.ColumnsSpanned?.DeepClone(),
                                  this.Details?.DeepClone(),
+                                 this.Validation?.DeepClone(),
+                                 this.ValidationEvents?.DeepClone(),
                                  this.Format?.DeepClone(),
                                  hoverOver,
                                  this.Link?.DeepClone());
@@ -286,6 +366,8 @@ namespace OBeautifulCode.DataStructure
                                  this.Id?.DeepClone(),
                                  this.ColumnsSpanned?.DeepClone(),
                                  this.Details?.DeepClone(),
+                                 this.Validation?.DeepClone(),
+                                 this.ValidationEvents?.DeepClone(),
                                  this.Format?.DeepClone(),
                                  this.HoverOver?.DeepClone(),
                                  link);
@@ -301,6 +383,8 @@ namespace OBeautifulCode.DataStructure
                                  this.Id?.DeepClone(),
                                  this.ColumnsSpanned?.DeepClone(),
                                  this.Details?.DeepClone(),
+                                 this.Validation?.DeepClone(),
+                                 this.ValidationEvents?.DeepClone(),
                                  this.Format?.DeepClone(),
                                  this.HoverOver?.DeepClone(),
                                  this.Link?.DeepClone());
@@ -312,7 +396,7 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"OBeautifulCode.DataStructure.NullCell: Id = {this.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, ColumnsSpanned = {this.ColumnsSpanned?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Details = {this.Details?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Format = {this.Format?.ToString() ?? "<null>"}, HoverOver = {this.HoverOver?.ToString() ?? "<null>"}, Link = {this.Link?.ToString() ?? "<null>"}.");
+            var result = Invariant($"OBeautifulCode.DataStructure.NullCell: Id = {this.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, ColumnsSpanned = {this.ColumnsSpanned?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Details = {this.Details?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Validation = {this.Validation?.ToString() ?? "<null>"}, ValidationEvents = {this.ValidationEvents?.ToString() ?? "<null>"}, Format = {this.Format?.ToString() ?? "<null>"}, HoverOver = {this.HoverOver?.ToString() ?? "<null>"}, Link = {this.Link?.ToString() ?? "<null>"}.");
 
             return result;
         }

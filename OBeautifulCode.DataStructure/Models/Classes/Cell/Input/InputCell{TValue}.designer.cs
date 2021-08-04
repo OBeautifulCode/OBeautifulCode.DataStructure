@@ -72,9 +72,9 @@ namespace OBeautifulCode.DataStructure
             var result = this.Id.IsEqualTo(other.Id, StringComparer.Ordinal)
                       && this.ColumnsSpanned.IsEqualTo(other.ColumnsSpanned)
                       && this.Details.IsEqualTo(other.Details, StringComparer.Ordinal)
-                      && this.CellInputEvents.IsEqualTo(other.CellInputEvents)
-                      && this.ValidationConditions.IsEqualTo(other.ValidationConditions)
-                      && this.CellValidationEvents.IsEqualTo(other.CellValidationEvents)
+                      && this.Validation.IsEqualTo(other.Validation)
+                      && this.ValidationEvents.IsEqualTo(other.ValidationEvents)
+                      && this.InputEvents.IsEqualTo(other.InputEvents)
                       && this.ValueFormat.IsEqualTo(other.ValueFormat)
                       && this.Format.IsEqualTo(other.Format)
                       && this.HoverOver.IsEqualTo(other.HoverOver);
@@ -90,9 +90,9 @@ namespace OBeautifulCode.DataStructure
             .Hash(this.Id)
             .Hash(this.ColumnsSpanned)
             .Hash(this.Details)
-            .Hash(this.CellInputEvents)
-            .Hash(this.ValidationConditions)
-            .Hash(this.CellValidationEvents)
+            .Hash(this.Validation)
+            .Hash(this.ValidationEvents)
+            .Hash(this.InputEvents)
             .Hash(this.ValueFormat)
             .Hash(this.Format)
             .Hash(this.HoverOver)
@@ -122,12 +122,12 @@ namespace OBeautifulCode.DataStructure
         public override CellBase DeepCloneWithId(string id)
         {
             var result = new InputCell<TValue>(
-                                 this.CellInputEvents?.DeepClone(),
-                                 this.ValidationConditions?.DeepClone(),
-                                 this.CellValidationEvents?.DeepClone(),
                                  id,
                                  this.ColumnsSpanned?.DeepClone(),
                                  this.Details?.DeepClone(),
+                                 this.Validation?.DeepClone(),
+                                 this.ValidationEvents?.DeepClone(),
+                                 this.InputEvents?.DeepClone(),
                                  this.ValueFormat?.DeepClone(),
                                  this.Format?.DeepClone(),
                                  this.HoverOver?.DeepClone());
@@ -156,12 +156,12 @@ namespace OBeautifulCode.DataStructure
         public override CellBase DeepCloneWithColumnsSpanned(int? columnsSpanned)
         {
             var result = new InputCell<TValue>(
-                                 this.CellInputEvents?.DeepClone(),
-                                 this.ValidationConditions?.DeepClone(),
-                                 this.CellValidationEvents?.DeepClone(),
                                  this.Id?.DeepClone(),
                                  columnsSpanned,
                                  this.Details?.DeepClone(),
+                                 this.Validation?.DeepClone(),
+                                 this.ValidationEvents?.DeepClone(),
+                                 this.InputEvents?.DeepClone(),
                                  this.ValueFormat?.DeepClone(),
                                  this.Format?.DeepClone(),
                                  this.HoverOver?.DeepClone());
@@ -190,12 +190,12 @@ namespace OBeautifulCode.DataStructure
         public override CellBase DeepCloneWithDetails(string details)
         {
             var result = new InputCell<TValue>(
-                                 this.CellInputEvents?.DeepClone(),
-                                 this.ValidationConditions?.DeepClone(),
-                                 this.CellValidationEvents?.DeepClone(),
                                  this.Id?.DeepClone(),
                                  this.ColumnsSpanned?.DeepClone(),
                                  details,
+                                 this.Validation?.DeepClone(),
+                                 this.ValidationEvents?.DeepClone(),
+                                 this.InputEvents?.DeepClone(),
                                  this.ValueFormat?.DeepClone(),
                                  this.Format?.DeepClone(),
                                  this.HoverOver?.DeepClone());
@@ -221,15 +221,15 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public override InputCellBase<TValue> DeepCloneWithCellInputEvents(IReadOnlyList<CellInputEventBase> cellInputEvents)
+        public override NotSlottedCellBase DeepCloneWithValidation(Validation validation)
         {
             var result = new InputCell<TValue>(
-                                 cellInputEvents,
-                                 this.ValidationConditions?.DeepClone(),
-                                 this.CellValidationEvents?.DeepClone(),
                                  this.Id?.DeepClone(),
                                  this.ColumnsSpanned?.DeepClone(),
                                  this.Details?.DeepClone(),
+                                 validation,
+                                 this.ValidationEvents?.DeepClone(),
+                                 this.InputEvents?.DeepClone(),
                                  this.ValueFormat?.DeepClone(),
                                  this.Format?.DeepClone(),
                                  this.HoverOver?.DeepClone());
@@ -255,15 +255,15 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public override InputCellBase<TValue> DeepCloneWithValidationConditions(ValidationConditions validationConditions)
+        public override NotSlottedCellBase DeepCloneWithValidationEvents(IReadOnlyList<CellValidationEventBase> validationEvents)
         {
             var result = new InputCell<TValue>(
-                                 this.CellInputEvents?.DeepClone(),
-                                 validationConditions,
-                                 this.CellValidationEvents?.DeepClone(),
                                  this.Id?.DeepClone(),
                                  this.ColumnsSpanned?.DeepClone(),
                                  this.Details?.DeepClone(),
+                                 this.Validation?.DeepClone(),
+                                 validationEvents,
+                                 this.InputEvents?.DeepClone(),
                                  this.ValueFormat?.DeepClone(),
                                  this.Format?.DeepClone(),
                                  this.HoverOver?.DeepClone());
@@ -289,15 +289,15 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public override InputCellBase<TValue> DeepCloneWithCellValidationEvents(IReadOnlyList<CellValidationEventBase> cellValidationEvents)
+        public override InputCellBase<TValue> DeepCloneWithInputEvents(IReadOnlyList<CellInputEventBase> inputEvents)
         {
             var result = new InputCell<TValue>(
-                                 this.CellInputEvents?.DeepClone(),
-                                 this.ValidationConditions?.DeepClone(),
-                                 cellValidationEvents,
                                  this.Id?.DeepClone(),
                                  this.ColumnsSpanned?.DeepClone(),
                                  this.Details?.DeepClone(),
+                                 this.Validation?.DeepClone(),
+                                 this.ValidationEvents?.DeepClone(),
+                                 inputEvents,
                                  this.ValueFormat?.DeepClone(),
                                  this.Format?.DeepClone(),
                                  this.HoverOver?.DeepClone());
@@ -330,12 +330,12 @@ namespace OBeautifulCode.DataStructure
         public InputCell<TValue> DeepCloneWithValueFormat(ICellValueFormat<TValue> valueFormat)
         {
             var result = new InputCell<TValue>(
-                                 this.CellInputEvents?.DeepClone(),
-                                 this.ValidationConditions?.DeepClone(),
-                                 this.CellValidationEvents?.DeepClone(),
                                  this.Id?.DeepClone(),
                                  this.ColumnsSpanned?.DeepClone(),
                                  this.Details?.DeepClone(),
+                                 this.Validation?.DeepClone(),
+                                 this.ValidationEvents?.DeepClone(),
+                                 this.InputEvents?.DeepClone(),
                                  valueFormat,
                                  this.Format?.DeepClone(),
                                  this.HoverOver?.DeepClone());
@@ -368,12 +368,12 @@ namespace OBeautifulCode.DataStructure
         public InputCell<TValue> DeepCloneWithFormat(CellFormat format)
         {
             var result = new InputCell<TValue>(
-                                 this.CellInputEvents?.DeepClone(),
-                                 this.ValidationConditions?.DeepClone(),
-                                 this.CellValidationEvents?.DeepClone(),
                                  this.Id?.DeepClone(),
                                  this.ColumnsSpanned?.DeepClone(),
                                  this.Details?.DeepClone(),
+                                 this.Validation?.DeepClone(),
+                                 this.ValidationEvents?.DeepClone(),
+                                 this.InputEvents?.DeepClone(),
                                  this.ValueFormat?.DeepClone(),
                                  format,
                                  this.HoverOver?.DeepClone());
@@ -406,12 +406,12 @@ namespace OBeautifulCode.DataStructure
         public InputCell<TValue> DeepCloneWithHoverOver(IHoverOver hoverOver)
         {
             var result = new InputCell<TValue>(
-                                 this.CellInputEvents?.DeepClone(),
-                                 this.ValidationConditions?.DeepClone(),
-                                 this.CellValidationEvents?.DeepClone(),
                                  this.Id?.DeepClone(),
                                  this.ColumnsSpanned?.DeepClone(),
                                  this.Details?.DeepClone(),
+                                 this.Validation?.DeepClone(),
+                                 this.ValidationEvents?.DeepClone(),
+                                 this.InputEvents?.DeepClone(),
                                  this.ValueFormat?.DeepClone(),
                                  this.Format?.DeepClone(),
                                  hoverOver);
@@ -424,12 +424,12 @@ namespace OBeautifulCode.DataStructure
         protected override CellBase DeepCloneInternal()
         {
             var result = new InputCell<TValue>(
-                                 this.CellInputEvents?.DeepClone(),
-                                 this.ValidationConditions?.DeepClone(),
-                                 this.CellValidationEvents?.DeepClone(),
                                  this.Id?.DeepClone(),
                                  this.ColumnsSpanned?.DeepClone(),
                                  this.Details?.DeepClone(),
+                                 this.Validation?.DeepClone(),
+                                 this.ValidationEvents?.DeepClone(),
+                                 this.InputEvents?.DeepClone(),
                                  this.ValueFormat?.DeepClone(),
                                  this.Format?.DeepClone(),
                                  this.HoverOver?.DeepClone());
@@ -441,7 +441,7 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"OBeautifulCode.DataStructure.{this.GetType().ToStringReadable()}: Id = {this.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, ColumnsSpanned = {this.ColumnsSpanned?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Details = {this.Details?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, CellInputEvents = {this.CellInputEvents?.ToString() ?? "<null>"}, ValidationConditions = {this.ValidationConditions?.ToString() ?? "<null>"}, CellValidationEvents = {this.CellValidationEvents?.ToString() ?? "<null>"}, ValueFormat = {this.ValueFormat?.ToString() ?? "<null>"}, Format = {this.Format?.ToString() ?? "<null>"}, HoverOver = {this.HoverOver?.ToString() ?? "<null>"}.");
+            var result = Invariant($"OBeautifulCode.DataStructure.{this.GetType().ToStringReadable()}: Id = {this.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, ColumnsSpanned = {this.ColumnsSpanned?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Details = {this.Details?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Validation = {this.Validation?.ToString() ?? "<null>"}, ValidationEvents = {this.ValidationEvents?.ToString() ?? "<null>"}, InputEvents = {this.InputEvents?.ToString() ?? "<null>"}, ValueFormat = {this.ValueFormat?.ToString() ?? "<null>"}, Format = {this.Format?.ToString() ?? "<null>"}, HoverOver = {this.HoverOver?.ToString() ?? "<null>"}.");
 
             return result;
         }

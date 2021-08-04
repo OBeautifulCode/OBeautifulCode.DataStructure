@@ -11,7 +11,7 @@ namespace OBeautifulCode.DataStructure
     using OBeautifulCode.Type;
 
     /// <summary>
-    /// The execution of an <see cref="IOperationOutputCell{TResult}"/>'s <see cref="IOperationOutputCell{TResult}.Operation"/> was cleared.
+    /// The execution of an <see cref="IOperationOutputCell{TResult}"/>'s <see cref="IOperationOutputCell{TResult}.Operation"/> was cleared-out.
     /// </summary>
     // ReSharper disable once RedundantExtendsListEntry
     public partial class CellOpExecutionClearedEvent : CellOpExecutionEventBase, IModelViaCodeGen
@@ -20,7 +20,7 @@ namespace OBeautifulCode.DataStructure
         /// Initializes a new instance of the <see cref="CellOpExecutionClearedEvent"/> class.
         /// </summary>
         /// <param name="timestampUtc">The timestamp.</param>
-        /// <param name="details">Details about the cleared execution.</param>
+        /// <param name="details">Details about the cleared-out execution.</param>
         public CellOpExecutionClearedEvent(
             DateTime timestampUtc,
             string details)

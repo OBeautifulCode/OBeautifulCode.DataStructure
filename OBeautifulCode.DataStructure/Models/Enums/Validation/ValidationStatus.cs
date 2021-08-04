@@ -7,7 +7,7 @@
 namespace OBeautifulCode.DataStructure
 {
     /// <summary>
-    /// The status of a validation.
+    /// The status of a validation performed on some subject.
     /// </summary>
     public enum ValidationStatus
     {
@@ -17,37 +17,37 @@ namespace OBeautifulCode.DataStructure
         Unknown,
 
         /// <summary>
-        /// There are no validation conditions for the subject.
+        /// There is no validation to perform.
         /// </summary>
-        Unconditioned,
+        ValidationMissing,
 
         /// <summary>
-        /// The validation was not run.
+        /// The validation has not been executed.
         /// </summary>
         Unvalidated,
 
         /// <summary>
-        /// A validation condition deemed the validation not applicable.
+        /// The validation of the subject was deemed not applicable.
         /// </summary>
         DeemedNotApplicable,
 
         /// <summary>
-        /// A validation condition was aborted when executing.
+        /// The validation of the subject was aborted.
         /// </summary>
         Aborted,
 
         /// <summary>
-        /// A validation condition failed to be executed.
+        /// The validation of the subject failed.
         /// </summary>
         Failed,
 
         /// <summary>
-        /// The subject is valid (all conditions pass/are met).
+        /// The subject is valid.
         /// </summary>
         Valid,
 
         /// <summary>
-        /// The subject is invalid (a condition failed to be met).
+        /// The subject is invalid.
         /// </summary>
         Invalid,
     }

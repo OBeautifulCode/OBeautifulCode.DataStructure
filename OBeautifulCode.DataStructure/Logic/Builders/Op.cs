@@ -1,17 +1,19 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Do.cs" company="OBeautifulCode">
+// <copyright file="Op.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace OBeautifulCode.DataStructure
 {
+    using System.Collections.Generic;
+
     using OBeautifulCode.Type;
 
     /// <summary>
     /// Builder methods related to operations.
     /// </summary>
-    public static class Do
+    public static class Op
     {
         /// <summary>
         /// Builds an operation that throws a <see cref="OpExecutionAbortedException"/>.
@@ -53,7 +55,7 @@ namespace OBeautifulCode.DataStructure
         /// <returns>
         /// An operation that gets the specified value.
         /// </returns>
-        public static GetConstOp<TValue> Value<TValue>(
+        public static GetConstOp<TValue> Const<TValue>(
             TValue value)
         {
             var result = new GetConstOp<TValue>(value);
@@ -205,6 +207,21 @@ namespace OBeautifulCode.DataStructure
             IReturningOperation<decimal> right)
         {
             var result = new CompareOp(left, CompareOperator.LessThanOrEqualTo, right);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Builds an <see cref="ValidateUsingConditionsOp"/>.
+        /// </summary>
+        /// <param name="conditions">The conditions.</param>
+        /// <returns>
+        /// The operation.
+        /// </returns>
+        public static ValidateUsingConditionsOp ValidateUsingConditions(
+            IReadOnlyList<ValidationCondition> conditions)
+        {
+            var result = new ValidateUsingConditionsOp(conditions);
 
             return result;
         }

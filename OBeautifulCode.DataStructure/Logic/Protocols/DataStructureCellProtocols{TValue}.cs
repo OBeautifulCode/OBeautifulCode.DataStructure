@@ -155,32 +155,32 @@ namespace OBeautifulCode.DataStructure
 
             if (cell.GetExecutionStatus() == CellOpExecutionStatus.NotExecuted)
             {
-                CellOpExecutionEventBase cellOpExecutionEvent;
+                CellOpExecutionEventBase operationExecutionEvent;
 
                 try
                 {
                     var operationResult = this.protocolFactory.GetProtocolAndExecuteViaReflection<TValue>(cell.Operation);
 
-                    cellOpExecutionEvent = new CellOpExecutionCompletedEvent<TValue>(this.timestampUtc, null, operationResult);
+                    operationExecutionEvent = new CellOpExecutionCompletedEvent<TValue>(this.timestampUtc, null, operationResult);
                 }
                 catch (OpExecutionAbortedExceptionBase ex)
                 {
-                    cellOpExecutionEvent = new CellOpExecutionAbortedEvent(this.timestampUtc, ex.ToString());
+                    operationExecutionEvent = new CellOpExecutionAbortedEvent(this.timestampUtc, ex.ToString());
                 }
                 catch (OpExecutionDeemedNotApplicableExceptionBase ex)
                 {
-                    cellOpExecutionEvent = new CellOpExecutionDeemedNotApplicableEvent(this.timestampUtc, ex.ToString());
+                    operationExecutionEvent = new CellOpExecutionDeemedNotApplicableEvent(this.timestampUtc, ex.ToString());
                 }
                 catch (Exception ex)
                 {
                     // The "proper" exception for a protocol to throw is an OpExecutionFailedExceptionBase.
                     // Protocol authors might not comply.
-                    cellOpExecutionEvent = new CellOpExecutionFailedEvent(this.timestampUtc, ex.ToString());
+                    operationExecutionEvent = new CellOpExecutionFailedEvent(this.timestampUtc, ex.ToString());
                 }
 
-                cell.Record(cellOpExecutionEvent);
+                cell.Record(operationExecutionEvent);
             }
-            else if (cell.CellOpExecutionEvents.Last().TimestampUtc != this.timestampUtc)
+            else if (cell.OperationExecutionEvents.Last().TimestampUtc != this.timestampUtc)
             {
                 throw new InvalidOperationException("Something went wrong.  The operation was executed, but the recorded timestamp doesn't match this timestamp.");
             }
@@ -200,32 +200,32 @@ namespace OBeautifulCode.DataStructure
 
             if (cell.GetExecutionStatus() == CellOpExecutionStatus.NotExecuted)
             {
-                CellOpExecutionEventBase cellOpExecutionEvent;
+                CellOpExecutionEventBase operationExecutionEvent;
 
                 try
                 {
                     var operationResult = await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync<TValue>(cell.Operation);
 
-                    cellOpExecutionEvent = new CellOpExecutionCompletedEvent<TValue>(this.timestampUtc, null, operationResult);
+                    operationExecutionEvent = new CellOpExecutionCompletedEvent<TValue>(this.timestampUtc, null, operationResult);
                 }
                 catch (OpExecutionAbortedExceptionBase ex)
                 {
-                    cellOpExecutionEvent = new CellOpExecutionAbortedEvent(this.timestampUtc, ex.ToString());
+                    operationExecutionEvent = new CellOpExecutionAbortedEvent(this.timestampUtc, ex.ToString());
                 }
                 catch (OpExecutionDeemedNotApplicableExceptionBase ex)
                 {
-                    cellOpExecutionEvent = new CellOpExecutionDeemedNotApplicableEvent(this.timestampUtc, ex.ToString());
+                    operationExecutionEvent = new CellOpExecutionDeemedNotApplicableEvent(this.timestampUtc, ex.ToString());
                 }
                 catch (Exception ex)
                 {
                     // The "proper" exception for a protocol to throw is an OpExecutionFailedExceptionBase.
                     // Protocol authors might not comply.
-                    cellOpExecutionEvent = new CellOpExecutionFailedEvent(this.timestampUtc, ex.ToString());
+                    operationExecutionEvent = new CellOpExecutionFailedEvent(this.timestampUtc, ex.ToString());
                 }
 
-                cell.Record(cellOpExecutionEvent);
+                cell.Record(operationExecutionEvent);
             }
-            else if (cell.CellOpExecutionEvents.Last().TimestampUtc != this.timestampUtc)
+            else if (cell.OperationExecutionEvents.Last().TimestampUtc != this.timestampUtc)
             {
                 throw new InvalidOperationException("Something went wrong.  The operation was executed, but the recorded timestamp doesn't match this timestamp.");
             }
@@ -245,57 +245,64 @@ namespace OBeautifulCode.DataStructure
 
             var validationStatus = cell.GetValidationStatus();
 
-            if (validationStatus == ValidationStatus.Unconditioned)
+            if (validationStatus == ValidationStatus.ValidationMissing)
             {
                 // no-op
             }
             else if (validationStatus == ValidationStatus.Unvalidated)
             {
-                if (cell.ValidationConditions != null)
+                CellValidationEventBase validationEvent;
+
+                try
                 {
-                    CellValidationEventBase cellValidationEvent;
+                    var validation = cell.Validation;
 
-                    try
+                    var validationResult = this.protocolFactory.GetProtocolAndExecuteViaReflection<ValidationResult>(validation.Operation);
+
+                    string message = null;
+
+                    if (validationResult.MessageOp != null)
                     {
-                        foreach (var validationCondition in cell.ValidationConditions.Conditions)
-                        {
-                            var operationResult = this.protocolFactory.GetProtocolAndExecuteViaReflection<bool>(validationCondition.Operation);
-
-                            var conditionWasMet = WasConditionMet(operationResult, validationCondition.Kind);
-
-                            if (!conditionWasMet)
-                            {
-                                var failureMessage = this.protocolFactory.GetProtocolAndExecuteViaReflection<string>(validationCondition.FailureMessageOp);
-
-                                cellValidationEvent = new CellValidationConditionUnmetEvent(failureMessage, this.timestampUtc, validationCondition.Details);
-
-                                cell.Record(cellValidationEvent);
-
-                                return;
-                            }
-                        }
-
-                        cellValidationEvent = new CellValidationCompletedEvent(this.timestampUtc, null);
-                    }
-                    catch (OpExecutionAbortedExceptionBase ex)
-                    {
-                        cellValidationEvent = new CellValidationAbortedEvent(this.timestampUtc, ex.ToString());
-                    }
-                    catch (OpExecutionDeemedNotApplicableExceptionBase ex)
-                    {
-                        cellValidationEvent = new CellValidationDeemedNotApplicableEvent(this.timestampUtc, ex.ToString());
-                    }
-                    catch (Exception ex)
-                    {
-                        // The "proper" exception for a protocol to throw is an OpExecutionFailedExceptionBase.
-                        // Protocol authors might not comply.
-                        cellValidationEvent = new CellValidationFailedEvent(this.timestampUtc, ex.ToString());
+                        message = this.protocolFactory.GetProtocolAndExecuteViaReflection<string>(validationResult.MessageOp);
                     }
 
-                    cell.Record(cellValidationEvent);
+                    var validity = validationResult.Validity;
+
+                    if (validity == Validity.Invalid)
+                    {
+                        validationEvent = new CellValidationDeterminedCellInvalidEvent(this.timestampUtc, null, message);
+                    }
+                    else if (validity == Validity.Valid)
+                    {
+                        validationEvent = new CellValidationDeterminedCellValidEvent(this.timestampUtc, null, message);
+                    }
+                    else if (validity == Validity.NotApplicable)
+                    {
+                        validationEvent = new CellValidationDeemedNotApplicableEvent(this.timestampUtc, null, message);
+                    }
+                    else
+                    {
+                        throw new NotSupportedException(Invariant($"This {nameof(Validity)} is not supported: {validity}."));
+                    }
                 }
+                catch (OpExecutionAbortedExceptionBase ex)
+                {
+                    validationEvent = new CellValidationAbortedEvent(this.timestampUtc, ex.ToString());
+                }
+                catch (OpExecutionDeemedNotApplicableExceptionBase ex)
+                {
+                    validationEvent = new CellValidationDeemedNotApplicableEvent(this.timestampUtc, ex.ToString(), null);
+                }
+                catch (Exception ex)
+                {
+                    // The "proper" exception for a protocol to throw is an OpExecutionFailedExceptionBase.
+                    // Protocol authors might not comply.
+                    validationEvent = new CellValidationFailedEvent(this.timestampUtc, ex.ToString());
+                }
+
+                cell.Record(validationEvent);
             }
-            else if (cell.CellValidationEvents.Last().TimestampUtc != this.timestampUtc)
+            else if (cell.ValidationEvents.Last().TimestampUtc != this.timestampUtc)
             {
                 throw new InvalidOperationException("Something went wrong.  The cell was validated, but the recorded timestamp doesn't match this timestamp.");
             }
@@ -315,57 +322,64 @@ namespace OBeautifulCode.DataStructure
 
             var validationStatus = cell.GetValidationStatus();
 
-            if (validationStatus == ValidationStatus.Unconditioned)
+            if (validationStatus == ValidationStatus.ValidationMissing)
             {
                 // no-op
             }
             else if (validationStatus == ValidationStatus.Unvalidated)
             {
-                if (cell.ValidationConditions != null)
+                CellValidationEventBase validationEvent;
+
+                try
                 {
-                    CellValidationEventBase cellValidationEvent;
+                    var validation = cell.Validation;
 
-                    try
+                    var validationResult = await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync<ValidationResult>(validation.Operation);
+
+                    string message = null;
+
+                    if (validationResult.MessageOp != null)
                     {
-                        foreach (var validationCondition in cell.ValidationConditions.Conditions)
-                        {
-                            var operationResult = await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync<bool>(validationCondition.Operation);
-
-                            var conditionWasMet = WasConditionMet(operationResult, validationCondition.Kind);
-
-                            if (!conditionWasMet)
-                            {
-                                var failureMessage = await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync<string>(validationCondition.FailureMessageOp);
-
-                                cellValidationEvent = new CellValidationConditionUnmetEvent(failureMessage, this.timestampUtc, validationCondition.Details);
-
-                                cell.Record(cellValidationEvent);
-
-                                return;
-                            }
-                        }
-
-                        cellValidationEvent = new CellValidationCompletedEvent(this.timestampUtc, null);
-                    }
-                    catch (OpExecutionAbortedExceptionBase ex)
-                    {
-                        cellValidationEvent = new CellValidationAbortedEvent(this.timestampUtc, ex.ToString());
-                    }
-                    catch (OpExecutionDeemedNotApplicableExceptionBase ex)
-                    {
-                        cellValidationEvent = new CellValidationDeemedNotApplicableEvent(this.timestampUtc, ex.ToString());
-                    }
-                    catch (Exception ex)
-                    {
-                        // The "proper" exception for a protocol to throw is an OpExecutionFailedExceptionBase.
-                        // Protocol authors might not comply.
-                        cellValidationEvent = new CellValidationFailedEvent(this.timestampUtc, ex.ToString());
+                        message = await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync<string>(validationResult.MessageOp);
                     }
 
-                    cell.Record(cellValidationEvent);
+                    var validity = validationResult.Validity;
+
+                    if (validity == Validity.Invalid)
+                    {
+                        validationEvent = new CellValidationDeterminedCellInvalidEvent(this.timestampUtc, null, message);
+                    }
+                    else if (validity == Validity.Valid)
+                    {
+                        validationEvent = new CellValidationDeterminedCellValidEvent(this.timestampUtc, null, message);
+                    }
+                    else if (validity == Validity.NotApplicable)
+                    {
+                        validationEvent = new CellValidationDeemedNotApplicableEvent(this.timestampUtc, null, message);
+                    }
+                    else
+                    {
+                        throw new NotSupportedException(Invariant($"This {nameof(Validity)} is not supported: {validity}."));
+                    }
                 }
+                catch (OpExecutionAbortedExceptionBase ex)
+                {
+                    validationEvent = new CellValidationAbortedEvent(this.timestampUtc, ex.ToString());
+                }
+                catch (OpExecutionDeemedNotApplicableExceptionBase ex)
+                {
+                    validationEvent = new CellValidationDeemedNotApplicableEvent(this.timestampUtc, ex.ToString(), null);
+                }
+                catch (Exception ex)
+                {
+                    // The "proper" exception for a protocol to throw is an OpExecutionFailedExceptionBase.
+                    // Protocol authors might not comply.
+                    validationEvent = new CellValidationFailedEvent(this.timestampUtc, ex.ToString());
+                }
+
+                cell.Record(validationEvent);
             }
-            else if (cell.CellValidationEvents.Last().TimestampUtc != this.timestampUtc)
+            else if (cell.ValidationEvents.Last().TimestampUtc != this.timestampUtc)
             {
                 throw new InvalidOperationException("Something went wrong.  The cell was validated, but the recorded timestamp doesn't match this timestamp.");
             }
@@ -507,33 +521,6 @@ namespace OBeautifulCode.DataStructure
             await Task.FromResult(0);
 
             throw new OpExecutionDeemedNotApplicableException(operation.Details, operation);
-        }
-
-        private static bool WasConditionMet(
-            bool operationResult,
-            ValidationConditionKind validationConditionKind)
-        {
-            bool result;
-
-            switch (validationConditionKind)
-            {
-                case ValidationConditionKind.PassWhenTrue:
-                    result = operationResult;
-                    break;
-                case ValidationConditionKind.PassWhenFalse:
-                    result = !operationResult;
-                    break;
-                case ValidationConditionKind.FailWhenTrue:
-                    result = !operationResult;
-                    break;
-                case ValidationConditionKind.FailWhenFalse:
-                    result = operationResult;
-                    break;
-                default:
-                    throw new NotSupportedException(Invariant($"This {nameof(ValidationConditionKind)} is not supported: {validationConditionKind}."));
-            }
-
-            return result;
         }
 
         private IGetCellValue<TValue> GetCellHavingTypedValue(

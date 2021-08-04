@@ -12,17 +12,17 @@ namespace OBeautifulCode.DataStructure
     /// A cell whose value can be inputted with a specified type of value.
     /// </summary>
     /// <typeparam name="TValue">The type of inputted value.</typeparam>
-    public interface IInputCell<TValue> : INotSlottedCell, IGetCellValue<TValue>, IClearCellValue, ICanBeValidated
+    public interface IInputCell<TValue> : INotSlottedCell, IGetCellValue<TValue>, IClearCellValue
     {
         /// <summary>
         /// Gets the events that record the manipulation of this cell's value.
         /// </summary>
-        IReadOnlyList<CellInputEventBase> CellInputEvents { get; }
+        IReadOnlyList<CellInputEventBase> InputEvents { get; }
 
         /// <summary>
         /// Records a <see cref="CellInputEventBase"/>.
         /// </summary>
-        /// <param name="cellInputEvent">The event to record.</param>
-        void Record(CellInputEventBase cellInputEvent);
+        /// <param name="inputEvent">The event to record.</param>
+        void Record(CellInputEventBase inputEvent);
     }
 }

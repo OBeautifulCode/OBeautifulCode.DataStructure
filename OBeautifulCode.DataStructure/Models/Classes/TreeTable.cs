@@ -26,7 +26,7 @@ namespace OBeautifulCode.DataStructure
 
         private readonly IReadOnlyCollection<ICell> operationCells;
 
-        private readonly IReadOnlyCollection<ICanBeValidated> cellsNeedingValidation;
+        private readonly IReadOnlyCollection<IValidationCell> validationCells;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TreeTable"/> class.
@@ -99,7 +99,7 @@ namespace OBeautifulCode.DataStructure
 
             this.cellIdToCellMap = allCellsWithIds.ToDictionary(_ => _.Id, _ => _);
             this.operationCells = allCells.Where(_ => _.IsOperationCell()).ToList();
-            this.cellsNeedingValidation = allCells.OfType<ICanBeValidated>().Where(_ => _.ValidationConditions != null).ToList();
+            this.validationCells = allCells.OfType<IValidationCell>().ToList();
 
             this.TableColumns = tableColumns;
             this.TableRows = tableRows;
@@ -138,11 +138,11 @@ namespace OBeautifulCode.DataStructure
         public IReadOnlyCollection<ICell> GetOperationCells() => this.operationCells;
 
         /// <summary>
-        /// Gets all <see cref="ICanBeValidated"/>s.
+        /// Gets all <see cref="IValidationCell"/>s.
         /// </summary>
         /// <returns>
-        /// All <see cref="ICanBeValidated"/>s in the tree table.
+        /// All <see cref="IValidationCell"/>s in the tree table.
         /// </returns>
-        public IReadOnlyCollection<ICanBeValidated> GetCellsNeedingValidation() => this.cellsNeedingValidation;
+        public IReadOnlyCollection<IValidationCell> GetValidationCells() => this.validationCells;
     }
 }

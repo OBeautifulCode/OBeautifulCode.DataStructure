@@ -64,6 +64,9 @@
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringReadableOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringXmlDocOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
+    <Compile Include="Events\CellAvailabilityEventBase.designer.cs">
+      <DependentUpon>CellAvailabilityEventBase.cs</DependentUpon>
+    </Compile>
     <Compile Include="Events\CellInputEventBase.designer.cs">
       <DependentUpon>CellInputEventBase.cs</DependentUpon>
     </Compile>
@@ -90,6 +93,7 @@
     <Compile Include="Events\CellOpExecution\CellOpExecutionFailedEvent.designer.cs">
       <DependentUpon>CellOpExecutionFailedEvent.cs</DependentUpon>
     </Compile>
+    <Compile Include="Events\CellAvailabilityEventBase.cs" />
     <Compile Include="Events\CellValidationEventBase.cs" />
     <Compile Include="Events\CellOpExecutionEventBase.cs" />
     <Compile Include="Events\CellOpExecution\CellOpExecutionAbortedEvent.cs" />
@@ -103,20 +107,20 @@
     <Compile Include="Events\CellValidation\CellValidationClearedEvent.designer.cs">
       <DependentUpon>CellValidationClearedEvent.cs</DependentUpon>
     </Compile>
-    <Compile Include="Events\CellValidation\CellValidationCompletedEvent.designer.cs">
-      <DependentUpon>CellValidationCompletedEvent.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Events\CellValidation\CellValidationConditionUnmetEvent.designer.cs">
-      <DependentUpon>CellValidationConditionUnmetEvent.cs</DependentUpon>
-    </Compile>
     <Compile Include="Events\CellValidation\CellValidationDeemedNotApplicableEvent.cs" />
     <Compile Include="Events\CellValidation\CellValidationDeemedNotApplicableEvent.designer.cs">
       <DependentUpon>CellValidationDeemedNotApplicableEvent.cs</DependentUpon>
     </Compile>
+    <Compile Include="Events\CellValidation\CellValidationDeterminedCellInvalidEvent.designer.cs">
+      <DependentUpon>CellValidationDeterminedCellInvalidEvent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Events\CellValidation\CellValidationDeterminedCellValidEvent.designer.cs">
+      <DependentUpon>CellValidationDeterminedCellValidEvent.cs</DependentUpon>
+    </Compile>
     <Compile Include="Events\CellValidation\CellValidationFailedEvent.cs" />
     <Compile Include="Events\CellValidation\CellValidationAbortedEvent.cs" />
-    <Compile Include="Events\CellValidation\CellValidationConditionUnmetEvent.cs" />
-    <Compile Include="Events\CellValidation\CellValidationCompletedEvent.cs" />
+    <Compile Include="Events\CellValidation\CellValidationDeterminedCellInvalidEvent.cs" />
+    <Compile Include="Events\CellValidation\CellValidationDeterminedCellValidEvent.cs" />
     <Compile Include="Events\CellValidation\CellValidationFailedEvent.designer.cs">
       <DependentUpon>CellValidationFailedEvent.cs</DependentUpon>
     </Compile>
@@ -131,17 +135,16 @@
     <Compile Include="Exception\CellValueMissingException.cs" />
     <Compile Include="Exception\CellNotFoundException.cs" />
     <Compile Include="Interfaces\Behavior\IClearCellValue.cs" />
-    <Compile Include="Interfaces\Behavior\IValidateCellValue.cs" />
     <Compile Include="Interfaces\Behavior\IGetCellValue.cs" />
     <Compile Include="Interfaces\Behavior\IGetCellValue{TValue}.cs" />
-    <Compile Include="Interfaces\Convenience\ICanBeValidated.cs" />
+    <Compile Include="Interfaces\Classification\Cell\Feature\IAvailabilityCell.cs" />
+    <Compile Include="Interfaces\Classification\Cell\Feature\IValidationCell.cs" />
     <Compile Include="Interfaces\Classification\Cell\INotSlottedCell.cs" />
     <Compile Include="Interfaces\Classification\Cell\Output\IConstOutputCell{TValue}.cs" />
     <Compile Include="Interfaces\Classification\Cell\Null\INullCell.cs" />
     <Compile Include="Interfaces\Classification\Cell\Slotted\ISlottedCell.cs" />
     <Compile Include="Interfaces\Classification\Format\ICellValueFormat{TValue}.cs" />
     <Compile Include="Interfaces\Property\IHaveCellValueFormat{TValue}.cs" />
-    <Compile Include="Interfaces\Property\IHaveCellValidationConditions.cs" />
     <Compile Include="Interfaces\Property\IHaveStandardCellFeatures{TValue}.cs" />
     <Compile Include="Interfaces\Property\IHaveStandardCellFeatures.cs" />
     <Compile Include="Interfaces\Property\IHaveLink.cs" />
@@ -150,7 +153,7 @@
     <Compile Include="Interfaces\Classification\Cell\Input\IInputCell{TValue}.cs" />
     <Compile Include="Interfaces\Classification\Resource\ILinkedResource.cs" />
     <Compile Include="Interfaces\Classification\Resource\ILink.cs" />
-    <Compile Include="Logic\Builders\Do.cs" />
+    <Compile Include="Logic\Builders\Op.cs" />
     <Compile Include="Logic\Builders\Cell.cs" />
     <Compile Include="Logic\Extensions\CellExtensions.cs" />
     <Compile Include="Logic\Extensions\TreeTableExtensions.cs" />
@@ -161,16 +164,20 @@
     <Compile Include="Models\Classes\CellValue\MediaReference.designer.cs">
       <DependentUpon>MediaReference.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Classes\Cell\CellBase.designer.cs">
-      <DependentUpon>CellBase.cs</DependentUpon>
-    </Compile>
     <Compile Include="Models\Classes\Cell\Input\InputCellBase{TValue}.designer.cs">
       <DependentUpon>InputCellBase{TValue}.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Classes\Cell\Input\InputCell{TValue}.cs" />
-    <Compile Include="Models\Classes\Cell\Input\InputCellBase{TValue}.cs" />
     <Compile Include="Models\Classes\Cell\Input\InputCell{TValue}.designer.cs">
       <DependentUpon>InputCell{TValue}.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Cell\NotSlottedCellBase.cs" />
+    <Compile Include="Models\Classes\Cell\CellBase.designer.cs">
+      <DependentUpon>CellBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Cell\Input\InputCell{TValue}.cs" />
+    <Compile Include="Models\Classes\Cell\Input\InputCellBase{TValue}.cs" />
+    <Compile Include="Models\Classes\Cell\NotSlottedCellBase.designer.cs">
+      <DependentUpon>NotSlottedCellBase.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Classes\Cell\Null\NullCell.designer.cs">
       <DependentUpon>NullCell.cs</DependentUpon>
@@ -381,20 +388,25 @@
     <Compile Include="Models\Classes\TreeTable.designer.cs">
       <DependentUpon>TreeTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\Classes\Validation\Validation.designer.cs">
+      <DependentUpon>Validation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Validation\ValidationCondition.cs" />
     <Compile Include="Models\Classes\Validation\ValidationCondition.designer.cs">
       <DependentUpon>ValidationCondition.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Classes\Validation\ValidationConditions.designer.cs">
-      <DependentUpon>ValidationConditions.cs</DependentUpon>
+    <Compile Include="Models\Classes\Validation\ValidationResult.cs" />
+    <Compile Include="Models\Classes\Validation\ValidationResult.designer.cs">
+      <DependentUpon>ValidationResult.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Enums\Cell\MediaReferenceKind.cs" />
     <Compile Include="Models\Enums\Cell\CellOpExecutionStatus.cs" />
     <Compile Include="Models\Enums\Formatting\NumberFormat\NumberFormatPercentDisplayKind.cs" />
     <Compile Include="Models\Enums\Formatting\NumberFormat\NumberFormatNegativeDisplayKind.cs" />
     <Compile Include="Models\Enums\Formatting\NumberFormat\NumberFormatDigitGroupKind.cs" />
+    <Compile Include="Models\Classes\Validation\Validation.cs" />
     <Compile Include="Models\Enums\Validation\ValidationConditionKind.cs" />
-    <Compile Include="Models\Classes\Validation\ValidationConditions.cs" />
-    <Compile Include="Models\Classes\Validation\ValidationCondition.cs" />
+    <Compile Include="Models\Enums\Validation\Validity.cs" />
     <Compile Include="Models\Enums\Validation\ValidationStatus.cs" />
     <Compile Include="Operations\Classes\Bool\AndAlsoOp.designer.cs">
       <DependentUpon>AndAlsoOp.cs</DependentUpon>
@@ -430,11 +442,18 @@
       <DependentUpon>GetConstOp{TValue}.cs</DependentUpon>
     </Compile>
     <Compile Include="Operations\Classes\Integer\GetNumberOfSignificantDigitsOp.cs" />
+    <Compile Include="Operations\Classes\Integer\GetNumberOfSignificantDigitsOp.designer.cs">
+      <DependentUpon>GetNumberOfSignificantDigitsOp.cs</DependentUpon>
+    </Compile>
     <Compile Include="Operations\Classes\MultiStatementOpBase{TStatement,TResult}.designer.cs">
       <DependentUpon>MultiStatementOpBase{TStatement,TResult}.cs</DependentUpon>
     </Compile>
     <Compile Include="Operations\Classes\SingleStatementOpBase{TStatement,TResult}.designer.cs">
       <DependentUpon>SingleStatementOpBase{TStatement,TResult}.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Operations\Classes\ValidationResult\ValidateUsingConditionsOp.cs" />
+    <Compile Include="Operations\Classes\ValidationResult\ValidateUsingConditionsOp.designer.cs">
+      <DependentUpon>ValidateUsingConditionsOp.cs</DependentUpon>
     </Compile>
     <Compile Include="Operations\Enums\CompareOperator.cs" />
     <Compile Include="Models\Enums\Formatting\FontFormatOptions.cs" />
@@ -495,7 +514,9 @@
     <Content Include=".analyzers\dictionary.xml" />
     <None Include="nuget-icon.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Events\CellAvailability\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\OBeautifulCode.Build.Analyzers.1.1.136\build\OBeautifulCode.Build.Analyzers.targets" Condition="Exists('..\packages\OBeautifulCode.Build.Analyzers.1.1.136\build\OBeautifulCode.Build.Analyzers.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

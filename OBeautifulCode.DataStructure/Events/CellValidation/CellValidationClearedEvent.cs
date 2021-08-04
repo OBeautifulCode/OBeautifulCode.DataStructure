@@ -11,7 +11,7 @@ namespace OBeautifulCode.DataStructure
     using OBeautifulCode.Type;
 
     /// <summary>
-    /// Validation performed on a cell has been cleared out.
+    /// The validation of a cell was cleared-out.
     /// </summary>
     // ReSharper disable once RedundantExtendsListEntry
     public partial class CellValidationClearedEvent : CellValidationEventBase, IModelViaCodeGen
@@ -20,7 +20,7 @@ namespace OBeautifulCode.DataStructure
         /// Initializes a new instance of the <see cref="CellValidationClearedEvent"/> class.
         /// </summary>
         /// <param name="timestampUtc">The timestamp.</param>
-        /// <param name="details">Details about the condition that aborted the validation.</param>
+        /// <param name="details">Details about the cleared-out validation.</param>
         public CellValidationClearedEvent(
             DateTime timestampUtc,
             string details)

@@ -25,60 +25,70 @@ namespace OBeautifulCode.DataStructure.Test
         {
             const string sectionId = "section-id";
 
+            /*
+             * Op.IfThenElse(
+             *     Op.Not(Cell.HasValue(sectionId, "sales-fte")),
+             *     new ValidationResult(Invalid, Op.Value("input required")),
+             *     Op.IfThenElse(
+             *     Cell.HasValue(sectionId, "sales-fte"),
+             *     new ValidationResult(Invalid, Op.Value("input required")),
+             * ))
+             */
+
             var numberOfSalesFteCell = Cell.CreateInput<decimal>(
                 id: "sales-fte",
-                validationConditions: new ValidationConditions(
+                validation: Cell.CreateValidation(Op.ValidateUsingConditions(
                     new[]
                     {
-                        new ValidationCondition(Cell.HasValue(sectionId, "sales-fte"), Do.Value("input required")),
+                        new ValidationCondition(Cell.HasValue(sectionId, "sales-fte"), Op.Const("input required")),
                         new ValidationCondition(
-                            Do.IsGreaterThanOrEqualTo(
+                            Op.IsGreaterThanOrEqualTo(
                                 Cell.GetValue<decimal>(sectionId, "sales-fte"),
-                                Do.Value(0m)),
-                            Do.Value("must be >= 0")),
-                    }));
+                                Op.Const(0m)),
+                            Op.Const("must be >= 0")),
+                    })));
 
             var numberOfWarehouseFteCell = Cell.CreateInput<decimal>(
                 id: "warehouse-fte",
-                validationConditions: new ValidationConditions(
+                validation: Cell.CreateValidation(Op.ValidateUsingConditions(
                     new[]
                     {
-                        new ValidationCondition(Cell.HasValue(sectionId, "warehouse-fte"), Do.Value("input required")),
+                        new ValidationCondition(Cell.HasValue(sectionId, "warehouse-fte"), Op.Const("input required")),
                         new ValidationCondition(
-                            Do.IsGreaterThanOrEqualTo(
+                            Op.IsGreaterThanOrEqualTo(
                                 Cell.GetValue<decimal>(sectionId, "warehouse-fte"),
-                                Do.Value(0m)),
-                            Do.Value("must be >= 0")),
-                    }));
+                                Op.Const(0m)),
+                            Op.Const("must be >= 0")),
+                    })));
 
             var numberOfTotalFte = Cell.CreateOp(
                     id: "total-fte",
                     operation:
-                        Do.IfThenElse(
-                            Do.AndAlso(
+                        Op.IfThenElse(
+                            Op.AndAlso(
                                 Cell.HasValue(sectionId, numberOfSalesFteCell.Id),
                                 Cell.HasValue(sectionId, numberOfWarehouseFteCell.Id)),
-                            Do.Sum(
+                            Op.Sum(
                                 Cell.GetValue<decimal>(sectionId, numberOfSalesFteCell.Id),
                                 Cell.GetValue<decimal>(sectionId, numberOfWarehouseFteCell.Id)),
-                            Do.Abort<decimal>("cannot perform sum")),
-                    validationConditions: new ValidationConditions(
+                            Op.Abort<decimal>("cannot perform sum")),
+                    validation: Cell.CreateValidation(Op.ValidateUsingConditions(
                         new[]
                         {
                             new ValidationCondition(
-                                Do.IfThenElse(
-                                    Do.AndAlso(
+                                Op.IfThenElse(
+                                    Op.AndAlso(
                                         Cell.HasValue(sectionId, numberOfSalesFteCell.Id),
                                         Cell.HasValue(sectionId, numberOfWarehouseFteCell.Id)),
-                                    Do.Value(true),
-                                    Do.Abort<bool>()),
-                                Do.Value("never-hit")),
+                                    Op.Const(true),
+                                    Op.Abort<bool>()),
+                                Op.Const("never-hit")),
                             new ValidationCondition(
-                                Do.IsGreaterThan(
+                                Op.IsGreaterThan(
                                     Cell.GetValue<decimal>(sectionId, "total-fte"),
-                                    Do.Value(0m)),
-                                Do.Value("must be >= 0")),
-                        }));
+                                    Op.Const(0m)),
+                                Op.Const("must be >= 0")),
+                        })));
 
             var coscoresCell = Cell.CreateConst<NamedDecimalSet>(
                 new[]
@@ -108,7 +118,6 @@ namespace OBeautifulCode.DataStructure.Test
                 new TileOp(
                     Cell.GetValue<NamedDecimalSet>(sectionId, "coscores-copy"),
                     Cell.GetValue<int>(sectionId, "int-const")),
-                null,
                 id: "quartiles");
 
             var rows = new[]

@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ValidationConditions.cs" company="OBeautifulCode">
+// <copyright file="ValidateUsingConditionsOp.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -15,21 +15,17 @@ namespace OBeautifulCode.DataStructure
     using static System.FormattableString;
 
     /// <summary>
-    /// A list of conditions that determine the validity of a subject (e.g. a cell).
+    /// Validates a subject using a list of conditions that determine it's validity.
     /// </summary>
-    /// <remarks>
-    /// The conditions are evaluated in order; so if one of them fails, the others are not evaluated.
-    /// </remarks>
-    public partial class ValidationConditions : IHaveDetails, IModelViaCodeGen
+    // ReSharper disable once RedundantExtendsListEntry
+    public partial class ValidateUsingConditionsOp : ReturningOperationBase<ValidationResult>, IModelViaCodeGen
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ValidationConditions"/> class.
+        /// Initializes a new instance of the <see cref="ValidateUsingConditionsOp"/> class.
         /// </summary>
         /// <param name="conditions">The conditions.</param>
-        /// <param name="details">OPTIONAL details about the validation.  DEFAULT is to omit any details.</param>
-        public ValidationConditions(
-            IReadOnlyList<ValidationCondition> conditions,
-            string details = null)
+        public ValidateUsingConditionsOp(
+            IReadOnlyList<ValidationCondition> conditions)
         {
             if (conditions == null)
             {
@@ -47,17 +43,11 @@ namespace OBeautifulCode.DataStructure
             }
 
             this.Conditions = conditions;
-            this.Details = details;
         }
 
         /// <summary>
         /// Gets the conditions.
         /// </summary>
         public IReadOnlyList<ValidationCondition> Conditions { get; private set; }
-
-        /// <summary>
-        /// Gets details about the validation.
-        /// </summary>
-        public string Details { get; private set; }
     }
 }

@@ -11,7 +11,7 @@ namespace OBeautifulCode.DataStructure
     using OBeautifulCode.Type;
 
     /// <summary>
-    /// A validation condition deemed the validation not applicable.
+    /// The validation of a cell was deemed not applicable.
     /// </summary>
     // ReSharper disable once RedundantExtendsListEntry
     public partial class CellValidationDeemedNotApplicableEvent : CellValidationEventBase, IModelViaCodeGen
@@ -20,12 +20,20 @@ namespace OBeautifulCode.DataStructure
         /// Initializes a new instance of the <see cref="CellValidationDeemedNotApplicableEvent"/> class.
         /// </summary>
         /// <param name="timestampUtc">The timestamp.</param>
-        /// <param name="details">Details about the condition that aborted the validation.</param>
+        /// <param name="details">Details about the validation that is not applicable.</param>
+        /// <param name="message">The message to emit about determination that the validation is not applicable.</param>
         public CellValidationDeemedNotApplicableEvent(
             DateTime timestampUtc,
-            string details)
+            string details,
+            string message)
             : base(timestampUtc, details)
         {
+            this.Message = message;
         }
+
+        /// <summary>
+        /// Gets the message to emit about determination that the validation is not applicable.
+        /// </summary>
+        public string Message { get; private set; }
     }
 }

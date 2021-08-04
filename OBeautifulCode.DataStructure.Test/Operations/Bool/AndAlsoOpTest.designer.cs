@@ -171,12 +171,14 @@ namespace OBeautifulCode.DataStructure.Test
                         A.Dummy<ExecuteOperationCellIfNecessaryOp<Version>>(),
                         A.Dummy<GetCellValueOp<Version>>(),
                         A.Dummy<GetConstOp<Version>>(),
+                        A.Dummy<GetNumberOfSignificantDigitsOp>(),
                         A.Dummy<HasCellValueOp>(),
                         A.Dummy<IfThenElseOp<Version>>(),
                         A.Dummy<NotOp>(),
                         A.Dummy<OrElseOp>(),
                         A.Dummy<SumOp>(),
                         A.Dummy<ValidateCellOp>(),
+                        A.Dummy<ValidateUsingConditionsOp>(),
                     },
                 });
 

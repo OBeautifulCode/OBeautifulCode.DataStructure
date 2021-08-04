@@ -67,12 +67,12 @@ namespace OBeautifulCode.DataStructure
         /// </summary>
         /// <typeparam name="TValue">The type of value.</typeparam>
         /// <param name="operation">The operation.</param>
-        /// <param name="cellOpExecutionEvents">OPTIONAL results of executing the operation.  DEFAULT is a cell who's operation has not yet been executed.</param>
-        /// <param name="validationConditions">OPTIONAL list of conditions that determine the validity of the cell's value.  DEFAULT is to omit validation.</param>
-        /// <param name="cellValidationEvents">OPTIONAL events that record the validation of this cell's value.  DEFAULT is a cell that has not yet been validated.</param>
         /// <param name="id">OPTIONAL unique identifier of the cell.  DEFAULT is a cell with no unique identifier.</param>
         /// <param name="columnsSpanned">OPTIONAL number of columns spanned or null if none (cell occupies a single column).  DEFAULT is none.</param>
         /// <param name="details">OPTIONAL details about the cell.  DEFAULT is to omit any details.</param>
+        /// <param name="validation">OPTIONAL validation to perform.  DEFAULT is no validation.</param>
+        /// <param name="validationEvents">OPTIONAL events that record the validation of this cell.  DEFAULT is a cell that has not yet been validated.</param>
+        /// <param name="operationExecutionEvents">OPTIONAL events that record the execution of <paramref name="operation"/>.  DEFAULT is a cell who's operation has not yet been executed.</param>
         /// <param name="valueFormat">OPTIONAL format to apply to the cell value.  DEFAULT is to leave the format unchanged.</param>
         /// <param name="format">OPTIONAL format to apply to the cell.  DEFAULT is to leave the format unchanged.</param>
         /// <param name="hoverOver">OPTIONAL hover-over for the cell.  DEFAULT is no hover-over.</param>
@@ -82,18 +82,18 @@ namespace OBeautifulCode.DataStructure
         /// </returns>
         public static OperationCell<TValue> CreateOp<TValue>(
             IReturningOperation<TValue> operation,
-            IReadOnlyList<CellOpExecutionEventBase> cellOpExecutionEvents = null,
-            ValidationConditions validationConditions = null,
-            IReadOnlyList<CellValidationEventBase> cellValidationEvents = null,
             string id = null,
             int? columnsSpanned = null,
             string details = null,
+            Validation validation = null,
+            IReadOnlyList<CellValidationEventBase> validationEvents = null,
+            IReadOnlyList<CellOpExecutionEventBase> operationExecutionEvents = null,
             ICellValueFormat<TValue> valueFormat = null,
             CellFormat format = null,
             IHoverOver hoverOver = null,
             ILink link = null)
         {
-            var result = new OperationCell<TValue>(operation, cellOpExecutionEvents, validationConditions, cellValidationEvents, id, columnsSpanned, details, valueFormat, format, hoverOver, link);
+            var result = new OperationCell<TValue>(operation, id, columnsSpanned, details, validation, validationEvents, operationExecutionEvents, valueFormat, format, hoverOver, link);
 
             return result;
         }
@@ -102,10 +102,12 @@ namespace OBeautifulCode.DataStructure
         /// Builds an <see cref="IConstOutputCell{TValue}"/>.
         /// </summary>
         /// <typeparam name="TValue">The type of value.</typeparam>
-        /// <param name="value">The value.</param>
+        /// <param name="value">The cell's value.</param>
         /// <param name="id">OPTIONAL unique identifier of the cell.  DEFAULT is a cell with no unique identifier.</param>
         /// <param name="columnsSpanned">OPTIONAL number of columns spanned or null if none (cell occupies a single column).  DEFAULT is none.</param>
         /// <param name="details">OPTIONAL details about the cell.  DEFAULT is to omit any details.</param>
+        /// <param name="validation">OPTIONAL validation to perform.  DEFAULT is no validation.</param>
+        /// <param name="validationEvents">OPTIONAL events that record the validation of this cell.  DEFAULT is a cell that has not yet been validated.</param>
         /// <param name="valueFormat">OPTIONAL format to apply to the cell value.  DEFAULT is to leave the format unchanged.</param>
         /// <param name="format">OPTIONAL format to apply to the cell.  DEFAULT is to leave the format unchanged.</param>
         /// <param name="hoverOver">OPTIONAL hover-over for the cell.  DEFAULT is no hover-over.</param>
@@ -118,12 +120,14 @@ namespace OBeautifulCode.DataStructure
             string id = null,
             int? columnsSpanned = null,
             string details = null,
+            Validation validation = null,
+            IReadOnlyList<CellValidationEventBase> validationEvents = null,
             ICellValueFormat<TValue> valueFormat = null,
             CellFormat format = null,
             IHoverOver hoverOver = null,
             ILink link = null)
         {
-            var result = new ConstCell<TValue>(value, id, columnsSpanned, details, valueFormat, format, hoverOver, link);
+            var result = new ConstCell<TValue>(value, id, columnsSpanned, details, validation, validationEvents, valueFormat, format, hoverOver, link);
 
             return result;
         }
@@ -132,12 +136,12 @@ namespace OBeautifulCode.DataStructure
         /// Builds an <see cref="IConstOutputCell{TValue}"/>.
         /// </summary>
         /// <typeparam name="TValue">The type of value.</typeparam>
-        /// <param name="cellInputEvents">OPTIONAL events that record the manipulation of this cell's value.  DEFAULT is a cell with no inputted value.</param>
-        /// <param name="validationConditions">OPTIONAL list of conditions that determine the validity of the cell's value.  DEFAULT is to omit validation.</param>
-        /// <param name="cellValidationEvents">OPTIONAL events that record the validation of this cell's value.  DEFAULT is a cell that has not yet been validated.</param>
         /// <param name="id">OPTIONAL unique identifier of the cell.  DEFAULT is a cell with no unique identifier.</param>
         /// <param name="columnsSpanned">OPTIONAL number of columns spanned or null if none (cell occupies a single column).  DEFAULT is none.</param>
         /// <param name="details">OPTIONAL details about the cell.  DEFAULT is to omit any details.</param>
+        /// <param name="validation">OPTIONAL validation to perform.  DEFAULT is no validation.</param>
+        /// <param name="validationEvents">OPTIONAL events that record the validation of this cell.  DEFAULT is a cell that has not yet been validated.</param>
+        /// <param name="inputEvents">OPTIONAL events that record the manipulation of this cell's value.  DEFAULT is a cell with no inputted value.</param>
         /// <param name="valueFormat">OPTIONAL format to apply to the cell value.  DEFAULT is to leave the format unchanged.</param>
         /// <param name="format">OPTIONAL format to apply to the cell.  DEFAULT is to leave the format unchanged.</param>
         /// <param name="hoverOver">OPTIONAL hover-over for the cell.  DEFAULT is no hover-over.</param>
@@ -145,17 +149,34 @@ namespace OBeautifulCode.DataStructure
         /// The cell.
         /// </returns>
         public static InputCell<TValue> CreateInput<TValue>(
-            IReadOnlyList<CellInputEventBase> cellInputEvents = null,
-            ValidationConditions validationConditions = null,
-            IReadOnlyList<CellValidationEventBase> cellValidationEvents = null,
             string id = null,
             int? columnsSpanned = null,
             string details = null,
+            Validation validation = null,
+            IReadOnlyList<CellValidationEventBase> validationEvents = null,
+            IReadOnlyList<CellInputEventBase> inputEvents = null,
             ICellValueFormat<TValue> valueFormat = null,
             CellFormat format = null,
             IHoverOver hoverOver = null)
         {
-            var result = new InputCell<TValue>(cellInputEvents, validationConditions, cellValidationEvents, id, columnsSpanned, details, valueFormat, format, hoverOver);
+            var result = new InputCell<TValue>(id, columnsSpanned, details, validation, validationEvents, inputEvents, valueFormat, format, hoverOver);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Builds a <see cref="Validation"/>.
+        /// </summary>
+        /// <param name="operation">The operation to execute to get the validity of the subject.</param>
+        /// <param name="details">OPTIONAL details about this validation.  DEFAULT is to omit any details.</param>
+        /// <returns>
+        /// The validation.
+        /// </returns>
+        public static Validation CreateValidation(
+            IReturningOperation<ValidationResult> operation,
+            string details = null)
+        {
+            var result = new Validation(operation, details);
 
             return result;
         }

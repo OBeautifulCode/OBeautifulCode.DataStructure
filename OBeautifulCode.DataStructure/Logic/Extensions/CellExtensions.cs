@@ -34,7 +34,7 @@ namespace OBeautifulCode.DataStructure
 
             CellOpExecutionStatus result;
 
-            var lastCellOpExecutionEvent = cell.CellOpExecutionEvents?.LastOrDefault();
+            var lastCellOpExecutionEvent = cell.OperationExecutionEvents?.LastOrDefault();
 
             if (lastCellOpExecutionEvent == null)
             {
@@ -76,7 +76,7 @@ namespace OBeautifulCode.DataStructure
         /// The validation status of the specified cell.
         /// </returns>
         public static ValidationStatus GetValidationStatus(
-            this ICanBeValidated cell)
+            this IValidationCell cell)
         {
             if (cell == null)
             {
@@ -85,11 +85,11 @@ namespace OBeautifulCode.DataStructure
 
             ValidationStatus result;
 
-            var lastCellValidationEvent = cell.CellValidationEvents?.LastOrDefault();
+            var lastCellValidationEvent = cell.ValidationEvents?.LastOrDefault();
 
-            if (cell.ValidationConditions == null)
+            if (cell.Validation == null)
             {
-                result = ValidationStatus.Unconditioned;
+                result = ValidationStatus.ValidationMissing;
             }
             else if (lastCellValidationEvent == null)
             {
@@ -107,7 +107,7 @@ namespace OBeautifulCode.DataStructure
             {
                 result = ValidationStatus.Aborted;
             }
-            else if (lastCellValidationEvent is CellValidationCompletedEvent)
+            else if (lastCellValidationEvent is CellValidationDeterminedCellValidEvent)
             {
                 result = ValidationStatus.Valid;
             }
@@ -115,7 +115,7 @@ namespace OBeautifulCode.DataStructure
             {
                 result = ValidationStatus.Failed;
             }
-            else if (lastCellValidationEvent is CellValidationConditionUnmetEvent)
+            else if (lastCellValidationEvent is CellValidationDeterminedCellInvalidEvent)
             {
                 result = ValidationStatus.Invalid;
             }

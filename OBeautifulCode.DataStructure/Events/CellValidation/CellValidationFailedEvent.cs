@@ -11,7 +11,7 @@ namespace OBeautifulCode.DataStructure
     using OBeautifulCode.Type;
 
     /// <summary>
-    /// The validation failed; an exception was thrown.
+    /// The validation of a cell failed; an exception was thrown.
     /// </summary>
     // ReSharper disable once RedundantExtendsListEntry
     public partial class CellValidationFailedEvent : CellValidationEventBase, IModelViaCodeGen
@@ -20,7 +20,7 @@ namespace OBeautifulCode.DataStructure
         /// Initializes a new instance of the <see cref="CellValidationFailedEvent"/> class.
         /// </summary>
         /// <param name="timestampUtc">The timestamp.</param>
-        /// <param name="details">Details about the failed execution.</param>
+        /// <param name="details">Details about the failed validation.</param>
         public CellValidationFailedEvent(
             DateTime timestampUtc,
             string details)

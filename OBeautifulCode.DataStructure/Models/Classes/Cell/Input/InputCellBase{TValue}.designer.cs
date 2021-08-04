@@ -77,10 +77,10 @@ namespace OBeautifulCode.DataStructure
         public new InputCellBase<TValue> DeepClone() => (InputCellBase<TValue>)this.DeepCloneInternal();
 
         /// <summary>
-        /// Deep clones this object with a new <see cref="CellInputEvents" />.
+        /// Deep clones this object with a new <see cref="InputEvents" />.
         /// </summary>
-        /// <param name="cellInputEvents">The new <see cref="CellInputEvents" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="InputCellBase{TValue}" /> using the specified <paramref name="cellInputEvents" /> for <see cref="CellInputEvents" /> and a deep clone of every other property.</returns>
+        /// <param name="inputEvents">The new <see cref="InputEvents" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="InputCellBase{TValue}" /> using the specified <paramref name="inputEvents" /> for <see cref="InputEvents" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -98,61 +98,7 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public virtual InputCellBase<TValue> DeepCloneWithCellInputEvents(IReadOnlyList<CellInputEventBase> cellInputEvents)
-        {
-            throw new NotImplementedException("This method should be abstract.  It was generated as virtual so that you aren't forced to override it when you create a new model that derives from this model.  It will be overridden in the generated designer file.");
-        }
-
-        /// <summary>
-        /// Deep clones this object with a new <see cref="ValidationConditions" />.
-        /// </summary>
-        /// <param name="validationConditions">The new <see cref="ValidationConditions" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="InputCellBase{TValue}" /> using the specified <paramref name="validationConditions" /> for <see cref="ValidationConditions" /> and a deep clone of every other property.</returns>
-        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
-        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
-        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
-        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public virtual InputCellBase<TValue> DeepCloneWithValidationConditions(ValidationConditions validationConditions)
-        {
-            throw new NotImplementedException("This method should be abstract.  It was generated as virtual so that you aren't forced to override it when you create a new model that derives from this model.  It will be overridden in the generated designer file.");
-        }
-
-        /// <summary>
-        /// Deep clones this object with a new <see cref="CellValidationEvents" />.
-        /// </summary>
-        /// <param name="cellValidationEvents">The new <see cref="CellValidationEvents" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="InputCellBase{TValue}" /> using the specified <paramref name="cellValidationEvents" /> for <see cref="CellValidationEvents" /> and a deep clone of every other property.</returns>
-        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
-        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
-        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
-        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public virtual InputCellBase<TValue> DeepCloneWithCellValidationEvents(IReadOnlyList<CellValidationEventBase> cellValidationEvents)
+        public virtual InputCellBase<TValue> DeepCloneWithInputEvents(IReadOnlyList<CellInputEventBase> inputEvents)
         {
             throw new NotImplementedException("This method should be abstract.  It was generated as virtual so that you aren't forced to override it when you create a new model that derives from this model.  It will be overridden in the generated designer file.");
         }

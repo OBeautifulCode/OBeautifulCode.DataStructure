@@ -14,7 +14,7 @@ namespace OBeautifulCode.DataStructure
     /// A cell who's output is the result of executing an operation.
     /// </summary>
     /// <typeparam name="TValue">The type of output value.</typeparam>
-    public interface IOperationOutputCell<TValue> : IOutputCell<TValue>, IClearCellValue, ICanBeValidated
+    public interface IOperationOutputCell<TValue> : IOutputCell<TValue>, IClearCellValue
     {
         /// <summary>
         /// Gets the operation.
@@ -24,12 +24,12 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Gets the events that record the execution of <see cref="Operation"/>.
         /// </summary>
-        IReadOnlyList<CellOpExecutionEventBase> CellOpExecutionEvents { get; }
+        IReadOnlyList<CellOpExecutionEventBase> OperationExecutionEvents { get; }
 
         /// <summary>
         /// Records a <see cref="CellOpExecutionEventBase"/>.
         /// </summary>
-        /// <param name="cellOpExecutionEvent">The event to record.</param>
-        void Record(CellOpExecutionEventBase cellOpExecutionEvent);
+        /// <param name="operationExecutionEvent">The event to record.</param>
+        void Record(CellOpExecutionEventBase operationExecutionEvent);
     }
 }

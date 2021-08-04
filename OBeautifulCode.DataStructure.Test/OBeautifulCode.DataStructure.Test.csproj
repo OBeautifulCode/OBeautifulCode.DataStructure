@@ -197,6 +197,18 @@
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringReadableOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringXmlDocOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
+    <Compile Include="Events\CellAvailabilityEventBaseTest.cs" />
+    <Compile Include="Events\CellAvailabilityEventBaseTest.designer.cs">
+      <DependentUpon>CellAvailabilityEventBaseTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Events\CellValidation\CellValidationDeterminedCellInvalidEventTest.cs" />
+    <Compile Include="Events\CellValidation\CellValidationDeterminedCellInvalidEventTest.designer.cs">
+      <DependentUpon>CellValidationDeterminedCellInvalidEventTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Events\CellValidation\CellValidationDeterminedCellValidEventTest.cs" />
+    <Compile Include="Events\CellValidation\CellValidationDeterminedCellValidEventTest.designer.cs">
+      <DependentUpon>CellValidationDeterminedCellValidEventTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Events\CellValidation\CellValidationClearedEventTest.cs" />
     <Compile Include="Events\CellValidation\CellValidationClearedEventTest.designer.cs">
       <DependentUpon>CellValidationClearedEventTest.cs</DependentUpon>
@@ -216,6 +228,10 @@
     <Compile Include="Events\CellOpExecution\CellOpExecutionClearedEventTest.cs" />
     <Compile Include="Events\CellOpExecution\CellOpExecutionClearedEventTest.designer.cs">
       <DependentUpon>CellOpExecutionClearedEventTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Operations\Integer\GetNumberOfSignificantDigitsOpTest.cs" />
+    <Compile Include="Operations\Integer\GetNumberOfSignificantDigitsOpTest.designer.cs">
+      <DependentUpon>GetNumberOfSignificantDigitsOpTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Classes\Format\Region\Regions\FooterRowsFormatTest.cs" />
     <Compile Include="Models\Classes\Format\Region\Regions\FooterRowsFormatTest.designer.cs">
@@ -273,14 +289,6 @@
     <Compile Include="Events\CellValidation\CellValidationAbortedEventTest.cs" />
     <Compile Include="Events\CellValidation\CellValidationAbortedEventTest.designer.cs">
       <DependentUpon>CellValidationAbortedEventTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Events\CellValidation\CellValidationCompletedEventTest.cs" />
-    <Compile Include="Events\CellValidation\CellValidationCompletedEventTest.designer.cs">
-      <DependentUpon>CellValidationCompletedEventTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Events\CellValidation\CellValidationConditionUnmetEventTest.cs" />
-    <Compile Include="Events\CellValidation\CellValidationConditionUnmetEventTest.designer.cs">
-      <DependentUpon>CellValidationConditionUnmetEventTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Events\CellValidation\CellValidationDeemedNotApplicableEventTest.cs" />
     <Compile Include="Events\CellValidation\CellValidationDeemedNotApplicableEventTest.designer.cs">
@@ -434,15 +442,13 @@
     <Compile Include="Models\Classes\TreeTableTest.designer.cs">
       <DependentUpon>TreeTableTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Classes\Validation\ValidationConditionsTest.designer.cs">
-      <DependentUpon>ValidationConditionsTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Validation\ValidationConditionTest.designer.cs">
-      <DependentUpon>ValidationConditionTest.cs</DependentUpon>
-    </Compile>
     <Compile Include="Models\Classes\Format\CellValue\NumberCellFormatBase{TValue}Test.cs" />
     <Compile Include="Models\Classes\Format\CellValue\NumberCellFormatBase{TValue}Test.designer.cs">
       <DependentUpon>NumberCellFormatBase{TValue}Test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Cell\NotSlottedCellBaseTest.cs" />
+    <Compile Include="Models\Classes\Cell\NotSlottedCellBaseTest.designer.cs">
+      <DependentUpon>NotSlottedCellBaseTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Operations\Bool\AndAlsoOpTest.designer.cs">
       <DependentUpon>AndAlsoOpTest.cs</DependentUpon>
@@ -492,12 +498,26 @@
     <Compile Include="Operations\Branch\IfThenElseOp{TResult}Test.cs" />
     <Compile Include="Models\Classes\Cell\Input\InputCellBase{TValue}Test.cs" />
     <Compile Include="Models\Classes\Cell\Input\InputCell{TValue}Test.cs" />
-    <Compile Include="Models\Classes\Validation\ValidationConditionTest.cs" />
-    <Compile Include="Models\Classes\Validation\ValidationConditionsTest.cs" />
     <Compile Include="Operations\Cell\ValidateCellOpTest.cs" />
     <Compile Include="Models\Classes\Format\CellValue\StandardCellValueFormatBase{TValue}Test.cs" />
     <Compile Include="Models\Classes\Format\CellValue\StandardCellValueFormatBase{TValue}Test.designer.cs">
       <DependentUpon>StandardCellValueFormatBase{TValue}Test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Validation\ValidationTest.cs" />
+    <Compile Include="Models\Classes\Validation\ValidationTest.designer.cs">
+      <DependentUpon>ValidationTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Validation\ValidationResultTest.cs" />
+    <Compile Include="Models\Classes\Validation\ValidationResultTest.designer.cs">
+      <DependentUpon>ValidationResultTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Operations\ValidationResult\ValidateUsingConditionsOpTest.cs" />
+    <Compile Include="Operations\ValidationResult\ValidateUsingConditionsOpTest.designer.cs">
+      <DependentUpon>ValidateUsingConditionsOpTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Validation\ValidationConditionTest.cs" />
+    <Compile Include="Models\Classes\Validation\ValidationConditionTest.designer.cs">
+      <DependentUpon>ValidationConditionTest.cs</DependentUpon>
     </Compile>
     <None Include="Logic\Extensions\RowExtensionsTest.cs" />
     <Compile Include="Logic\Extensions\TreeTableExtensionsTest.cs" />

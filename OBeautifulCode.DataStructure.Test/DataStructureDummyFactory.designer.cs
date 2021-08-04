@@ -200,19 +200,21 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<string>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new CellValidationCompletedEvent(
-                                 A.Dummy<DateTime>(),
-                                 A.Dummy<string>()));
-
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new CellValidationConditionUnmetEvent(
-                                 A.Dummy<string>(),
-                                 A.Dummy<DateTime>(),
-                                 A.Dummy<string>()));
-
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new CellValidationDeemedNotApplicableEvent(
                                  A.Dummy<DateTime>(),
+                                 A.Dummy<string>(),
+                                 A.Dummy<string>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new CellValidationDeterminedCellInvalidEvent(
+                                 A.Dummy<DateTime>(),
+                                 A.Dummy<string>(),
+                                 A.Dummy<string>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new CellValidationDeterminedCellValidEvent(
+                                 A.Dummy<DateTime>(),
+                                 A.Dummy<string>(),
                                  A.Dummy<string>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
@@ -222,9 +224,9 @@ namespace OBeautifulCode.DataStructure.Test
                     {
                         typeof(CellValidationAbortedEvent),
                         typeof(CellValidationClearedEvent),
-                        typeof(CellValidationCompletedEvent),
-                        typeof(CellValidationConditionUnmetEvent),
                         typeof(CellValidationDeemedNotApplicableEvent),
+                        typeof(CellValidationDeterminedCellInvalidEvent),
+                        typeof(CellValidationDeterminedCellValidEvent),
                         typeof(CellValidationFailedEvent)
                     };
 
@@ -285,6 +287,8 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<string>(),
                                  A.Dummy<int?>(),
                                  A.Dummy<string>(),
+                                 A.Dummy<Validation>(),
+                                 A.Dummy<IReadOnlyList<CellValidationEventBase>>(),
                                  A.Dummy<ICellValueFormat<Version>>(),
                                  A.Dummy<CellFormat>(),
                                  A.Dummy<IHoverOver>(),
@@ -373,6 +377,10 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<Version>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new GetNumberOfSignificantDigitsOp(
+                                 A.Dummy<IReturningOperation<decimal>>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new HasCellValueOp(
                                  A.Dummy<CellLocator>()));
 
@@ -428,12 +436,12 @@ namespace OBeautifulCode.DataStructure.Test
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new InputCell<Version>(
-                                 A.Dummy<IReadOnlyList<CellInputEventBase>>(),
-                                 A.Dummy<ValidationConditions>(),
-                                 A.Dummy<IReadOnlyList<CellValidationEventBase>>(),
                                  A.Dummy<string>(),
                                  A.Dummy<int?>(),
                                  A.Dummy<string>(),
+                                 A.Dummy<Validation>(),
+                                 A.Dummy<IReadOnlyList<CellValidationEventBase>>(),
+                                 A.Dummy<IReadOnlyList<CellInputEventBase>>(),
                                  A.Dummy<ICellValueFormat<Version>>(),
                                  A.Dummy<CellFormat>(),
                                  A.Dummy<IHoverOver>()));
@@ -519,15 +527,38 @@ namespace OBeautifulCode.DataStructure.Test
                     return result;
                 });
 
+
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new NotOp(
                                  A.Dummy<IReturningOperation<bool>>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var availableTypes = new[]
+                    {
+                        typeof(ConstCell<Version>),
+                        typeof(InputCell<Version>),
+                        typeof(NullCell),
+                        typeof(OperationCell<Version>)
+                    };
+
+                    var randomIndex = ThreadSafeRandom.Next(0, availableTypes.Length);
+
+                    var randomType = availableTypes[randomIndex];
+
+                    var result = (NotSlottedCellBase)AD.ummy(randomType);
+
+                    return result;
+                });
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new NullCell(
                                  A.Dummy<string>(),
                                  A.Dummy<int?>(),
                                  A.Dummy<string>(),
+                                 A.Dummy<Validation>(),
+                                 A.Dummy<IReadOnlyList<CellValidationEventBase>>(),
                                  A.Dummy<CellFormat>(),
                                  A.Dummy<IHoverOver>(),
                                  A.Dummy<ILink>()));
@@ -549,15 +580,16 @@ namespace OBeautifulCode.DataStructure.Test
                     return result;
                 });
 
+
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new OperationCell<Version>(
                                  A.Dummy<IReturningOperation<Version>>(),
-                                 A.Dummy<IReadOnlyList<CellOpExecutionEventBase>>(),
-                                 A.Dummy<ValidationConditions>(),
-                                 A.Dummy<IReadOnlyList<CellValidationEventBase>>(),
                                  A.Dummy<string>(),
                                  A.Dummy<int?>(),
                                  A.Dummy<string>(),
+                                 A.Dummy<Validation>(),
+                                 A.Dummy<IReadOnlyList<CellValidationEventBase>>(),
+                                 A.Dummy<IReadOnlyList<CellOpExecutionEventBase>>(),
                                  A.Dummy<ICellValueFormat<Version>>(),
                                  A.Dummy<CellFormat>(),
                                  A.Dummy<IHoverOver>(),
@@ -772,7 +804,16 @@ namespace OBeautifulCode.DataStructure.Test
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new ValidateCellOp(
-                                 A.Dummy<ICanBeValidated>()));
+                                 A.Dummy<IValidationCell>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new ValidateUsingConditionsOp(
+                                 A.Dummy<IReadOnlyList<ValidationCondition>>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new Validation(
+                                 A.Dummy<IReturningOperation<ValidationResult>>(),
+                                 A.Dummy<string>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new ValidationCondition(
@@ -782,9 +823,9 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<string>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new ValidationConditions(
-                                 A.Dummy<IReadOnlyList<ValidationCondition>>(),
-                                 A.Dummy<string>()));
+                () => new ValidationResult(
+                                 A.Dummy<Validity>(),
+                                 A.Dummy<IReturningOperation<string>>()));
         }
 
         /// <inheritdoc />

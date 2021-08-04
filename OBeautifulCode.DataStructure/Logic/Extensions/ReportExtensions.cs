@@ -222,7 +222,7 @@ namespace OBeautifulCode.DataStructure
 
             var operationCells = report.GetClearedOperationCells(timestampUtc);
 
-            var validateableCells = report.GetClearedValidateableCells(timestampUtc);
+            var validationCells = report.GetClearedValidationCells(timestampUtc);
 
             foreach (var operationCell in operationCells)
             {
@@ -231,9 +231,9 @@ namespace OBeautifulCode.DataStructure
                 protocolFactory.GetProtocolAndExecuteViaReflection(executeOperationCellIfNecessaryOp);
             }
 
-            foreach (var validateableCell in validateableCells)
+            foreach (var validationCell in validationCells)
             {
-                var validateCellOp = new ValidateCellOp(validateableCell);
+                var validateCellOp = new ValidateCellOp(validationCell);
 
                 protocolFactory.GetProtocolAndExecuteViaReflection(validateCellOp);
             }
@@ -269,7 +269,7 @@ namespace OBeautifulCode.DataStructure
 
             var operationCells = report.GetClearedOperationCells(timestampUtc);
 
-            var validateableCells = report.GetClearedValidateableCells(timestampUtc);
+            var validationCells = report.GetClearedValidationCells(timestampUtc);
 
             foreach (var operationCell in operationCells)
             {
@@ -278,9 +278,9 @@ namespace OBeautifulCode.DataStructure
                 await protocolFactory.GetProtocolAndExecuteViaReflectionAsync(executeOperationCellIfNecessaryOp);
             }
 
-            foreach (var validateableCell in validateableCells)
+            foreach (var validationCell in validationCells)
             {
-                var validateCellOp = new ValidateCellOp(validateableCell);
+                var validateCellOp = new ValidateCellOp(validationCell);
 
                 await protocolFactory.GetProtocolAndExecuteViaReflectionAsync(validateCellOp);
             }
@@ -397,11 +397,11 @@ namespace OBeautifulCode.DataStructure
             return result;
         }
 
-        private static IReadOnlyCollection<ICanBeValidated> GetClearedValidateableCells(
+        private static IReadOnlyCollection<IValidationCell> GetClearedValidationCells(
             this Report report,
             DateTime timestampUtc)
         {
-            var result = report.Sections.SelectMany(_ => _.TreeTable.GetCellsNeedingValidation()).ToList();
+            var result = report.Sections.SelectMany(_ => _.TreeTable.GetValidationCells()).Where(_ => _.Validation != null).ToList();
 
             var details = Invariant($"Validation cleared by {nameof(ReportExtensions)}.{nameof(ExecuteAllOperationsAndValidationsAndRecordResults)} or async overload.");
 
