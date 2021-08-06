@@ -209,8 +209,8 @@
     <Compile Include="Events\CellAvailability\CellAvailabilityCheckFailedEventTest.designer.cs">
       <DependentUpon>CellAvailabilityCheckFailedEventTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Operations\Cell\CheckAvailabilityOfCellOpTest.cs" />
-    <Compile Include="Operations\Cell\CheckAvailabilityOfCellOpTest.designer.cs">
+    <Compile Include="Operations\Cell\Referenced\CheckAvailabilityOfCellOpTest.cs" />
+    <Compile Include="Operations\Cell\Referenced\CheckAvailabilityOfCellOpTest.designer.cs">
       <DependentUpon>CheckAvailabilityOfCellOpTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Classes\AvailabilityCheck\AvailabilityCheckResultTest.cs" />
@@ -499,30 +499,30 @@
     <Compile Include="Operations\Branch\IfThenElseOp{TResult}Test.designer.cs">
       <DependentUpon>IfThenElseOp{TResult}Test.cs</DependentUpon>
     </Compile>
-    <Compile Include="Operations\Cell\ExecuteOperationCellIfNecessaryOp{TValue}Test.cs" />
+    <Compile Include="Operations\Cell\Referenced\ExecuteOperationCellIfNecessaryOp{TValue}Test.cs" />
     <Compile Include="ExpressionTest.cs" />
-    <Compile Include="Operations\Cell\ExecuteOperationCellIfNecessaryOp{TValue}Test.designer.cs">
+    <Compile Include="Operations\Cell\Referenced\ExecuteOperationCellIfNecessaryOp{TValue}Test.designer.cs">
       <DependentUpon>ExecuteOperationCellIfNecessaryOp{TValue}Test.cs</DependentUpon>
     </Compile>
-    <Compile Include="Operations\Cell\GetCellValueOp{TValue}Test.cs" />
-    <Compile Include="Operations\Cell\GetCellValueOp{TValue}Test.designer.cs">
+    <Compile Include="Operations\Cell\Located\GetCellValueOp{TValue}Test.cs" />
+    <Compile Include="Operations\Cell\Located\GetCellValueOp{TValue}Test.designer.cs">
       <DependentUpon>GetCellValueOp{TValue}Test.cs</DependentUpon>
     </Compile>
-    <Compile Include="Operations\Cell\HasCellValueOpTest.designer.cs">
+    <Compile Include="Operations\Cell\Located\HasCellValueOpTest.designer.cs">
       <DependentUpon>HasCellValueOpTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Operations\Cell\ValidateCellOpTest.designer.cs">
+    <Compile Include="Operations\Cell\Referenced\ValidateCellOpTest.designer.cs">
       <DependentUpon>ValidateCellOpTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Operations\Decimal\SumOpTest.designer.cs">
       <DependentUpon>SumOpTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Operations\GetConstOp{TValue}Test.cs" />
-    <Compile Include="Operations\Cell\HasCellValueOpTest.cs" />
+    <Compile Include="Operations\Cell\Located\HasCellValueOpTest.cs" />
     <Compile Include="Operations\Branch\IfThenElseOp{TResult}Test.cs" />
     <Compile Include="Models\Classes\Cell\Input\InputCellBase{TValue}Test.cs" />
     <Compile Include="Models\Classes\Cell\Input\InputCell{TValue}Test.cs" />
-    <Compile Include="Operations\Cell\ValidateCellOpTest.cs" />
+    <Compile Include="Operations\Cell\Referenced\ValidateCellOpTest.cs" />
     <Compile Include="Models\Classes\Format\CellValue\StandardCellValueFormatBase{TValue}Test.cs" />
     <Compile Include="Models\Classes\Format\CellValue\StandardCellValueFormatBase{TValue}Test.designer.cs">
       <DependentUpon>StandardCellValueFormatBase{TValue}Test.cs</DependentUpon>
