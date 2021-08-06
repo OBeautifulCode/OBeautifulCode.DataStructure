@@ -60,6 +60,7 @@
     <Compile Include=".recipes\OBeautifulCode.Equality\NullableDateTimeEqualityComparer.cs" />
     <Compile Include=".recipes\OBeautifulCode.Equality\ObjectEqualityComparer.cs" />
     <Compile Include=".recipes\OBeautifulCode.Equality\ReadOnlyDictionaryEqualityComparer.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Execution\Synchronizer.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\ArrayKind.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringReadableOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringXmlDocOptions.cs" />
@@ -459,7 +460,6 @@
       <DependentUpon>HasCellValueOp.cs</DependentUpon>
     </Compile>
     <Compile Include="Operations\Classes\Cell\Referenced\CheckAvailabilityOfCellOp.cs" />
-    <Compile Include="Operations\Classes\Cell\GetCellOpExecutionStatusOp.cs" />
     <Compile Include="Operations\Classes\Cell\Referenced\ValidateCellOp.designer.cs">
       <DependentUpon>ValidateCellOp.cs</DependentUpon>
     </Compile>

@@ -13,6 +13,7 @@ namespace OBeautifulCode.DataStructure
     using System.Reflection;
     using System.Threading.Tasks;
 
+    using OBeautifulCode.Execution.Recipes;
     using OBeautifulCode.Type;
     using OBeautifulCode.Type.Recipes;
 
@@ -101,6 +102,8 @@ namespace OBeautifulCode.DataStructure
         private static readonly ConcurrentDictionary<Type, ConstructorInfo> CachedTypeToConvenienceProtocolsConstructorInfoMap =
             new ConcurrentDictionary<Type, ConstructorInfo>();
 
+        private static readonly Synchronizer RecalcSynchronizer = new Synchronizer();
+
         /// <summary>
         /// Gets a cell.
         /// </summary>
@@ -165,6 +168,76 @@ namespace OBeautifulCode.DataStructure
             IReadOnlyCollection<Func<IProtocolFactory, IProtocolFactory>> protocolFactoryFuncs = null,
             IReadOnlyCollection<Type> additionalTypesForCoreCellOps = null)
         {
+            RecalcSynchronizer.Run(() => report.ReCalcInternal(timestampUtc, protocolFactoryFuncs, additionalTypesForCoreCellOps));
+        }
+
+        /// <summary>
+        /// Executes all cell operations, validations, and availability checks and records the results.
+        /// </summary>
+        /// <param name="report">The report.</param>
+        /// <param name="timestampUtc">The timestamp (in UTC) to use when recording a <see cref="CellOpExecutionEventBase"/> with an <see cref="IOperationOutputCell{TValue}"/>.</param>
+        /// <param name="protocolFactoryFuncs">
+        /// OPTIONAL protocol factory chain-of-responsibility for protocols needed to execute the operations for all <see cref="IOperationOutputCell{TValue}"/>.
+        /// Each func takes, as input, the protocol factory that should be used when these protocols need to execute other operations
+        /// (e.g. MyOperation requires an int and declares it as an IReturningOperation{int} to enable others to "plug-in"
+        /// any source of an int - perhaps the value of another cell or the output of some other calculation).
+        /// Each func should return a protocol factory that gets protocols for the operations in-use by the <see cref="IOperationOutputCell{TValue}"/>s.
+        /// DEFAULT is not to "plug-in" any additional protocols.
+        /// </param>
+        /// <param name="additionalTypesForCoreCellOps">
+        /// OPTIONAL types in addition to <see cref="DefaultTypesSupportedForCoreCellOps"/> that should be supported
+        /// when executing the core cell operations (e.g. <see cref="GetCellValueOp{TValue}"/>) .
+        /// </param>
+        /// <returns>
+        /// A task.
+        /// </returns>
+        public static async Task ReCalcAsync(
+            this Report report,
+            DateTime timestampUtc,
+            IReadOnlyCollection<Func<IProtocolFactory, IProtocolFactory>> protocolFactoryFuncs = null,
+            IReadOnlyCollection<Type> additionalTypesForCoreCellOps = null)
+        {
+            await RecalcSynchronizer.RunAsync(() => report.ReCalcInternalAsync(timestampUtc, protocolFactoryFuncs, additionalTypesForCoreCellOps));
+        }
+
+        /// <summary>
+        /// Sets the value of an input cell.
+        /// </summary>
+        /// <typeparam name="TValue">The type of value.</typeparam>
+        /// <param name="report">The report.</param>
+        /// <param name="value">The value to set the cell to.</param>
+        /// <param name="timestampUtc">The timestamp, in UTC, to record when the input is applied to the cell.</param>
+        /// <param name="sectionId">The id of the section that contains the cell.</param>
+        /// <param name="cellId">The id of the cell.</param>
+        /// <param name="slotId">OPTIONAL id of the slot to use -OR- null if not addressing an <see cref="ISlottedCell"/>.  DEFAULT is to address an <see cref="INotSlottedCell"/>.</param>
+        /// <param name="details">OPTIONAL details about inputting a value.  DEFAULT is to omit any details.</param>
+        public static void SetInputCellValue<TValue>(
+            this Report report,
+            TValue value,
+            DateTime timestampUtc,
+            string sectionId,
+            string cellId,
+            string slotId = null,
+            string details = null)
+        {
+            var cell = report.GetCell(sectionId, cellId, slotId);
+
+            if (!(cell is IInputCell<TValue> inputCell))
+            {
+                throw new ArgumentException("The specified cell is not an input cell.");
+            }
+
+            var inputAppliedToCellEvent = new CellInputAppliedEvent<TValue>(timestampUtc, value, details);
+
+            inputCell.Record(inputAppliedToCellEvent);
+        }
+
+        private static void ReCalcInternal(
+            this Report report,
+            DateTime timestampUtc,
+            IReadOnlyCollection<Func<IProtocolFactory, IProtocolFactory>> protocolFactoryFuncs = null,
+            IReadOnlyCollection<Type> additionalTypesForCoreCellOps = null)
+        {
             // NOTE: THIS CODE IS A NEAR DUPLICATE OF THE ASYNC METHOD BELOW; NO GOOD WAY TO D.R.Y. IT OUT
             var protocolFactory = report.BuildProtocolFactoryToExecuteAllOperations(timestampUtc, protocolFactoryFuncs, additionalTypesForCoreCellOps);
 
@@ -197,31 +270,11 @@ namespace OBeautifulCode.DataStructure
 
             if (report.PrepareToRerunRecalc(timestampUtc, validationCells, availabilityCheckCells))
             {
-                report.ReCalc(timestampUtc, protocolFactoryFuncs, additionalTypesForCoreCellOps);
+                report.ReCalcInternal(timestampUtc, protocolFactoryFuncs, additionalTypesForCoreCellOps);
             }
         }
 
-        /// <summary>
-        /// Executes all cell operations, validations, and availability checks and records the results.
-        /// </summary>
-        /// <param name="report">The report.</param>
-        /// <param name="timestampUtc">The timestamp (in UTC) to use when recording a <see cref="CellOpExecutionEventBase"/> with an <see cref="IOperationOutputCell{TValue}"/>.</param>
-        /// <param name="protocolFactoryFuncs">
-        /// OPTIONAL protocol factory chain-of-responsibility for protocols needed to execute the operations for all <see cref="IOperationOutputCell{TValue}"/>.
-        /// Each func takes, as input, the protocol factory that should be used when these protocols need to execute other operations
-        /// (e.g. MyOperation requires an int and declares it as an IReturningOperation{int} to enable others to "plug-in"
-        /// any source of an int - perhaps the value of another cell or the output of some other calculation).
-        /// Each func should return a protocol factory that gets protocols for the operations in-use by the <see cref="IOperationOutputCell{TValue}"/>s.
-        /// DEFAULT is not to "plug-in" any additional protocols.
-        /// </param>
-        /// <param name="additionalTypesForCoreCellOps">
-        /// OPTIONAL types in addition to <see cref="DefaultTypesSupportedForCoreCellOps"/> that should be supported
-        /// when executing the core cell operations (e.g. <see cref="GetCellValueOp{TValue}"/>) .
-        /// </param>
-        /// <returns>
-        /// A task.
-        /// </returns>
-        public static async Task ReCalcAsync(
+        private static async Task ReCalcInternalAsync(
             this Report report,
             DateTime timestampUtc,
             IReadOnlyCollection<Func<IProtocolFactory, IProtocolFactory>> protocolFactoryFuncs = null,
@@ -259,40 +312,8 @@ namespace OBeautifulCode.DataStructure
 
             if (report.PrepareToRerunRecalc(timestampUtc, validationCells, availabilityCheckCells))
             {
-                await report.ReCalcAsync(timestampUtc, protocolFactoryFuncs, additionalTypesForCoreCellOps);
+                await report.ReCalcInternalAsync(timestampUtc, protocolFactoryFuncs, additionalTypesForCoreCellOps);
             }
-        }
-
-        /// <summary>
-        /// Sets the value of an input cell.
-        /// </summary>
-        /// <typeparam name="TValue">The type of value.</typeparam>
-        /// <param name="report">The report.</param>
-        /// <param name="value">The value to set the cell to.</param>
-        /// <param name="timestampUtc">The timestamp, in UTC, to record when the input is applied to the cell.</param>
-        /// <param name="sectionId">The id of the section that contains the cell.</param>
-        /// <param name="cellId">The id of the cell.</param>
-        /// <param name="slotId">OPTIONAL id of the slot to use -OR- null if not addressing an <see cref="ISlottedCell"/>.  DEFAULT is to address an <see cref="INotSlottedCell"/>.</param>
-        /// <param name="details">OPTIONAL details about inputting a value.  DEFAULT is to omit any details.</param>
-        public static void SetInputCellValue<TValue>(
-            this Report report,
-            TValue value,
-            DateTime timestampUtc,
-            string sectionId,
-            string cellId,
-            string slotId = null,
-            string details = null)
-        {
-            var cell = report.GetCell(sectionId, cellId, slotId);
-
-            if (!(cell is IInputCell<TValue> inputCell))
-            {
-                throw new ArgumentException("The specified cell is not an input cell.");
-            }
-
-            var inputAppliedToCellEvent = new CellInputAppliedEvent<TValue>(timestampUtc, value, details);
-
-            inputCell.Record(inputAppliedToCellEvent);
         }
 
         private static ChainOfResponsibilityProtocolFactory BuildProtocolFactoryToExecuteAllOperations(
