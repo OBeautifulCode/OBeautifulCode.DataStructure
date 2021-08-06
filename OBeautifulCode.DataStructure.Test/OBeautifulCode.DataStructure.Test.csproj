@@ -197,6 +197,10 @@
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringReadableOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringXmlDocOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
+    <Compile Include="Events\CellAvailability\CellAvailabilityCheckClearedEventTest.cs" />
+    <Compile Include="Events\CellAvailability\CellAvailabilityCheckClearedEventTest.designer.cs">
+      <DependentUpon>CellAvailabilityCheckClearedEventTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Events\CellAvailability\CellAvailabilityCheckDeterminedCellDisabledEventTest.cs" />
     <Compile Include="Events\CellAvailability\CellAvailabilityCheckDeterminedCellDisabledEventTest.designer.cs">
       <DependentUpon>CellAvailabilityCheckDeterminedCellDisabledEventTest.cs</DependentUpon>

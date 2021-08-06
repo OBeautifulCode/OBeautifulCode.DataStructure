@@ -68,6 +68,9 @@
     <Compile Include="Events\CellAvailabilityCheckEventBase.designer.cs">
       <DependentUpon>CellAvailabilityCheckEventBase.cs</DependentUpon>
     </Compile>
+    <Compile Include="Events\CellAvailabilityCheck\CellAvailabilityCheckClearedEvent.designer.cs">
+      <DependentUpon>CellAvailabilityCheckClearedEvent.cs</DependentUpon>
+    </Compile>
     <Compile Include="Events\CellAvailabilityCheck\CellAvailabilityCheckDeterminedCellDisabledEvent.cs" />
     <Compile Include="Events\CellAvailabilityCheck\CellAvailabilityCheckDeterminedCellDisabledEvent.designer.cs">
       <DependentUpon>CellAvailabilityCheckDeterminedCellDisabledEvent.cs</DependentUpon>
@@ -76,6 +79,7 @@
     <Compile Include="Events\CellAvailabilityCheck\CellAvailabilityCheckDeterminedCellEnabledEvent.designer.cs">
       <DependentUpon>CellAvailabilityCheckDeterminedCellEnabledEvent.cs</DependentUpon>
     </Compile>
+    <Compile Include="Events\CellAvailabilityCheck\CellAvailabilityCheckClearedEvent.cs" />
     <Compile Include="Events\CellAvailabilityCheck\CellAvailabilityCheckFailedEvent.cs" />
     <Compile Include="Events\CellAvailabilityCheck\CellAvailabilityCheckFailedEvent.designer.cs">
       <DependentUpon>CellAvailabilityCheckFailedEvent.cs</DependentUpon>

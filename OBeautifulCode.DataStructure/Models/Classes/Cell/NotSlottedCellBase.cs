@@ -141,5 +141,18 @@ namespace OBeautifulCode.DataStructure
                 this.Record(cellValidationClearedEvent);
             }
         }
+
+        /// <inheritdoc />
+        public void ClearAvailabilityCheck(
+            DateTime timestampUtc,
+            string details)
+        {
+            if (this.AvailabilityCheck != null)
+            {
+                var cellAvailabilityCheckClearedEvent = new CellAvailabilityCheckClearedEvent(timestampUtc, details);
+
+                this.Record(cellAvailabilityCheckClearedEvent);
+            }
+        }
     }
 }

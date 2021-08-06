@@ -204,6 +204,7 @@ namespace OBeautifulCode.DataStructure.Test
                         A.Dummy<int>(),
                         A.Dummy<int?>(),
                         A.Dummy<Guid>(),
+                        A.Dummy<CellAvailabilityCheckClearedEvent>(),
                         A.Dummy<CellAvailabilityCheckDeterminedCellDisabledEvent>(),
                         A.Dummy<CellAvailabilityCheckDeterminedCellEnabledEvent>(),
                         A.Dummy<CellInputAppliedEvent<Version>>(),

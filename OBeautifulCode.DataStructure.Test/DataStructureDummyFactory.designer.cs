@@ -85,6 +85,11 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<string>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new CellAvailabilityCheckClearedEvent(
+                                 A.Dummy<DateTime>(),
+                                 A.Dummy<string>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new CellAvailabilityCheckDeterminedCellDisabledEvent(
                                  A.Dummy<DateTime>(),
                                  A.Dummy<string>(),
@@ -101,6 +106,7 @@ namespace OBeautifulCode.DataStructure.Test
                 {
                     var availableTypes = new[]
                     {
+                        typeof(CellAvailabilityCheckClearedEvent),
                         typeof(CellAvailabilityCheckDeterminedCellDisabledEvent),
                         typeof(CellAvailabilityCheckDeterminedCellEnabledEvent),
                         typeof(CellAvailabilityCheckFailedEvent)

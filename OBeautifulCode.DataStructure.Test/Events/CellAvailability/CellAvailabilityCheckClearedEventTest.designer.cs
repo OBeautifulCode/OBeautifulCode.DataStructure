@@ -33,40 +33,39 @@ namespace OBeautifulCode.DataStructure.Test
 
     using static global::System.FormattableString;
 
-    public static partial class CellValidationDeterminedCellInvalidEventTest
+    public static partial class CellAvailabilityCheckClearedEventTest
     {
-        private static readonly StringRepresentationTestScenarios<CellValidationDeterminedCellInvalidEvent> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<CellValidationDeterminedCellInvalidEvent>()
+        private static readonly StringRepresentationTestScenarios<CellAvailabilityCheckClearedEvent> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<CellAvailabilityCheckClearedEvent>()
             .AddScenario(() =>
-                new StringRepresentationTestScenario<CellValidationDeterminedCellInvalidEvent>
+                new StringRepresentationTestScenario<CellAvailabilityCheckClearedEvent>
                 {
                     Name = "Default Code Generated Scenario",
                     SystemUnderTestExpectedStringRepresentationFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<CellValidationDeterminedCellInvalidEvent>();
+                        var systemUnderTest = A.Dummy<CellAvailabilityCheckClearedEvent>();
 
-                        var result = new SystemUnderTestExpectedStringRepresentation<CellValidationDeterminedCellInvalidEvent>
+                        var result = new SystemUnderTestExpectedStringRepresentation<CellAvailabilityCheckClearedEvent>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.CellValidationDeterminedCellInvalidEvent: TimestampUtc = {systemUnderTest.TimestampUtc.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Details = {systemUnderTest.Details?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Message = {systemUnderTest.Message?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.CellAvailabilityCheckClearedEvent: TimestampUtc = {systemUnderTest.TimestampUtc.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Details = {systemUnderTest.Details?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}."),
                         };
 
                         return result;
                     },
                 });
 
-        private static readonly ConstructorArgumentValidationTestScenarios<CellValidationDeterminedCellInvalidEvent> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<CellValidationDeterminedCellInvalidEvent>()
+        private static readonly ConstructorArgumentValidationTestScenarios<CellAvailabilityCheckClearedEvent> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<CellAvailabilityCheckClearedEvent>()
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<CellValidationDeterminedCellInvalidEvent>
+                new ConstructorArgumentValidationTestScenario<CellAvailabilityCheckClearedEvent>
                 {
                     Name = "constructor should throw ArgumentNullException when parameter 'details' is null scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<CellValidationDeterminedCellInvalidEvent>();
+                        var referenceObject = A.Dummy<CellAvailabilityCheckClearedEvent>();
 
-                        var result = new CellValidationDeterminedCellInvalidEvent(
+                        var result = new CellAvailabilityCheckClearedEvent(
                                              referenceObject.TimestampUtc,
-                                             null,
-                                             referenceObject.Message);
+                                             null);
 
                         return result;
                     },
@@ -74,75 +73,37 @@ namespace OBeautifulCode.DataStructure.Test
                     ExpectedExceptionMessageContains = new[] { "details", },
                 })
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<CellValidationDeterminedCellInvalidEvent>
+                new ConstructorArgumentValidationTestScenario<CellAvailabilityCheckClearedEvent>
                 {
                     Name = "constructor should throw ArgumentException when parameter 'details' is white space scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<CellValidationDeterminedCellInvalidEvent>();
+                        var referenceObject = A.Dummy<CellAvailabilityCheckClearedEvent>();
 
-                        var result = new CellValidationDeterminedCellInvalidEvent(
+                        var result = new CellAvailabilityCheckClearedEvent(
                                              referenceObject.TimestampUtc,
-                                             Invariant($"  {Environment.NewLine}  "),
-                                             referenceObject.Message);
-
-                        return result;
-                    },
-                    ExpectedExceptionType = typeof(ArgumentException),
-                    ExpectedExceptionMessageContains = new[] { "details", "white space", },
-                })
-            .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<CellValidationDeterminedCellInvalidEvent>
-                {
-                    Name = "constructor should throw ArgumentNullException when parameter 'message' is null scenario",
-                    ConstructionFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<CellValidationDeterminedCellInvalidEvent>();
-
-                        var result = new CellValidationDeterminedCellInvalidEvent(
-                                             referenceObject.TimestampUtc,
-                                             referenceObject.Details,
-                                             null);
-
-                        return result;
-                    },
-                    ExpectedExceptionType = typeof(ArgumentNullException),
-                    ExpectedExceptionMessageContains = new[] { "message", },
-                })
-            .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<CellValidationDeterminedCellInvalidEvent>
-                {
-                    Name = "constructor should throw ArgumentException when parameter 'message' is white space scenario",
-                    ConstructionFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<CellValidationDeterminedCellInvalidEvent>();
-
-                        var result = new CellValidationDeterminedCellInvalidEvent(
-                                             referenceObject.TimestampUtc,
-                                             referenceObject.Details,
                                              Invariant($"  {Environment.NewLine}  "));
 
                         return result;
                     },
                     ExpectedExceptionType = typeof(ArgumentException),
-                    ExpectedExceptionMessageContains = new[] { "message", "white space", },
+                    ExpectedExceptionMessageContains = new[] { "details", "white space", },
                 });
 
-        private static readonly ConstructorPropertyAssignmentTestScenarios<CellValidationDeterminedCellInvalidEvent> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<CellValidationDeterminedCellInvalidEvent>()
+        private static readonly ConstructorPropertyAssignmentTestScenarios<CellAvailabilityCheckClearedEvent> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<CellAvailabilityCheckClearedEvent>()
             .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<CellValidationDeterminedCellInvalidEvent>
+                new ConstructorPropertyAssignmentTestScenario<CellAvailabilityCheckClearedEvent>
                 {
                     Name = "TimestampUtc should return same 'timestampUtc' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
-                        var referenceObject = A.Dummy<CellValidationDeterminedCellInvalidEvent>();
+                        var referenceObject = A.Dummy<CellAvailabilityCheckClearedEvent>();
 
-                        var result = new SystemUnderTestExpectedPropertyValue<CellValidationDeterminedCellInvalidEvent>
+                        var result = new SystemUnderTestExpectedPropertyValue<CellAvailabilityCheckClearedEvent>
                         {
-                            SystemUnderTest = new CellValidationDeterminedCellInvalidEvent(
+                            SystemUnderTest = new CellAvailabilityCheckClearedEvent(
                                                       referenceObject.TimestampUtc,
-                                                      referenceObject.Details,
-                                                      referenceObject.Message),
+                                                      referenceObject.Details),
                             ExpectedPropertyValue = referenceObject.TimestampUtc,
                         };
 
@@ -151,61 +112,39 @@ namespace OBeautifulCode.DataStructure.Test
                     PropertyName = "TimestampUtc",
                 })
             .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<CellValidationDeterminedCellInvalidEvent>
+                new ConstructorPropertyAssignmentTestScenario<CellAvailabilityCheckClearedEvent>
                 {
                     Name = "Details should return same 'details' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
-                        var referenceObject = A.Dummy<CellValidationDeterminedCellInvalidEvent>();
+                        var referenceObject = A.Dummy<CellAvailabilityCheckClearedEvent>();
 
-                        var result = new SystemUnderTestExpectedPropertyValue<CellValidationDeterminedCellInvalidEvent>
+                        var result = new SystemUnderTestExpectedPropertyValue<CellAvailabilityCheckClearedEvent>
                         {
-                            SystemUnderTest = new CellValidationDeterminedCellInvalidEvent(
+                            SystemUnderTest = new CellAvailabilityCheckClearedEvent(
                                                       referenceObject.TimestampUtc,
-                                                      referenceObject.Details,
-                                                      referenceObject.Message),
+                                                      referenceObject.Details),
                             ExpectedPropertyValue = referenceObject.Details,
                         };
 
                         return result;
                     },
                     PropertyName = "Details",
-                })
-            .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<CellValidationDeterminedCellInvalidEvent>
-                {
-                    Name = "Message should return same 'message' parameter passed to constructor when getting",
-                    SystemUnderTestExpectedPropertyValueFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<CellValidationDeterminedCellInvalidEvent>();
-
-                        var result = new SystemUnderTestExpectedPropertyValue<CellValidationDeterminedCellInvalidEvent>
-                        {
-                            SystemUnderTest = new CellValidationDeterminedCellInvalidEvent(
-                                                      referenceObject.TimestampUtc,
-                                                      referenceObject.Details,
-                                                      referenceObject.Message),
-                            ExpectedPropertyValue = referenceObject.Message,
-                        };
-
-                        return result;
-                    },
-                    PropertyName = "Message",
                 });
 
-        private static readonly DeepCloneWithTestScenarios<CellValidationDeterminedCellInvalidEvent> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<CellValidationDeterminedCellInvalidEvent>()
+        private static readonly DeepCloneWithTestScenarios<CellAvailabilityCheckClearedEvent> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<CellAvailabilityCheckClearedEvent>()
             .AddScenario(() =>
-                new DeepCloneWithTestScenario<CellValidationDeterminedCellInvalidEvent>
+                new DeepCloneWithTestScenario<CellAvailabilityCheckClearedEvent>
                 {
                     Name = "DeepCloneWithTimestampUtc should deep clone object and replace TimestampUtc with the provided timestampUtc",
                     WithPropertyName = "TimestampUtc",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<CellValidationDeterminedCellInvalidEvent>();
+                        var systemUnderTest = A.Dummy<CellAvailabilityCheckClearedEvent>();
 
-                        var referenceObject = A.Dummy<CellValidationDeterminedCellInvalidEvent>().ThatIs(_ => !systemUnderTest.TimestampUtc.IsEqualTo(_.TimestampUtc));
+                        var referenceObject = A.Dummy<CellAvailabilityCheckClearedEvent>().ThatIs(_ => !systemUnderTest.TimestampUtc.IsEqualTo(_.TimestampUtc));
 
-                        var result = new SystemUnderTestDeepCloneWithValue<CellValidationDeterminedCellInvalidEvent>
+                        var result = new SystemUnderTestDeepCloneWithValue<CellAvailabilityCheckClearedEvent>
                         {
                             SystemUnderTest = systemUnderTest,
                             DeepCloneWithValue = referenceObject.TimestampUtc,
@@ -215,17 +154,17 @@ namespace OBeautifulCode.DataStructure.Test
                     },
                 })
             .AddScenario(() =>
-                new DeepCloneWithTestScenario<CellValidationDeterminedCellInvalidEvent>
+                new DeepCloneWithTestScenario<CellAvailabilityCheckClearedEvent>
                 {
                     Name = "DeepCloneWithDetails should deep clone object and replace Details with the provided details",
                     WithPropertyName = "Details",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<CellValidationDeterminedCellInvalidEvent>();
+                        var systemUnderTest = A.Dummy<CellAvailabilityCheckClearedEvent>();
 
-                        var referenceObject = A.Dummy<CellValidationDeterminedCellInvalidEvent>().ThatIs(_ => !systemUnderTest.Details.IsEqualTo(_.Details));
+                        var referenceObject = A.Dummy<CellAvailabilityCheckClearedEvent>().ThatIs(_ => !systemUnderTest.Details.IsEqualTo(_.Details));
 
-                        var result = new SystemUnderTestDeepCloneWithValue<CellValidationDeterminedCellInvalidEvent>
+                        var result = new SystemUnderTestDeepCloneWithValue<CellAvailabilityCheckClearedEvent>
                         {
                             SystemUnderTest = systemUnderTest,
                             DeepCloneWithValue = referenceObject.Details,
@@ -233,57 +172,30 @@ namespace OBeautifulCode.DataStructure.Test
 
                         return result;
                     },
-                })
-            .AddScenario(() =>
-                new DeepCloneWithTestScenario<CellValidationDeterminedCellInvalidEvent>
-                {
-                    Name = "DeepCloneWithMessage should deep clone object and replace Message with the provided message",
-                    WithPropertyName = "Message",
-                    SystemUnderTestDeepCloneWithValueFunc = () =>
-                    {
-                        var systemUnderTest = A.Dummy<CellValidationDeterminedCellInvalidEvent>();
-
-                        var referenceObject = A.Dummy<CellValidationDeterminedCellInvalidEvent>().ThatIs(_ => !systemUnderTest.Message.IsEqualTo(_.Message));
-
-                        var result = new SystemUnderTestDeepCloneWithValue<CellValidationDeterminedCellInvalidEvent>
-                        {
-                            SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.Message,
-                        };
-
-                        return result;
-                    },
                 });
 
-        private static readonly CellValidationDeterminedCellInvalidEvent ReferenceObjectForEquatableTestScenarios = A.Dummy<CellValidationDeterminedCellInvalidEvent>();
+        private static readonly CellAvailabilityCheckClearedEvent ReferenceObjectForEquatableTestScenarios = A.Dummy<CellAvailabilityCheckClearedEvent>();
 
-        private static readonly EquatableTestScenarios<CellValidationDeterminedCellInvalidEvent> EquatableTestScenarios = new EquatableTestScenarios<CellValidationDeterminedCellInvalidEvent>()
+        private static readonly EquatableTestScenarios<CellAvailabilityCheckClearedEvent> EquatableTestScenarios = new EquatableTestScenarios<CellAvailabilityCheckClearedEvent>()
             .AddScenario(() =>
-                new EquatableTestScenario<CellValidationDeterminedCellInvalidEvent>
+                new EquatableTestScenario<CellAvailabilityCheckClearedEvent>
                 {
                     Name = "Default Code Generated Scenario",
                     ReferenceObject = ReferenceObjectForEquatableTestScenarios,
-                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new CellValidationDeterminedCellInvalidEvent[]
+                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new CellAvailabilityCheckClearedEvent[]
                     {
-                        new CellValidationDeterminedCellInvalidEvent(
+                        new CellAvailabilityCheckClearedEvent(
                                 ReferenceObjectForEquatableTestScenarios.TimestampUtc,
-                                ReferenceObjectForEquatableTestScenarios.Details,
-                                ReferenceObjectForEquatableTestScenarios.Message),
+                                ReferenceObjectForEquatableTestScenarios.Details),
                     },
-                    ObjectsThatAreNotEqualToReferenceObject = new CellValidationDeterminedCellInvalidEvent[]
+                    ObjectsThatAreNotEqualToReferenceObject = new CellAvailabilityCheckClearedEvent[]
                     {
-                        new CellValidationDeterminedCellInvalidEvent(
-                                A.Dummy<CellValidationDeterminedCellInvalidEvent>().Whose(_ => !_.TimestampUtc.IsEqualTo(ReferenceObjectForEquatableTestScenarios.TimestampUtc)).TimestampUtc,
-                                ReferenceObjectForEquatableTestScenarios.Details,
-                                ReferenceObjectForEquatableTestScenarios.Message),
-                        new CellValidationDeterminedCellInvalidEvent(
+                        new CellAvailabilityCheckClearedEvent(
+                                A.Dummy<CellAvailabilityCheckClearedEvent>().Whose(_ => !_.TimestampUtc.IsEqualTo(ReferenceObjectForEquatableTestScenarios.TimestampUtc)).TimestampUtc,
+                                ReferenceObjectForEquatableTestScenarios.Details),
+                        new CellAvailabilityCheckClearedEvent(
                                 ReferenceObjectForEquatableTestScenarios.TimestampUtc,
-                                A.Dummy<CellValidationDeterminedCellInvalidEvent>().Whose(_ => !_.Details.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Details)).Details,
-                                ReferenceObjectForEquatableTestScenarios.Message),
-                        new CellValidationDeterminedCellInvalidEvent(
-                                ReferenceObjectForEquatableTestScenarios.TimestampUtc,
-                                ReferenceObjectForEquatableTestScenarios.Details,
-                                A.Dummy<CellValidationDeterminedCellInvalidEvent>().Whose(_ => !_.Message.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Message)).Message),
+                                A.Dummy<CellAvailabilityCheckClearedEvent>().Whose(_ => !_.Details.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Details)).Details),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
                     {
@@ -292,7 +204,6 @@ namespace OBeautifulCode.DataStructure.Test
                         A.Dummy<int>(),
                         A.Dummy<int?>(),
                         A.Dummy<Guid>(),
-                        A.Dummy<CellAvailabilityCheckClearedEvent>(),
                         A.Dummy<CellAvailabilityCheckDeterminedCellDisabledEvent>(),
                         A.Dummy<CellAvailabilityCheckDeterminedCellEnabledEvent>(),
                         A.Dummy<CellAvailabilityCheckFailedEvent>(),
@@ -306,6 +217,7 @@ namespace OBeautifulCode.DataStructure.Test
                         A.Dummy<CellValidationAbortedEvent>(),
                         A.Dummy<CellValidationClearedEvent>(),
                         A.Dummy<CellValidationDeemedNotApplicableEvent>(),
+                        A.Dummy<CellValidationDeterminedCellInvalidEvent>(),
                         A.Dummy<CellValidationDeterminedCellValidEvent>(),
                         A.Dummy<CellValidationFailedEvent>(),
                     },
@@ -329,12 +241,12 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void CellValidationDeterminedCellInvalidEvent___Should_implement_IModel_of_CellValidationDeterminedCellInvalidEvent___When_reflecting()
+            public static void CellAvailabilityCheckClearedEvent___Should_implement_IModel_of_CellAvailabilityCheckClearedEvent___When_reflecting()
             {
                 // Arrange
-                var type = typeof(CellValidationDeterminedCellInvalidEvent);
+                var type = typeof(CellAvailabilityCheckClearedEvent);
 
-                var expectedModelMethods = typeof(IModel<CellValidationDeterminedCellInvalidEvent>).GetInterfaceDeclaredAndImplementedMethods();
+                var expectedModelMethods = typeof(IModel<CellAvailabilityCheckClearedEvent>).GetInterfaceDeclaredAndImplementedMethods();
 
                 var expectedModelMethodHashes = expectedModelMethods.Select(_ => _.GetSignatureHash());
 
@@ -344,7 +256,7 @@ namespace OBeautifulCode.DataStructure.Test
                 var actualModelMethodHashes = actualModelMethods.Select(_ => _.GetSignatureHash());
 
                 // Assert
-                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<CellValidationDeterminedCellInvalidEvent>));
+                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<CellAvailabilityCheckClearedEvent>));
                 expectedModelMethodHashes.Except(actualModelMethodHashes).AsTest().Must().BeEmptyEnumerable();
             }
 
@@ -362,10 +274,10 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void CellValidationDeterminedCellInvalidEvent___Should_be_attributed_with_Serializable____When_reflecting()
+            public static void CellAvailabilityCheckClearedEvent___Should_be_attributed_with_Serializable____When_reflecting()
             {
                 // Arrange
-                var type = typeof(CellValidationDeterminedCellInvalidEvent);
+                var type = typeof(CellAvailabilityCheckClearedEvent);
 
                 // Act
                 var actualAttributes = type.GetCustomAttributes(typeof(SerializableAttribute), false);
@@ -523,10 +435,10 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Clone___Should_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<CellValidationDeterminedCellInvalidEvent>();
+                var systemUnderTest = A.Dummy<CellAvailabilityCheckClearedEvent>();
 
                 // Act
-                var actual = (CellValidationDeterminedCellInvalidEvent)systemUnderTest.Clone();
+                var actual = (CellAvailabilityCheckClearedEvent)systemUnderTest.Clone();
 
                 // Assert
                 actual.AsTest().Must().BeEqualTo(systemUnderTest);
@@ -550,7 +462,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void DeepClone___Should_deep_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<CellValidationDeterminedCellInvalidEvent>();
+                var systemUnderTest = A.Dummy<CellAvailabilityCheckClearedEvent>();
 
                 // Act
                 var actual = systemUnderTest.DeepClone();
@@ -576,7 +488,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "TimestampUtc", "Details", "Message" };
+                var propertyNames = new string[] { "TimestampUtc", "Details" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 
@@ -589,12 +501,12 @@ namespace OBeautifulCode.DataStructure.Test
                     }
 
                     // Act
-                    var actual = (CellValidationDeterminedCellInvalidEvent)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
+                    var actual = (CellAvailabilityCheckClearedEvent)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
 
                     // Assert
                     foreach(var propertyName in propertyNames)
                     {
-                        var propertyInfo = typeof(CellValidationDeterminedCellInvalidEvent).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
+                        var propertyInfo = typeof(CellAvailabilityCheckClearedEvent).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
 
                         var actualPropertyValue = propertyInfo.GetValue(actual);
 
@@ -656,7 +568,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<CellValidationDeterminedCellInvalidEvent>();
+                var expected = A.Dummy<CellAvailabilityCheckClearedEvent>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -685,7 +597,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<CellValidationDeterminedCellInvalidEvent>();
+                var expected = A.Dummy<CellAvailabilityCheckClearedEvent>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -714,7 +626,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<CellValidationDeterminedCellInvalidEvent>();
+                var expected = A.Dummy<CellAvailabilityCheckClearedEvent>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -743,7 +655,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<CellValidationDeterminedCellInvalidEvent>();
+                var expected = A.Dummy<CellAvailabilityCheckClearedEvent>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -777,8 +689,8 @@ namespace OBeautifulCode.DataStructure.Test
             public static void EqualsOperator___Should_return_true___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                CellValidationDeterminedCellInvalidEvent systemUnderTest1 = null;
-                CellValidationDeterminedCellInvalidEvent systemUnderTest2 = null;
+                CellAvailabilityCheckClearedEvent systemUnderTest1 = null;
+                CellAvailabilityCheckClearedEvent systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 == systemUnderTest2;
@@ -808,7 +720,7 @@ namespace OBeautifulCode.DataStructure.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    CellValidationDeterminedCellInvalidEvent systemUnderTest = null;
+                    CellAvailabilityCheckClearedEvent systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest == scenario.ReferenceObject;
@@ -957,8 +869,8 @@ namespace OBeautifulCode.DataStructure.Test
             public static void NotEqualsOperator___Should_return_false___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                CellValidationDeterminedCellInvalidEvent systemUnderTest1 = null;
-                CellValidationDeterminedCellInvalidEvent systemUnderTest2 = null;
+                CellAvailabilityCheckClearedEvent systemUnderTest1 = null;
+                CellAvailabilityCheckClearedEvent systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 != systemUnderTest2;
@@ -988,7 +900,7 @@ namespace OBeautifulCode.DataStructure.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    CellValidationDeterminedCellInvalidEvent systemUnderTest = null;
+                    CellAvailabilityCheckClearedEvent systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest != scenario.ReferenceObject;
@@ -1277,17 +1189,17 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_CellValidationEventBase___Should_return_false___When_parameter_other_is_null()
+            public static void Equals_with_CellAvailabilityCheckEventBase___Should_return_false___When_parameter_other_is_null()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    CellValidationEventBase systemUnderTest = null;
+                    CellAvailabilityCheckEventBase systemUnderTest = null;
 
                     // Act
-                    var actual = scenario.ReferenceObject.Equals((CellValidationEventBase)systemUnderTest);
+                    var actual = scenario.ReferenceObject.Equals((CellAvailabilityCheckEventBase)systemUnderTest);
 
                     // Assert
                     actual.AsTest().Must().BeFalse(because: scenario.Id);
@@ -1308,14 +1220,14 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_CellValidationEventBase___Should_return_true___When_parameter_other_is_same_object()
+            public static void Equals_with_CellAvailabilityCheckEventBase___Should_return_true___When_parameter_other_is_same_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange, Act
-                    var actual = scenario.ReferenceObject.Equals((CellValidationEventBase)scenario.ReferenceObject);
+                    var actual = scenario.ReferenceObject.Equals((CellAvailabilityCheckEventBase)scenario.ReferenceObject);
 
                     // Assert
                     actual.AsTest().Must().BeTrue(because: scenario.Id);
@@ -1336,14 +1248,14 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_CellValidationEventBase___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
+            public static void Equals_with_CellAvailabilityCheckEventBase___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange, Act
-                    var actuals = scenario.ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((CellValidationEventBase)_)).ToList();
+                    var actuals = scenario.ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((CellAvailabilityCheckEventBase)_)).ToList();
 
                     // Assert
                     actuals.AsTest().Must().Each().BeFalse(because: scenario.Id);
@@ -1364,14 +1276,14 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_CellValidationEventBase___Should_return_false___When_objects_being_compared_have_different_property_values()
+            public static void Equals_with_CellAvailabilityCheckEventBase___Should_return_false___When_objects_being_compared_have_different_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange, Act
-                    var actuals = scenario.ObjectsThatAreNotEqualToReferenceObject.Select(_ => scenario.ReferenceObject.Equals((CellValidationEventBase)_)).ToList();
+                    var actuals = scenario.ObjectsThatAreNotEqualToReferenceObject.Select(_ => scenario.ReferenceObject.Equals((CellAvailabilityCheckEventBase)_)).ToList();
 
                     // Assert
                     actuals.AsTest().Must().Each().BeFalse(because: scenario.Id);
@@ -1392,14 +1304,14 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_CellValidationEventBase___Should_return_true___When_objects_being_compared_have_same_property_values()
+            public static void Equals_with_CellAvailabilityCheckEventBase___Should_return_true___When_objects_being_compared_have_same_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange, Act
-                    var actuals = scenario.ObjectsThatAreEqualToButNotTheSameAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((CellValidationEventBase)_)).ToList();
+                    var actuals = scenario.ObjectsThatAreEqualToButNotTheSameAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((CellAvailabilityCheckEventBase)_)).ToList();
 
                     // Assert
                     actuals.AsTest().Must().Each().BeTrue(because: scenario.Id);
@@ -1420,14 +1332,14 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_CellValidationDeterminedCellInvalidEvent___Should_return_false___When_parameter_other_is_null()
+            public static void Equals_with_CellAvailabilityCheckClearedEvent___Should_return_false___When_parameter_other_is_null()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    CellValidationDeterminedCellInvalidEvent systemUnderTest = null;
+                    CellAvailabilityCheckClearedEvent systemUnderTest = null;
 
                     // Act
                     var actual = scenario.ReferenceObject.Equals(systemUnderTest);
@@ -1451,7 +1363,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_CellValidationDeterminedCellInvalidEvent___Should_return_true___When_parameter_other_is_same_object()
+            public static void Equals_with_CellAvailabilityCheckClearedEvent___Should_return_true___When_parameter_other_is_same_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1479,7 +1391,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_CellValidationDeterminedCellInvalidEvent___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
+            public static void Equals_with_CellAvailabilityCheckClearedEvent___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1507,7 +1419,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_CellValidationDeterminedCellInvalidEvent___Should_return_false___When_objects_being_compared_have_different_property_values()
+            public static void Equals_with_CellAvailabilityCheckClearedEvent___Should_return_false___When_objects_being_compared_have_different_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1535,7 +1447,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_CellValidationDeterminedCellInvalidEvent___Should_return_true___When_objects_being_compared_have_same_property_values()
+            public static void Equals_with_CellAvailabilityCheckClearedEvent___Should_return_true___When_objects_being_compared_have_same_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 

@@ -6,6 +6,7 @@
 
 namespace OBeautifulCode.DataStructure
 {
+    using System;
     using System.Collections.Generic;
 
     /// <summary>
@@ -33,5 +34,12 @@ namespace OBeautifulCode.DataStructure
         /// </summary>
         /// <param name="availabilityCheckEvent">The event to record.</param>
         void Record(CellAvailabilityCheckEventBase availabilityCheckEvent);
+
+        /// <summary>
+        /// Clears any availability check that has been performed.
+        /// </summary>
+        /// <param name="timestampUtc">The timestamp (in UTC) to use on the event that records the clearing-out of a cell's availability check.</param>
+        /// <param name="details">OPTIONAL details related to clearing the cell's availability check.  DEFAULT is to omit any details.</param>
+        void ClearAvailabilityCheck(DateTime timestampUtc, string details);
     }
 }

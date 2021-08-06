@@ -245,7 +245,7 @@ namespace OBeautifulCode.DataStructure
 
             var validationCells = report.GetClearedValidationCells(timestampUtc);
 
-            var availabilityCheckCells = report.GetAvailabilityCheckCells();
+            var availabilityCheckCells = report.GetClearedAvailabilityCheckCells(timestampUtc);
 
             foreach (var cell in operationCells)
             {
@@ -287,7 +287,7 @@ namespace OBeautifulCode.DataStructure
 
             var validationCells = report.GetClearedValidationCells(timestampUtc);
 
-            var availabilityCheckCells = report.GetAvailabilityCheckCells();
+            var availabilityCheckCells = report.GetClearedAvailabilityCheckCells(timestampUtc);
 
             foreach (var cell in operationCells)
             {
@@ -411,10 +411,18 @@ namespace OBeautifulCode.DataStructure
             return result;
         }
 
-        private static IReadOnlyCollection<IAvailabilityCheckCell> GetAvailabilityCheckCells(
-            this Report report)
+        private static IReadOnlyCollection<IAvailabilityCheckCell> GetClearedAvailabilityCheckCells(
+            this Report report,
+            DateTime timestampUtc)
         {
             var result = report.Sections.SelectMany(_ => _.TreeTable.GetAvailabilityCheckCells()).Where(_ => _.AvailabilityCheck != null).ToList();
+
+            var details = Invariant($"Availability check cleared by {nameof(ReportExtensions)}.{nameof(ReCalc)} or async overload.");
+
+            foreach (var cell in result)
+            {
+                cell.ClearAvailabilityCheck(timestampUtc, details);
+            }
 
             return result;
         }

@@ -185,6 +185,10 @@ namespace OBeautifulCode.DataStructure
             {
                 result = AvailabilityCheckStatus.Unchecked;
             }
+            else if (lastAvailabilityCheckEvent is CellAvailabilityCheckClearedEvent)
+            {
+                result = AvailabilityCheckStatus.Unchecked;
+            }
             else if (lastAvailabilityCheckEvent is CellAvailabilityCheckDeterminedCellEnabledEvent)
             {
                 result = AvailabilityCheckStatus.DeterminedSubjectIsEnabled;
