@@ -32,13 +32,13 @@ namespace OBeautifulCode.DataStructure
         Failed,
 
         /// <summary>
-        /// The subject is enabled.
+        /// The availability check was run and it determined that the subject is enabled.
         /// </summary>
-        Enabled,
+        DeterminedSubjectIsEnabled,
 
         /// <summary>
-        /// The subject is disabled.
+        /// The availability check was run and it determined that the subject is disabled.
         /// </summary>
-        Disabled,
+        DeterminedSubjectIsDisabled,
     }
 }

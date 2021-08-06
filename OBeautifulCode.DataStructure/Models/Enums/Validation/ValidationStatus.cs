@@ -27,7 +27,7 @@ namespace OBeautifulCode.DataStructure
         Unvalidated,
 
         /// <summary>
-        /// The validation of the subject was deemed not applicable.
+        /// The validation was run and the subject was deemed not applicable.
         /// </summary>
         DeemedNotApplicable,
 
@@ -44,11 +44,11 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// The subject is valid.
         /// </summary>
-        Valid,
+        DeterminedSubjectIsValid,
 
         /// <summary>
         /// The subject is invalid.
         /// </summary>
-        Invalid,
+        DeterminedSubjectIsInvalid,
     }
 }

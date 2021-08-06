@@ -26,6 +26,7 @@ namespace OBeautifulCode.DataStructure
         /// <param name="details">OPTIONAL details about the cell.  DEFAULT is to omit any details.</param>
         /// <param name="validation">OPTIONAL validation to perform.  DEFAULT is no validation.</param>
         /// <param name="validationEvents">OPTIONAL events that record the validation of this cell.  DEFAULT is a cell that has not yet been validated.</param>
+        /// <param name="initialAvailability">OPTIONAL initial availability of the cell (before <paramref name="availabilityCheck"/> is run).  DEFAULT is an enabled cell.</param>
         /// <param name="availabilityCheck">OPTIONAL availability check to perform.  DEFAULT is a cell with no availability check.</param>
         /// <param name="availabilityCheckEvents">OPTIONAL events that record the availability checks on this cell.  DEFAULT is a cell that has not yet had an availability check.</param>
         /// <param name="valueFormat">OPTIONAL format to apply to the cell value.  DEFAULT is to leave the format unchanged.</param>
@@ -39,13 +40,14 @@ namespace OBeautifulCode.DataStructure
             string details = null,
             Validation validation = null,
             IReadOnlyList<CellValidationEventBase> validationEvents = null,
+            Availability initialAvailability = Availability.Enabled,
             AvailabilityCheck availabilityCheck = null,
             IReadOnlyList<CellAvailabilityCheckEventBase> availabilityCheckEvents = null,
             ICellValueFormat<TValue> valueFormat = null,
             CellFormat format = null,
             IHoverOver hoverOver = null,
             ILink link = null)
-            : base(id, columnsSpanned, details, validation, validationEvents, availabilityCheck, availabilityCheckEvents, value)
+            : base(id, columnsSpanned, details, validation, validationEvents, initialAvailability, availabilityCheck, availabilityCheckEvents, value)
         {
             this.ValueFormat = valueFormat;
             this.Format = format;

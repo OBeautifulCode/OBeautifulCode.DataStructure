@@ -29,6 +29,7 @@ namespace OBeautifulCode.DataStructure
         /// <param name="details">Details about the cell.</param>
         /// <param name="validation">The validation to perform.</param>
         /// <param name="validationEvents">The events that record the validation of this cell.</param>
+        /// <param name="initialAvailability">The initial availability of the cell (before <paramref name="availabilityCheck"/> is run).</param>
         /// <param name="availabilityCheck">The availability check to perform.</param>
         /// <param name="availabilityCheckEvents">The events that record the availability checks on this cell.</param>
         /// <param name="inputEvents">The events that record the manipulation of this cell's value.</param>
@@ -38,10 +39,11 @@ namespace OBeautifulCode.DataStructure
             string details,
             Validation validation,
             IReadOnlyList<CellValidationEventBase> validationEvents,
+            Availability initialAvailability,
             AvailabilityCheck availabilityCheck,
             IReadOnlyList<CellAvailabilityCheckEventBase> availabilityCheckEvents,
             IReadOnlyList<CellInputEventBase> inputEvents)
-            : base(id, columnsSpanned, details, validation, validationEvents, availabilityCheck, availabilityCheckEvents)
+            : base(id, columnsSpanned, details, validation, validationEvents, initialAvailability, availabilityCheck, availabilityCheckEvents)
         {
             if ((inputEvents != null) && inputEvents.Any(_ => _ == null))
             {

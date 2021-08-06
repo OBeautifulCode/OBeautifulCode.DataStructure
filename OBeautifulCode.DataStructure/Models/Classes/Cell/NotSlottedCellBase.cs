@@ -28,6 +28,7 @@ namespace OBeautifulCode.DataStructure
         /// <param name="details">Details about the cell.</param>
         /// <param name="validation">The validation to perform.</param>
         /// <param name="validationEvents">The events that record the validation of this cell.</param>
+        /// <param name="initialAvailability">The initial availability of the cell (before <paramref name="availabilityCheck"/> is run).</param>
         /// <param name="availabilityCheck">The availability check to perform.</param>
         /// <param name="availabilityCheckEvents">The events that record the availability checks on this cell.</param>
         protected NotSlottedCellBase(
@@ -36,6 +37,7 @@ namespace OBeautifulCode.DataStructure
             string details,
             Validation validation,
             IReadOnlyList<CellValidationEventBase> validationEvents,
+            Availability initialAvailability,
             AvailabilityCheck availabilityCheck,
             IReadOnlyList<CellAvailabilityCheckEventBase> availabilityCheckEvents)
             : base(id, columnsSpanned, details)
@@ -50,6 +52,11 @@ namespace OBeautifulCode.DataStructure
                 throw new ArgumentException(Invariant($"There is no {nameof(validation)} specified, however one or more {nameof(validationEvents)} exists."));
             }
 
+            if ((initialAvailability != Availability.Enabled) && (initialAvailability != Availability.Disabled))
+            {
+                throw new ArgumentException(Invariant($"{nameof(initialAvailability)} is neither {nameof(Availability)}.{nameof(Availability.Enabled)} nor {nameof(Availability)}.{nameof(Availability.Disabled)}."));
+            }
+
             if ((availabilityCheckEvents != null) && availabilityCheckEvents.Any(_ => _ == null))
             {
                 throw new ArgumentException(Invariant($"{nameof(availabilityCheckEvents)} contains a null element."));
@@ -62,7 +69,7 @@ namespace OBeautifulCode.DataStructure
 
             this.Validation = validation;
             this.ValidationEvents = validationEvents;
-
+            this.InitialAvailability = initialAvailability;
             this.AvailabilityCheck = availabilityCheck;
             this.AvailabilityCheckEvents = availabilityCheckEvents;
         }
@@ -72,6 +79,9 @@ namespace OBeautifulCode.DataStructure
 
         /// <inheritdoc />
         public IReadOnlyList<CellValidationEventBase> ValidationEvents { get; private set; }
+
+        /// <inheritdoc />
+        public Availability InitialAvailability { get; private set; }
 
         /// <inheritdoc />
         public IReadOnlyList<CellAvailabilityCheckEventBase> AvailabilityCheckEvents { get; private set; }

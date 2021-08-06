@@ -14,6 +14,11 @@ namespace OBeautifulCode.DataStructure
     public interface IAvailabilityCheckCell : ICell
     {
         /// <summary>
+        /// Gets the initial availability of the cell (before <see cref="AvailabilityCheck"/> is run).
+        /// </summary>
+        Availability InitialAvailability { get; }
+
+        /// <summary>
         /// Gets an object that determines the availability of the cell.
         /// </summary>
         AvailabilityCheck AvailabilityCheck { get; }

@@ -88,6 +88,8 @@ namespace OBeautifulCode.DataStructure
             typeof(IReadOnlyList<NamedValue<bool?>>),
             typeof(IReadOnlyList<NamedValue<DateTime?>>),
             typeof(IReadOnlyList<NamedValue<Guid?>>),
+            typeof(AvailabilityCheckResult),
+            typeof(ValidationResult),
         };
 
         private static readonly ConcurrentDictionary<Type, ConstructorInfo> CachedTypeToExecuteOperationCellIfNecessaryOpConstructorInfoMap =
@@ -402,13 +404,13 @@ namespace OBeautifulCode.DataStructure
             IReadOnlyCollection<IValidationCell> validationCells,
             IReadOnlyCollection<IAvailabilityCheckCell> availabilityCheckCells)
         {
-            var hasValidationFailure = validationCells.Any(_ => _.GetValidationStatus() == ValidationStatus.Failed);
+            var validityIsUnknown = validationCells.Any(_ => _.GetValidity() == Validity.Unknown);
 
-            var hasAvailabilityCheckFailure = availabilityCheckCells.Any(_ => _.GetAvailabilityCheckStatus() == AvailabilityCheckStatus.Failed);
+            var availabilityIsUnknown = availabilityCheckCells.Any(_ => _.GetAvailability() == Availability.Unknown);
 
             bool result;
 
-            if (hasValidationFailure || hasAvailabilityCheckFailure)
+            if (validityIsUnknown || availabilityIsUnknown)
             {
                 result = false;
             }

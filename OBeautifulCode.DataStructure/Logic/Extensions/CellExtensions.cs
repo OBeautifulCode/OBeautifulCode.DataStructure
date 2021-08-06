@@ -109,7 +109,7 @@ namespace OBeautifulCode.DataStructure
             }
             else if (lastValidationEvent is CellValidationDeterminedCellValidEvent)
             {
-                result = ValidationStatus.Valid;
+                result = ValidationStatus.DeterminedSubjectIsValid;
             }
             else if (lastValidationEvent is CellValidationFailedEvent)
             {
@@ -117,7 +117,7 @@ namespace OBeautifulCode.DataStructure
             }
             else if (lastValidationEvent is CellValidationDeterminedCellInvalidEvent)
             {
-                result = ValidationStatus.Invalid;
+                result = ValidationStatus.DeterminedSubjectIsInvalid;
             }
             else
             {
@@ -147,11 +147,11 @@ namespace OBeautifulCode.DataStructure
             switch (validationStatus)
             {
                 case ValidationStatus.ValidationMissing:
-                case ValidationStatus.Valid:
+                case ValidationStatus.DeterminedSubjectIsValid:
                     return Validity.Valid;
                 case ValidationStatus.DeemedNotApplicable:
                     return Validity.NotApplicable;
-                case ValidationStatus.Invalid:
+                case ValidationStatus.DeterminedSubjectIsInvalid:
                     return Validity.Invalid;
                 default:
                     return Validity.Unknown;
@@ -187,11 +187,11 @@ namespace OBeautifulCode.DataStructure
             }
             else if (lastAvailabilityCheckEvent is CellAvailabilityCheckDeterminedCellEnabledEvent)
             {
-                result = AvailabilityCheckStatus.Enabled;
+                result = AvailabilityCheckStatus.DeterminedSubjectIsEnabled;
             }
             else if (lastAvailabilityCheckEvent is CellAvailabilityCheckDeterminedCellDisabledEvent)
             {
-                result = AvailabilityCheckStatus.Disabled;
+                result = AvailabilityCheckStatus.DeterminedSubjectIsDisabled;
             }
             else if (lastAvailabilityCheckEvent is CellAvailabilityCheckFailedEvent)
             {
@@ -222,15 +222,14 @@ namespace OBeautifulCode.DataStructure
 
             var availabilityCheckStatus = cell.GetAvailabilityCheckStatus();
 
-            // Note that we are purposely mapping Unchecked to Unknown here.
-            // At time t=0 when the report is loaded and there is no user input,
-            // the caller should perform a recalc, which will execute the availbility check.
             switch (availabilityCheckStatus)
             {
                 case AvailabilityCheckStatus.AvailabilityCheckMissing:
-                case AvailabilityCheckStatus.Enabled:
+                case AvailabilityCheckStatus.Unchecked:
+                    return cell.InitialAvailability;
+                case AvailabilityCheckStatus.DeterminedSubjectIsEnabled:
                     return Availability.Enabled;
-                case AvailabilityCheckStatus.Disabled:
+                case AvailabilityCheckStatus.DeterminedSubjectIsDisabled:
                     return Availability.Disabled;
                 default:
                     return Availability.Unknown;

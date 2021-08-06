@@ -6,8 +6,6 @@
 
 namespace OBeautifulCode.DataStructure
 {
-    using System;
-
     using OBeautifulCode.Type;
 
     /// <summary>
@@ -89,7 +87,7 @@ namespace OBeautifulCode.DataStructure
             IHoverOver hoverOver = null,
             ILink link = null)
         {
-            var result = new OperationCell<TValue>(operation, id, columnsSpanned, details, validation, null, null, null, null, valueFormat, format, hoverOver, link);
+            var result = new OperationCell<TValue>(operation, id, columnsSpanned, details, validation, null, Availability.Enabled, null, null, null, valueFormat, format, hoverOver, link);
 
             return result;
         }
@@ -119,7 +117,7 @@ namespace OBeautifulCode.DataStructure
             IHoverOver hoverOver = null,
             ILink link = null)
         {
-            var result = new ConstCell<TValue>(value, id, columnsSpanned, details, null, null, null, null, valueFormat, format, hoverOver, link);
+            var result = new ConstCell<TValue>(value, id, columnsSpanned, details, null, null, Availability.Enabled, null, null, valueFormat, format, hoverOver, link);
 
             return result;
         }
@@ -149,9 +147,7 @@ namespace OBeautifulCode.DataStructure
             CellFormat format = null,
             IHoverOver hoverOver = null)
         {
-            var availabilityCheckEvents = new[] { new CellAvailabilityCheckDeterminedCellEnabledEvent(DateTime.UtcNow, "enabled by default", null) };
-
-            var result = new InputCell<TValue>(id, columnsSpanned, details, validation, null, availabilityCheck, availabilityCheckEvents, null, valueFormat, format, hoverOver);
+            var result = new InputCell<TValue>(id, columnsSpanned, details, validation, null, Availability.Enabled, availabilityCheck, null, null, valueFormat, format, hoverOver);
 
             return result;
         }
@@ -181,9 +177,7 @@ namespace OBeautifulCode.DataStructure
             CellFormat format = null,
             IHoverOver hoverOver = null)
         {
-            var availabilityCheckEvents = new[] { new CellAvailabilityCheckDeterminedCellDisabledEvent(DateTime.UtcNow, "disabled by default", null) };
-
-            var result = new InputCell<TValue>(id, columnsSpanned, details, validation, null, availabilityCheck, availabilityCheckEvents, null, valueFormat, format, hoverOver);
+            var result = new InputCell<TValue>(id, columnsSpanned, details, validation, null, Availability.Disabled, availabilityCheck, null, null, valueFormat, format, hoverOver);
 
             return result;
         }

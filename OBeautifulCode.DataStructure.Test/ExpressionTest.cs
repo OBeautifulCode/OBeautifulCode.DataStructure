@@ -35,6 +35,18 @@ namespace OBeautifulCode.DataStructure.Test
              * ))
              */
 
+            var isForProfitCell = Cell.CreateEnabledInput<bool>("is-for-profit");
+
+            var restrictedCash = Cell.CreateDisabledInput<decimal>(
+                "restricted-cash",
+                availabilityCheck: Cell.CreateAvailabilityCheck(
+                    Op.IfThenElse(
+                        Op.AndAlso(
+                            Cell.HasValue(sectionId, isForProfitCell.Id),
+                            Op.Not(Cell.GetValue<bool>(sectionId, isForProfitCell.Id))),
+                        Op.Const(new AvailabilityCheckResult(Availability.Enabled)),
+                        Op.Const(new AvailabilityCheckResult(Availability.Disabled)))));
+
             var numberOfSalesFteCell = Cell.CreateEnabledInput<decimal>(
                 id: "sales-fte",
                 validation: Cell.CreateValidation(Op.ValidateUsingConditions(
@@ -122,6 +134,8 @@ namespace OBeautifulCode.DataStructure.Test
 
             var rows = new[]
             {
+                new Row(new[] { isForProfitCell }),
+                new Row(new[] { restrictedCash }),
                 new Row(new[] { numberOfSalesFteCell }),
                 new Row(new[] { numberOfWarehouseFteCell }),
                 new Row(new[] { numberOfTotalFte }),
@@ -152,6 +166,8 @@ namespace OBeautifulCode.DataStructure.Test
             };
 
             var report = new Report("report-id", sections);
+
+            report.SetInputCellValue(false, DateTime.UtcNow, sectionId, isForProfitCell.Id);
 
             report.ReCalc(
                 DateTime.UtcNow,

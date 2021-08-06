@@ -47,7 +47,7 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new SystemUnderTestExpectedStringRepresentation<ConstCell<Version>>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.ConstCell<Version>: Id = {systemUnderTest.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, ColumnsSpanned = {systemUnderTest.ColumnsSpanned?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Details = {systemUnderTest.Details?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Validation = {systemUnderTest.Validation?.ToString() ?? "<null>"}, ValidationEvents = {systemUnderTest.ValidationEvents?.ToString() ?? "<null>"}, AvailabilityCheckEvents = {systemUnderTest.AvailabilityCheckEvents?.ToString() ?? "<null>"}, AvailabilityCheck = {systemUnderTest.AvailabilityCheck?.ToString() ?? "<null>"}, Value = {systemUnderTest.Value?.ToString() ?? "<null>"}, ValueFormat = {systemUnderTest.ValueFormat?.ToString() ?? "<null>"}, Format = {systemUnderTest.Format?.ToString() ?? "<null>"}, HoverOver = {systemUnderTest.HoverOver?.ToString() ?? "<null>"}, Link = {systemUnderTest.Link?.ToString() ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.ConstCell<Version>: Id = {systemUnderTest.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, ColumnsSpanned = {systemUnderTest.ColumnsSpanned?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Details = {systemUnderTest.Details?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Validation = {systemUnderTest.Validation?.ToString() ?? "<null>"}, ValidationEvents = {systemUnderTest.ValidationEvents?.ToString() ?? "<null>"}, InitialAvailability = {systemUnderTest.InitialAvailability.ToString() ?? "<null>"}, AvailabilityCheckEvents = {systemUnderTest.AvailabilityCheckEvents?.ToString() ?? "<null>"}, AvailabilityCheck = {systemUnderTest.AvailabilityCheck?.ToString() ?? "<null>"}, Value = {systemUnderTest.Value?.ToString() ?? "<null>"}, ValueFormat = {systemUnderTest.ValueFormat?.ToString() ?? "<null>"}, Format = {systemUnderTest.Format?.ToString() ?? "<null>"}, HoverOver = {systemUnderTest.HoverOver?.ToString() ?? "<null>"}, Link = {systemUnderTest.Link?.ToString() ?? "<null>"}."),
                         };
 
                         return result;
@@ -70,6 +70,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Details,
                                              referenceObject.Validation,
                                              referenceObject.ValidationEvents,
+                                             referenceObject.InitialAvailability,
                                              referenceObject.AvailabilityCheck,
                                              referenceObject.AvailabilityCheckEvents,
                                              referenceObject.ValueFormat,
@@ -97,6 +98,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Details,
                                              referenceObject.Validation,
                                              referenceObject.ValidationEvents,
+                                             referenceObject.InitialAvailability,
                                              referenceObject.AvailabilityCheck,
                                              referenceObject.AvailabilityCheckEvents,
                                              referenceObject.ValueFormat,
@@ -124,6 +126,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Details,
                                              referenceObject.Validation,
                                              referenceObject.ValidationEvents,
+                                             referenceObject.InitialAvailability,
                                              referenceObject.AvailabilityCheck,
                                              referenceObject.AvailabilityCheckEvents,
                                              referenceObject.ValueFormat,
@@ -151,6 +154,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              null,
                                              referenceObject.Validation,
                                              referenceObject.ValidationEvents,
+                                             referenceObject.InitialAvailability,
                                              referenceObject.AvailabilityCheck,
                                              referenceObject.AvailabilityCheckEvents,
                                              referenceObject.ValueFormat,
@@ -178,6 +182,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              Invariant($"  {Environment.NewLine}  "),
                                              referenceObject.Validation,
                                              referenceObject.ValidationEvents,
+                                             referenceObject.InitialAvailability,
                                              referenceObject.AvailabilityCheck,
                                              referenceObject.AvailabilityCheckEvents,
                                              referenceObject.ValueFormat,
@@ -205,6 +210,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Details,
                                              null,
                                              referenceObject.ValidationEvents,
+                                             referenceObject.InitialAvailability,
                                              referenceObject.AvailabilityCheck,
                                              referenceObject.AvailabilityCheckEvents,
                                              referenceObject.ValueFormat,
@@ -232,6 +238,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Details,
                                              referenceObject.Validation,
                                              null,
+                                             referenceObject.InitialAvailability,
                                              referenceObject.AvailabilityCheck,
                                              referenceObject.AvailabilityCheckEvents,
                                              referenceObject.ValueFormat,
@@ -259,6 +266,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Details,
                                              referenceObject.Validation,
                                              new List<CellValidationEventBase>(),
+                                             referenceObject.InitialAvailability,
                                              referenceObject.AvailabilityCheck,
                                              referenceObject.AvailabilityCheckEvents,
                                              referenceObject.ValueFormat,
@@ -286,6 +294,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Details,
                                              referenceObject.Validation,
                                              new CellValidationEventBase[0].Concat(referenceObject.ValidationEvents).Concat(new CellValidationEventBase[] { null }).Concat(referenceObject.ValidationEvents).ToList(),
+                                             referenceObject.InitialAvailability,
                                              referenceObject.AvailabilityCheck,
                                              referenceObject.AvailabilityCheckEvents,
                                              referenceObject.ValueFormat,
@@ -313,6 +322,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Details,
                                              referenceObject.Validation,
                                              referenceObject.ValidationEvents,
+                                             referenceObject.InitialAvailability,
                                              null,
                                              referenceObject.AvailabilityCheckEvents,
                                              referenceObject.ValueFormat,
@@ -340,6 +350,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Details,
                                              referenceObject.Validation,
                                              referenceObject.ValidationEvents,
+                                             referenceObject.InitialAvailability,
                                              referenceObject.AvailabilityCheck,
                                              null,
                                              referenceObject.ValueFormat,
@@ -367,6 +378,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Details,
                                              referenceObject.Validation,
                                              referenceObject.ValidationEvents,
+                                             referenceObject.InitialAvailability,
                                              referenceObject.AvailabilityCheck,
                                              new List<CellAvailabilityCheckEventBase>(),
                                              referenceObject.ValueFormat,
@@ -394,6 +406,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Details,
                                              referenceObject.Validation,
                                              referenceObject.ValidationEvents,
+                                             referenceObject.InitialAvailability,
                                              referenceObject.AvailabilityCheck,
                                              new CellAvailabilityCheckEventBase[0].Concat(referenceObject.AvailabilityCheckEvents).Concat(new CellAvailabilityCheckEventBase[] { null }).Concat(referenceObject.AvailabilityCheckEvents).ToList(),
                                              referenceObject.ValueFormat,
@@ -421,6 +434,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Details,
                                              referenceObject.Validation,
                                              referenceObject.ValidationEvents,
+                                             referenceObject.InitialAvailability,
                                              referenceObject.AvailabilityCheck,
                                              referenceObject.AvailabilityCheckEvents,
                                              null,
@@ -448,6 +462,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Details,
                                              referenceObject.Validation,
                                              referenceObject.ValidationEvents,
+                                             referenceObject.InitialAvailability,
                                              referenceObject.AvailabilityCheck,
                                              referenceObject.AvailabilityCheckEvents,
                                              referenceObject.ValueFormat,
@@ -475,6 +490,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Details,
                                              referenceObject.Validation,
                                              referenceObject.ValidationEvents,
+                                             referenceObject.InitialAvailability,
                                              referenceObject.AvailabilityCheck,
                                              referenceObject.AvailabilityCheckEvents,
                                              referenceObject.ValueFormat,
@@ -502,6 +518,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Details,
                                              referenceObject.Validation,
                                              referenceObject.ValidationEvents,
+                                             referenceObject.InitialAvailability,
                                              referenceObject.AvailabilityCheck,
                                              referenceObject.AvailabilityCheckEvents,
                                              referenceObject.ValueFormat,
@@ -533,6 +550,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Details,
                                                       referenceObject.Validation,
                                                       referenceObject.ValidationEvents,
+                                                      referenceObject.InitialAvailability,
                                                       referenceObject.AvailabilityCheck,
                                                       referenceObject.AvailabilityCheckEvents,
                                                       referenceObject.ValueFormat,
@@ -563,6 +581,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Details,
                                                       referenceObject.Validation,
                                                       referenceObject.ValidationEvents,
+                                                      referenceObject.InitialAvailability,
                                                       referenceObject.AvailabilityCheck,
                                                       referenceObject.AvailabilityCheckEvents,
                                                       referenceObject.ValueFormat,
@@ -593,6 +612,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Details,
                                                       referenceObject.Validation,
                                                       referenceObject.ValidationEvents,
+                                                      referenceObject.InitialAvailability,
                                                       referenceObject.AvailabilityCheck,
                                                       referenceObject.AvailabilityCheckEvents,
                                                       referenceObject.ValueFormat,
@@ -623,6 +643,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Details,
                                                       referenceObject.Validation,
                                                       referenceObject.ValidationEvents,
+                                                      referenceObject.InitialAvailability,
                                                       referenceObject.AvailabilityCheck,
                                                       referenceObject.AvailabilityCheckEvents,
                                                       referenceObject.ValueFormat,
@@ -653,6 +674,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Details,
                                                       referenceObject.Validation,
                                                       referenceObject.ValidationEvents,
+                                                      referenceObject.InitialAvailability,
                                                       referenceObject.AvailabilityCheck,
                                                       referenceObject.AvailabilityCheckEvents,
                                                       referenceObject.ValueFormat,
@@ -683,6 +705,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Details,
                                                       referenceObject.Validation,
                                                       referenceObject.ValidationEvents,
+                                                      referenceObject.InitialAvailability,
                                                       referenceObject.AvailabilityCheck,
                                                       referenceObject.AvailabilityCheckEvents,
                                                       referenceObject.ValueFormat,
@@ -695,6 +718,37 @@ namespace OBeautifulCode.DataStructure.Test
                         return result;
                     },
                     PropertyName = "ValidationEvents",
+                })
+            .AddScenario(() =>
+                new ConstructorPropertyAssignmentTestScenario<ConstCell<Version>>
+                {
+                    Name = "InitialAvailability should return same 'initialAvailability' parameter passed to constructor when getting",
+                    SystemUnderTestExpectedPropertyValueFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<ConstCell<Version>>();
+
+                        var result = new SystemUnderTestExpectedPropertyValue<ConstCell<Version>>
+                        {
+                            SystemUnderTest = new ConstCell<Version>(
+                                                      referenceObject.Value,
+                                                      referenceObject.Id,
+                                                      referenceObject.ColumnsSpanned,
+                                                      referenceObject.Details,
+                                                      referenceObject.Validation,
+                                                      referenceObject.ValidationEvents,
+                                                      referenceObject.InitialAvailability,
+                                                      referenceObject.AvailabilityCheck,
+                                                      referenceObject.AvailabilityCheckEvents,
+                                                      referenceObject.ValueFormat,
+                                                      referenceObject.Format,
+                                                      referenceObject.HoverOver,
+                                                      referenceObject.Link),
+                            ExpectedPropertyValue = referenceObject.InitialAvailability,
+                        };
+
+                        return result;
+                    },
+                    PropertyName = "InitialAvailability",
                 })
             .AddScenario(() =>
                 new ConstructorPropertyAssignmentTestScenario<ConstCell<Version>>
@@ -713,6 +767,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Details,
                                                       referenceObject.Validation,
                                                       referenceObject.ValidationEvents,
+                                                      referenceObject.InitialAvailability,
                                                       referenceObject.AvailabilityCheck,
                                                       referenceObject.AvailabilityCheckEvents,
                                                       referenceObject.ValueFormat,
@@ -743,6 +798,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Details,
                                                       referenceObject.Validation,
                                                       referenceObject.ValidationEvents,
+                                                      referenceObject.InitialAvailability,
                                                       referenceObject.AvailabilityCheck,
                                                       referenceObject.AvailabilityCheckEvents,
                                                       referenceObject.ValueFormat,
@@ -773,6 +829,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Details,
                                                       referenceObject.Validation,
                                                       referenceObject.ValidationEvents,
+                                                      referenceObject.InitialAvailability,
                                                       referenceObject.AvailabilityCheck,
                                                       referenceObject.AvailabilityCheckEvents,
                                                       referenceObject.ValueFormat,
@@ -803,6 +860,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Details,
                                                       referenceObject.Validation,
                                                       referenceObject.ValidationEvents,
+                                                      referenceObject.InitialAvailability,
                                                       referenceObject.AvailabilityCheck,
                                                       referenceObject.AvailabilityCheckEvents,
                                                       referenceObject.ValueFormat,
@@ -833,6 +891,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Details,
                                                       referenceObject.Validation,
                                                       referenceObject.ValidationEvents,
+                                                      referenceObject.InitialAvailability,
                                                       referenceObject.AvailabilityCheck,
                                                       referenceObject.AvailabilityCheckEvents,
                                                       referenceObject.ValueFormat,
@@ -863,6 +922,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Details,
                                                       referenceObject.Validation,
                                                       referenceObject.ValidationEvents,
+                                                      referenceObject.InitialAvailability,
                                                       referenceObject.AvailabilityCheck,
                                                       referenceObject.AvailabilityCheckEvents,
                                                       referenceObject.ValueFormat,
@@ -973,6 +1033,26 @@ namespace OBeautifulCode.DataStructure.Test
                         {
                             SystemUnderTest = systemUnderTest,
                             DeepCloneWithValue = referenceObject.ValidationEvents,
+                        };
+
+                        return result;
+                    },
+                })
+            .AddScenario(() =>
+                new DeepCloneWithTestScenario<ConstCell<Version>>
+                {
+                    Name = "DeepCloneWithInitialAvailability should deep clone object and replace InitialAvailability with the provided initialAvailability",
+                    WithPropertyName = "InitialAvailability",
+                    SystemUnderTestDeepCloneWithValueFunc = () =>
+                    {
+                        var systemUnderTest = A.Dummy<ConstCell<Version>>();
+
+                        var referenceObject = A.Dummy<ConstCell<Version>>().ThatIs(_ => !systemUnderTest.InitialAvailability.IsEqualTo(_.InitialAvailability));
+
+                        var result = new SystemUnderTestDeepCloneWithValue<ConstCell<Version>>
+                        {
+                            SystemUnderTest = systemUnderTest,
+                            DeepCloneWithValue = referenceObject.InitialAvailability,
                         };
 
                         return result;
@@ -1136,6 +1216,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.Details,
                                 ReferenceObjectForEquatableTestScenarios.Validation,
                                 ReferenceObjectForEquatableTestScenarios.ValidationEvents,
+                                ReferenceObjectForEquatableTestScenarios.InitialAvailability,
                                 ReferenceObjectForEquatableTestScenarios.AvailabilityCheck,
                                 ReferenceObjectForEquatableTestScenarios.AvailabilityCheckEvents,
                                 ReferenceObjectForEquatableTestScenarios.ValueFormat,
@@ -1152,6 +1233,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.Details,
                                 ReferenceObjectForEquatableTestScenarios.Validation,
                                 ReferenceObjectForEquatableTestScenarios.ValidationEvents,
+                                ReferenceObjectForEquatableTestScenarios.InitialAvailability,
                                 ReferenceObjectForEquatableTestScenarios.AvailabilityCheck,
                                 ReferenceObjectForEquatableTestScenarios.AvailabilityCheckEvents,
                                 ReferenceObjectForEquatableTestScenarios.ValueFormat,
@@ -1165,6 +1247,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.Details,
                                 ReferenceObjectForEquatableTestScenarios.Validation,
                                 ReferenceObjectForEquatableTestScenarios.ValidationEvents,
+                                ReferenceObjectForEquatableTestScenarios.InitialAvailability,
                                 ReferenceObjectForEquatableTestScenarios.AvailabilityCheck,
                                 ReferenceObjectForEquatableTestScenarios.AvailabilityCheckEvents,
                                 ReferenceObjectForEquatableTestScenarios.ValueFormat,
@@ -1178,6 +1261,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 A.Dummy<ConstCell<Version>>().Whose(_ => !_.Details.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Details)).Details,
                                 ReferenceObjectForEquatableTestScenarios.Validation,
                                 ReferenceObjectForEquatableTestScenarios.ValidationEvents,
+                                ReferenceObjectForEquatableTestScenarios.InitialAvailability,
                                 ReferenceObjectForEquatableTestScenarios.AvailabilityCheck,
                                 ReferenceObjectForEquatableTestScenarios.AvailabilityCheckEvents,
                                 ReferenceObjectForEquatableTestScenarios.ValueFormat,
@@ -1191,6 +1275,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.Details,
                                 A.Dummy<ConstCell<Version>>().Whose(_ => !_.Validation.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Validation)).Validation,
                                 ReferenceObjectForEquatableTestScenarios.ValidationEvents,
+                                ReferenceObjectForEquatableTestScenarios.InitialAvailability,
                                 ReferenceObjectForEquatableTestScenarios.AvailabilityCheck,
                                 ReferenceObjectForEquatableTestScenarios.AvailabilityCheckEvents,
                                 ReferenceObjectForEquatableTestScenarios.ValueFormat,
@@ -1204,6 +1289,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.Details,
                                 ReferenceObjectForEquatableTestScenarios.Validation,
                                 A.Dummy<ConstCell<Version>>().Whose(_ => !_.ValidationEvents.IsEqualTo(ReferenceObjectForEquatableTestScenarios.ValidationEvents)).ValidationEvents,
+                                ReferenceObjectForEquatableTestScenarios.InitialAvailability,
                                 ReferenceObjectForEquatableTestScenarios.AvailabilityCheck,
                                 ReferenceObjectForEquatableTestScenarios.AvailabilityCheckEvents,
                                 ReferenceObjectForEquatableTestScenarios.ValueFormat,
@@ -1217,6 +1303,21 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.Details,
                                 ReferenceObjectForEquatableTestScenarios.Validation,
                                 ReferenceObjectForEquatableTestScenarios.ValidationEvents,
+                                A.Dummy<ConstCell<Version>>().Whose(_ => !_.InitialAvailability.IsEqualTo(ReferenceObjectForEquatableTestScenarios.InitialAvailability)).InitialAvailability,
+                                ReferenceObjectForEquatableTestScenarios.AvailabilityCheck,
+                                ReferenceObjectForEquatableTestScenarios.AvailabilityCheckEvents,
+                                ReferenceObjectForEquatableTestScenarios.ValueFormat,
+                                ReferenceObjectForEquatableTestScenarios.Format,
+                                ReferenceObjectForEquatableTestScenarios.HoverOver,
+                                ReferenceObjectForEquatableTestScenarios.Link),
+                        new ConstCell<Version>(
+                                ReferenceObjectForEquatableTestScenarios.Value,
+                                ReferenceObjectForEquatableTestScenarios.Id,
+                                ReferenceObjectForEquatableTestScenarios.ColumnsSpanned,
+                                ReferenceObjectForEquatableTestScenarios.Details,
+                                ReferenceObjectForEquatableTestScenarios.Validation,
+                                ReferenceObjectForEquatableTestScenarios.ValidationEvents,
+                                ReferenceObjectForEquatableTestScenarios.InitialAvailability,
                                 ReferenceObjectForEquatableTestScenarios.AvailabilityCheck,
                                 A.Dummy<ConstCell<Version>>().Whose(_ => !_.AvailabilityCheckEvents.IsEqualTo(ReferenceObjectForEquatableTestScenarios.AvailabilityCheckEvents)).AvailabilityCheckEvents,
                                 ReferenceObjectForEquatableTestScenarios.ValueFormat,
@@ -1230,6 +1331,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.Details,
                                 ReferenceObjectForEquatableTestScenarios.Validation,
                                 ReferenceObjectForEquatableTestScenarios.ValidationEvents,
+                                ReferenceObjectForEquatableTestScenarios.InitialAvailability,
                                 A.Dummy<ConstCell<Version>>().Whose(_ => !_.AvailabilityCheck.IsEqualTo(ReferenceObjectForEquatableTestScenarios.AvailabilityCheck)).AvailabilityCheck,
                                 ReferenceObjectForEquatableTestScenarios.AvailabilityCheckEvents,
                                 ReferenceObjectForEquatableTestScenarios.ValueFormat,
@@ -1243,6 +1345,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.Details,
                                 ReferenceObjectForEquatableTestScenarios.Validation,
                                 ReferenceObjectForEquatableTestScenarios.ValidationEvents,
+                                ReferenceObjectForEquatableTestScenarios.InitialAvailability,
                                 ReferenceObjectForEquatableTestScenarios.AvailabilityCheck,
                                 ReferenceObjectForEquatableTestScenarios.AvailabilityCheckEvents,
                                 ReferenceObjectForEquatableTestScenarios.ValueFormat,
@@ -1256,6 +1359,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.Details,
                                 ReferenceObjectForEquatableTestScenarios.Validation,
                                 ReferenceObjectForEquatableTestScenarios.ValidationEvents,
+                                ReferenceObjectForEquatableTestScenarios.InitialAvailability,
                                 ReferenceObjectForEquatableTestScenarios.AvailabilityCheck,
                                 ReferenceObjectForEquatableTestScenarios.AvailabilityCheckEvents,
                                 A.Dummy<ConstCell<Version>>().Whose(_ => !_.ValueFormat.IsEqualTo(ReferenceObjectForEquatableTestScenarios.ValueFormat)).ValueFormat,
@@ -1269,6 +1373,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.Details,
                                 ReferenceObjectForEquatableTestScenarios.Validation,
                                 ReferenceObjectForEquatableTestScenarios.ValidationEvents,
+                                ReferenceObjectForEquatableTestScenarios.InitialAvailability,
                                 ReferenceObjectForEquatableTestScenarios.AvailabilityCheck,
                                 ReferenceObjectForEquatableTestScenarios.AvailabilityCheckEvents,
                                 ReferenceObjectForEquatableTestScenarios.ValueFormat,
@@ -1282,6 +1387,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.Details,
                                 ReferenceObjectForEquatableTestScenarios.Validation,
                                 ReferenceObjectForEquatableTestScenarios.ValidationEvents,
+                                ReferenceObjectForEquatableTestScenarios.InitialAvailability,
                                 ReferenceObjectForEquatableTestScenarios.AvailabilityCheck,
                                 ReferenceObjectForEquatableTestScenarios.AvailabilityCheckEvents,
                                 ReferenceObjectForEquatableTestScenarios.ValueFormat,
@@ -1295,6 +1401,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.Details,
                                 ReferenceObjectForEquatableTestScenarios.Validation,
                                 ReferenceObjectForEquatableTestScenarios.ValidationEvents,
+                                ReferenceObjectForEquatableTestScenarios.InitialAvailability,
                                 ReferenceObjectForEquatableTestScenarios.AvailabilityCheck,
                                 ReferenceObjectForEquatableTestScenarios.AvailabilityCheckEvents,
                                 ReferenceObjectForEquatableTestScenarios.ValueFormat,
@@ -1689,7 +1796,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "Id", "ColumnsSpanned", "Details", "Validation", "ValidationEvents", "AvailabilityCheckEvents", "AvailabilityCheck", "Value", "ValueFormat", "Format", "HoverOver", "Link" };
+                var propertyNames = new string[] { "Id", "ColumnsSpanned", "Details", "Validation", "ValidationEvents", "InitialAvailability", "AvailabilityCheckEvents", "AvailabilityCheck", "Value", "ValueFormat", "Format", "HoverOver", "Link" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 
