@@ -7,9 +7,7 @@
 namespace OBeautifulCode.DataStructure
 {
     using System;
-    using System.Collections.Concurrent;
     using System.Linq;
-    using System.Reflection;
     using System.Threading.Tasks;
 
     using OBeautifulCode.Type;
@@ -31,10 +29,6 @@ namespace OBeautifulCode.DataStructure
           ISyncAndAsyncReturningProtocol<ThrowOpExecutionDeemedNotApplicableExceptionOp<TValue>, TValue>,
           ISyncAndAsyncVoidProtocol<CheckAvailabilityOfCellOp>
     {
-        // ReSharper disable once StaticMemberInGenericType
-        private static readonly ConcurrentDictionary<Type, ConstructorInfo> CachedTypeToExecuteOperationCellIfNecessaryOpConstructorInfoMap =
-            new ConcurrentDictionary<Type, ConstructorInfo>();
-
         private readonly Report report;
 
         private readonly IProtocolFactory protocolFactory;
@@ -719,11 +713,11 @@ namespace OBeautifulCode.DataStructure
             {
                 var valueType = cell.GetValueTypeOrNull();
 
-                if (!CachedTypeToExecuteOperationCellIfNecessaryOpConstructorInfoMap.TryGetValue(valueType, out var constructorInfo))
+                if (!DataStructureCellProtocols.CachedTypeToExecuteOperationCellIfNecessaryOpConstructorInfoMap.TryGetValue(valueType, out var constructorInfo))
                 {
                     constructorInfo = typeof(ExecuteOperationCellIfNecessaryOp<>).MakeGenericType(cell.GetValueTypeOrNull()).GetConstructors().Single();
 
-                    CachedTypeToExecuteOperationCellIfNecessaryOpConstructorInfoMap.TryAdd(valueType, constructorInfo);
+                    DataStructureCellProtocols.CachedTypeToExecuteOperationCellIfNecessaryOpConstructorInfoMap.TryAdd(valueType, constructorInfo);
                 }
 
                 // ReSharper disable once CoVariantArrayConversion

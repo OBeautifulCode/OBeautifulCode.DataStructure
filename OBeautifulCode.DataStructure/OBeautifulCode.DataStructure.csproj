@@ -170,6 +170,7 @@
     <Compile Include="Logic\Extensions\CellExtensions.cs" />
     <Compile Include="Logic\Extensions\TreeTableExtensions.cs" />
     <Compile Include="Logic\Extensions\ReportExtensions.cs" />
+    <Compile Include="Logic\Protocols\DataStructureCellProtocols.cs" />
     <Compile Include="Logic\Protocols\DataStructureConvenienceProtocols{TResult}.cs" />
     <Compile Include="Logic\Protocols\DataStructureCellProtocols{TValue}.cs" />
     <Compile Include="Models\Classes\AvailabilityCheck\AvailabilityCheck.cs" />
