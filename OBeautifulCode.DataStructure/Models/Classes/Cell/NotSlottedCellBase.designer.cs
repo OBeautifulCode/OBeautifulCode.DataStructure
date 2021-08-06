@@ -131,10 +131,10 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <summary>
-        /// Deep clones this object with a new <see cref="InitialAvailability" />.
+        /// Deep clones this object with a new <see cref="DefaultAvailability" />.
         /// </summary>
-        /// <param name="initialAvailability">The new <see cref="InitialAvailability" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="NotSlottedCellBase" /> using the specified <paramref name="initialAvailability" /> for <see cref="InitialAvailability" /> and a deep clone of every other property.</returns>
+        /// <param name="defaultAvailability">The new <see cref="DefaultAvailability" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="NotSlottedCellBase" /> using the specified <paramref name="defaultAvailability" /> for <see cref="DefaultAvailability" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -152,7 +152,7 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public virtual NotSlottedCellBase DeepCloneWithInitialAvailability(Availability initialAvailability)
+        public virtual NotSlottedCellBase DeepCloneWithDefaultAvailability(Availability defaultAvailability)
         {
             throw new NotImplementedException("This method should be abstract.  It was generated as virtual so that you aren't forced to override it when you create a new model that derives from this model.  It will be overridden in the generated designer file.");
         }

@@ -230,7 +230,7 @@ namespace OBeautifulCode.DataStructure
             {
                 case AvailabilityCheckStatus.AvailabilityCheckMissing:
                 case AvailabilityCheckStatus.Unchecked:
-                    return cell.InitialAvailability;
+                    return cell.DefaultAvailability;
                 case AvailabilityCheckStatus.DeterminedSubjectIsEnabled:
                     return Availability.Enabled;
                 case AvailabilityCheckStatus.DeterminedSubjectIsDisabled:

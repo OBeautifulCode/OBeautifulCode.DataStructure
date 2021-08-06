@@ -74,7 +74,7 @@ namespace OBeautifulCode.DataStructure
                       && this.Details.IsEqualTo(other.Details, StringComparer.Ordinal)
                       && this.Validation.IsEqualTo(other.Validation)
                       && this.ValidationEvents.IsEqualTo(other.ValidationEvents)
-                      && this.InitialAvailability.IsEqualTo(other.InitialAvailability)
+                      && this.DefaultAvailability.IsEqualTo(other.DefaultAvailability)
                       && this.AvailabilityCheckEvents.IsEqualTo(other.AvailabilityCheckEvents)
                       && this.AvailabilityCheck.IsEqualTo(other.AvailabilityCheck)
                       && this.InputEvents.IsEqualTo(other.InputEvents)
@@ -95,7 +95,7 @@ namespace OBeautifulCode.DataStructure
             .Hash(this.Details)
             .Hash(this.Validation)
             .Hash(this.ValidationEvents)
-            .Hash(this.InitialAvailability)
+            .Hash(this.DefaultAvailability)
             .Hash(this.AvailabilityCheckEvents)
             .Hash(this.AvailabilityCheck)
             .Hash(this.InputEvents)
@@ -133,7 +133,7 @@ namespace OBeautifulCode.DataStructure
                                  this.Details?.DeepClone(),
                                  this.Validation?.DeepClone(),
                                  this.ValidationEvents?.DeepClone(),
-                                 this.InitialAvailability.DeepClone(),
+                                 this.DefaultAvailability.DeepClone(),
                                  this.AvailabilityCheck?.DeepClone(),
                                  this.AvailabilityCheckEvents?.DeepClone(),
                                  this.InputEvents?.DeepClone(),
@@ -170,7 +170,7 @@ namespace OBeautifulCode.DataStructure
                                  this.Details?.DeepClone(),
                                  this.Validation?.DeepClone(),
                                  this.ValidationEvents?.DeepClone(),
-                                 this.InitialAvailability.DeepClone(),
+                                 this.DefaultAvailability.DeepClone(),
                                  this.AvailabilityCheck?.DeepClone(),
                                  this.AvailabilityCheckEvents?.DeepClone(),
                                  this.InputEvents?.DeepClone(),
@@ -207,7 +207,7 @@ namespace OBeautifulCode.DataStructure
                                  details,
                                  this.Validation?.DeepClone(),
                                  this.ValidationEvents?.DeepClone(),
-                                 this.InitialAvailability.DeepClone(),
+                                 this.DefaultAvailability.DeepClone(),
                                  this.AvailabilityCheck?.DeepClone(),
                                  this.AvailabilityCheckEvents?.DeepClone(),
                                  this.InputEvents?.DeepClone(),
@@ -244,7 +244,7 @@ namespace OBeautifulCode.DataStructure
                                  this.Details?.DeepClone(),
                                  validation,
                                  this.ValidationEvents?.DeepClone(),
-                                 this.InitialAvailability.DeepClone(),
+                                 this.DefaultAvailability.DeepClone(),
                                  this.AvailabilityCheck?.DeepClone(),
                                  this.AvailabilityCheckEvents?.DeepClone(),
                                  this.InputEvents?.DeepClone(),
@@ -281,7 +281,7 @@ namespace OBeautifulCode.DataStructure
                                  this.Details?.DeepClone(),
                                  this.Validation?.DeepClone(),
                                  validationEvents,
-                                 this.InitialAvailability.DeepClone(),
+                                 this.DefaultAvailability.DeepClone(),
                                  this.AvailabilityCheck?.DeepClone(),
                                  this.AvailabilityCheckEvents?.DeepClone(),
                                  this.InputEvents?.DeepClone(),
@@ -310,7 +310,7 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public override NotSlottedCellBase DeepCloneWithInitialAvailability(Availability initialAvailability)
+        public override NotSlottedCellBase DeepCloneWithDefaultAvailability(Availability defaultAvailability)
         {
             var result = new InputCell<TValue>(
                                  this.Id?.DeepClone(),
@@ -318,7 +318,7 @@ namespace OBeautifulCode.DataStructure
                                  this.Details?.DeepClone(),
                                  this.Validation?.DeepClone(),
                                  this.ValidationEvents?.DeepClone(),
-                                 initialAvailability,
+                                 defaultAvailability,
                                  this.AvailabilityCheck?.DeepClone(),
                                  this.AvailabilityCheckEvents?.DeepClone(),
                                  this.InputEvents?.DeepClone(),
@@ -355,7 +355,7 @@ namespace OBeautifulCode.DataStructure
                                  this.Details?.DeepClone(),
                                  this.Validation?.DeepClone(),
                                  this.ValidationEvents?.DeepClone(),
-                                 this.InitialAvailability.DeepClone(),
+                                 this.DefaultAvailability.DeepClone(),
                                  this.AvailabilityCheck?.DeepClone(),
                                  availabilityCheckEvents,
                                  this.InputEvents?.DeepClone(),
@@ -392,7 +392,7 @@ namespace OBeautifulCode.DataStructure
                                  this.Details?.DeepClone(),
                                  this.Validation?.DeepClone(),
                                  this.ValidationEvents?.DeepClone(),
-                                 this.InitialAvailability.DeepClone(),
+                                 this.DefaultAvailability.DeepClone(),
                                  availabilityCheck,
                                  this.AvailabilityCheckEvents?.DeepClone(),
                                  this.InputEvents?.DeepClone(),
@@ -429,7 +429,7 @@ namespace OBeautifulCode.DataStructure
                                  this.Details?.DeepClone(),
                                  this.Validation?.DeepClone(),
                                  this.ValidationEvents?.DeepClone(),
-                                 this.InitialAvailability.DeepClone(),
+                                 this.DefaultAvailability.DeepClone(),
                                  this.AvailabilityCheck?.DeepClone(),
                                  this.AvailabilityCheckEvents?.DeepClone(),
                                  inputEvents,
@@ -470,7 +470,7 @@ namespace OBeautifulCode.DataStructure
                                  this.Details?.DeepClone(),
                                  this.Validation?.DeepClone(),
                                  this.ValidationEvents?.DeepClone(),
-                                 this.InitialAvailability.DeepClone(),
+                                 this.DefaultAvailability.DeepClone(),
                                  this.AvailabilityCheck?.DeepClone(),
                                  this.AvailabilityCheckEvents?.DeepClone(),
                                  this.InputEvents?.DeepClone(),
@@ -511,7 +511,7 @@ namespace OBeautifulCode.DataStructure
                                  this.Details?.DeepClone(),
                                  this.Validation?.DeepClone(),
                                  this.ValidationEvents?.DeepClone(),
-                                 this.InitialAvailability.DeepClone(),
+                                 this.DefaultAvailability.DeepClone(),
                                  this.AvailabilityCheck?.DeepClone(),
                                  this.AvailabilityCheckEvents?.DeepClone(),
                                  this.InputEvents?.DeepClone(),
@@ -552,7 +552,7 @@ namespace OBeautifulCode.DataStructure
                                  this.Details?.DeepClone(),
                                  this.Validation?.DeepClone(),
                                  this.ValidationEvents?.DeepClone(),
-                                 this.InitialAvailability.DeepClone(),
+                                 this.DefaultAvailability.DeepClone(),
                                  this.AvailabilityCheck?.DeepClone(),
                                  this.AvailabilityCheckEvents?.DeepClone(),
                                  this.InputEvents?.DeepClone(),
@@ -573,7 +573,7 @@ namespace OBeautifulCode.DataStructure
                                  this.Details?.DeepClone(),
                                  this.Validation?.DeepClone(),
                                  this.ValidationEvents?.DeepClone(),
-                                 this.InitialAvailability.DeepClone(),
+                                 this.DefaultAvailability.DeepClone(),
                                  this.AvailabilityCheck?.DeepClone(),
                                  this.AvailabilityCheckEvents?.DeepClone(),
                                  this.InputEvents?.DeepClone(),
@@ -588,7 +588,7 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"OBeautifulCode.DataStructure.{this.GetType().ToStringReadable()}: Id = {this.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, ColumnsSpanned = {this.ColumnsSpanned?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Details = {this.Details?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Validation = {this.Validation?.ToString() ?? "<null>"}, ValidationEvents = {this.ValidationEvents?.ToString() ?? "<null>"}, InitialAvailability = {this.InitialAvailability.ToString() ?? "<null>"}, AvailabilityCheckEvents = {this.AvailabilityCheckEvents?.ToString() ?? "<null>"}, AvailabilityCheck = {this.AvailabilityCheck?.ToString() ?? "<null>"}, InputEvents = {this.InputEvents?.ToString() ?? "<null>"}, ValueFormat = {this.ValueFormat?.ToString() ?? "<null>"}, Format = {this.Format?.ToString() ?? "<null>"}, HoverOver = {this.HoverOver?.ToString() ?? "<null>"}.");
+            var result = Invariant($"OBeautifulCode.DataStructure.{this.GetType().ToStringReadable()}: Id = {this.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, ColumnsSpanned = {this.ColumnsSpanned?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Details = {this.Details?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Validation = {this.Validation?.ToString() ?? "<null>"}, ValidationEvents = {this.ValidationEvents?.ToString() ?? "<null>"}, DefaultAvailability = {this.DefaultAvailability.ToString() ?? "<null>"}, AvailabilityCheckEvents = {this.AvailabilityCheckEvents?.ToString() ?? "<null>"}, AvailabilityCheck = {this.AvailabilityCheck?.ToString() ?? "<null>"}, InputEvents = {this.InputEvents?.ToString() ?? "<null>"}, ValueFormat = {this.ValueFormat?.ToString() ?? "<null>"}, Format = {this.Format?.ToString() ?? "<null>"}, HoverOver = {this.HoverOver?.ToString() ?? "<null>"}.");
 
             return result;
         }

@@ -24,7 +24,7 @@ namespace OBeautifulCode.DataStructure
         /// <param name="details">Details about the cell.</param>
         /// <param name="validation">The validation to perform.</param>
         /// <param name="validationEvents">The events that record the validation of this cell.</param>
-        /// <param name="initialAvailability">The initial availability of the cell (before <paramref name="availabilityCheck"/> is run).</param>
+        /// <param name="defaultAvailability">The default availability of the cell (before <paramref name="availabilityCheck"/> is run).</param>
         /// <param name="availabilityCheck">The availability check to perform.</param>
         /// <param name="availabilityCheckEvents">The events that record the availability checks on this cell.</param>
         protected NullCellBase(
@@ -33,10 +33,10 @@ namespace OBeautifulCode.DataStructure
             string details,
             Validation validation,
             IReadOnlyList<CellValidationEventBase> validationEvents,
-            Availability initialAvailability,
+            Availability defaultAvailability,
             AvailabilityCheck availabilityCheck,
             IReadOnlyList<CellAvailabilityCheckEventBase> availabilityCheckEvents)
-            : base(id, columnsSpanned, details, validation, validationEvents, initialAvailability, availabilityCheck, availabilityCheckEvents)
+            : base(id, columnsSpanned, details, validation, validationEvents, defaultAvailability, availabilityCheck, availabilityCheckEvents)
         {
         }
     }
