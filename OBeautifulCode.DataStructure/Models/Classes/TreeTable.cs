@@ -32,6 +32,8 @@ namespace OBeautifulCode.DataStructure
 
         private readonly IReadOnlyCollection<INotSlottedCell> inputCells;
 
+        private readonly IReadOnlyCollection<ICell> allCells;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="TreeTable"/> class.
         /// </summary>
@@ -55,7 +57,7 @@ namespace OBeautifulCode.DataStructure
 
             ids.AddRange(tableColumns.Columns.Where(_ => !string.IsNullOrWhiteSpace(_.Id)).Select(_ => _.Id));
 
-            var allCells = new List<ICell>();
+            var localAllCells = new List<ICell>();
 
             var allCellsWithIds = new List<ICell>();
 
@@ -78,17 +80,17 @@ namespace OBeautifulCode.DataStructure
 
                 ids.AddRange(allRowsInOrder.Where(_ => !string.IsNullOrWhiteSpace(_.Id)).Select(_ => _.Id));
 
-                allCells = new List<ICell>(allRowsInOrder.SelectMany(_ => _.Cells).ToList());
+                localAllCells = new List<ICell>(allRowsInOrder.SelectMany(_ => _.Cells).ToList());
 
-                var slottedCells = allCells.OfType<ISlottedCell>().SelectMany(_ => _.SlotIdToCellMap.Values).ToList();
+                var slottedCells = localAllCells.OfType<ISlottedCell>().SelectMany(_ => _.SlotIdToCellMap.Values).ToList();
 
-                allCells.AddRange(slottedCells);
+                localAllCells.AddRange(slottedCells);
 
-                allCellsWithIds = allCells.Where(_ => !string.IsNullOrWhiteSpace(_.Id)).ToList();
+                allCellsWithIds = localAllCells.Where(_ => !string.IsNullOrWhiteSpace(_.Id)).ToList();
 
                 ids.AddRange(allCellsWithIds.Select(_ => _.Id));
 
-                var inputCellsWithoutId = allCells.Where(_ => _.IsInputCell()).Where(_ => string.IsNullOrWhiteSpace(_.Id)).ToList();
+                var inputCellsWithoutId = localAllCells.Where(_ => _.IsInputCell()).Where(_ => string.IsNullOrWhiteSpace(_.Id)).ToList();
 
                 if (inputCellsWithoutId.Any())
                 {
@@ -102,10 +104,11 @@ namespace OBeautifulCode.DataStructure
             }
 
             this.cellIdToCellMap = allCellsWithIds.ToDictionary(_ => _.Id, _ => _);
-            this.operationCells = allCells.Where(_ => _.IsOperationCell()).Cast<INotSlottedCell>().ToList();
-            this.inputCells = allCells.Where(_ => _.IsInputCell()).Cast<INotSlottedCell>().ToList();
-            this.validationCells = allCells.OfType<IValidationCell>().ToList();
-            this.availabilityCheckCells = allCells.OfType<IAvailabilityCheckCell>().ToList();
+            this.operationCells = localAllCells.Where(_ => _.IsOperationCell()).Cast<INotSlottedCell>().ToList();
+            this.inputCells = localAllCells.Where(_ => _.IsInputCell()).Cast<INotSlottedCell>().ToList();
+            this.validationCells = localAllCells.OfType<IValidationCell>().ToList();
+            this.availabilityCheckCells = localAllCells.OfType<IAvailabilityCheckCell>().ToList();
+            this.allCells = localAllCells;
 
             this.TableColumns = tableColumns;
             this.TableRows = tableRows;
@@ -134,6 +137,14 @@ namespace OBeautifulCode.DataStructure
         /// A map of cell id to the corresponding cell.
         /// </returns>
         public IReadOnlyDictionary<string, ICell> GetCellIdToCellMap() => this.cellIdToCellMap;
+
+        /// <summary>
+        /// Gets all <see cref="ICell"/>s.
+        /// </summary>
+        /// <returns>
+        /// All <see cref="ICell"/>s in the tree table.
+        /// </returns>
+        public IReadOnlyCollection<ICell> GetAllCells() => this.allCells;
 
         /// <summary>
         /// Gets all <see cref="IAvailabilityCheckCell"/>s.

@@ -23,15 +23,15 @@ namespace OBeautifulCode.DataStructure
     using static global::System.FormattableString;
 
     [Serializable]
-    public partial class CellLocator : IModel<CellLocator>
+    public partial class SectionCellLocator : IModel<SectionCellLocator>
     {
         /// <summary>
-        /// Determines whether two objects of type <see cref="CellLocator"/> are equal.
+        /// Determines whether two objects of type <see cref="SectionCellLocator"/> are equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are equal; otherwise false.</returns>
-        public static bool operator ==(CellLocator left, CellLocator right)
+        public static bool operator ==(SectionCellLocator left, SectionCellLocator right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -49,15 +49,15 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <summary>
-        /// Determines whether two objects of type <see cref="CellLocator"/> are not equal.
+        /// Determines whether two objects of type <see cref="SectionCellLocator"/> are not equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are not equal; otherwise false.</returns>
-        public static bool operator !=(CellLocator left, CellLocator right) => !(left == right);
+        public static bool operator !=(SectionCellLocator left, SectionCellLocator right) => !(left == right);
 
         /// <inheritdoc />
-        public bool Equals(CellLocator other)
+        public bool Equals(SectionCellLocator other)
         {
             if (ReferenceEquals(this, other))
             {
@@ -69,8 +69,7 @@ namespace OBeautifulCode.DataStructure
                 return false;
             }
 
-            var result = this.SectionId.IsEqualTo(other.SectionId, StringComparer.Ordinal)
-                      && this.CellId.IsEqualTo(other.CellId, StringComparer.Ordinal)
+            var result = this.CellId.IsEqualTo(other.CellId, StringComparer.Ordinal)
                       && this.SlotId.IsEqualTo(other.SlotId, StringComparer.Ordinal)
                       && this.SlotSelectionStrategy.IsEqualTo(other.SlotSelectionStrategy);
 
@@ -78,69 +77,23 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => this == (obj as CellLocator);
+        public override bool Equals(object obj) => this == (obj as SectionCellLocator);
 
         /// <inheritdoc />
         public override int GetHashCode() => HashCodeHelper.Initialize()
-            .Hash(this.SectionId)
             .Hash(this.CellId)
             .Hash(this.SlotId)
             .Hash(this.SlotSelectionStrategy)
             .Value;
 
         /// <inheritdoc />
-        public object Clone() => this.DeepClone();
-
-        /// <inheritdoc />
-        public CellLocator DeepClone()
-        {
-            var result = new CellLocator(
-                                 this.SectionId?.DeepClone(),
-                                 this.CellId?.DeepClone(),
-                                 this.SlotId?.DeepClone(),
-                                 this.SlotSelectionStrategy.DeepClone());
-
-            return result;
-        }
-
-        /// <summary>
-        /// Deep clones this object with a new <see cref="SectionId" />.
-        /// </summary>
-        /// <param name="sectionId">The new <see cref="SectionId" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="CellLocator" /> using the specified <paramref name="sectionId" /> for <see cref="SectionId" /> and a deep clone of every other property.</returns>
-        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
-        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
-        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
-        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public CellLocator DeepCloneWithSectionId(string sectionId)
-        {
-            var result = new CellLocator(
-                                 sectionId,
-                                 this.CellId?.DeepClone(),
-                                 this.SlotId?.DeepClone(),
-                                 this.SlotSelectionStrategy.DeepClone());
-
-            return result;
-        }
+        public new SectionCellLocator DeepClone() => (SectionCellLocator)this.DeepCloneInternal();
 
         /// <summary>
         /// Deep clones this object with a new <see cref="CellId" />.
         /// </summary>
         /// <param name="cellId">The new <see cref="CellId" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="CellLocator" /> using the specified <paramref name="cellId" /> for <see cref="CellId" /> and a deep clone of every other property.</returns>
+        /// <returns>New <see cref="SectionCellLocator" /> using the specified <paramref name="cellId" /> for <see cref="CellId" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -158,10 +111,9 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public CellLocator DeepCloneWithCellId(string cellId)
+        public SectionCellLocator DeepCloneWithCellId(string cellId)
         {
-            var result = new CellLocator(
-                                 this.SectionId?.DeepClone(),
+            var result = new SectionCellLocator(
                                  cellId,
                                  this.SlotId?.DeepClone(),
                                  this.SlotSelectionStrategy.DeepClone());
@@ -173,7 +125,7 @@ namespace OBeautifulCode.DataStructure
         /// Deep clones this object with a new <see cref="SlotId" />.
         /// </summary>
         /// <param name="slotId">The new <see cref="SlotId" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="CellLocator" /> using the specified <paramref name="slotId" /> for <see cref="SlotId" /> and a deep clone of every other property.</returns>
+        /// <returns>New <see cref="SectionCellLocator" /> using the specified <paramref name="slotId" /> for <see cref="SlotId" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -191,10 +143,9 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public CellLocator DeepCloneWithSlotId(string slotId)
+        public SectionCellLocator DeepCloneWithSlotId(string slotId)
         {
-            var result = new CellLocator(
-                                 this.SectionId?.DeepClone(),
+            var result = new SectionCellLocator(
                                  this.CellId?.DeepClone(),
                                  slotId,
                                  this.SlotSelectionStrategy.DeepClone());
@@ -206,7 +157,7 @@ namespace OBeautifulCode.DataStructure
         /// Deep clones this object with a new <see cref="SlotSelectionStrategy" />.
         /// </summary>
         /// <param name="slotSelectionStrategy">The new <see cref="SlotSelectionStrategy" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="CellLocator" /> using the specified <paramref name="slotSelectionStrategy" /> for <see cref="SlotSelectionStrategy" /> and a deep clone of every other property.</returns>
+        /// <returns>New <see cref="SectionCellLocator" /> using the specified <paramref name="slotSelectionStrategy" /> for <see cref="SlotSelectionStrategy" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -224,10 +175,9 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public CellLocator DeepCloneWithSlotSelectionStrategy(SlotSelectionStrategy slotSelectionStrategy)
+        public SectionCellLocator DeepCloneWithSlotSelectionStrategy(SlotSelectionStrategy slotSelectionStrategy)
         {
-            var result = new CellLocator(
-                                 this.SectionId?.DeepClone(),
+            var result = new SectionCellLocator(
                                  this.CellId?.DeepClone(),
                                  this.SlotId?.DeepClone(),
                                  slotSelectionStrategy);
@@ -237,9 +187,21 @@ namespace OBeautifulCode.DataStructure
 
         /// <inheritdoc />
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
+        protected override CellLocatorBase DeepCloneInternal()
+        {
+            var result = new SectionCellLocator(
+                                 this.CellId?.DeepClone(),
+                                 this.SlotId?.DeepClone(),
+                                 this.SlotSelectionStrategy.DeepClone());
+
+            return result;
+        }
+
+        /// <inheritdoc />
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"OBeautifulCode.DataStructure.CellLocator: SectionId = {this.SectionId?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, CellId = {this.CellId?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, SlotId = {this.SlotId?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, SlotSelectionStrategy = {this.SlotSelectionStrategy.ToString() ?? "<null>"}.");
+            var result = Invariant($"OBeautifulCode.DataStructure.SectionCellLocator: CellId = {this.CellId?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, SlotId = {this.SlotId?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, SlotSelectionStrategy = {this.SlotSelectionStrategy.ToString() ?? "<null>"}.");
 
             return result;
         }

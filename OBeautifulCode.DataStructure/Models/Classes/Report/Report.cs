@@ -10,6 +10,7 @@ namespace OBeautifulCode.DataStructure
     using System.Collections.Generic;
     using System.Linq;
 
+    using OBeautifulCode.Equality.Recipes;
     using OBeautifulCode.Type;
 
     using static System.FormattableString;
@@ -19,7 +20,9 @@ namespace OBeautifulCode.DataStructure
     /// </summary>
     public partial class Report : IModelViaCodeGen
     {
-        private IReadOnlyDictionary<string, Section> sectionIdToSectionMap;
+        private readonly IReadOnlyDictionary<string, Section> sectionIdToSectionMap;
+
+        private readonly IReadOnlyDictionary<ICell, Section> cellToSectionMap;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Report"/> class.
@@ -65,6 +68,11 @@ namespace OBeautifulCode.DataStructure
             }
 
             this.sectionIdToSectionMap = sections.ToDictionary(_ => _.Id, _ => _);
+            this.cellToSectionMap = sections
+                .SelectMany(_ => _.TreeTable
+                    .GetAllCells()
+                    .Select(cell => new { Section = _, Cell = cell }))
+                .ToDictionary(_ => _.Cell, _ => _.Section, new ReferenceEqualityComparer<ICell>());
 
             this.Id = id;
             this.Sections = sections;
@@ -99,5 +107,13 @@ namespace OBeautifulCode.DataStructure
         /// A map of section id to the corresponding section.
         /// </returns>
         public IReadOnlyDictionary<string, Section> GetSectionIdToSectionMap() => this.sectionIdToSectionMap;
+
+        /// <summary>
+        /// Gets a map of cell to the corresponding section.
+        /// </summary>
+        /// <returns>
+        /// A map of cell to the corresponding section.
+        /// </returns>
+        public IReadOnlyDictionary<ICell, Section> GetCellToSectionMap() => this.cellToSectionMap;
     }
 }

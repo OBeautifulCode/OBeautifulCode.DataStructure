@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="CellLocator.cs" company="OBeautifulCode">
+// <copyright file="ReportCellLocator.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -13,18 +13,19 @@ namespace OBeautifulCode.DataStructure
     using static System.FormattableString;
 
     /// <summary>
-    /// Locates an <see cref="ICell"/> in a report.
+    /// Locates an <see cref="ICell"/> within the report in-context.
     /// </summary>
-    public partial class CellLocator : IModelViaCodeGen
+    // ReSharper disable once RedundantExtendsListEntry
+    public partial class ReportCellLocator : CellLocatorBase, IModelViaCodeGen
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="CellLocator"/> class.
+        /// Initializes a new instance of the <see cref="ReportCellLocator"/> class.
         /// </summary>
         /// <param name="sectionId">The id of the section that contains the cell.</param>
         /// <param name="cellId">The id of the cell.</param>
         /// <param name="slotId">OPTIONAL id of the slot to use -OR- null if not addressing an <see cref="ISlottedCell"/>.  DEFAULT is to address an <see cref="INotSlottedCell"/>.</param>
         /// <param name="slotSelectionStrategy">OPTIONAL strategy to use to select a slot if addressing an <see cref="ISlottedCell"/>.  DEFAULT is to throw if addressing an <see cref="ISlottedCell"/> -AND- <paramref name="slotId"/> is not specified.</param>
-        public CellLocator(
+        public ReportCellLocator(
             string sectionId,
             string cellId,
             string slotId = null,
@@ -55,9 +56,9 @@ namespace OBeautifulCode.DataStructure
                 throw new ArgumentOutOfRangeException();
             }
 
+            this.SectionId = sectionId;
             this.CellId = cellId;
             this.SlotId = slotId;
-            this.SectionId = sectionId;
             this.SlotSelectionStrategy = slotSelectionStrategy;
         }
 

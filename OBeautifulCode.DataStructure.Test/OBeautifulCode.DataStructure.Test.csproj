@@ -197,6 +197,10 @@
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringReadableOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringXmlDocOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
+    <Compile Include="Models\Classes\CellLocator\CellLocatorBaseTest.cs" />
+    <Compile Include="Models\Classes\CellLocator\CellLocatorBaseTest.designer.cs">
+      <DependentUpon>CellLocatorBaseTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Events\CellAvailability\CellAvailabilityCheckClearedEventTest.cs" />
     <Compile Include="Events\CellAvailability\CellAvailabilityCheckClearedEventTest.designer.cs">
       <DependentUpon>CellAvailabilityCheckClearedEventTest.cs</DependentUpon>
@@ -440,9 +444,6 @@
     <Compile Include="Models\Classes\Link\SimpleLinkTest.designer.cs">
       <DependentUpon>SimpleLinkTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Classes\Report\CellLocatorTest.designer.cs">
-      <DependentUpon>CellLocatorTest.cs</DependentUpon>
-    </Compile>
     <Compile Include="Models\Classes\Report\ReportTest.designer.cs">
       <DependentUpon>ReportTest.cs</DependentUpon>
     </Compile>
@@ -484,7 +485,6 @@
     <Compile Include="Operations\Bool\CompareOpTest.cs" />
     <Compile Include="Events\CellValidationEventBaseTest.cs" />
     <Compile Include="Operations\Bool\AndAlsoOpTest.cs" />
-    <Compile Include="Models\Classes\Report\CellLocatorTest.cs" />
     <Compile Include="Events\CellOpExecution\CellOpExecutionAbortedEventTest.cs" />
     <Compile Include="Events\CellOpExecution\CellOpExecutionCompletedEvent{TResult}Test.cs" />
     <Compile Include="Events\CellOpExecutionEventBaseTest.cs" />
@@ -546,6 +546,10 @@
     <Compile Include="Models\Classes\Validation\ValidationConditionTest.cs" />
     <Compile Include="Models\Classes\Validation\ValidationConditionTest.designer.cs">
       <DependentUpon>ValidationConditionTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\CellLocator\ThisCellLocatorTest.cs" />
+    <Compile Include="Models\Classes\CellLocator\ThisCellLocatorTest.designer.cs">
+      <DependentUpon>ThisCellLocatorTest.cs</DependentUpon>
     </Compile>
     <None Include="Logic\Extensions\RowExtensionsTest.cs" />
     <Compile Include="Logic\Extensions\TreeTableExtensionsTest.cs" />
@@ -618,6 +622,14 @@
     <None Include=".analyzers\test.ruleset" />
     <None Include="DummyFactory.recipe-nuspec" />
     <Compile Include="Properties\ProjectInfo.cs" />
+    <Compile Include="Models\Classes\CellLocator\ReportCellLocatorTest.cs" />
+    <Compile Include="Models\Classes\CellLocator\ReportCellLocatorTest.designer.cs">
+      <DependentUpon>ReportCellLocatorTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\CellLocator\SectionCellLocatorTest.cs" />
+    <Compile Include="Models\Classes\CellLocator\SectionCellLocatorTest.designer.cs">
+      <DependentUpon>SectionCellLocatorTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="SerializationConfigurationTypes.cs" />
     <None Include="packages.config" />
   </ItemGroup>

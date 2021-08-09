@@ -14,24 +14,69 @@ namespace OBeautifulCode.DataStructure
     public static class Cell
     {
         /// <summary>
-        /// Builds an operation that determines whether a cell has a value.
+        /// Builds a <see cref="ThisCellLocator"/>.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="ThisCellLocator"/>.
+        /// </returns>
+        public static ThisCellLocator This()
+        {
+            var result = new ThisCellLocator();
+
+            return result;
+        }
+
+        /// <summary>
+        /// Builds a <see cref="SectionCellLocator"/>.
+        /// </summary>
+        /// <param name="cellId">The id of the cell.</param>
+        /// <param name="slotId">OPTIONAL id of the slot to use -OR- null if not addressing an <see cref="ISlottedCell"/>.  DEFAULT is to address an <see cref="INotSlottedCell"/>.</param>
+        /// <param name="slotSelectionStrategy">OPTIONAL strategy to use to select a slot if addressing an <see cref="ISlottedCell"/>.  DEFAULT is to throw if addressing an <see cref="ISlottedCell"/> -AND- <paramref name="slotId"/> is not specified.</param>
+        /// <returns>
+        /// A <see cref="SectionCellLocator"/>.
+        /// </returns>
+        public static SectionCellLocator InThisSection(
+            string cellId,
+            string slotId = null,
+            SlotSelectionStrategy slotSelectionStrategy = SlotSelectionStrategy.ThrowIfSlotIdNotSpecified)
+        {
+            var result = new SectionCellLocator(cellId, slotId, slotSelectionStrategy);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Builds a <see cref="ReportCellLocator"/>.
         /// </summary>
         /// <param name="sectionId">The id of the section that contains the cell.</param>
         /// <param name="cellId">The id of the cell.</param>
         /// <param name="slotId">OPTIONAL id of the slot to use -OR- null if not addressing an <see cref="ISlottedCell"/>.  DEFAULT is to address an <see cref="INotSlottedCell"/>.</param>
         /// <param name="slotSelectionStrategy">OPTIONAL strategy to use to select a slot if addressing an <see cref="ISlottedCell"/>.  DEFAULT is to throw if addressing an <see cref="ISlottedCell"/> -AND- <paramref name="slotId"/> is not specified.</param>
         /// <returns>
-        /// The operation.
+        /// A <see cref="ReportCellLocator"/>.
         /// </returns>
-        public static HasCellValueOp HasValue(
+        public static ReportCellLocator InThisReport(
             string sectionId,
             string cellId,
             string slotId = null,
             SlotSelectionStrategy slotSelectionStrategy = SlotSelectionStrategy.ThrowIfSlotIdNotSpecified)
         {
-            var cellLocator = new CellLocator(sectionId, cellId, slotId, slotSelectionStrategy);
+            var result = new ReportCellLocator(sectionId, cellId, slotId, slotSelectionStrategy);
 
-            var result = new HasCellValueOp(cellLocator);
+            return result;
+        }
+
+        /// <summary>
+        /// Builds an operation that determines whether a cell has a value.
+        /// </summary>
+        /// <param name="cellLocator">The cell locator.</param>
+        /// <returns>
+        /// The operation.
+        /// </returns>
+        public static HasCellValueOp HasValue(
+            CellLocatorBase cellLocator)
+        {
+            var result = new HasCellValueOp(Op.Const(cellLocator));
 
             return result;
         }
@@ -40,22 +85,14 @@ namespace OBeautifulCode.DataStructure
         /// Builds an operation that gets the value of a cell.
         /// </summary>
         /// <typeparam name="TValue">The type of value.</typeparam>
-        /// <param name="sectionId">The id of the section that contains the cell.</param>
-        /// <param name="cellId">The id of the cell.</param>
-        /// <param name="slotId">OPTIONAL id of the slot to use -OR- null if not addressing an <see cref="ISlottedCell"/>.  DEFAULT is to address an <see cref="INotSlottedCell"/>.</param>
-        /// <param name="slotSelectionStrategy">OPTIONAL strategy to use to select a slot if addressing an <see cref="ISlottedCell"/>.  DEFAULT is to throw if addressing an <see cref="ISlottedCell"/> -AND- <paramref name="slotId"/> is not specified.</param>
+        /// <param name="cellLocator">The cell locator.</param>
         /// <returns>
         /// The operation.
         /// </returns>
         public static GetCellValueOp<TValue> GetValue<TValue>(
-            string sectionId,
-            string cellId,
-            string slotId = null,
-            SlotSelectionStrategy slotSelectionStrategy = SlotSelectionStrategy.ThrowIfSlotIdNotSpecified)
+            CellLocatorBase cellLocator)
         {
-            var cellLocator = new CellLocator(sectionId, cellId, slotId, slotSelectionStrategy);
-
-            var result = new GetCellValueOp<TValue>(cellLocator);
+            var result = new GetCellValueOp<TValue>(Op.Const(cellLocator));
 
             return result;
         }

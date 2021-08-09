@@ -60,6 +60,7 @@
     <Compile Include=".recipes\OBeautifulCode.Equality\NullableDateTimeEqualityComparer.cs" />
     <Compile Include=".recipes\OBeautifulCode.Equality\ObjectEqualityComparer.cs" />
     <Compile Include=".recipes\OBeautifulCode.Equality\ReadOnlyDictionaryEqualityComparer.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Equality\ReferenceEqualityComparer{T}.cs" />
     <Compile Include=".recipes\OBeautifulCode.Execution\Synchronizer.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\ArrayKind.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringReadableOptions.cs" />
@@ -185,6 +186,21 @@
     <Compile Include="Models\Classes\AvailabilityCheck\AvailabilityCheckResult.cs" />
     <Compile Include="Models\Classes\AvailabilityCheck\AvailabilityCheckResult.designer.cs">
       <DependentUpon>AvailabilityCheckResult.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\CellLocator\CellLocatorBase.cs" />
+    <Compile Include="Models\Classes\CellLocator\CellLocatorBase.designer.cs">
+      <DependentUpon>CellLocatorBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\CellLocator\ReportCellLocator.designer.cs">
+      <DependentUpon>ReportCellLocator.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\CellLocator\SectionCellLocator.designer.cs">
+      <DependentUpon>SectionCellLocator.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\CellLocator\ThisCellLocator.cs" />
+    <Compile Include="Models\Classes\CellLocator\SectionCellLocator.cs" />
+    <Compile Include="Models\Classes\CellLocator\ThisCellLocator.designer.cs">
+      <DependentUpon>ThisCellLocator.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Classes\CellValue\MediaReference.cs" />
     <Compile Include="Models\Classes\CellValue\MediaReference.designer.cs">
@@ -375,10 +391,7 @@
     <Compile Include="Models\Classes\Link\SimpleLink.designer.cs">
       <DependentUpon>SimpleLink.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Classes\Report\CellLocator.cs" />
-    <Compile Include="Models\Classes\Report\CellLocator.designer.cs">
-      <DependentUpon>CellLocator.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Models\Classes\CellLocator\ReportCellLocator.cs" />
     <Compile Include="Models\Classes\Report\Report.designer.cs">
       <DependentUpon>Report.cs</DependentUpon>
     </Compile>
@@ -451,17 +464,17 @@
     <Compile Include="Operations\Classes\Branch\IfThenElseOp{TResult}.designer.cs">
       <DependentUpon>IfThenElseOp{TResult}.cs</DependentUpon>
     </Compile>
-    <Compile Include="Operations\Classes\Cell\Referenced\CheckAvailabilityOfCellOp.designer.cs">
-      <DependentUpon>CheckAvailabilityOfCellOp.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Operations\Classes\Cell\Referenced\ExecuteOperationCellIfNecessaryOp{TValue}.designer.cs">
-      <DependentUpon>ExecuteOperationCellIfNecessaryOp{TValue}.cs</DependentUpon>
-    </Compile>
     <Compile Include="Operations\Classes\Cell\Located\GetCellValueOp{TValue}.designer.cs">
       <DependentUpon>GetCellValueOp{TValue}.cs</DependentUpon>
     </Compile>
     <Compile Include="Operations\Classes\Cell\Located\HasCellValueOp.designer.cs">
       <DependentUpon>HasCellValueOp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Operations\Classes\Cell\Referenced\CheckAvailabilityOfCellOp.designer.cs">
+      <DependentUpon>CheckAvailabilityOfCellOp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Operations\Classes\Cell\Referenced\ExecuteOperationCellIfNecessaryOp{TValue}.designer.cs">
+      <DependentUpon>ExecuteOperationCellIfNecessaryOp{TValue}.cs</DependentUpon>
     </Compile>
     <Compile Include="Operations\Classes\Cell\Referenced\CheckAvailabilityOfCellOp.cs" />
     <Compile Include="Operations\Classes\Cell\Referenced\ValidateCellOp.designer.cs">

@@ -188,11 +188,23 @@ namespace OBeautifulCode.DataStructure.Test
                 });
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new CellLocator(
-                                 A.Dummy<string>(),
-                                 A.Dummy<string>(),
-                                 A.Dummy<string>(),
-                                 A.Dummy<SlotSelectionStrategy>()));
+                () =>
+                {
+                    var availableTypes = new[]
+                    {
+                        typeof(ReportCellLocator),
+                        typeof(SectionCellLocator),
+                        typeof(ThisCellLocator)
+                    };
+
+                    var randomIndex = ThreadSafeRandom.Next(0, availableTypes.Length);
+
+                    var randomType = availableTypes[randomIndex];
+
+                    var result = (CellLocatorBase)AD.ummy(randomType);
+
+                    return result;
+                });
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new CellOpExecutionAbortedEvent(
@@ -428,7 +440,7 @@ namespace OBeautifulCode.DataStructure.Test
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new GetCellValueOp<Version>(
-                                 A.Dummy<CellLocator>(),
+                                 A.Dummy<IReturningOperation<CellLocatorBase>>(),
                                  A.Dummy<IReturningOperation<Version>>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
@@ -441,7 +453,7 @@ namespace OBeautifulCode.DataStructure.Test
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new HasCellValueOp(
-                                 A.Dummy<CellLocator>()));
+                                 A.Dummy<IReturningOperation<CellLocatorBase>>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new HeaderRows(
@@ -750,6 +762,13 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<ReportFormat>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new ReportCellLocator(
+                                 A.Dummy<string>(),
+                                 A.Dummy<string>(),
+                                 A.Dummy<string>(),
+                                 A.Dummy<SlotSelectionStrategy>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new ReportFormat());
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
@@ -793,6 +812,12 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<TreeTable>(),
                                  A.Dummy<string>(),
                                  A.Dummy<SectionFormat>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new SectionCellLocator(
+                                 A.Dummy<string>(),
+                                 A.Dummy<string>(),
+                                 A.Dummy<SlotSelectionStrategy>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new SectionFormat());
@@ -858,6 +883,9 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<DataRows>(),
                                  A.Dummy<FooterRows>(),
                                  A.Dummy<RowFormat>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new ThisCellLocator());
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new TreeTable(

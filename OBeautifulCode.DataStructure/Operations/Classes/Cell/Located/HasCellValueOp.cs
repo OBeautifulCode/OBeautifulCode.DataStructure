@@ -20,7 +20,7 @@ namespace OBeautifulCode.DataStructure
         /// </summary>
         /// <param name="cellLocator">The cell locator.</param>
         public HasCellValueOp(
-            CellLocator cellLocator)
+            IReturningOperation<CellLocatorBase> cellLocator)
         {
             if (cellLocator == null)
             {
@@ -33,6 +33,6 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Gets the cell locator.
         /// </summary>
-        public CellLocator CellLocator { get; private set; }
+        public IReturningOperation<CellLocatorBase> CellLocator { get; private set; }
     }
 }

@@ -107,7 +107,7 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public HasCellValueOp DeepCloneWithCellLocator(CellLocator cellLocator)
+        public HasCellValueOp DeepCloneWithCellLocator(IReturningOperation<CellLocatorBase> cellLocator)
         {
             var result = new HasCellValueOp(
                                  cellLocator);

@@ -89,6 +89,7 @@ namespace OBeautifulCode.DataStructure
             typeof(IReadOnlyList<NamedValue<bool?>>),
             typeof(IReadOnlyList<NamedValue<DateTime?>>),
             typeof(IReadOnlyList<NamedValue<Guid?>>),
+            typeof(CellLocatorBase),
             typeof(AvailabilityCheckResult),
             typeof(ValidationResult),
         };

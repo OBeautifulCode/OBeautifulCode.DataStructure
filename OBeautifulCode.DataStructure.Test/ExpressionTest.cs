@@ -23,8 +23,6 @@ namespace OBeautifulCode.DataStructure.Test
         [Fact]
         public static void Test()
         {
-            const string sectionId = "section-id";
-
             /*
              * Op.IfThenElse(
              *     Op.Not(Cell.HasValue(sectionId, "sales-fte")),
@@ -42,8 +40,8 @@ namespace OBeautifulCode.DataStructure.Test
                 availabilityCheck: Cell.CreateAvailabilityCheck(
                     Op.IfThenElse(
                         Op.AndAlso(
-                            Cell.HasValue(sectionId, isForProfitCell.Id),
-                            Op.Not(Cell.GetValue<bool>(sectionId, isForProfitCell.Id))),
+                            Cell.HasValue(Cell.InThisSection(isForProfitCell.Id)),
+                            Op.Not(Cell.GetValue<bool>(Cell.InThisSection(isForProfitCell.Id)))),
                         Op.Const(new AvailabilityCheckResult(Availability.Enabled)),
                         Op.Const(new AvailabilityCheckResult(Availability.Disabled)))));
 
@@ -52,10 +50,10 @@ namespace OBeautifulCode.DataStructure.Test
                 validation: Cell.CreateValidation(Op.ValidateUsingConditions(
                     new[]
                     {
-                        new ValidationCondition(Cell.HasValue(sectionId, "sales-fte"), Op.Const("input required")),
+                        new ValidationCondition(Cell.HasValue(Cell.This()), Op.Const("input required")),
                         new ValidationCondition(
                             Op.IsGreaterThanOrEqualTo(
-                                Cell.GetValue<decimal>(sectionId, "sales-fte"),
+                                Cell.GetValue<decimal>(Cell.This()),
                                 Op.Const(0m)),
                             Op.Const("must be >= 0")),
                     })));
@@ -65,10 +63,10 @@ namespace OBeautifulCode.DataStructure.Test
                 validation: Cell.CreateValidation(Op.ValidateUsingConditions(
                     new[]
                     {
-                        new ValidationCondition(Cell.HasValue(sectionId, "warehouse-fte"), Op.Const("input required")),
+                        new ValidationCondition(Cell.HasValue(Cell.This()), Op.Const("input required")),
                         new ValidationCondition(
                             Op.IsGreaterThanOrEqualTo(
-                                Cell.GetValue<decimal>(sectionId, "warehouse-fte"),
+                                Cell.GetValue<decimal>(Cell.This()),
                                 Op.Const(0m)),
                             Op.Const("must be >= 0")),
                     })));
@@ -78,11 +76,11 @@ namespace OBeautifulCode.DataStructure.Test
                     operation:
                         Op.IfThenElse(
                             Op.AndAlso(
-                                Cell.HasValue(sectionId, numberOfSalesFteCell.Id),
-                                Cell.HasValue(sectionId, numberOfWarehouseFteCell.Id)),
+                                Cell.HasValue(Cell.InThisSection(numberOfSalesFteCell.Id)),
+                                Cell.HasValue(Cell.InThisSection(numberOfWarehouseFteCell.Id))),
                             Op.Sum(
-                                Cell.GetValue<decimal>(sectionId, numberOfSalesFteCell.Id),
-                                Cell.GetValue<decimal>(sectionId, numberOfWarehouseFteCell.Id)),
+                                Cell.GetValue<decimal>(Cell.InThisSection(numberOfSalesFteCell.Id)),
+                                Cell.GetValue<decimal>(Cell.InThisSection(numberOfWarehouseFteCell.Id))),
                             Op.Abort<decimal>("cannot perform sum")),
                     validation: Cell.CreateValidation(Op.ValidateUsingConditions(
                         new[]
@@ -90,14 +88,14 @@ namespace OBeautifulCode.DataStructure.Test
                             new ValidationCondition(
                                 Op.IfThenElse(
                                     Op.AndAlso(
-                                        Cell.HasValue(sectionId, numberOfSalesFteCell.Id),
-                                        Cell.HasValue(sectionId, numberOfWarehouseFteCell.Id)),
+                                        Cell.HasValue(Cell.InThisSection(numberOfSalesFteCell.Id)),
+                                        Cell.HasValue(Cell.InThisSection(numberOfWarehouseFteCell.Id))),
                                     Op.Const(true),
                                     Op.Abort<bool>()),
                                 Op.Const("never-hit")),
                             new ValidationCondition(
                                 Op.IsGreaterThan(
-                                    Cell.GetValue<decimal>(sectionId, "total-fte"),
+                                    Cell.GetValue<decimal>(Cell.This()),
                                     Op.Const(0m)),
                                 Op.Const("must be >= 0")),
                         })));
@@ -121,15 +119,15 @@ namespace OBeautifulCode.DataStructure.Test
                 id: "coscores");
 
             var coscoreCellsCopy = Cell.CreateOp(
-                Cell.GetValue<NamedDecimalSet>(sectionId, "coscores"),
+                Cell.GetValue<NamedDecimalSet>(Cell.InThisSection("coscores")),
                 id: "coscores-copy");
 
             var intConstCell = new ConstCell<int>(4, id: "int-const");
 
             var quartileCell = Cell.CreateOp(
                 new TileOp(
-                    Cell.GetValue<NamedDecimalSet>(sectionId, "coscores-copy"),
-                    Cell.GetValue<int>(sectionId, "int-const")),
+                    Cell.GetValue<NamedDecimalSet>(Cell.InThisSection(coscoreCellsCopy.Id)),
+                    Cell.GetValue<int>(Cell.InThisSection(intConstCell.Id))),
                 id: "quartiles");
 
             var rows = new[]
@@ -157,6 +155,8 @@ namespace OBeautifulCode.DataStructure.Test
             var tableColumns = new TableColumns(columns);
 
             var treeTable = new TreeTable(tableColumns, tableRows);
+
+            var sectionId = "section-id";
 
             var section = new Section(sectionId, treeTable);
 
