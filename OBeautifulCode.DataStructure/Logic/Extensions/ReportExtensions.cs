@@ -92,6 +92,8 @@ namespace OBeautifulCode.DataStructure
             typeof(CellLocatorBase),
             typeof(AvailabilityCheckResult),
             typeof(ValidationResult),
+            typeof(CellOpExecutionOutcome),
+            typeof(Validity),
         };
 
         private static readonly ConcurrentDictionary<Type, ConstructorInfo> CachedTypeToExecuteOperationCellIfNecessaryOpConstructorInfoMap =

@@ -152,6 +152,7 @@
     </Compile>
     <Compile Include="Exception\CellValueMissingException.cs" />
     <Compile Include="Exception\CellNotFoundException.cs" />
+    <Compile Include="Interfaces\Behavior\IRecordCellOpExecutionEvents.cs" />
     <Compile Include="Interfaces\Behavior\IClearCellValue.cs" />
     <Compile Include="Interfaces\Behavior\IGetCellValue.cs" />
     <Compile Include="Interfaces\Behavior\IGetCellValue{TValue}.cs" />
@@ -439,6 +440,7 @@
       <DependentUpon>ValidationResult.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Enums\CellValue\MediaReferenceKind.cs" />
+    <Compile Include="Models\Enums\OperationCell\CellOpExecutionOutcome.cs" />
     <Compile Include="Models\Enums\OperationCell\CellOpExecutionStatus.cs" />
     <Compile Include="Models\Enums\Formatting\NumberFormat\NumberFormatPercentDisplayKind.cs" />
     <Compile Include="Models\Enums\Formatting\NumberFormat\NumberFormatNegativeDisplayKind.cs" />
@@ -455,6 +457,7 @@
     <Compile Include="Operations\Classes\Bool\CompareOp.designer.cs">
       <DependentUpon>CompareOp.cs</DependentUpon>
     </Compile>
+    <Compile Include="Operations\Classes\Bool\IsEqualToOp{TStatement}.cs" />
     <Compile Include="Operations\Classes\Bool\NotOp.designer.cs">
       <DependentUpon>NotOp.cs</DependentUpon>
     </Compile>
@@ -464,6 +467,7 @@
     <Compile Include="Operations\Classes\Branch\IfThenElseOp{TResult}.designer.cs">
       <DependentUpon>IfThenElseOp{TResult}.cs</DependentUpon>
     </Compile>
+    <Compile Include="Operations\Classes\Cell\Located\GetCellOpExecutionOutcomeOp.cs" />
     <Compile Include="Operations\Classes\Cell\Located\GetCellValueOp{TValue}.designer.cs">
       <DependentUpon>GetCellValueOp{TValue}.cs</DependentUpon>
     </Compile>
@@ -493,6 +497,7 @@
     <Compile Include="Operations\Classes\MultiStatementOpBase{TStatement,TResult}.designer.cs">
       <DependentUpon>MultiStatementOpBase{TStatement,TResult}.cs</DependentUpon>
     </Compile>
+    <Compile Include="Operations\Classes\TwoStatementOpBase{TStatement,TResult}.cs" />
     <Compile Include="Operations\Classes\SingleStatementOpBase{TStatement,TResult}.designer.cs">
       <DependentUpon>SingleStatementOpBase{TStatement,TResult}.cs</DependentUpon>
     </Compile>

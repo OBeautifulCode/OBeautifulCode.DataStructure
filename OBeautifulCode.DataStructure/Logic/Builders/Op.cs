@@ -66,19 +66,19 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Builds an operation that throws a <see cref="OpExecutionAbortedException"/>.
         /// </summary>
-        /// <typeparam name="TValue">The type of value.</typeparam>
+        /// <typeparam name="TResult">The type of result.</typeparam>
         /// <param name="condition">The condition.</param>
         /// <param name="statement">The statement to execute if the condition is true.</param>
         /// <param name="elseStatement">The statement to execute if the condition is false.</param>
         /// <returns>
         /// The operation.
         /// </returns>
-        public static IfThenElseOp<TValue> IfThenElse<TValue>(
+        public static IfThenElseOp<TResult> IfThenElse<TResult>(
             IReturningOperation<bool> condition,
-            IReturningOperation<TValue> statement,
-            IReturningOperation<TValue> elseStatement)
+            IReturningOperation<TResult> statement,
+            IReturningOperation<TResult> elseStatement)
         {
-            var result = new IfThenElseOp<TValue>(condition, statement, elseStatement);
+            var result = new IfThenElseOp<TResult>(condition, statement, elseStatement);
 
             return result;
         }
@@ -109,6 +109,24 @@ namespace OBeautifulCode.DataStructure
             params IReturningOperation<bool>[] statements)
         {
             var result = new OrElseOp(statements);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Builds an <see cref="IsEqualToOp{TResult}"/>.
+        /// </summary>
+        /// <typeparam name="TStatement">The type of the statements to compare.</typeparam>
+        /// <param name="statement1">The first statement.</param>
+        /// <param name="statement2">The second statement.</param>
+        /// <returns>
+        /// The operation.
+        /// </returns>
+        public static IsEqualToOp<TStatement> IsEqualTo<TStatement>(
+            IReturningOperation<TStatement> statement1,
+            IReturningOperation<TStatement> statement2)
+        {
+            var result = new IsEqualToOp<TStatement>(statement1, statement2);
 
             return result;
         }
@@ -222,6 +240,21 @@ namespace OBeautifulCode.DataStructure
             IReadOnlyList<ValidationCondition> conditions)
         {
             var result = new ValidateUsingConditionsOp(conditions);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Builds an <see cref="GetCellOpExecutionOutcomeOp"/>.
+        /// </summary>
+        /// <param name="cellLocator">The cell locator.</param>
+        /// <returns>
+        /// The operation.
+        /// </returns>
+        public static GetCellOpExecutionOutcomeOp GetCellOpExecutionOutcome(
+            CellLocatorBase cellLocator)
+        {
+            var result = new GetCellOpExecutionOutcomeOp(Op.Const(cellLocator));
 
             return result;
         }

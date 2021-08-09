@@ -9,6 +9,8 @@ namespace OBeautifulCode.DataStructure
     using System;
     using System.Linq;
 
+    using OBeautifulCode.Type.Recipes;
+
     using static System.FormattableString;
 
     /// <summary>
@@ -19,13 +21,12 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Gets the status of the execution of an <see cref="IOperationOutputCell{TValue}"/>'s <see cref="IOperationOutputCell{TValue}.Operation"/>.
         /// </summary>
-        /// <typeparam name="TValue">The type of value.</typeparam>
         /// <param name="cell">The cell.</param>
         /// <returns>
         /// The status of the execution of an <see cref="IOperationOutputCell{TValue}"/>'s <see cref="IOperationOutputCell{TValue}.Operation"/>.
         /// </returns>
-        public static CellOpExecutionStatus GetExecutionStatus<TValue>(
-            this IOperationOutputCell<TValue> cell)
+        public static CellOpExecutionStatus GetCellOpExecutionStatus(
+            this IRecordCellOpExecutionEvents cell)
         {
             if (cell == null)
             {
@@ -48,10 +49,6 @@ namespace OBeautifulCode.DataStructure
             {
                 result = CellOpExecutionStatus.Aborted;
             }
-            else if (lastCellOpExecutionEvent is CellOpExecutionCompletedEvent<TValue>)
-            {
-                result = CellOpExecutionStatus.Completed;
-            }
             else if (lastCellOpExecutionEvent is CellOpExecutionDeemedNotApplicableEvent)
             {
                 result = CellOpExecutionStatus.DeemedNotApplicable;
@@ -60,12 +57,48 @@ namespace OBeautifulCode.DataStructure
             {
                 result = CellOpExecutionStatus.Failed;
             }
+            else if (lastCellOpExecutionEvent.GetType().GetGenericTypeDefinitionOrSpecifiedType() == typeof(CellOpExecutionCompletedEvent<>))
+            {
+                result = CellOpExecutionStatus.Completed;
+            }
             else
             {
                 throw new InvalidOperationException(Invariant($"Cannot determine the {nameof(CellOpExecutionStatus)} of the specified cell."));
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Gets the outcome of executing an <see cref="IOperationOutputCell{TValue}"/>'s <see cref="IOperationOutputCell{TValue}.Operation"/>.
+        /// </summary>
+        /// <param name="cell">The cell.</param>
+        /// <returns>
+        /// The outcome of executing an <see cref="IOperationOutputCell{TValue}"/>'s <see cref="IOperationOutputCell{TValue}.Operation"/>.
+        /// </returns>
+        public static CellOpExecutionOutcome GetCellOpExecutionOutcome(
+            this IRecordCellOpExecutionEvents cell)
+        {
+            if (cell == null)
+            {
+                throw new ArgumentNullException(nameof(cell));
+            }
+
+            var executionStatus = cell.GetCellOpExecutionStatus();
+
+            switch (executionStatus)
+            {
+                case CellOpExecutionStatus.DeemedNotApplicable:
+                    return CellOpExecutionOutcome.NotApplicable;
+                case CellOpExecutionStatus.Aborted:
+                    return CellOpExecutionOutcome.Aborted;
+                case CellOpExecutionStatus.Failed:
+                    return CellOpExecutionOutcome.Failed;
+                case CellOpExecutionStatus.Completed:
+                    return CellOpExecutionOutcome.Completed;
+                default:
+                    return CellOpExecutionOutcome.Unknown;
+            }
         }
 
         /// <summary>

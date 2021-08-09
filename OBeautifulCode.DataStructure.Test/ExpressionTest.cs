@@ -87,9 +87,9 @@ namespace OBeautifulCode.DataStructure.Test
                         {
                             new ValidationCondition(
                                 Op.IfThenElse(
-                                    Op.AndAlso(
-                                        Cell.HasValue(Cell.InThisSection(numberOfSalesFteCell.Id)),
-                                        Cell.HasValue(Cell.InThisSection(numberOfWarehouseFteCell.Id))),
+                                    Op.IsEqualTo(
+                                        Op.GetCellOpExecutionOutcome(Cell.This()),
+                                        Op.Const(CellOpExecutionOutcome.Completed)),
                                     Op.Const(true),
                                     Op.Abort<bool>()),
                                 Op.Const("never-hit")),

@@ -6,30 +6,17 @@
 
 namespace OBeautifulCode.DataStructure
 {
-    using System.Collections.Generic;
-
     using OBeautifulCode.Type;
 
     /// <summary>
     /// A cell who's output is the result of executing an operation.
     /// </summary>
     /// <typeparam name="TValue">The type of output value.</typeparam>
-    public interface IOperationOutputCell<TValue> : IOutputCell<TValue>, IClearCellValue
+    public interface IOperationOutputCell<TValue> : IRecordCellOpExecutionEvents, IOutputCell<TValue>, IClearCellValue
     {
         /// <summary>
         /// Gets the operation.
         /// </summary>
         IReturningOperation<TValue> Operation { get; }
-
-        /// <summary>
-        /// Gets the events that record the execution of <see cref="Operation"/>.
-        /// </summary>
-        IReadOnlyList<CellOpExecutionEventBase> OperationExecutionEvents { get; }
-
-        /// <summary>
-        /// Records a <see cref="CellOpExecutionEventBase"/>.
-        /// </summary>
-        /// <param name="operationExecutionEvent">The event to record.</param>
-        void Record(CellOpExecutionEventBase operationExecutionEvent);
     }
 }

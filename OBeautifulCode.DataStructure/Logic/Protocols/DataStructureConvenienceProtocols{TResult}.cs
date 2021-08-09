@@ -10,6 +10,7 @@ namespace OBeautifulCode.DataStructure
     using System.Linq;
     using System.Threading.Tasks;
 
+    using OBeautifulCode.Equality.Recipes;
     using OBeautifulCode.Type;
 
     using static System.FormattableString;
@@ -20,6 +21,7 @@ namespace OBeautifulCode.DataStructure
     /// <typeparam name="TResult">The type of value.</typeparam>
     public class DataStructureConvenienceProtocols<TResult> :
           ISyncAndAsyncReturningProtocol<IfThenElseOp<TResult>, TResult>,
+          ISyncAndAsyncReturningProtocol<IsEqualToOp<TResult>, bool>,
           ISyncAndAsyncReturningProtocol<AndAlsoOp, bool>,
           ISyncAndAsyncReturningProtocol<OrElseOp, bool>,
           ISyncAndAsyncReturningProtocol<NotOp, bool>,
@@ -89,6 +91,42 @@ namespace OBeautifulCode.DataStructure
             {
                 result = await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync<TResult>(operation.ElseStatement);
             }
+
+            return result;
+        }
+
+        /// <inheritdoc />
+        public bool Execute(
+            IsEqualToOp<TResult> operation)
+        {
+            if (operation == null)
+            {
+                throw new ArgumentNullException(nameof(operation));
+            }
+
+            var value1 = this.protocolFactory.GetProtocolAndExecuteViaReflection<TResult>(operation.Statement1);
+
+            var value2 = this.protocolFactory.GetProtocolAndExecuteViaReflection<TResult>(operation.Statement2);
+
+            var result = value1.IsEqualTo(value2);
+
+            return result;
+        }
+
+        /// <inheritdoc />
+        public async Task<bool> ExecuteAsync(
+            IsEqualToOp<TResult> operation)
+        {
+            if (operation == null)
+            {
+                throw new ArgumentNullException(nameof(operation));
+            }
+
+            var value1 = await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync<TResult>(operation.Statement1);
+
+            var value2 = await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync<TResult>(operation.Statement2);
+
+            var result = value1.IsEqualTo(value2);
 
             return result;
         }

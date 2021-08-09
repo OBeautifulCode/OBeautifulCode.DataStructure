@@ -27,7 +27,8 @@ namespace OBeautifulCode.DataStructure
           ISyncAndAsyncVoidProtocol<ValidateCellOp>,
           ISyncAndAsyncVoidProtocol<CheckAvailabilityOfCellOp>,
           ISyncAndAsyncReturningProtocol<HasCellValueOp, bool>,
-          ISyncAndAsyncReturningProtocol<GetCellValueOp<TValue>, TValue>
+          ISyncAndAsyncReturningProtocol<GetCellValueOp<TValue>, TValue>,
+          ISyncAndAsyncReturningProtocol<GetCellOpExecutionOutcomeOp, CellOpExecutionOutcome>
     {
         private readonly Report report;
 
@@ -312,24 +313,9 @@ namespace OBeautifulCode.DataStructure
                 throw new ArgumentNullException(nameof(operation));
             }
 
-            var cellLocator = this.protocolFactory.GetProtocolAndExecuteViaReflection<CellLocatorBase>(operation.CellLocator);
+            var locatedCell = this.GetCellAndExecuteOperationIfNecessary(operation.CellLocator);
 
-            var cell = this.GetCellHavingValue(cellLocator);
-
-            // This is necessary because we can't simply use new ExecuteOperationCellIfNecessaryOp<TValue>()
-            // TValue is the TValue of THIS protocol factory.
-            // HasCellValueOp does not have TValue in it's generic arguments; ALL instances of
-            // DataStructureCellProtocols can execute that operation and the chain-of-responsibility
-            // protocol factory will simply use the first instance of DataStructureCellProtocols that is registered.
-            // So TValue of this factory might be int whereas the cell's TValue is a decimal.
-            var executeOperationCellIfNecessaryOp = this.GetExecuteOperationCellIfNecessaryOpOrNull((ICell)cell);
-
-            if (executeOperationCellIfNecessaryOp != null)
-            {
-                this.protocolFactory.GetProtocolAndExecuteViaReflection(executeOperationCellIfNecessaryOp);
-            }
-
-            var result = cell.HasCellValue();
+            var result = locatedCell.Cell.HasCellValue();
 
             return result;
         }
@@ -344,24 +330,9 @@ namespace OBeautifulCode.DataStructure
                 throw new ArgumentNullException(nameof(operation));
             }
 
-            var cellLocator = await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync<CellLocatorBase>(operation.CellLocator);
+            var locatedCell = await this.GetCellAndExecuteOperationIfNecessaryAsync(operation.CellLocator);
 
-            var cell = this.GetCellHavingValue(cellLocator);
-
-            // This is necessary because we can't simply use new ExecuteOperationCellIfNecessaryOp<TValue>()
-            // TValue is the TValue of THIS protocol factory.
-            // HasCellValueOp does not have TValue in it's generic arguments; ALL instances of
-            // DataStructureCellProtocols can execute that operation and the chain-of-responsibility
-            // protocol factory will simply use the first instance of DataStructureCellProtocols that is registered.
-            // So TValue of this factory might be int whereas the cell's TValue is a decimal.
-            var executeOperationCellIfNecessaryOp = this.GetExecuteOperationCellIfNecessaryOpOrNull((ICell)cell);
-
-            if (executeOperationCellIfNecessaryOp != null)
-            {
-                await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync(executeOperationCellIfNecessaryOp);
-            }
-
-            var result = cell.HasCellValue();
+            var result = locatedCell.Cell.HasCellValue();
 
             return result;
         }
@@ -376,26 +347,24 @@ namespace OBeautifulCode.DataStructure
                 throw new ArgumentNullException(nameof(operation));
             }
 
-            // This will force the execution of an operation cell if it hasn't been executed yet.
-            var hasCellValueOp = new HasCellValueOp(operation.CellLocator);
-
-            var hasCellValue = this.protocolFactory.GetProtocolAndExecuteViaReflection<bool>(hasCellValueOp);
-
-            var cellLocator = this.protocolFactory.GetProtocolAndExecuteViaReflection<CellLocatorBase>(operation.CellLocator);
+            var locatedCell = this.GetCellAndExecuteOperationIfNecessary(operation.CellLocator);
 
             TValue result;
 
-            if (hasCellValue)
+            if (locatedCell.Cell.HasCellValue())
             {
-                var cell = this.GetCellHavingTypedValue(cellLocator);
+                if (!(locatedCell.Cell is IGetCellValue<TValue> getCellValueCell))
+                {
+                    throw new CellNotFoundException(Invariant($"The operation addresses a cell whose type is not an {typeof(IGetCellValue<TValue>).ToStringReadable()}: {locatedCell.Cell.GetType().ToStringReadable()}."), locatedCell.CellLocator);
+                }
 
-                result = cell.GetCellValue();
+                result = getCellValueCell.GetCellValue();
             }
             else
             {
                 if (operation.DefaultValue == null)
                 {
-                    throw new CellValueMissingException(cellLocator);
+                    throw new CellValueMissingException(locatedCell.CellLocator);
                 }
 
                 result = this.protocolFactory.GetProtocolAndExecuteViaReflection<TValue>(operation.DefaultValue);
@@ -414,26 +383,24 @@ namespace OBeautifulCode.DataStructure
                 throw new ArgumentNullException(nameof(operation));
             }
 
-            // This will force the execution of an operation cell if it hasn't been executed yet.
-            var hasCellValueOp = new HasCellValueOp(operation.CellLocator);
-
-            var hasCellValue = await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync<bool>(hasCellValueOp);
-
-            var cellLocator = await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync<CellLocatorBase>(operation.CellLocator);
+            var locatedCell = await this.GetCellAndExecuteOperationIfNecessaryAsync(operation.CellLocator);
 
             TValue result;
 
-            if (hasCellValue)
+            if (locatedCell.Cell.HasCellValue())
             {
-                var cell = this.GetCellHavingTypedValue(cellLocator);
+                if (!(locatedCell.Cell is IGetCellValue<TValue> getCellValueCell))
+                {
+                    throw new CellNotFoundException(Invariant($"The operation addresses a cell whose type is not an {typeof(IGetCellValue<TValue>).ToStringReadable()}: {locatedCell.Cell.GetType().ToStringReadable()}."), locatedCell.CellLocator);
+                }
 
-                result = cell.GetCellValue();
+                result = getCellValueCell.GetCellValue();
             }
             else
             {
                 if (operation.DefaultValue == null)
                 {
-                    throw new CellValueMissingException(cellLocator);
+                    throw new CellValueMissingException(locatedCell.CellLocator);
                 }
 
                 result = await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync<TValue>(operation.DefaultValue);
@@ -442,11 +409,55 @@ namespace OBeautifulCode.DataStructure
             return result;
         }
 
+        /// <inheritdoc />
+        public CellOpExecutionOutcome Execute(
+            GetCellOpExecutionOutcomeOp operation)
+        {
+            // NOTE: THIS CODE IS A NEAR DUPLICATE OF THE ASYNC METHOD BELOW; NO GOOD WAY TO D.R.Y. IT OUT
+            if (operation == null)
+            {
+                throw new ArgumentNullException(nameof(operation));
+            }
+
+            var locatedCell = this.GetCellAndExecuteOperationIfNecessary(operation.CellLocator);
+
+            if (!(locatedCell.Cell is IRecordCellOpExecutionEvents operationCell))
+            {
+                throw new CellNotFoundException(Invariant($"The operation addresses a cell whose type is not an {typeof(IOperationOutputCell<TValue>).ToStringReadable()}: {locatedCell.Cell.GetType().ToStringReadable()}."), locatedCell.CellLocator);
+            }
+
+            var result = operationCell.GetCellOpExecutionOutcome();
+
+            return result;
+        }
+
+        /// <inheritdoc />
+        public async Task<CellOpExecutionOutcome> ExecuteAsync(
+            GetCellOpExecutionOutcomeOp operation)
+        {
+            // NOTE: THIS CODE IS A NEAR DUPLICATE OF THE SYNC METHOD ABOVE; NO GOOD WAY TO D.R.Y. IT OUT
+            if (operation == null)
+            {
+                throw new ArgumentNullException(nameof(operation));
+            }
+
+            var locatedCell = await this.GetCellAndExecuteOperationIfNecessaryAsync(operation.CellLocator);
+
+            if (!(locatedCell.Cell is IRecordCellOpExecutionEvents operationCell))
+            {
+                throw new CellNotFoundException(Invariant($"The operation addresses a cell whose type is not an {typeof(IOperationOutputCell<TValue>).ToStringReadable()}: {locatedCell.Cell.GetType().ToStringReadable()}."), locatedCell.CellLocator);
+            }
+
+            var result = operationCell.GetCellOpExecutionOutcome();
+
+            return result;
+        }
+
         private void ExecuteOperationCellIfNecessary(
             IOperationOutputCell<TValue> cell)
         {
             // NOTE: THIS CODE IS A NEAR DUPLICATE OF THE ASYNC METHOD BELOW; NO GOOD WAY TO D.R.Y. IT OUT
-            if (cell.GetExecutionStatus() == CellOpExecutionStatus.NotExecuted)
+            if (cell.GetCellOpExecutionStatus() == CellOpExecutionStatus.NotExecuted)
             {
                 CellOpExecutionEventBase operationExecutionEvent;
 
@@ -483,7 +494,7 @@ namespace OBeautifulCode.DataStructure
             IOperationOutputCell<TValue> cell)
         {
             // NOTE: THIS CODE IS A NEAR DUPLICATE OF THE SYNC METHOD ABOVE; NO GOOD WAY TO D.R.Y. IT OUT
-            if (cell.GetExecutionStatus() == CellOpExecutionStatus.NotExecuted)
+            if (cell.GetCellOpExecutionStatus() == CellOpExecutionStatus.NotExecuted)
             {
                 CellOpExecutionEventBase operationExecutionEvent;
 
@@ -588,6 +599,7 @@ namespace OBeautifulCode.DataStructure
         private async Task ValidateCellAsync(
             IValidationCell cell)
         {
+            // NOTE: THIS CODE IS A NEAR DUPLICATE OF THE SYNC METHOD ABOVE; NO GOOD WAY TO D.R.Y. IT OUT
             var validationStatus = cell.GetValidationStatus();
 
             if (validationStatus == ValidationStatus.ValidationMissing)
@@ -713,6 +725,7 @@ namespace OBeautifulCode.DataStructure
         private async Task CheckAvailabilityOfCellAsync(
             IAvailabilityCheckCell cell)
         {
+            // NOTE: THIS CODE IS A NEAR DUPLICATE OF THE SYNC METHOD ABOVE; NO GOOD WAY TO D.R.Y. IT OUT
             var availabilityCheckStatus = cell.GetAvailabilityCheckStatus();
 
             if (availabilityCheckStatus == AvailabilityCheckStatus.AvailabilityCheckMissing)
@@ -766,6 +779,65 @@ namespace OBeautifulCode.DataStructure
             }
         }
 
+        private LocatedCell GetCellAndExecuteOperationIfNecessary(
+            IReturningOperation<CellLocatorBase> cellLocatorOp)
+        {
+            var cellLocator = this.protocolFactory.GetProtocolAndExecuteViaReflection<CellLocatorBase>(cellLocatorOp);
+
+            var cell = this.GetCellHavingValue(cellLocator);
+
+            // This is necessary because we can't simply use new ExecuteOperationCellIfNecessaryOp<TValue>()
+            // TValue is the TValue of THIS protocol factory.
+            // HasCellValueOp does not have TValue in it's generic arguments; ALL instances of
+            // DataStructureCellProtocols can execute that operation and the chain-of-responsibility
+            // protocol factory will simply use the first instance of DataStructureCellProtocols that is registered.
+            // So TValue of this factory might be int whereas the cell's TValue is a decimal.
+            var executeOperationCellIfNecessaryOp = this.GetExecuteOperationCellIfNecessaryOpOrNull((ICell)cell);
+
+            if (executeOperationCellIfNecessaryOp != null)
+            {
+                this.protocolFactory.GetProtocolAndExecuteViaReflection(executeOperationCellIfNecessaryOp);
+            }
+
+            var result = new LocatedCell
+            {
+                Cell = cell,
+                CellLocator = cellLocator,
+            };
+
+            return result;
+        }
+
+        private async Task<LocatedCell> GetCellAndExecuteOperationIfNecessaryAsync(
+            IReturningOperation<CellLocatorBase> cellLocatorOp)
+        {
+            // NOTE: THIS CODE IS A NEAR DUPLICATE OF THE ASYNC METHOD ABOVE; NO GOOD WAY TO D.R.Y. IT OUT
+            var cellLocator = await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync<CellLocatorBase>(cellLocatorOp);
+
+            var cell = this.GetCellHavingValue(cellLocator);
+
+            // This is necessary because we can't simply use new ExecuteOperationCellIfNecessaryOp<TValue>()
+            // TValue is the TValue of THIS protocol factory.
+            // HasCellValueOp does not have TValue in it's generic arguments; ALL instances of
+            // DataStructureCellProtocols can execute that operation and the chain-of-responsibility
+            // protocol factory will simply use the first instance of DataStructureCellProtocols that is registered.
+            // So TValue of this factory might be int whereas the cell's TValue is a decimal.
+            var executeOperationCellIfNecessaryOp = this.GetExecuteOperationCellIfNecessaryOpOrNull((ICell)cell);
+
+            if (executeOperationCellIfNecessaryOp != null)
+            {
+                await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync(executeOperationCellIfNecessaryOp);
+            }
+
+            var result = new LocatedCell
+            {
+                Cell = cell,
+                CellLocator = cellLocator,
+            };
+
+            return result;
+        }
+
         private IOperation GetExecuteOperationCellIfNecessaryOpOrNull(
             ICell cell)
         {
@@ -784,19 +856,6 @@ namespace OBeautifulCode.DataStructure
 
                 // ReSharper disable once CoVariantArrayConversion
                 result = (IOperation)constructorInfo.Invoke(new[] { cell });
-            }
-
-            return result;
-        }
-
-        private IGetCellValue<TValue> GetCellHavingTypedValue(
-            CellLocatorBase cellLocator)
-        {
-            var cell = this.GetCellHavingValue(cellLocator);
-
-            if (!(cell is IGetCellValue<TValue> result))
-            {
-                throw new CellNotFoundException(Invariant($"The operation addresses a cell whose type is not an {typeof(IGetCellValue<TValue>).ToStringReadable()}: {cell.GetType().ToStringReadable()}."), cellLocator);
             }
 
             return result;
@@ -887,6 +946,13 @@ namespace OBeautifulCode.DataStructure
             }
 
             return result;
+        }
+
+        private class LocatedCell
+        {
+            public IGetCellValue Cell { get; set; }
+
+            public CellLocatorBase CellLocator { get; set; }
         }
     }
 }
