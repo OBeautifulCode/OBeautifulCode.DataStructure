@@ -23,15 +23,15 @@ namespace OBeautifulCode.DataStructure
     using static global::System.FormattableString;
 
     [Serializable]
-    public partial class GetCellValueOp<TValue> : IModel<GetCellValueOp<TValue>>
+    public partial class GetCellValueOp<TResult> : IModel<GetCellValueOp<TResult>>
     {
         /// <summary>
-        /// Determines whether two objects of type <see cref="GetCellValueOp{TValue}"/> are equal.
+        /// Determines whether two objects of type <see cref="GetCellValueOp{TResult}"/> are equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are equal; otherwise false.</returns>
-        public static bool operator ==(GetCellValueOp<TValue> left, GetCellValueOp<TValue> right)
+        public static bool operator ==(GetCellValueOp<TResult> left, GetCellValueOp<TResult> right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -49,15 +49,15 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <summary>
-        /// Determines whether two objects of type <see cref="GetCellValueOp{TValue}"/> are not equal.
+        /// Determines whether two objects of type <see cref="GetCellValueOp{TResult}"/> are not equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are not equal; otherwise false.</returns>
-        public static bool operator !=(GetCellValueOp<TValue> left, GetCellValueOp<TValue> right) => !(left == right);
+        public static bool operator !=(GetCellValueOp<TResult> left, GetCellValueOp<TResult> right) => !(left == right);
 
         /// <inheritdoc />
-        public bool Equals(GetCellValueOp<TValue> other)
+        public bool Equals(GetCellValueOp<TResult> other)
         {
             if (ReferenceEquals(this, other))
             {
@@ -76,7 +76,7 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => this == (obj as GetCellValueOp<TValue>);
+        public override bool Equals(object obj) => this == (obj as GetCellValueOp<TResult>);
 
         /// <inheritdoc />
         public override int GetHashCode() => HashCodeHelper.Initialize()
@@ -85,13 +85,9 @@ namespace OBeautifulCode.DataStructure
             .Value;
 
         /// <inheritdoc />
-        public new GetCellValueOp<TValue> DeepClone() => (GetCellValueOp<TValue>)this.DeepCloneInternal();
+        public new GetCellValueOp<TResult> DeepClone() => (GetCellValueOp<TResult>)this.DeepCloneInternal();
 
-        /// <summary>
-        /// Deep clones this object with a new <see cref="CellLocator" />.
-        /// </summary>
-        /// <param name="cellLocator">The new <see cref="CellLocator" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="GetCellValueOp{TValue}" /> using the specified <paramref name="cellLocator" /> for <see cref="CellLocator" /> and a deep clone of every other property.</returns>
+        /// <inheritdoc />
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -109,9 +105,9 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public GetCellValueOp<TValue> DeepCloneWithCellLocator(IReturningOperation<CellLocatorBase> cellLocator)
+        public override LocatedCellOpBase<TResult> DeepCloneWithCellLocator(IReturningOperation<CellLocatorBase> cellLocator)
         {
-            var result = new GetCellValueOp<TValue>(
+            var result = new GetCellValueOp<TResult>(
                                  cellLocator,
                                  this.DefaultValue?.DeepClone());
 
@@ -122,7 +118,7 @@ namespace OBeautifulCode.DataStructure
         /// Deep clones this object with a new <see cref="DefaultValue" />.
         /// </summary>
         /// <param name="defaultValue">The new <see cref="DefaultValue" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="GetCellValueOp{TValue}" /> using the specified <paramref name="defaultValue" /> for <see cref="DefaultValue" /> and a deep clone of every other property.</returns>
+        /// <returns>New <see cref="GetCellValueOp{TResult}" /> using the specified <paramref name="defaultValue" /> for <see cref="DefaultValue" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -140,9 +136,9 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public GetCellValueOp<TValue> DeepCloneWithDefaultValue(IReturningOperation<TValue> defaultValue)
+        public GetCellValueOp<TResult> DeepCloneWithDefaultValue(IReturningOperation<TResult> defaultValue)
         {
-            var result = new GetCellValueOp<TValue>(
+            var result = new GetCellValueOp<TResult>(
                                  this.CellLocator?.DeepClone(),
                                  defaultValue);
 
@@ -153,7 +149,7 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         protected override OperationBase DeepCloneInternal()
         {
-            var result = new GetCellValueOp<TValue>(
+            var result = new GetCellValueOp<TResult>(
                                  this.CellLocator?.DeepClone(),
                                  this.DefaultValue?.DeepClone());
 

@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="GetCellValueOp{TValue}.cs" company="OBeautifulCode">
+// <copyright file="LocatedCellOpBase{TResult}.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -11,20 +11,18 @@ namespace OBeautifulCode.DataStructure
     using OBeautifulCode.Type;
 
     /// <summary>
-    /// Gets the value of a cell.
+    /// Base class for an operation that references a cell via a <see cref="CellLocator"/>.
     /// </summary>
-    /// <typeparam name="TValue">The type of value.</typeparam>
+    /// <typeparam name="TResult">The type returned when the operation is executed.</typeparam>
     // ReSharper disable once RedundantExtendsListEntry
-    public partial class GetCellValueOp<TValue> : ReturningOperationBase<TValue>, IModelViaCodeGen
+    public abstract partial class LocatedCellOpBase<TResult> : ReturningOperationBase<TResult>, IModelViaCodeGen
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="GetCellValueOp{TValue}"/> class.
+        /// Initializes a new instance of the <see cref="LocatedCellOpBase{TResult}"/> class.
         /// </summary>
         /// <param name="cellLocator">A cell locator.</param>
-        /// <param name="defaultValue">OPTIONAL value to use if the cell does not have a value.  DEFAULT is to throw if cell does not have a value.</param>
-        public GetCellValueOp(
-            IReturningOperation<CellLocatorBase> cellLocator,
-            IReturningOperation<TValue> defaultValue = null)
+        protected LocatedCellOpBase(
+            IReturningOperation<CellLocatorBase> cellLocator)
         {
             if (cellLocator == null)
             {
@@ -32,17 +30,11 @@ namespace OBeautifulCode.DataStructure
             }
 
             this.CellLocator = cellLocator;
-            this.DefaultValue = defaultValue;
         }
 
         /// <summary>
         /// Gets the cell locator.
         /// </summary>
         public IReturningOperation<CellLocatorBase> CellLocator { get; private set; }
-
-        /// <summary>
-        /// Gets the value to use if the cell does not have a value.
-        /// </summary>
-        public IReturningOperation<TValue> DefaultValue { get; private set; }
     }
 }

@@ -23,15 +23,15 @@ namespace OBeautifulCode.DataStructure
     using static global::System.FormattableString;
 
     [Serializable]
-    public partial class HasCellValueOp : IModel<HasCellValueOp>
+    public partial class GetCellOpExecutionOutcomeOp : IModel<GetCellOpExecutionOutcomeOp>
     {
         /// <summary>
-        /// Determines whether two objects of type <see cref="HasCellValueOp"/> are equal.
+        /// Determines whether two objects of type <see cref="GetCellOpExecutionOutcomeOp"/> are equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are equal; otherwise false.</returns>
-        public static bool operator ==(HasCellValueOp left, HasCellValueOp right)
+        public static bool operator ==(GetCellOpExecutionOutcomeOp left, GetCellOpExecutionOutcomeOp right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -49,15 +49,15 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <summary>
-        /// Determines whether two objects of type <see cref="HasCellValueOp"/> are not equal.
+        /// Determines whether two objects of type <see cref="GetCellOpExecutionOutcomeOp"/> are not equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are not equal; otherwise false.</returns>
-        public static bool operator !=(HasCellValueOp left, HasCellValueOp right) => !(left == right);
+        public static bool operator !=(GetCellOpExecutionOutcomeOp left, GetCellOpExecutionOutcomeOp right) => !(left == right);
 
         /// <inheritdoc />
-        public bool Equals(HasCellValueOp other)
+        public bool Equals(GetCellOpExecutionOutcomeOp other)
         {
             if (ReferenceEquals(this, other))
             {
@@ -75,7 +75,7 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => this == (obj as HasCellValueOp);
+        public override bool Equals(object obj) => this == (obj as GetCellOpExecutionOutcomeOp);
 
         /// <inheritdoc />
         public override int GetHashCode() => HashCodeHelper.Initialize()
@@ -83,7 +83,7 @@ namespace OBeautifulCode.DataStructure
             .Value;
 
         /// <inheritdoc />
-        public new HasCellValueOp DeepClone() => (HasCellValueOp)this.DeepCloneInternal();
+        public new GetCellOpExecutionOutcomeOp DeepClone() => (GetCellOpExecutionOutcomeOp)this.DeepCloneInternal();
 
         /// <inheritdoc />
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
@@ -103,9 +103,9 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public override LocatedCellOpBase<bool> DeepCloneWithCellLocator(IReturningOperation<CellLocatorBase> cellLocator)
+        public override LocatedCellOpBase<CellOpExecutionOutcome> DeepCloneWithCellLocator(IReturningOperation<CellLocatorBase> cellLocator)
         {
-            var result = new HasCellValueOp(
+            var result = new GetCellOpExecutionOutcomeOp(
                                  cellLocator);
 
             return result;
@@ -115,7 +115,7 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         protected override OperationBase DeepCloneInternal()
         {
-            var result = new HasCellValueOp(
+            var result = new GetCellOpExecutionOutcomeOp(
                                  this.CellLocator?.DeepClone());
 
             return result;
@@ -125,7 +125,7 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"OBeautifulCode.DataStructure.HasCellValueOp: CellLocator = {this.CellLocator?.ToString() ?? "<null>"}.");
+            var result = Invariant($"OBeautifulCode.DataStructure.GetCellOpExecutionOutcomeOp: CellLocator = {this.CellLocator?.ToString() ?? "<null>"}.");
 
             return result;
         }

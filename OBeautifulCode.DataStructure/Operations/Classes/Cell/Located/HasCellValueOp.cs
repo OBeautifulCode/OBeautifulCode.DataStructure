@@ -6,14 +6,12 @@
 
 namespace OBeautifulCode.DataStructure
 {
-    using System;
-
     using OBeautifulCode.Type;
 
     /// <summary>
     /// Determines if a cell has a value.
     /// </summary>
-    public partial class HasCellValueOp : ReturningOperationBase<bool>
+    public partial class HasCellValueOp : LocatedCellOpBase<bool>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="HasCellValueOp"/> class.
@@ -21,18 +19,8 @@ namespace OBeautifulCode.DataStructure
         /// <param name="cellLocator">The cell locator.</param>
         public HasCellValueOp(
             IReturningOperation<CellLocatorBase> cellLocator)
+            : base(cellLocator)
         {
-            if (cellLocator == null)
-            {
-                throw new ArgumentNullException(nameof(cellLocator));
-            }
-
-            this.CellLocator = cellLocator;
         }
-
-        /// <summary>
-        /// Gets the cell locator.
-        /// </summary>
-        public IReturningOperation<CellLocatorBase> CellLocator { get; private set; }
     }
 }

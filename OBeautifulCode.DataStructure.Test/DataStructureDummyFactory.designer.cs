@@ -439,6 +439,10 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<RowFormat>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new GetCellOpExecutionOutcomeOp(
+                                 A.Dummy<IReturningOperation<CellLocatorBase>>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new GetCellValueOp<Version>(
                                  A.Dummy<IReturningOperation<CellLocatorBase>>(),
                                  A.Dummy<IReturningOperation<Version>>()));
@@ -450,6 +454,10 @@ namespace OBeautifulCode.DataStructure.Test
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new GetNumberOfSignificantDigitsOp(
                                  A.Dummy<IReturningOperation<decimal>>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new GetValidityOp(
+                                 A.Dummy<IReturningOperation<CellLocatorBase>>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new HasCellValueOp(
@@ -538,6 +546,11 @@ namespace OBeautifulCode.DataStructure.Test
                 });
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new IsEqualToOp<Version>(
+                                 A.Dummy<IReturningOperation<Version>>(),
+                                 A.Dummy<IReturningOperation<Version>>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () =>
                 {
                     var availableTypes = new[]
@@ -569,6 +582,23 @@ namespace OBeautifulCode.DataStructure.Test
                     var randomType = availableTypes[randomIndex];
 
                     var result = (LinkedResourceBase)AD.ummy(randomType);
+
+                    return result;
+                });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var availableTypes = new[]
+                    {
+                        typeof(GetCellValueOp<Version>)
+                    };
+
+                    var randomIndex = ThreadSafeRandom.Next(0, availableTypes.Length);
+
+                    var randomType = availableTypes[randomIndex];
+
+                    var result = (LocatedCellOpBase<Version>)AD.ummy(randomType);
 
                     return result;
                 });

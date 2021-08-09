@@ -23,15 +23,15 @@ namespace OBeautifulCode.DataStructure
     using static global::System.FormattableString;
 
     [Serializable]
-    public partial class HasCellValueOp : IModel<HasCellValueOp>
+    public partial class IsEqualToOp<TStatement> : IModel<IsEqualToOp<TStatement>>
     {
         /// <summary>
-        /// Determines whether two objects of type <see cref="HasCellValueOp"/> are equal.
+        /// Determines whether two objects of type <see cref="IsEqualToOp{TStatement}"/> are equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are equal; otherwise false.</returns>
-        public static bool operator ==(HasCellValueOp left, HasCellValueOp right)
+        public static bool operator ==(IsEqualToOp<TStatement> left, IsEqualToOp<TStatement> right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -49,15 +49,15 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <summary>
-        /// Determines whether two objects of type <see cref="HasCellValueOp"/> are not equal.
+        /// Determines whether two objects of type <see cref="IsEqualToOp{TStatement}"/> are not equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are not equal; otherwise false.</returns>
-        public static bool operator !=(HasCellValueOp left, HasCellValueOp right) => !(left == right);
+        public static bool operator !=(IsEqualToOp<TStatement> left, IsEqualToOp<TStatement> right) => !(left == right);
 
         /// <inheritdoc />
-        public bool Equals(HasCellValueOp other)
+        public bool Equals(IsEqualToOp<TStatement> other)
         {
             if (ReferenceEquals(this, other))
             {
@@ -69,21 +69,23 @@ namespace OBeautifulCode.DataStructure
                 return false;
             }
 
-            var result = this.CellLocator.IsEqualTo(other.CellLocator);
+            var result = this.Statement1.IsEqualTo(other.Statement1)
+                      && this.Statement2.IsEqualTo(other.Statement2);
 
             return result;
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => this == (obj as HasCellValueOp);
+        public override bool Equals(object obj) => this == (obj as IsEqualToOp<TStatement>);
 
         /// <inheritdoc />
         public override int GetHashCode() => HashCodeHelper.Initialize()
-            .Hash(this.CellLocator)
+            .Hash(this.Statement1)
+            .Hash(this.Statement2)
             .Value;
 
         /// <inheritdoc />
-        public new HasCellValueOp DeepClone() => (HasCellValueOp)this.DeepCloneInternal();
+        public new IsEqualToOp<TStatement> DeepClone() => (IsEqualToOp<TStatement>)this.DeepCloneInternal();
 
         /// <inheritdoc />
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
@@ -103,10 +105,38 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public override LocatedCellOpBase<bool> DeepCloneWithCellLocator(IReturningOperation<CellLocatorBase> cellLocator)
+        public override TwoStatementOpBase<TStatement, bool> DeepCloneWithStatement1(IReturningOperation<TStatement> statement1)
         {
-            var result = new HasCellValueOp(
-                                 cellLocator);
+            var result = new IsEqualToOp<TStatement>(
+                                 statement1,
+                                 this.Statement2?.DeepClone());
+
+            return result;
+        }
+
+        /// <inheritdoc />
+        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
+        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
+        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
+        public override TwoStatementOpBase<TStatement, bool> DeepCloneWithStatement2(IReturningOperation<TStatement> statement2)
+        {
+            var result = new IsEqualToOp<TStatement>(
+                                 this.Statement1?.DeepClone(),
+                                 statement2);
 
             return result;
         }
@@ -115,8 +145,9 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         protected override OperationBase DeepCloneInternal()
         {
-            var result = new HasCellValueOp(
-                                 this.CellLocator?.DeepClone());
+            var result = new IsEqualToOp<TStatement>(
+                                 this.Statement1?.DeepClone(),
+                                 this.Statement2?.DeepClone());
 
             return result;
         }
@@ -125,7 +156,7 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"OBeautifulCode.DataStructure.HasCellValueOp: CellLocator = {this.CellLocator?.ToString() ?? "<null>"}.");
+            var result = Invariant($"OBeautifulCode.DataStructure.{this.GetType().ToStringReadable()}: Statement1 = {this.Statement1?.ToString() ?? "<null>"}, Statement2 = {this.Statement2?.ToString() ?? "<null>"}.");
 
             return result;
         }

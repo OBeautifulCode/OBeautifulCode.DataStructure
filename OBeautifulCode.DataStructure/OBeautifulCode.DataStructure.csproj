@@ -458,6 +458,9 @@
       <DependentUpon>CompareOp.cs</DependentUpon>
     </Compile>
     <Compile Include="Operations\Classes\Bool\IsEqualToOp{TStatement}.cs" />
+    <Compile Include="Operations\Classes\Bool\IsEqualToOp{TStatement}.designer.cs">
+      <DependentUpon>IsEqualToOp{TStatement}.cs</DependentUpon>
+    </Compile>
     <Compile Include="Operations\Classes\Bool\NotOp.designer.cs">
       <DependentUpon>NotOp.cs</DependentUpon>
     </Compile>
@@ -467,9 +470,20 @@
     <Compile Include="Operations\Classes\Branch\IfThenElseOp{TResult}.designer.cs">
       <DependentUpon>IfThenElseOp{TResult}.cs</DependentUpon>
     </Compile>
+    <Compile Include="Operations\Classes\Cell\LocatedCellOpBase{TResult}.cs" />
+    <Compile Include="Operations\Classes\Cell\LocatedCellOpBase{TResult}.designer.cs">
+      <DependentUpon>LocatedCellOpBase{TResult}.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Operations\Classes\Cell\Located\GetCellOpExecutionOutcomeOp.designer.cs">
+      <DependentUpon>GetCellOpExecutionOutcomeOp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Operations\Classes\Cell\Located\GetCellValueOp{TResult}.designer.cs">
+      <DependentUpon>GetCellValueOp{TResult}.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Operations\Classes\Cell\Located\GetValidityOp.cs" />
     <Compile Include="Operations\Classes\Cell\Located\GetCellOpExecutionOutcomeOp.cs" />
-    <Compile Include="Operations\Classes\Cell\Located\GetCellValueOp{TValue}.designer.cs">
-      <DependentUpon>GetCellValueOp{TValue}.cs</DependentUpon>
+    <Compile Include="Operations\Classes\Cell\Located\GetValidityOp.designer.cs">
+      <DependentUpon>GetValidityOp.cs</DependentUpon>
     </Compile>
     <Compile Include="Operations\Classes\Cell\Located\HasCellValueOp.designer.cs">
       <DependentUpon>HasCellValueOp.cs</DependentUpon>
@@ -500,6 +514,9 @@
     <Compile Include="Operations\Classes\TwoStatementOpBase{TStatement,TResult}.cs" />
     <Compile Include="Operations\Classes\SingleStatementOpBase{TStatement,TResult}.designer.cs">
       <DependentUpon>SingleStatementOpBase{TStatement,TResult}.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Operations\Classes\TwoStatementOpBase{TStatement,TResult}.designer.cs">
+      <DependentUpon>TwoStatementOpBase{TStatement,TResult}.cs</DependentUpon>
     </Compile>
     <Compile Include="Operations\Classes\ValidationResult\ValidateUsingConditionsOp.cs" />
     <Compile Include="Operations\Classes\ValidationResult\ValidateUsingConditionsOp.designer.cs">
@@ -540,7 +557,7 @@
     <Compile Include="Operations\Classes\Branch\IfThenElseOp{TResult}.cs" />
     <Compile Include="Operations\Classes\Cell\Located\HasCellValueOp.cs" />
     <Compile Include="Operations\Classes\GetConstOp{TValue}.cs" />
-    <Compile Include="Operations\Classes\Cell\Located\GetCellValueOp{TValue}.cs" />
+    <Compile Include="Operations\Classes\Cell\Located\GetCellValueOp{TResult}.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\GlobalSuppressions.cs" />
     <Compile Include="Models\Classes\Row\FlatRow.cs" />

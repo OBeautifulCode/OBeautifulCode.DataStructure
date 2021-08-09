@@ -23,15 +23,15 @@ namespace OBeautifulCode.DataStructure
     using static global::System.FormattableString;
 
     [Serializable]
-    public partial class HasCellValueOp : IModel<HasCellValueOp>
+    public partial class LocatedCellOpBase<TResult> : IModel<LocatedCellOpBase<TResult>>
     {
         /// <summary>
-        /// Determines whether two objects of type <see cref="HasCellValueOp"/> are equal.
+        /// Determines whether two objects of type <see cref="LocatedCellOpBase{TResult}"/> are equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are equal; otherwise false.</returns>
-        public static bool operator ==(HasCellValueOp left, HasCellValueOp right)
+        public static bool operator ==(LocatedCellOpBase<TResult> left, LocatedCellOpBase<TResult> right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -43,49 +43,44 @@ namespace OBeautifulCode.DataStructure
                 return false;
             }
 
-            var result = left.Equals(right);
+            var result = left.Equals((object)right);
 
             return result;
         }
 
         /// <summary>
-        /// Determines whether two objects of type <see cref="HasCellValueOp"/> are not equal.
+        /// Determines whether two objects of type <see cref="LocatedCellOpBase{TResult}"/> are not equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are not equal; otherwise false.</returns>
-        public static bool operator !=(HasCellValueOp left, HasCellValueOp right) => !(left == right);
+        public static bool operator !=(LocatedCellOpBase<TResult> left, LocatedCellOpBase<TResult> right) => !(left == right);
 
         /// <inheritdoc />
-        public bool Equals(HasCellValueOp other)
+        public bool Equals(LocatedCellOpBase<TResult> other) => this == other;
+
+        /// <inheritdoc />
+        [SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]
+        public override bool Equals(object obj)
         {
-            if (ReferenceEquals(this, other))
-            {
-                return true;
-            }
-
-            if (ReferenceEquals(other, null))
-            {
-                return false;
-            }
-
-            var result = this.CellLocator.IsEqualTo(other.CellLocator);
-
-            return result;
+            throw new NotImplementedException("This method should be abstract.  It was generated as virtual so that you aren't forced to override it when you create a new model that derives from this model.  It will be overridden in the generated designer file.");
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => this == (obj as HasCellValueOp);
+        [SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]
+        public override int GetHashCode()
+        {
+            throw new NotImplementedException("This method should be abstract.  It was generated as virtual so that you aren't forced to override it when you create a new model that derives from this model.  It will be overridden in the generated designer file.");
+        }
 
         /// <inheritdoc />
-        public override int GetHashCode() => HashCodeHelper.Initialize()
-            .Hash(this.CellLocator)
-            .Value;
+        public new LocatedCellOpBase<TResult> DeepClone() => (LocatedCellOpBase<TResult>)this.DeepCloneInternal();
 
-        /// <inheritdoc />
-        public new HasCellValueOp DeepClone() => (HasCellValueOp)this.DeepCloneInternal();
-
-        /// <inheritdoc />
+        /// <summary>
+        /// Deep clones this object with a new <see cref="CellLocator" />.
+        /// </summary>
+        /// <param name="cellLocator">The new <see cref="CellLocator" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="LocatedCellOpBase{TResult}" /> using the specified <paramref name="cellLocator" /> for <see cref="CellLocator" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -103,31 +98,16 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public override LocatedCellOpBase<bool> DeepCloneWithCellLocator(IReturningOperation<CellLocatorBase> cellLocator)
+        public virtual LocatedCellOpBase<TResult> DeepCloneWithCellLocator(IReturningOperation<CellLocatorBase> cellLocator)
         {
-            var result = new HasCellValueOp(
-                                 cellLocator);
-
-            return result;
+            throw new NotImplementedException("This method should be abstract.  It was generated as virtual so that you aren't forced to override it when you create a new model that derives from this model.  It will be overridden in the generated designer file.");
         }
 
         /// <inheritdoc />
-        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
-        protected override OperationBase DeepCloneInternal()
-        {
-            var result = new HasCellValueOp(
-                                 this.CellLocator?.DeepClone());
-
-            return result;
-        }
-
-        /// <inheritdoc />
-        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
+        [SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]
         public override string ToString()
         {
-            var result = Invariant($"OBeautifulCode.DataStructure.HasCellValueOp: CellLocator = {this.CellLocator?.ToString() ?? "<null>"}.");
-
-            return result;
+            throw new NotImplementedException("This method should be abstract.  It was generated as virtual so that you aren't forced to override it when you create a new model that derives from this model.  It will be overridden in the generated designer file.");
         }
     }
 }
