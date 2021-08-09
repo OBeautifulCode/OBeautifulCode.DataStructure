@@ -438,14 +438,14 @@
     <Compile Include="Models\Classes\Validation\ValidationResult.designer.cs">
       <DependentUpon>ValidationResult.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Enums\Cell\MediaReferenceKind.cs" />
-    <Compile Include="Models\Enums\Cell\CellOpExecutionStatus.cs" />
+    <Compile Include="Models\Enums\CellValue\MediaReferenceKind.cs" />
+    <Compile Include="Models\Enums\OperationCell\CellOpExecutionStatus.cs" />
     <Compile Include="Models\Enums\Formatting\NumberFormat\NumberFormatPercentDisplayKind.cs" />
     <Compile Include="Models\Enums\Formatting\NumberFormat\NumberFormatNegativeDisplayKind.cs" />
     <Compile Include="Models\Enums\Formatting\NumberFormat\NumberFormatDigitGroupKind.cs" />
     <Compile Include="Models\Classes\Validation\Validation.cs" />
-    <Compile Include="Models\Enums\Availability\AvailabilityCheckStatus.cs" />
-    <Compile Include="Models\Enums\Availability\Availability.cs" />
+    <Compile Include="Models\Enums\AvailabilityCheck\AvailabilityCheckStatus.cs" />
+    <Compile Include="Models\Enums\AvailabilityCheck\Availability.cs" />
     <Compile Include="Models\Enums\Validation\ValidationConditionKind.cs" />
     <Compile Include="Models\Enums\Validation\Validity.cs" />
     <Compile Include="Models\Enums\Validation\ValidationStatus.cs" />
@@ -522,7 +522,7 @@
     <Compile Include="Models\Enums\Formatting\CellFormatOptions.cs" />
     <Compile Include="Models\Classes\HoverOver\HtmlHoverOver.cs" />
     <Compile Include="Models\Classes\HoverOver\StringHoverOver.cs" />
-    <Compile Include="Models\Enums\Operations\SlotSelectionStrategy.cs" />
+    <Compile Include="Models\Enums\CellLocator\SlotSelectionStrategy.cs" />
     <Compile Include="Operations\Classes\Bool\CompareOp.cs" />
     <Compile Include="Operations\Classes\Bool\AndAlsoOp.cs" />
     <Compile Include="Operations\Classes\Bool\OrElseOp.cs" />
