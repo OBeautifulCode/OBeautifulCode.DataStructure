@@ -929,7 +929,7 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<UrlLinkedResourceKind>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new ValidateCellOp(
+                () => new ValidateCellIfNecessaryOp(
                                  A.Dummy<IValidationCell>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(

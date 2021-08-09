@@ -33,35 +33,35 @@ namespace OBeautifulCode.DataStructure.Test
 
     using static global::System.FormattableString;
 
-    public static partial class ValidateCellOpTest
+    public static partial class ValidateCellIfNecessaryOpTest
     {
-        private static readonly StringRepresentationTestScenarios<ValidateCellOp> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<ValidateCellOp>()
+        private static readonly StringRepresentationTestScenarios<ValidateCellIfNecessaryOp> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<ValidateCellIfNecessaryOp>()
             .AddScenario(() =>
-                new StringRepresentationTestScenario<ValidateCellOp>
+                new StringRepresentationTestScenario<ValidateCellIfNecessaryOp>
                 {
                     Name = "Default Code Generated Scenario",
                     SystemUnderTestExpectedStringRepresentationFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<ValidateCellOp>();
+                        var systemUnderTest = A.Dummy<ValidateCellIfNecessaryOp>();
 
-                        var result = new SystemUnderTestExpectedStringRepresentation<ValidateCellOp>
+                        var result = new SystemUnderTestExpectedStringRepresentation<ValidateCellIfNecessaryOp>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.ValidateCellOp: Cell = {systemUnderTest.Cell?.ToString() ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.ValidateCellIfNecessaryOp: Cell = {systemUnderTest.Cell?.ToString() ?? "<null>"}."),
                         };
 
                         return result;
                     },
                 });
 
-        private static readonly ConstructorArgumentValidationTestScenarios<ValidateCellOp> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<ValidateCellOp>()
+        private static readonly ConstructorArgumentValidationTestScenarios<ValidateCellIfNecessaryOp> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<ValidateCellIfNecessaryOp>()
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<ValidateCellOp>
+                new ConstructorArgumentValidationTestScenario<ValidateCellIfNecessaryOp>
                 {
                     Name = "constructor should throw ArgumentNullException when parameter 'cell' is null scenario",
                     ConstructionFunc = () =>
                     {
-                        var result = new ValidateCellOp(
+                        var result = new ValidateCellIfNecessaryOp(
                                              null);
 
                         return result;
@@ -70,18 +70,18 @@ namespace OBeautifulCode.DataStructure.Test
                     ExpectedExceptionMessageContains = new[] { "cell", },
                 });
 
-        private static readonly ConstructorPropertyAssignmentTestScenarios<ValidateCellOp> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<ValidateCellOp>()
+        private static readonly ConstructorPropertyAssignmentTestScenarios<ValidateCellIfNecessaryOp> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<ValidateCellIfNecessaryOp>()
             .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<ValidateCellOp>
+                new ConstructorPropertyAssignmentTestScenario<ValidateCellIfNecessaryOp>
                 {
                     Name = "Cell should return same 'cell' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
-                        var referenceObject = A.Dummy<ValidateCellOp>();
+                        var referenceObject = A.Dummy<ValidateCellIfNecessaryOp>();
 
-                        var result = new SystemUnderTestExpectedPropertyValue<ValidateCellOp>
+                        var result = new SystemUnderTestExpectedPropertyValue<ValidateCellIfNecessaryOp>
                         {
-                            SystemUnderTest = new ValidateCellOp(
+                            SystemUnderTest = new ValidateCellIfNecessaryOp(
                                                       referenceObject.Cell),
                             ExpectedPropertyValue = referenceObject.Cell,
                         };
@@ -91,19 +91,19 @@ namespace OBeautifulCode.DataStructure.Test
                     PropertyName = "Cell",
                 });
 
-        private static readonly DeepCloneWithTestScenarios<ValidateCellOp> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<ValidateCellOp>()
+        private static readonly DeepCloneWithTestScenarios<ValidateCellIfNecessaryOp> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<ValidateCellIfNecessaryOp>()
             .AddScenario(() =>
-                new DeepCloneWithTestScenario<ValidateCellOp>
+                new DeepCloneWithTestScenario<ValidateCellIfNecessaryOp>
                 {
                     Name = "DeepCloneWithCell should deep clone object and replace Cell with the provided cell",
                     WithPropertyName = "Cell",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<ValidateCellOp>();
+                        var systemUnderTest = A.Dummy<ValidateCellIfNecessaryOp>();
 
-                        var referenceObject = A.Dummy<ValidateCellOp>().ThatIs(_ => !systemUnderTest.Cell.IsEqualTo(_.Cell));
+                        var referenceObject = A.Dummy<ValidateCellIfNecessaryOp>().ThatIs(_ => !systemUnderTest.Cell.IsEqualTo(_.Cell));
 
-                        var result = new SystemUnderTestDeepCloneWithValue<ValidateCellOp>
+                        var result = new SystemUnderTestDeepCloneWithValue<ValidateCellIfNecessaryOp>
                         {
                             SystemUnderTest = systemUnderTest,
                             DeepCloneWithValue = referenceObject.Cell,
@@ -113,23 +113,23 @@ namespace OBeautifulCode.DataStructure.Test
                     },
                 });
 
-        private static readonly ValidateCellOp ReferenceObjectForEquatableTestScenarios = A.Dummy<ValidateCellOp>();
+        private static readonly ValidateCellIfNecessaryOp ReferenceObjectForEquatableTestScenarios = A.Dummy<ValidateCellIfNecessaryOp>();
 
-        private static readonly EquatableTestScenarios<ValidateCellOp> EquatableTestScenarios = new EquatableTestScenarios<ValidateCellOp>()
+        private static readonly EquatableTestScenarios<ValidateCellIfNecessaryOp> EquatableTestScenarios = new EquatableTestScenarios<ValidateCellIfNecessaryOp>()
             .AddScenario(() =>
-                new EquatableTestScenario<ValidateCellOp>
+                new EquatableTestScenario<ValidateCellIfNecessaryOp>
                 {
                     Name = "Default Code Generated Scenario",
                     ReferenceObject = ReferenceObjectForEquatableTestScenarios,
-                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new ValidateCellOp[]
+                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new ValidateCellIfNecessaryOp[]
                     {
-                        new ValidateCellOp(
+                        new ValidateCellIfNecessaryOp(
                                 ReferenceObjectForEquatableTestScenarios.Cell),
                     },
-                    ObjectsThatAreNotEqualToReferenceObject = new ValidateCellOp[]
+                    ObjectsThatAreNotEqualToReferenceObject = new ValidateCellIfNecessaryOp[]
                     {
-                        new ValidateCellOp(
-                                A.Dummy<ValidateCellOp>().Whose(_ => !_.Cell.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Cell)).Cell),
+                        new ValidateCellIfNecessaryOp(
+                                A.Dummy<ValidateCellIfNecessaryOp>().Whose(_ => !_.Cell.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Cell)).Cell),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
                     {
@@ -174,12 +174,12 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void ValidateCellOp___Should_implement_IModel_of_ValidateCellOp___When_reflecting()
+            public static void ValidateCellIfNecessaryOp___Should_implement_IModel_of_ValidateCellIfNecessaryOp___When_reflecting()
             {
                 // Arrange
-                var type = typeof(ValidateCellOp);
+                var type = typeof(ValidateCellIfNecessaryOp);
 
-                var expectedModelMethods = typeof(IModel<ValidateCellOp>).GetInterfaceDeclaredAndImplementedMethods();
+                var expectedModelMethods = typeof(IModel<ValidateCellIfNecessaryOp>).GetInterfaceDeclaredAndImplementedMethods();
 
                 var expectedModelMethodHashes = expectedModelMethods.Select(_ => _.GetSignatureHash());
 
@@ -189,7 +189,7 @@ namespace OBeautifulCode.DataStructure.Test
                 var actualModelMethodHashes = actualModelMethods.Select(_ => _.GetSignatureHash());
 
                 // Assert
-                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<ValidateCellOp>));
+                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<ValidateCellIfNecessaryOp>));
                 expectedModelMethodHashes.Except(actualModelMethodHashes).AsTest().Must().BeEmptyEnumerable();
             }
 
@@ -207,10 +207,10 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void ValidateCellOp___Should_be_attributed_with_Serializable____When_reflecting()
+            public static void ValidateCellIfNecessaryOp___Should_be_attributed_with_Serializable____When_reflecting()
             {
                 // Arrange
-                var type = typeof(ValidateCellOp);
+                var type = typeof(ValidateCellIfNecessaryOp);
 
                 // Act
                 var actualAttributes = type.GetCustomAttributes(typeof(SerializableAttribute), false);
@@ -368,10 +368,10 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Clone___Should_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<ValidateCellOp>();
+                var systemUnderTest = A.Dummy<ValidateCellIfNecessaryOp>();
 
                 // Act
-                var actual = (ValidateCellOp)systemUnderTest.Clone();
+                var actual = (ValidateCellIfNecessaryOp)systemUnderTest.Clone();
 
                 // Assert
                 actual.AsTest().Must().BeEqualTo(systemUnderTest);
@@ -395,7 +395,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void DeepClone___Should_deep_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<ValidateCellOp>();
+                var systemUnderTest = A.Dummy<ValidateCellIfNecessaryOp>();
 
                 // Act
                 var actual = systemUnderTest.DeepClone();
@@ -446,12 +446,12 @@ namespace OBeautifulCode.DataStructure.Test
                     }
 
                     // Act
-                    var actual = (ValidateCellOp)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
+                    var actual = (ValidateCellIfNecessaryOp)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
 
                     // Assert
                     foreach(var propertyName in propertyNames)
                     {
-                        var propertyInfo = typeof(ValidateCellOp).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
+                        var propertyInfo = typeof(ValidateCellIfNecessaryOp).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
 
                         var actualPropertyValue = propertyInfo.GetValue(actual);
 
@@ -513,7 +513,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<ValidateCellOp>();
+                var expected = A.Dummy<ValidateCellIfNecessaryOp>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -542,7 +542,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<ValidateCellOp>();
+                var expected = A.Dummy<ValidateCellIfNecessaryOp>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -571,7 +571,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<ValidateCellOp>();
+                var expected = A.Dummy<ValidateCellIfNecessaryOp>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -600,7 +600,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<ValidateCellOp>();
+                var expected = A.Dummy<ValidateCellIfNecessaryOp>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -634,8 +634,8 @@ namespace OBeautifulCode.DataStructure.Test
             public static void EqualsOperator___Should_return_true___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                ValidateCellOp systemUnderTest1 = null;
-                ValidateCellOp systemUnderTest2 = null;
+                ValidateCellIfNecessaryOp systemUnderTest1 = null;
+                ValidateCellIfNecessaryOp systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 == systemUnderTest2;
@@ -665,7 +665,7 @@ namespace OBeautifulCode.DataStructure.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    ValidateCellOp systemUnderTest = null;
+                    ValidateCellIfNecessaryOp systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest == scenario.ReferenceObject;
@@ -814,8 +814,8 @@ namespace OBeautifulCode.DataStructure.Test
             public static void NotEqualsOperator___Should_return_false___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                ValidateCellOp systemUnderTest1 = null;
-                ValidateCellOp systemUnderTest2 = null;
+                ValidateCellIfNecessaryOp systemUnderTest1 = null;
+                ValidateCellIfNecessaryOp systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 != systemUnderTest2;
@@ -845,7 +845,7 @@ namespace OBeautifulCode.DataStructure.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    ValidateCellOp systemUnderTest = null;
+                    ValidateCellIfNecessaryOp systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest != scenario.ReferenceObject;
@@ -1277,14 +1277,14 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_ValidateCellOp___Should_return_false___When_parameter_other_is_null()
+            public static void Equals_with_ValidateCellIfNecessaryOp___Should_return_false___When_parameter_other_is_null()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    ValidateCellOp systemUnderTest = null;
+                    ValidateCellIfNecessaryOp systemUnderTest = null;
 
                     // Act
                     var actual = scenario.ReferenceObject.Equals(systemUnderTest);
@@ -1308,7 +1308,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_ValidateCellOp___Should_return_true___When_parameter_other_is_same_object()
+            public static void Equals_with_ValidateCellIfNecessaryOp___Should_return_true___When_parameter_other_is_same_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1336,7 +1336,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_ValidateCellOp___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
+            public static void Equals_with_ValidateCellIfNecessaryOp___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1364,7 +1364,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_ValidateCellOp___Should_return_false___When_objects_being_compared_have_different_property_values()
+            public static void Equals_with_ValidateCellIfNecessaryOp___Should_return_false___When_objects_being_compared_have_different_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1392,7 +1392,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_ValidateCellOp___Should_return_true___When_objects_being_compared_have_same_property_values()
+            public static void Equals_with_ValidateCellIfNecessaryOp___Should_return_true___When_objects_being_compared_have_same_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 

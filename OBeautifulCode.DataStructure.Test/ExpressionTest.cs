@@ -40,8 +40,8 @@ namespace OBeautifulCode.DataStructure.Test
                 availabilityCheck: Cell.CreateAvailabilityCheck(
                     Op.IfThenElse(
                         Op.AndAlso(
-                            Cell.HasValue(Cell.InThisSection(isForProfitCell.Id)),
-                            Op.Not(Cell.GetValue<bool>(Cell.InThisSection(isForProfitCell.Id)))),
+                            Cell.InThisSection(isForProfitCell.Id).HasValue(),
+                            Op.Not(Cell.InThisSection(isForProfitCell.Id).GetValue<bool>())),
                         Op.Const(new AvailabilityCheckResult(Availability.Enabled)),
                         Op.Const(new AvailabilityCheckResult(Availability.Disabled)))));
 
@@ -50,10 +50,10 @@ namespace OBeautifulCode.DataStructure.Test
                 validation: Cell.CreateValidation(Op.ValidateUsingConditions(
                     new[]
                     {
-                        new ValidationCondition(Cell.HasValue(Cell.This()), Op.Const("input required")),
+                        new ValidationCondition(Cell.This().HasValue(), Op.Const("input required")),
                         new ValidationCondition(
                             Op.IsGreaterThanOrEqualTo(
-                                Cell.GetValue<decimal>(Cell.This()),
+                                Cell.This().GetValue<decimal>(),
                                 Op.Const(0m)),
                             Op.Const("must be >= 0")),
                     })));
@@ -63,10 +63,10 @@ namespace OBeautifulCode.DataStructure.Test
                 validation: Cell.CreateValidation(Op.ValidateUsingConditions(
                     new[]
                     {
-                        new ValidationCondition(Cell.HasValue(Cell.This()), Op.Const("input required")),
+                        new ValidationCondition(Cell.This().HasValue(), Op.Const("input required")),
                         new ValidationCondition(
                             Op.IsGreaterThanOrEqualTo(
-                                Cell.GetValue<decimal>(Cell.This()),
+                                Cell.This().GetValue<decimal>(),
                                 Op.Const(0m)),
                             Op.Const("must be >= 0")),
                     })));
@@ -76,11 +76,11 @@ namespace OBeautifulCode.DataStructure.Test
                     operation:
                         Op.IfThenElse(
                             Op.AndAlso(
-                                Cell.HasValue(Cell.InThisSection(numberOfSalesFteCell.Id)),
-                                Cell.HasValue(Cell.InThisSection(numberOfWarehouseFteCell.Id))),
+                                Cell.InThisSection(numberOfSalesFteCell.Id).HasValue(),
+                                Cell.InThisSection(numberOfWarehouseFteCell.Id).HasValue()),
                             Op.Sum(
-                                Cell.GetValue<decimal>(Cell.InThisSection(numberOfSalesFteCell.Id)),
-                                Cell.GetValue<decimal>(Cell.InThisSection(numberOfWarehouseFteCell.Id))),
+                                Cell.InThisSection(numberOfSalesFteCell.Id).GetValue<decimal>(),
+                                Cell.InThisSection(numberOfWarehouseFteCell.Id).GetValue<decimal>()),
                             Op.Abort<decimal>("cannot perform sum")),
                     validation: Cell.CreateValidation(Op.ValidateUsingConditions(
                         new[]
@@ -88,19 +88,19 @@ namespace OBeautifulCode.DataStructure.Test
                             new ValidationCondition(
                                 Op.IfThenElse(
                                     Op.IsEqualTo(
-                                        Op.GetCellOpExecutionOutcome(Cell.This()),
+                                        Cell.This().GetOpExecutionOutcome(),
                                         Op.Const(CellOpExecutionOutcome.Completed)),
                                     Op.Const(true),
                                     Op.Abort<bool>()),
                                 Op.Const("never-hit")),
                             new ValidationCondition(
                                 Op.IsGreaterThan(
-                                    Cell.GetValue<decimal>(Cell.This()),
+                                    Cell.This().GetValue<decimal>(),
                                     Op.Const(0m)),
                                 Op.Const("must be >= 0")),
                         })));
 
-            var coscoresCell = Cell.CreateConst<NamedDecimalSet>(
+            var scoresCell = Cell.CreateConst<NamedDecimalSet>(
                 new[]
                 {
                     new NamedValue<decimal>("bob", 1),
@@ -116,18 +116,18 @@ namespace OBeautifulCode.DataStructure.Test
                     new NamedValue<decimal>("april", 13),
                     new NamedValue<decimal>("wally", 5),
                 },
-                id: "coscores");
+                id: "scores");
 
-            var coscoreCellsCopy = Cell.CreateOp(
-                Cell.GetValue<NamedDecimalSet>(Cell.InThisSection("coscores")),
-                id: "coscores-copy");
+            var scoresCellCopy = Cell.CreateOp(
+                Cell.InThisSection(scoresCell.Id).GetValue<NamedDecimalSet>(),
+                id: "scores-copy");
 
             var intConstCell = new ConstCell<int>(4, id: "int-const");
 
             var quartileCell = Cell.CreateOp(
                 new TileOp(
-                    Cell.GetValue<NamedDecimalSet>(Cell.InThisSection(coscoreCellsCopy.Id)),
-                    Cell.GetValue<int>(Cell.InThisSection(intConstCell.Id))),
+                    Cell.InThisSection(scoresCellCopy.Id).GetValue<NamedDecimalSet>(),
+                    Cell.InThisSection(intConstCell.Id).GetValue<int>()),
                 id: "quartiles");
 
             var rows = new[]
@@ -138,8 +138,8 @@ namespace OBeautifulCode.DataStructure.Test
                 new Row(new[] { numberOfWarehouseFteCell }),
                 new Row(new[] { numberOfTotalFte }),
                 new Row(new[] { intConstCell }),
-                new Row(new[] { coscoreCellsCopy }),
-                new Row(new[] { coscoresCell }),
+                new Row(new[] { scoresCellCopy }),
+                new Row(new[] { scoresCell }),
                 new Row(new[] { quartileCell }),
             };
 
@@ -186,7 +186,7 @@ namespace OBeautifulCode.DataStructure.Test
                     frameworkFactory => new MyProprietaryProtocols(frameworkFactory).ToProtocolFactory(),
                 });
 
-            // todo: code up not applicable validaition (like if some cell is true, then don't validate)
+            // todo: code up not applicable validation (like if some cell is true, then don't validate)
         }
     }
 

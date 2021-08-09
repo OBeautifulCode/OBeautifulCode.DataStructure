@@ -287,7 +287,7 @@ namespace OBeautifulCode.DataStructure.Test
                         A.Dummy<NotOp>(),
                         A.Dummy<OrElseOp>(),
                         A.Dummy<SumOp>(),
-                        A.Dummy<ValidateCellOp>(),
+                        A.Dummy<ValidateCellIfNecessaryOp>(),
                         A.Dummy<ValidateUsingConditionsOp>(),
                     },
                 });

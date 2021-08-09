@@ -24,11 +24,12 @@ namespace OBeautifulCode.DataStructure
           ISyncAndAsyncReturningProtocol<ThrowOpExecutionAbortedExceptionOp<TValue>, TValue>,
           ISyncAndAsyncReturningProtocol<ThrowOpExecutionDeemedNotApplicableExceptionOp<TValue>, TValue>,
           ISyncAndAsyncVoidProtocol<ExecuteOperationCellIfNecessaryOp<TValue>>,
-          ISyncAndAsyncVoidProtocol<ValidateCellOp>,
+          ISyncAndAsyncVoidProtocol<ValidateCellIfNecessaryOp>,
           ISyncAndAsyncVoidProtocol<CheckAvailabilityOfCellOp>,
           ISyncAndAsyncReturningProtocol<HasCellValueOp, bool>,
           ISyncAndAsyncReturningProtocol<GetCellValueOp<TValue>, TValue>,
-          ISyncAndAsyncReturningProtocol<GetCellOpExecutionOutcomeOp, CellOpExecutionOutcome>
+          ISyncAndAsyncReturningProtocol<GetCellOpExecutionOutcomeOp, CellOpExecutionOutcome>,
+          ISyncAndAsyncReturningProtocol<GetValidityOp, Validity>
     {
         private readonly Report report;
 
@@ -201,7 +202,7 @@ namespace OBeautifulCode.DataStructure
 
         /// <inheritdoc />
         public void Execute(
-            ValidateCellOp operation)
+            ValidateCellIfNecessaryOp operation)
         {
             // NOTE: THIS CODE IS A NEAR DUPLICATE OF THE ASYNC METHOD BELOW; NO GOOD WAY TO D.R.Y. IT OUT
             if (operation == null)
@@ -215,7 +216,7 @@ namespace OBeautifulCode.DataStructure
             {
                 DataStructureCellProtocols.CurrentCellStack.Push(cell);
 
-                this.ValidateCell(cell);
+                this.ValidateCellIfNecessary(cell);
             }
             finally
             {
@@ -227,7 +228,7 @@ namespace OBeautifulCode.DataStructure
 
         /// <inheritdoc />
         public async Task ExecuteAsync(
-            ValidateCellOp operation)
+            ValidateCellIfNecessaryOp operation)
         {
             // NOTE: THIS CODE IS A NEAR DUPLICATE OF THE SYNC METHOD ABOVE; NO GOOD WAY TO D.R.Y. IT OUT
             if (operation == null)
@@ -241,7 +242,7 @@ namespace OBeautifulCode.DataStructure
             {
                 DataStructureCellProtocols.CurrentCellStack.Push(cell);
 
-                await this.ValidateCellAsync(cell);
+                await this.ValidateCellIfNecessaryAsync(cell);
             }
             finally
             {
@@ -453,6 +454,40 @@ namespace OBeautifulCode.DataStructure
             return result;
         }
 
+        /// <inheritdoc />
+        public Validity Execute(
+            GetValidityOp operation)
+        {
+            // NOTE: THIS CODE IS A NEAR DUPLICATE OF THE ASYNC METHOD BELOW; NO GOOD WAY TO D.R.Y. IT OUT
+            if (operation == null)
+            {
+                throw new ArgumentNullException(nameof(operation));
+            }
+
+            var cell = this.GetCellAndValidateIfNecessary(operation.CellLocator);
+
+            var result = cell.GetValidity();
+
+            return result;
+        }
+
+        /// <inheritdoc />
+        public async Task<Validity> ExecuteAsync(
+            GetValidityOp operation)
+        {
+            // NOTE: THIS CODE IS A NEAR DUPLICATE OF THE SYNC METHOD ABOVE; NO GOOD WAY TO D.R.Y. IT OUT
+            if (operation == null)
+            {
+                throw new ArgumentNullException(nameof(operation));
+            }
+
+            var cell = await this.GetCellAndValidateIfNecessaryAsync(operation.CellLocator);
+
+            var result = cell.GetValidity();
+
+            return result;
+        }
+
         private void ExecuteOperationCellIfNecessary(
             IOperationOutputCell<TValue> cell)
         {
@@ -527,7 +562,7 @@ namespace OBeautifulCode.DataStructure
             }
         }
 
-        private void ValidateCell(
+        private void ValidateCellIfNecessary(
             IValidationCell cell)
         {
             // NOTE: THIS CODE IS A NEAR DUPLICATE OF THE ASYNC METHOD BELOW; NO GOOD WAY TO D.R.Y. IT OUT
@@ -596,7 +631,7 @@ namespace OBeautifulCode.DataStructure
             }
         }
 
-        private async Task ValidateCellAsync(
+        private async Task ValidateCellIfNecessaryAsync(
             IValidationCell cell)
         {
             // NOTE: THIS CODE IS A NEAR DUPLICATE OF THE SYNC METHOD ABOVE; NO GOOD WAY TO D.R.Y. IT OUT
@@ -782,9 +817,15 @@ namespace OBeautifulCode.DataStructure
         private LocatedCell GetCellAndExecuteOperationIfNecessary(
             IReturningOperation<CellLocatorBase> cellLocatorOp)
         {
+            // NOTE: THIS CODE IS A NEAR DUPLICATE OF THE ASYNC METHOD BELOW; NO GOOD WAY TO D.R.Y. IT OUT
             var cellLocator = this.protocolFactory.GetProtocolAndExecuteViaReflection<CellLocatorBase>(cellLocatorOp);
 
-            var cell = this.GetCellHavingValue(cellLocator);
+            var cell = this.GetCell(cellLocator);
+
+            if (!(cell is IGetCellValue cellWithValue))
+            {
+                throw new CellNotFoundException(Invariant($"The operation addresses a cell whose type is not an {typeof(IGetCellValue).ToStringReadable()}: {cell.GetType().ToStringReadable()}."), cellLocator);
+            }
 
             // This is necessary because we can't simply use new ExecuteOperationCellIfNecessaryOp<TValue>()
             // TValue is the TValue of THIS protocol factory.
@@ -792,7 +833,7 @@ namespace OBeautifulCode.DataStructure
             // DataStructureCellProtocols can execute that operation and the chain-of-responsibility
             // protocol factory will simply use the first instance of DataStructureCellProtocols that is registered.
             // So TValue of this factory might be int whereas the cell's TValue is a decimal.
-            var executeOperationCellIfNecessaryOp = this.GetExecuteOperationCellIfNecessaryOpOrNull((ICell)cell);
+            var executeOperationCellIfNecessaryOp = this.GetExecuteOperationCellIfNecessaryOpOrNull(cell);
 
             if (executeOperationCellIfNecessaryOp != null)
             {
@@ -801,7 +842,7 @@ namespace OBeautifulCode.DataStructure
 
             var result = new LocatedCell
             {
-                Cell = cell,
+                Cell = cellWithValue,
                 CellLocator = cellLocator,
             };
 
@@ -811,10 +852,15 @@ namespace OBeautifulCode.DataStructure
         private async Task<LocatedCell> GetCellAndExecuteOperationIfNecessaryAsync(
             IReturningOperation<CellLocatorBase> cellLocatorOp)
         {
-            // NOTE: THIS CODE IS A NEAR DUPLICATE OF THE ASYNC METHOD ABOVE; NO GOOD WAY TO D.R.Y. IT OUT
+            // NOTE: THIS CODE IS A NEAR DUPLICATE OF THE SYNC METHOD ABOVE; NO GOOD WAY TO D.R.Y. IT OUT
             var cellLocator = await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync<CellLocatorBase>(cellLocatorOp);
 
-            var cell = this.GetCellHavingValue(cellLocator);
+            var cell = this.GetCell(cellLocator);
+
+            if (!(cell is IGetCellValue cellWithValue))
+            {
+                throw new CellNotFoundException(Invariant($"The operation addresses a cell whose type is not an {typeof(IGetCellValue).ToStringReadable()}: {cell.GetType().ToStringReadable()}."), cellLocator);
+            }
 
             // This is necessary because we can't simply use new ExecuteOperationCellIfNecessaryOp<TValue>()
             // TValue is the TValue of THIS protocol factory.
@@ -822,7 +868,7 @@ namespace OBeautifulCode.DataStructure
             // DataStructureCellProtocols can execute that operation and the chain-of-responsibility
             // protocol factory will simply use the first instance of DataStructureCellProtocols that is registered.
             // So TValue of this factory might be int whereas the cell's TValue is a decimal.
-            var executeOperationCellIfNecessaryOp = this.GetExecuteOperationCellIfNecessaryOpOrNull((ICell)cell);
+            var executeOperationCellIfNecessaryOp = this.GetExecuteOperationCellIfNecessaryOpOrNull(cell);
 
             if (executeOperationCellIfNecessaryOp != null)
             {
@@ -831,7 +877,7 @@ namespace OBeautifulCode.DataStructure
 
             var result = new LocatedCell
             {
-                Cell = cell,
+                Cell = cellWithValue,
                 CellLocator = cellLocator,
             };
 
@@ -861,31 +907,66 @@ namespace OBeautifulCode.DataStructure
             return result;
         }
 
-        private IGetCellValue GetCellHavingValue(
+        private IValidationCell GetCellAndValidateIfNecessary(
+            IReturningOperation<CellLocatorBase> cellLocatorOp)
+        {
+            // NOTE: THIS CODE IS A NEAR DUPLICATE OF THE ASYNC METHOD BELOW; NO GOOD WAY TO D.R.Y. IT OUT
+            var cellLocator = this.protocolFactory.GetProtocolAndExecuteViaReflection<CellLocatorBase>(cellLocatorOp);
+
+            var cell = this.GetCell(cellLocator);
+
+            if (!(cell is IValidationCell result))
+            {
+                throw new CellNotFoundException(Invariant($"The operation addresses a cell whose type is not an {typeof(IValidationCell).ToStringReadable()}: {cell.GetType().ToStringReadable()}."), cellLocator);
+            }
+
+            var validateCellIfNecessaryOp = new ValidateCellIfNecessaryOp(result);
+
+            this.protocolFactory.GetProtocolAndExecuteViaReflection(validateCellIfNecessaryOp);
+
+            return result;
+        }
+
+        private async Task<IValidationCell> GetCellAndValidateIfNecessaryAsync(
+            IReturningOperation<CellLocatorBase> cellLocatorOp)
+        {
+            // NOTE: THIS CODE IS A NEAR DUPLICATE OF THE SYNC METHOD ABOVE; NO GOOD WAY TO D.R.Y. IT OUT
+            var cellLocator = await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync<CellLocatorBase>(cellLocatorOp);
+
+            var cell = this.GetCell(cellLocator);
+
+            if (!(cell is IValidationCell result))
+            {
+                throw new CellNotFoundException(Invariant($"The operation addresses a cell whose type is not an {typeof(IValidationCell).ToStringReadable()}: {cell.GetType().ToStringReadable()}."), cellLocator);
+            }
+
+            var validateCellIfNecessaryOp = new ValidateCellIfNecessaryOp(result);
+
+            await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync(validateCellIfNecessaryOp);
+
+            return result;
+        }
+
+        private ICell GetCell(
             CellLocatorBase cellLocator)
         {
-            ICell cell;
+            ICell result;
 
             if (cellLocator is ReportCellLocator reportCellLocator)
             {
-                cell = this.GetCell(reportCellLocator);
+                result = this.GetCell(reportCellLocator);
             }
             else if (cellLocator is SectionCellLocator sectionCellLocator)
             {
-                cell = this.GetCell(sectionCellLocator);
+                result = this.GetCell(sectionCellLocator);
             }
             else if (cellLocator is ThisCellLocator)
             {
-                cell = DataStructureCellProtocols.CurrentCellStack.Peek();
+                result = DataStructureCellProtocols.CurrentCellStack.Peek();
             }
             else
             {
                 throw new NotSupportedException(Invariant($"This type of {nameof(CellLocatorBase)} is not supported: {cellLocator.GetType().ToStringReadable()}."));
-            }
-
-            if (!(cell is IGetCellValue result))
-            {
-                throw new CellNotFoundException(Invariant($"The operation addresses a cell whose type is not an {typeof(IGetCellValue).ToStringReadable()}: {cell.GetType().ToStringReadable()}."), cellLocator);
             }
 
             return result;

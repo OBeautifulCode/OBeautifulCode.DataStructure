@@ -181,7 +181,7 @@ namespace OBeautifulCode.DataStructure.Test
                         A.Dummy<IsEqualToOp<Version>>(),
                         A.Dummy<NotOp>(),
                         A.Dummy<OrElseOp>(),
-                        A.Dummy<ValidateCellOp>(),
+                        A.Dummy<ValidateCellIfNecessaryOp>(),
                         A.Dummy<ValidateUsingConditionsOp>(),
                     },
                 });

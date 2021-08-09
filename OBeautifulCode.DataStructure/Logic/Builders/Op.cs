@@ -243,20 +243,5 @@ namespace OBeautifulCode.DataStructure
 
             return result;
         }
-
-        /// <summary>
-        /// Builds an <see cref="GetCellOpExecutionOutcomeOp"/>.
-        /// </summary>
-        /// <param name="cellLocator">The cell locator.</param>
-        /// <returns>
-        /// The operation.
-        /// </returns>
-        public static GetCellOpExecutionOutcomeOp GetCellOpExecutionOutcome(
-            CellLocatorBase cellLocator)
-        {
-            var result = new GetCellOpExecutionOutcomeOp(Op.Const(cellLocator));
-
-            return result;
-        }
     }
 }

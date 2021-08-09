@@ -495,8 +495,8 @@
       <DependentUpon>ExecuteOperationCellIfNecessaryOp{TValue}.cs</DependentUpon>
     </Compile>
     <Compile Include="Operations\Classes\Cell\Referenced\CheckAvailabilityOfCellOp.cs" />
-    <Compile Include="Operations\Classes\Cell\Referenced\ValidateCellOp.designer.cs">
-      <DependentUpon>ValidateCellOp.cs</DependentUpon>
+    <Compile Include="Operations\Classes\Cell\Referenced\ValidateCellIfNecessaryOp.designer.cs">
+      <DependentUpon>ValidateCellIfNecessaryOp.cs</DependentUpon>
     </Compile>
     <Compile Include="Operations\Classes\Decimal\SumOp.designer.cs">
       <DependentUpon>SumOp.cs</DependentUpon>
@@ -549,7 +549,7 @@
     <Compile Include="Operations\Classes\Bool\AndAlsoOp.cs" />
     <Compile Include="Operations\Classes\Bool\OrElseOp.cs" />
     <Compile Include="Operations\Classes\Bool\NotOp.cs" />
-    <Compile Include="Operations\Classes\Cell\Referenced\ValidateCellOp.cs" />
+    <Compile Include="Operations\Classes\Cell\Referenced\ValidateCellIfNecessaryOp.cs" />
     <Compile Include="Operations\Classes\Decimal\SumOp.cs" />
     <Compile Include="Operations\Classes\SingleStatementOpBase{TStatement,TResult}.cs" />
     <Compile Include="Operations\Classes\MultiStatementOpBase{TStatement,TResult}.cs" />

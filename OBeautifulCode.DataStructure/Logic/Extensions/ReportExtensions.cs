@@ -259,7 +259,7 @@ namespace OBeautifulCode.DataStructure
 
             foreach (var cell in validationCells)
             {
-                var validateCellOp = new ValidateCellOp(cell);
+                var validateCellOp = new ValidateCellIfNecessaryOp(cell);
 
                 protocolFactory.GetProtocolAndExecuteViaReflection(validateCellOp);
             }
@@ -301,7 +301,7 @@ namespace OBeautifulCode.DataStructure
 
             foreach (var cell in validationCells)
             {
-                var validateCellOp = new ValidateCellOp(cell);
+                var validateCellOp = new ValidateCellIfNecessaryOp(cell);
 
                 await protocolFactory.GetProtocolAndExecuteViaReflectionAsync(validateCellOp);
             }

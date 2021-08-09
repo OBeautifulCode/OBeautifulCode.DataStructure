@@ -74,7 +74,7 @@ namespace OBeautifulCode.DataStructure
         /// The operation.
         /// </returns>
         public static HasCellValueOp HasValue(
-            CellLocatorBase cellLocator)
+            this CellLocatorBase cellLocator)
         {
             var result = new HasCellValueOp(Op.Const(cellLocator));
 
@@ -90,9 +90,39 @@ namespace OBeautifulCode.DataStructure
         /// The operation.
         /// </returns>
         public static GetCellValueOp<TValue> GetValue<TValue>(
-            CellLocatorBase cellLocator)
+            this CellLocatorBase cellLocator)
         {
             var result = new GetCellValueOp<TValue>(Op.Const(cellLocator));
+
+            return result;
+        }
+
+        /// <summary>
+        /// Builds an <see cref="GetCellOpExecutionOutcomeOp"/>.
+        /// </summary>
+        /// <param name="cellLocator">The cell locator.</param>
+        /// <returns>
+        /// The operation.
+        /// </returns>
+        public static GetCellOpExecutionOutcomeOp GetOpExecutionOutcome(
+            this CellLocatorBase cellLocator)
+        {
+            var result = new GetCellOpExecutionOutcomeOp(Op.Const(cellLocator));
+
+            return result;
+        }
+
+        /// <summary>
+        /// Builds an <see cref="GetValidityOp"/>.
+        /// </summary>
+        /// <param name="cellLocator">The cell locator.</param>
+        /// <returns>
+        /// The operation.
+        /// </returns>
+        public static GetValidityOp GetValidity(
+            this CellLocatorBase cellLocator)
+        {
+            var result = new GetValidityOp(Op.Const(cellLocator));
 
             return result;
         }

@@ -23,15 +23,15 @@ namespace OBeautifulCode.DataStructure
     using static global::System.FormattableString;
 
     [Serializable]
-    public partial class ValidateCellOp : IModel<ValidateCellOp>
+    public partial class ValidateCellIfNecessaryOp : IModel<ValidateCellIfNecessaryOp>
     {
         /// <summary>
-        /// Determines whether two objects of type <see cref="ValidateCellOp"/> are equal.
+        /// Determines whether two objects of type <see cref="ValidateCellIfNecessaryOp"/> are equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are equal; otherwise false.</returns>
-        public static bool operator ==(ValidateCellOp left, ValidateCellOp right)
+        public static bool operator ==(ValidateCellIfNecessaryOp left, ValidateCellIfNecessaryOp right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -49,15 +49,15 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <summary>
-        /// Determines whether two objects of type <see cref="ValidateCellOp"/> are not equal.
+        /// Determines whether two objects of type <see cref="ValidateCellIfNecessaryOp"/> are not equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are not equal; otherwise false.</returns>
-        public static bool operator !=(ValidateCellOp left, ValidateCellOp right) => !(left == right);
+        public static bool operator !=(ValidateCellIfNecessaryOp left, ValidateCellIfNecessaryOp right) => !(left == right);
 
         /// <inheritdoc />
-        public bool Equals(ValidateCellOp other)
+        public bool Equals(ValidateCellIfNecessaryOp other)
         {
             if (ReferenceEquals(this, other))
             {
@@ -75,7 +75,7 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => this == (obj as ValidateCellOp);
+        public override bool Equals(object obj) => this == (obj as ValidateCellIfNecessaryOp);
 
         /// <inheritdoc />
         public override int GetHashCode() => HashCodeHelper.Initialize()
@@ -83,13 +83,13 @@ namespace OBeautifulCode.DataStructure
             .Value;
 
         /// <inheritdoc />
-        public new ValidateCellOp DeepClone() => (ValidateCellOp)this.DeepCloneInternal();
+        public new ValidateCellIfNecessaryOp DeepClone() => (ValidateCellIfNecessaryOp)this.DeepCloneInternal();
 
         /// <summary>
         /// Deep clones this object with a new <see cref="Cell" />.
         /// </summary>
         /// <param name="cell">The new <see cref="Cell" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="ValidateCellOp" /> using the specified <paramref name="cell" /> for <see cref="Cell" /> and a deep clone of every other property.</returns>
+        /// <returns>New <see cref="ValidateCellIfNecessaryOp" /> using the specified <paramref name="cell" /> for <see cref="Cell" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -107,9 +107,9 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public ValidateCellOp DeepCloneWithCell(IValidationCell cell)
+        public ValidateCellIfNecessaryOp DeepCloneWithCell(IValidationCell cell)
         {
-            var result = new ValidateCellOp(
+            var result = new ValidateCellIfNecessaryOp(
                                  cell);
 
             return result;
@@ -119,7 +119,7 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         protected override OperationBase DeepCloneInternal()
         {
-            var result = new ValidateCellOp(
+            var result = new ValidateCellIfNecessaryOp(
                                  this.Cell?.DeepClone());
 
             return result;
@@ -129,7 +129,7 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"OBeautifulCode.DataStructure.ValidateCellOp: Cell = {this.Cell?.ToString() ?? "<null>"}.");
+            var result = Invariant($"OBeautifulCode.DataStructure.ValidateCellIfNecessaryOp: Cell = {this.Cell?.ToString() ?? "<null>"}.");
 
             return result;
         }

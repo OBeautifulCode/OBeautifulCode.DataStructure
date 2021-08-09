@@ -531,9 +531,6 @@
     <Compile Include="Operations\Cell\Located\HasCellValueOpTest.designer.cs">
       <DependentUpon>HasCellValueOpTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Operations\Cell\Referenced\ValidateCellOpTest.designer.cs">
-      <DependentUpon>ValidateCellOpTest.cs</DependentUpon>
-    </Compile>
     <Compile Include="Operations\Decimal\SumOpTest.designer.cs">
       <DependentUpon>SumOpTest.cs</DependentUpon>
     </Compile>
@@ -542,7 +539,6 @@
     <Compile Include="Operations\Branch\IfThenElseOp{TResult}Test.cs" />
     <Compile Include="Models\Classes\Cell\Input\InputCellBase{TValue}Test.cs" />
     <Compile Include="Models\Classes\Cell\Input\InputCell{TValue}Test.cs" />
-    <Compile Include="Operations\Cell\Referenced\ValidateCellOpTest.cs" />
     <Compile Include="Models\Classes\Format\CellValue\StandardCellValueFormatBase{TValue}Test.cs" />
     <Compile Include="Models\Classes\Format\CellValue\StandardCellValueFormatBase{TValue}Test.designer.cs">
       <DependentUpon>StandardCellValueFormatBase{TValue}Test.cs</DependentUpon>
@@ -570,6 +566,10 @@
     <Compile Include="Operations\TwoStatementOpBase{TStatement,TResult}Test.cs" />
     <Compile Include="Operations\TwoStatementOpBase{TStatement,TResult}Test.designer.cs">
       <DependentUpon>TwoStatementOpBase{TStatement,TResult}Test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Operations\Cell\Referenced\ValidateCellIfNecessaryOpTest.cs" />
+    <Compile Include="Operations\Cell\Referenced\ValidateCellIfNecessaryOpTest.designer.cs">
+      <DependentUpon>ValidateCellIfNecessaryOpTest.cs</DependentUpon>
     </Compile>
     <None Include="Logic\Extensions\RowExtensionsTest.cs" />
     <Compile Include="Logic\Extensions\TreeTableExtensionsTest.cs" />
