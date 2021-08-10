@@ -7,7 +7,9 @@
 namespace OBeautifulCode.DataStructure
 {
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
 
+    using OBeautifulCode.CodeAnalysis.Recipes;
     using OBeautifulCode.Type;
 
     /// <summary>
@@ -15,7 +17,7 @@ namespace OBeautifulCode.DataStructure
     /// </summary>
     /// <typeparam name="TStatement">The type of the statements.</typeparam>
     /// <typeparam name="TResult">The type of the result.</typeparam>
-    // ReSharper disable once RedundantExtendsListEntry
+    [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Multi", Justification = ObcSuppressBecause.CA1704_IdentifiersShouldBeSpelledCorrectly_SpellingIsCorrectInContextOfTheDomain)]
     public partial class NullMultiStatementOp<TStatement, TResult> : MultiStatementOpBase<TStatement, TResult>, IModelViaCodeGen
     {
         /// <summary>

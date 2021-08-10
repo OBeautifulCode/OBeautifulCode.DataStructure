@@ -350,6 +350,11 @@ namespace OBeautifulCode.DataStructure
             ValidateUsingConditionsOp operation)
         {
             // NOTE: THIS CODE IS A NEAR DUPLICATE OF THE ASYNC METHOD BELOW; NO GOOD WAY TO D.R.Y. IT OUT
+            if (operation == null)
+            {
+                throw new ArgumentNullException(nameof(operation));
+            }
+
             ValidationResult result = null;
 
             foreach (var condition in operation.Conditions)
@@ -383,6 +388,11 @@ namespace OBeautifulCode.DataStructure
             ValidateUsingConditionsOp operation)
         {
             // NOTE: THIS CODE IS A NEAR DUPLICATE OF THE SYNC METHOD ABOVE; NO GOOD WAY TO D.R.Y. IT OUT
+            if (operation == null)
+            {
+                throw new ArgumentNullException(nameof(operation));
+            }
+
             ValidationResult result = null;
 
             foreach (var condition in operation.Conditions)

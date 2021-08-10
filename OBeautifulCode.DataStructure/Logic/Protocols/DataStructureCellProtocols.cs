@@ -9,7 +9,10 @@ namespace OBeautifulCode.DataStructure
     using System;
     using System.Collections.Concurrent;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Reflection;
+
+    using OBeautifulCode.Type;
 
     /// <summary>
     /// Statics for <see cref="DataStructureCellProtocols{TValue}"/>.
@@ -40,6 +43,36 @@ namespace OBeautifulCode.DataStructure
             {
                 throw new InvalidOperationException("The cell popped off the current cell stack is not the expected cell.");
             }
+        }
+
+        /// <summary>
+        /// Gets a <see cref="ExecuteOperationCellIfNecessaryOp{TValue}"/> for the specified cell or null if not applicable.
+        /// </summary>
+        /// <param name="cell">The cell.</param>
+        /// <returns>
+        /// The operation to execute or null if not applicable.
+        /// </returns>
+        public static IOperation GetExecuteOperationCellIfNecessaryOpOrNull(
+            ICell cell)
+        {
+            IOperation result = null;
+
+            if (cell.IsOperationCell())
+            {
+                var valueType = cell.GetValueTypeOrNull();
+
+                if (!CachedTypeToExecuteOperationCellIfNecessaryOpConstructorInfoMap.TryGetValue(valueType, out var constructorInfo))
+                {
+                    constructorInfo = typeof(ExecuteOperationCellIfNecessaryOp<>).MakeGenericType(cell.GetValueTypeOrNull()).GetConstructors().Single();
+
+                    CachedTypeToExecuteOperationCellIfNecessaryOpConstructorInfoMap.TryAdd(valueType, constructorInfo);
+                }
+
+                // ReSharper disable once CoVariantArrayConversion
+                result = (IOperation)constructorInfo.Invoke(new[] { cell });
+            }
+
+            return result;
         }
     }
 }

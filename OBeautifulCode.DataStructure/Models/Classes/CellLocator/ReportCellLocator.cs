@@ -53,7 +53,7 @@ namespace OBeautifulCode.DataStructure
 
             if (slotSelectionStrategy == SlotSelectionStrategy.Unknown)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException(Invariant($"{nameof(slotSelectionStrategy)} is {nameof(DataStructure.SlotSelectionStrategy)}.{nameof(SlotSelectionStrategy.Unknown)}."));
             }
 
             this.SectionId = sectionId;

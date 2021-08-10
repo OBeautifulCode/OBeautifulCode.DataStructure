@@ -7,9 +7,10 @@
 namespace OBeautifulCode.DataStructure
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Threading.Tasks;
-
+    using OBeautifulCode.CodeAnalysis.Recipes;
     using OBeautifulCode.Type;
     using OBeautifulCode.Type.Recipes;
 
@@ -19,6 +20,7 @@ namespace OBeautifulCode.DataStructure
     /// The core <see cref="ICell"/>-related protocols.
     /// </summary>
     /// <typeparam name="TValue">The type of value.</typeparam>
+    [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = ObcSuppressBecause.CA1506_AvoidExcessiveClassCoupling_DisagreeWithAssessment)]
     public class DataStructureCellProtocols<TValue> :
           ISyncAndAsyncReturningProtocol<GetConstOp<TValue>, TValue>,
           ISyncAndAsyncReturningProtocol<ThrowOpExecutionAbortedExceptionOp<TValue>, TValue>,
@@ -907,7 +909,7 @@ namespace OBeautifulCode.DataStructure
             // DataStructureCellProtocols can execute that operation and the chain-of-responsibility
             // protocol factory will simply use the first instance of DataStructureCellProtocols that is registered.
             // So TValue of this factory might be int whereas the cell's TValue is a decimal.
-            var executeOperationCellIfNecessaryOp = this.GetExecuteOperationCellIfNecessaryOpOrNull(cell);
+            var executeOperationCellIfNecessaryOp = DataStructureCellProtocols.GetExecuteOperationCellIfNecessaryOpOrNull(cell);
 
             if (executeOperationCellIfNecessaryOp != null)
             {
@@ -942,7 +944,7 @@ namespace OBeautifulCode.DataStructure
             // DataStructureCellProtocols can execute that operation and the chain-of-responsibility
             // protocol factory will simply use the first instance of DataStructureCellProtocols that is registered.
             // So TValue of this factory might be int whereas the cell's TValue is a decimal.
-            var executeOperationCellIfNecessaryOp = this.GetExecuteOperationCellIfNecessaryOpOrNull(cell);
+            var executeOperationCellIfNecessaryOp = DataStructureCellProtocols.GetExecuteOperationCellIfNecessaryOpOrNull(cell);
 
             if (executeOperationCellIfNecessaryOp != null)
             {
@@ -954,29 +956,6 @@ namespace OBeautifulCode.DataStructure
                 Cell = cellWithValue,
                 CellLocator = cellLocator,
             };
-
-            return result;
-        }
-
-        private IOperation GetExecuteOperationCellIfNecessaryOpOrNull(
-            ICell cell)
-        {
-            IOperation result = null;
-
-            if (cell.IsOperationCell())
-            {
-                var valueType = cell.GetValueTypeOrNull();
-
-                if (!DataStructureCellProtocols.CachedTypeToExecuteOperationCellIfNecessaryOpConstructorInfoMap.TryGetValue(valueType, out var constructorInfo))
-                {
-                    constructorInfo = typeof(ExecuteOperationCellIfNecessaryOp<>).MakeGenericType(cell.GetValueTypeOrNull()).GetConstructors().Single();
-
-                    DataStructureCellProtocols.CachedTypeToExecuteOperationCellIfNecessaryOpConstructorInfoMap.TryAdd(valueType, constructorInfo);
-                }
-
-                // ReSharper disable once CoVariantArrayConversion
-                result = (IOperation)constructorInfo.Invoke(new[] { cell });
-            }
 
             return result;
         }

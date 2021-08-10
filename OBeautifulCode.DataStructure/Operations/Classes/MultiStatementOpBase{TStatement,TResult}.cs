@@ -8,8 +8,10 @@ namespace OBeautifulCode.DataStructure
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
 
+    using OBeautifulCode.CodeAnalysis.Recipes;
     using OBeautifulCode.Type;
 
     using static System.FormattableString;
@@ -20,6 +22,7 @@ namespace OBeautifulCode.DataStructure
     /// <typeparam name="TStatement">The type of the statements.</typeparam>
     /// <typeparam name="TResult">The type of the result.</typeparam>
     // ReSharper disable once RedundantExtendsListEntry
+    [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Multi", Justification = ObcSuppressBecause.CA1704_IdentifiersShouldBeSpelledCorrectly_SpellingIsCorrectInContextOfTheDomain)]
     public abstract partial class MultiStatementOpBase<TStatement, TResult> : ReturningOperationBase<TResult>, IModelViaCodeGen
     {
         /// <summary>

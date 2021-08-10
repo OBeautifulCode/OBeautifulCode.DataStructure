@@ -9,10 +9,12 @@ namespace OBeautifulCode.DataStructure
     using System;
     using System.Collections.Concurrent;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Reflection;
     using System.Threading.Tasks;
 
+    using OBeautifulCode.CodeAnalysis.Recipes;
     using OBeautifulCode.Execution.Recipes;
     using OBeautifulCode.Type;
     using OBeautifulCode.Type.Recipes;
@@ -27,6 +29,7 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Gets the default types supported for core operations (e.g. <see cref="GetCellValueOp{TValue}"/>).
         /// </summary>
+        [SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes", Justification = ObcSuppressBecause.CA2104_DoNotDeclareReadOnlyMutableReferenceTypes_TypeIsImmutable)]
         public static readonly IReadOnlyCollection<Type> DefaultTypesSupportedForCoreCellOps = new[]
         {
             typeof(sbyte),
@@ -166,7 +169,7 @@ namespace OBeautifulCode.DataStructure
         /// OPTIONAL types in addition to <see cref="DefaultTypesSupportedForCoreCellOps"/> that should be supported
         /// when executing the core cell operations (e.g. <see cref="GetCellValueOp{TValue}"/>) .
         /// </param>
-        public static void ReCalc(
+        public static void Recalc(
             this Report report,
             DateTime timestampUtc,
             IReadOnlyCollection<Func<IProtocolFactory, IProtocolFactory>> protocolFactoryFuncs = null,
@@ -195,7 +198,7 @@ namespace OBeautifulCode.DataStructure
         /// <returns>
         /// A task.
         /// </returns>
-        public static async Task ReCalcAsync(
+        public static async Task RecalcAsync(
             this Report report,
             DateTime timestampUtc,
             IReadOnlyCollection<Func<IProtocolFactory, IProtocolFactory>> protocolFactoryFuncs = null,
@@ -412,7 +415,7 @@ namespace OBeautifulCode.DataStructure
         {
             var result = report.Sections.SelectMany(_ => _.TreeTable.GetOperationCells()).ToList();
 
-            var details = Invariant($"Value cleared by {nameof(ReportExtensions)}.{nameof(ReCalc)} or async overload.");
+            var details = Invariant($"Value cleared by {nameof(ReportExtensions)}.{nameof(Recalc)} or async overload.");
 
             foreach (var operationCell in result)
             {
@@ -428,7 +431,7 @@ namespace OBeautifulCode.DataStructure
         {
             var result = report.Sections.SelectMany(_ => _.TreeTable.GetValidationCells()).Where(_ => _.Validation != null).ToList();
 
-            var details = Invariant($"Validation cleared by {nameof(ReportExtensions)}.{nameof(ReCalc)} or async overload.");
+            var details = Invariant($"Validation cleared by {nameof(ReportExtensions)}.{nameof(Recalc)} or async overload.");
 
             foreach (var cell in result)
             {
@@ -444,7 +447,7 @@ namespace OBeautifulCode.DataStructure
         {
             var result = report.Sections.SelectMany(_ => _.TreeTable.GetAvailabilityCheckCells()).Where(_ => _.AvailabilityCheck != null).ToList();
 
-            var details = Invariant($"Availability check cleared by {nameof(ReportExtensions)}.{nameof(ReCalc)} or async overload.");
+            var details = Invariant($"Availability check cleared by {nameof(ReportExtensions)}.{nameof(Recalc)} or async overload.");
 
             foreach (var cell in result)
             {
@@ -484,7 +487,7 @@ namespace OBeautifulCode.DataStructure
                 {
                     foreach (var cell in disabledInputCellsWithValues)
                     {
-                        cell.ClearCellValue(timestampUtc, Invariant($"{nameof(ReportExtensions)}.{nameof(ReCalc)} found this disabled input cell having a value.  Clearing the value and will re-run recalc."));
+                        cell.ClearCellValue(timestampUtc, Invariant($"{nameof(ReportExtensions)}.{nameof(Recalc)} found this disabled input cell having a value.  Clearing the value and will re-run recalc."));
                     }
 
                     result = true;

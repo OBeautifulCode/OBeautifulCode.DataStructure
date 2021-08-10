@@ -27,7 +27,7 @@ namespace OBeautifulCode.DataStructure
             this Availability availability,
             IReturningOperation<string> messageOp = null)
         {
-            var result = Op.Const(new AvailabilityCheckResult(Op.Const(availability)));
+            var result = Op.Const(new AvailabilityCheckResult(Op.Const(availability), messageOp));
 
             return result;
         }

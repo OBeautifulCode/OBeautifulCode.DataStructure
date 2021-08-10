@@ -181,7 +181,7 @@ namespace OBeautifulCode.DataStructure.Test
 
             report.SetInputCellValue(false, DateTime.UtcNow, sectionId, isForProfitCell.Id);
 
-            report.ReCalc(
+            report.Recalc(
                 DateTime.UtcNow,
                 new Func<IProtocolFactory, IProtocolFactory>[]
                 {
@@ -191,7 +191,7 @@ namespace OBeautifulCode.DataStructure.Test
             report.SetInputCellValue(2.2m, DateTime.UtcNow, sectionId, numberOfSalesFteCell.Id);
             report.SetInputCellValue(1.1m, DateTime.UtcNow, sectionId, numberOfWarehouseFteCell.Id);
 
-            report.ReCalc(
+            report.Recalc(
                 DateTime.UtcNow,
                 new Func<IProtocolFactory, IProtocolFactory>[]
                 {
