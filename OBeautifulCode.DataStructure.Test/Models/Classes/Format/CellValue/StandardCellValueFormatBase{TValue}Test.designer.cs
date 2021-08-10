@@ -55,6 +55,10 @@ namespace OBeautifulCode.DataStructure.Test
                         // We do not know in advance if this will happen.  As such, the following objects are commented out.
                         // ReferenceObjectForEquatableTestScenarios.DeepCloneWithMissingValueText(A.Dummy<StandardCellValueFormatBase<Version>>().Whose(_ => !_.MissingValueText.IsEqualTo(ReferenceObjectForEquatableTestScenarios.MissingValueText)).MissingValueText),
                     },
+                    ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject = new StandardCellValueFormatBase<Version>[]
+                    {
+                        A.Dummy<StandardCellValueFormatBase<Version>>().Whose(_ => _.GetType() != ReferenceObjectForEquatableTestScenarios.GetType()),
+                    },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
                     {
                         A.Dummy<object>(),

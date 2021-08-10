@@ -33,111 +33,42 @@ namespace OBeautifulCode.DataStructure.Test
 
     using static global::System.FormattableString;
 
-    public static partial class BooleanCellValueFormatTest
+    public static partial class NullNumberCellFormatTValueTest
     {
-        private static readonly StringRepresentationTestScenarios<BooleanCellValueFormat> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<BooleanCellValueFormat>()
+        private static readonly StringRepresentationTestScenarios<NullNumberCellFormat<Version>> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<NullNumberCellFormat<Version>>()
             .AddScenario(() =>
-                new StringRepresentationTestScenario<BooleanCellValueFormat>
+                new StringRepresentationTestScenario<NullNumberCellFormat<Version>>
                 {
                     Name = "Default Code Generated Scenario",
                     SystemUnderTestExpectedStringRepresentationFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<BooleanCellValueFormat>();
+                        var systemUnderTest = A.Dummy<NullNumberCellFormat<Version>>();
 
-                        var result = new SystemUnderTestExpectedStringRepresentation<BooleanCellValueFormat>
+                        var result = new SystemUnderTestExpectedStringRepresentation<NullNumberCellFormat<Version>>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.BooleanCellValueFormat: MissingValueText = {systemUnderTest.MissingValueText?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, TrueText = {systemUnderTest.TrueText?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, FalseText = {systemUnderTest.FalseText?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.NullNumberCellFormat<Version>: MissingValueText = {systemUnderTest.MissingValueText?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, NumberOfDecimalPlaces = {systemUnderTest.NumberOfDecimalPlaces?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, DecimalSeparator = {systemUnderTest.DecimalSeparator?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, DigitGroupKind = {systemUnderTest.DigitGroupKind?.ToString() ?? "<null>"}, DigitGroupSeparator = {systemUnderTest.DigitGroupSeparator?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, NegativeNumberDisplayKind = {systemUnderTest.NegativeNumberDisplayKind?.ToString() ?? "<null>"}."),
                         };
 
                         return result;
                     },
                 });
 
-        private static readonly ConstructorArgumentValidationTestScenarios<BooleanCellValueFormat> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<BooleanCellValueFormat>()
+        private static readonly ConstructorArgumentValidationTestScenarios<NullNumberCellFormat<Version>> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<NullNumberCellFormat<Version>>()
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<BooleanCellValueFormat>
-                {
-                    Name = "constructor should throw ArgumentNullException when parameter 'trueText' is null scenario",
-                    ConstructionFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<BooleanCellValueFormat>();
-
-                        var result = new BooleanCellValueFormat(
-                                             null,
-                                             referenceObject.FalseText,
-                                             referenceObject.MissingValueText);
-
-                        return result;
-                    },
-                    ExpectedExceptionType = typeof(ArgumentNullException),
-                    ExpectedExceptionMessageContains = new[] { "trueText", },
-                })
-            .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<BooleanCellValueFormat>
-                {
-                    Name = "constructor should throw ArgumentException when parameter 'trueText' is white space scenario",
-                    ConstructionFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<BooleanCellValueFormat>();
-
-                        var result = new BooleanCellValueFormat(
-                                             Invariant($"  {Environment.NewLine}  "),
-                                             referenceObject.FalseText,
-                                             referenceObject.MissingValueText);
-
-                        return result;
-                    },
-                    ExpectedExceptionType = typeof(ArgumentException),
-                    ExpectedExceptionMessageContains = new[] { "trueText", "white space", },
-                })
-            .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<BooleanCellValueFormat>
-                {
-                    Name = "constructor should throw ArgumentNullException when parameter 'falseText' is null scenario",
-                    ConstructionFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<BooleanCellValueFormat>();
-
-                        var result = new BooleanCellValueFormat(
-                                             referenceObject.TrueText,
-                                             null,
-                                             referenceObject.MissingValueText);
-
-                        return result;
-                    },
-                    ExpectedExceptionType = typeof(ArgumentNullException),
-                    ExpectedExceptionMessageContains = new[] { "falseText", },
-                })
-            .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<BooleanCellValueFormat>
-                {
-                    Name = "constructor should throw ArgumentException when parameter 'falseText' is white space scenario",
-                    ConstructionFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<BooleanCellValueFormat>();
-
-                        var result = new BooleanCellValueFormat(
-                                             referenceObject.TrueText,
-                                             Invariant($"  {Environment.NewLine}  "),
-                                             referenceObject.MissingValueText);
-
-                        return result;
-                    },
-                    ExpectedExceptionType = typeof(ArgumentException),
-                    ExpectedExceptionMessageContains = new[] { "falseText", "white space", },
-                })
-            .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<BooleanCellValueFormat>
+                new ConstructorArgumentValidationTestScenario<NullNumberCellFormat<Version>>
                 {
                     Name = "constructor should throw ArgumentNullException when parameter 'missingValueText' is null scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<BooleanCellValueFormat>();
+                        var referenceObject = A.Dummy<NullNumberCellFormat<Version>>();
 
-                        var result = new BooleanCellValueFormat(
-                                             referenceObject.TrueText,
-                                             referenceObject.FalseText,
+                        var result = new NullNumberCellFormat<Version>(
+                                             referenceObject.NumberOfDecimalPlaces,
+                                             referenceObject.DecimalSeparator,
+                                             referenceObject.DigitGroupKind,
+                                             referenceObject.DigitGroupSeparator,
+                                             referenceObject.NegativeNumberDisplayKind,
                                              null);
 
                         return result;
@@ -146,16 +77,19 @@ namespace OBeautifulCode.DataStructure.Test
                     ExpectedExceptionMessageContains = new[] { "missingValueText", },
                 })
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<BooleanCellValueFormat>
+                new ConstructorArgumentValidationTestScenario<NullNumberCellFormat<Version>>
                 {
                     Name = "constructor should throw ArgumentException when parameter 'missingValueText' is white space scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<BooleanCellValueFormat>();
+                        var referenceObject = A.Dummy<NullNumberCellFormat<Version>>();
 
-                        var result = new BooleanCellValueFormat(
-                                             referenceObject.TrueText,
-                                             referenceObject.FalseText,
+                        var result = new NullNumberCellFormat<Version>(
+                                             referenceObject.NumberOfDecimalPlaces,
+                                             referenceObject.DecimalSeparator,
+                                             referenceObject.DigitGroupKind,
+                                             referenceObject.DigitGroupSeparator,
+                                             referenceObject.NegativeNumberDisplayKind,
                                              Invariant($"  {Environment.NewLine}  "));
 
                         return result;
@@ -164,62 +98,143 @@ namespace OBeautifulCode.DataStructure.Test
                     ExpectedExceptionMessageContains = new[] { "missingValueText", "white space", },
                 });
 
-        private static readonly ConstructorPropertyAssignmentTestScenarios<BooleanCellValueFormat> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<BooleanCellValueFormat>()
+        private static readonly ConstructorPropertyAssignmentTestScenarios<NullNumberCellFormat<Version>> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<NullNumberCellFormat<Version>>()
             .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<BooleanCellValueFormat>
+                new ConstructorPropertyAssignmentTestScenario<NullNumberCellFormat<Version>>
                 {
-                    Name = "TrueText should return same 'trueText' parameter passed to constructor when getting",
+                    Name = "NumberOfDecimalPlaces should return same 'numberOfDecimalPlaces' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
-                        var referenceObject = A.Dummy<BooleanCellValueFormat>();
+                        var referenceObject = A.Dummy<NullNumberCellFormat<Version>>();
 
-                        var result = new SystemUnderTestExpectedPropertyValue<BooleanCellValueFormat>
+                        var result = new SystemUnderTestExpectedPropertyValue<NullNumberCellFormat<Version>>
                         {
-                            SystemUnderTest = new BooleanCellValueFormat(
-                                                      referenceObject.TrueText,
-                                                      referenceObject.FalseText,
+                            SystemUnderTest = new NullNumberCellFormat<Version>(
+                                                      referenceObject.NumberOfDecimalPlaces,
+                                                      referenceObject.DecimalSeparator,
+                                                      referenceObject.DigitGroupKind,
+                                                      referenceObject.DigitGroupSeparator,
+                                                      referenceObject.NegativeNumberDisplayKind,
                                                       referenceObject.MissingValueText),
-                            ExpectedPropertyValue = referenceObject.TrueText,
+                            ExpectedPropertyValue = referenceObject.NumberOfDecimalPlaces,
                         };
 
                         return result;
                     },
-                    PropertyName = "TrueText",
+                    PropertyName = "NumberOfDecimalPlaces",
                 })
             .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<BooleanCellValueFormat>
+                new ConstructorPropertyAssignmentTestScenario<NullNumberCellFormat<Version>>
                 {
-                    Name = "FalseText should return same 'falseText' parameter passed to constructor when getting",
+                    Name = "DecimalSeparator should return same 'decimalSeparator' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
-                        var referenceObject = A.Dummy<BooleanCellValueFormat>();
+                        var referenceObject = A.Dummy<NullNumberCellFormat<Version>>();
 
-                        var result = new SystemUnderTestExpectedPropertyValue<BooleanCellValueFormat>
+                        var result = new SystemUnderTestExpectedPropertyValue<NullNumberCellFormat<Version>>
                         {
-                            SystemUnderTest = new BooleanCellValueFormat(
-                                                      referenceObject.TrueText,
-                                                      referenceObject.FalseText,
+                            SystemUnderTest = new NullNumberCellFormat<Version>(
+                                                      referenceObject.NumberOfDecimalPlaces,
+                                                      referenceObject.DecimalSeparator,
+                                                      referenceObject.DigitGroupKind,
+                                                      referenceObject.DigitGroupSeparator,
+                                                      referenceObject.NegativeNumberDisplayKind,
                                                       referenceObject.MissingValueText),
-                            ExpectedPropertyValue = referenceObject.FalseText,
+                            ExpectedPropertyValue = referenceObject.DecimalSeparator,
                         };
 
                         return result;
                     },
-                    PropertyName = "FalseText",
+                    PropertyName = "DecimalSeparator",
                 })
             .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<BooleanCellValueFormat>
+                new ConstructorPropertyAssignmentTestScenario<NullNumberCellFormat<Version>>
+                {
+                    Name = "DigitGroupKind should return same 'digitGroupKind' parameter passed to constructor when getting",
+                    SystemUnderTestExpectedPropertyValueFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<NullNumberCellFormat<Version>>();
+
+                        var result = new SystemUnderTestExpectedPropertyValue<NullNumberCellFormat<Version>>
+                        {
+                            SystemUnderTest = new NullNumberCellFormat<Version>(
+                                                      referenceObject.NumberOfDecimalPlaces,
+                                                      referenceObject.DecimalSeparator,
+                                                      referenceObject.DigitGroupKind,
+                                                      referenceObject.DigitGroupSeparator,
+                                                      referenceObject.NegativeNumberDisplayKind,
+                                                      referenceObject.MissingValueText),
+                            ExpectedPropertyValue = referenceObject.DigitGroupKind,
+                        };
+
+                        return result;
+                    },
+                    PropertyName = "DigitGroupKind",
+                })
+            .AddScenario(() =>
+                new ConstructorPropertyAssignmentTestScenario<NullNumberCellFormat<Version>>
+                {
+                    Name = "DigitGroupSeparator should return same 'digitGroupSeparator' parameter passed to constructor when getting",
+                    SystemUnderTestExpectedPropertyValueFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<NullNumberCellFormat<Version>>();
+
+                        var result = new SystemUnderTestExpectedPropertyValue<NullNumberCellFormat<Version>>
+                        {
+                            SystemUnderTest = new NullNumberCellFormat<Version>(
+                                                      referenceObject.NumberOfDecimalPlaces,
+                                                      referenceObject.DecimalSeparator,
+                                                      referenceObject.DigitGroupKind,
+                                                      referenceObject.DigitGroupSeparator,
+                                                      referenceObject.NegativeNumberDisplayKind,
+                                                      referenceObject.MissingValueText),
+                            ExpectedPropertyValue = referenceObject.DigitGroupSeparator,
+                        };
+
+                        return result;
+                    },
+                    PropertyName = "DigitGroupSeparator",
+                })
+            .AddScenario(() =>
+                new ConstructorPropertyAssignmentTestScenario<NullNumberCellFormat<Version>>
+                {
+                    Name = "NegativeNumberDisplayKind should return same 'negativeNumberDisplayKind' parameter passed to constructor when getting",
+                    SystemUnderTestExpectedPropertyValueFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<NullNumberCellFormat<Version>>();
+
+                        var result = new SystemUnderTestExpectedPropertyValue<NullNumberCellFormat<Version>>
+                        {
+                            SystemUnderTest = new NullNumberCellFormat<Version>(
+                                                      referenceObject.NumberOfDecimalPlaces,
+                                                      referenceObject.DecimalSeparator,
+                                                      referenceObject.DigitGroupKind,
+                                                      referenceObject.DigitGroupSeparator,
+                                                      referenceObject.NegativeNumberDisplayKind,
+                                                      referenceObject.MissingValueText),
+                            ExpectedPropertyValue = referenceObject.NegativeNumberDisplayKind,
+                        };
+
+                        return result;
+                    },
+                    PropertyName = "NegativeNumberDisplayKind",
+                })
+            .AddScenario(() =>
+                new ConstructorPropertyAssignmentTestScenario<NullNumberCellFormat<Version>>
                 {
                     Name = "MissingValueText should return same 'missingValueText' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
-                        var referenceObject = A.Dummy<BooleanCellValueFormat>();
+                        var referenceObject = A.Dummy<NullNumberCellFormat<Version>>();
 
-                        var result = new SystemUnderTestExpectedPropertyValue<BooleanCellValueFormat>
+                        var result = new SystemUnderTestExpectedPropertyValue<NullNumberCellFormat<Version>>
                         {
-                            SystemUnderTest = new BooleanCellValueFormat(
-                                                      referenceObject.TrueText,
-                                                      referenceObject.FalseText,
+                            SystemUnderTest = new NullNumberCellFormat<Version>(
+                                                      referenceObject.NumberOfDecimalPlaces,
+                                                      referenceObject.DecimalSeparator,
+                                                      referenceObject.DigitGroupKind,
+                                                      referenceObject.DigitGroupSeparator,
+                                                      referenceObject.NegativeNumberDisplayKind,
                                                       referenceObject.MissingValueText),
                             ExpectedPropertyValue = referenceObject.MissingValueText,
                         };
@@ -229,19 +244,19 @@ namespace OBeautifulCode.DataStructure.Test
                     PropertyName = "MissingValueText",
                 });
 
-        private static readonly DeepCloneWithTestScenarios<BooleanCellValueFormat> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<BooleanCellValueFormat>()
+        private static readonly DeepCloneWithTestScenarios<NullNumberCellFormat<Version>> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<NullNumberCellFormat<Version>>()
             .AddScenario(() =>
-                new DeepCloneWithTestScenario<BooleanCellValueFormat>
+                new DeepCloneWithTestScenario<NullNumberCellFormat<Version>>
                 {
                     Name = "DeepCloneWithMissingValueText should deep clone object and replace MissingValueText with the provided missingValueText",
                     WithPropertyName = "MissingValueText",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<BooleanCellValueFormat>();
+                        var systemUnderTest = A.Dummy<NullNumberCellFormat<Version>>();
 
-                        var referenceObject = A.Dummy<BooleanCellValueFormat>().ThatIs(_ => !systemUnderTest.MissingValueText.IsEqualTo(_.MissingValueText));
+                        var referenceObject = A.Dummy<NullNumberCellFormat<Version>>().ThatIs(_ => !systemUnderTest.MissingValueText.IsEqualTo(_.MissingValueText));
 
-                        var result = new SystemUnderTestDeepCloneWithValue<BooleanCellValueFormat>
+                        var result = new SystemUnderTestDeepCloneWithValue<NullNumberCellFormat<Version>>
                         {
                             SystemUnderTest = systemUnderTest,
                             DeepCloneWithValue = referenceObject.MissingValueText,
@@ -251,74 +266,167 @@ namespace OBeautifulCode.DataStructure.Test
                     },
                 })
             .AddScenario(() =>
-                new DeepCloneWithTestScenario<BooleanCellValueFormat>
+                new DeepCloneWithTestScenario<NullNumberCellFormat<Version>>
                 {
-                    Name = "DeepCloneWithTrueText should deep clone object and replace TrueText with the provided trueText",
-                    WithPropertyName = "TrueText",
+                    Name = "DeepCloneWithNumberOfDecimalPlaces should deep clone object and replace NumberOfDecimalPlaces with the provided numberOfDecimalPlaces",
+                    WithPropertyName = "NumberOfDecimalPlaces",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<BooleanCellValueFormat>();
+                        var systemUnderTest = A.Dummy<NullNumberCellFormat<Version>>();
 
-                        var referenceObject = A.Dummy<BooleanCellValueFormat>().ThatIs(_ => !systemUnderTest.TrueText.IsEqualTo(_.TrueText));
+                        var referenceObject = A.Dummy<NullNumberCellFormat<Version>>().ThatIs(_ => !systemUnderTest.NumberOfDecimalPlaces.IsEqualTo(_.NumberOfDecimalPlaces));
 
-                        var result = new SystemUnderTestDeepCloneWithValue<BooleanCellValueFormat>
+                        var result = new SystemUnderTestDeepCloneWithValue<NullNumberCellFormat<Version>>
                         {
                             SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.TrueText,
+                            DeepCloneWithValue = referenceObject.NumberOfDecimalPlaces,
                         };
 
                         return result;
                     },
                 })
             .AddScenario(() =>
-                new DeepCloneWithTestScenario<BooleanCellValueFormat>
+                new DeepCloneWithTestScenario<NullNumberCellFormat<Version>>
                 {
-                    Name = "DeepCloneWithFalseText should deep clone object and replace FalseText with the provided falseText",
-                    WithPropertyName = "FalseText",
+                    Name = "DeepCloneWithDecimalSeparator should deep clone object and replace DecimalSeparator with the provided decimalSeparator",
+                    WithPropertyName = "DecimalSeparator",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<BooleanCellValueFormat>();
+                        var systemUnderTest = A.Dummy<NullNumberCellFormat<Version>>();
 
-                        var referenceObject = A.Dummy<BooleanCellValueFormat>().ThatIs(_ => !systemUnderTest.FalseText.IsEqualTo(_.FalseText));
+                        var referenceObject = A.Dummy<NullNumberCellFormat<Version>>().ThatIs(_ => !systemUnderTest.DecimalSeparator.IsEqualTo(_.DecimalSeparator));
 
-                        var result = new SystemUnderTestDeepCloneWithValue<BooleanCellValueFormat>
+                        var result = new SystemUnderTestDeepCloneWithValue<NullNumberCellFormat<Version>>
                         {
                             SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.FalseText,
+                            DeepCloneWithValue = referenceObject.DecimalSeparator,
+                        };
+
+                        return result;
+                    },
+                })
+            .AddScenario(() =>
+                new DeepCloneWithTestScenario<NullNumberCellFormat<Version>>
+                {
+                    Name = "DeepCloneWithDigitGroupKind should deep clone object and replace DigitGroupKind with the provided digitGroupKind",
+                    WithPropertyName = "DigitGroupKind",
+                    SystemUnderTestDeepCloneWithValueFunc = () =>
+                    {
+                        var systemUnderTest = A.Dummy<NullNumberCellFormat<Version>>();
+
+                        var referenceObject = A.Dummy<NullNumberCellFormat<Version>>().ThatIs(_ => !systemUnderTest.DigitGroupKind.IsEqualTo(_.DigitGroupKind));
+
+                        var result = new SystemUnderTestDeepCloneWithValue<NullNumberCellFormat<Version>>
+                        {
+                            SystemUnderTest = systemUnderTest,
+                            DeepCloneWithValue = referenceObject.DigitGroupKind,
+                        };
+
+                        return result;
+                    },
+                })
+            .AddScenario(() =>
+                new DeepCloneWithTestScenario<NullNumberCellFormat<Version>>
+                {
+                    Name = "DeepCloneWithDigitGroupSeparator should deep clone object and replace DigitGroupSeparator with the provided digitGroupSeparator",
+                    WithPropertyName = "DigitGroupSeparator",
+                    SystemUnderTestDeepCloneWithValueFunc = () =>
+                    {
+                        var systemUnderTest = A.Dummy<NullNumberCellFormat<Version>>();
+
+                        var referenceObject = A.Dummy<NullNumberCellFormat<Version>>().ThatIs(_ => !systemUnderTest.DigitGroupSeparator.IsEqualTo(_.DigitGroupSeparator));
+
+                        var result = new SystemUnderTestDeepCloneWithValue<NullNumberCellFormat<Version>>
+                        {
+                            SystemUnderTest = systemUnderTest,
+                            DeepCloneWithValue = referenceObject.DigitGroupSeparator,
+                        };
+
+                        return result;
+                    },
+                })
+            .AddScenario(() =>
+                new DeepCloneWithTestScenario<NullNumberCellFormat<Version>>
+                {
+                    Name = "DeepCloneWithNegativeNumberDisplayKind should deep clone object and replace NegativeNumberDisplayKind with the provided negativeNumberDisplayKind",
+                    WithPropertyName = "NegativeNumberDisplayKind",
+                    SystemUnderTestDeepCloneWithValueFunc = () =>
+                    {
+                        var systemUnderTest = A.Dummy<NullNumberCellFormat<Version>>();
+
+                        var referenceObject = A.Dummy<NullNumberCellFormat<Version>>().ThatIs(_ => !systemUnderTest.NegativeNumberDisplayKind.IsEqualTo(_.NegativeNumberDisplayKind));
+
+                        var result = new SystemUnderTestDeepCloneWithValue<NullNumberCellFormat<Version>>
+                        {
+                            SystemUnderTest = systemUnderTest,
+                            DeepCloneWithValue = referenceObject.NegativeNumberDisplayKind,
                         };
 
                         return result;
                     },
                 });
 
-        private static readonly BooleanCellValueFormat ReferenceObjectForEquatableTestScenarios = A.Dummy<BooleanCellValueFormat>();
+        private static readonly NullNumberCellFormat<Version> ReferenceObjectForEquatableTestScenarios = A.Dummy<NullNumberCellFormat<Version>>();
 
-        private static readonly EquatableTestScenarios<BooleanCellValueFormat> EquatableTestScenarios = new EquatableTestScenarios<BooleanCellValueFormat>()
+        private static readonly EquatableTestScenarios<NullNumberCellFormat<Version>> EquatableTestScenarios = new EquatableTestScenarios<NullNumberCellFormat<Version>>()
             .AddScenario(() =>
-                new EquatableTestScenario<BooleanCellValueFormat>
+                new EquatableTestScenario<NullNumberCellFormat<Version>>
                 {
                     Name = "Default Code Generated Scenario",
                     ReferenceObject = ReferenceObjectForEquatableTestScenarios,
-                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new BooleanCellValueFormat[]
+                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new NullNumberCellFormat<Version>[]
                     {
-                        new BooleanCellValueFormat(
-                                ReferenceObjectForEquatableTestScenarios.TrueText,
-                                ReferenceObjectForEquatableTestScenarios.FalseText,
+                        new NullNumberCellFormat<Version>(
+                                ReferenceObjectForEquatableTestScenarios.NumberOfDecimalPlaces,
+                                ReferenceObjectForEquatableTestScenarios.DecimalSeparator,
+                                ReferenceObjectForEquatableTestScenarios.DigitGroupKind,
+                                ReferenceObjectForEquatableTestScenarios.DigitGroupSeparator,
+                                ReferenceObjectForEquatableTestScenarios.NegativeNumberDisplayKind,
                                 ReferenceObjectForEquatableTestScenarios.MissingValueText),
                     },
-                    ObjectsThatAreNotEqualToReferenceObject = new BooleanCellValueFormat[]
+                    ObjectsThatAreNotEqualToReferenceObject = new NullNumberCellFormat<Version>[]
                     {
-                        new BooleanCellValueFormat(
-                                ReferenceObjectForEquatableTestScenarios.TrueText,
-                                ReferenceObjectForEquatableTestScenarios.FalseText,
-                                A.Dummy<BooleanCellValueFormat>().Whose(_ => !_.MissingValueText.IsEqualTo(ReferenceObjectForEquatableTestScenarios.MissingValueText)).MissingValueText),
-                        new BooleanCellValueFormat(
-                                A.Dummy<BooleanCellValueFormat>().Whose(_ => !_.TrueText.IsEqualTo(ReferenceObjectForEquatableTestScenarios.TrueText)).TrueText,
-                                ReferenceObjectForEquatableTestScenarios.FalseText,
+                        new NullNumberCellFormat<Version>(
+                                ReferenceObjectForEquatableTestScenarios.NumberOfDecimalPlaces,
+                                ReferenceObjectForEquatableTestScenarios.DecimalSeparator,
+                                ReferenceObjectForEquatableTestScenarios.DigitGroupKind,
+                                ReferenceObjectForEquatableTestScenarios.DigitGroupSeparator,
+                                ReferenceObjectForEquatableTestScenarios.NegativeNumberDisplayKind,
+                                A.Dummy<NullNumberCellFormat<Version>>().Whose(_ => !_.MissingValueText.IsEqualTo(ReferenceObjectForEquatableTestScenarios.MissingValueText)).MissingValueText),
+                        new NullNumberCellFormat<Version>(
+                                A.Dummy<NullNumberCellFormat<Version>>().Whose(_ => !_.NumberOfDecimalPlaces.IsEqualTo(ReferenceObjectForEquatableTestScenarios.NumberOfDecimalPlaces)).NumberOfDecimalPlaces,
+                                ReferenceObjectForEquatableTestScenarios.DecimalSeparator,
+                                ReferenceObjectForEquatableTestScenarios.DigitGroupKind,
+                                ReferenceObjectForEquatableTestScenarios.DigitGroupSeparator,
+                                ReferenceObjectForEquatableTestScenarios.NegativeNumberDisplayKind,
                                 ReferenceObjectForEquatableTestScenarios.MissingValueText),
-                        new BooleanCellValueFormat(
-                                ReferenceObjectForEquatableTestScenarios.TrueText,
-                                A.Dummy<BooleanCellValueFormat>().Whose(_ => !_.FalseText.IsEqualTo(ReferenceObjectForEquatableTestScenarios.FalseText)).FalseText,
+                        new NullNumberCellFormat<Version>(
+                                ReferenceObjectForEquatableTestScenarios.NumberOfDecimalPlaces,
+                                A.Dummy<NullNumberCellFormat<Version>>().Whose(_ => !_.DecimalSeparator.IsEqualTo(ReferenceObjectForEquatableTestScenarios.DecimalSeparator)).DecimalSeparator,
+                                ReferenceObjectForEquatableTestScenarios.DigitGroupKind,
+                                ReferenceObjectForEquatableTestScenarios.DigitGroupSeparator,
+                                ReferenceObjectForEquatableTestScenarios.NegativeNumberDisplayKind,
+                                ReferenceObjectForEquatableTestScenarios.MissingValueText),
+                        new NullNumberCellFormat<Version>(
+                                ReferenceObjectForEquatableTestScenarios.NumberOfDecimalPlaces,
+                                ReferenceObjectForEquatableTestScenarios.DecimalSeparator,
+                                A.Dummy<NullNumberCellFormat<Version>>().Whose(_ => !_.DigitGroupKind.IsEqualTo(ReferenceObjectForEquatableTestScenarios.DigitGroupKind)).DigitGroupKind,
+                                ReferenceObjectForEquatableTestScenarios.DigitGroupSeparator,
+                                ReferenceObjectForEquatableTestScenarios.NegativeNumberDisplayKind,
+                                ReferenceObjectForEquatableTestScenarios.MissingValueText),
+                        new NullNumberCellFormat<Version>(
+                                ReferenceObjectForEquatableTestScenarios.NumberOfDecimalPlaces,
+                                ReferenceObjectForEquatableTestScenarios.DecimalSeparator,
+                                ReferenceObjectForEquatableTestScenarios.DigitGroupKind,
+                                A.Dummy<NullNumberCellFormat<Version>>().Whose(_ => !_.DigitGroupSeparator.IsEqualTo(ReferenceObjectForEquatableTestScenarios.DigitGroupSeparator)).DigitGroupSeparator,
+                                ReferenceObjectForEquatableTestScenarios.NegativeNumberDisplayKind,
+                                ReferenceObjectForEquatableTestScenarios.MissingValueText),
+                        new NullNumberCellFormat<Version>(
+                                ReferenceObjectForEquatableTestScenarios.NumberOfDecimalPlaces,
+                                ReferenceObjectForEquatableTestScenarios.DecimalSeparator,
+                                ReferenceObjectForEquatableTestScenarios.DigitGroupKind,
+                                ReferenceObjectForEquatableTestScenarios.DigitGroupSeparator,
+                                A.Dummy<NullNumberCellFormat<Version>>().Whose(_ => !_.NegativeNumberDisplayKind.IsEqualTo(ReferenceObjectForEquatableTestScenarios.NegativeNumberDisplayKind)).NegativeNumberDisplayKind,
                                 ReferenceObjectForEquatableTestScenarios.MissingValueText),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
@@ -328,10 +436,10 @@ namespace OBeautifulCode.DataStructure.Test
                         A.Dummy<int>(),
                         A.Dummy<int?>(),
                         A.Dummy<Guid>(),
+                        A.Dummy<BooleanCellValueFormat>(),
                         A.Dummy<CategoricalCellValueFormat<Version>>(),
                         A.Dummy<DecimalCellValueFormat>(),
                         A.Dummy<HtmlCellValueFormat>(),
-                        A.Dummy<NullNumberCellFormat<Version>>(),
                         A.Dummy<PercentCellValueFormat>(),
                     },
                 });
@@ -354,12 +462,12 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void BooleanCellValueFormat___Should_implement_IModel_of_BooleanCellValueFormat___When_reflecting()
+            public static void NullNumberCellFormat___Should_implement_IModel_of_NullNumberCellFormat___When_reflecting()
             {
                 // Arrange
-                var type = typeof(BooleanCellValueFormat);
+                var type = typeof(NullNumberCellFormat<Version>);
 
-                var expectedModelMethods = typeof(IModel<BooleanCellValueFormat>).GetInterfaceDeclaredAndImplementedMethods();
+                var expectedModelMethods = typeof(IModel<NullNumberCellFormat<Version>>).GetInterfaceDeclaredAndImplementedMethods();
 
                 var expectedModelMethodHashes = expectedModelMethods.Select(_ => _.GetSignatureHash());
 
@@ -369,7 +477,7 @@ namespace OBeautifulCode.DataStructure.Test
                 var actualModelMethodHashes = actualModelMethods.Select(_ => _.GetSignatureHash());
 
                 // Assert
-                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<BooleanCellValueFormat>));
+                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<NullNumberCellFormat<Version>>));
                 expectedModelMethodHashes.Except(actualModelMethodHashes).AsTest().Must().BeEmptyEnumerable();
             }
 
@@ -387,10 +495,10 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void BooleanCellValueFormat___Should_be_attributed_with_Serializable____When_reflecting()
+            public static void NullNumberCellFormat___Should_be_attributed_with_Serializable____When_reflecting()
             {
                 // Arrange
-                var type = typeof(BooleanCellValueFormat);
+                var type = typeof(NullNumberCellFormat<Version>);
 
                 // Act
                 var actualAttributes = type.GetCustomAttributes(typeof(SerializableAttribute), false);
@@ -548,10 +656,10 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Clone___Should_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<BooleanCellValueFormat>();
+                var systemUnderTest = A.Dummy<NullNumberCellFormat<Version>>();
 
                 // Act
-                var actual = (BooleanCellValueFormat)systemUnderTest.Clone();
+                var actual = (NullNumberCellFormat<Version>)systemUnderTest.Clone();
 
                 // Assert
                 actual.AsTest().Must().BeEqualTo(systemUnderTest);
@@ -575,7 +683,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void DeepClone___Should_deep_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<BooleanCellValueFormat>();
+                var systemUnderTest = A.Dummy<NullNumberCellFormat<Version>>();
 
                 // Act
                 var actual = systemUnderTest.DeepClone();
@@ -601,7 +709,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "MissingValueText", "TrueText", "FalseText" };
+                var propertyNames = new string[] { "MissingValueText", "NumberOfDecimalPlaces", "DecimalSeparator", "DigitGroupKind", "DigitGroupSeparator", "NegativeNumberDisplayKind" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 
@@ -614,12 +722,12 @@ namespace OBeautifulCode.DataStructure.Test
                     }
 
                     // Act
-                    var actual = (BooleanCellValueFormat)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
+                    var actual = (NullNumberCellFormat<Version>)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
 
                     // Assert
                     foreach(var propertyName in propertyNames)
                     {
-                        var propertyInfo = typeof(BooleanCellValueFormat).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
+                        var propertyInfo = typeof(NullNumberCellFormat<Version>).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
 
                         var actualPropertyValue = propertyInfo.GetValue(actual);
 
@@ -681,7 +789,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<BooleanCellValueFormat>();
+                var expected = A.Dummy<NullNumberCellFormat<Version>>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -710,7 +818,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<BooleanCellValueFormat>();
+                var expected = A.Dummy<NullNumberCellFormat<Version>>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -739,7 +847,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<BooleanCellValueFormat>();
+                var expected = A.Dummy<NullNumberCellFormat<Version>>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -768,7 +876,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<BooleanCellValueFormat>();
+                var expected = A.Dummy<NullNumberCellFormat<Version>>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -802,8 +910,8 @@ namespace OBeautifulCode.DataStructure.Test
             public static void EqualsOperator___Should_return_true___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                BooleanCellValueFormat systemUnderTest1 = null;
-                BooleanCellValueFormat systemUnderTest2 = null;
+                NullNumberCellFormat<Version> systemUnderTest1 = null;
+                NullNumberCellFormat<Version> systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 == systemUnderTest2;
@@ -833,7 +941,7 @@ namespace OBeautifulCode.DataStructure.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    BooleanCellValueFormat systemUnderTest = null;
+                    NullNumberCellFormat<Version> systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest == scenario.ReferenceObject;
@@ -982,8 +1090,8 @@ namespace OBeautifulCode.DataStructure.Test
             public static void NotEqualsOperator___Should_return_false___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                BooleanCellValueFormat systemUnderTest1 = null;
-                BooleanCellValueFormat systemUnderTest2 = null;
+                NullNumberCellFormat<Version> systemUnderTest1 = null;
+                NullNumberCellFormat<Version> systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 != systemUnderTest2;
@@ -1013,7 +1121,7 @@ namespace OBeautifulCode.DataStructure.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    BooleanCellValueFormat systemUnderTest = null;
+                    NullNumberCellFormat<Version> systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest != scenario.ReferenceObject;
@@ -1166,10 +1274,10 @@ namespace OBeautifulCode.DataStructure.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    CellValueFormatBase<bool> systemUnderTest = null;
+                    CellValueFormatBase<Version> systemUnderTest = null;
 
                     // Act
-                    var actual = scenario.ReferenceObject.Equals((CellValueFormatBase<bool>)systemUnderTest);
+                    var actual = scenario.ReferenceObject.Equals((CellValueFormatBase<Version>)systemUnderTest);
 
                     // Assert
                     actual.AsTest().Must().BeFalse(because: scenario.Id);
@@ -1197,7 +1305,7 @@ namespace OBeautifulCode.DataStructure.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange, Act
-                    var actual = scenario.ReferenceObject.Equals((CellValueFormatBase<bool>)scenario.ReferenceObject);
+                    var actual = scenario.ReferenceObject.Equals((CellValueFormatBase<Version>)scenario.ReferenceObject);
 
                     // Assert
                     actual.AsTest().Must().BeTrue(because: scenario.Id);
@@ -1225,7 +1333,7 @@ namespace OBeautifulCode.DataStructure.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange, Act
-                    var actuals = scenario.ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((CellValueFormatBase<bool>)_)).ToList();
+                    var actuals = scenario.ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((CellValueFormatBase<Version>)_)).ToList();
 
                     // Assert
                     actuals.AsTest().Must().Each().BeFalse(because: scenario.Id);
@@ -1253,7 +1361,7 @@ namespace OBeautifulCode.DataStructure.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange, Act
-                    var actuals = scenario.ObjectsThatAreNotEqualToReferenceObject.Select(_ => scenario.ReferenceObject.Equals((CellValueFormatBase<bool>)_)).ToList();
+                    var actuals = scenario.ObjectsThatAreNotEqualToReferenceObject.Select(_ => scenario.ReferenceObject.Equals((CellValueFormatBase<Version>)_)).ToList();
 
                     // Assert
                     actuals.AsTest().Must().Each().BeFalse(because: scenario.Id);
@@ -1281,7 +1389,7 @@ namespace OBeautifulCode.DataStructure.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange, Act
-                    var actuals = scenario.ObjectsThatAreEqualToButNotTheSameAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((CellValueFormatBase<bool>)_)).ToList();
+                    var actuals = scenario.ObjectsThatAreEqualToButNotTheSameAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((CellValueFormatBase<Version>)_)).ToList();
 
                     // Assert
                     actuals.AsTest().Must().Each().BeTrue(because: scenario.Id);
@@ -1309,10 +1417,10 @@ namespace OBeautifulCode.DataStructure.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    StandardCellValueFormatBase<bool> systemUnderTest = null;
+                    StandardCellValueFormatBase<Version> systemUnderTest = null;
 
                     // Act
-                    var actual = scenario.ReferenceObject.Equals((StandardCellValueFormatBase<bool>)systemUnderTest);
+                    var actual = scenario.ReferenceObject.Equals((StandardCellValueFormatBase<Version>)systemUnderTest);
 
                     // Assert
                     actual.AsTest().Must().BeFalse(because: scenario.Id);
@@ -1340,7 +1448,7 @@ namespace OBeautifulCode.DataStructure.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange, Act
-                    var actual = scenario.ReferenceObject.Equals((StandardCellValueFormatBase<bool>)scenario.ReferenceObject);
+                    var actual = scenario.ReferenceObject.Equals((StandardCellValueFormatBase<Version>)scenario.ReferenceObject);
 
                     // Assert
                     actual.AsTest().Must().BeTrue(because: scenario.Id);
@@ -1368,7 +1476,7 @@ namespace OBeautifulCode.DataStructure.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange, Act
-                    var actuals = scenario.ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((StandardCellValueFormatBase<bool>)_)).ToList();
+                    var actuals = scenario.ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((StandardCellValueFormatBase<Version>)_)).ToList();
 
                     // Assert
                     actuals.AsTest().Must().Each().BeFalse(because: scenario.Id);
@@ -1396,7 +1504,7 @@ namespace OBeautifulCode.DataStructure.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange, Act
-                    var actuals = scenario.ObjectsThatAreNotEqualToReferenceObject.Select(_ => scenario.ReferenceObject.Equals((StandardCellValueFormatBase<bool>)_)).ToList();
+                    var actuals = scenario.ObjectsThatAreNotEqualToReferenceObject.Select(_ => scenario.ReferenceObject.Equals((StandardCellValueFormatBase<Version>)_)).ToList();
 
                     // Assert
                     actuals.AsTest().Must().Each().BeFalse(because: scenario.Id);
@@ -1424,7 +1532,7 @@ namespace OBeautifulCode.DataStructure.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange, Act
-                    var actuals = scenario.ObjectsThatAreEqualToButNotTheSameAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((StandardCellValueFormatBase<bool>)_)).ToList();
+                    var actuals = scenario.ObjectsThatAreEqualToButNotTheSameAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((StandardCellValueFormatBase<Version>)_)).ToList();
 
                     // Assert
                     actuals.AsTest().Must().Each().BeTrue(because: scenario.Id);
@@ -1445,14 +1553,157 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_BooleanCellValueFormat___Should_return_false___When_parameter_other_is_null()
+            public static void Equals_with_NumberCellFormatBase___Should_return_false___When_parameter_other_is_null()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    BooleanCellValueFormat systemUnderTest = null;
+                    NumberCellFormatBase<Version> systemUnderTest = null;
+
+                    // Act
+                    var actual = scenario.ReferenceObject.Equals((NumberCellFormatBase<Version>)systemUnderTest);
+
+                    // Assert
+                    actual.AsTest().Must().BeFalse(because: scenario.Id);
+                }
+            }
+
+            [Fact]
+            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+            public static void Equals_with_NumberCellFormatBase___Should_return_true___When_parameter_other_is_same_object()
+            {
+                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
+
+                foreach (var scenario in scenarios)
+                {
+                    // Arrange, Act
+                    var actual = scenario.ReferenceObject.Equals((NumberCellFormatBase<Version>)scenario.ReferenceObject);
+
+                    // Assert
+                    actual.AsTest().Must().BeTrue(because: scenario.Id);
+                }
+            }
+
+            [Fact]
+            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+            public static void Equals_with_NumberCellFormatBase___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
+            {
+                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
+
+                foreach (var scenario in scenarios)
+                {
+                    // Arrange, Act
+                    var actuals = scenario.ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((NumberCellFormatBase<Version>)_)).ToList();
+
+                    // Assert
+                    actuals.AsTest().Must().Each().BeFalse(because: scenario.Id);
+                }
+            }
+
+            [Fact]
+            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+            public static void Equals_with_NumberCellFormatBase___Should_return_false___When_objects_being_compared_have_different_property_values()
+            {
+                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
+
+                foreach (var scenario in scenarios)
+                {
+                    // Arrange, Act
+                    var actuals = scenario.ObjectsThatAreNotEqualToReferenceObject.Select(_ => scenario.ReferenceObject.Equals((NumberCellFormatBase<Version>)_)).ToList();
+
+                    // Assert
+                    actuals.AsTest().Must().Each().BeFalse(because: scenario.Id);
+                }
+            }
+
+            [Fact]
+            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+            public static void Equals_with_NumberCellFormatBase___Should_return_true___When_objects_being_compared_have_same_property_values()
+            {
+                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
+
+                foreach (var scenario in scenarios)
+                {
+                    // Arrange, Act
+                    var actuals = scenario.ObjectsThatAreEqualToButNotTheSameAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((NumberCellFormatBase<Version>)_)).ToList();
+
+                    // Assert
+                    actuals.AsTest().Must().Each().BeTrue(because: scenario.Id);
+                }
+            }
+
+            [Fact]
+            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+            public static void Equals_with_NullNumberCellFormat___Should_return_false___When_parameter_other_is_null()
+            {
+                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
+
+                foreach (var scenario in scenarios)
+                {
+                    // Arrange
+                    NullNumberCellFormat<Version> systemUnderTest = null;
 
                     // Act
                     var actual = scenario.ReferenceObject.Equals(systemUnderTest);
@@ -1476,7 +1727,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_BooleanCellValueFormat___Should_return_true___When_parameter_other_is_same_object()
+            public static void Equals_with_NullNumberCellFormat___Should_return_true___When_parameter_other_is_same_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1504,7 +1755,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_BooleanCellValueFormat___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
+            public static void Equals_with_NullNumberCellFormat___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1532,7 +1783,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_BooleanCellValueFormat___Should_return_false___When_objects_being_compared_have_different_property_values()
+            public static void Equals_with_NullNumberCellFormat___Should_return_false___When_objects_being_compared_have_different_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1560,7 +1811,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_BooleanCellValueFormat___Should_return_true___When_objects_being_compared_have_same_property_values()
+            public static void Equals_with_NullNumberCellFormat___Should_return_true___When_objects_being_compared_have_same_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 

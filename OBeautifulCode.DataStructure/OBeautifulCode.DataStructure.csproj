@@ -288,6 +288,9 @@
     <Compile Include="Models\Classes\Format\CellValue\Concrete\HtmlCellValueFormat.designer.cs">
       <DependentUpon>HtmlCellValueFormat.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\Classes\Format\CellValue\Concrete\NullNumberCellFormat{TValue}.designer.cs">
+      <DependentUpon>NullNumberCellFormat{TValue}.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Classes\Format\CellValue\Concrete\PercentCellValueFormat.cs" />
     <Compile Include="Models\Classes\Format\CellValue\Concrete\DecimalCellValueFormat.cs" />
     <Compile Include="Models\Classes\Format\CellValue\Concrete\CategoricalCellValueFormat{TValue}.cs" />
@@ -299,6 +302,7 @@
     <Compile Include="Models\Classes\Format\CellValue\NumberCellFormatBase{TValue}.designer.cs">
       <DependentUpon>NumberCellFormatBase{TValue}.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\Classes\Format\CellValue\Concrete\NullNumberCellFormat{TValue}.cs" />
     <Compile Include="Models\Classes\Format\CellValue\StandardCellValueFormatBase{TValue}.cs" />
     <Compile Include="Models\Classes\Format\CellValue\CellValueFormatBase{TValue}.cs" />
     <Compile Include="Models\Classes\Format\CellValue\CellValueFormatBase{TValue}.designer.cs">
@@ -516,6 +520,18 @@
     </Compile>
     <Compile Include="Operations\Classes\MultiStatementOpBase{TStatement,TResult}.designer.cs">
       <DependentUpon>MultiStatementOpBase{TStatement,TResult}.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Operations\Classes\Null\NullMultiStatementOp{TStatement,TResult}.cs" />
+    <Compile Include="Operations\Classes\Null\NullMultiStatementOp{TStatement,TResult}.designer.cs">
+      <DependentUpon>NullMultiStatementOp{TStatement,TResult}.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Operations\Classes\Null\NullSingleStatementOp{TStatement,TResult}.cs" />
+    <Compile Include="Operations\Classes\Null\NullSingleStatementOp{TStatement,TResult}.designer.cs">
+      <DependentUpon>NullSingleStatementOp{TStatement,TResult}.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Operations\Classes\Null\NullTwoStatementOp{TStatement,TResult}.cs" />
+    <Compile Include="Operations\Classes\Null\NullTwoStatementOp{TStatement,TResult}.designer.cs">
+      <DependentUpon>NullTwoStatementOp{TStatement,TResult}.cs</DependentUpon>
     </Compile>
     <Compile Include="Operations\Classes\TwoStatementOpBase{TStatement,TResult}.cs" />
     <Compile Include="Operations\Classes\SingleStatementOpBase{TStatement,TResult}.designer.cs">

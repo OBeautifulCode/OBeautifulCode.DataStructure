@@ -54,6 +54,10 @@ namespace OBeautifulCode.DataStructure.Test
                         // corresponds with the property who's value is provided in the DeepCloneWith___() method.
                         // We do not know in advance if this will happen.  As such, the following objects are commented out.
                     },
+                    ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject = new CellValueFormatBase<Version>[]
+                    {
+                        A.Dummy<CellValueFormatBase<Version>>().Whose(_ => _.GetType() != ReferenceObjectForEquatableTestScenarios.GetType()),
+                    },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
                     {
                         A.Dummy<object>(),

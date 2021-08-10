@@ -264,6 +264,7 @@ namespace OBeautifulCode.DataStructure.Test
                         A.Dummy<BooleanCellValueFormat>(),
                         A.Dummy<DecimalCellValueFormat>(),
                         A.Dummy<HtmlCellValueFormat>(),
+                        A.Dummy<NullNumberCellFormat<Version>>(),
                         A.Dummy<PercentCellValueFormat>(),
                     },
                 });

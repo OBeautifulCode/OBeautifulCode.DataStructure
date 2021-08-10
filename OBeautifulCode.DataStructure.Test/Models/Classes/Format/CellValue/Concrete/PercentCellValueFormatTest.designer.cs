@@ -508,6 +508,7 @@ namespace OBeautifulCode.DataStructure.Test
                         A.Dummy<CategoricalCellValueFormat<Version>>(),
                         A.Dummy<DecimalCellValueFormat>(),
                         A.Dummy<HtmlCellValueFormat>(),
+                        A.Dummy<NullNumberCellFormat<Version>>(),
                     },
                 });
 
