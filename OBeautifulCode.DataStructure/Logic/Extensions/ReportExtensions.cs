@@ -243,13 +243,20 @@ namespace OBeautifulCode.DataStructure
             IReadOnlyCollection<Type> additionalTypesForCoreCellOps = null)
         {
             // NOTE: THIS CODE IS A NEAR DUPLICATE OF THE ASYNC METHOD BELOW; NO GOOD WAY TO D.R.Y. IT OUT
-            var protocolFactory = report.BuildProtocolFactoryToExecuteAllOperations(timestampUtc, protocolFactoryFuncs, additionalTypesForCoreCellOps);
+            var recalcPhase = RecalcPhase.Unknown;
+
+            // ReSharper disable once AccessToModifiedClosure
+            RecalcPhase GetRecalcPhaseFunc() => recalcPhase;
+
+            var protocolFactory = report.BuildProtocolFactoryToExecuteAllOperations(timestampUtc, protocolFactoryFuncs, additionalTypesForCoreCellOps, GetRecalcPhaseFunc);
 
             var operationCells = report.GetClearedOperationCells(timestampUtc);
 
             var validationCells = report.GetClearedValidationCells(timestampUtc);
 
             var availabilityCheckCells = report.GetClearedAvailabilityCheckCells(timestampUtc);
+
+            recalcPhase = RecalcPhase.CellOpExecution;
 
             foreach (var cell in operationCells)
             {
@@ -258,12 +265,16 @@ namespace OBeautifulCode.DataStructure
                 protocolFactory.GetProtocolAndExecuteViaReflection(executeOperationCellIfNecessaryOp);
             }
 
+            recalcPhase = RecalcPhase.Validation;
+
             foreach (var cell in validationCells)
             {
                 var validateCellIfNecessaryOp = new ValidateCellIfNecessaryOp(cell);
 
                 protocolFactory.GetProtocolAndExecuteViaReflection(validateCellIfNecessaryOp);
             }
+
+            recalcPhase = RecalcPhase.AvailabilityCheck;
 
             foreach (var cell in availabilityCheckCells)
             {
@@ -285,13 +296,20 @@ namespace OBeautifulCode.DataStructure
             IReadOnlyCollection<Type> additionalTypesForCoreCellOps = null)
         {
             // NOTE: THIS CODE IS A NEAR DUPLICATE OF THE SYNC METHOD ABOVE; NO GOOD WAY TO D.R.Y. IT OUT
-            var protocolFactory = report.BuildProtocolFactoryToExecuteAllOperations(timestampUtc, protocolFactoryFuncs, additionalTypesForCoreCellOps);
+            var recalcPhase = RecalcPhase.Unknown;
+
+            // ReSharper disable once AccessToModifiedClosure
+            RecalcPhase GetRecalcPhaseFunc() => recalcPhase;
+
+            var protocolFactory = report.BuildProtocolFactoryToExecuteAllOperations(timestampUtc, protocolFactoryFuncs, additionalTypesForCoreCellOps, GetRecalcPhaseFunc);
 
             var operationCells = report.GetClearedOperationCells(timestampUtc);
 
             var validationCells = report.GetClearedValidationCells(timestampUtc);
 
             var availabilityCheckCells = report.GetClearedAvailabilityCheckCells(timestampUtc);
+
+            recalcPhase = RecalcPhase.CellOpExecution;
 
             foreach (var cell in operationCells)
             {
@@ -300,12 +318,16 @@ namespace OBeautifulCode.DataStructure
                 await protocolFactory.GetProtocolAndExecuteViaReflectionAsync(executeOperationCellIfNecessaryOp);
             }
 
+            recalcPhase = RecalcPhase.Validation;
+
             foreach (var cell in validationCells)
             {
                 var validateCellIfNecessaryOp = new ValidateCellIfNecessaryOp(cell);
 
                 await protocolFactory.GetProtocolAndExecuteViaReflectionAsync(validateCellIfNecessaryOp);
             }
+
+            recalcPhase = RecalcPhase.AvailabilityCheck;
 
             foreach (var cell in availabilityCheckCells)
             {
@@ -324,7 +346,8 @@ namespace OBeautifulCode.DataStructure
             this Report report,
             DateTime timestampUtc,
             IReadOnlyCollection<Func<IProtocolFactory, IProtocolFactory>> protocolFactoryFuncs,
-            IReadOnlyCollection<Type> additionalTypesForCoreCellOps)
+            IReadOnlyCollection<Type> additionalTypesForCoreCellOps,
+            Func<RecalcPhase> getRecalcPhaseFunc)
         {
             if (report == null)
             {
@@ -368,7 +391,7 @@ namespace OBeautifulCode.DataStructure
             ConstructorInfo GetCellProtocolsFunc(Type type) => typeof(DataStructureCellProtocols<>).MakeGenericType(type).GetConstructors().Single();
             ConstructorInfo GetConvenienceProtocolsFunc(Type type) => typeof(DataStructureConvenienceProtocols<>).MakeGenericType(type).GetConstructors().Single();
 
-            var cellProtocolsConstructorInfoParams = new object[] { report, result, timestampUtc };
+            var cellProtocolsConstructorInfoParams = new object[] { report, result, timestampUtc, getRecalcPhaseFunc };
             var convenienceProtocolsConstructorInfoParams = new object[] { result };
 
             foreach (var typeForCoreCellOps in typesForCoreCellOps)

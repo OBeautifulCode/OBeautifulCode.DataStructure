@@ -38,16 +38,20 @@ namespace OBeautifulCode.DataStructure
 
         private readonly DateTime timestampUtc;
 
+        private readonly Func<RecalcPhase> getRecalcPhaseFunc;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="DataStructureCellProtocols{TValue}"/> class.
         /// </summary>
         /// <param name="report">The report in-context.</param>
         /// <param name="protocolFactory">The protocol factory to use when executing an <see cref="IOperationOutputCell{TValue}"/>'s <see cref="IOperationOutputCell{TValue}.Operation"/>.</param>
         /// <param name="timestampUtc">The timestamp (in UTC) to use when recording a <see cref="CellOpExecutionEventBase"/> with an <see cref="IOperationOutputCell{TValue}"/>.</param>
+        /// <param name="getRecalcPhaseFunc">Func that gets the <see cref="RecalcPhase"/>.</param>
         public DataStructureCellProtocols(
             Report report,
             IProtocolFactory protocolFactory,
-            DateTime timestampUtc)
+            DateTime timestampUtc,
+            Func<RecalcPhase> getRecalcPhaseFunc)
         {
             if (report == null)
             {
@@ -65,9 +69,15 @@ namespace OBeautifulCode.DataStructure
                 throw new ArgumentException(Invariant($"{nameof(timestampUtc)} is not in UTC time."));
             }
 
+            if (getRecalcPhaseFunc == null)
+            {
+                throw new ArgumentNullException(nameof(getRecalcPhaseFunc));
+            }
+
             this.report = report;
             this.protocolFactory = protocolFactory;
             this.timestampUtc = timestampUtc;
+            this.getRecalcPhaseFunc = getRecalcPhaseFunc;
         }
 
         /// <inheritdoc />
@@ -466,6 +476,13 @@ namespace OBeautifulCode.DataStructure
                 throw new ArgumentNullException(nameof(operation));
             }
 
+            var recalcPhase = this.getRecalcPhaseFunc();
+
+            if ((recalcPhase != RecalcPhase.Validation) && (recalcPhase != RecalcPhase.AvailabilityCheck))
+            {
+                throw new InvalidOperationException(Invariant($"Cannot execute {nameof(GetValidityOp)} during the {recalcPhase} phase."));
+            }
+
             var cell = this.GetCellAndValidateIfNecessary(operation.CellLocator);
 
             var result = cell.GetValidity();
@@ -481,6 +498,13 @@ namespace OBeautifulCode.DataStructure
             if (operation == null)
             {
                 throw new ArgumentNullException(nameof(operation));
+            }
+
+            var recalcPhase = this.getRecalcPhaseFunc();
+
+            if ((recalcPhase != RecalcPhase.Validation) && (recalcPhase != RecalcPhase.AvailabilityCheck))
+            {
+                throw new InvalidOperationException(Invariant($"Cannot execute {nameof(GetValidityOp)} during the {recalcPhase} phase."));
             }
 
             var cell = await this.GetCellAndValidateIfNecessaryAsync(operation.CellLocator);
@@ -500,6 +524,13 @@ namespace OBeautifulCode.DataStructure
                 throw new ArgumentNullException(nameof(operation));
             }
 
+            var recalcPhase = this.getRecalcPhaseFunc();
+
+            if (recalcPhase != RecalcPhase.AvailabilityCheck)
+            {
+                throw new InvalidOperationException(Invariant($"Cannot execute {nameof(GetAvailabilityOp)} during the {recalcPhase} phase."));
+            }
+
             var cell = this.GetCellAndCheckAvailabilityIfNecessary(operation.CellLocator);
 
             var result = cell.GetAvailability();
@@ -515,6 +546,13 @@ namespace OBeautifulCode.DataStructure
             if (operation == null)
             {
                 throw new ArgumentNullException(nameof(operation));
+            }
+
+            var recalcPhase = this.getRecalcPhaseFunc();
+
+            if (recalcPhase != RecalcPhase.AvailabilityCheck)
+            {
+                throw new InvalidOperationException(Invariant($"Cannot execute {nameof(GetAvailabilityOp)} during the {recalcPhase} phase."));
             }
 
             var cell = await this.GetCellAndCheckAvailabilityIfNecessaryAsync(operation.CellLocator);
