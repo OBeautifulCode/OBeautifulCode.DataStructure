@@ -47,7 +47,7 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new SystemUnderTestExpectedStringRepresentation<ValidationResult>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.ValidationResult: Validity = {systemUnderTest.Validity.ToString() ?? "<null>"}, MessageOp = {systemUnderTest.MessageOp?.ToString() ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.ValidationResult: ValidityOp = {systemUnderTest.ValidityOp?.ToString() ?? "<null>"}, MessageOp = {systemUnderTest.MessageOp?.ToString() ?? "<null>"}."),
                         };
 
                         return result;
@@ -58,13 +58,30 @@ namespace OBeautifulCode.DataStructure.Test
             .AddScenario(() =>
                 new ConstructorArgumentValidationTestScenario<ValidationResult>
                 {
+                    Name = "constructor should throw ArgumentNullException when parameter 'validityOp' is null scenario",
+                    ConstructionFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<ValidationResult>();
+
+                        var result = new ValidationResult(
+                                             null,
+                                             referenceObject.MessageOp);
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentNullException),
+                    ExpectedExceptionMessageContains = new[] { "validityOp", },
+                })
+            .AddScenario(() =>
+                new ConstructorArgumentValidationTestScenario<ValidationResult>
+                {
                     Name = "constructor should throw ArgumentNullException when parameter 'messageOp' is null scenario",
                     ConstructionFunc = () =>
                     {
                         var referenceObject = A.Dummy<ValidationResult>();
 
                         var result = new ValidationResult(
-                                             referenceObject.Validity,
+                                             referenceObject.ValidityOp,
                                              null);
 
                         return result;
@@ -77,7 +94,7 @@ namespace OBeautifulCode.DataStructure.Test
             .AddScenario(() =>
                 new ConstructorPropertyAssignmentTestScenario<ValidationResult>
                 {
-                    Name = "Validity should return same 'validity' parameter passed to constructor when getting",
+                    Name = "ValidityOp should return same 'validityOp' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
                         var referenceObject = A.Dummy<ValidationResult>();
@@ -85,14 +102,14 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new SystemUnderTestExpectedPropertyValue<ValidationResult>
                         {
                             SystemUnderTest = new ValidationResult(
-                                                      referenceObject.Validity,
+                                                      referenceObject.ValidityOp,
                                                       referenceObject.MessageOp),
-                            ExpectedPropertyValue = referenceObject.Validity,
+                            ExpectedPropertyValue = referenceObject.ValidityOp,
                         };
 
                         return result;
                     },
-                    PropertyName = "Validity",
+                    PropertyName = "ValidityOp",
                 })
             .AddScenario(() =>
                 new ConstructorPropertyAssignmentTestScenario<ValidationResult>
@@ -105,7 +122,7 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new SystemUnderTestExpectedPropertyValue<ValidationResult>
                         {
                             SystemUnderTest = new ValidationResult(
-                                                      referenceObject.Validity,
+                                                      referenceObject.ValidityOp,
                                                       referenceObject.MessageOp),
                             ExpectedPropertyValue = referenceObject.MessageOp,
                         };
@@ -119,18 +136,18 @@ namespace OBeautifulCode.DataStructure.Test
             .AddScenario(() =>
                 new DeepCloneWithTestScenario<ValidationResult>
                 {
-                    Name = "DeepCloneWithValidity should deep clone object and replace Validity with the provided validity",
-                    WithPropertyName = "Validity",
+                    Name = "DeepCloneWithValidityOp should deep clone object and replace ValidityOp with the provided validityOp",
+                    WithPropertyName = "ValidityOp",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
                         var systemUnderTest = A.Dummy<ValidationResult>();
 
-                        var referenceObject = A.Dummy<ValidationResult>().ThatIs(_ => !systemUnderTest.Validity.IsEqualTo(_.Validity));
+                        var referenceObject = A.Dummy<ValidationResult>().ThatIs(_ => !systemUnderTest.ValidityOp.IsEqualTo(_.ValidityOp));
 
                         var result = new SystemUnderTestDeepCloneWithValue<ValidationResult>
                         {
                             SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.Validity,
+                            DeepCloneWithValue = referenceObject.ValidityOp,
                         };
 
                         return result;
@@ -168,16 +185,16 @@ namespace OBeautifulCode.DataStructure.Test
                     ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new ValidationResult[]
                     {
                         new ValidationResult(
-                                ReferenceObjectForEquatableTestScenarios.Validity,
+                                ReferenceObjectForEquatableTestScenarios.ValidityOp,
                                 ReferenceObjectForEquatableTestScenarios.MessageOp),
                     },
                     ObjectsThatAreNotEqualToReferenceObject = new ValidationResult[]
                     {
                         new ValidationResult(
-                                A.Dummy<ValidationResult>().Whose(_ => !_.Validity.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Validity)).Validity,
+                                A.Dummy<ValidationResult>().Whose(_ => !_.ValidityOp.IsEqualTo(ReferenceObjectForEquatableTestScenarios.ValidityOp)).ValidityOp,
                                 ReferenceObjectForEquatableTestScenarios.MessageOp),
                         new ValidationResult(
-                                ReferenceObjectForEquatableTestScenarios.Validity,
+                                ReferenceObjectForEquatableTestScenarios.ValidityOp,
                                 A.Dummy<ValidationResult>().Whose(_ => !_.MessageOp.IsEqualTo(ReferenceObjectForEquatableTestScenarios.MessageOp)).MessageOp),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
@@ -438,6 +455,18 @@ namespace OBeautifulCode.DataStructure.Test
                 actual.AsTest().Must().BeEqualTo(systemUnderTest);
                 actual.AsTest().Must().NotBeSameReferenceAs(systemUnderTest);
 
+                if (systemUnderTest.ValidityOp == null)
+                {
+                    actual.ValidityOp.AsTest().Must().BeNull();
+                }
+                else if (!actual.ValidityOp.GetType().IsValueType)
+                {
+                    // When the declared type is a reference type, we still have to check the runtime type.
+                    // The object could be a boxed value type, which will fail this asseration because
+                    // a deep clone of a value type object is the same object.
+                    actual.ValidityOp.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.ValidityOp);
+                }
+
                 if (systemUnderTest.MessageOp == null)
                 {
                     actual.MessageOp.AsTest().Must().BeNull();
@@ -467,7 +496,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "Validity", "MessageOp" };
+                var propertyNames = new string[] { "ValidityOp", "MessageOp" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 

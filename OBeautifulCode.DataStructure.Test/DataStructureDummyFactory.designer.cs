@@ -954,7 +954,7 @@ namespace OBeautifulCode.DataStructure.Test
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new ValidationResult(
-                                 A.Dummy<Validity>(),
+                                 A.Dummy<IReturningOperation<Validity>>(),
                                  A.Dummy<IReturningOperation<string>>()));
         }
 

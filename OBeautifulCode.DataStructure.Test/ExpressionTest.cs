@@ -52,29 +52,33 @@ namespace OBeautifulCode.DataStructure.Test
 
             var numberOfSalesFteCell = Cell.CreateEnabledInput<decimal>(
                 id: "sales-fte",
-                validation: Cell.CreateValidation(Op.ValidateUsingConditions(
-                    new[]
-                    {
-                        new ValidationCondition(Cell.This().HasValue(), Op.Const("input required")),
-                        new ValidationCondition(
-                            Op.IsGreaterThanOrEqualTo(
-                                Cell.This().GetValue<decimal>(),
-                                Op.Const(0m)),
-                            Op.Const("must be >= 0")),
-                    })));
+                validation:
+                    Op.ValidateUsingConditions(
+                        new[]
+                        {
+                            new ValidationCondition(Cell.This().HasValue(), Op.Const("input required")),
+                            new ValidationCondition(
+                                Op.IsGreaterThanOrEqualTo(
+                                    Cell.This().GetValue<decimal>(),
+                                    Op.Const(0m)),
+                                Op.Const("must be >= 0")),
+                        })
+                    .CreateValidation());
 
             var numberOfWarehouseFteCell = Cell.CreateEnabledInput<decimal>(
                 id: "warehouse-fte",
-                validation: Cell.CreateValidation(Op.ValidateUsingConditions(
-                    new[]
-                    {
-                        new ValidationCondition(Cell.This().HasValue(), Op.Const("input required")),
-                        new ValidationCondition(
-                            Op.IsGreaterThanOrEqualTo(
-                                Cell.This().GetValue<decimal>(),
-                                Op.Const(0m)),
-                            Op.Const("must be >= 0")),
-                    })));
+                validation:
+                    Op.ValidateUsingConditions(
+                        new[]
+                        {
+                            new ValidationCondition(Cell.This().HasValue(), Op.Const("input required")),
+                            new ValidationCondition(
+                                Op.IsGreaterThanOrEqualTo(
+                                    Cell.This().GetValue<decimal>(),
+                                    Op.Const(0m)),
+                                Op.Const("must be >= 0")),
+                        })
+                    .CreateValidation());
 
             var numberOfTotalFte = Cell.CreateOp(
                     id: "total-fte",
@@ -87,23 +91,25 @@ namespace OBeautifulCode.DataStructure.Test
                                 Cell.InThisSection(numberOfSalesFteCell.Id).GetValue<decimal>(),
                                 Cell.InThisSection(numberOfWarehouseFteCell.Id).GetValue<decimal>()),
                             Op.Abort<decimal>("cannot perform sum")),
-                    validation: Cell.CreateValidation(Op.ValidateUsingConditions(
-                        new[]
-                        {
-                            new ValidationCondition(
-                                Op.IfThenElse(
-                                    Op.IsEqualTo(
-                                        Cell.This().GetOpExecutionOutcome(),
-                                        Op.Const(CellOpExecutionOutcome.Completed)),
-                                    Op.Const(true),
-                                    Op.Abort<bool>()),
-                                Op.Const("never-hit")),
-                            new ValidationCondition(
-                                Op.IsGreaterThan(
-                                    Cell.This().GetValue<decimal>(),
-                                    Op.Const(0m)),
-                                Op.Const("must be >= 0")),
-                        })));
+                    validation:
+                        Op.ValidateUsingConditions(
+                            new[]
+                            {
+                                new ValidationCondition(
+                                    Op.IfThenElse(
+                                        Op.IsEqualTo(
+                                            Cell.This().GetOpExecutionOutcome(),
+                                            Op.Const(CellOpExecutionOutcome.Completed)),
+                                        Op.Const(true),
+                                        Op.Abort<bool>()),
+                                    Op.Const("never-hit")),
+                                new ValidationCondition(
+                                    Op.IsGreaterThan(
+                                        Cell.This().GetValue<decimal>(),
+                                        Op.Const(0m)),
+                                    Op.Const("must be >= 0")),
+                            })
+                        .CreateValidation());
 
             var scoresCell = Cell.CreateConst<NamedDecimalSet>(
                 new[]

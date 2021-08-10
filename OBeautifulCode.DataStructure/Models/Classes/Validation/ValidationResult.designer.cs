@@ -69,7 +69,7 @@ namespace OBeautifulCode.DataStructure
                 return false;
             }
 
-            var result = this.Validity.IsEqualTo(other.Validity)
+            var result = this.ValidityOp.IsEqualTo(other.ValidityOp)
                       && this.MessageOp.IsEqualTo(other.MessageOp);
 
             return result;
@@ -80,7 +80,7 @@ namespace OBeautifulCode.DataStructure
 
         /// <inheritdoc />
         public override int GetHashCode() => HashCodeHelper.Initialize()
-            .Hash(this.Validity)
+            .Hash(this.ValidityOp)
             .Hash(this.MessageOp)
             .Value;
 
@@ -91,17 +91,17 @@ namespace OBeautifulCode.DataStructure
         public ValidationResult DeepClone()
         {
             var result = new ValidationResult(
-                                 this.Validity.DeepClone(),
+                                 this.ValidityOp?.DeepClone(),
                                  this.MessageOp?.DeepClone());
 
             return result;
         }
 
         /// <summary>
-        /// Deep clones this object with a new <see cref="Validity" />.
+        /// Deep clones this object with a new <see cref="ValidityOp" />.
         /// </summary>
-        /// <param name="validity">The new <see cref="Validity" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="ValidationResult" /> using the specified <paramref name="validity" /> for <see cref="Validity" /> and a deep clone of every other property.</returns>
+        /// <param name="validityOp">The new <see cref="ValidityOp" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="ValidationResult" /> using the specified <paramref name="validityOp" /> for <see cref="ValidityOp" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -119,10 +119,10 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public ValidationResult DeepCloneWithValidity(Validity validity)
+        public ValidationResult DeepCloneWithValidityOp(IReturningOperation<Validity> validityOp)
         {
             var result = new ValidationResult(
-                                 validity,
+                                 validityOp,
                                  this.MessageOp?.DeepClone());
 
             return result;
@@ -153,7 +153,7 @@ namespace OBeautifulCode.DataStructure
         public ValidationResult DeepCloneWithMessageOp(IReturningOperation<string> messageOp)
         {
             var result = new ValidationResult(
-                                 this.Validity.DeepClone(),
+                                 this.ValidityOp?.DeepClone(),
                                  messageOp);
 
             return result;
@@ -163,7 +163,7 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"OBeautifulCode.DataStructure.ValidationResult: Validity = {this.Validity.ToString() ?? "<null>"}, MessageOp = {this.MessageOp?.ToString() ?? "<null>"}.");
+            var result = Invariant($"OBeautifulCode.DataStructure.ValidationResult: ValidityOp = {this.ValidityOp?.ToString() ?? "<null>"}, MessageOp = {this.MessageOp?.ToString() ?? "<null>"}.");
 
             return result;
         }

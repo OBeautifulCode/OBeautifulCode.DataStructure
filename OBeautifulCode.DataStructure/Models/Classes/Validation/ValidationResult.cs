@@ -20,25 +20,25 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Initializes a new instance of the <see cref="ValidationResult"/> class.
         /// </summary>
-        /// <param name="validity">The validity of the subject.</param>
+        /// <param name="validityOp">Operation to execute to get the validity of the subject.</param>
         /// <param name="messageOp">OPTIONAL operation to execute to get the message to emit about the validity.  DEFAULT is no message.</param>
         public ValidationResult(
-            Validity validity,
+            IReturningOperation<Validity> validityOp,
             IReturningOperation<string> messageOp = null)
         {
-            if (validity == Validity.Unknown)
+            if (validityOp == null)
             {
-                throw new ArgumentOutOfRangeException(Invariant($"{nameof(validity)} is {nameof(DataStructure.Validity)}.{nameof(Validity.Unknown)}."));
+                throw new ArgumentNullException(nameof(validityOp));
             }
 
-            this.Validity = validity;
+            this.ValidityOp = validityOp;
             this.MessageOp = messageOp;
         }
 
         /// <summary>
-        /// Gets the validity of the subject.
+        /// Gets the operation to execute to get the validity of the subject.
         /// </summary>
-        public Validity Validity { get; private set; }
+        public IReturningOperation<Validity> ValidityOp { get; private set; }
 
         /// <summary>
         /// Gets the operation to execute to get the message to emit about the validity.

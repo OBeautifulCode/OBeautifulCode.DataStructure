@@ -54,6 +54,7 @@ namespace OBeautifulCode.DataStructure
                 throw new ArgumentNullException(nameof(report));
             }
 
+            // ReSharper disable once JoinNullCheckWithUsage
             if (protocolFactory == null)
             {
                 throw new ArgumentNullException(nameof(protocolFactory));
@@ -624,7 +625,7 @@ namespace OBeautifulCode.DataStructure
                         message = this.protocolFactory.GetProtocolAndExecuteViaReflection<string>(validationResult.MessageOp);
                     }
 
-                    var validity = validationResult.Validity;
+                    var validity = this.protocolFactory.GetProtocolAndExecuteViaReflection<Validity>(validationResult.ValidityOp);
 
                     if (validity == Validity.Invalid)
                     {
@@ -693,7 +694,7 @@ namespace OBeautifulCode.DataStructure
                         message = await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync<string>(validationResult.MessageOp);
                     }
 
-                    var validity = validationResult.Validity;
+                    var validity = await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync<Validity>(validationResult.ValidityOp);
 
                     if (validity == Validity.Invalid)
                     {

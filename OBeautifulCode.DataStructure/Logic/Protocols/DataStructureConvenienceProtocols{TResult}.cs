@@ -360,7 +360,9 @@ namespace OBeautifulCode.DataStructure
 
                 if (!conditionWasMet)
                 {
-                    result = new ValidationResult(Validity.Invalid, condition.FailureMessageOp);
+                    var validityOp = new GetConstOp<Validity>(Validity.Invalid);
+
+                    result = new ValidationResult(validityOp, condition.FailureMessageOp);
 
                     break;
                 }
@@ -368,7 +370,9 @@ namespace OBeautifulCode.DataStructure
 
             if (result == null)
             {
-                result = new ValidationResult(Validity.Valid);
+                var validityOp = new GetConstOp<Validity>(Validity.Valid);
+
+                result = new ValidationResult(validityOp);
             }
 
             return result;
@@ -389,7 +393,9 @@ namespace OBeautifulCode.DataStructure
 
                 if (!conditionWasMet)
                 {
-                    result = new ValidationResult(Validity.Invalid, condition.FailureMessageOp);
+                    var validityOp = new GetConstOp<Validity>(Validity.Invalid);
+
+                    result = new ValidationResult(validityOp, condition.FailureMessageOp);
 
                     break;
                 }
@@ -397,7 +403,9 @@ namespace OBeautifulCode.DataStructure
 
             if (result == null)
             {
-                result = new ValidationResult(Validity.Valid);
+                var validityOp = new GetConstOp<Validity>(Validity.Valid);
+
+                result = new ValidationResult(validityOp);
             }
 
             return result;

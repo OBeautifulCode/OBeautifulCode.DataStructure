@@ -273,7 +273,7 @@ namespace OBeautifulCode.DataStructure
         /// The validation.
         /// </returns>
         public static Validation CreateValidation(
-            IReturningOperation<ValidationResult> operation,
+            this IReturningOperation<ValidationResult> operation,
             string details = null)
         {
             var result = new Validation(operation, details);
