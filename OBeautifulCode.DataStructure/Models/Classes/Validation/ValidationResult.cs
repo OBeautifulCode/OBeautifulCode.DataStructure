@@ -10,8 +10,6 @@ namespace OBeautifulCode.DataStructure
 
     using OBeautifulCode.Type;
 
-    using static System.FormattableString;
-
     /// <summary>
     /// The result of validating a subject.
     /// </summary>

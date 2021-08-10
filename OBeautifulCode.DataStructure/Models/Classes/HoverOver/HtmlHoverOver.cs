@@ -14,6 +14,7 @@ namespace OBeautifulCode.DataStructure
     /// <summary>
     /// An HTML hover-over.
     /// </summary>
+    // ReSharper disable once RedundantExtendsListEntry
     public partial class HtmlHoverOver : HoverOverBase, IModelViaCodeGen
     {
         /// <summary>
