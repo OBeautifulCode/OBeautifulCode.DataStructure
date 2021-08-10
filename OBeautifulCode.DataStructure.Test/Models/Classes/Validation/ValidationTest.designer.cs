@@ -47,7 +47,7 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new SystemUnderTestExpectedStringRepresentation<Validation>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.Validation: Operation = {systemUnderTest.Operation?.ToString() ?? "<null>"}, Details = {systemUnderTest.Details?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.Validation: Operation = {systemUnderTest.Operation?.ToString() ?? "<null>"}, MessageFormatKind = {systemUnderTest.MessageFormatKind?.ToString() ?? "<null>"}, Details = {systemUnderTest.Details?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}."),
                         };
 
                         return result;
@@ -65,6 +65,7 @@ namespace OBeautifulCode.DataStructure.Test
 
                         var result = new Validation(
                                              null,
+                                             referenceObject.MessageFormatKind,
                                              referenceObject.Details);
 
                         return result;
@@ -82,6 +83,7 @@ namespace OBeautifulCode.DataStructure.Test
 
                         var result = new Validation(
                                              referenceObject.Operation,
+                                             referenceObject.MessageFormatKind,
                                              null);
 
                         return result;
@@ -99,6 +101,7 @@ namespace OBeautifulCode.DataStructure.Test
 
                         var result = new Validation(
                                              referenceObject.Operation,
+                                             referenceObject.MessageFormatKind,
                                              Invariant($"  {Environment.NewLine}  "));
 
                         return result;
@@ -120,6 +123,7 @@ namespace OBeautifulCode.DataStructure.Test
                         {
                             SystemUnderTest = new Validation(
                                                       referenceObject.Operation,
+                                                      referenceObject.MessageFormatKind,
                                                       referenceObject.Details),
                             ExpectedPropertyValue = referenceObject.Operation,
                         };
@@ -127,6 +131,27 @@ namespace OBeautifulCode.DataStructure.Test
                         return result;
                     },
                     PropertyName = "Operation",
+                })
+            .AddScenario(() =>
+                new ConstructorPropertyAssignmentTestScenario<Validation>
+                {
+                    Name = "MessageFormatKind should return same 'messageFormatKind' parameter passed to constructor when getting",
+                    SystemUnderTestExpectedPropertyValueFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<Validation>();
+
+                        var result = new SystemUnderTestExpectedPropertyValue<Validation>
+                        {
+                            SystemUnderTest = new Validation(
+                                                      referenceObject.Operation,
+                                                      referenceObject.MessageFormatKind,
+                                                      referenceObject.Details),
+                            ExpectedPropertyValue = referenceObject.MessageFormatKind,
+                        };
+
+                        return result;
+                    },
+                    PropertyName = "MessageFormatKind",
                 })
             .AddScenario(() =>
                 new ConstructorPropertyAssignmentTestScenario<Validation>
@@ -140,6 +165,7 @@ namespace OBeautifulCode.DataStructure.Test
                         {
                             SystemUnderTest = new Validation(
                                                       referenceObject.Operation,
+                                                      referenceObject.MessageFormatKind,
                                                       referenceObject.Details),
                             ExpectedPropertyValue = referenceObject.Details,
                         };
@@ -165,6 +191,26 @@ namespace OBeautifulCode.DataStructure.Test
                         {
                             SystemUnderTest = systemUnderTest,
                             DeepCloneWithValue = referenceObject.Operation,
+                        };
+
+                        return result;
+                    },
+                })
+            .AddScenario(() =>
+                new DeepCloneWithTestScenario<Validation>
+                {
+                    Name = "DeepCloneWithMessageFormatKind should deep clone object and replace MessageFormatKind with the provided messageFormatKind",
+                    WithPropertyName = "MessageFormatKind",
+                    SystemUnderTestDeepCloneWithValueFunc = () =>
+                    {
+                        var systemUnderTest = A.Dummy<Validation>();
+
+                        var referenceObject = A.Dummy<Validation>().ThatIs(_ => !systemUnderTest.MessageFormatKind.IsEqualTo(_.MessageFormatKind));
+
+                        var result = new SystemUnderTestDeepCloneWithValue<Validation>
+                        {
+                            SystemUnderTest = systemUnderTest,
+                            DeepCloneWithValue = referenceObject.MessageFormatKind,
                         };
 
                         return result;
@@ -203,15 +249,22 @@ namespace OBeautifulCode.DataStructure.Test
                     {
                         new Validation(
                                 ReferenceObjectForEquatableTestScenarios.Operation,
+                                ReferenceObjectForEquatableTestScenarios.MessageFormatKind,
                                 ReferenceObjectForEquatableTestScenarios.Details),
                     },
                     ObjectsThatAreNotEqualToReferenceObject = new Validation[]
                     {
                         new Validation(
                                 A.Dummy<Validation>().Whose(_ => !_.Operation.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Operation)).Operation,
+                                ReferenceObjectForEquatableTestScenarios.MessageFormatKind,
                                 ReferenceObjectForEquatableTestScenarios.Details),
                         new Validation(
                                 ReferenceObjectForEquatableTestScenarios.Operation,
+                                A.Dummy<Validation>().Whose(_ => !_.MessageFormatKind.IsEqualTo(ReferenceObjectForEquatableTestScenarios.MessageFormatKind)).MessageFormatKind,
+                                ReferenceObjectForEquatableTestScenarios.Details),
+                        new Validation(
+                                ReferenceObjectForEquatableTestScenarios.Operation,
+                                ReferenceObjectForEquatableTestScenarios.MessageFormatKind,
                                 A.Dummy<Validation>().Whose(_ => !_.Details.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Details)).Details),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
@@ -501,7 +554,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "Operation", "Details" };
+                var propertyNames = new string[] { "Operation", "MessageFormatKind", "Details" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 

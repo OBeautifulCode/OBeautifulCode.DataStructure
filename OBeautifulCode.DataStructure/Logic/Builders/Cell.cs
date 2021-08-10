@@ -268,15 +268,17 @@ namespace OBeautifulCode.DataStructure
         /// Builds a <see cref="Validation"/>.
         /// </summary>
         /// <param name="operation">The operation to execute to get the validity of the subject.</param>
+        /// <param name="messageFormatKind">OPTIONAL kind of format to apply to the message that is emitted about the validity of the subject.  DEFAULT is to omit this specification.</param>
         /// <param name="details">OPTIONAL details about this validation.  DEFAULT is to omit any details.</param>
         /// <returns>
         /// The validation.
         /// </returns>
         public static Validation CreateValidation(
             this IReturningOperation<ValidationResult> operation,
+            MessageFormatKind? messageFormatKind = null,
             string details = null)
         {
-            var result = new Validation(operation, details);
+            var result = new Validation(operation, messageFormatKind, details);
 
             return result;
         }
@@ -285,15 +287,17 @@ namespace OBeautifulCode.DataStructure
         /// Builds an <see cref="AvailabilityCheck"/>.
         /// </summary>
         /// <param name="operation">The operation to execute to check the availability of the subject.</param>
+        /// <param name="messageFormatKind">OPTIONAL kind of format to apply to the message that is emitted about the availability of the subject.  DEFAULT is to omit this specification.</param>
         /// <param name="details">OPTIONAL details about this availability check.  DEFAULT is to omit any details.</param>
         /// <returns>
         /// The validation.
         /// </returns>
         public static AvailabilityCheck CreateAvailabilityCheck(
             this IReturningOperation<AvailabilityCheckResult> operation,
+            MessageFormatKind? messageFormatKind = null,
             string details = null)
         {
-            var result = new AvailabilityCheck(operation, details);
+            var result = new AvailabilityCheck(operation, messageFormatKind, details);
 
             return result;
         }

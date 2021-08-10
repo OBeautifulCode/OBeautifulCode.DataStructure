@@ -441,6 +441,7 @@
       <DependentUpon>ValidationResult.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Enums\CellValue\MediaReferenceKind.cs" />
+    <Compile Include="Models\Enums\Formatting\MessageFormatKind.cs" />
     <Compile Include="Models\Enums\OperationCell\CellOpExecutionOutcome.cs" />
     <Compile Include="Models\Enums\OperationCell\CellOpExecutionStatus.cs" />
     <Compile Include="Models\Enums\Formatting\NumberFormat\NumberFormatPercentDisplayKind.cs" />

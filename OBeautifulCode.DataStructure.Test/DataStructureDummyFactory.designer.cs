@@ -43,6 +43,7 @@ namespace OBeautifulCode.DataStructure.Test
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new AvailabilityCheck(
                                  A.Dummy<IReturningOperation<AvailabilityCheckResult>>(),
+                                 A.Dummy<MessageFormatKind?>(),
                                  A.Dummy<string>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
@@ -943,6 +944,7 @@ namespace OBeautifulCode.DataStructure.Test
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new Validation(
                                  A.Dummy<IReturningOperation<ValidationResult>>(),
+                                 A.Dummy<MessageFormatKind?>(),
                                  A.Dummy<string>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
