@@ -10,8 +10,6 @@ namespace OBeautifulCode.DataStructure
 
     using OBeautifulCode.Type;
 
-    using static System.FormattableString;
-
     /// <summary>
     /// The result of checking the availability of a subject.
     /// </summary>
@@ -20,44 +18,29 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Initializes a new instance of the <see cref="AvailabilityCheckResult"/> class.
         /// </summary>
-        /// <param name="availability">The availability of the subject.</param>
+        /// <param name="availabilityOp">Operation to execute to get the availability of the subject.</param>
         /// <param name="messageOp">OPTIONAL operation to execute to get the message to emit about the availability.  DEFAULT is no message.</param>
         public AvailabilityCheckResult(
-            Availability availability,
+            IReturningOperation<Availability> availabilityOp,
             IReturningOperation<string> messageOp = null)
         {
-            if (availability == Availability.Unknown)
+            if (availabilityOp == null)
             {
-                throw new ArgumentOutOfRangeException(Invariant($"{nameof(availability)} is {nameof(DataStructure.Availability)}.{nameof(Availability.Unknown)}."));
+                throw new ArgumentNullException(nameof(availabilityOp));
             }
 
-            this.Availability = availability;
+            this.AvailabilityOp = availabilityOp;
             this.MessageOp = messageOp;
         }
 
         /// <summary>
-        /// Gets the availability of the subject.
+        /// Gets the operation to execute to get the availability of the subject.
         /// </summary>
-        public Availability Availability { get; private set; }
+        public IReturningOperation<Availability> AvailabilityOp { get; private set; }
 
         /// <summary>
         /// Gets the operation to execute to get the message to emit about the availability.
         /// </summary>
         public IReturningOperation<string> MessageOp { get; private set; }
-
-        /// <summary>
-        /// Performs an implicit conversion from a <see cref="Availability"/> to a <see cref="AvailabilityCheckResult"/>.
-        /// </summary>
-        /// <param name="from">The <see cref="Availability"/> to convert from.</param>
-        /// <returns>
-        /// The result of the conversion.
-        /// </returns>
-        public static implicit operator AvailabilityCheckResult(
-            Availability from)
-        {
-            var result = new AvailabilityCheckResult(from);
-
-            return result;
-        }
     }
 }

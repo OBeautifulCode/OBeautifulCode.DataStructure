@@ -474,12 +474,16 @@
     <Compile Include="Operations\Classes\Cell\LocatedCellOpBase{TResult}.designer.cs">
       <DependentUpon>LocatedCellOpBase{TResult}.cs</DependentUpon>
     </Compile>
+    <Compile Include="Operations\Classes\Cell\Located\GetAvailabilityOp.designer.cs">
+      <DependentUpon>GetAvailabilityOp.cs</DependentUpon>
+    </Compile>
     <Compile Include="Operations\Classes\Cell\Located\GetCellOpExecutionOutcomeOp.designer.cs">
       <DependentUpon>GetCellOpExecutionOutcomeOp.cs</DependentUpon>
     </Compile>
     <Compile Include="Operations\Classes\Cell\Located\GetCellValueOp{TResult}.designer.cs">
       <DependentUpon>GetCellValueOp{TResult}.cs</DependentUpon>
     </Compile>
+    <Compile Include="Operations\Classes\Cell\Located\GetAvailabilityOp.cs" />
     <Compile Include="Operations\Classes\Cell\Located\GetValidityOp.cs" />
     <Compile Include="Operations\Classes\Cell\Located\GetCellOpExecutionOutcomeOp.cs" />
     <Compile Include="Operations\Classes\Cell\Located\GetValidityOp.designer.cs">
@@ -488,13 +492,13 @@
     <Compile Include="Operations\Classes\Cell\Located\HasCellValueOp.designer.cs">
       <DependentUpon>HasCellValueOp.cs</DependentUpon>
     </Compile>
-    <Compile Include="Operations\Classes\Cell\Referenced\CheckAvailabilityOfCellOp.designer.cs">
-      <DependentUpon>CheckAvailabilityOfCellOp.cs</DependentUpon>
+    <Compile Include="Operations\Classes\Cell\Referenced\CheckAvailabilityOfCellIfNecessaryOp.designer.cs">
+      <DependentUpon>CheckAvailabilityOfCellIfNecessaryOp.cs</DependentUpon>
     </Compile>
     <Compile Include="Operations\Classes\Cell\Referenced\ExecuteOperationCellIfNecessaryOp{TValue}.designer.cs">
       <DependentUpon>ExecuteOperationCellIfNecessaryOp{TValue}.cs</DependentUpon>
     </Compile>
-    <Compile Include="Operations\Classes\Cell\Referenced\CheckAvailabilityOfCellOp.cs" />
+    <Compile Include="Operations\Classes\Cell\Referenced\CheckAvailabilityOfCellIfNecessaryOp.cs" />
     <Compile Include="Operations\Classes\Cell\Referenced\ValidateCellIfNecessaryOp.designer.cs">
       <DependentUpon>ValidateCellIfNecessaryOp.cs</DependentUpon>
     </Compile>

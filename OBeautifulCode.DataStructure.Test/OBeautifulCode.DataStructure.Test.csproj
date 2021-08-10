@@ -197,6 +197,14 @@
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringReadableOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringXmlDocOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
+    <Compile Include="Operations\Cell\Referenced\CheckAvailabilityOfCellIfNecessaryOpTest.cs" />
+    <Compile Include="Operations\Cell\Referenced\CheckAvailabilityOfCellIfNecessaryOpTest.designer.cs">
+      <DependentUpon>CheckAvailabilityOfCellIfNecessaryOpTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Operations\Cell\Located\GetAvailabilityOpTest.cs" />
+    <Compile Include="Operations\Cell\Located\GetAvailabilityOpTest.designer.cs">
+      <DependentUpon>GetAvailabilityOpTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Operations\Cell\Located\GetCellOpExecutionOutcomeOpTest.cs" />
     <Compile Include="Operations\Cell\Located\GetCellOpExecutionOutcomeOpTest.designer.cs">
       <DependentUpon>GetCellOpExecutionOutcomeOpTest.cs</DependentUpon>
@@ -236,10 +244,6 @@
     <Compile Include="Events\CellAvailability\CellAvailabilityCheckFailedEventTest.cs" />
     <Compile Include="Events\CellAvailability\CellAvailabilityCheckFailedEventTest.designer.cs">
       <DependentUpon>CellAvailabilityCheckFailedEventTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Operations\Cell\Referenced\CheckAvailabilityOfCellOpTest.cs" />
-    <Compile Include="Operations\Cell\Referenced\CheckAvailabilityOfCellOpTest.designer.cs">
-      <DependentUpon>CheckAvailabilityOfCellOpTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Classes\AvailabilityCheck\AvailabilityCheckResultTest.cs" />
     <Compile Include="Models\Classes\AvailabilityCheck\AvailabilityCheckResultTest.designer.cs">

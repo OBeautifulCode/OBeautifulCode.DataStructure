@@ -25,11 +25,12 @@ namespace OBeautifulCode.DataStructure
           ISyncAndAsyncReturningProtocol<ThrowOpExecutionDeemedNotApplicableExceptionOp<TValue>, TValue>,
           ISyncAndAsyncVoidProtocol<ExecuteOperationCellIfNecessaryOp<TValue>>,
           ISyncAndAsyncVoidProtocol<ValidateCellIfNecessaryOp>,
-          ISyncAndAsyncVoidProtocol<CheckAvailabilityOfCellOp>,
+          ISyncAndAsyncVoidProtocol<CheckAvailabilityOfCellIfNecessaryOp>,
           ISyncAndAsyncReturningProtocol<HasCellValueOp, bool>,
           ISyncAndAsyncReturningProtocol<GetCellValueOp<TValue>, TValue>,
           ISyncAndAsyncReturningProtocol<GetCellOpExecutionOutcomeOp, CellOpExecutionOutcome>,
-          ISyncAndAsyncReturningProtocol<GetValidityOp, Validity>
+          ISyncAndAsyncReturningProtocol<GetValidityOp, Validity>,
+          ISyncAndAsyncReturningProtocol<GetAvailabilityOp, Availability>
     {
         private readonly Report report;
 
@@ -254,7 +255,7 @@ namespace OBeautifulCode.DataStructure
 
         /// <inheritdoc />
         public void Execute(
-            CheckAvailabilityOfCellOp operation)
+            CheckAvailabilityOfCellIfNecessaryOp operation)
         {
             // NOTE: THIS CODE IS A NEAR DUPLICATE OF THE ASYNC METHOD BELOW; NO GOOD WAY TO D.R.Y. IT OUT
             if (operation == null)
@@ -268,7 +269,7 @@ namespace OBeautifulCode.DataStructure
             {
                 DataStructureCellProtocols.CurrentCellStack.Push(cell);
 
-                this.CheckAvailabilityOfCell(cell);
+                this.CheckAvailabilityOfCellIfNecessary(cell);
             }
             finally
             {
@@ -280,7 +281,7 @@ namespace OBeautifulCode.DataStructure
 
         /// <inheritdoc />
         public async Task ExecuteAsync(
-            CheckAvailabilityOfCellOp operation)
+            CheckAvailabilityOfCellIfNecessaryOp operation)
         {
             // NOTE: THIS CODE IS A NEAR DUPLICATE OF THE SYNC METHOD ABOVE; NO GOOD WAY TO D.R.Y. IT OUT
             if (operation == null)
@@ -294,7 +295,7 @@ namespace OBeautifulCode.DataStructure
             {
                 DataStructureCellProtocols.CurrentCellStack.Push(cell);
 
-                await this.CheckAvailabilityOfCellAsync(cell);
+                await this.CheckAvailabilityOfCellIfNecessaryAsync(cell);
             }
             finally
             {
@@ -484,6 +485,40 @@ namespace OBeautifulCode.DataStructure
             var cell = await this.GetCellAndValidateIfNecessaryAsync(operation.CellLocator);
 
             var result = cell.GetValidity();
+
+            return result;
+        }
+
+        /// <inheritdoc />
+        public Availability Execute(
+            GetAvailabilityOp operation)
+        {
+            // NOTE: THIS CODE IS A NEAR DUPLICATE OF THE ASYNC METHOD BELOW; NO GOOD WAY TO D.R.Y. IT OUT
+            if (operation == null)
+            {
+                throw new ArgumentNullException(nameof(operation));
+            }
+
+            var cell = this.GetCellAndCheckAvailabilityIfNecessary(operation.CellLocator);
+
+            var result = cell.GetAvailability();
+
+            return result;
+        }
+
+        /// <inheritdoc />
+        public async Task<Availability> ExecuteAsync(
+            GetAvailabilityOp operation)
+        {
+            // NOTE: THIS CODE IS A NEAR DUPLICATE OF THE SYNC METHOD ABOVE; NO GOOD WAY TO D.R.Y. IT OUT
+            if (operation == null)
+            {
+                throw new ArgumentNullException(nameof(operation));
+            }
+
+            var cell = await this.GetCellAndCheckAvailabilityIfNecessaryAsync(operation.CellLocator);
+
+            var result = cell.GetAvailability();
 
             return result;
         }
@@ -700,7 +735,7 @@ namespace OBeautifulCode.DataStructure
             }
         }
 
-        private void CheckAvailabilityOfCell(
+        private void CheckAvailabilityOfCellIfNecessary(
             IAvailabilityCheckCell cell)
         {
             // NOTE: THIS CODE IS A NEAR DUPLICATE OF THE ASYNC METHOD BELOW; NO GOOD WAY TO D.R.Y. IT OUT
@@ -727,7 +762,7 @@ namespace OBeautifulCode.DataStructure
                         message = this.protocolFactory.GetProtocolAndExecuteViaReflection<string>(availabilityCheckResult.MessageOp);
                     }
 
-                    var availability = availabilityCheckResult.Availability;
+                    var availability = this.protocolFactory.GetProtocolAndExecuteViaReflection<Availability>(availabilityCheckResult.AvailabilityOp);
 
                     if (availability == Availability.Disabled)
                     {
@@ -757,7 +792,7 @@ namespace OBeautifulCode.DataStructure
             }
         }
 
-        private async Task CheckAvailabilityOfCellAsync(
+        private async Task CheckAvailabilityOfCellIfNecessaryAsync(
             IAvailabilityCheckCell cell)
         {
             // NOTE: THIS CODE IS A NEAR DUPLICATE OF THE SYNC METHOD ABOVE; NO GOOD WAY TO D.R.Y. IT OUT
@@ -784,7 +819,7 @@ namespace OBeautifulCode.DataStructure
                         message = await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync<string>(availabilityCheckResult.MessageOp);
                     }
 
-                    var availability = availabilityCheckResult.Availability;
+                    var availability = await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync<Availability>(availabilityCheckResult.AvailabilityOp);
 
                     if (availability == Availability.Disabled)
                     {
@@ -943,6 +978,46 @@ namespace OBeautifulCode.DataStructure
             var validateCellIfNecessaryOp = new ValidateCellIfNecessaryOp(result);
 
             await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync(validateCellIfNecessaryOp);
+
+            return result;
+        }
+
+        private IAvailabilityCheckCell GetCellAndCheckAvailabilityIfNecessary(
+            IReturningOperation<CellLocatorBase> cellLocatorOp)
+        {
+            // NOTE: THIS CODE IS A NEAR DUPLICATE OF THE ASYNC METHOD BELOW; NO GOOD WAY TO D.R.Y. IT OUT
+            var cellLocator = this.protocolFactory.GetProtocolAndExecuteViaReflection<CellLocatorBase>(cellLocatorOp);
+
+            var cell = this.GetCell(cellLocator);
+
+            if (!(cell is IAvailabilityCheckCell result))
+            {
+                throw new CellNotFoundException(Invariant($"The operation addresses a cell whose type is not an {typeof(IAvailabilityCheckCell).ToStringReadable()}: {cell.GetType().ToStringReadable()}."), cellLocator);
+            }
+
+            var checkAvailabilityOfCellIfNecessaryOp = new CheckAvailabilityOfCellIfNecessaryOp(result);
+
+            this.protocolFactory.GetProtocolAndExecuteViaReflection(checkAvailabilityOfCellIfNecessaryOp);
+
+            return result;
+        }
+
+        private async Task<IAvailabilityCheckCell> GetCellAndCheckAvailabilityIfNecessaryAsync(
+            IReturningOperation<CellLocatorBase> cellLocatorOp)
+        {
+            // NOTE: THIS CODE IS A NEAR DUPLICATE OF THE SYNC METHOD ABOVE; NO GOOD WAY TO D.R.Y. IT OUT
+            var cellLocator = await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync<CellLocatorBase>(cellLocatorOp);
+
+            var cell = this.GetCell(cellLocator);
+
+            if (!(cell is IAvailabilityCheckCell result))
+            {
+                throw new CellNotFoundException(Invariant($"The operation addresses a cell whose type is not an {typeof(IAvailabilityCheckCell).ToStringReadable()}: {cell.GetType().ToStringReadable()}."), cellLocator);
+            }
+
+            var checkAvailabilityOfCellIfNecessaryOp = new CheckAvailabilityOfCellIfNecessaryOp(result);
+
+            await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync(checkAvailabilityOfCellIfNecessaryOp);
 
             return result;
         }

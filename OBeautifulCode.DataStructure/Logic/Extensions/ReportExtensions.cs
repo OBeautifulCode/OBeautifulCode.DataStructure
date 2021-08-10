@@ -94,6 +94,7 @@ namespace OBeautifulCode.DataStructure
             typeof(ValidationResult),
             typeof(CellOpExecutionOutcome),
             typeof(Validity),
+            typeof(Availability),
         };
 
         private static readonly ConcurrentDictionary<Type, ConstructorInfo> CachedTypeToExecuteOperationCellIfNecessaryOpConstructorInfoMap =
@@ -259,16 +260,16 @@ namespace OBeautifulCode.DataStructure
 
             foreach (var cell in validationCells)
             {
-                var validateCellOp = new ValidateCellIfNecessaryOp(cell);
+                var validateCellIfNecessaryOp = new ValidateCellIfNecessaryOp(cell);
 
-                protocolFactory.GetProtocolAndExecuteViaReflection(validateCellOp);
+                protocolFactory.GetProtocolAndExecuteViaReflection(validateCellIfNecessaryOp);
             }
 
             foreach (var cell in availabilityCheckCells)
             {
-                var checkAvailabilityOfCellOp = new CheckAvailabilityOfCellOp(cell);
+                var checkAvailabilityOfCellIfNecessaryOp = new CheckAvailabilityOfCellIfNecessaryOp(cell);
 
-                protocolFactory.GetProtocolAndExecuteViaReflection(checkAvailabilityOfCellOp);
+                protocolFactory.GetProtocolAndExecuteViaReflection(checkAvailabilityOfCellIfNecessaryOp);
             }
 
             if (report.PrepareToRerunRecalc(timestampUtc, validationCells, availabilityCheckCells))
@@ -301,16 +302,16 @@ namespace OBeautifulCode.DataStructure
 
             foreach (var cell in validationCells)
             {
-                var validateCellOp = new ValidateCellIfNecessaryOp(cell);
+                var validateCellIfNecessaryOp = new ValidateCellIfNecessaryOp(cell);
 
-                await protocolFactory.GetProtocolAndExecuteViaReflectionAsync(validateCellOp);
+                await protocolFactory.GetProtocolAndExecuteViaReflectionAsync(validateCellIfNecessaryOp);
             }
 
             foreach (var cell in availabilityCheckCells)
             {
-                var checkAvailabilityOfCellOp = new CheckAvailabilityOfCellOp(cell);
+                var checkAvailabilityOfCellIfNecessaryOp = new CheckAvailabilityOfCellIfNecessaryOp(cell);
 
-                await protocolFactory.GetProtocolAndExecuteViaReflectionAsync(checkAvailabilityOfCellOp);
+                await protocolFactory.GetProtocolAndExecuteViaReflectionAsync(checkAvailabilityOfCellIfNecessaryOp);
             }
 
             if (report.PrepareToRerunRecalc(timestampUtc, validationCells, availabilityCheckCells))

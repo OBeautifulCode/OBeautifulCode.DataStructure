@@ -16,6 +16,40 @@ namespace OBeautifulCode.DataStructure
     public static class Op
     {
         /// <summary>
+        /// Builds an operation that returns an <see cref="AvailabilityCheckResult"/>.
+        /// </summary>
+        /// <param name="availability">The availability of the subject.</param>
+        /// <param name="messageOp">OPTIONAL operation to execute to get the message to emit about the availability.  DEFAULT is no message.</param>
+        /// <returns>
+        /// The operation.
+        /// </returns>
+        public static IReturningOperation<AvailabilityCheckResult> GetAvailabilityCheckResult(
+            this Availability availability,
+            IReturningOperation<string> messageOp = null)
+        {
+            var result = Op.Const(new AvailabilityCheckResult(Op.Const(availability)));
+
+            return result;
+        }
+
+        /// <summary>
+        /// Builds an operation that returns an <see cref="AvailabilityCheckResult"/>.
+        /// </summary>
+        /// <param name="availabilityOp">Operation to execute to get the availability of the subject.</param>
+        /// <param name="messageOp">OPTIONAL operation to execute to get the message to emit about the availability.  DEFAULT is no message.</param>
+        /// <returns>
+        /// The operation.
+        /// </returns>
+        public static IReturningOperation<AvailabilityCheckResult> GetAvailabilityCheckResult(
+            this IReturningOperation<Availability> availabilityOp,
+            IReturningOperation<string> messageOp = null)
+        {
+            var result = Op.Const(new AvailabilityCheckResult(availabilityOp, messageOp));
+
+            return result;
+        }
+
+        /// <summary>
         /// Builds an operation that throws a <see cref="OpExecutionAbortedException"/>.
         /// </summary>
         /// <typeparam name="TValue">The type of value.</typeparam>

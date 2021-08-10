@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="CheckAvailabilityOfCellOp.cs" company="OBeautifulCode">
+// <copyright file="CheckAvailabilityOfCellIfNecessaryOp.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -14,13 +14,13 @@ namespace OBeautifulCode.DataStructure
     /// Performs an availability check on a cell.
     /// </summary>
     // ReSharper disable once RedundantExtendsListEntry
-    public partial class CheckAvailabilityOfCellOp : VoidOperationBase, IModelViaCodeGen
+    public partial class CheckAvailabilityOfCellIfNecessaryOp : VoidOperationBase, IModelViaCodeGen
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="CheckAvailabilityOfCellOp"/> class.
+        /// Initializes a new instance of the <see cref="CheckAvailabilityOfCellIfNecessaryOp"/> class.
         /// </summary>
         /// <param name="cell">The cell.</param>
-        public CheckAvailabilityOfCellOp(
+        public CheckAvailabilityOfCellIfNecessaryOp(
             IAvailabilityCheckCell cell)
         {
             if (cell == null)

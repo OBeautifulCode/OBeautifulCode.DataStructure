@@ -128,6 +128,21 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <summary>
+        /// Builds an <see cref="GetAvailabilityOp"/>.
+        /// </summary>
+        /// <param name="cellLocator">The cell locator.</param>
+        /// <returns>
+        /// The operation.
+        /// </returns>
+        public static GetAvailabilityOp GetAvailability(
+            this CellLocatorBase cellLocator)
+        {
+            var result = new GetAvailabilityOp(Op.Const(cellLocator));
+
+            return result;
+        }
+
+        /// <summary>
         /// Builds an <see cref="IOperationOutputCell{TValue}"/>.
         /// </summary>
         /// <typeparam name="TValue">The type of value.</typeparam>
@@ -275,7 +290,7 @@ namespace OBeautifulCode.DataStructure
         /// The validation.
         /// </returns>
         public static AvailabilityCheck CreateAvailabilityCheck(
-            IReturningOperation<AvailabilityCheckResult> operation,
+            this IReturningOperation<AvailabilityCheckResult> operation,
             string details = null)
         {
             var result = new AvailabilityCheck(operation, details);

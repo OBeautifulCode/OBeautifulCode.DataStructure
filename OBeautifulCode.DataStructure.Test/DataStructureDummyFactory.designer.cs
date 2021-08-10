@@ -47,7 +47,7 @@ namespace OBeautifulCode.DataStructure.Test
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new AvailabilityCheckResult(
-                                 A.Dummy<Availability>(),
+                                 A.Dummy<IReturningOperation<Availability>>(),
                                  A.Dummy<IReturningOperation<string>>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
@@ -326,7 +326,7 @@ namespace OBeautifulCode.DataStructure.Test
                 });
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new CheckAvailabilityOfCellOp(
+                () => new CheckAvailabilityOfCellIfNecessaryOp(
                                  A.Dummy<IAvailabilityCheckCell>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
@@ -437,6 +437,10 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<IReadOnlyList<OuterBorder>>(),
                                  A.Dummy<IReadOnlyList<InnerBorder>>(),
                                  A.Dummy<RowFormat>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new GetAvailabilityOp(
+                                 A.Dummy<IReturningOperation<CellLocatorBase>>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new GetCellOpExecutionOutcomeOp(

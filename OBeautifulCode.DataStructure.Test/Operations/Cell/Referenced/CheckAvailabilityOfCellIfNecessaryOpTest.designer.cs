@@ -33,35 +33,35 @@ namespace OBeautifulCode.DataStructure.Test
 
     using static global::System.FormattableString;
 
-    public static partial class CheckAvailabilityOfCellOpTest
+    public static partial class CheckAvailabilityOfCellIfNecessaryOpTest
     {
-        private static readonly StringRepresentationTestScenarios<CheckAvailabilityOfCellOp> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<CheckAvailabilityOfCellOp>()
+        private static readonly StringRepresentationTestScenarios<CheckAvailabilityOfCellIfNecessaryOp> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<CheckAvailabilityOfCellIfNecessaryOp>()
             .AddScenario(() =>
-                new StringRepresentationTestScenario<CheckAvailabilityOfCellOp>
+                new StringRepresentationTestScenario<CheckAvailabilityOfCellIfNecessaryOp>
                 {
                     Name = "Default Code Generated Scenario",
                     SystemUnderTestExpectedStringRepresentationFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<CheckAvailabilityOfCellOp>();
+                        var systemUnderTest = A.Dummy<CheckAvailabilityOfCellIfNecessaryOp>();
 
-                        var result = new SystemUnderTestExpectedStringRepresentation<CheckAvailabilityOfCellOp>
+                        var result = new SystemUnderTestExpectedStringRepresentation<CheckAvailabilityOfCellIfNecessaryOp>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.CheckAvailabilityOfCellOp: Cell = {systemUnderTest.Cell?.ToString() ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.CheckAvailabilityOfCellIfNecessaryOp: Cell = {systemUnderTest.Cell?.ToString() ?? "<null>"}."),
                         };
 
                         return result;
                     },
                 });
 
-        private static readonly ConstructorArgumentValidationTestScenarios<CheckAvailabilityOfCellOp> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<CheckAvailabilityOfCellOp>()
+        private static readonly ConstructorArgumentValidationTestScenarios<CheckAvailabilityOfCellIfNecessaryOp> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<CheckAvailabilityOfCellIfNecessaryOp>()
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<CheckAvailabilityOfCellOp>
+                new ConstructorArgumentValidationTestScenario<CheckAvailabilityOfCellIfNecessaryOp>
                 {
                     Name = "constructor should throw ArgumentNullException when parameter 'cell' is null scenario",
                     ConstructionFunc = () =>
                     {
-                        var result = new CheckAvailabilityOfCellOp(
+                        var result = new CheckAvailabilityOfCellIfNecessaryOp(
                                              null);
 
                         return result;
@@ -70,18 +70,18 @@ namespace OBeautifulCode.DataStructure.Test
                     ExpectedExceptionMessageContains = new[] { "cell", },
                 });
 
-        private static readonly ConstructorPropertyAssignmentTestScenarios<CheckAvailabilityOfCellOp> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<CheckAvailabilityOfCellOp>()
+        private static readonly ConstructorPropertyAssignmentTestScenarios<CheckAvailabilityOfCellIfNecessaryOp> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<CheckAvailabilityOfCellIfNecessaryOp>()
             .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<CheckAvailabilityOfCellOp>
+                new ConstructorPropertyAssignmentTestScenario<CheckAvailabilityOfCellIfNecessaryOp>
                 {
                     Name = "Cell should return same 'cell' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
-                        var referenceObject = A.Dummy<CheckAvailabilityOfCellOp>();
+                        var referenceObject = A.Dummy<CheckAvailabilityOfCellIfNecessaryOp>();
 
-                        var result = new SystemUnderTestExpectedPropertyValue<CheckAvailabilityOfCellOp>
+                        var result = new SystemUnderTestExpectedPropertyValue<CheckAvailabilityOfCellIfNecessaryOp>
                         {
-                            SystemUnderTest = new CheckAvailabilityOfCellOp(
+                            SystemUnderTest = new CheckAvailabilityOfCellIfNecessaryOp(
                                                       referenceObject.Cell),
                             ExpectedPropertyValue = referenceObject.Cell,
                         };
@@ -91,19 +91,19 @@ namespace OBeautifulCode.DataStructure.Test
                     PropertyName = "Cell",
                 });
 
-        private static readonly DeepCloneWithTestScenarios<CheckAvailabilityOfCellOp> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<CheckAvailabilityOfCellOp>()
+        private static readonly DeepCloneWithTestScenarios<CheckAvailabilityOfCellIfNecessaryOp> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<CheckAvailabilityOfCellIfNecessaryOp>()
             .AddScenario(() =>
-                new DeepCloneWithTestScenario<CheckAvailabilityOfCellOp>
+                new DeepCloneWithTestScenario<CheckAvailabilityOfCellIfNecessaryOp>
                 {
                     Name = "DeepCloneWithCell should deep clone object and replace Cell with the provided cell",
                     WithPropertyName = "Cell",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<CheckAvailabilityOfCellOp>();
+                        var systemUnderTest = A.Dummy<CheckAvailabilityOfCellIfNecessaryOp>();
 
-                        var referenceObject = A.Dummy<CheckAvailabilityOfCellOp>().ThatIs(_ => !systemUnderTest.Cell.IsEqualTo(_.Cell));
+                        var referenceObject = A.Dummy<CheckAvailabilityOfCellIfNecessaryOp>().ThatIs(_ => !systemUnderTest.Cell.IsEqualTo(_.Cell));
 
-                        var result = new SystemUnderTestDeepCloneWithValue<CheckAvailabilityOfCellOp>
+                        var result = new SystemUnderTestDeepCloneWithValue<CheckAvailabilityOfCellIfNecessaryOp>
                         {
                             SystemUnderTest = systemUnderTest,
                             DeepCloneWithValue = referenceObject.Cell,
@@ -113,23 +113,23 @@ namespace OBeautifulCode.DataStructure.Test
                     },
                 });
 
-        private static readonly CheckAvailabilityOfCellOp ReferenceObjectForEquatableTestScenarios = A.Dummy<CheckAvailabilityOfCellOp>();
+        private static readonly CheckAvailabilityOfCellIfNecessaryOp ReferenceObjectForEquatableTestScenarios = A.Dummy<CheckAvailabilityOfCellIfNecessaryOp>();
 
-        private static readonly EquatableTestScenarios<CheckAvailabilityOfCellOp> EquatableTestScenarios = new EquatableTestScenarios<CheckAvailabilityOfCellOp>()
+        private static readonly EquatableTestScenarios<CheckAvailabilityOfCellIfNecessaryOp> EquatableTestScenarios = new EquatableTestScenarios<CheckAvailabilityOfCellIfNecessaryOp>()
             .AddScenario(() =>
-                new EquatableTestScenario<CheckAvailabilityOfCellOp>
+                new EquatableTestScenario<CheckAvailabilityOfCellIfNecessaryOp>
                 {
                     Name = "Default Code Generated Scenario",
                     ReferenceObject = ReferenceObjectForEquatableTestScenarios,
-                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new CheckAvailabilityOfCellOp[]
+                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new CheckAvailabilityOfCellIfNecessaryOp[]
                     {
-                        new CheckAvailabilityOfCellOp(
+                        new CheckAvailabilityOfCellIfNecessaryOp(
                                 ReferenceObjectForEquatableTestScenarios.Cell),
                     },
-                    ObjectsThatAreNotEqualToReferenceObject = new CheckAvailabilityOfCellOp[]
+                    ObjectsThatAreNotEqualToReferenceObject = new CheckAvailabilityOfCellIfNecessaryOp[]
                     {
-                        new CheckAvailabilityOfCellOp(
-                                A.Dummy<CheckAvailabilityOfCellOp>().Whose(_ => !_.Cell.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Cell)).Cell),
+                        new CheckAvailabilityOfCellIfNecessaryOp(
+                                A.Dummy<CheckAvailabilityOfCellIfNecessaryOp>().Whose(_ => !_.Cell.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Cell)).Cell),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
                     {
@@ -140,6 +140,7 @@ namespace OBeautifulCode.DataStructure.Test
                         A.Dummy<Guid>(),
                         A.Dummy<AndAlsoOp>(),
                         A.Dummy<ExecuteOperationCellIfNecessaryOp<Version>>(),
+                        A.Dummy<GetAvailabilityOp>(),
                         A.Dummy<GetCellOpExecutionOutcomeOp>(),
                         A.Dummy<GetCellValueOp<Version>>(),
                         A.Dummy<GetConstOp<Version>>(),
@@ -174,12 +175,12 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void CheckAvailabilityOfCellOp___Should_implement_IModel_of_CheckAvailabilityOfCellOp___When_reflecting()
+            public static void CheckAvailabilityOfCellIfNecessaryOp___Should_implement_IModel_of_CheckAvailabilityOfCellIfNecessaryOp___When_reflecting()
             {
                 // Arrange
-                var type = typeof(CheckAvailabilityOfCellOp);
+                var type = typeof(CheckAvailabilityOfCellIfNecessaryOp);
 
-                var expectedModelMethods = typeof(IModel<CheckAvailabilityOfCellOp>).GetInterfaceDeclaredAndImplementedMethods();
+                var expectedModelMethods = typeof(IModel<CheckAvailabilityOfCellIfNecessaryOp>).GetInterfaceDeclaredAndImplementedMethods();
 
                 var expectedModelMethodHashes = expectedModelMethods.Select(_ => _.GetSignatureHash());
 
@@ -189,7 +190,7 @@ namespace OBeautifulCode.DataStructure.Test
                 var actualModelMethodHashes = actualModelMethods.Select(_ => _.GetSignatureHash());
 
                 // Assert
-                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<CheckAvailabilityOfCellOp>));
+                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<CheckAvailabilityOfCellIfNecessaryOp>));
                 expectedModelMethodHashes.Except(actualModelMethodHashes).AsTest().Must().BeEmptyEnumerable();
             }
 
@@ -207,10 +208,10 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void CheckAvailabilityOfCellOp___Should_be_attributed_with_Serializable____When_reflecting()
+            public static void CheckAvailabilityOfCellIfNecessaryOp___Should_be_attributed_with_Serializable____When_reflecting()
             {
                 // Arrange
-                var type = typeof(CheckAvailabilityOfCellOp);
+                var type = typeof(CheckAvailabilityOfCellIfNecessaryOp);
 
                 // Act
                 var actualAttributes = type.GetCustomAttributes(typeof(SerializableAttribute), false);
@@ -368,10 +369,10 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Clone___Should_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<CheckAvailabilityOfCellOp>();
+                var systemUnderTest = A.Dummy<CheckAvailabilityOfCellIfNecessaryOp>();
 
                 // Act
-                var actual = (CheckAvailabilityOfCellOp)systemUnderTest.Clone();
+                var actual = (CheckAvailabilityOfCellIfNecessaryOp)systemUnderTest.Clone();
 
                 // Assert
                 actual.AsTest().Must().BeEqualTo(systemUnderTest);
@@ -395,7 +396,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void DeepClone___Should_deep_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<CheckAvailabilityOfCellOp>();
+                var systemUnderTest = A.Dummy<CheckAvailabilityOfCellIfNecessaryOp>();
 
                 // Act
                 var actual = systemUnderTest.DeepClone();
@@ -446,12 +447,12 @@ namespace OBeautifulCode.DataStructure.Test
                     }
 
                     // Act
-                    var actual = (CheckAvailabilityOfCellOp)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
+                    var actual = (CheckAvailabilityOfCellIfNecessaryOp)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
 
                     // Assert
                     foreach(var propertyName in propertyNames)
                     {
-                        var propertyInfo = typeof(CheckAvailabilityOfCellOp).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
+                        var propertyInfo = typeof(CheckAvailabilityOfCellIfNecessaryOp).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
 
                         var actualPropertyValue = propertyInfo.GetValue(actual);
 
@@ -513,7 +514,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<CheckAvailabilityOfCellOp>();
+                var expected = A.Dummy<CheckAvailabilityOfCellIfNecessaryOp>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -542,7 +543,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<CheckAvailabilityOfCellOp>();
+                var expected = A.Dummy<CheckAvailabilityOfCellIfNecessaryOp>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -571,7 +572,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<CheckAvailabilityOfCellOp>();
+                var expected = A.Dummy<CheckAvailabilityOfCellIfNecessaryOp>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -600,7 +601,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<CheckAvailabilityOfCellOp>();
+                var expected = A.Dummy<CheckAvailabilityOfCellIfNecessaryOp>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -634,8 +635,8 @@ namespace OBeautifulCode.DataStructure.Test
             public static void EqualsOperator___Should_return_true___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                CheckAvailabilityOfCellOp systemUnderTest1 = null;
-                CheckAvailabilityOfCellOp systemUnderTest2 = null;
+                CheckAvailabilityOfCellIfNecessaryOp systemUnderTest1 = null;
+                CheckAvailabilityOfCellIfNecessaryOp systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 == systemUnderTest2;
@@ -665,7 +666,7 @@ namespace OBeautifulCode.DataStructure.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    CheckAvailabilityOfCellOp systemUnderTest = null;
+                    CheckAvailabilityOfCellIfNecessaryOp systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest == scenario.ReferenceObject;
@@ -814,8 +815,8 @@ namespace OBeautifulCode.DataStructure.Test
             public static void NotEqualsOperator___Should_return_false___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                CheckAvailabilityOfCellOp systemUnderTest1 = null;
-                CheckAvailabilityOfCellOp systemUnderTest2 = null;
+                CheckAvailabilityOfCellIfNecessaryOp systemUnderTest1 = null;
+                CheckAvailabilityOfCellIfNecessaryOp systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 != systemUnderTest2;
@@ -845,7 +846,7 @@ namespace OBeautifulCode.DataStructure.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    CheckAvailabilityOfCellOp systemUnderTest = null;
+                    CheckAvailabilityOfCellIfNecessaryOp systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest != scenario.ReferenceObject;
@@ -1277,14 +1278,14 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_CheckAvailabilityOfCellOp___Should_return_false___When_parameter_other_is_null()
+            public static void Equals_with_CheckAvailabilityOfCellIfNecessaryOp___Should_return_false___When_parameter_other_is_null()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    CheckAvailabilityOfCellOp systemUnderTest = null;
+                    CheckAvailabilityOfCellIfNecessaryOp systemUnderTest = null;
 
                     // Act
                     var actual = scenario.ReferenceObject.Equals(systemUnderTest);
@@ -1308,7 +1309,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_CheckAvailabilityOfCellOp___Should_return_true___When_parameter_other_is_same_object()
+            public static void Equals_with_CheckAvailabilityOfCellIfNecessaryOp___Should_return_true___When_parameter_other_is_same_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1336,7 +1337,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_CheckAvailabilityOfCellOp___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
+            public static void Equals_with_CheckAvailabilityOfCellIfNecessaryOp___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1364,7 +1365,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_CheckAvailabilityOfCellOp___Should_return_false___When_objects_being_compared_have_different_property_values()
+            public static void Equals_with_CheckAvailabilityOfCellIfNecessaryOp___Should_return_false___When_objects_being_compared_have_different_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1392,7 +1393,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_CheckAvailabilityOfCellOp___Should_return_true___When_objects_being_compared_have_same_property_values()
+            public static void Equals_with_CheckAvailabilityOfCellIfNecessaryOp___Should_return_true___When_objects_being_compared_have_same_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 

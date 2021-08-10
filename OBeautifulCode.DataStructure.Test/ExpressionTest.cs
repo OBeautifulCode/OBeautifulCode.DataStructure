@@ -37,13 +37,18 @@ namespace OBeautifulCode.DataStructure.Test
 
             var restrictedCash = Cell.CreateDisabledInput<decimal>(
                 "restricted-cash",
-                availabilityCheck: Cell.CreateAvailabilityCheck(
+                availabilityCheck:
                     Op.IfThenElse(
                         Op.AndAlso(
                             Cell.InThisSection(isForProfitCell.Id).HasValue(),
                             Op.Not(Cell.InThisSection(isForProfitCell.Id).GetValue<bool>())),
-                        Op.Const(new AvailabilityCheckResult(Availability.Enabled)),
-                        Op.Const(new AvailabilityCheckResult(Availability.Disabled)))));
+                        Availability.Enabled.GetAvailabilityCheckResult(),
+                        Availability.Disabled.GetAvailabilityCheckResult())
+                    .CreateAvailabilityCheck());
+
+            var partiallyRestrictedCash = Cell.CreateDisabledInput<decimal>(
+                "partially-restricted-cash",
+                availabilityCheck: Cell.InThisSection(restrictedCash.Id).GetAvailability().GetAvailabilityCheckResult().CreateAvailabilityCheck());
 
             var numberOfSalesFteCell = Cell.CreateEnabledInput<decimal>(
                 id: "sales-fte",
@@ -134,6 +139,7 @@ namespace OBeautifulCode.DataStructure.Test
             {
                 new Row(new[] { isForProfitCell }),
                 new Row(new[] { restrictedCash }),
+                new Row(new[] { partiallyRestrictedCash }),
                 new Row(new[] { numberOfSalesFteCell }),
                 new Row(new[] { numberOfWarehouseFteCell }),
                 new Row(new[] { numberOfTotalFte }),

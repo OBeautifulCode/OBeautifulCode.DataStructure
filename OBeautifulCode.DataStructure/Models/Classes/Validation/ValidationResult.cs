@@ -44,20 +44,5 @@ namespace OBeautifulCode.DataStructure
         /// Gets the operation to execute to get the message to emit about the validity.
         /// </summary>
         public IReturningOperation<string> MessageOp { get; private set; }
-
-        /// <summary>
-        /// Performs an implicit conversion from a <see cref="Validity"/> to a <see cref="ValidationResult"/>.
-        /// </summary>
-        /// <param name="from">The <see cref="Validity"/> to convert from.</param>
-        /// <returns>
-        /// The result of the conversion.
-        /// </returns>
-        public static implicit operator ValidationResult(
-            Validity from)
-        {
-            var result = new ValidationResult(from);
-
-            return result;
-        }
     }
 }

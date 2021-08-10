@@ -23,15 +23,15 @@ namespace OBeautifulCode.DataStructure
     using static global::System.FormattableString;
 
     [Serializable]
-    public partial class AvailabilityCheckResult : IModel<AvailabilityCheckResult>
+    public partial class GetAvailabilityOp : IModel<GetAvailabilityOp>
     {
         /// <summary>
-        /// Determines whether two objects of type <see cref="AvailabilityCheckResult"/> are equal.
+        /// Determines whether two objects of type <see cref="GetAvailabilityOp"/> are equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are equal; otherwise false.</returns>
-        public static bool operator ==(AvailabilityCheckResult left, AvailabilityCheckResult right)
+        public static bool operator ==(GetAvailabilityOp left, GetAvailabilityOp right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -49,15 +49,15 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <summary>
-        /// Determines whether two objects of type <see cref="AvailabilityCheckResult"/> are not equal.
+        /// Determines whether two objects of type <see cref="GetAvailabilityOp"/> are not equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are not equal; otherwise false.</returns>
-        public static bool operator !=(AvailabilityCheckResult left, AvailabilityCheckResult right) => !(left == right);
+        public static bool operator !=(GetAvailabilityOp left, GetAvailabilityOp right) => !(left == right);
 
         /// <inheritdoc />
-        public bool Equals(AvailabilityCheckResult other)
+        public bool Equals(GetAvailabilityOp other)
         {
             if (ReferenceEquals(this, other))
             {
@@ -69,39 +69,23 @@ namespace OBeautifulCode.DataStructure
                 return false;
             }
 
-            var result = this.AvailabilityOp.IsEqualTo(other.AvailabilityOp)
-                      && this.MessageOp.IsEqualTo(other.MessageOp);
+            var result = this.CellLocator.IsEqualTo(other.CellLocator);
 
             return result;
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => this == (obj as AvailabilityCheckResult);
+        public override bool Equals(object obj) => this == (obj as GetAvailabilityOp);
 
         /// <inheritdoc />
         public override int GetHashCode() => HashCodeHelper.Initialize()
-            .Hash(this.AvailabilityOp)
-            .Hash(this.MessageOp)
+            .Hash(this.CellLocator)
             .Value;
 
         /// <inheritdoc />
-        public object Clone() => this.DeepClone();
+        public new GetAvailabilityOp DeepClone() => (GetAvailabilityOp)this.DeepCloneInternal();
 
         /// <inheritdoc />
-        public AvailabilityCheckResult DeepClone()
-        {
-            var result = new AvailabilityCheckResult(
-                                 this.AvailabilityOp?.DeepClone(),
-                                 this.MessageOp?.DeepClone());
-
-            return result;
-        }
-
-        /// <summary>
-        /// Deep clones this object with a new <see cref="AvailabilityOp" />.
-        /// </summary>
-        /// <param name="availabilityOp">The new <see cref="AvailabilityOp" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="AvailabilityCheckResult" /> using the specified <paramref name="availabilityOp" /> for <see cref="AvailabilityOp" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -119,42 +103,20 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public AvailabilityCheckResult DeepCloneWithAvailabilityOp(IReturningOperation<Availability> availabilityOp)
+        public override LocatedCellOpBase<Availability> DeepCloneWithCellLocator(IReturningOperation<CellLocatorBase> cellLocator)
         {
-            var result = new AvailabilityCheckResult(
-                                 availabilityOp,
-                                 this.MessageOp?.DeepClone());
+            var result = new GetAvailabilityOp(
+                                 cellLocator);
 
             return result;
         }
 
-        /// <summary>
-        /// Deep clones this object with a new <see cref="MessageOp" />.
-        /// </summary>
-        /// <param name="messageOp">The new <see cref="MessageOp" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="AvailabilityCheckResult" /> using the specified <paramref name="messageOp" /> for <see cref="MessageOp" /> and a deep clone of every other property.</returns>
-        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
+        /// <inheritdoc />
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
-        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
-        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public AvailabilityCheckResult DeepCloneWithMessageOp(IReturningOperation<string> messageOp)
+        protected override OperationBase DeepCloneInternal()
         {
-            var result = new AvailabilityCheckResult(
-                                 this.AvailabilityOp?.DeepClone(),
-                                 messageOp);
+            var result = new GetAvailabilityOp(
+                                 this.CellLocator?.DeepClone());
 
             return result;
         }
@@ -163,7 +125,7 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"OBeautifulCode.DataStructure.AvailabilityCheckResult: AvailabilityOp = {this.AvailabilityOp?.ToString() ?? "<null>"}, MessageOp = {this.MessageOp?.ToString() ?? "<null>"}.");
+            var result = Invariant($"OBeautifulCode.DataStructure.GetAvailabilityOp: CellLocator = {this.CellLocator?.ToString() ?? "<null>"}.");
 
             return result;
         }
