@@ -29,6 +29,30 @@ namespace OBeautifulCode.DataStructure.Test
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = ObcSuppressBecause.CA1810_InitializeReferenceTypeStaticFieldsInline_FieldsDeclaredInCodeGeneratedPartialTestClass)]
         static PercentCellValueFormatTest()
         {
+            ConstructorArgumentValidationTestScenarios
+                .RemoveAllScenarios()
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<PercentCellValueFormat>
+                    {
+                        Name = "constructor should throw ArgumentOutOfRangeException when parameter 'percentDisplayKind' is NumberFormatPercentDisplayKind.Unknown",
+                        ConstructionFunc = () =>
+                        {
+                            var referenceObject = A.Dummy<PercentCellValueFormat>();
+
+                            var result = new PercentCellValueFormat(
+                                NumberFormatPercentDisplayKind.Unknown,
+                                referenceObject.NumberOfDecimalPlaces,
+                                referenceObject.DecimalSeparator,
+                                referenceObject.DigitGroupKind,
+                                referenceObject.DigitGroupSeparator,
+                                referenceObject.NegativeNumberDisplayKind,
+                                referenceObject.MissingValueText);
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentOutOfRangeException),
+                        ExpectedExceptionMessageContains = new[] { "percentDisplayKind", "Unknown" },
+                    });
         }
     }
 }

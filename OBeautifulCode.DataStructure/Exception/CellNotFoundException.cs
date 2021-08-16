@@ -24,7 +24,6 @@ namespace OBeautifulCode.DataStructure
         /// <param name="cellLocator">The cell locator.</param>
         public CellNotFoundException(
             CellLocatorBase cellLocator)
-            : base()
         {
             this.CellLocator = cellLocator;
         }

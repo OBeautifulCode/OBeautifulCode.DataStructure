@@ -28,6 +28,7 @@ namespace OBeautifulCode.DataStructure
             MessageFormatKind? messageFormatKind,
             string details = null)
         {
+            // ReSharper disable once JoinNullCheckWithUsage
             if (operation == null)
             {
                 throw new ArgumentNullException(nameof(operation));
@@ -35,7 +36,7 @@ namespace OBeautifulCode.DataStructure
 
             if ((messageFormatKind != null) && (messageFormatKind == DataStructure.MessageFormatKind.Unknown))
             {
-                throw new ArgumentOutOfRangeException(Invariant($"{nameof(messageFormatKind)} is {nameof(DataStructure.MessageFormatKind)}.{nameof(DataStructure.MessageFormatKind.Unknown)}"));
+                throw new ArgumentOutOfRangeException(Invariant($"{nameof(messageFormatKind)} is {nameof(DataStructure.MessageFormatKind)}.{nameof(DataStructure.MessageFormatKind.Unknown)}."));
             }
 
             this.Operation = operation;

@@ -65,20 +65,20 @@
     <Reference Include="OBeautifulCode.Representation.System, Version=1.0.60.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\OBeautifulCode.Representation.System.1.0.60\lib\net462\OBeautifulCode.Representation.System.dll</HintPath>
     </Reference>
-    <Reference Include="OBeautifulCode.Serialization, Version=1.0.112.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OBeautifulCode.Serialization.1.0.112\lib\net462\OBeautifulCode.Serialization.dll</HintPath>
+    <Reference Include="OBeautifulCode.Serialization, Version=1.0.114.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Serialization.1.0.114\lib\net462\OBeautifulCode.Serialization.dll</HintPath>
     </Reference>
-    <Reference Include="OBeautifulCode.Serialization.Bson, Version=1.0.112.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OBeautifulCode.Serialization.Bson.1.0.112\lib\net462\OBeautifulCode.Serialization.Bson.dll</HintPath>
+    <Reference Include="OBeautifulCode.Serialization.Bson, Version=1.0.114.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Serialization.Bson.1.0.114\lib\net462\OBeautifulCode.Serialization.Bson.dll</HintPath>
     </Reference>
-    <Reference Include="OBeautifulCode.Serialization.Json, Version=1.0.112.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OBeautifulCode.Serialization.Json.1.0.112\lib\net462\OBeautifulCode.Serialization.Json.dll</HintPath>
+    <Reference Include="OBeautifulCode.Serialization.Json, Version=1.0.114.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Serialization.Json.1.0.114\lib\net462\OBeautifulCode.Serialization.Json.dll</HintPath>
     </Reference>
-    <Reference Include="OBeautifulCode.Serialization.PropertyBag, Version=1.0.112.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OBeautifulCode.Serialization.PropertyBag.1.0.112\lib\net462\OBeautifulCode.Serialization.PropertyBag.dll</HintPath>
+    <Reference Include="OBeautifulCode.Serialization.PropertyBag, Version=1.0.114.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Serialization.PropertyBag.1.0.114\lib\net462\OBeautifulCode.Serialization.PropertyBag.dll</HintPath>
     </Reference>
-    <Reference Include="OBeautifulCode.Type, Version=1.0.102.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OBeautifulCode.Type.1.0.102\lib\net462\OBeautifulCode.Type.dll</HintPath>
+    <Reference Include="OBeautifulCode.Type, Version=1.0.103.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Type.1.0.103\lib\net462\OBeautifulCode.Type.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
@@ -199,7 +199,11 @@
     <Compile Include=".recipes\OBeautifulCode.Type\ArrayKind.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringReadableOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringXmlDocOptions.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Type\TypeDummyFactory.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Type\TypeDummyFactory.designer.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
+    <Compile Include="Exception\CellValueMissingExceptionTest.cs" />
+    <Compile Include="Exception\CellNotFoundExceptionTest.cs" />
     <Compile Include="Models\Classes\Format\CellValue\Concrete\NullNumberCellFormat{TValue}Test.cs" />
     <Compile Include="Models\Classes\Format\CellValue\Concrete\NullNumberCellFormat{TValue}Test.designer.cs">
       <DependentUpon>NullNumberCellFormat{TValue}Test.cs</DependentUpon>
@@ -248,20 +252,20 @@
     <Compile Include="Models\Classes\CellLocator\CellLocatorBaseTest.designer.cs">
       <DependentUpon>CellLocatorBaseTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Events\CellAvailability\CellAvailabilityCheckClearedEventTest.cs" />
-    <Compile Include="Events\CellAvailability\CellAvailabilityCheckClearedEventTest.designer.cs">
+    <Compile Include="Events\CellAvailabilityCheck\CellAvailabilityCheckClearedEventTest.cs" />
+    <Compile Include="Events\CellAvailabilityCheck\CellAvailabilityCheckClearedEventTest.designer.cs">
       <DependentUpon>CellAvailabilityCheckClearedEventTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Events\CellAvailability\CellAvailabilityCheckDeterminedCellDisabledEventTest.cs" />
-    <Compile Include="Events\CellAvailability\CellAvailabilityCheckDeterminedCellDisabledEventTest.designer.cs">
+    <Compile Include="Events\CellAvailabilityCheck\CellAvailabilityCheckDeterminedCellDisabledEventTest.cs" />
+    <Compile Include="Events\CellAvailabilityCheck\CellAvailabilityCheckDeterminedCellDisabledEventTest.designer.cs">
       <DependentUpon>CellAvailabilityCheckDeterminedCellDisabledEventTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Events\CellAvailability\CellAvailabilityCheckDeterminedCellEnabledEventTest.cs" />
-    <Compile Include="Events\CellAvailability\CellAvailabilityCheckDeterminedCellEnabledEventTest.designer.cs">
+    <Compile Include="Events\CellAvailabilityCheck\CellAvailabilityCheckDeterminedCellEnabledEventTest.cs" />
+    <Compile Include="Events\CellAvailabilityCheck\CellAvailabilityCheckDeterminedCellEnabledEventTest.designer.cs">
       <DependentUpon>CellAvailabilityCheckDeterminedCellEnabledEventTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Events\CellAvailability\CellAvailabilityCheckFailedEventTest.cs" />
-    <Compile Include="Events\CellAvailability\CellAvailabilityCheckFailedEventTest.designer.cs">
+    <Compile Include="Events\CellAvailabilityCheck\CellAvailabilityCheckFailedEventTest.cs" />
+    <Compile Include="Events\CellAvailabilityCheck\CellAvailabilityCheckFailedEventTest.designer.cs">
       <DependentUpon>CellAvailabilityCheckFailedEventTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Classes\AvailabilityCheck\AvailabilityCheckResultTest.cs" />
@@ -511,9 +515,9 @@
     <Compile Include="Models\Classes\Row\TableRowsTest.designer.cs">
       <DependentUpon>TableRowsTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Classes\TreeTableTest.designer.cs">
+    <None Include="Models\Classes\Report\TreeTableTest.designer.cs">
       <DependentUpon>TreeTableTest.cs</DependentUpon>
-    </Compile>
+    </None>
     <Compile Include="Models\Classes\Format\CellValue\NumberCellFormatBase{TValue}Test.cs" />
     <Compile Include="Models\Classes\Format\CellValue\NumberCellFormatBase{TValue}Test.designer.cs">
       <DependentUpon>NumberCellFormatBase{TValue}Test.cs</DependentUpon>
@@ -547,7 +551,7 @@
       <DependentUpon>IfThenElseOp{TResult}Test.cs</DependentUpon>
     </Compile>
     <Compile Include="Operations\Cell\Referenced\ExecuteOperationCellIfNecessaryOp{TValue}Test.cs" />
-    <Compile Include="ExpressionTest.cs" />
+    <None Include="ExpressionTest.cs" />
     <Compile Include="Operations\Cell\Referenced\ExecuteOperationCellIfNecessaryOp{TValue}Test.designer.cs">
       <DependentUpon>ExecuteOperationCellIfNecessaryOp{TValue}Test.cs</DependentUpon>
     </Compile>
@@ -634,7 +638,7 @@
     <Compile Include="Models\Classes\Row\RowBaseTest.cs" />
     <Compile Include="Models\Classes\Row\RowTest.cs" />
     <Compile Include="Models\Classes\Row\TableRowsTest.cs" />
-    <None Include="Models\Classes\TreeTableTest.cs" />
+    <None Include="Models\Classes\Report\TreeTableTest.cs" />
     <Compile Include="Operations\GetConstOp{TValue}Test.designer.cs">
       <DependentUpon>GetConstOp{TValue}Test.cs</DependentUpon>
     </Compile>
@@ -699,7 +703,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Exception\" />
     <Folder Include="Logic\Builders\" />
     <Folder Include="Logic\Protocols\" />
   </ItemGroup>

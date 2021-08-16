@@ -9,6 +9,7 @@
 
 namespace OBeautifulCode.DataStructure.Test
 {
+    using System;
     using System.Collections.Generic;
     using System.Drawing;
     using System.Linq;
@@ -17,6 +18,7 @@ namespace OBeautifulCode.DataStructure.Test
 
     using OBeautifulCode.AutoFakeItEasy;
     using OBeautifulCode.Math.Recipes;
+    using OBeautifulCode.Type;
 
     /// <summary>
     /// A Dummy Factory for types in <see cref="OBeautifulCode.DataStructure"/>.
@@ -32,269 +34,546 @@ namespace OBeautifulCode.DataStructure.Test
     {
         public DataStructureDummyFactory()
         {
-            ////// <------------------- ENUMS ------------------------>
-            ////AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(MediaReferenceKind.Unknown);
-            ////AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(BorderStyle.Unknown);
-            ////AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(BorderWeight.Unknown);
-            ////AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(FillPatternStyle.Unknown);
-            ////AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(HorizontalAlignment.Unknown);
-            ////AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(InnerBorderEdges.None);
-            ////AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(OuterBorderSides.None);
-            ////AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(VerticalAlignment.Unknown);
-            ////AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(BytesPayloadLinkedResourceKind.Unknown);
-            ////AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(LinkTarget.Unknown);
-            ////AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(StringPayloadLinkedResourceKind.Unknown);
-            ////AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(UrlLinkedResourceKind.Unknown);
+            // <------------------- ENUMS ------------------------>
+            AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(Availability.Unknown);
+            AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(AvailabilityCheckStatus.Unknown);
+            AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(BorderStyle.Unknown);
+            AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(BorderWeight.Unknown);
+            AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(BytesPayloadLinkedResourceKind.Unknown);
+            AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(CellOpExecutionOutcome.Unknown);
+            AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(CellOpExecutionStatus.Unknown);
+            AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(CompareOperator.Unknown);
+            AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(FillPatternStyle.Unknown);
+            AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(HorizontalAlignment.Unknown);
+            AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(InnerBorderEdges.None);
+            AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(LinkTarget.Unknown);
+            AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(MediaReferenceKind.Unknown);
+            AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(MessageFormatKind.Unknown);
+            AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(NumberFormatDigitGroupKind.Unknown);
+            AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(NumberFormatNegativeDisplayKind.Unknown);
+            AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(NumberFormatPercentDisplayKind.Unknown);
+            AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(OuterBorderSides.None);
+            AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(SlotSelectionStrategy.Unknown);
+            AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(StringPayloadLinkedResourceKind.Unknown);
+            AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(UrlLinkedResourceKind.Unknown);
+            AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(ValidationConditionKind.Unknown);
+            AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(ValidationStatus.Unknown);
+            AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(Validity.Unknown);
+            AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(VerticalAlignment.Unknown);
 
-            ////// <------------------- INTERFACES ------------------------>
-            ////AutoFixtureBackedDummyFactory.AddDummyCreator<IColumnSpanningCell>(A.Dummy<ColumnSpanningStandardCellBase>);
-            ////AutoFixtureBackedDummyFactory.AddDummyCreator<IHaveCellFormat>(A.Dummy<ConstCell<>>);
-            ////AutoFixtureBackedDummyFactory.AddDummyCreator<ICell>(A.Dummy<CellBase>);
-            ////AutoFixtureBackedDummyFactory.AddDummyCreator<IHoverOver>(A.Dummy<HoverOverBase>);
-            ////AutoFixtureBackedDummyFactory.AddDummyCreator<ILink>(A.Dummy<LinkBase>);
-            ////AutoFixtureBackedDummyFactory.AddDummyCreator<ILinkedResource>(A.Dummy<LinkedResourceBase>);
-            ////AutoFixtureBackedDummyFactory.AddDummyCreator<IHaveValueCell>(() =>
-            ////{
-            ////    IHaveValueCell result;
+            // <------------------- INTERFACES ------------------------>
+            AutoFixtureBackedDummyFactory.AddDummyCreator<IAvailabilityCheckCell>(A.Dummy<NotSlottedCellBase>);
+            AutoFixtureBackedDummyFactory.AddDummyCreator<ICell>(A.Dummy<CellBase>);
+            AutoFixtureBackedDummyFactory.AddDummyCreator<INotSlottedCell>(A.Dummy<NotSlottedCellBase>);
+            AutoFixtureBackedDummyFactory.AddDummyCreator<IValidationCell>(A.Dummy<NotSlottedCellBase>);
+            AutoFixtureBackedDummyFactory.AddDummyCreator<ICellValueFormat<Version>>(A.Dummy<CellValueFormatBase<Version>>);
+            AutoFixtureBackedDummyFactory.AddDummyCreator<IHoverOver>(A.Dummy<HoverOverBase>);
+            AutoFixtureBackedDummyFactory.AddDummyCreator<ILink>(A.Dummy<SimpleLink>);
+            AutoFixtureBackedDummyFactory.AddDummyCreator<ILinkedResource>(A.Dummy<LinkedResourceBase>);
 
-            ////    do
-            ////    {
-            ////        result = A.Dummy<ConstCell<>>() as IHaveValueCell;
-            ////    } while (result == null);
-                
-            ////    return result;
-            ////});
+            // <------------------- OPERATIONS ------------------------>
+            RegisterReturningOperation<bool>();
+            RegisterReturningOperation<decimal>();
+            RegisterReturningOperation<string>();
+            RegisterReturningOperation<ValidationResult>();
+            RegisterReturningOperation<AvailabilityCheckResult>();
+            RegisterReturningOperation<Availability>();
+            RegisterReturningOperation<Validity>();
+            RegisterReturningOperation<CellLocatorBase>();
 
-            ////// <------------------- CLASSES ------------------------>
-            ////AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
-            ////{
-            ////    var columns = Some.ReadOnlyDummies<Column>().ToList();
+            // <------------------- CLASSES ------------------------>
 
-            ////    var tableColumns = new TableColumns(columns, A.Dummy<ColumnFormat>());
+            // TreeTable
+            AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
+            {
+                var columns = Some.ReadOnlyDummies<Column>().ToList();
 
-            ////    var tableRows = BuildTableRows(columns.Count);
+                var tableColumns = new TableColumns(columns, A.Dummy<ColumnFormat>());
 
-            ////    var result = new TreeTable(tableColumns, tableRows, A.Dummy<TableFormat>());
+                var tableRows = BuildTableRows(columns.Count);
 
-            ////    return result;
-            ////});
+                var result = new TreeTable(tableColumns, tableRows, A.Dummy<TableFormat>());
 
-            ////AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
-            ////{
-            ////    var result = BuildTableRows(ThreadSafeRandom.Next(1, 6));
+                return result;
+            });
 
-            ////    return result;
-            ////});
+            // TableRows
+            AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
+            {
+                var result = BuildTableRows(GetRandomNumberOfColumns());
 
-            ////AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
-            ////{
-            ////    var headerRows = BuildFlatRows(ThreadSafeRandom.Next(1, 6));
+                return result;
+            });
 
-            ////    var result = new HeaderRows(headerRows, A.Dummy<HeaderRowsFormat>());
+            // HeaderRows
+            AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
+            {
+                var headerRows = BuildFlatRows(GetRandomNumberOfColumns());
 
-            ////    return result;
-            ////});
+                var result = new HeaderRows(headerRows, A.Dummy<HeaderRowsFormat>());
 
-            ////AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
-            ////{
-            ////    var allDataRows = BuildDataRows(ThreadSafeRandom.Next(1, 6));
+                return result;
+            });
 
-            ////    var result = new DataRows(allDataRows, A.Dummy<DataRowsFormat>());
+            // DataRows
+            AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
+            {
+                var allDataRows = BuildDataRows(GetRandomNumberOfColumns());
 
-            ////    return result;
-            ////});
+                var result = new DataRows(allDataRows, A.Dummy<DataRowsFormat>());
 
-            ////AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
-            ////{
-            ////    var result = BuildDataRow(ThreadSafeRandom.Next(1, 6));
+                return result;
+            });
 
-            ////    return result;
-            ////});
+            // FooterRows
+            AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
+            {
+                var footerRows = BuildFlatRows(GetRandomNumberOfColumns());
 
-            ////AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
-            ////{
-            ////    var cells = Some.ReadOnlyDummies<IHaveValueCell>().Whose(_ => !_.Any(e => e is IColumnSpanningCell));
+                var result = new FooterRows(footerRows, A.Dummy<FooterRowsFormat>());
 
-            ////    var slotIdToCellMap = cells.ToDictionary(_ => A.Dummy<string>(), _ => _);
+                return result;
+            });
 
-            ////    var defaultSlotId = slotIdToCellMap.ElementAt(ThreadSafeRandom.Next(0, slotIdToCellMap.Count)).Key;
+            // Row
+            AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
+            {
+                var result = BuildDataRow(GetRandomNumberOfColumns());
 
-            ////    var result = new SlottedCell(slotIdToCellMap, defaultSlotId, A.Dummy<string>());
+                return result;
+            });
 
-            ////    return result;
-            ////});
+            // FlatRow
+            AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
+            {
+                var result = BuildFlatRow(GetRandomNumberOfColumns(), allowSpanningCells: true);
 
-            ////AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
-            ////{
-            ////    var result = new ColumnSpanningDecimalCell(A.Dummy<decimal>(), A.Dummy<PositiveInteger>().ThatIs(_ => _ != 1), A.Dummy<string>(), A.Dummy<string>(), A.Dummy<CellFormat>(), A.Dummy<IHoverOver>(), A.Dummy<ILink>());
+                return result;
+            });
 
-            ////    return result;
-            ////});
+            // SlottedCell
+            AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
+            {
+                var columnsSpanned = GetRandomColumnsSpannedByCell();
 
-            ////AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
-            ////{
-            ////    var result = new ColumnSpanningHtmlCell(A.Dummy<string>(), A.Dummy<PositiveInteger>().ThatIs(_ => _ != 1), A.Dummy<string>(), A.Dummy<CellFormat>(), A.Dummy<IHoverOver>(), A.Dummy<ILink>());
+                var cells = Some.ReadOnlyDummies<NotSlottedCellBase>().Select(_ => _.DeepCloneWithColumnsSpanned(columnsSpanned)).Cast<NotSlottedCellBase>().ToList();
 
-            ////    return result;
-            ////});
+                var slotIdToCellMap = cells.ToDictionary(_ => A.Dummy<string>(), _ => (INotSlottedCell)_);
 
-            ////AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
-            ////{
-            ////    var result = new ColumnSpanningMediaReferenceCell(A.Dummy<MediaReference>(), A.Dummy<PositiveInteger>().ThatIs(_ => _ != 1), A.Dummy<string>(), A.Dummy<CellFormat>(), A.Dummy<IHoverOver>(), A.Dummy<ILink>());
+                var defaultSlotId = slotIdToCellMap.ElementAt(ThreadSafeRandom.Next(0, slotIdToCellMap.Count)).Key;
 
-            ////    return result;
-            ////});
+                var result = new SlottedCell(slotIdToCellMap, defaultSlotId, A.Dummy<string>(), columnsSpanned, A.Dummy<string>());
 
-            ////AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
-            ////{
-            ////    var result = new ColumnSpanningNullCell(A.Dummy<PositiveInteger>().ThatIs(_ => _ != 1), A.Dummy<string>(), A.Dummy<string>(), A.Dummy<CellFormat>(), A.Dummy<IHoverOver>(), A.Dummy<ILink>());
+                return result;
+            });
 
-            ////    return result;
-            ////});
+            // InputCell<Version>
+            AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
+            {
+                var result = new InputCell<Version>(
+                    A.Dummy<string>(),
+                    GetRandomColumnsSpannedByCell(),
+                    A.Dummy<string>(),
+                    A.Dummy<Validation>(),
+                    Some.ReadOnlyDummies<CellValidationEventBase>().ToList(),
+                    A.Dummy<Availability>(),
+                    A.Dummy<AvailabilityCheck>(),
+                    Some.ReadOnlyDummies<CellAvailabilityCheckEventBase>().ToList(),
+                    Some.ReadOnlyDummies<CellInputEventBase>().ToList(),
+                    A.Dummy<ICellValueFormat<Version>>(),
+                    A.Dummy<CellFormat>(), A.Dummy<IHoverOver>());
 
-            ////AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
-            ////{
-            ////    var slottedCell = A.Dummy<SlottedCell>();
+                return result;
+            });
 
-            ////    var result = new ColumnSpanningSlottedCell(slottedCell.SlotIdToCellMap, slottedCell.DefaultSlotId, A.Dummy<PositiveInteger>().ThatIs(_ => _ != 1));
+            // NullCell
+            AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
+            {
+                var result = new NullCell(
+                    A.Dummy<string>(),
+                    GetRandomColumnsSpannedByCell(),
+                    A.Dummy<string>(),
+                    A.Dummy<Validation>(),
+                    Some.ReadOnlyDummies<CellValidationEventBase>().ToList(),
+                    A.Dummy<Availability>(),
+                    A.Dummy<AvailabilityCheck>(),
+                    Some.ReadOnlyDummies<CellAvailabilityCheckEventBase>().ToList(),
+                    A.Dummy<CellFormat>(),
+                    A.Dummy<IHoverOver>(),
+                    A.Dummy<ILink>());
 
-            ////    return result;
-            ////});
+                return result;
+            });
 
-            ////AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
-            ////{
-            ////    var result = new ColumnSpanningStringCell(A.Dummy<string>(), A.Dummy<PositiveInteger>().ThatIs(_ => _ != 1), A.Dummy<string>(), A.Dummy<string>(), A.Dummy<CellFormat>(), A.Dummy<IHoverOver>(), A.Dummy<ILink>());
+            // ConstCell<Version>
+            AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
+            {
+                var result = new ConstCell<Version>(
+                    A.Dummy<Version>(),
+                    A.Dummy<string>(),
+                    GetRandomColumnsSpannedByCell(),
+                    A.Dummy<string>(),
+                    A.Dummy<Validation>(),
+                    Some.ReadOnlyDummies<CellValidationEventBase>().ToList(),
+                    A.Dummy<Availability>(),
+                    A.Dummy<AvailabilityCheck>(),
+                    Some.ReadOnlyDummies<CellAvailabilityCheckEventBase>().ToList(),
+                    A.Dummy<ICellValueFormat<Version>>(),
+                    A.Dummy<CellFormat>(),
+                    A.Dummy<IHoverOver>(),
+                    A.Dummy<ILink>());
 
-            ////    return result;
-            ////});
+                return result;
+            });
 
-            ////AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
-            ////{
-            ////    var result = Color.FromArgb(A.Dummy<byte>(), A.Dummy<byte>(), A.Dummy<byte>());
+            // OperationOutputCell<Version>
+            AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
+            {
+                var result = new OperationCell<Version>(
+                    A.Dummy<IReturningOperation<Version>>(),
+                    A.Dummy<string>(),
+                    GetRandomColumnsSpannedByCell(),
+                    A.Dummy<string>(),
+                    A.Dummy<Validation>(),
+                    Some.ReadOnlyDummies<CellValidationEventBase>().ToList(),
+                    A.Dummy<Availability>(),
+                    A.Dummy<AvailabilityCheck>(),
+                    Some.ReadOnlyDummies<CellAvailabilityCheckEventBase>().ToList(),
+                    Some.ReadOnlyDummies<CellOpExecutionEventBase>().ToList(),
+                    A.Dummy<ICellValueFormat<Version>>(),
+                    A.Dummy<CellFormat>(),
+                    A.Dummy<IHoverOver>(),
+                    A.Dummy<ILink>());
 
-            ////    return result;
-            ////});
+                return result;
+            });
+
+            // Color
+            AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
+            {
+                var result = Color.FromArgb(A.Dummy<byte>(), A.Dummy<byte>(), A.Dummy<byte>());
+
+                return result;
+            });
+
+            // Events
+            AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
+            {
+                var result = new CellAvailabilityCheckClearedEvent(A.Dummy<UtcDateTime>(), A.Dummy<string>());
+
+                return result;
+            });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
+            {
+                var result = new CellAvailabilityCheckDeterminedCellDisabledEvent(A.Dummy<UtcDateTime>(), A.Dummy<string>(), A.Dummy<string>());
+
+                return result;
+            });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
+            {
+                var result = new CellAvailabilityCheckDeterminedCellEnabledEvent(A.Dummy<UtcDateTime>(), A.Dummy<string>(), A.Dummy<string>());
+
+                return result;
+            });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
+            {
+                var result = new CellAvailabilityCheckFailedEvent(A.Dummy<UtcDateTime>(), A.Dummy<string>());
+
+                return result;
+            });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
+            {
+                var result = new CellInputAppliedEvent<Version>(A.Dummy<UtcDateTime>(), A.Dummy<Version>(), A.Dummy<string>());
+
+                return result;
+            });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
+            {
+                var result = new CellInputClearedEvent(A.Dummy<UtcDateTime>(), A.Dummy<string>());
+
+                return result;
+            });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
+            {
+                var result = new CellOpExecutionAbortedEvent(A.Dummy<UtcDateTime>(), A.Dummy<string>());
+
+                return result;
+            });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
+            {
+                var result = new CellOpExecutionClearedEvent(A.Dummy<UtcDateTime>(), A.Dummy<string>());
+
+                return result;
+            });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
+            {
+                var result = new CellOpExecutionCompletedEvent<Version>(A.Dummy<UtcDateTime>(), A.Dummy<string>(), A.Dummy<Version>());
+
+                return result;
+            });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
+            {
+                var result = new CellOpExecutionDeemedNotApplicableEvent(A.Dummy<UtcDateTime>(), A.Dummy<string>());
+
+                return result;
+            });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
+            {
+                var result = new CellOpExecutionFailedEvent(A.Dummy<UtcDateTime>(), A.Dummy<string>());
+
+                return result;
+            });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
+            {
+                var result = new CellValidationAbortedEvent(A.Dummy<UtcDateTime>(), A.Dummy<string>());
+
+                return result;
+            });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
+            {
+                var result = new CellValidationClearedEvent(A.Dummy<UtcDateTime>(), A.Dummy<string>());
+
+                return result;
+            });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
+            {
+                var result = new CellValidationDeemedNotApplicableEvent(A.Dummy<UtcDateTime>(), A.Dummy<string>(), A.Dummy<string>());
+
+                return result;
+            });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
+            {
+                var result = new CellValidationDeterminedCellInvalidEvent(A.Dummy<UtcDateTime>(), A.Dummy<string>(), A.Dummy<string>());
+
+                return result;
+            });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
+            {
+                var result = new CellValidationDeterminedCellValidEvent(A.Dummy<UtcDateTime>(), A.Dummy<string>(), A.Dummy<string>());
+
+                return result;
+            });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
+            {
+                var result = new CellValidationFailedEvent(A.Dummy<UtcDateTime>(), A.Dummy<string>());
+
+                return result;
+            });
         }
 
-        ////private TableRows BuildTableRows(
-        ////    int numberOfColumns)
-        ////{
-        ////    var allHeaderRows = BuildFlatRows(numberOfColumns);
+        private static TableRows BuildTableRows(
+            int numberOfColumns)
+        {
+            var allHeaderRows = BuildFlatRows(numberOfColumns);
 
-        ////    var headerRows = new HeaderRows(allHeaderRows, A.Dummy<HeaderRowsFormat>());
+            var headerRows = new HeaderRows(allHeaderRows, A.Dummy<HeaderRowsFormat>());
 
-        ////    var allDataRows = BuildDataRows(numberOfColumns);
+            var allFooterRows = BuildFlatRows(numberOfColumns);
 
-        ////    var dataRows = new DataRows(allDataRows, A.Dummy<DataRowsFormat>());
+            var footerRows = new FooterRows(allFooterRows, A.Dummy<FooterRowsFormat>());
 
-        ////    var result = new TableRows(headerRows, dataRows, A.Dummy<RowFormat>());
+            var allDataRows = BuildDataRows(numberOfColumns);
 
-        ////    return result;
-        ////}
+            var dataRows = new DataRows(allDataRows, A.Dummy<DataRowsFormat>());
 
-        ////private IReadOnlyList<FlatRow> BuildFlatRows(
-        ////    int numberOfColumns)
-        ////{
-        ////    var numberOfRows = ThreadSafeRandom.Next(0, 4);
+            var result = new TableRows(headerRows, dataRows, footerRows, A.Dummy<RowFormat>());
 
-        ////    var result = new List<FlatRow>();
+            return result;
+        }
 
-        ////    for (var x = 0; x < numberOfRows; x++)
-        ////    {
-        ////        var allowSpanningCells = (x + 1) != numberOfRows;
+        private static IReadOnlyList<FlatRow> BuildFlatRows(
+            int numberOfColumns)
+        {
+            var numberOfRows = GetRandomNumberOfRows();
 
-        ////        var headerRow = BuildFlatRow(numberOfColumns, allowSpanningCells);
+            var result = new List<FlatRow>();
 
-        ////        result.Add(headerRow);
-        ////    }
+            for (var x = 0; x < numberOfRows; x++)
+            {
+                var allowSpanningCells = (x + 1) != numberOfRows;
 
-        ////    return result;
-        ////}
+                var headerRow = BuildFlatRow(numberOfColumns, allowSpanningCells);
 
-        ////private FlatRow BuildFlatRow(
-        ////    int numberOfColumns,
-        ////    bool allowSpanningCells)
-        ////{
-        ////    var cells = BuildRowCells(numberOfColumns, allowSpanningCells);
+                result.Add(headerRow);
+            }
 
-        ////    var result = new FlatRow(cells, A.Dummy<string>(), A.Dummy<RowFormat>());
+            return result;
+        }
 
-        ////    return result;
+        private static FlatRow BuildFlatRow(
+            int numberOfColumns,
+            bool allowSpanningCells)
+        {
+            var cells = BuildRowCells(numberOfColumns, allowSpanningCells);
 
-        ////}
+            var result = new FlatRow(cells, A.Dummy<string>(), A.Dummy<RowFormat>());
 
-        ////private IReadOnlyList<Row> BuildDataRows(
-        ////    int numberOfColumns,
-        ////    int depth = 0)
-        ////{
-        ////    var numberOfRows = ThreadSafeRandom.Next(0, 4);
+            return result;
 
-        ////    var result = new List<Row>();
+        }
 
-        ////    for (var x = 0; x < numberOfRows; x++)
-        ////    {
-        ////        var dataRow = BuildDataRow(numberOfColumns, depth);
+        private static IReadOnlyList<Row> BuildDataRows(
+            int numberOfColumns,
+            int depth = 0)
+        {
+            var numberOfRows = GetRandomNumberOfRows();
 
-        ////        result.Add(dataRow);
-        ////    }
+            var result = new List<Row>();
 
-        ////    return result;
-        ////}
+            for (var x = 0; x < numberOfRows; x++)
+            {
+                var dataRow = BuildDataRow(numberOfColumns, depth);
 
-        ////private Row BuildDataRow(
-        ////    int numberOfColumns,
-        ////    int depth = 0)
-        ////{
-        ////    var cells = BuildRowCells(numberOfColumns, allowSpanningCells: true);
+                result.Add(dataRow);
+            }
 
-        ////    var childRows = depth == 2
-        ////        ? new Row[0]
-        ////        : BuildDataRows(numberOfColumns, depth + 1);
+            return result;
+        }
 
-        ////    var expandedSummaryRow = childRows.Any()
-        ////        ? BuildFlatRow(numberOfColumns, allowSpanningCells: true)
-        ////        : null;
+        private static Row BuildDataRow(
+            int numberOfColumns,
+            int depth = 0)
+        {
+            var cells = BuildRowCells(numberOfColumns, allowSpanningCells: true);
 
-        ////    var collapsedSummaryRow = childRows.Any()
-        ////        ? BuildFlatRow(numberOfColumns, allowSpanningCells: true)
-        ////        : null;
+            var childRows = depth == 2
+                ? new Row[0]
+                : BuildDataRows(numberOfColumns, depth + 1);
 
-        ////    var result = new Row(cells, A.Dummy<string>(), A.Dummy<RowFormat>(), childRows, expandedSummaryRow, collapsedSummaryRow);
+            var expandedSummaryRow = childRows.Any()
+                ? BuildFlatRow(numberOfColumns, allowSpanningCells: true)
+                : null;
 
-        ////    return result;
-        ////}
+            var collapsedSummaryRow = childRows.Any()
+                ? BuildFlatRow(numberOfColumns, allowSpanningCells: true)
+                : null;
 
-        ////private IReadOnlyList<ICell> BuildRowCells(
-        ////    int numberOfColumns,
-        ////    bool allowSpanningCells)
-        ////{
-        ////    var columnsSpanned = 0;
+            var result = new Row(cells, A.Dummy<string>(), A.Dummy<RowFormat>(), childRows, expandedSummaryRow, collapsedSummaryRow);
 
-        ////    var result = new List<ICell>();
+            return result;
+        }
 
-        ////    while (columnsSpanned != numberOfColumns)
-        ////    {
-        ////        ICell cell;
+        private static IReadOnlyList<ICell> BuildRowCells(
+            int numberOfColumns,
+            bool allowSpanningCells)
+        {
+            var columnsSpanned = 0;
 
-        ////        if (allowSpanningCells && (ThreadSafeRandom.Next(0, 2) == 0) && ((columnsSpanned + 1) != numberOfColumns))
-        ////        {
-        ////            var columnsSpannedByThisCell = ThreadSafeRandom.Next(2, (numberOfColumns - columnsSpanned + 1));
+            var result = new List<ICell>();
 
-        ////            cell = A.Dummy<ColumnSpanningStandardCellBase>().DeepCloneWithColumnsSpanned(columnsSpannedByThisCell);
+            while (columnsSpanned != numberOfColumns)
+            {
+                int columnsSpannedByThisCell;
 
-        ////            columnsSpanned += columnsSpannedByThisCell;
-        ////        }
-        ////        else
-        ////        {
-        ////            cell = A.Dummy<CellBase>().ThatIs(_ => !(_ is IColumnSpanningCell));
+                if (allowSpanningCells && ShouldCellSpanColumns() && ((columnsSpanned + 1) != numberOfColumns))
+                {
+                    columnsSpannedByThisCell = ThreadSafeRandom.Next(2, (numberOfColumns - columnsSpanned + 1));
+                }
+                else
+                {
+                    columnsSpannedByThisCell = 1;
+                }
 
-        ////            columnsSpanned += 1;
-        ////        }
+                var cell = InternalDeepCloneWithColumnsSpanned(A.Dummy<CellBase>(), columnsSpannedByThisCell);
 
-        ////        result.Add(cell);
-        ////    }
+                columnsSpanned += columnsSpannedByThisCell;
 
-        ////    return result;
-        ////}
+                result.Add(cell);
+            }
+
+            return result;
+        }
+
+        private static int GetRandomNumberOfColumns()
+        {
+            var result = ThreadSafeRandom.Next(1, 6);
+
+            return result;
+        }
+
+        private static int GetRandomNumberOfRows()
+        {
+            var result = ThreadSafeRandom.Next(0, 4);
+
+            return result;
+        }
+
+        private static bool ShouldCellSpanColumns()
+        {
+            var result = ThreadSafeRandom.Next(0, 2) == 0;
+
+            return result;
+        }
+
+        private static int? GetRandomColumnsSpannedByCell()
+        {
+            var result = ShouldCellSpanColumns()
+                ? GetRandomNumberOfColumns()
+                : (int?)null;
+
+            return result;
+        }
+
+        private static void RegisterReturningOperation<T>()
+        {
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var availableTypes = new[]
+                    {
+                        typeof(ThrowOpExecutionAbortedExceptionOp<T>),
+                        typeof(NullReturningOp<T>)
+                    };
+
+                    var randomIndex = ThreadSafeRandom.Next(0, availableTypes.Length);
+
+                    var randomType = availableTypes[randomIndex];
+
+                    var result = (ReturningOperationBase<T>)AD.ummy(randomType);
+
+                    return result;
+                });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator<IReturningOperation<T>>(A.Dummy<ReturningOperationBase<T>>);
+        }
+
+        private static CellBase InternalDeepCloneWithColumnsSpanned(
+            CellBase cell,
+            int columnsSpanned)
+        {
+            CellBase result;
+
+            if (cell is SlottedCell slottedCell)
+            {
+                result = new SlottedCell(
+                    slottedCell.SlotIdToCellMap.ToDictionary(_ => _.Key, _ => (INotSlottedCell)((NotSlottedCellBase)_.Value).DeepCloneWithColumnsSpanned(columnsSpanned)),
+                    slottedCell.DefaultSlotId,
+                    slottedCell.Id,
+                    columnsSpanned,
+                    slottedCell.Details);
+            }
+            else
+            {
+                result = cell.DeepCloneWithColumnsSpanned(columnsSpanned);
+            }
+
+            return result;
+        }
     }
 }

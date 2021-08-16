@@ -39,8 +39,8 @@
     <CodeAnalysisRuleSet />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="OBeautifulCode.Type, Version=1.0.102.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OBeautifulCode.Type.1.0.102\lib\net462\OBeautifulCode.Type.dll</HintPath>
+    <Reference Include="OBeautifulCode.Type, Version=1.0.103.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Type.1.0.103\lib\net462\OBeautifulCode.Type.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
@@ -432,7 +432,7 @@
     <Compile Include="Models\Classes\Row\TableRows.designer.cs">
       <DependentUpon>TableRows.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Classes\TreeTable.designer.cs">
+    <Compile Include="Models\Classes\Report\TreeTable.designer.cs">
       <DependentUpon>TreeTable.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Classes\Validation\Validation.designer.cs">
@@ -587,7 +587,7 @@
     <Compile Include="Models\Classes\Row\FlatRow.cs" />
     <Compile Include="Models\Classes\Row\Row.cs" />
     <Compile Include="Models\Classes\Row\RowBase.cs" />
-    <Compile Include="Models\Classes\TreeTable.cs" />
+    <Compile Include="Models\Classes\Report\TreeTable.cs" />
     <Compile Include="Models\Classes\Column\Column.cs" />
     <Compile Include="Models\Classes\Column\TableColumns.cs" />
     <Compile Include="Models\Classes\Row\DataRows.cs" />

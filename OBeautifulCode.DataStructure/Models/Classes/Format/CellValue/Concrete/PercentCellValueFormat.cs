@@ -40,7 +40,7 @@ namespace OBeautifulCode.DataStructure
         {
             if ((percentDisplayKind != null) && (percentDisplayKind == NumberFormatPercentDisplayKind.Unknown))
             {
-                throw new ArgumentOutOfRangeException(Invariant($"{percentDisplayKind} is {nameof(NumberFormatPercentDisplayKind)}.{nameof(NumberFormatPercentDisplayKind.Unknown)}."));
+                throw new ArgumentOutOfRangeException(Invariant($"{nameof(percentDisplayKind)} is {nameof(NumberFormatPercentDisplayKind)}.{nameof(NumberFormatPercentDisplayKind.Unknown)}."));
             }
 
             this.PercentDisplayKind = percentDisplayKind;

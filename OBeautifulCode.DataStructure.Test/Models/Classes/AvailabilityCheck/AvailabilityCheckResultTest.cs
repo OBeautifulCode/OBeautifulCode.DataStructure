@@ -29,6 +29,25 @@ namespace OBeautifulCode.DataStructure.Test
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = ObcSuppressBecause.CA1810_InitializeReferenceTypeStaticFieldsInline_FieldsDeclaredInCodeGeneratedPartialTestClass)]
         static AvailabilityCheckResultTest()
         {
+            ConstructorArgumentValidationTestScenarios
+                .RemoveAllScenarios()
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<AvailabilityCheckResult>
+                    {
+                        Name = "constructor should throw ArgumentNullException when parameter 'availabilityOp' is null scenario",
+                        ConstructionFunc = () =>
+                        {
+                            var referenceObject = A.Dummy<AvailabilityCheckResult>();
+
+                            var result = new AvailabilityCheckResult(
+                                null,
+                                referenceObject.MessageOp);
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentNullException),
+                        ExpectedExceptionMessageContains = new[] { "availabilityOp", },
+                    });
         }
     }
 }

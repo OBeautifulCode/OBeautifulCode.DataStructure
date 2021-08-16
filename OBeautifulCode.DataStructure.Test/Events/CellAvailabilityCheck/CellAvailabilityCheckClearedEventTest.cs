@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="CellAvailabilityCheckDeterminedCellEnabledEventTest.cs" company="OBeautifulCode">
+// <copyright file="CellAvailabilityCheckClearedEventTest.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -23,12 +23,15 @@ namespace OBeautifulCode.DataStructure.Test
     using static System.FormattableString;
 
     [SuppressMessage("Microsoft.Maintainability", "CA1505:AvoidUnmaintainableCode", Justification = ObcSuppressBecause.CA1505_AvoidUnmaintainableCode_DisagreeWithAssessment)]
-    public static partial class CellAvailabilityCheckDeterminedCellEnabledEventTest
+    public static partial class CellAvailabilityCheckClearedEventTest
     {
         [SuppressMessage("Microsoft.Maintainability", "CA1505:AvoidUnmaintainableCode", Justification = ObcSuppressBecause.CA1505_AvoidUnmaintainableCode_DisagreeWithAssessment)]
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = ObcSuppressBecause.CA1810_InitializeReferenceTypeStaticFieldsInline_FieldsDeclaredInCodeGeneratedPartialTestClass)]
-        static CellAvailabilityCheckDeterminedCellEnabledEventTest()
+        static CellAvailabilityCheckClearedEventTest()
         {
+            ConstructorArgumentValidationTestScenarios
+                .RemoveAllScenarios()
+                .AddScenario(ConstructorArgumentValidationTestScenario<CellAvailabilityCheckClearedEvent>.ConstructorCannotThrowScenario);
         }
     }
 }

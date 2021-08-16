@@ -39,12 +39,12 @@ namespace OBeautifulCode.DataStructure
         {
             if ((digitGroupKind != null) && (digitGroupKind == NumberFormatDigitGroupKind.Unknown))
             {
-                throw new ArgumentOutOfRangeException(Invariant($"{digitGroupKind} is {nameof(NumberFormatDigitGroupKind)}.{nameof(NumberFormatDigitGroupKind.Unknown)}."));
+                throw new ArgumentOutOfRangeException(Invariant($"{nameof(digitGroupKind)} is {nameof(NumberFormatDigitGroupKind)}.{nameof(NumberFormatDigitGroupKind.Unknown)}."));
             }
 
             if ((negativeNumberDisplayKind != null) && (negativeNumberDisplayKind == NumberFormatNegativeDisplayKind.Unknown))
             {
-                throw new ArgumentOutOfRangeException(Invariant($"{negativeNumberDisplayKind} is {nameof(NumberFormatNegativeDisplayKind)}.{nameof(NumberFormatNegativeDisplayKind.Unknown)}."));
+                throw new ArgumentOutOfRangeException(Invariant($"{nameof(negativeNumberDisplayKind)} is {nameof(NumberFormatNegativeDisplayKind)}.{nameof(NumberFormatNegativeDisplayKind.Unknown)}."));
             }
 
             this.NumberOfDecimalPlaces = numberOfDecimalPlaces;

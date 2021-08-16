@@ -29,6 +29,44 @@ namespace OBeautifulCode.DataStructure.Test
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = ObcSuppressBecause.CA1810_InitializeReferenceTypeStaticFieldsInline_FieldsDeclaredInCodeGeneratedPartialTestClass)]
         static AvailabilityCheckTest()
         {
+            ConstructorArgumentValidationTestScenarios
+                .RemoveAllScenarios()
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<AvailabilityCheck>
+                    {
+                        Name = "constructor should throw ArgumentNullException when parameter 'operation' is null scenario",
+                        ConstructionFunc = () =>
+                        {
+                            var referenceObject = A.Dummy<AvailabilityCheck>();
+
+                            var result = new AvailabilityCheck(
+                                                 null,
+                                                 referenceObject.MessageFormatKind,
+                                                 referenceObject.Details);
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentNullException),
+                        ExpectedExceptionMessageContains = new[] { "operation", },
+                    })
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<AvailabilityCheck>
+                    {
+                        Name = "constructor should throw ArgumentOutOfRangeException when parameter 'messageFormatKind' is MessageFormatKind.Unknown",
+                        ConstructionFunc = () =>
+                        {
+                            var referenceObject = A.Dummy<AvailabilityCheck>();
+
+                            var result = new AvailabilityCheck(
+                                                 referenceObject.Operation,
+                                                 MessageFormatKind.Unknown,
+                                                 null);
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentOutOfRangeException),
+                        ExpectedExceptionMessageContains = new[] { "messageFormatKind is MessageFormatKind.Unknown", },
+                    });
         }
     }
 }

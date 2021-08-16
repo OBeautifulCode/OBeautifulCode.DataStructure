@@ -10,6 +10,8 @@ namespace OBeautifulCode.DataStructure
 
     using OBeautifulCode.Type;
 
+    using static System.FormattableString;
+
     /// <summary>
     /// The availability check on a cell failed; an exception was thrown.
     /// </summary>
@@ -26,6 +28,15 @@ namespace OBeautifulCode.DataStructure
             string details)
             : base(timestampUtc, details)
         {
+            if (details == null)
+            {
+                throw new ArgumentNullException(nameof(details));
+            }
+
+            if (string.IsNullOrWhiteSpace(details))
+            {
+                throw new ArgumentException(Invariant($"{nameof(details)} is white space."));
+            }
         }
     }
 }

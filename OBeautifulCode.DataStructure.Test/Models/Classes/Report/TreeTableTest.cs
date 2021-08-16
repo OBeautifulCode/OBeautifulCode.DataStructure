@@ -61,9 +61,8 @@ namespace OBeautifulCode.DataStructure.Test
 
                             var rows = new[]
                             {
-                                new FlatRow(Some.ReadOnlyDummies<DecimalCell>(2).ToList()),
-                                new FlatRow(Some.ReadOnlyDummies<StringCell>(3).ToList()),
-                                new FlatRow(Some.ReadOnlyDummies<HtmlCell>(2).ToList()),
+                                new FlatRow(Some.ReadOnlyDummies<NotSlottedCellBase>(2).Select(_ => _.DeepCloneWithColumnsSpanned(1)).ToList()),
+                                new FlatRow(Some.ReadOnlyDummies<NotSlottedCellBase>(3).ToList()),
                             };
 
                             var headerRows = new HeaderRows(rows, null);
@@ -89,21 +88,48 @@ namespace OBeautifulCode.DataStructure.Test
 
                             var rows = new[]
                             {
-                                new Row(Some.ReadOnlyDummies<DecimalCell>(2).ToList()),
+                                new Row(Some.ReadOnlyDummies<NotSlottedCellBase>(2).Select(_ => _.DeepCloneWithColumnsSpanned(1)).ToList()),
                                 new Row(
-                                    Some.ReadOnlyDummies<HtmlCell>(2).ToList(),
+                                    Some.ReadOnlyDummies<NotSlottedCellBase>(2).Select(_ => _.DeepCloneWithColumnsSpanned(1)).ToList(),
                                     childRows: new[]
                                     {
-                                        new Row(Some.ReadOnlyDummies<MediaReferenceCell>(2).ToList()),
-                                        new Row(Some.ReadOnlyDummies<StringCell>(3).ToList()),
-                                        new Row(Some.ReadOnlyDummies<SlottedCell>(2).ToList()),
+                                        new Row(Some.ReadOnlyDummies<NotSlottedCellBase>(2).Select(_ => _.DeepCloneWithColumnsSpanned(1)).ToList()),
+                                        new Row(Some.ReadOnlyDummies<NotSlottedCellBase>(3)),
+                                        new Row(Some.ReadOnlyDummies<NotSlottedCellBase>(2).Select(_ => _.DeepCloneWithColumnsSpanned(1)).ToList()),
                                     }),
-                                new Row(Some.ReadOnlyDummies<DecimalCell>(2).ToList()),
+                                new Row(Some.ReadOnlyDummies<NotSlottedCellBase>(2).Select(_ => _.DeepCloneWithColumnsSpanned(1)).ToList()),
                             };
 
                             var dataRows = new DataRows(rows, null);
 
                             var tableRows = new TableRows(null, dataRows);
+
+                            var result = new TreeTable(
+                                tableColumns,
+                                tableRows);
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentException),
+                        ExpectedExceptionMessageContains = new[] { "tableRows contains a row or descendant row that does not span all 2 of the defined columns", },
+                    })
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<TreeTable>
+                    {
+                        Name = "constructor should throw ArgumentException when parameter 'footerRows' contains a footer row that does not span all of the columns in tableColumns",
+                        ConstructionFunc = () =>
+                        {
+                            var tableColumns = new TableColumns(Some.ReadOnlyDummies<Column>(2).ToList());
+
+                            var rows = new[]
+                            {
+                                new FlatRow(Some.ReadOnlyDummies<NotSlottedCellBase>(2).Select(_ => _.DeepCloneWithColumnsSpanned(1)).ToList()),
+                                new FlatRow(Some.ReadOnlyDummies<NotSlottedCellBase>(3).ToList()),
+                            };
+
+                            var footerRows = new FooterRows(rows, null);
+
+                            var tableRows = new TableRows(footerRows: footerRows);
 
                             var result = new TreeTable(
                                 tableColumns,
@@ -124,12 +150,12 @@ namespace OBeautifulCode.DataStructure.Test
 
                             var rows = new[]
                             {
-                                new FlatRow(Some.ReadOnlyDummies<MediaReferenceCell>(3).ToList()),
-                                new FlatRow(Some.ReadOnlyDummies<StringCell>(3).ToList()),
+                                new FlatRow(Some.ReadOnlyDummies<NotSlottedCellBase>(3).Select(_ => _.DeepCloneWithColumnsSpanned(1)).ToList()),
+                                new FlatRow(Some.ReadOnlyDummies<NotSlottedCellBase>(1).Select(_ => _.DeepCloneWithColumnsSpanned(3)).ToList()),
                                 new FlatRow(
                                     new[]
                                     {
-                                        new ColumnSpanningDecimalCell(A.Dummy<decimal>(), 3),
+                                        A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(3),
                                     }),
                             };
 
@@ -162,20 +188,22 @@ namespace OBeautifulCode.DataStructure.Test
                             var headerRows = new HeaderRows(
                                 new[]
                                 {
-                                    new FlatRow(Some.ReadOnlyDummies<MediaReferenceCell>(3).ToList()),
-                                    new FlatRow(Some.ReadOnlyDummies<StringCell>(3).ToList()),
+                                    new FlatRow(Some.ReadOnlyDummies<NotSlottedCellBase>(3).Select(_ => _.DeepCloneWithColumnsSpanned(1)).ToList()),
+                                    new FlatRow(Some.ReadOnlyDummies<NotSlottedCellBase>(3).Select(_ => _.DeepCloneWithColumnsSpanned(1)).ToList()),
                                 },
                                 null);
 
                             var dataRows = new DataRows(
                                 new[]
                                 {
-                                    new Row(Some.ReadOnlyDummies<NullCell>(3).ToList()),
-                                    new Row(Some.ReadOnlyDummies<NullCell>(3).ToList(), childRows:
-                                        new[]
-                                        {
-                                            new Row(Some.ReadOnlyDummies<NullCell>(3).ToList()),
-                                        }),
+                                    new Row(Some.ReadOnlyDummies<NotSlottedCellBase>(3).Select(_ => _.DeepCloneWithColumnsSpanned(1)).ToList()),
+                                    new Row(
+                                        Some.ReadOnlyDummies<NotSlottedCellBase>(3).Select(_ => _.DeepCloneWithColumnsSpanned(1)).ToList(),
+                                        childRows:
+                                            new[]
+                                            {
+                                                new Row(Some.ReadOnlyDummies<NotSlottedCellBase>(3).Select(_ => _.DeepCloneWithColumnsSpanned(1)).ToList()),
+                                            }),
                                 });
 
                             var tableRows = new TableRows(headerRows, dataRows);
@@ -200,19 +228,19 @@ namespace OBeautifulCode.DataStructure.Test
                             var headerRows = new HeaderRows(
                                 new[]
                                 {
-                                    new FlatRow(Some.ReadOnlyDummies<MediaReferenceCell>(3).ToList(), "row-1"),
-                                    new FlatRow(Some.ReadOnlyDummies<StringCell>(3).ToList(), "row-2"),
+                                    new FlatRow(Some.ReadOnlyDummies<NotSlottedCellBase>(3).Select(_ => _.DeepCloneWithColumnsSpanned(1)).ToList(), "row-1"),
+                                    new FlatRow(Some.ReadOnlyDummies<NotSlottedCellBase>(3).Select(_ => _.DeepCloneWithColumnsSpanned(1)).ToList(), "row-2"),
                                 },
                                 null);
 
                             var dataRows = new DataRows(
                                 new[]
                                 {
-                                    new Row(Some.ReadOnlyDummies<NullCell>(3).ToList(), "row-3"),
-                                    new Row(Some.ReadOnlyDummies<NullCell>(3).ToList(), childRows:
+                                    new Row(Some.ReadOnlyDummies<NotSlottedCellBase>(3).Select(_ => _.DeepCloneWithColumnsSpanned(1)).ToList(), "row-3"),
+                                    new Row(Some.ReadOnlyDummies<NotSlottedCellBase>(3).Select(_ => _.DeepCloneWithColumnsSpanned(1)).ToList(), childRows:
                                         new[]
                                         {
-                                            new Row(Some.ReadOnlyDummies<NullCell>(3).ToList(), "row-1"),
+                                            new Row(Some.ReadOnlyDummies<NotSlottedCellBase>(3).Select(_ => _.DeepCloneWithColumnsSpanned(1)).ToList(), "row-1"),
                                         }),
                                 });
 
@@ -241,29 +269,31 @@ namespace OBeautifulCode.DataStructure.Test
                                     new FlatRow(
                                         new ICell[]
                                         {
-                                            A.Dummy<MediaReferenceCell>(),
-                                            new NullCell(id: "cell-1"),
-                                            A.Dummy<StringCell>(),
+                                            A.Dummy<NotSlottedCellBase>().DeepCloneWithId(null),
+                                            A.Dummy<NotSlottedCellBase>().DeepCloneWithId("cell-1"),
+                                            A.Dummy<NotSlottedCellBase>().DeepCloneWithId(null),
                                         }),
-                                    new FlatRow(Some.ReadOnlyDummies<StringCell>(3).ToList()),
+                                    new FlatRow(Some.ReadOnlyDummies<NotSlottedCellBase>(3).Select(_ => _.DeepCloneWithColumnsSpanned(1)).ToList()),
                                 },
                                 null);
 
                             var dataRows = new DataRows(
                                 new[]
                                 {
-                                    new Row(Some.ReadOnlyDummies<NullCell>(3).ToList()),
-                                    new Row(Some.ReadOnlyDummies<NullCell>(3).ToList(), childRows:
-                                        new[]
-                                        {
-                                            new Row(
-                                                new ICell[]
-                                                {
-                                                    A.Dummy<MediaReferenceCell>(),
-                                                    A.Dummy<StringCell>(),
-                                                    new MediaReferenceCell(A.Dummy<MediaReference>(), id: "cell-1"),
-                                                }),
-                                        }),
+                                    new Row(Some.ReadOnlyDummies<NotSlottedCellBase>(3).Select(_ => _.DeepCloneWithColumnsSpanned(1)).ToList()),
+                                    new Row(
+                                        Some.ReadOnlyDummies<NotSlottedCellBase>(3).Select(_ => _.DeepCloneWithColumnsSpanned(1)).ToList(),
+                                        childRows:
+                                            new[]
+                                            {
+                                                new Row(
+                                                    new ICell[]
+                                                    {
+                                                        A.Dummy<NotSlottedCellBase>().DeepCloneWithId(null),
+                                                        A.Dummy<NotSlottedCellBase>().DeepCloneWithId(null),
+                                                        A.Dummy<NotSlottedCellBase>().DeepCloneWithId("cell-1"),
+                                                    }),
+                                            }),
                                 });
 
                             var tableRows = new TableRows(headerRows, dataRows);

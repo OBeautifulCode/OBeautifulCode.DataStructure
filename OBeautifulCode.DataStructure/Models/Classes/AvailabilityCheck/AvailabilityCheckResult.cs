@@ -24,6 +24,7 @@ namespace OBeautifulCode.DataStructure
             IReturningOperation<Availability> availabilityOp,
             IReturningOperation<string> messageOp = null)
         {
+            // ReSharper disable once JoinNullCheckWithUsage
             if (availabilityOp == null)
             {
                 throw new ArgumentNullException(nameof(availabilityOp));

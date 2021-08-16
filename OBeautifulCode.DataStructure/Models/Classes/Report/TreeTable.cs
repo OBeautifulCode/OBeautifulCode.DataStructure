@@ -90,12 +90,11 @@ namespace OBeautifulCode.DataStructure
 
                 ids.AddRange(allCellsWithIds.Select(_ => _.Id));
 
-                var inputCellsWithoutId = localAllCells.Where(_ => _.IsInputCell()).Where(_ => string.IsNullOrWhiteSpace(_.Id)).ToList();
-
-                if (inputCellsWithoutId.Any())
-                {
-                    throw new ArgumentException(Invariant($"One or more input cell(s) does not have an identifier and thus cannot be addressed."));
-                }
+                ////var inputCellsWithoutId = localAllCells.Where(_ => _.IsInputCell()).Where(_ => string.IsNullOrWhiteSpace(_.Id)).ToList();
+                ////if (inputCellsWithoutId.Any())
+                ////{
+                ////    throw new ArgumentException(Invariant($"One or more input cell(s) does not have an identifier and thus cannot be addressed."));
+                ////}
             }
 
             if (ids.Distinct().Count() != ids.Count)

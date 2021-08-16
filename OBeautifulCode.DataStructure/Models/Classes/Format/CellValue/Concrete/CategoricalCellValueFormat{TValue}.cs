@@ -38,12 +38,17 @@ namespace OBeautifulCode.DataStructure
 
             if (!valueToTextMap.Any())
             {
-                throw new ArgumentException(Invariant($"{nameof(valueToTextMap)} is empty."));
+                throw new ArgumentException(Invariant($"{nameof(valueToTextMap)} is an empty dictionary."));
             }
 
             if (valueToTextMap.Any(_ => string.IsNullOrWhiteSpace(_.Value)))
             {
-                throw new ArgumentException(Invariant($"{nameof(valueToTextMap)} is contains an null or white space value."));
+                throw new ArgumentException(Invariant($"{nameof(valueToTextMap)} contains at least one key-value pair with a null value."));
+            }
+
+            if (valueToTextMap.Values.Concat(new[] { missingValueText }).Distinct().Count() != (valueToTextMap.Count + 1))
+            {
+                throw new ArgumentException(Invariant($"{nameof(valueToTextMap)} Values and {nameof(missingValueText)} are not distinct."));
             }
 
             this.ValueToTextMap = valueToTextMap;

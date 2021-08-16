@@ -10,6 +10,8 @@ namespace OBeautifulCode.DataStructure
 
     using OBeautifulCode.Type;
 
+    using static System.FormattableString;
+
     /// <summary>
     /// The execution of <see cref="IOperationOutputCell{TResult}"/>'s <see cref="IOperationOutputCell{TResult}.Operation"/>,
     /// deemed itself not applicable.
@@ -27,6 +29,15 @@ namespace OBeautifulCode.DataStructure
             string details)
             : base(timestampUtc, details)
         {
+            if (details == null)
+            {
+                throw new ArgumentNullException(nameof(details));
+            }
+
+            if (string.IsNullOrWhiteSpace(details))
+            {
+                throw new ArgumentException(Invariant($"{nameof(details)} is white space."));
+            }
         }
     }
 }

@@ -54,7 +54,7 @@ namespace OBeautifulCode.DataStructure
 
             if ((defaultAvailability != Availability.Enabled) && (defaultAvailability != Availability.Disabled))
             {
-                throw new ArgumentException(Invariant($"{nameof(defaultAvailability)} is neither {nameof(Availability)}.{nameof(Availability.Enabled)} nor {nameof(Availability)}.{nameof(Availability.Disabled)}."));
+                throw new ArgumentOutOfRangeException(Invariant($"{nameof(defaultAvailability)} is neither {nameof(Availability)}.{nameof(Availability.Enabled)} nor {nameof(Availability)}.{nameof(Availability.Disabled)}."));
             }
 
             if ((availabilityCheckEvents != null) && availabilityCheckEvents.Any(_ => _ == null))
