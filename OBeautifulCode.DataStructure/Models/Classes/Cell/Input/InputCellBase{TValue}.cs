@@ -95,6 +95,17 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <inheritdoc />
+        public void SetCellValue(
+            TValue value,
+            DateTime timestampUtc,
+            string details = null)
+        {
+            var cellInputAppliedEvent = new CellInputAppliedEvent<TValue>(timestampUtc, value, details);
+
+            this.Record(cellInputAppliedEvent);
+        }
+
+        /// <inheritdoc />
         public override bool IsConstCell() => false;
 
         /// <inheritdoc />

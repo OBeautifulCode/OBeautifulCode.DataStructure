@@ -234,9 +234,7 @@ namespace OBeautifulCode.DataStructure
                 throw new ArgumentException("The specified cell is not an input cell.");
             }
 
-            var inputAppliedToCellEvent = new CellInputAppliedEvent<TValue>(timestampUtc, value, details);
-
-            inputCell.Record(inputAppliedToCellEvent);
+            inputCell.SetCellValue(value, timestampUtc, details);
         }
 
         private static void ReCalcInternal(

@@ -482,7 +482,37 @@ namespace OBeautifulCode.DataStructure.Test
 
             var dataRows = new DataRows(allDataRows);
 
-            var tableRows = new TableRows(headerRows, dataRows);
+            var allFooterRows = new[]
+            {
+                new FlatRow(
+                    new ICell[]
+                    {
+                        A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(null),
+                        A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(2),
+                    }),
+                new FlatRow(
+                    new ICell[]
+                    {
+                        A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1),
+                        A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(null),
+                        A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1),
+                    }),
+                new FlatRow(
+                    new ICell[]
+                    {
+                        A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(2),
+                        A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1),
+                    }),
+                new FlatRow(
+                    new ICell[]
+                    {
+                        A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(3),
+                    }),
+            };
+
+            var footerRows = new FooterRows(allFooterRows);
+
+            var tableRows = new TableRows(headerRows, dataRows, footerRows);
 
             // Act
             var actual = Record.Exception(() => new TreeTable(tableColumns, tableRows));
@@ -526,6 +556,8 @@ namespace OBeautifulCode.DataStructure.Test
                 "slot-2-id",
                 columnsSpanned: 1,
                 id: null);
+            var cell11 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1).DeepCloneWithId("id-1");
+            var cell12 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(2).DeepCloneWithId("id-2");
 
             IReadOnlyDictionary<string, ICell> expected = new Dictionary<string, ICell>
             {
@@ -538,6 +570,8 @@ namespace OBeautifulCode.DataStructure.Test
                 { cell7.Id, cell7 },
                 { cell8.Id, cell8 },
                 { cell9.Id, cell9 },
+                { cell11.Id, cell11 },
+                { cell12.Id, cell12 },
             };
 
             var headerRows = new HeaderRows(
@@ -590,7 +624,24 @@ namespace OBeautifulCode.DataStructure.Test
                         }),
                 });
 
-            var tableRows = new TableRows(headerRows, dataRows);
+            var footerRows = new FooterRows(
+                new[]
+                {
+                    new FlatRow(Some.ReadOnlyDummies<NotSlottedCellBase>(2).Select(_ => _.DeepCloneWithColumnsSpanned(1).DeepCloneWithId(null)).ToList()),
+                    new FlatRow(
+                        new ICell[]
+                        {
+                            A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1).DeepCloneWithId(null),
+                            cell11,
+                        }),
+                    new FlatRow(
+                        new ICell[]
+                        {
+                            cell12,
+                        }),
+                });
+
+            var tableRows = new TableRows(headerRows, dataRows, footerRows);
 
             var systemUnderTest = new TreeTable(
                 tableColumns,
