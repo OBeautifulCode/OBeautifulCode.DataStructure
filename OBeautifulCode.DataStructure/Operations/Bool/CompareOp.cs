@@ -26,7 +26,7 @@ namespace OBeautifulCode.DataStructure
         /// <param name="right">The value to the right of the <paramref name="operator"/>.</param>
         public CompareOp(
             IReturningOperation<decimal> left,
-            CompareOperator @operator,
+            IReturningOperation<CompareOperator> @operator,
             IReturningOperation<decimal> right)
         {
             if (left == null)
@@ -34,9 +34,9 @@ namespace OBeautifulCode.DataStructure
                 throw new ArgumentNullException(nameof(left));
             }
 
-            if (@operator == CompareOperator.Unknown)
+            if (@operator == null)
             {
-                throw new ArgumentOutOfRangeException(Invariant($"{nameof(@operator)} is {nameof(CompareOperator)}."));
+                throw new ArgumentNullException(nameof(@operator));
             }
 
             if (right == null)
@@ -57,7 +57,7 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Gets the comparison operator to use.
         /// </summary>
-        public CompareOperator Operator { get; private set; }
+        public IReturningOperation<CompareOperator> Operator { get; private set; }
 
         /// <summary>
         /// Gets value to the right of the <see cref="Operator"/>.

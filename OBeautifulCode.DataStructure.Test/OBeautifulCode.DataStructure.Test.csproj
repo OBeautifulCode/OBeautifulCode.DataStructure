@@ -515,9 +515,9 @@
     <Compile Include="Models\Classes\Row\TableRowsTest.designer.cs">
       <DependentUpon>TableRowsTest.cs</DependentUpon>
     </Compile>
-    <None Include="Models\Classes\Report\TreeTableTest.designer.cs">
+    <Compile Include="Models\Classes\Report\TreeTableTest.designer.cs">
       <DependentUpon>TreeTableTest.cs</DependentUpon>
-    </None>
+    </Compile>
     <Compile Include="Models\Classes\Format\CellValue\NumberCellFormatBase{TValue}Test.cs" />
     <Compile Include="Models\Classes\Format\CellValue\NumberCellFormatBase{TValue}Test.designer.cs">
       <DependentUpon>NumberCellFormatBase{TValue}Test.cs</DependentUpon>
@@ -551,7 +551,7 @@
       <DependentUpon>IfThenElseOp{TResult}Test.cs</DependentUpon>
     </Compile>
     <Compile Include="Operations\Cell\Referenced\ExecuteOperationCellIfNecessaryOp{TValue}Test.cs" />
-    <None Include="ExpressionTest.cs" />
+    <Compile Include="ExpressionTest.cs" />
     <Compile Include="Operations\Cell\Referenced\ExecuteOperationCellIfNecessaryOp{TValue}Test.designer.cs">
       <DependentUpon>ExecuteOperationCellIfNecessaryOp{TValue}Test.cs</DependentUpon>
     </Compile>
@@ -638,7 +638,7 @@
     <Compile Include="Models\Classes\Row\RowBaseTest.cs" />
     <Compile Include="Models\Classes\Row\RowTest.cs" />
     <Compile Include="Models\Classes\Row\TableRowsTest.cs" />
-    <None Include="Models\Classes\Report\TreeTableTest.cs" />
+    <Compile Include="Models\Classes\Report\TreeTableTest.cs" />
     <Compile Include="Operations\GetConstOp{TValue}Test.designer.cs">
       <DependentUpon>GetConstOp{TValue}Test.cs</DependentUpon>
     </Compile>

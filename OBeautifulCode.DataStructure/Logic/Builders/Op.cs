@@ -207,7 +207,7 @@ namespace OBeautifulCode.DataStructure
             IReturningOperation<decimal> left,
             IReturningOperation<decimal> right)
         {
-            var result = new CompareOp(left, CompareOperator.GreaterThan, right);
+            var result = new CompareOp(left, Op.Const(CompareOperator.GreaterThan), right);
 
             return result;
         }
@@ -224,7 +224,7 @@ namespace OBeautifulCode.DataStructure
             IReturningOperation<decimal> left,
             IReturningOperation<decimal> right)
         {
-            var result = new CompareOp(left, CompareOperator.GreaterThanOrEqualTo, right);
+            var result = new CompareOp(left, Op.Const(CompareOperator.GreaterThanOrEqualTo), right);
 
             return result;
         }
@@ -241,7 +241,7 @@ namespace OBeautifulCode.DataStructure
             IReturningOperation<decimal> left,
             IReturningOperation<decimal> right)
         {
-            var result = new CompareOp(left, CompareOperator.LessThan, right);
+            var result = new CompareOp(left, Op.Const(CompareOperator.LessThan), right);
 
             return result;
         }
@@ -258,7 +258,7 @@ namespace OBeautifulCode.DataStructure
             IReturningOperation<decimal> left,
             IReturningOperation<decimal> right)
         {
-            var result = new CompareOp(left, CompareOperator.LessThanOrEqualTo, right);
+            var result = new CompareOp(left, Op.Const(CompareOperator.LessThanOrEqualTo), right);
 
             return result;
         }

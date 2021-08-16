@@ -288,9 +288,11 @@ namespace OBeautifulCode.DataStructure
 
             var left = this.protocolFactory.GetProtocolAndExecuteViaReflection<decimal>(operation.Left);
 
+            var @operator = this.protocolFactory.GetProtocolAndExecuteViaReflection<CompareOperator>(operation.Operator);
+
             var right = this.protocolFactory.GetProtocolAndExecuteViaReflection<decimal>(operation.Right);
 
-            var result = Compare(left, operation.Operator, right);
+            var result = Compare(left, @operator, right);
 
             return result;
         }
@@ -306,9 +308,11 @@ namespace OBeautifulCode.DataStructure
 
             var left = await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync<decimal>(operation.Left);
 
+            var @operator = await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync<CompareOperator>(operation.Operator);
+
             var right = await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync<decimal>(operation.Right);
 
-            var result = Compare(left, operation.Operator, right);
+            var result = Compare(left, @operator, right);
 
             return result;
         }

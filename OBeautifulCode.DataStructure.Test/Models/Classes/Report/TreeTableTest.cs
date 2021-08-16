@@ -269,9 +269,9 @@ namespace OBeautifulCode.DataStructure.Test
                                     new FlatRow(
                                         new ICell[]
                                         {
-                                            A.Dummy<NotSlottedCellBase>().DeepCloneWithId(null),
-                                            A.Dummy<NotSlottedCellBase>().DeepCloneWithId("cell-1"),
-                                            A.Dummy<NotSlottedCellBase>().DeepCloneWithId(null),
+                                            A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1).DeepCloneWithId(null),
+                                            A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1).DeepCloneWithId("cell-1"),
+                                            A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1).DeepCloneWithId(null),
                                         }),
                                     new FlatRow(Some.ReadOnlyDummies<NotSlottedCellBase>(3).Select(_ => _.DeepCloneWithColumnsSpanned(1)).ToList()),
                                 },
@@ -289,9 +289,9 @@ namespace OBeautifulCode.DataStructure.Test
                                                 new Row(
                                                     new ICell[]
                                                     {
-                                                        A.Dummy<NotSlottedCellBase>().DeepCloneWithId(null),
-                                                        A.Dummy<NotSlottedCellBase>().DeepCloneWithId(null),
-                                                        A.Dummy<NotSlottedCellBase>().DeepCloneWithId("cell-1"),
+                                                        A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(null).DeepCloneWithId(null),
+                                                        A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(null).DeepCloneWithId(null),
+                                                        A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(null).DeepCloneWithId("cell-1"),
                                                     }),
                                             }),
                                 });
@@ -424,26 +424,26 @@ namespace OBeautifulCode.DataStructure.Test
                 new FlatRow(
                     new ICell[]
                     {
-                        new DecimalCell(A.Dummy<decimal>()),
-                        new ColumnSpanningHtmlCell(A.Dummy<string>(), 2),
+                        A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(null),
+                        A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(2),
                     }),
                 new FlatRow(
                     new ICell[]
                     {
-                        new ColumnSpanningStringCell(A.Dummy<string>(), 2),
-                        new HtmlCell(A.Dummy<string>()),
+                        A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(2),
+                        A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1),
                     }),
                 new FlatRow(
                     new ICell[]
                     {
-                        new ColumnSpanningMediaReferenceCell(A.Dummy<MediaReference>(), 3),
+                        A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(3),
                     }),
                 new FlatRow(
                     new ICell[]
                     {
-                        new DecimalCell(A.Dummy<decimal>()),
-                        new StringCell(A.Dummy<string>()),
-                        new MediaReferenceCell(A.Dummy<MediaReference>()),
+                        A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1),
+                        A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(null),
+                        A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1),
                     }),
             };
 
@@ -451,40 +451,36 @@ namespace OBeautifulCode.DataStructure.Test
 
             var allDataRows = new[]
             {
-                new Row(Some.ReadOnlyDummies<DecimalCell>(3).ToList()),
+                new Row(new[] { A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(3) }),
                 new Row(
-                    Some.ReadOnlyDummies<HtmlCell>(3).ToList(),
+                    Some.ReadOnlyDummies<NotSlottedCellBase>(3).Select(_ => _.DeepCloneWithColumnsSpanned(null)).ToList(),
                     childRows: new[]
                     {
-                        new Row(Some.ReadOnlyDummies<MediaReferenceCell>(3).ToList()),
-                        new Row(Some.ReadOnlyDummies<StringCell>(3).ToList()),
+                        new Row(Some.ReadOnlyDummies<NotSlottedCellBase>(3).Select(_ => _.DeepCloneWithColumnsSpanned(null)).ToList()),
+                        new Row(Some.ReadOnlyDummies<NotSlottedCellBase>(3).Select(_ => _.DeepCloneWithColumnsSpanned(null)).ToList()),
                         new Row(
                             new ICell[]
                             {
-                                new DecimalCell(A.Dummy<decimal>()),
-                                new ColumnSpanningHtmlCell(A.Dummy<string>(), 2),
+                                A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(2),
+                                A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(null),
                             }),
                     }),
                 new Row(
-                    Some.ReadOnlyDummies<DecimalCell>(3).ToList(),
+                    Some.ReadOnlyDummies<NotSlottedCellBase>(3).Select(_ => _.DeepCloneWithColumnsSpanned(null)).ToList(),
                     childRows: new[]
                     {
-                        new Row(Some.ReadOnlyDummies<StringCell>(3).ToList()),
+                        new Row(Some.ReadOnlyDummies<NotSlottedCellBase>(3).Select(_ => _.DeepCloneWithColumnsSpanned(1)).ToList()),
                         new Row(
                             new ICell[]
                             {
-                                new ColumnSpanningStringCell(A.Dummy<string>(), 2),
-                                new HtmlCell(A.Dummy<string>()),
+                                A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1),
+                                A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(2),
                             }),
-                        new Row(
-                            new ICell[]
-                            {
-                                new ColumnSpanningMediaReferenceCell(A.Dummy<MediaReference>(), 3),
-                            }),
+                        new Row(Some.ReadOnlyDummies<NotSlottedCellBase>(1).Select(_ => _.DeepCloneWithColumnsSpanned(3)).ToList()),
                     }),
             };
 
-            var dataRows = new DataRows(allDataRows, null);
+            var dataRows = new DataRows(allDataRows);
 
             var tableRows = new TableRows(headerRows, dataRows);
 
@@ -501,32 +497,35 @@ namespace OBeautifulCode.DataStructure.Test
             // Arrange
             var tableColumns = new TableColumns(Some.ReadOnlyDummies<Column>(2).ToList());
 
-            var cell1 = new MediaReferenceCell(A.Dummy<MediaReference>(), "id-1");
-            var cell2 = new ColumnSpanningDecimalCell(A.Dummy<decimal>(), 2, "id-2");
-            var cell3 = new DecimalCell(A.Dummy<decimal>(), null, "id-3");
-            var cell4 = A.Dummy<IHaveValueCell>().ThatIs(_ => !(_ is IColumnSpanningCell));
-            var cell5 = A.Dummy<IHaveValueCell>().ThatIs(_ => !(_ is IColumnSpanningCell));
-            var cell6 = A.Dummy<IHaveValueCell>().ThatIs(_ => !(_ is IColumnSpanningCell));
-            var cell7 = A.Dummy<IHaveValueCell>().ThatIs(_ => !(_ is IColumnSpanningCell));
+            var cell1 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1).DeepCloneWithId("id-1");
+            var cell2 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(2).DeepCloneWithId("id-2");
+            var cell3 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1).DeepCloneWithId("id-3");
+            var cell4 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1);
+            var cell5 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1);
+            var cell6 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1);
+            var cell7 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1);
             var cell8 = new SlottedCell(
-                new Dictionary<string, IHaveValueCell>
+                new Dictionary<string, INotSlottedCell>
                 {
-                    { "slot-1-id", new NullCell() },
-                    { "slot-2-id", cell6 },
-                    { "slot-3-id", cell7 },
+                    { "slot-1-id", (INotSlottedCell)A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(null).DeepCloneWithId(null) },
+                    { "slot-2-id", (INotSlottedCell)cell6 },
+                    { "slot-3-id", (INotSlottedCell)cell7 },
                 },
                 "slot-2-id",
-                A.Dummy<string>());
+                A.Dummy<string>(),
+                columnsSpanned: 1);
 
-            var cell9 = A.Dummy<IHaveValueCell>().ThatIs(_ => !(_ is IColumnSpanningCell));
+            var cell9 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1);
             var cell10 = new SlottedCell(
-                new Dictionary<string, IHaveValueCell>
+                new Dictionary<string, INotSlottedCell>
                 {
-                    { "slot-1-id", new NullCell() },
-                    { "slot-2-id", new NullCell() },
-                    { "slot-3-id", cell9 },
+                    { "slot-1-id", (INotSlottedCell)A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1).DeepCloneWithId(null) },
+                    { "slot-2-id", (INotSlottedCell)A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1).DeepCloneWithId(null) },
+                    { "slot-3-id", (INotSlottedCell)cell9 },
                 },
-                "slot-2-id");
+                "slot-2-id",
+                columnsSpanned: 1,
+                id: null);
 
             IReadOnlyDictionary<string, ICell> expected = new Dictionary<string, ICell>
             {
@@ -549,15 +548,14 @@ namespace OBeautifulCode.DataStructure.Test
                         {
                             cell2,
                         }),
-                    new FlatRow(Some.ReadOnlyDummies<StringCell>(2).Select(_ => _.DeepCloneWithId(null)).ToList()),
+                    new FlatRow(Some.ReadOnlyDummies<NotSlottedCellBase>(2).Select(_ => _.DeepCloneWithColumnsSpanned(1).DeepCloneWithId(null)).ToList()),
                     new FlatRow(
                         new ICell[]
                         {
-                            new NullCell(),
+                            A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1).DeepCloneWithId(null),
                             cell1,
                         }),
-                },
-                null);
+                });
 
             var dataRows = new DataRows(
                 new[]
@@ -569,7 +567,7 @@ namespace OBeautifulCode.DataStructure.Test
                             cell4,
                         }),
                     new Row(
-                        Some.ReadOnlyDummies<NullCell>(2).Select(_ => _.DeepCloneWithId(null)).ToList(),
+                        Some.ReadOnlyDummies<NotSlottedCellBase>(2).Select(_ => _.DeepCloneWithColumnsSpanned(null).DeepCloneWithId(null)).ToList(),
                         childRows:
                         new[]
                         {
@@ -586,7 +584,7 @@ namespace OBeautifulCode.DataStructure.Test
                                         new ICell[]
                                         {
                                             cell10,
-                                            new NullCell(),
+                                            A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1).DeepCloneWithId(null),
                                         }),
                                 }),
                         }),
