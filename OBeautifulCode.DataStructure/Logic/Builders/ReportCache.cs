@@ -173,6 +173,16 @@ namespace OBeautifulCode.DataStructure
             SectionCellLocator sectionCellLocator,
             ICell currentCell)
         {
+            if (sectionCellLocator == null)
+            {
+                throw new ArgumentNullException(nameof(sectionCellLocator));
+            }
+
+            if (currentCell == null)
+            {
+                throw new ArgumentNullException(nameof(currentCell));
+            }
+
             if (!this.cellToSectionIdMap.TryGetValue(currentCell, out var sectionId))
             {
                 throw new CellNotFoundException(Invariant($"{nameof(currentCell)} is not a cell in the report."), sectionCellLocator);

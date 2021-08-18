@@ -18,7 +18,7 @@ namespace OBeautifulCode.DataStructure.Test
 
     using NamedDecimalSet = System.Collections.Generic.IReadOnlyList<OBeautifulCode.Type.NamedValue<decimal>>;
 
-    public partial class ExpressionTestOp
+    public static class ExpressionTestOp
     {
         [Fact]
         public static void Test()
