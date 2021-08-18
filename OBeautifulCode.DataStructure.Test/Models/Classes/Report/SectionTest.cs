@@ -16,6 +16,7 @@ namespace OBeautifulCode.DataStructure.Test
     using OBeautifulCode.AutoFakeItEasy;
     using OBeautifulCode.CodeAnalysis.Recipes;
     using OBeautifulCode.CodeGen.ModelObject.Recipes;
+    using OBeautifulCode.Equality.Recipes;
     using OBeautifulCode.Math.Recipes;
 
     using Xunit;
@@ -87,6 +88,116 @@ namespace OBeautifulCode.DataStructure.Test
                         },
                         ExpectedExceptionType = typeof(ArgumentNullException),
                         ExpectedExceptionMessageContains = new[] { "treeTable", },
+                    });
+
+            // Need to do this because SectionFormat is currently empty and so there isn't a way to create
+            // two sections having all the same properties except different formats.
+            DeepCloneWithTestScenarios
+                .RemoveAllScenarios()
+                .AddScenario(() =>
+                    new DeepCloneWithTestScenario<Section>
+                    {
+                        Name = "DeepCloneWithId should deep clone object and replace Id with the provided id",
+                        WithPropertyName = "Id",
+                        SystemUnderTestDeepCloneWithValueFunc = () =>
+                        {
+                            var systemUnderTest = A.Dummy<Section>();
+
+                            var referenceObject = A.Dummy<Section>().ThatIs(_ => !systemUnderTest.Id.IsEqualTo(_.Id));
+
+                            var result = new SystemUnderTestDeepCloneWithValue<Section>
+                            {
+                                SystemUnderTest = systemUnderTest,
+                                DeepCloneWithValue = referenceObject.Id,
+                            };
+
+                            return result;
+                        },
+                    })
+                .AddScenario(() =>
+                    new DeepCloneWithTestScenario<Section>
+                    {
+                        Name = "DeepCloneWithTreeTable should deep clone object and replace TreeTable with the provided treeTable",
+                        WithPropertyName = "TreeTable",
+                        SystemUnderTestDeepCloneWithValueFunc = () =>
+                        {
+                            var systemUnderTest = A.Dummy<Section>();
+
+                            var referenceObject = A.Dummy<Section>().ThatIs(_ => !systemUnderTest.TreeTable.IsEqualTo(_.TreeTable));
+
+                            var result = new SystemUnderTestDeepCloneWithValue<Section>
+                            {
+                                SystemUnderTest = systemUnderTest,
+                                DeepCloneWithValue = referenceObject.TreeTable,
+                            };
+
+                            return result;
+                        },
+                    })
+                .AddScenario(() =>
+                    new DeepCloneWithTestScenario<Section>
+                    {
+                        Name = "DeepCloneWithTitle should deep clone object and replace Title with the provided title",
+                        WithPropertyName = "Title",
+                        SystemUnderTestDeepCloneWithValueFunc = () =>
+                        {
+                            var systemUnderTest = A.Dummy<Section>();
+
+                            var referenceObject = A.Dummy<Section>().ThatIs(_ => !systemUnderTest.Title.IsEqualTo(_.Title));
+
+                            var result = new SystemUnderTestDeepCloneWithValue<Section>
+                            {
+                                SystemUnderTest = systemUnderTest,
+                                DeepCloneWithValue = referenceObject.Title,
+                            };
+
+                            return result;
+                        },
+                    });
+
+            // Need to do this because SectionFormat is currently empty and so there isn't a way to create
+            // two sections having all the same properties except different formats.
+            EquatableTestScenarios
+                .RemoveAllScenarios()
+                .AddScenario(() =>
+                    new EquatableTestScenario<Section>
+                    {
+                        Name = "Default Code Generated Scenario",
+                        ReferenceObject = ReferenceObjectForEquatableTestScenarios,
+                        ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new Section[]
+                        {
+                            new Section(
+                                    ReferenceObjectForEquatableTestScenarios.Id,
+                                    ReferenceObjectForEquatableTestScenarios.TreeTable,
+                                    ReferenceObjectForEquatableTestScenarios.Title,
+                                    ReferenceObjectForEquatableTestScenarios.Format),
+                        },
+                        ObjectsThatAreNotEqualToReferenceObject = new Section[]
+                        {
+                            new Section(
+                                    A.Dummy<Section>().Whose(_ => !_.Id.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Id)).Id,
+                                    ReferenceObjectForEquatableTestScenarios.TreeTable,
+                                    ReferenceObjectForEquatableTestScenarios.Title,
+                                    ReferenceObjectForEquatableTestScenarios.Format),
+                            new Section(
+                                    ReferenceObjectForEquatableTestScenarios.Id,
+                                    A.Dummy<Section>().Whose(_ => !_.TreeTable.IsEqualTo(ReferenceObjectForEquatableTestScenarios.TreeTable)).TreeTable,
+                                    ReferenceObjectForEquatableTestScenarios.Title,
+                                    ReferenceObjectForEquatableTestScenarios.Format),
+                            new Section(
+                                    ReferenceObjectForEquatableTestScenarios.Id,
+                                    ReferenceObjectForEquatableTestScenarios.TreeTable,
+                                    A.Dummy<Section>().Whose(_ => !_.Title.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Title)).Title,
+                                    ReferenceObjectForEquatableTestScenarios.Format),
+                        },
+                        ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
+                        {
+                            A.Dummy<object>(),
+                            A.Dummy<string>(),
+                            A.Dummy<int>(),
+                            A.Dummy<int?>(),
+                            A.Dummy<Guid>(),
+                        },
                     });
         }
     }

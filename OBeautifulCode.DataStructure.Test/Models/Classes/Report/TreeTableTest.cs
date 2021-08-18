@@ -143,38 +143,6 @@ namespace OBeautifulCode.DataStructure.Test
                 .AddScenario(() =>
                     new ConstructorArgumentValidationTestScenario<TreeTable>
                     {
-                        Name = "constructor should throw ArgumentException when parameter 'tableRows' contains header rows where the last header row does not contain one cell for all defined columns",
-                        ConstructionFunc = () =>
-                        {
-                            var tableColumns = new TableColumns(Some.ReadOnlyDummies<Column>(3).ToList());
-
-                            var rows = new[]
-                            {
-                                new FlatRow(Some.ReadOnlyDummies<NotSlottedCellBase>(3).Select(_ => _.DeepCloneWithColumnsSpanned(1)).ToList()),
-                                new FlatRow(Some.ReadOnlyDummies<NotSlottedCellBase>(1).Select(_ => _.DeepCloneWithColumnsSpanned(3)).ToList()),
-                                new FlatRow(
-                                    new[]
-                                    {
-                                        A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(3),
-                                    }),
-                            };
-
-                            var headerRows = new HeaderRows(rows, null);
-
-                            var tableRows = new TableRows(headerRows, null);
-
-                            var result = new TreeTable(
-                                tableColumns,
-                                tableRows);
-
-                            return result;
-                        },
-                        ExpectedExceptionType = typeof(ArgumentException),
-                        ExpectedExceptionMessageContains = new[] { "The last row in tableRows.HeaderRows does not contain one cell for all 3 of the defined columns.  Spanning is disallowed for the last header row.", },
-                    })
-                .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<TreeTable>
-                    {
                         Name = "constructor should throw ArgumentException when two columns have the same identifier",
                         ConstructionFunc = () =>
                         {

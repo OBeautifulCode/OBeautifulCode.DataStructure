@@ -17,7 +17,7 @@ namespace OBeautifulCode.DataStructure.Test
     using OBeautifulCode.CodeAnalysis.Recipes;
     using OBeautifulCode.CodeGen.ModelObject.Recipes;
     using OBeautifulCode.Math.Recipes;
-
+    using OBeautifulCode.Type;
     using Xunit;
 
     using static System.FormattableString;
@@ -29,6 +29,22 @@ namespace OBeautifulCode.DataStructure.Test
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = ObcSuppressBecause.CA1810_InitializeReferenceTypeStaticFieldsInline_FieldsDeclaredInCodeGeneratedPartialTestClass)]
         static SumOpTest()
         {
+            ConstructorArgumentValidationTestScenarios
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<SumOp>
+                    {
+                        Name = "constructor should throw ArgumentException when parameter 'statements' contains a null element scenario",
+                        ConstructionFunc = () =>
+                        {
+                            var referenceObject = A.Dummy<SumOp>();
+
+                            var result = new SumOp(new[] { referenceObject.Statements.First() });
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentException),
+                        ExpectedExceptionMessageContains = new[] { "contains less than 2 elements", },
+                    });
         }
     }
 }

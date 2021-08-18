@@ -34,12 +34,12 @@ namespace OBeautifulCode.DataStructure
 
             if (!conditions.Any())
             {
-                throw new ArgumentException(Invariant($"{nameof(conditions)} is empty."));
+                throw new ArgumentException(Invariant($"{nameof(conditions)} is an empty enumerable."));
             }
 
             if (conditions.Any(_ => _ == null))
             {
-                throw new ArgumentException(Invariant($"{nameof(conditions)} contains a null element."));
+                throw new ArgumentException(Invariant($"{nameof(conditions)} contains at least one null element."));
             }
 
             this.Conditions = conditions;

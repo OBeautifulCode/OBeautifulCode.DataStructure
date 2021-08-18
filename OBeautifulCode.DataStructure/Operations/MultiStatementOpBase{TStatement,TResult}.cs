@@ -37,6 +37,11 @@ namespace OBeautifulCode.DataStructure
                 throw new ArgumentNullException(nameof(statements));
             }
 
+            if (!statements.Any())
+            {
+                throw new ArgumentException(Invariant($"{nameof(statements)} is an empty enumerable."));
+            }
+
             if (statements.Count < 2)
             {
                 throw new ArgumentException(Invariant($"{nameof(statements)} contains less than 2 elements."));
@@ -44,7 +49,7 @@ namespace OBeautifulCode.DataStructure
 
             if (statements.Any(_ => _ == null))
             {
-                throw new ArgumentException(Invariant($"{nameof(statements)} contains a null element."));
+                throw new ArgumentException(Invariant($"{nameof(statements)} contains at least one null element."));
             }
 
             this.Statements = statements;

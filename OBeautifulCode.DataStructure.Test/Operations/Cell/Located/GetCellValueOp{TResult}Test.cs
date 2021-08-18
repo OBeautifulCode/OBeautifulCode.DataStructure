@@ -29,6 +29,25 @@ namespace OBeautifulCode.DataStructure.Test
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = ObcSuppressBecause.CA1810_InitializeReferenceTypeStaticFieldsInline_FieldsDeclaredInCodeGeneratedPartialTestClass)]
         static GetCellValueOpTResultTest()
         {
+            ConstructorArgumentValidationTestScenarios
+                .RemoveAllScenarios()
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<GetCellValueOp<Version>>
+                    {
+                        Name = "constructor should throw ArgumentNullException when parameter 'cellLocator' is null scenario",
+                        ConstructionFunc = () =>
+                        {
+                            var referenceObject = A.Dummy<GetCellValueOp<Version>>();
+
+                            var result = new GetCellValueOp<Version>(
+                                null,
+                                referenceObject.DefaultValue);
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentNullException),
+                        ExpectedExceptionMessageContains = new[] { "cellLocator", },
+                    });
         }
     }
 }

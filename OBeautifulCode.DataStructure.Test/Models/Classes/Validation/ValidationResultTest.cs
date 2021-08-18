@@ -29,6 +29,25 @@ namespace OBeautifulCode.DataStructure.Test
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = ObcSuppressBecause.CA1810_InitializeReferenceTypeStaticFieldsInline_FieldsDeclaredInCodeGeneratedPartialTestClass)]
         static ValidationResultTest()
         {
+            ConstructorArgumentValidationTestScenarios
+                .RemoveAllScenarios()
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<ValidationResult>
+                    {
+                        Name = "constructor should throw ArgumentNullException when parameter 'validityOp' is null scenario",
+                        ConstructionFunc = () =>
+                        {
+                            var referenceObject = A.Dummy<ValidationResult>();
+
+                            var result = new ValidationResult(
+                                null,
+                                referenceObject.MessageOp);
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentNullException),
+                        ExpectedExceptionMessageContains = new[] { "validityOp", },
+                    });
         }
     }
 }

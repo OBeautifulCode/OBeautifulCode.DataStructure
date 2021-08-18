@@ -17,6 +17,7 @@ namespace OBeautifulCode.DataStructure.Test
     using OBeautifulCode.CodeAnalysis.Recipes;
     using OBeautifulCode.CodeGen.ModelObject.Recipes;
     using OBeautifulCode.Math.Recipes;
+    using OBeautifulCode.Type;
 
     using Xunit;
 
@@ -29,6 +30,23 @@ namespace OBeautifulCode.DataStructure.Test
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = ObcSuppressBecause.CA1810_InitializeReferenceTypeStaticFieldsInline_FieldsDeclaredInCodeGeneratedPartialTestClass)]
         static AndAlsoOpTest()
         {
+            ConstructorArgumentValidationTestScenarios
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<AndAlsoOp>
+                    {
+                        Name = "constructor should throw ArgumentException when parameter 'statements' contains less than 2 elements",
+                        ConstructionFunc = () =>
+                        {
+                            var referenceObject = A.Dummy<AndAlsoOp>();
+
+                            var result = new AndAlsoOp(
+                                new[] { referenceObject.Statements.First() });
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentException),
+                        ExpectedExceptionMessageContains = new[] { "statements", "contains less than 2 elements", },
+                    });
         }
     }
 }

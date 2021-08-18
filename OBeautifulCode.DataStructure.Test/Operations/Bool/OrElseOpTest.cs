@@ -29,6 +29,23 @@ namespace OBeautifulCode.DataStructure.Test
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = ObcSuppressBecause.CA1810_InitializeReferenceTypeStaticFieldsInline_FieldsDeclaredInCodeGeneratedPartialTestClass)]
         static OrElseOpTest()
         {
+            ConstructorArgumentValidationTestScenarios
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<OrElseOp>
+                    {
+                        Name = "constructor should throw ArgumentException when parameter 'statements' contains less than 2 elements",
+                        ConstructionFunc = () =>
+                        {
+                            var referenceObject = A.Dummy<OrElseOp>();
+
+                            var result = new OrElseOp(
+                                new[] { referenceObject.Statements.First() });
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentException),
+                        ExpectedExceptionMessageContains = new[] { "statements", "contains less than 2 elements", },
+                    });
         }
     }
 }

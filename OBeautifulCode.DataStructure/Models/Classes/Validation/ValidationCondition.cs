@@ -42,7 +42,7 @@ namespace OBeautifulCode.DataStructure
 
             if (kind == ValidationConditionKind.Unknown)
             {
-                throw new ArgumentOutOfRangeException(Invariant($"{nameof(operation)} is {nameof(ValidationConditionKind.Unknown)}."));
+                throw new ArgumentOutOfRangeException(Invariant($"{nameof(kind)} is {nameof(ValidationConditionKind.Unknown)}."));
             }
 
             this.Operation = operation;

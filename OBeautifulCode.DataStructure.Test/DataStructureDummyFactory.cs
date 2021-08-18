@@ -70,6 +70,7 @@ namespace OBeautifulCode.DataStructure.Test
             AutoFixtureBackedDummyFactory.AddDummyCreator<IHoverOver>(A.Dummy<HoverOverBase>);
             AutoFixtureBackedDummyFactory.AddDummyCreator<ILink>(A.Dummy<SimpleLink>);
             AutoFixtureBackedDummyFactory.AddDummyCreator<ILinkedResource>(A.Dummy<LinkedResourceBase>);
+            AutoFixtureBackedDummyFactory.AddDummyCreator<IOperationOutputCell<Version>>(A.Dummy<OperationCell<Version>>);
 
             // <------------------- OPERATIONS ------------------------>
             RegisterReturningOperation<bool>();
@@ -80,8 +81,9 @@ namespace OBeautifulCode.DataStructure.Test
             RegisterReturningOperation<Availability>();
             RegisterReturningOperation<Validity>();
             RegisterReturningOperation<CellLocatorBase>();
+            RegisterReturningOperation<CompareOperator>();
 
-            // <------------------- CLASSES ------------------------>
+            // <------------------- MODELS ------------------------>
 
             // Report
             AutoFixtureBackedDummyFactory.AddDummyCreator(() =>

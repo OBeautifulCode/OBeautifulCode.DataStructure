@@ -17,6 +17,7 @@ namespace OBeautifulCode.DataStructure.Test
     using OBeautifulCode.AutoFakeItEasy;
     using OBeautifulCode.CodeAnalysis.Recipes;
     using OBeautifulCode.CodeGen.ModelObject.Recipes;
+    using OBeautifulCode.Equality.Recipes;
     using OBeautifulCode.Math.Recipes;
 
     using Xunit;
@@ -177,6 +178,116 @@ namespace OBeautifulCode.DataStructure.Test
                         },
                         ExpectedExceptionType = typeof(ArgumentException),
                         ExpectedExceptionMessageContains = new[] { "One or more ICell objects are used multiple times in the report", },
+                    });
+
+            // Need to do this because ReportFormat is currently empty and so there isn't a way to create
+            // two reports having all the same properties except different report formats.
+            EquatableTestScenarios
+                .RemoveAllScenarios()
+                .AddScenario(() =>
+                    new EquatableTestScenario<Report>
+                    {
+                        Name = "Default Code Generated Scenario",
+                        ReferenceObject = ReferenceObjectForEquatableTestScenarios,
+                        ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new Report[]
+                        {
+                            new Report(
+                                    ReferenceObjectForEquatableTestScenarios.Id,
+                                    ReferenceObjectForEquatableTestScenarios.Sections,
+                                    ReferenceObjectForEquatableTestScenarios.Title,
+                                    ReferenceObjectForEquatableTestScenarios.Format),
+                        },
+                        ObjectsThatAreNotEqualToReferenceObject = new Report[]
+                        {
+                            new Report(
+                                    A.Dummy<Report>().Whose(_ => !_.Id.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Id)).Id,
+                                    ReferenceObjectForEquatableTestScenarios.Sections,
+                                    ReferenceObjectForEquatableTestScenarios.Title,
+                                    ReferenceObjectForEquatableTestScenarios.Format),
+                            new Report(
+                                    ReferenceObjectForEquatableTestScenarios.Id,
+                                    A.Dummy<Report>().Whose(_ => !_.Sections.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Sections)).Sections,
+                                    ReferenceObjectForEquatableTestScenarios.Title,
+                                    ReferenceObjectForEquatableTestScenarios.Format),
+                            new Report(
+                                    ReferenceObjectForEquatableTestScenarios.Id,
+                                    ReferenceObjectForEquatableTestScenarios.Sections,
+                                    A.Dummy<Report>().Whose(_ => !_.Title.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Title)).Title,
+                                    ReferenceObjectForEquatableTestScenarios.Format),
+                        },
+                        ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
+                        {
+                            A.Dummy<object>(),
+                            A.Dummy<string>(),
+                            A.Dummy<int>(),
+                            A.Dummy<int?>(),
+                            A.Dummy<Guid>(),
+                        },
+                    });
+
+            // Need to do this because ReportFormat is currently empty and so there isn't a way to create
+            // two reports having all the same properties except different report formats.
+            DeepCloneWithTestScenarios
+                .RemoveAllScenarios()
+                .AddScenario(() =>
+                    new DeepCloneWithTestScenario<Report>
+                    {
+                        Name = "DeepCloneWithId should deep clone object and replace Id with the provided id",
+                        WithPropertyName = "Id",
+                        SystemUnderTestDeepCloneWithValueFunc = () =>
+                        {
+                            var systemUnderTest = A.Dummy<Report>();
+
+                            var referenceObject = A.Dummy<Report>().ThatIs(_ => !systemUnderTest.Id.IsEqualTo(_.Id));
+
+                            var result = new SystemUnderTestDeepCloneWithValue<Report>
+                            {
+                                SystemUnderTest = systemUnderTest,
+                                DeepCloneWithValue = referenceObject.Id,
+                            };
+
+                            return result;
+                        },
+                    })
+                .AddScenario(() =>
+                    new DeepCloneWithTestScenario<Report>
+                    {
+                        Name = "DeepCloneWithSections should deep clone object and replace Sections with the provided sections",
+                        WithPropertyName = "Sections",
+                        SystemUnderTestDeepCloneWithValueFunc = () =>
+                        {
+                            var systemUnderTest = A.Dummy<Report>();
+
+                            var referenceObject = A.Dummy<Report>().ThatIs(_ => !systemUnderTest.Sections.IsEqualTo(_.Sections));
+
+                            var result = new SystemUnderTestDeepCloneWithValue<Report>
+                            {
+                                SystemUnderTest = systemUnderTest,
+                                DeepCloneWithValue = referenceObject.Sections,
+                            };
+
+                            return result;
+                        },
+                    })
+                .AddScenario(() =>
+                    new DeepCloneWithTestScenario<Report>
+                    {
+                        Name = "DeepCloneWithTitle should deep clone object and replace Title with the provided title",
+                        WithPropertyName = "Title",
+                        SystemUnderTestDeepCloneWithValueFunc = () =>
+                        {
+                            var systemUnderTest = A.Dummy<Report>();
+
+                            var referenceObject = A.Dummy<Report>().ThatIs(_ => !systemUnderTest.Title.IsEqualTo(_.Title));
+
+                            var result = new SystemUnderTestDeepCloneWithValue<Report>
+                            {
+                                SystemUnderTest = systemUnderTest,
+                                DeepCloneWithValue = referenceObject.Title,
+                            };
+
+                            return result;
+                        },
                     });
         }
     }
