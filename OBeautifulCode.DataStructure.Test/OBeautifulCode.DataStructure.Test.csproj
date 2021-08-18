@@ -204,6 +204,13 @@
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
     <Compile Include="Exception\CellValueMissingExceptionTest.cs" />
     <Compile Include="Exception\CellNotFoundExceptionTest.cs" />
+    <Compile Include="Logic\Builders\ReportCacheTest.cs" />
+    <Compile Include="Logic\Builders\OpTest.cs" />
+    <Compile Include="Logic\Builders\CellTest.cs" />
+    <Compile Include="Logic\Extensions\ReportExtensionsTest.cs" />
+    <Compile Include="Logic\Extensions\CellExtensionsTest.cs" />
+    <Compile Include="Logic\Protocols\DataStructureConvenienceProtocolsTest.cs" />
+    <Compile Include="Logic\Protocols\DataStructureCellProtocolsTest.cs" />
     <Compile Include="Models\Classes\Format\CellValue\Concrete\NullNumberCellFormat{TValue}Test.cs" />
     <Compile Include="Models\Classes\Format\CellValue\Concrete\NullNumberCellFormat{TValue}Test.designer.cs">
       <DependentUpon>NullNumberCellFormat{TValue}Test.cs</DependentUpon>
@@ -702,10 +709,7 @@
       <Name>OBeautifulCode.DataStructure</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Logic\Builders\" />
-    <Folder Include="Logic\Protocols\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include=".analyzers\dictionary.xml" />
   </ItemGroup>

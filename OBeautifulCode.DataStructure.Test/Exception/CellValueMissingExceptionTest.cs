@@ -16,6 +16,8 @@ namespace OBeautifulCode.DataStructure.Test
 
     using Xunit;
 
+    using static System.FormattableString;
+
     public static class CellValueMissingExceptionTest
     {
         [Fact]
@@ -79,8 +81,7 @@ namespace OBeautifulCode.DataStructure.Test
             // Arrange
             var systemUnderTest = new CellValueMissingException("my-message", new Exception("my-inner-exception"), null);
 
-            var expected = @"OBeautifulCode.DataStructure.CellValueMissingException: my-message ---> System.Exception: my-inner-exception
-   --- End of inner exception stack trace ---";
+            var expected = Invariant($"OBeautifulCode.DataStructure.CellValueMissingException: my-message ---> System.Exception: my-inner-exception{Environment.NewLine}   --- End of inner exception stack trace ---");
 
             // Act
             var actual = systemUnderTest.ToString();
@@ -98,9 +99,7 @@ namespace OBeautifulCode.DataStructure.Test
 
             var systemUnderTest = new CellValueMissingException("my-message", new Exception("my-inner-exception"), cellLocator);
 
-            var expected = @"The cell that was found using the following locator does not yet have a value: OBeautifulCode.DataStructure.SectionCellLocator: CellId = cell-id, SlotId = <null>, SlotSelectionStrategy = ThrowIfSlotIdNotSpecified.
-OBeautifulCode.DataStructure.CellValueMissingException: my-message ---> System.Exception: my-inner-exception
-   --- End of inner exception stack trace ---";
+            var expected = Invariant($"The cell that was found using the following locator does not yet have a value: OBeautifulCode.DataStructure.SectionCellLocator: CellId = cell-id, SlotId = <null>, SlotSelectionStrategy = ThrowIfSlotIdNotSpecified.{Environment.NewLine}OBeautifulCode.DataStructure.CellValueMissingException: my-message ---> System.Exception: my-inner-exception{Environment.NewLine}   --- End of inner exception stack trace ---");
 
             // Act
             var actual = systemUnderTest.ToString();
