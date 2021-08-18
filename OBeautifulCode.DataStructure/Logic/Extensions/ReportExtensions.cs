@@ -98,6 +98,7 @@ namespace OBeautifulCode.DataStructure
             typeof(CellOpExecutionOutcome),
             typeof(Validity),
             typeof(Availability),
+            typeof(CompareOperator),
         };
 
         private static readonly ConcurrentDictionary<Type, ConstructorInfo> CachedTypeToExecuteOperationCellIfNecessaryOpConstructorInfoMap =
@@ -110,47 +111,6 @@ namespace OBeautifulCode.DataStructure
             new ConcurrentDictionary<Type, ConstructorInfo>();
 
         private static readonly Synchronizer RecalcSynchronizer = new Synchronizer();
-
-        /// <summary>
-        /// Gets a cell.
-        /// </summary>
-        /// <param name="report">The report.</param>
-        /// <param name="sectionId">The id of the section that contains the cell.</param>
-        /// <param name="cellId">The id of the cell.</param>
-        /// <param name="slotId">OPTIONAL id of the slot to use -OR- null if not addressing an <see cref="ISlottedCell"/>.  DEFAULT is to address an <see cref="INotSlottedCell"/>.</param>
-        /// <returns>
-        /// The cell.
-        /// </returns>
-        public static ICell GetCell(
-            this Report report,
-            string sectionId,
-            string cellId,
-            string slotId = null)
-        {
-            if (report == null)
-            {
-                throw new ArgumentNullException(nameof(report));
-            }
-
-            if (sectionId == null)
-            {
-                throw new ArgumentNullException(nameof(sectionId));
-            }
-
-            if (string.IsNullOrWhiteSpace(sectionId))
-            {
-                throw new ArgumentException(Invariant($"{nameof(sectionId)} is white space."));
-            }
-
-            if (!report.GetSectionIdToSectionMap().TryGetValue(sectionId, out var section))
-            {
-                throw new InvalidOperationException(Invariant($"There is no section with id {sectionId}."));
-            }
-
-            var result = section.TreeTable.GetCell(cellId, slotId);
-
-            return result;
-        }
 
         /// <summary>
         /// Executes all cell operations, validations, and availability checks, and records the results.
@@ -175,6 +135,16 @@ namespace OBeautifulCode.DataStructure
             IReadOnlyCollection<Func<IProtocolFactory, IProtocolFactory>> protocolFactoryFuncs = null,
             IReadOnlyCollection<Type> additionalTypesForCoreCellOps = null)
         {
+            if (report == null)
+            {
+                throw new ArgumentNullException(nameof(report));
+            }
+
+            if (timestampUtc.Kind != DateTimeKind.Utc)
+            {
+                throw new ArgumentException(Invariant($"{nameof(timestampUtc)} is not in UTC."));
+            }
+
             RecalcSynchronizer.Run(() => report.ReCalcInternal(timestampUtc, protocolFactoryFuncs, additionalTypesForCoreCellOps));
         }
 
@@ -204,37 +174,17 @@ namespace OBeautifulCode.DataStructure
             IReadOnlyCollection<Func<IProtocolFactory, IProtocolFactory>> protocolFactoryFuncs = null,
             IReadOnlyCollection<Type> additionalTypesForCoreCellOps = null)
         {
-            await RecalcSynchronizer.RunAsync(() => report.ReCalcInternalAsync(timestampUtc, protocolFactoryFuncs, additionalTypesForCoreCellOps));
-        }
-
-        /// <summary>
-        /// Sets the value of an input cell.
-        /// </summary>
-        /// <typeparam name="TValue">The type of value.</typeparam>
-        /// <param name="report">The report.</param>
-        /// <param name="value">The value to set the cell to.</param>
-        /// <param name="timestampUtc">The timestamp, in UTC, to record when the input is applied to the cell.</param>
-        /// <param name="sectionId">The id of the section that contains the cell.</param>
-        /// <param name="cellId">The id of the cell.</param>
-        /// <param name="slotId">OPTIONAL id of the slot to use -OR- null if not addressing an <see cref="ISlottedCell"/>.  DEFAULT is to address an <see cref="INotSlottedCell"/>.</param>
-        /// <param name="details">OPTIONAL details about inputting a value.  DEFAULT is to omit any details.</param>
-        public static void SetInputCellValue<TValue>(
-            this Report report,
-            TValue value,
-            DateTime timestampUtc,
-            string sectionId,
-            string cellId,
-            string slotId = null,
-            string details = null)
-        {
-            var cell = report.GetCell(sectionId, cellId, slotId);
-
-            if (!(cell is IInputCell<TValue> inputCell))
+            if (report == null)
             {
-                throw new ArgumentException("The specified cell is not an input cell.");
+                throw new ArgumentNullException(nameof(report));
             }
 
-            inputCell.SetCellValue(value, timestampUtc, details);
+            if (timestampUtc.Kind != DateTimeKind.Utc)
+            {
+                throw new ArgumentException(Invariant($"{nameof(timestampUtc)} is not in UTC."));
+            }
+
+            await RecalcSynchronizer.RunAsync(() => report.ReCalcInternalAsync(timestampUtc, protocolFactoryFuncs, additionalTypesForCoreCellOps));
         }
 
         private static void ReCalcInternal(
@@ -249,17 +199,15 @@ namespace OBeautifulCode.DataStructure
             // ReSharper disable once AccessToModifiedClosure
             RecalcPhase GetRecalcPhaseFunc() => recalcPhase;
 
-            var protocolFactory = report.BuildProtocolFactoryToExecuteAllOperations(timestampUtc, protocolFactoryFuncs, additionalTypesForCoreCellOps, GetRecalcPhaseFunc);
+            var reportCache = new ReportCache(report);
 
-            var operationCells = report.GetClearedOperationCells(timestampUtc);
+            var protocolFactory = reportCache.BuildProtocolFactoryToExecuteAllOperations(timestampUtc, protocolFactoryFuncs, additionalTypesForCoreCellOps, GetRecalcPhaseFunc);
 
-            var validationCells = report.GetClearedValidationCells(timestampUtc);
-
-            var availabilityCheckCells = report.GetClearedAvailabilityCheckCells(timestampUtc);
+            reportCache.ClearCells(timestampUtc);
 
             recalcPhase = RecalcPhase.CellOpExecution;
 
-            foreach (var cell in operationCells)
+            foreach (var cell in reportCache.OperationCells)
             {
                 var executeOperationCellIfNecessaryOp = cell.BuildExecuteOperationCellIfNecessaryOp();
 
@@ -268,7 +216,7 @@ namespace OBeautifulCode.DataStructure
 
             recalcPhase = RecalcPhase.Validation;
 
-            foreach (var cell in validationCells)
+            foreach (var cell in reportCache.ValidationCells)
             {
                 var validateCellIfNecessaryOp = new ValidateCellIfNecessaryOp(cell);
 
@@ -277,14 +225,14 @@ namespace OBeautifulCode.DataStructure
 
             recalcPhase = RecalcPhase.AvailabilityCheck;
 
-            foreach (var cell in availabilityCheckCells)
+            foreach (var cell in reportCache.AvailabilityCheckCells)
             {
                 var checkAvailabilityOfCellIfNecessaryOp = new CheckAvailabilityOfCellIfNecessaryOp(cell);
 
                 protocolFactory.GetProtocolAndExecuteViaReflection(checkAvailabilityOfCellIfNecessaryOp);
             }
 
-            if (report.PrepareToRerunRecalc(timestampUtc, validationCells, availabilityCheckCells))
+            if (reportCache.PrepareToRerunRecalc(timestampUtc))
             {
                 report.ReCalcInternal(timestampUtc, protocolFactoryFuncs, additionalTypesForCoreCellOps);
             }
@@ -302,17 +250,15 @@ namespace OBeautifulCode.DataStructure
             // ReSharper disable once AccessToModifiedClosure
             RecalcPhase GetRecalcPhaseFunc() => recalcPhase;
 
-            var protocolFactory = report.BuildProtocolFactoryToExecuteAllOperations(timestampUtc, protocolFactoryFuncs, additionalTypesForCoreCellOps, GetRecalcPhaseFunc);
+            var reportCache = new ReportCache(report);
 
-            var operationCells = report.GetClearedOperationCells(timestampUtc);
+            var protocolFactory = reportCache.BuildProtocolFactoryToExecuteAllOperations(timestampUtc, protocolFactoryFuncs, additionalTypesForCoreCellOps, GetRecalcPhaseFunc);
 
-            var validationCells = report.GetClearedValidationCells(timestampUtc);
-
-            var availabilityCheckCells = report.GetClearedAvailabilityCheckCells(timestampUtc);
+            reportCache.ClearCells(timestampUtc);
 
             recalcPhase = RecalcPhase.CellOpExecution;
 
-            foreach (var cell in operationCells)
+            foreach (var cell in reportCache.OperationCells)
             {
                 var executeOperationCellIfNecessaryOp = cell.BuildExecuteOperationCellIfNecessaryOp();
 
@@ -321,7 +267,7 @@ namespace OBeautifulCode.DataStructure
 
             recalcPhase = RecalcPhase.Validation;
 
-            foreach (var cell in validationCells)
+            foreach (var cell in reportCache.ValidationCells)
             {
                 var validateCellIfNecessaryOp = new ValidateCellIfNecessaryOp(cell);
 
@@ -330,36 +276,26 @@ namespace OBeautifulCode.DataStructure
 
             recalcPhase = RecalcPhase.AvailabilityCheck;
 
-            foreach (var cell in availabilityCheckCells)
+            foreach (var cell in reportCache.AvailabilityCheckCells)
             {
                 var checkAvailabilityOfCellIfNecessaryOp = new CheckAvailabilityOfCellIfNecessaryOp(cell);
 
                 await protocolFactory.GetProtocolAndExecuteViaReflectionAsync(checkAvailabilityOfCellIfNecessaryOp);
             }
 
-            if (report.PrepareToRerunRecalc(timestampUtc, validationCells, availabilityCheckCells))
+            if (reportCache.PrepareToRerunRecalc(timestampUtc))
             {
                 await report.ReCalcInternalAsync(timestampUtc, protocolFactoryFuncs, additionalTypesForCoreCellOps);
             }
         }
 
         private static ChainOfResponsibilityProtocolFactory BuildProtocolFactoryToExecuteAllOperations(
-            this Report report,
+            this ReportCache reportCache,
             DateTime timestampUtc,
             IReadOnlyCollection<Func<IProtocolFactory, IProtocolFactory>> protocolFactoryFuncs,
             IReadOnlyCollection<Type> additionalTypesForCoreCellOps,
             Func<RecalcPhase> getRecalcPhaseFunc)
         {
-            if (report == null)
-            {
-                throw new ArgumentNullException(nameof(report));
-            }
-
-            if (timestampUtc.Kind != DateTimeKind.Utc)
-            {
-                throw new ArgumentException(Invariant($"{nameof(timestampUtc)} is not in UTC."));
-            }
-
             protocolFactoryFuncs = protocolFactoryFuncs ?? new List<Func<IProtocolFactory, IProtocolFactory>>();
 
             if (protocolFactoryFuncs.Any(_ => _ == null))
@@ -392,7 +328,7 @@ namespace OBeautifulCode.DataStructure
             ConstructorInfo GetCellProtocolsFunc(Type type) => typeof(DataStructureCellProtocols<>).MakeGenericType(type).GetConstructors().Single();
             ConstructorInfo GetConvenienceProtocolsFunc(Type type) => typeof(DataStructureConvenienceProtocols<>).MakeGenericType(type).GetConstructors().Single();
 
-            var cellProtocolsConstructorInfoParams = new object[] { report, result, timestampUtc, getRecalcPhaseFunc };
+            var cellProtocolsConstructorInfoParams = new object[] { reportCache, result, timestampUtc, getRecalcPhaseFunc };
             var convenienceProtocolsConstructorInfoParams = new object[] { result };
 
             foreach (var typeForCoreCellOps in typesForCoreCellOps)
@@ -407,63 +343,39 @@ namespace OBeautifulCode.DataStructure
             return result;
         }
 
-        private static IReadOnlyCollection<ICell> GetClearedOperationCells(
-            this Report report,
+        private static void ClearCells(
+            this ReportCache reportCache,
             DateTime timestampUtc)
         {
-            var result = report.Sections.SelectMany(_ => _.TreeTable.GetOperationCells()).ToList();
-
             var details = Invariant($"Value cleared by {nameof(ReportExtensions)}.{nameof(Recalc)} or async overload.");
 
-            foreach (var operationCell in result)
+            foreach (var operationCell in reportCache.OperationCells)
             {
-                ((IClearCellValue)operationCell).ClearCellValue(timestampUtc, details);
+                operationCell.ClearCellValue(timestampUtc, details);
             }
 
-            return result;
-        }
+            details = Invariant($"Validation cleared by {nameof(ReportExtensions)}.{nameof(Recalc)} or async overload.");
 
-        private static IReadOnlyCollection<IValidationCell> GetClearedValidationCells(
-            this Report report,
-            DateTime timestampUtc)
-        {
-            var result = report.Sections.SelectMany(_ => _.TreeTable.GetValidationCells()).Where(_ => _.Validation != null).ToList();
-
-            var details = Invariant($"Validation cleared by {nameof(ReportExtensions)}.{nameof(Recalc)} or async overload.");
-
-            foreach (var cell in result)
+            foreach (var cell in reportCache.ValidationCells)
             {
                 cell.ClearValidation(timestampUtc, details);
             }
 
-            return result;
-        }
+            details = Invariant($"Availability check cleared by {nameof(ReportExtensions)}.{nameof(Recalc)} or async overload.");
 
-        private static IReadOnlyCollection<IAvailabilityCheckCell> GetClearedAvailabilityCheckCells(
-            this Report report,
-            DateTime timestampUtc)
-        {
-            var result = report.Sections.SelectMany(_ => _.TreeTable.GetAvailabilityCheckCells()).Where(_ => _.AvailabilityCheck != null).ToList();
-
-            var details = Invariant($"Availability check cleared by {nameof(ReportExtensions)}.{nameof(Recalc)} or async overload.");
-
-            foreach (var cell in result)
+            foreach (var cell in reportCache.AvailabilityCheckCells)
             {
                 cell.ClearAvailabilityCheck(timestampUtc, details);
             }
-
-            return result;
         }
 
         private static bool PrepareToRerunRecalc(
-            this Report report,
-            DateTime timestampUtc,
-            IReadOnlyCollection<IValidationCell> validationCells,
-            IReadOnlyCollection<IAvailabilityCheckCell> availabilityCheckCells)
+            this ReportCache reportCache,
+            DateTime timestampUtc)
         {
-            var validityIsUnknown = validationCells.Any(_ => _.GetValidity() == Validity.Unknown);
+            var validityIsUnknown = reportCache.ValidationCells.Any(_ => _.GetValidity() == Validity.Unknown);
 
-            var availabilityIsUnknown = availabilityCheckCells.Any(_ => _.GetAvailability() == Availability.Unknown);
+            var availabilityIsUnknown = reportCache.AvailabilityCheckCells.Any(_ => _.GetAvailability() == Availability.Unknown);
 
             bool result;
 
@@ -473,19 +385,17 @@ namespace OBeautifulCode.DataStructure
             }
             else
             {
-                var disabledInputCellsWithValues = report
-                    .Sections
-                    .SelectMany(_ => _.TreeTable.GetInputCells())
+                var disabledInputCellsWithValues = reportCache
+                    .InputCells
                     .Where(_ => _.GetAvailability() == Availability.Disabled)
-                    .Where(_ => ((IGetCellValue)_).HasCellValue())
-                    .Cast<IClearCellValue>()
+                    .Where(_ => _.HasCellValue())
                     .ToList();
 
                 if (disabledInputCellsWithValues.Any())
                 {
-                    foreach (var cell in disabledInputCellsWithValues)
+                    foreach (var disabledInputCellWithValue in disabledInputCellsWithValues)
                     {
-                        cell.ClearCellValue(timestampUtc, Invariant($"{nameof(ReportExtensions)}.{nameof(Recalc)} found this disabled input cell having a value.  Clearing the value and will re-run recalc."));
+                        disabledInputCellWithValue.ClearCellValue(timestampUtc, Invariant($"{nameof(ReportExtensions)}.{nameof(Recalc)} found this disabled input cell having a value.  Clearing the value and will re-run recalc."));
                     }
 
                     result = true;
@@ -500,7 +410,7 @@ namespace OBeautifulCode.DataStructure
         }
 
         private static IOperation BuildExecuteOperationCellIfNecessaryOp(
-            this ICell operationCell)
+            this IOperationOutputCell operationCell)
         {
             var valueType = operationCell.GetValueTypeOrNull();
 

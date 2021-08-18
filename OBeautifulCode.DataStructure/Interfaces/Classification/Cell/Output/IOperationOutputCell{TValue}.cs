@@ -12,7 +12,7 @@ namespace OBeautifulCode.DataStructure
     /// A cell who's output is the result of executing an operation.
     /// </summary>
     /// <typeparam name="TValue">The type of output value.</typeparam>
-    public interface IOperationOutputCell<TValue> : IRecordCellOpExecutionEvents, IOutputCell<TValue>, IClearCellValue
+    public interface IOperationOutputCell<TValue> : IOperationOutputCell, IOutputCell<TValue>
     {
         /// <summary>
         /// Gets the operation.

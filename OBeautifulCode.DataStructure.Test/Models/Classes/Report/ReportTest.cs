@@ -151,24 +151,33 @@ namespace OBeautifulCode.DataStructure.Test
                         },
                         ExpectedExceptionType = typeof(ArgumentException),
                         ExpectedExceptionMessageContains = new[] { "sections", "contains two or more elements with the same Id", },
+                    })
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<Report>
+                    {
+                        Name = "constructor should throw ArgumentException when the same cell object is used multiple times",
+                        ConstructionFunc = () =>
+                        {
+                            var referenceObject = A.Dummy<Report>();
+
+                            var treeTable = A.Dummy<TreeTable>();
+
+                            var result = new Report(
+                                referenceObject.Id,
+                                new[]
+                                {
+                                    new Section("id1", treeTable),
+                                    new Section("id2", A.Dummy<TreeTable>()),
+                                    new Section("id3", treeTable),
+                                },
+                                referenceObject.Title,
+                                referenceObject.Format);
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentException),
+                        ExpectedExceptionMessageContains = new[] { "One or more ICell objects are used multiple times in the report", },
                     });
-        }
-
-        [Fact]
-        public static void GetSectionIdToSectionMap___Should_return_map_of_Section_Id_to_Section___When_called()
-        {
-            // Arrange
-            var sections = Some.ReadOnlyDummies<Section>(3);
-
-            var systemUnderTest = new Report(A.Dummy<string>(), sections);
-
-            var expected = sections.ToDictionary(_ => _.Id, _ => _);
-
-            // Act
-            var actual = systemUnderTest.GetSectionIdToSectionMap().ToDictionary(_ => _.Key, _ => _.Value);
-
-            // Assert
-            actual.AsTest().Must().BeEqualTo(expected);
         }
     }
 }

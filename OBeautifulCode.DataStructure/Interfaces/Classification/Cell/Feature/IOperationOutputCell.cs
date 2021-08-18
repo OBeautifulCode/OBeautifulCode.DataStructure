@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IRecordCellOpExecutionEvents.cs" company="OBeautifulCode">
+// <copyright file="IOperationOutputCell.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -9,10 +9,9 @@ namespace OBeautifulCode.DataStructure
     using System.Collections.Generic;
 
     /// <summary>
-    /// Records <see cref="CellOpExecutionEventBase"/> events.
+    /// A cell who's output is the result of executing an operation.
     /// </summary>
-    // ReSharper disable once TypeParameterCanBeVariant
-    public interface IRecordCellOpExecutionEvents
+    public interface IOperationOutputCell : IOutputCell, IClearCellValue
     {
         /// <summary>
         /// Gets the events that record the execution of an operation.

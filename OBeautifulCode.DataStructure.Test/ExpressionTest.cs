@@ -179,7 +179,7 @@ namespace OBeautifulCode.DataStructure.Test
 
             var report = new Report("report-id", sections);
 
-            report.SetInputCellValue(false, DateTime.UtcNow, sectionId, isForProfitCell.Id);
+            isForProfitCell.SetCellValue(false, DateTime.UtcNow);
 
             report.Recalc(
                 DateTime.UtcNow,
@@ -188,8 +188,8 @@ namespace OBeautifulCode.DataStructure.Test
                     frameworkFactory => new MyProprietaryProtocols(frameworkFactory).ToProtocolFactory(),
                 });
 
-            report.SetInputCellValue(2.2m, DateTime.UtcNow, sectionId, numberOfSalesFteCell.Id);
-            report.SetInputCellValue(1.1m, DateTime.UtcNow, sectionId, numberOfWarehouseFteCell.Id);
+            numberOfSalesFteCell.SetCellValue(2.2m, DateTime.UtcNow);
+            numberOfWarehouseFteCell.SetCellValue(1.1m, DateTime.UtcNow);
 
             report.Recalc(
                 DateTime.UtcNow,

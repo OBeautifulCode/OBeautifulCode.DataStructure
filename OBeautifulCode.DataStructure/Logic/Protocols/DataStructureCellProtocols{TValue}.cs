@@ -10,6 +10,7 @@ namespace OBeautifulCode.DataStructure
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Threading.Tasks;
+
     using OBeautifulCode.CodeAnalysis.Recipes;
     using OBeautifulCode.Type;
     using OBeautifulCode.Type.Recipes;
@@ -34,7 +35,7 @@ namespace OBeautifulCode.DataStructure
           ISyncAndAsyncReturningProtocol<GetValidityOp, Validity>,
           ISyncAndAsyncReturningProtocol<GetAvailabilityOp, Availability>
     {
-        private readonly Report report;
+        private readonly ReportCache reportCache;
 
         private readonly IProtocolFactory protocolFactory;
 
@@ -45,19 +46,19 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Initializes a new instance of the <see cref="DataStructureCellProtocols{TValue}"/> class.
         /// </summary>
-        /// <param name="report">The report in-context.</param>
+        /// <param name="reportCache">The report cache in-context.</param>
         /// <param name="protocolFactory">The protocol factory to use when executing an <see cref="IOperationOutputCell{TValue}"/>'s <see cref="IOperationOutputCell{TValue}.Operation"/>.</param>
         /// <param name="timestampUtc">The timestamp (in UTC) to use when recording a <see cref="CellOpExecutionEventBase"/> with an <see cref="IOperationOutputCell{TValue}"/>.</param>
         /// <param name="getRecalcPhaseFunc">Func that gets the <see cref="RecalcPhase"/>.</param>
         public DataStructureCellProtocols(
-            Report report,
+            ReportCache reportCache,
             IProtocolFactory protocolFactory,
             DateTime timestampUtc,
             Func<RecalcPhase> getRecalcPhaseFunc)
         {
-            if (report == null)
+            if (reportCache == null)
             {
-                throw new ArgumentNullException(nameof(report));
+                throw new ArgumentNullException(nameof(reportCache));
             }
 
             // ReSharper disable once JoinNullCheckWithUsage
@@ -76,7 +77,7 @@ namespace OBeautifulCode.DataStructure
                 throw new ArgumentNullException(nameof(getRecalcPhaseFunc));
             }
 
-            this.report = report;
+            this.reportCache = reportCache;
             this.protocolFactory = protocolFactory;
             this.timestampUtc = timestampUtc;
             this.getRecalcPhaseFunc = getRecalcPhaseFunc;
@@ -328,7 +329,7 @@ namespace OBeautifulCode.DataStructure
                 throw new ArgumentNullException(nameof(operation));
             }
 
-            var locatedCell = this.GetCellAndExecuteOperationIfNecessary(operation.CellLocator);
+            var locatedCell = this.GetCellHavingValueAndExecuteOperationIfNecessary(operation.CellLocator);
 
             var result = locatedCell.Cell.HasCellValue();
 
@@ -362,7 +363,7 @@ namespace OBeautifulCode.DataStructure
                 throw new ArgumentNullException(nameof(operation));
             }
 
-            var locatedCell = this.GetCellAndExecuteOperationIfNecessary(operation.CellLocator);
+            var locatedCell = this.GetCellHavingValueAndExecuteOperationIfNecessary(operation.CellLocator);
 
             TValue result;
 
@@ -434,9 +435,9 @@ namespace OBeautifulCode.DataStructure
                 throw new ArgumentNullException(nameof(operation));
             }
 
-            var locatedCell = this.GetCellAndExecuteOperationIfNecessary(operation.CellLocator);
+            var locatedCell = this.GetCellHavingValueAndExecuteOperationIfNecessary(operation.CellLocator);
 
-            if (!(locatedCell.Cell is IRecordCellOpExecutionEvents operationCell))
+            if (!(locatedCell.Cell is IOperationOutputCell operationCell))
             {
                 throw new CellNotFoundException(Invariant($"The operation addresses a cell whose type is not an {typeof(IOperationOutputCell<TValue>).ToStringReadable()}: {locatedCell.Cell.GetType().ToStringReadable()}."), locatedCell.CellLocator);
             }
@@ -458,7 +459,7 @@ namespace OBeautifulCode.DataStructure
 
             var locatedCell = await this.GetCellAndExecuteOperationIfNecessaryAsync(operation.CellLocator);
 
-            if (!(locatedCell.Cell is IRecordCellOpExecutionEvents operationCell))
+            if (!(locatedCell.Cell is IOperationOutputCell operationCell))
             {
                 throw new CellNotFoundException(Invariant($"The operation addresses a cell whose type is not an {typeof(IOperationOutputCell<TValue>).ToStringReadable()}: {locatedCell.Cell.GetType().ToStringReadable()}."), locatedCell.CellLocator);
             }
@@ -890,7 +891,7 @@ namespace OBeautifulCode.DataStructure
             }
         }
 
-        private LocatedCell GetCellAndExecuteOperationIfNecessary(
+        private LocatedCellHavingValue GetCellHavingValueAndExecuteOperationIfNecessary(
             IReturningOperation<CellLocatorBase> cellLocatorOp)
         {
             // NOTE: THIS CODE IS A NEAR DUPLICATE OF THE ASYNC METHOD BELOW; NO GOOD WAY TO D.R.Y. IT OUT
@@ -916,7 +917,7 @@ namespace OBeautifulCode.DataStructure
                 this.protocolFactory.GetProtocolAndExecuteViaReflection(executeOperationCellIfNecessaryOp);
             }
 
-            var result = new LocatedCell
+            var result = new LocatedCellHavingValue
             {
                 Cell = cellWithValue,
                 CellLocator = cellLocator,
@@ -925,7 +926,7 @@ namespace OBeautifulCode.DataStructure
             return result;
         }
 
-        private async Task<LocatedCell> GetCellAndExecuteOperationIfNecessaryAsync(
+        private async Task<LocatedCellHavingValue> GetCellAndExecuteOperationIfNecessaryAsync(
             IReturningOperation<CellLocatorBase> cellLocatorOp)
         {
             // NOTE: THIS CODE IS A NEAR DUPLICATE OF THE SYNC METHOD ABOVE; NO GOOD WAY TO D.R.Y. IT OUT
@@ -951,7 +952,7 @@ namespace OBeautifulCode.DataStructure
                 await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync(executeOperationCellIfNecessaryOp);
             }
 
-            var result = new LocatedCell
+            var result = new LocatedCellHavingValue
             {
                 Cell = cellWithValue,
                 CellLocator = cellLocator,
@@ -1047,11 +1048,13 @@ namespace OBeautifulCode.DataStructure
 
             if (cellLocator is ReportCellLocator reportCellLocator)
             {
-                result = this.GetCell(reportCellLocator);
+                result = this.reportCache.GetCell(reportCellLocator);
             }
             else if (cellLocator is SectionCellLocator sectionCellLocator)
             {
-                result = this.GetCell(sectionCellLocator);
+                var currentCell = DataStructureCellProtocols.CurrentCellStack.Peek();
+
+                result = this.reportCache.GetCell(sectionCellLocator, currentCell);
             }
             else if (cellLocator is ThisCellLocator)
             {
@@ -1065,64 +1068,7 @@ namespace OBeautifulCode.DataStructure
             return result;
         }
 
-        private ICell GetCell(
-            SectionCellLocator sectionCellLocator)
-        {
-            var currentCell = DataStructureCellProtocols.CurrentCellStack.Peek();
-
-            var cellToSectionMap = this.report.GetCellToSectionMap();
-
-            if (!cellToSectionMap.TryGetValue(currentCell, out var section))
-            {
-                throw new InvalidOperationException(Invariant($"Something went wrong.  Expected to find the current cell in {nameof(Report)}.{nameof(Report.GetCellToSectionMap)}."));
-            }
-
-            var reportCellLocator = new ReportCellLocator(section.Id, sectionCellLocator.CellId, sectionCellLocator.SlotId, sectionCellLocator.SlotSelectionStrategy);
-
-            var result = this.GetCell(reportCellLocator);
-
-            return result;
-        }
-
-        private ICell GetCell(
-            ReportCellLocator reportCellLocator)
-        {
-            ICell result;
-
-            try
-            {
-                result = this.report.GetCell(reportCellLocator.SectionId, reportCellLocator.CellId, reportCellLocator.SlotId);
-            }
-            catch (Exception ex)
-            {
-                throw new CellNotFoundException(ex.Message, reportCellLocator);
-            }
-
-            if (result is ISlottedCell slottedCell)
-            {
-                if (!string.IsNullOrWhiteSpace(reportCellLocator.SlotId))
-                {
-                    throw new InvalidOperationException(Invariant($"Something went wrong.  The only way to address a slotted cell is if the slot id is not provided."));
-                }
-
-                if (reportCellLocator.SlotSelectionStrategy == SlotSelectionStrategy.DefaultSlot)
-                {
-                    result = slottedCell.SlotIdToCellMap[slottedCell.DefaultSlotId];
-                }
-                else if (reportCellLocator.SlotSelectionStrategy == SlotSelectionStrategy.ThrowIfSlotIdNotSpecified)
-                {
-                    throw new CellNotFoundException(Invariant($"The operation addresses an {nameof(ISlottedCell)} (and not a slot within that cell) and {nameof(SlotSelectionStrategy)} is {nameof(SlotSelectionStrategy.ThrowIfSlotIdNotSpecified)}."), reportCellLocator);
-                }
-                else
-                {
-                    throw new NotSupportedException(Invariant($"This {nameof(SlotSelectionStrategy)} is not supported: {reportCellLocator.SlotSelectionStrategy}."));
-                }
-            }
-
-            return result;
-        }
-
-        private class LocatedCell
+        private class LocatedCellHavingValue
         {
             public IGetCellValue Cell { get; set; }
 

@@ -106,15 +106,6 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <inheritdoc />
-        public override bool IsConstCell() => false;
-
-        /// <inheritdoc />
-        public override bool IsInputCell() => false;
-
-        /// <inheritdoc />
-        public override bool IsOperationCell() => true;
-
-        /// <inheritdoc />
         public override Type GetValueTypeOrNull() => typeof(TValue);
 
         /// <inheritdoc />

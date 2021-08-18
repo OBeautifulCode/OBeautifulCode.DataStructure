@@ -83,10 +83,22 @@ namespace OBeautifulCode.DataStructure.Test
 
             // <------------------- CLASSES ------------------------>
 
+            // Report
+            AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
+            {
+                var numberOfSections = ThreadSafeRandom.Next(1, 4);
+
+                var result = new Report(A.Dummy<string>(), Some.ReadOnlyDummies<Section>(numberOfSections).ToList(), A.Dummy<string>(), A.Dummy<ReportFormat>());
+
+                return result;
+            });
+
             // TreeTable
             AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
             {
-                var columns = Some.ReadOnlyDummies<Column>().ToList();
+                var numberOfColumns = GetRandomNumberOfColumns();
+
+                var columns = Some.ReadOnlyDummies<Column>(numberOfColumns).ToList();
 
                 var tableColumns = new TableColumns(columns, A.Dummy<ColumnFormat>());
 
@@ -502,7 +514,7 @@ namespace OBeautifulCode.DataStructure.Test
 
         private static int GetRandomNumberOfColumns()
         {
-            var result = ThreadSafeRandom.Next(1, 6);
+            var result = ThreadSafeRandom.Next(1, 4);
 
             return result;
         }

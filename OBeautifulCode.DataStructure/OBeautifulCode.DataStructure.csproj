@@ -154,11 +154,14 @@
     </Compile>
     <Compile Include="Exception\CellValueMissingException.cs" />
     <Compile Include="Exception\CellNotFoundException.cs" />
-    <Compile Include="Interfaces\Behavior\IRecordCellOpExecutionEvents.cs" />
     <Compile Include="Interfaces\Behavior\IClearCellValue.cs" />
     <Compile Include="Interfaces\Behavior\IGetCellValue.cs" />
     <Compile Include="Interfaces\Behavior\IGetCellValue{TValue}.cs" />
     <Compile Include="Interfaces\Classification\Cell\Feature\IAvailabilityCheckCell.cs" />
+    <Compile Include="Interfaces\Classification\Cell\Feature\IOperationOutputCell.cs" />
+    <Compile Include="Interfaces\Classification\Cell\Feature\IConstOutputCell.cs" />
+    <Compile Include="Interfaces\Classification\Cell\Feature\IOutputCell.cs" />
+    <Compile Include="Interfaces\Classification\Cell\Feature\IInputCell.cs" />
     <Compile Include="Interfaces\Classification\Cell\Feature\IValidationCell.cs" />
     <Compile Include="Interfaces\Classification\Cell\INotSlottedCell.cs" />
     <Compile Include="Interfaces\Classification\Cell\Output\IConstOutputCell{TValue}.cs" />
@@ -176,6 +179,7 @@
     <Compile Include="Interfaces\Classification\Resource\ILink.cs" />
     <Compile Include="Logic\Builders\Op.cs" />
     <Compile Include="Logic\Builders\Cell.cs" />
+    <Compile Include="Logic\Builders\ReportCache.cs" />
     <Compile Include="Logic\Enums\RecalcPhase.cs" />
     <Compile Include="Logic\Extensions\CellExtensions.cs" />
     <Compile Include="Logic\Extensions\TreeTableExtensions.cs" />

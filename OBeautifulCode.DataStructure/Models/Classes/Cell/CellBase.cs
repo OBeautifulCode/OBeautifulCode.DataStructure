@@ -48,15 +48,6 @@ namespace OBeautifulCode.DataStructure
         public string Details { get; private set; }
 
         /// <inheritdoc />
-        public abstract bool IsConstCell();
-
-        /// <inheritdoc />
-        public abstract bool IsInputCell();
-
-        /// <inheritdoc />
-        public abstract bool IsOperationCell();
-
-        /// <inheritdoc />
         public abstract Type GetValueTypeOrNull();
     }
 }

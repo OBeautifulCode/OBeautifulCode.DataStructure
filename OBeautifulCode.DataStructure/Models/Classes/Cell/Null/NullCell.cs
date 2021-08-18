@@ -60,15 +60,6 @@ namespace OBeautifulCode.DataStructure
         public ILink Link { get; private set; }
 
         /// <inheritdoc />
-        public override bool IsConstCell() => false;
-
-        /// <inheritdoc />
-        public override bool IsInputCell() => false;
-
-        /// <inheritdoc />
-        public override bool IsOperationCell() => false;
-
-        /// <inheritdoc />
         public override Type GetValueTypeOrNull() => null;
     }
 }

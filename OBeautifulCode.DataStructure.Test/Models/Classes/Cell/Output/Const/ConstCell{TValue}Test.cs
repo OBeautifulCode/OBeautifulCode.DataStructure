@@ -540,45 +540,6 @@ namespace OBeautifulCode.DataStructure.Test
         }
 
         [Fact]
-        public static void IsConstCell___Should_return_true___When_called()
-        {
-            // Arrange
-            var systemUnderTest = A.Dummy<ConstCell<Version>>();
-
-            // Act
-            var actual = systemUnderTest.IsConstCell();
-
-            // Assert
-            actual.AsTest().Must().BeTrue();
-        }
-
-        [Fact]
-        public static void IsInputCell___Should_return_false___When_called()
-        {
-            // Arrange
-            var systemUnderTest = A.Dummy<ConstCell<Version>>();
-
-            // Act
-            var actual = systemUnderTest.IsInputCell();
-
-            // Assert
-            actual.AsTest().Must().BeFalse();
-        }
-
-        [Fact]
-        public static void IsOperationCell___Should_return_false___When_called()
-        {
-            // Arrange
-            var systemUnderTest = A.Dummy<ConstCell<Version>>();
-
-            // Act
-            var actual = systemUnderTest.IsOperationCell();
-
-            // Assert
-            actual.AsTest().Must().BeFalse();
-        }
-
-        [Fact]
         public static void GetCellObjectValue___Should_return_constant_value___When_called()
         {
             // Arrange

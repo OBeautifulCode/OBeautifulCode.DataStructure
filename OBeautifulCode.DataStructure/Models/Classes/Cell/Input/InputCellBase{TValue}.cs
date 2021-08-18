@@ -11,6 +11,7 @@ namespace OBeautifulCode.DataStructure
     using System.Linq;
 
     using OBeautifulCode.Type;
+    using OBeautifulCode.Type.Recipes;
 
     using static System.FormattableString;
 
@@ -106,13 +107,31 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <inheritdoc />
-        public override bool IsConstCell() => false;
-
-        /// <inheritdoc />
-        public override bool IsInputCell() => true;
-
-        /// <inheritdoc />
-        public override bool IsOperationCell() => false;
+        public void SetCellValue(
+            object value,
+            DateTime timestampUtc,
+            string details = null)
+        {
+            if (value == null)
+            {
+                if (typeof(TValue).IsTypeAssignableToNull())
+                {
+                    this.SetCellValue(default, timestampUtc, details);
+                }
+                else
+                {
+                    throw new ArgumentException(Invariant($"{nameof(value)} is null, which is not assignable to a value of type {typeof(TValue).ToStringReadable()}."));
+                }
+            }
+            else if (value is TValue typedValue)
+            {
+                this.SetCellValue(typedValue, timestampUtc, details);
+            }
+            else
+            {
+                throw new ArgumentException(Invariant($"{nameof(value)} is not of type {typeof(TValue).ToStringReadable()}."));
+            }
+        }
 
         /// <inheritdoc />
         public override Type GetValueTypeOrNull() => typeof(TValue);

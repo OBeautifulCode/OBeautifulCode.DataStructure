@@ -26,7 +26,7 @@ namespace OBeautifulCode.DataStructure
         /// The status of the execution of an <see cref="IOperationOutputCell{TValue}"/>'s <see cref="IOperationOutputCell{TValue}.Operation"/>.
         /// </returns>
         public static CellOpExecutionStatus GetCellOpExecutionStatus(
-            this IRecordCellOpExecutionEvents cell)
+            this IOperationOutputCell cell)
         {
             if (cell == null)
             {
@@ -77,7 +77,7 @@ namespace OBeautifulCode.DataStructure
         /// The outcome of executing an <see cref="IOperationOutputCell{TValue}"/>'s <see cref="IOperationOutputCell{TValue}.Operation"/>.
         /// </returns>
         public static CellOpExecutionOutcome GetCellOpExecutionOutcome(
-            this IRecordCellOpExecutionEvents cell)
+            this IOperationOutputCell cell)
         {
             if (cell == null)
             {

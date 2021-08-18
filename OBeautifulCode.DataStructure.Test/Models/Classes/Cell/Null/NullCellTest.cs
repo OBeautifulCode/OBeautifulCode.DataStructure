@@ -514,44 +514,5 @@ namespace OBeautifulCode.DataStructure.Test
             // Assert
             actual.AsTest().Must().BeNull();
         }
-
-        [Fact]
-        public static void IsConstCell___Should_return_false___When_called()
-        {
-            // Arrange
-            var systemUnderTest = A.Dummy<NullCell>();
-
-            // Act
-            var actual = systemUnderTest.IsConstCell();
-
-            // Assert
-            actual.AsTest().Must().BeFalse();
-        }
-
-        [Fact]
-        public static void IsInputCell___Should_return_false___When_called()
-        {
-            // Arrange
-            var systemUnderTest = A.Dummy<NullCell>();
-
-            // Act
-            var actual = systemUnderTest.IsInputCell();
-
-            // Assert
-            actual.AsTest().Must().BeFalse();
-        }
-
-        [Fact]
-        public static void IsOperationCell___Should_return_false___When_called()
-        {
-            // Arrange
-            var systemUnderTest = A.Dummy<NullCell>();
-
-            // Act
-            var actual = systemUnderTest.IsOperationCell();
-
-            // Assert
-            actual.AsTest().Must().BeFalse();
-        }
     }
 }

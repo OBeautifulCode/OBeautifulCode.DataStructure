@@ -13,6 +13,9 @@ namespace OBeautifulCode.DataStructure
     using System.Reflection;
 
     using OBeautifulCode.Type;
+    using OBeautifulCode.Type.Recipes;
+
+    using static System.FormattableString;
 
     /// <summary>
     /// Statics for <see cref="DataStructureCellProtocols{TValue}"/>.
@@ -57,9 +60,14 @@ namespace OBeautifulCode.DataStructure
         {
             IOperation result = null;
 
-            if (cell.IsOperationCell())
+            if (cell is IOperationOutputCell)
             {
                 var valueType = cell.GetValueTypeOrNull();
+
+                if (valueType == null)
+                {
+                    throw new InvalidOperationException(Invariant($"This kind of cell is supposed to have a value type: {cell.GetType().ToStringReadable()}."));
+                }
 
                 if (!CachedTypeToExecuteOperationCellIfNecessaryOpConstructorInfoMap.TryGetValue(valueType, out var constructorInfo))
                 {

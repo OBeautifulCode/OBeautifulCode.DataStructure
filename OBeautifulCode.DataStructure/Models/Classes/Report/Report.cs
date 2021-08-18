@@ -20,10 +20,6 @@ namespace OBeautifulCode.DataStructure
     /// </summary>
     public partial class Report : IModelViaCodeGen
     {
-        private readonly IReadOnlyDictionary<string, Section> sectionIdToSectionMap;
-
-        private readonly IReadOnlyDictionary<ICell, Section> cellToSectionMap;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="Report"/> class.
         /// </summary>
@@ -67,12 +63,14 @@ namespace OBeautifulCode.DataStructure
                 throw new ArgumentException(Invariant($"{nameof(sections)} contains two or more elements with the same {nameof(Section.Id)}."));
             }
 
-            this.sectionIdToSectionMap = sections.ToDictionary(_ => _.Id, _ => _);
-            this.cellToSectionMap = sections
-                .SelectMany(_ => _.TreeTable
-                    .GetAllCells()
-                    .Select(cell => new { Section = _, Cell = cell }))
-                .ToDictionary(_ => _.Cell, _ => _.Section, new ReferenceEqualityComparer<ICell>());
+            var allCells = sections.SelectMany(_ => _.TreeTable.GetAllCells()).ToList();
+
+            var distinctCells = allCells.Distinct(new ReferenceEqualityComparer<ICell>()).ToList();
+
+            if (allCells.Count != distinctCells.Count)
+            {
+                throw new ArgumentException(Invariant($"One or more {nameof(ICell)} objects are used multiple times in the report."));
+            }
 
             this.Id = id;
             this.Sections = sections;
@@ -99,21 +97,5 @@ namespace OBeautifulCode.DataStructure
         /// Gets the format to apply to the report.
         /// </summary>
         public ReportFormat Format { get; private set; }
-
-        /// <summary>
-        /// Gets a map of section id to the corresponding section.
-        /// </summary>
-        /// <returns>
-        /// A map of section id to the corresponding section.
-        /// </returns>
-        public IReadOnlyDictionary<string, Section> GetSectionIdToSectionMap() => this.sectionIdToSectionMap;
-
-        /// <summary>
-        /// Gets a map of cell to the corresponding section.
-        /// </summary>
-        /// <returns>
-        /// A map of cell to the corresponding section.
-        /// </returns>
-        public IReadOnlyDictionary<ICell, Section> GetCellToSectionMap() => this.cellToSectionMap;
     }
 }

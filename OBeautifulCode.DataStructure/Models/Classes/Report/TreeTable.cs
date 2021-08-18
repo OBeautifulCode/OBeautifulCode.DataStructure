@@ -12,6 +12,7 @@ namespace OBeautifulCode.DataStructure
     using System.Linq;
 
     using OBeautifulCode.CodeAnalysis.Recipes;
+    using OBeautifulCode.Equality.Recipes;
     using OBeautifulCode.Type;
 
     using static System.FormattableString;
@@ -22,18 +23,6 @@ namespace OBeautifulCode.DataStructure
     /// </summary>
     public partial class TreeTable : IModelViaCodeGen
     {
-        private readonly IReadOnlyDictionary<string, ICell> cellIdToCellMap;
-
-        private readonly IReadOnlyCollection<INotSlottedCell> operationCells;
-
-        private readonly IReadOnlyCollection<IValidationCell> validationCells;
-
-        private readonly IReadOnlyCollection<IAvailabilityCheckCell> availabilityCheckCells;
-
-        private readonly IReadOnlyCollection<INotSlottedCell> inputCells;
-
-        private readonly IReadOnlyCollection<ICell> allCells;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="TreeTable"/> class.
         /// </summary>
@@ -57,57 +46,34 @@ namespace OBeautifulCode.DataStructure
 
             ids.AddRange(tableColumns.Columns.Where(_ => !string.IsNullOrWhiteSpace(_.Id)).Select(_ => _.Id));
 
-            var localAllCells = new List<ICell>();
+            var allRowsInOrder = tableRows == null
+                ? new List<RowBase>()
+                : tableRows.GetAllRowsInOrder();
 
-            var allCellsWithIds = new List<ICell>();
-
-            if (tableRows != null)
+            if (allRowsInOrder.Any(_ => _.GetNumberOfColumnsSpanned() != numberOfColumns))
             {
-                var allRowsInOrder = tableRows.GetAllRowsInOrder();
-
-                if (allRowsInOrder.Any(_ => _.GetNumberOfColumnsSpanned() != numberOfColumns))
-                {
-                    throw new ArgumentException(Invariant($"{nameof(tableRows)} contains a row or descendant row that does not span all {numberOfColumns} of the defined columns."));
-                }
-
-                if ((tableRows.HeaderRows != null) && tableRows.HeaderRows.Rows.Any())
-                {
-                    if (tableRows.HeaderRows.Rows.Last().Cells.Count != numberOfColumns)
-                    {
-                        throw new ArgumentException(Invariant($"The last row in {nameof(tableRows)}.{nameof(this.TableRows.HeaderRows)} does not contain one cell for all {numberOfColumns} of the defined columns.  Spanning is disallowed for the last header row."));
-                    }
-                }
-
-                ids.AddRange(allRowsInOrder.Where(_ => !string.IsNullOrWhiteSpace(_.Id)).Select(_ => _.Id));
-
-                localAllCells = new List<ICell>(allRowsInOrder.SelectMany(_ => _.Cells).ToList());
-
-                var slottedCells = localAllCells.OfType<ISlottedCell>().SelectMany(_ => _.SlotIdToCellMap.Values).ToList();
-
-                localAllCells.AddRange(slottedCells);
-
-                allCellsWithIds = localAllCells.Where(_ => !string.IsNullOrWhiteSpace(_.Id)).ToList();
-
-                ids.AddRange(allCellsWithIds.Select(_ => _.Id));
-
-                ////var inputCellsWithoutId = localAllCells.Where(_ => _.IsInputCell()).Where(_ => string.IsNullOrWhiteSpace(_.Id)).ToList();
-                ////if (inputCellsWithoutId.Any())
-                ////{
-                ////    throw new ArgumentException(Invariant($"One or more input cell(s) does not have an identifier and thus cannot be addressed."));
-                ////}
+                throw new ArgumentException(Invariant($"{nameof(tableRows)} contains a row or descendant row that does not span all {numberOfColumns} of the defined columns."));
             }
+
+            ids.AddRange(allRowsInOrder.Where(_ => !string.IsNullOrWhiteSpace(_.Id)).Select(_ => _.Id));
+
+            var allCells = tableRows == null
+                ? new List<ICell>()
+                : tableRows.GetAllCells();
+
+            var allCellsWithIds = allCells.Where(_ => !string.IsNullOrWhiteSpace(_.Id)).ToList();
+
+            ids.AddRange(allCellsWithIds.Select(_ => _.Id));
 
             if (ids.Distinct().Count() != ids.Count)
             {
                 throw new ArgumentException(Invariant($"Two or more elements (i.e. columns, rows, cells) have the same identifier."));
             }
 
-            this.cellIdToCellMap = allCellsWithIds.ToDictionary(_ => _.Id, _ => _);
-            this.operationCells = localAllCells.Where(_ => _.IsOperationCell()).Cast<INotSlottedCell>().ToList();
-            this.inputCells = localAllCells.Where(_ => _.IsInputCell()).Cast<INotSlottedCell>().ToList();
-            this.validationCells = localAllCells.OfType<IValidationCell>().ToList();
-            this.availabilityCheckCells = localAllCells.OfType<IAvailabilityCheckCell>().ToList();
-            this.allCells = localAllCells;
+            if (allCells.Distinct(new ReferenceEqualityComparer<ICell>()).Count() != allCells.Count)
+            {
+                throw new ArgumentException(Invariant($"One or more {nameof(ICell)} objects are used multiple times in the tree table."));
+            }
 
             this.TableColumns = tableColumns;
             this.TableRows = tableRows;
@@ -128,53 +94,5 @@ namespace OBeautifulCode.DataStructure
         /// Gets the format to apply to the whole table.
         /// </summary>
         public TableFormat Format { get; private set; }
-
-        /// <summary>
-        /// Gets a map of cell id to the corresponding cell.
-        /// </summary>
-        /// <returns>
-        /// A map of cell id to the corresponding cell.
-        /// </returns>
-        public IReadOnlyDictionary<string, ICell> GetCellIdToCellMap() => this.cellIdToCellMap;
-
-        /// <summary>
-        /// Gets all <see cref="ICell"/>s.
-        /// </summary>
-        /// <returns>
-        /// All <see cref="ICell"/>s in the tree table.
-        /// </returns>
-        public IReadOnlyCollection<ICell> GetAllCells() => this.allCells;
-
-        /// <summary>
-        /// Gets all <see cref="IAvailabilityCheckCell"/>s.
-        /// </summary>
-        /// <returns>
-        /// All <see cref="IAvailabilityCheckCell"/>s in the tree table.
-        /// </returns>
-        public IReadOnlyCollection<IAvailabilityCheckCell> GetAvailabilityCheckCells() => this.availabilityCheckCells;
-
-        /// <summary>
-        /// Gets all <see cref="IInputCell{TValue}"/>s.
-        /// </summary>
-        /// <returns>
-        /// All <see cref="IInputCell{TValue}"/>s in the tree table.
-        /// </returns>
-        public IReadOnlyCollection<INotSlottedCell> GetInputCells() => this.inputCells;
-
-        /// <summary>
-        /// Gets all <see cref="IOperationOutputCell{TValue}"/>s.
-        /// </summary>
-        /// <returns>
-        /// All <see cref="IOperationOutputCell{TValue}"/>s in the tree table.
-        /// </returns>
-        public IReadOnlyCollection<INotSlottedCell> GetOperationCells() => this.operationCells;
-
-        /// <summary>
-        /// Gets all <see cref="IValidationCell"/>s.
-        /// </summary>
-        /// <returns>
-        /// All <see cref="IValidationCell"/>s in the tree table.
-        /// </returns>
-        public IReadOnlyCollection<IValidationCell> GetValidationCells() => this.validationCells;
     }
 }

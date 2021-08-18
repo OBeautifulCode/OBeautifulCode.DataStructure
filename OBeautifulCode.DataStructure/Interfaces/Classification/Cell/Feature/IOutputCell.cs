@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IConstOutputCell{TValue}.cs" company="OBeautifulCode">
+// <copyright file="IOutputCell.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -7,10 +7,9 @@
 namespace OBeautifulCode.DataStructure
 {
     /// <summary>
-    /// A cell who's output is an immutable value.
+    /// A cell that can output a value.
     /// </summary>
-    /// <typeparam name="TValue">The type of output value.</typeparam>
-    public interface IConstOutputCell<TValue> : IConstOutputCell, IOutputCell<TValue>
+    public interface IOutputCell : INotSlottedCell, IGetCellValue
     {
     }
 }

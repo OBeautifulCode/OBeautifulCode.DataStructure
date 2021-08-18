@@ -7,8 +7,7 @@
 namespace OBeautifulCode.DataStructure
 {
     using System;
-
-    using static System.FormattableString;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Extension methods on <see cref="TreeTable"/>.
@@ -16,63 +15,45 @@ namespace OBeautifulCode.DataStructure
     public static class TreeTableExtensions
     {
         /// <summary>
-        /// Gets a cell by it's identifier with an optional slot identifier.
+        /// Gets all of the rows, header and descendants included, in the order they appear in the table.
         /// </summary>
-        /// <param name="treeTable">The tree table.</param>
-        /// <param name="cellId">The id of the cell.</param>
-        /// <param name="slotId">OPTIONAL id of the slot to use -OR- null if not addressing an <see cref="ISlottedCell"/>.  DEFAULT is to address an <see cref="INotSlottedCell"/>.</param>
+        /// <param name="treeTable">The table.</param>
         /// <returns>
-        /// The addressed cell.
+        /// The rows, header and descendants included, in the order they appear in the table.
         /// </returns>
-        public static ICell GetCell(
-            this TreeTable treeTable,
-            string cellId,
-            string slotId = null)
+        public static IReadOnlyList<RowBase> GetAllRowsInOrder(
+            this TreeTable treeTable)
         {
             if (treeTable == null)
             {
                 throw new ArgumentNullException(nameof(treeTable));
             }
 
-            if (cellId == null)
+            var result = treeTable.TableRows == null
+                ? new List<RowBase>()
+                : treeTable.TableRows.GetAllRowsInOrder();
+
+            return result;
+        }
+
+        /// <summary>
+        /// Gets all cells in a table.
+        /// </summary>
+        /// <param name="treeTable">The table.</param>
+        /// <returns>
+        /// All cells in a table.
+        /// </returns>
+        public static IReadOnlyCollection<ICell> GetAllCells(
+            this TreeTable treeTable)
+        {
+            if (treeTable == null)
             {
-                throw new ArgumentNullException(nameof(cellId));
+                throw new ArgumentNullException(nameof(treeTable));
             }
 
-            if (string.IsNullOrWhiteSpace(cellId))
-            {
-                throw new ArgumentException(Invariant($"{nameof(cellId)} is white space."));
-            }
-
-            if (!treeTable.GetCellIdToCellMap().TryGetValue(cellId, out var cell))
-            {
-                throw new InvalidOperationException(Invariant($"There is no cell with id '{cellId}'."));
-            }
-
-            ICell result;
-
-            if (string.IsNullOrWhiteSpace(slotId))
-            {
-                result = cell;
-            }
-            else
-            {
-                if (cell is SlottedCell slottedCell)
-                {
-                    if (slottedCell.SlotIdToCellMap.ContainsKey(slotId))
-                    {
-                        result = slottedCell.SlotIdToCellMap[slotId];
-                    }
-                    else
-                    {
-                        throw new InvalidOperationException(Invariant($"Slot id '{slotId}' was specified, but the addressed cell ('{cellId}') does not contain a slot having that id."));
-                    }
-                }
-                else
-                {
-                    throw new InvalidOperationException(Invariant($"Slot id '{slotId}' was specified, but the addressed cell ('{cellId}') is not a slotted cell"));
-                }
-            }
+            var result = treeTable.TableRows == null
+                ? new List<ICell>()
+                : treeTable.TableRows.GetAllCells();
 
             return result;
         }

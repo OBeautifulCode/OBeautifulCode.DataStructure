@@ -21,30 +21,6 @@ namespace OBeautifulCode.DataStructure
         int? ColumnsSpanned { get; }
 
         /// <summary>
-        /// Determines whether the cell is a const cell.
-        /// </summary>
-        /// <returns>
-        /// true if the cell is a const cell; otherwise false.
-        /// </returns>
-        bool IsConstCell();
-
-        /// <summary>
-        /// Determines whether the cell is an input cell.
-        /// </summary>
-        /// <returns>
-        /// true if the cell is an input cell; otherwise false.
-        /// </returns>
-        bool IsInputCell();
-
-        /// <summary>
-        /// Determines whether the cell is an operation cell.
-        /// </summary>
-        /// <returns>
-        /// true if the cell is an operation cell; otherwise false.
-        /// </returns>
-        bool IsOperationCell();
-
-        /// <summary>
         /// Gets the type of value that the cell stores or null if not applicable.
         /// </summary>
         /// <returns>

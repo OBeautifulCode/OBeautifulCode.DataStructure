@@ -10,7 +10,7 @@ namespace OBeautifulCode.DataStructure
     /// A cell that can output a specified type of value.
     /// </summary>
     /// <typeparam name="TValue">The type of output value.</typeparam>
-    public interface IOutputCell<TValue> : INotSlottedCell, IGetCellValue<TValue>
+    public interface IOutputCell<TValue> : IOutputCell, IGetCellValue<TValue>
     {
     }
 }

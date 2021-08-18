@@ -559,45 +559,6 @@ namespace OBeautifulCode.DataStructure.Test
         }
 
         [Fact]
-        public static void IsConstCell___Should_return_false___When_called()
-        {
-            // Arrange
-            var systemUnderTest = A.Dummy<InputCell<Version>>();
-
-            // Act
-            var actual = systemUnderTest.IsConstCell();
-
-            // Assert
-            actual.AsTest().Must().BeFalse();
-        }
-
-        [Fact]
-        public static void IsInputCell___Should_return_true___When_called()
-        {
-            // Arrange
-            var systemUnderTest = A.Dummy<InputCell<Version>>();
-
-            // Act
-            var actual = systemUnderTest.IsInputCell();
-
-            // Assert
-            actual.AsTest().Must().BeTrue();
-        }
-
-        [Fact]
-        public static void IsOperationCell___Should_return_false___When_called()
-        {
-            // Arrange
-            var systemUnderTest = A.Dummy<InputCell<Version>>();
-
-            // Act
-            var actual = systemUnderTest.IsOperationCell();
-
-            // Assert
-            actual.AsTest().Must().BeFalse();
-        }
-
-        [Fact]
         public static void ClearCellValue___Should_add_CellInputClearedEvent_to_the_end_of_InputEvents___When_InputEvents_is_null()
         {
             // Arrange
@@ -646,7 +607,7 @@ namespace OBeautifulCode.DataStructure.Test
         }
 
         [Fact]
-        public static void SetCellValue___Should_add_CellInputAppliedEvent_to_the_end_of_InputEvents___When_InputEvents_is_null()
+        public static void SetCellValue_TValue___Should_add_CellInputAppliedEvent_to_the_end_of_InputEvents___When_InputEvents_is_null()
         {
             // Arrange
             var systemUnderTest = A.Dummy<InputCell<Version>>().DeepCloneWithInputEvents(null);
@@ -671,7 +632,118 @@ namespace OBeautifulCode.DataStructure.Test
         }
 
         [Fact]
-        public static void SetCellValue___Should_add_CellInputAppliedEvent_to_the_end_of_InputEvents___When_InputEvents_is_not_empty()
+        public static void SetCellValue_TValue___Should_add_CellInputAppliedEvent_to_the_end_of_InputEvents___When_InputEvents_is_not_empty()
+        {
+            // Arrange
+            var systemUnderTest = A.Dummy<InputCell<Version>>();
+
+            var timestampUtc = A.Dummy<UtcDateTime>();
+
+            var details = A.Dummy<string>();
+
+            var version = A.Dummy<Version>();
+
+            IReadOnlyList<CellInputEventBase> expected = new CellInputEventBase[0]
+                .Concat(systemUnderTest.InputEvents)
+                .Concat(new[]
+                {
+                    new CellInputAppliedEvent<Version>(timestampUtc, version, details),
+                })
+                .ToList();
+
+            // Act
+            systemUnderTest.SetCellValue(version, timestampUtc, details);
+
+            // Assert
+            systemUnderTest.InputEvents.Must().BeEqualTo(expected);
+        }
+
+        [Fact]
+        public static void SetCellValue_object___Should_throw_ArgumentException___When_value_is_null_but_TValue_is_not_assignable_to_null()
+        {
+            // Arrange
+            var systemUnderTest = new InputCell<int>();
+
+            var timestampUtc = A.Dummy<UtcDateTime>();
+
+            var details = A.Dummy<string>();
+
+            // Act
+            var actual = Record.Exception(() => systemUnderTest.SetCellValue(null, timestampUtc, details));
+
+            // Assert
+            actual.AsTest().Must().BeOfType<ArgumentException>();
+            actual.Message.AsTest().Must().BeEqualTo("value is null, which is not assignable to a value of type int.");
+        }
+
+        [Fact]
+        public static void SetCellValue_object___Should_throw_ArgumentException___When_value_is_not_null_and_not_assignable_to_TValue()
+        {
+            // Arrange
+            var systemUnderTest = new InputCell<int>();
+
+            var timestampUtc = A.Dummy<UtcDateTime>();
+
+            var details = A.Dummy<string>();
+
+            // Act
+            var actual = Record.Exception(() => systemUnderTest.SetCellValue(A.Dummy<Version>(), timestampUtc, details));
+
+            // Assert
+            actual.AsTest().Must().BeOfType<ArgumentException>();
+            actual.Message.AsTest().Must().BeEqualTo("value is not of type int.");
+        }
+
+        [Fact]
+        public static void SetCellValue_object___Should_add_CellInputAppliedEvent_to_the_end_of_InputEvents___When_value_is_null()
+        {
+            // Arrange
+            var systemUnderTest = A.Dummy<InputCell<Version>>().DeepCloneWithInputEvents(null);
+
+            var timestampUtc = A.Dummy<UtcDateTime>();
+
+            var details = A.Dummy<string>();
+
+            IReadOnlyList<CellInputEventBase> expected = new CellInputEventBase[]
+                {
+                    new CellInputAppliedEvent<Version>(timestampUtc, null, details),
+                }
+                .ToList();
+
+            // Act
+            systemUnderTest.SetCellValue(null, timestampUtc, details);
+
+            // Assert
+            systemUnderTest.InputEvents.Must().BeEqualTo(expected);
+        }
+
+        [Fact]
+        public static void SetCellValue_object___Should_add_CellInputAppliedEvent_to_the_end_of_InputEvents___When_InputEvents_is_null()
+        {
+            // Arrange
+            var systemUnderTest = A.Dummy<InputCell<Version>>().DeepCloneWithInputEvents(null);
+
+            var timestampUtc = A.Dummy<UtcDateTime>();
+
+            var details = A.Dummy<string>();
+
+            var version = A.Dummy<Version>();
+
+            IReadOnlyList<CellInputEventBase> expected = new CellInputEventBase[]
+                {
+                    new CellInputAppliedEvent<Version>(timestampUtc, version, details),
+                }
+                .ToList();
+
+            // Act
+            systemUnderTest.SetCellValue((object)version, timestampUtc, details);
+
+            // Assert
+            systemUnderTest.InputEvents.Must().BeEqualTo(expected);
+        }
+
+        [Fact]
+        public static void SetCellValue_object___Should_add_CellInputAppliedEvent_to_the_end_of_InputEvents___When_InputEvents_is_not_empty()
         {
             // Arrange
             var systemUnderTest = A.Dummy<InputCell<Version>>();

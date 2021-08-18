@@ -306,6 +306,60 @@ namespace OBeautifulCode.DataStructure.Test
                         },
                         ExpectedExceptionType = typeof(ArgumentException),
                         ExpectedExceptionMessageContains = new[] { "Two or more elements (i.e. columns, rows, cells) have the same identifier.", },
+                    })
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<TreeTable>
+                    {
+                        Name = "constructor should throw ArgumentException when a cell object is used multiple times",
+                        ConstructionFunc = () =>
+                        {
+                            var tableColumns = new TableColumns(Some.ReadOnlyDummies<Column>(3).ToList());
+
+                            var cell = A.Dummy<CellBase>().DeepCloneWithColumnsSpanned(1).DeepCloneWithId(null);
+
+                            var headerRows = new HeaderRows(
+                                new[]
+                                {
+                                    new FlatRow(
+                                        new ICell[]
+                                        {
+                                            A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1).DeepCloneWithId(null),
+                                            cell,
+                                            A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1).DeepCloneWithId(null),
+                                        }),
+                                    new FlatRow(Some.ReadOnlyDummies<NotSlottedCellBase>(3).Select(_ => _.DeepCloneWithColumnsSpanned(1)).ToList()),
+                                },
+                                null);
+
+                            var dataRows = new DataRows(
+                                new[]
+                                {
+                                    new Row(Some.ReadOnlyDummies<NotSlottedCellBase>(3).Select(_ => _.DeepCloneWithColumnsSpanned(1)).ToList()),
+                                    new Row(
+                                        Some.ReadOnlyDummies<NotSlottedCellBase>(3).Select(_ => _.DeepCloneWithColumnsSpanned(1)).ToList(),
+                                        childRows:
+                                            new[]
+                                            {
+                                                new Row(
+                                                    new ICell[]
+                                                    {
+                                                        A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(null).DeepCloneWithId(null),
+                                                        A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(null).DeepCloneWithId(null),
+                                                        cell,
+                                                    }),
+                                            }),
+                                });
+
+                            var tableRows = new TableRows(headerRows, dataRows);
+
+                            var result = new TreeTable(
+                                tableColumns,
+                                tableRows);
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentException),
+                        ExpectedExceptionMessageContains = new[] { "One or more ICell objects are used multiple times in the tree table.", },
                     });
 
             DeepCloneWithTestScenarios
@@ -519,139 +573,6 @@ namespace OBeautifulCode.DataStructure.Test
 
             // Assert
             actual.AsTest().Must().BeNull();
-        }
-
-        [Fact]
-        public static void GetCellIdToCellMap___Should_return_map_of_Cell_Id_to_Cell___When_called()
-        {
-            // Arrange
-            var tableColumns = new TableColumns(Some.ReadOnlyDummies<Column>(2).ToList());
-
-            var cell1 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1).DeepCloneWithId("id-1");
-            var cell2 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(2).DeepCloneWithId("id-2");
-            var cell3 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1).DeepCloneWithId("id-3");
-            var cell4 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1);
-            var cell5 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1);
-            var cell6 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1);
-            var cell7 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1);
-            var cell8 = new SlottedCell(
-                new Dictionary<string, INotSlottedCell>
-                {
-                    { "slot-1-id", (INotSlottedCell)A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(null).DeepCloneWithId(null) },
-                    { "slot-2-id", (INotSlottedCell)cell6 },
-                    { "slot-3-id", (INotSlottedCell)cell7 },
-                },
-                "slot-2-id",
-                A.Dummy<string>(),
-                columnsSpanned: 1);
-
-            var cell9 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1);
-            var cell10 = new SlottedCell(
-                new Dictionary<string, INotSlottedCell>
-                {
-                    { "slot-1-id", (INotSlottedCell)A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1).DeepCloneWithId(null) },
-                    { "slot-2-id", (INotSlottedCell)A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1).DeepCloneWithId(null) },
-                    { "slot-3-id", (INotSlottedCell)cell9 },
-                },
-                "slot-2-id",
-                columnsSpanned: 1,
-                id: null);
-            var cell11 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1).DeepCloneWithId("id-1");
-            var cell12 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(2).DeepCloneWithId("id-2");
-
-            IReadOnlyDictionary<string, ICell> expected = new Dictionary<string, ICell>
-            {
-                { cell1.Id, cell1 },
-                { cell2.Id, cell2 },
-                { cell3.Id, cell3 },
-                { cell4.Id, cell4 },
-                { cell5.Id, cell5 },
-                { cell6.Id, cell6 },
-                { cell7.Id, cell7 },
-                { cell8.Id, cell8 },
-                { cell9.Id, cell9 },
-                { cell11.Id, cell11 },
-                { cell12.Id, cell12 },
-            };
-
-            var headerRows = new HeaderRows(
-                new[]
-                {
-                    new FlatRow(
-                        new ICell[]
-                        {
-                            cell2,
-                        }),
-                    new FlatRow(Some.ReadOnlyDummies<NotSlottedCellBase>(2).Select(_ => _.DeepCloneWithColumnsSpanned(1).DeepCloneWithId(null)).ToList()),
-                    new FlatRow(
-                        new ICell[]
-                        {
-                            A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1).DeepCloneWithId(null),
-                            cell1,
-                        }),
-                });
-
-            var dataRows = new DataRows(
-                new[]
-                {
-                    new Row(
-                        new[]
-                        {
-                            cell3,
-                            cell4,
-                        }),
-                    new Row(
-                        Some.ReadOnlyDummies<NotSlottedCellBase>(2).Select(_ => _.DeepCloneWithColumnsSpanned(null).DeepCloneWithId(null)).ToList(),
-                        childRows:
-                        new[]
-                        {
-                            new Row(
-                                new ICell[]
-                                {
-                                    cell5,
-                                    cell8,
-                                },
-                                childRows:
-                                new[]
-                                {
-                                    new Row(
-                                        new ICell[]
-                                        {
-                                            cell10,
-                                            A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1).DeepCloneWithId(null),
-                                        }),
-                                }),
-                        }),
-                });
-
-            var footerRows = new FooterRows(
-                new[]
-                {
-                    new FlatRow(Some.ReadOnlyDummies<NotSlottedCellBase>(2).Select(_ => _.DeepCloneWithColumnsSpanned(1).DeepCloneWithId(null)).ToList()),
-                    new FlatRow(
-                        new ICell[]
-                        {
-                            A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1).DeepCloneWithId(null),
-                            cell11,
-                        }),
-                    new FlatRow(
-                        new ICell[]
-                        {
-                            cell12,
-                        }),
-                });
-
-            var tableRows = new TableRows(headerRows, dataRows, footerRows);
-
-            var systemUnderTest = new TreeTable(
-                tableColumns,
-                tableRows);
-
-            // Act
-            var actual = systemUnderTest.GetCellIdToCellMap();
-
-            // Assert
-            actual.AsTest().Must().BeEqualTo(expected);
         }
     }
 }
