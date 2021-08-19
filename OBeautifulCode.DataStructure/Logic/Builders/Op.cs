@@ -166,7 +166,7 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <summary>
-        /// Builds an <see cref="OrElseOp"/>.
+        /// Builds an <see cref="NotOp"/>.
         /// </summary>
         /// <param name="statement">The statement.</param>
         /// <returns>
@@ -196,7 +196,7 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <summary>
-        /// Builds an <see cref="SumOp"/>.
+        /// Builds an <see cref="CompareOp"/>.
         /// </summary>
         /// <param name="left">The value to the left of the greater-than operator.</param>
         /// <param name="right">The value to the right of the greater-than operator.</param>
@@ -213,7 +213,7 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <summary>
-        /// Builds an <see cref="SumOp"/>.
+        /// Builds an <see cref="CompareOp"/>.
         /// </summary>
         /// <param name="left">The value to the left of the greater-than-or-equal-to operator.</param>
         /// <param name="right">The value to the right of the greater-than-or-equal-to operator.</param>
@@ -230,7 +230,7 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <summary>
-        /// Builds an <see cref="SumOp"/>.
+        /// Builds an <see cref="CompareOp"/>.
         /// </summary>
         /// <param name="left">The value to the left of the less-than operator.</param>
         /// <param name="right">The value to the right of the less-than operator.</param>
@@ -247,7 +247,7 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <summary>
-        /// Builds an <see cref="SumOp"/>.
+        /// Builds an <see cref="CompareOp"/>.
         /// </summary>
         /// <param name="left">The value to the left of the less-than-or-equal-to operator.</param>
         /// <param name="right">The value to the right of the less-than-or-equal-to operator.</param>
@@ -259,6 +259,21 @@ namespace OBeautifulCode.DataStructure
             IReturningOperation<decimal> right)
         {
             var result = new CompareOp(left, Op.Const(CompareOperator.LessThanOrEqualTo), right);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Builds an <see cref="GetNumberOfSignificantDigitsOp"/>.
+        /// </summary>
+        /// <param name="statement">The statement.</param>
+        /// <returns>
+        /// The operation.
+        /// </returns>
+        public static GetNumberOfSignificantDigitsOp GetNumberOfSignificantDigits(
+            IReturningOperation<decimal> statement)
+        {
+            var result = new GetNumberOfSignificantDigitsOp(statement);
 
             return result;
         }
