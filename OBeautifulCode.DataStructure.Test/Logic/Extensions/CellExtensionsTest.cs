@@ -774,7 +774,7 @@ namespace OBeautifulCode.DataStructure.Test
         }
 
         [Fact]
-        public static void GetAvailability___Should_return_Availability_Unknown___When_AvailabilityCheck_is_null()
+        public static void GetAvailability___Should_return_DefaultAvailability___When_AvailabilityCheck_is_null()
         {
             // Arrange
             var cell = A.Dummy<NotSlottedCellBase>().DeepCloneWithAvailabilityCheckEvents(null).DeepCloneWithAvailabilityCheck(null);
@@ -783,11 +783,11 @@ namespace OBeautifulCode.DataStructure.Test
             var actual = cell.GetAvailability();
 
             // Assert
-            actual.AsTest().Must().BeEqualTo(Availability.Unknown);
+            actual.AsTest().Must().BeEqualTo(cell.DefaultAvailability);
         }
 
         [Fact]
-        public static void GetAvailability___Should_return_Availability_Unknown___When_AvailabilityCheckEvents_is_null()
+        public static void GetAvailability___Should_return_DefaultAvailability___When_AvailabilityCheckEvents_is_null()
         {
             // Arrange
             var cell = A.Dummy<NotSlottedCellBase>().DeepCloneWithAvailabilityCheckEvents(null);
@@ -796,11 +796,11 @@ namespace OBeautifulCode.DataStructure.Test
             var actual = cell.GetAvailability();
 
             // Assert
-            actual.AsTest().Must().BeEqualTo(Availability.Unknown);
+            actual.AsTest().Must().BeEqualTo(cell.DefaultAvailability);
         }
 
         [Fact]
-        public static void GetAvailability___Should_return_Availability_Unknown___When_AvailabilityCheckEvents_is_empty()
+        public static void GetAvailability___Should_return_DefaultAvailability___When_AvailabilityCheckEvents_is_empty()
         {
             // Arrange
             var cell = A.Dummy<NotSlottedCellBase>().DeepCloneWithAvailabilityCheckEvents(new CellAvailabilityCheckEventBase[0]);
@@ -809,11 +809,11 @@ namespace OBeautifulCode.DataStructure.Test
             var actual = cell.GetAvailability();
 
             // Assert
-            actual.AsTest().Must().BeEqualTo(Availability.Unknown);
+            actual.AsTest().Must().BeEqualTo(cell.DefaultAvailability);
         }
 
         [Fact]
-        public static void GetAvailability___Should_return_Availability_Unknown___When_last_event_in_AvailabilityCheckEvents_is_CellAvailabilityCheckClearedEvent()
+        public static void GetAvailability___Should_return_DefaultAvailability___When_last_event_in_AvailabilityCheckEvents_is_CellAvailabilityCheckClearedEvent()
         {
             // Arrange
             var events = new CellAvailabilityCheckEventBase[0]
@@ -830,7 +830,7 @@ namespace OBeautifulCode.DataStructure.Test
             var actual = cell.GetAvailability();
 
             // Assert
-            actual.AsTest().Must().BeEqualTo(Availability.Unknown);
+            actual.AsTest().Must().BeEqualTo(cell.DefaultAvailability);
         }
 
         [Fact]
