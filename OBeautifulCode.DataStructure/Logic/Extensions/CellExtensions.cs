@@ -186,6 +186,8 @@ namespace OBeautifulCode.DataStructure
                     return Validity.NotApplicable;
                 case ValidationStatus.DeterminedSubjectIsInvalid:
                     return Validity.Invalid;
+                case ValidationStatus.Aborted:
+                    return Validity.Aborted;
                 default:
                     return Validity.Unknown;
             }

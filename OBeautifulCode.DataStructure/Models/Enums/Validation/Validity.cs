@@ -30,5 +30,10 @@ namespace OBeautifulCode.DataStructure
         /// The validation is not applicable to the subject.
         /// </summary>
         NotApplicable,
+
+        /// <summary>
+        /// The validation was aborted.
+        /// </summary>
+        Aborted,
     }
 }

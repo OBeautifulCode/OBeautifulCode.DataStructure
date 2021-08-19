@@ -558,7 +558,6 @@
       <DependentUpon>IfThenElseOp{TResult}Test.cs</DependentUpon>
     </Compile>
     <Compile Include="Operations\Cell\Referenced\ExecuteOperationCellIfNecessaryOp{TValue}Test.cs" />
-    <Compile Include="ExpressionTest.cs" />
     <Compile Include="Operations\Cell\Referenced\ExecuteOperationCellIfNecessaryOp{TValue}Test.designer.cs">
       <DependentUpon>ExecuteOperationCellIfNecessaryOp{TValue}Test.cs</DependentUpon>
     </Compile>
