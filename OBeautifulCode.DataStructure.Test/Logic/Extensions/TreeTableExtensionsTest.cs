@@ -7,25 +7,21 @@
 namespace OBeautifulCode.DataStructure.Test
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
-
     using FakeItEasy;
-
     using OBeautifulCode.Assertion.Recipes;
     using OBeautifulCode.AutoFakeItEasy;
-    using OBeautifulCode.Math.Recipes;
 
     using Xunit;
-
-    using static System.FormattableString;
 
     public static class TreeTableExtensionsTest
     {
         [Fact]
-        public static void GetCell___Should_throw_ArgumentNullException___When_parameter_treeTable_is_null()
+        public static void GetAllRowsInOrder___Should_throw_ArgumentNullException___When_parameter_treeTable_is_null()
         {
             // Arrange
-            var actual = Record.Exception(() => TreeTableExtensions.GetCell(null, A.Dummy<string>()));
+            var actual = Record.Exception(() => TreeTableExtensions.GetAllRowsInOrder(null));
 
             // Act, Assert
             actual.AsTest().Must().BeOfType<ArgumentNullException>();
@@ -33,123 +29,365 @@ namespace OBeautifulCode.DataStructure.Test
         }
 
         [Fact]
-        public static void GetCell___Should_throw_ArgumentNullException___When_parameter_cellId_is_null()
+        public static void GetAllRowsInOrder___Should_return_all_rows_in_order___When_all_kinds_of_rows_present()
         {
             // Arrange
-            var actual = Record.Exception(() => A.Dummy<TreeTable>().GetCell(null));
+            var tableRows = GetTableRowsForTesting().Item1;
+
+            var treeTable = new TreeTable(new TableColumns(Some.ReadOnlyDummies<Column>(3).ToList()), tableRows);
+
+            var expectedIds = Enumerable.Range(1, 17).Select(_ => _.ToString()).ToList();
+
+            // Act
+            var actual = treeTable.GetAllRowsInOrder();
+
+            // Assert
+            var actualIds = actual.Select(_ => _.Id).ToList();
+            actualIds.AsTest().Must().BeEqualTo(expectedIds);
+        }
+
+        [Fact]
+        public static void GetAllRowsInOrder___Should_return_all_rows_in_order___When_only_header_rows_present()
+        {
+            // Arrange
+            var tableRows = new TableRows(headerRows: GetHeaderRowsForTesting().Item1);
+
+            var treeTable = new TreeTable(new TableColumns(Some.ReadOnlyDummies<Column>(3).ToList()), tableRows);
+
+            var expectedIds = Enumerable.Range(1, 3).Select(_ => _.ToString()).ToList();
+
+            // Act
+            var actual = treeTable.GetAllRowsInOrder();
+
+            // Assert
+            var actualIds = actual.Select(_ => _.Id).ToList();
+            actualIds.AsTest().Must().BeEqualTo(expectedIds);
+        }
+
+        [Fact]
+        public static void GetAllRowsInOrder___Should_return_all_rows_in_order___When_only_data_rows_present()
+        {
+            // Arrange
+            var tableRows = new TableRows(dataRows: GetDataRowsForTesting().Item1);
+
+            var treeTable = new TreeTable(new TableColumns(Some.ReadOnlyDummies<Column>(3).ToList()), tableRows);
+
+            var expectedIds = Enumerable.Range(4, 11).Select(_ => _.ToString()).ToList();
+
+            // Act
+            var actual = treeTable.GetAllRowsInOrder();
+
+            // Assert
+            var actualIds = actual.Select(_ => _.Id).ToList();
+            actualIds.AsTest().Must().BeEqualTo(expectedIds);
+        }
+
+        [Fact]
+        public static void GetAllRowsInOrder___Should_return_all_rows_in_order___When_only_footer_rows_present()
+        {
+            // Arrange
+            var tableRows = new TableRows(footerRows: GetFooterRowsForTesting().Item1);
+
+            var treeTable = new TreeTable(new TableColumns(Some.ReadOnlyDummies<Column>(3).ToList()), tableRows);
+
+            var expectedIds = Enumerable.Range(15, 3).Select(_ => _.ToString()).ToList();
+
+            // Act
+            var actual = treeTable.GetAllRowsInOrder();
+
+            // Assert
+            var actualIds = actual.Select(_ => _.Id).ToList();
+            actualIds.AsTest().Must().BeEqualTo(expectedIds);
+        }
+
+        [Fact]
+        public static void GetAllCells___Should_throw_ArgumentNullException___When_parameter_treeTable_is_null()
+        {
+            // Arrange
+            var actual = Record.Exception(() => TreeTableExtensions.GetAllCells(null));
 
             // Act, Assert
             actual.AsTest().Must().BeOfType<ArgumentNullException>();
-            actual.Message.AsTest().Must().ContainString("cellId");
+            actual.Message.AsTest().Must().ContainString("treeTable");
         }
 
         [Fact]
-        public static void GetCell___Should_throw_ArgumentException___When_parameter_cellId_is_white_space()
+        public static void GetAllCells___Should_return_all_rows_in_order___When_all_kinds_of_rows_present()
         {
             // Arrange
-            var actual = Record.Exception(() => A.Dummy<TreeTable>().GetCell(" \r\n  "));
+            var tableRowsResult = GetTableRowsForTesting();
 
-            // Act, Assert
-            actual.AsTest().Must().BeOfType<ArgumentException>();
-            actual.Message.AsTest().Must().ContainString("cellId");
-        }
+            var treeTable = new TreeTable(new TableColumns(Some.ReadOnlyDummies<Column>(3).ToList()), tableRowsResult.Item1);
 
-        [Fact]
-        public static void GetCell___Should_throw_ArgumentException___When_there_is_no_cell_with_the_specified_id()
-        {
-            // Arrange
-            var treeTable = A.Dummy<TreeTable>();
-
-            var cellId = A.Dummy<string>();
+            var expected = tableRowsResult.Item2;
 
             // Act
-            var actual = Record.Exception(() => treeTable.GetCell(cellId));
+            var actual = treeTable.GetAllCells();
 
             // Assert
-            actual.AsTest().Must().BeOfType<ArgumentException>();
-            actual.Message.AsTest().Must().ContainString(Invariant($"There is no cell with id '{cellId}'."));
+            actual.AsTest().Must().BeEqualTo(expected);
         }
 
         [Fact]
-        public static void GetCell___Should_return_cell___When_slotId_is_null()
+        public static void GetAllCells___Should_return_all_rows_in_order___When_only_header_rows_present()
         {
             // Arrange
-            var treeTable = A.Dummy<TreeTable>().Whose(_ => _.TableRows.GetAllRowsInOrder().Any());
+            var headerRowsResult = GetHeaderRowsForTesting();
 
-            var allRowsInOrder = treeTable.TableRows.GetAllRowsInOrder();
+            var tableRows = new TableRows(headerRows: headerRowsResult.Item1);
 
-            var randomRow = allRowsInOrder[ThreadSafeRandom.Next(0, allRowsInOrder.Count)];
+            var treeTable = new TreeTable(new TableColumns(Some.ReadOnlyDummies<Column>(3).ToList()), tableRows);
 
-            var expected = randomRow.Cells[ThreadSafeRandom.Next(0, randomRow.Cells.Count)];
+            var expected = headerRowsResult.Item2;
 
             // Act
-            var actual = treeTable.GetCell(expected.Id);
+            var actual = treeTable.GetAllCells();
 
             // Assert
-            actual.AsTest().Must().BeSameReferenceAs(expected);
+            actual.AsTest().Must().BeEqualTo(expected);
         }
 
         [Fact]
-        public static void GetCell___Should_throw_ArgumentException___When_slotId_specified_but_addressed_cell_is_not_a_slotted_cell()
+        public static void GetAllCells___Should_return_all_rows_in_order___When_only_data_rows_present()
         {
             // Arrange
-            var treeTable = A.Dummy<TreeTable>().Whose(_ => _.TableRows.GetAllRowsInOrder().SelectMany(r => r.Cells).Any(c => !(c is ISlottedCell)));
+            var dataRowsResult = GetDataRowsForTesting();
 
-            var allNotSlottedCells = treeTable.TableRows.GetAllRowsInOrder().SelectMany(_ => _.Cells).Where(_ => !(_ is ISlottedCell)).ToList();
+            var tableRows = new TableRows(dataRows: dataRowsResult.Item1);
 
-            var cell = allNotSlottedCells[ThreadSafeRandom.Next(0, allNotSlottedCells.Count)];
+            var treeTable = new TreeTable(new TableColumns(Some.ReadOnlyDummies<Column>(3).ToList()), tableRows);
 
-            var slotId = A.Dummy<string>();
+            var expected = dataRowsResult.Item2;
 
             // Act
-            var actual = Record.Exception(() => treeTable.GetCell(cell.Id, slotId));
+            var actual = treeTable.GetAllCells();
 
             // Assert
-            actual.AsTest().Must().BeOfType<ArgumentException>();
-            actual.Message.AsTest().Must().BeEqualTo(Invariant($"Slot id '{slotId}' was specified, but the addressed cell ('{cell.Id}') is not a slotted cell"));
+            actual.AsTest().Must().BeEqualTo(expected);
         }
 
         [Fact]
-        public static void GetCell___Should_throw_ArgumentException___When_slotId_specified_but_there_is_no_slot_with_that_id()
+        public static void GetAllCells___Should_return_all_rows_in_order___When_only_footer_rows_present()
         {
             // Arrange
-            var treeTable = A.Dummy<TreeTable>().Whose(_ => _.TableRows.GetAllRowsInOrder().SelectMany(r => r.Cells).Any(c => c is ISlottedCell));
+            var footerRowsResult = GetFooterRowsForTesting();
 
-            var allSlottedCells = treeTable.TableRows.GetAllRowsInOrder().SelectMany(_ => _.Cells).OfType<ISlottedCell>().ToList();
+            var tableRows = new TableRows(footerRows: footerRowsResult.Item1);
 
-            var cell = allSlottedCells[ThreadSafeRandom.Next(0, allSlottedCells.Count)];
+            var treeTable = new TreeTable(new TableColumns(Some.ReadOnlyDummies<Column>(3).ToList()), tableRows);
 
-            var slotId = A.Dummy<string>();
+            var expected = footerRowsResult.Item2;
 
             // Act
-            var actual = Record.Exception(() => treeTable.GetCell(cell.Id, slotId));
+            var actual = treeTable.GetAllCells();
 
             // Assert
-            actual.AsTest().Must().BeOfType<ArgumentException>();
-            actual.Message.AsTest().Must().BeEqualTo(Invariant($"Slot id '{slotId}' was specified, but the addressed cell ('{cell.Id}') does not contain a slot having that id."));
+            actual.AsTest().Must().BeEqualTo(expected);
         }
 
-        [Fact]
-        public static void GetCell___Should_return_cell___When_slotId_specified()
+        public static Tuple<TableRows, IReadOnlyCollection<ICell>> GetTableRowsForTesting()
         {
-            // Arrange
-            var treeTable = A.Dummy<TreeTable>().Whose(_ => _.TableRows.GetAllRowsInOrder().SelectMany(r => r.Cells).Any(c => c is ISlottedCell));
+            var headerRowsResult = GetHeaderRowsForTesting();
 
-            var allSlottedCells = treeTable.TableRows.GetAllRowsInOrder().SelectMany(_ => _.Cells).OfType<ISlottedCell>().ToList();
+            var dataRowsResult = GetDataRowsForTesting();
 
-            var slottedCell = allSlottedCells[ThreadSafeRandom.Next(0, allSlottedCells.Count)];
+            var footerRowsResult = GetFooterRowsForTesting();
 
-            var slotIdAndCell = slottedCell.SlotIdToCellMap.ElementAt(ThreadSafeRandom.Next(0, slottedCell.SlotIdToCellMap.Count));
+            var tableRows = new TableRows(headerRowsResult.Item1, dataRowsResult.Item1, footerRowsResult.Item1);
 
-            var slotId = slotIdAndCell.Key;
+            var allCells = new ICell[0]
+                .Concat(headerRowsResult.Item2)
+                .Concat(dataRowsResult.Item2)
+                .Concat(footerRowsResult.Item2)
+                .ToList();
 
-            var expected = (ICell)slotIdAndCell.Value;
+            var result = new Tuple<TableRows, IReadOnlyCollection<ICell>>(tableRows, allCells);
 
-            // Act
-            var actual = treeTable.GetCell(slottedCell.Id, slotId);
+            return result;
+        }
 
-            // Assert
-            actual.AsTest().Must().BeSameReferenceAs(expected);
+        public static Tuple<HeaderRows, IReadOnlyCollection<ICell>> GetHeaderRowsForTesting()
+        {
+            var row1Cells = Some.ReadOnlyDummies<NotSlottedCellBase>(3).Select(_ => _.DeepCloneWithColumnsSpanned(1)).ToList();
+            var row2SlottedCells = new[]
+            {
+                (INotSlottedCell)A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1),
+                (INotSlottedCell)A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1),
+                (INotSlottedCell)A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1),
+            };
+            var row2Cells = new ICell[]
+            {
+                A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1),
+                new SlottedCell(
+                    new Dictionary<string, INotSlottedCell>
+                    {
+                        { "first", row2SlottedCells[0] },
+                    },
+                    "first"),
+                new SlottedCell(
+                    new Dictionary<string, INotSlottedCell>
+                    {
+                        { "second", row2SlottedCells[1] },
+                        { "third", row2SlottedCells[2] },
+                    },
+                    "second"),
+            };
+            var row3Cells = Some.ReadOnlyDummies<NotSlottedCellBase>(3).Select(_ => _.DeepCloneWithColumnsSpanned(1)).ToList();
+
+            var allHeaderRows = new[]
+            {
+                new FlatRow(row1Cells, "1"),
+                new FlatRow(row2Cells, "2"),
+                new FlatRow(row3Cells, "3"),
+            };
+
+            var allCells = new ICell[0]
+                .Concat(row1Cells)
+                .Concat(row2SlottedCells)
+                .Concat(row2Cells)
+                .Concat(row3Cells)
+                .ToList();
+
+            var headerRows = new HeaderRows(allHeaderRows);
+
+            var result = new Tuple<HeaderRows, IReadOnlyCollection<ICell>>(headerRows, allCells);
+
+            return result;
+        }
+
+        public static Tuple<DataRows, IReadOnlyCollection<ICell>> GetDataRowsForTesting()
+        {
+            var row1Cells = Some.ReadOnlyDummies<NotSlottedCellBase>(3).Select(_ => _.DeepCloneWithColumnsSpanned(1)).ToList();
+            var row1Child1Cells = Some.ReadOnlyDummies<NotSlottedCellBase>(3).Select(_ => _.DeepCloneWithColumnsSpanned(1)).ToList();
+            var row1Child2Cells = Some.ReadOnlyDummies<NotSlottedCellBase>(3).Select(_ => _.DeepCloneWithColumnsSpanned(1)).ToList();
+            var row11Child2Grandchild1Cells = Some.ReadOnlyDummies<NotSlottedCellBase>(3).Select(_ => _.DeepCloneWithColumnsSpanned(1)).ToList();
+            var row11Child2Grandchild2Cells = Some.ReadOnlyDummies<NotSlottedCellBase>(3).Select(_ => _.DeepCloneWithColumnsSpanned(1)).ToList();
+
+            var row2Cells = Some.ReadOnlyDummies<NotSlottedCellBase>(3).Select(_ => _.DeepCloneWithColumnsSpanned(1)).ToList();
+            var row2Child1Cells = Some.ReadOnlyDummies<NotSlottedCellBase>(3).Select(_ => _.DeepCloneWithColumnsSpanned(1)).ToList();
+            var row2Child1Grandchild1Cells = Some.ReadOnlyDummies<NotSlottedCellBase>(3).Select(_ => _.DeepCloneWithColumnsSpanned(1)).ToList();
+            var row2Child1Grandchild2Cells = Some.ReadOnlyDummies<NotSlottedCellBase>(3).Select(_ => _.DeepCloneWithColumnsSpanned(1)).ToList();
+            var row2Child2Cells = Some.ReadOnlyDummies<NotSlottedCellBase>(3).Select(_ => _.DeepCloneWithColumnsSpanned(1)).ToList();
+            var row3SlottedCells = new[]
+            {
+                (INotSlottedCell)A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1),
+                (INotSlottedCell)A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1),
+            };
+            var row3Cells = new ICell[]
+            {
+                A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1),
+                A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1),
+                new SlottedCell(
+                    new Dictionary<string, INotSlottedCell>
+                    {
+                        { "second", row3SlottedCells[0] },
+                        { "third", row3SlottedCells[1] },
+                    },
+                    "second"),
+            };
+
+            var allDataRows = new[]
+            {
+                new Row(
+                    row1Cells,
+                    "4",
+                    childRows: new[]
+                    {
+                        new Row(
+                            row1Child1Cells,
+                            "5"),
+                        new Row(
+                            row1Child2Cells,
+                            "6",
+                            childRows: new[]
+                            {
+                                new Row(row11Child2Grandchild1Cells, "7"),
+                                new Row(row11Child2Grandchild2Cells, "8"),
+                            }),
+                    }),
+                new Row(
+                    row2Cells,
+                    "9",
+                    childRows: new[]
+                    {
+                        new Row(
+                            row2Child1Cells,
+                            "10",
+                            childRows: new[]
+                            {
+                                new Row(row2Child1Grandchild1Cells, "11"),
+                                new Row(row2Child1Grandchild2Cells, "12"),
+                            }),
+                        new Row(row2Child2Cells, "13"),
+                    }),
+                new Row(row3Cells, "14"),
+            };
+
+            var allCells = new ICell[0]
+                .Concat(row1Cells)
+                .Concat(row1Child1Cells)
+                .Concat(row1Child2Cells)
+                .Concat(row11Child2Grandchild1Cells)
+                .Concat(row11Child2Grandchild2Cells)
+                .Concat(row2Cells)
+                .Concat(row2Child1Cells)
+                .Concat(row2Child1Grandchild1Cells)
+                .Concat(row2Child1Grandchild2Cells)
+                .Concat(row2Child2Cells)
+                .Concat(row3SlottedCells)
+                .Concat(row3Cells)
+                .ToList();
+
+            var dataRows = new DataRows(allDataRows);
+
+            var result = new Tuple<DataRows, IReadOnlyCollection<ICell>>(dataRows, allCells);
+
+            return result;
+        }
+
+        public static Tuple<FooterRows, IReadOnlyCollection<ICell>> GetFooterRowsForTesting()
+        {
+            var row1Cells = Some.ReadOnlyDummies<NotSlottedCellBase>(3).Select(_ => _.DeepCloneWithColumnsSpanned(1)).ToList();
+            var row2Cells = Some.ReadOnlyDummies<NotSlottedCellBase>(3).Select(_ => _.DeepCloneWithColumnsSpanned(1)).ToList();
+            var row3SlottedCells = new[]
+            {
+                (INotSlottedCell)A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1),
+                (INotSlottedCell)A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1),
+                (INotSlottedCell)A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1),
+            };
+            var row3Cells = new ICell[]
+            {
+                A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1),
+                A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1),
+                new SlottedCell(
+                    new Dictionary<string, INotSlottedCell>
+                    {
+                        { "first", row3SlottedCells[0] },
+                        { "second", row3SlottedCells[1] },
+                        { "third", row3SlottedCells[2] },
+                    },
+                    "second"),
+            };
+
+            var allFooterRows = new[]
+            {
+                new FlatRow(row1Cells, "15"),
+                new FlatRow(row2Cells, "16"),
+                new FlatRow(row3Cells, "17"),
+            };
+
+            var allCells = new ICell[0]
+                .Concat(row1Cells)
+                .Concat(row2Cells)
+                .Concat(row3SlottedCells)
+                .Concat(row3Cells)
+                .ToList();
+
+            var footerRows = new FooterRows(allFooterRows);
+
+            var result = new Tuple<FooterRows, IReadOnlyCollection<ICell>>(footerRows, allCells);
+
+            return result;
         }
     }
 }
