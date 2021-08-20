@@ -340,7 +340,7 @@ namespace OBeautifulCode.DataStructure.Test
         }
 
         [Fact]
-        public static void GetValidationStatus___Should_return_ValidationStatus_Unvalidated___When_last_event_in_ValidationEvents_is_CellValidationClearedEvent()
+        public static void GetValidationStatus___Should_return_ValidationStatus_Unvalidated___When_last_event_of_ValidationEvents_is_CellValidationClearedEvent()
         {
             // Arrange
             var events = new CellValidationEventBase[0]
@@ -361,7 +361,7 @@ namespace OBeautifulCode.DataStructure.Test
         }
 
         [Fact]
-        public static void GetValidationStatus___Should_return_ValidationStatus_Aborted___When_last_event_in_ValidationEvents_is_CellValidationAbortedEvent()
+        public static void GetValidationStatus___Should_return_ValidationStatus_Aborted___When_last_event_of_ValidationEvents_is_CellValidationAbortedEvent()
         {
             // Arrange
             var events = new CellValidationEventBase[0]
@@ -382,7 +382,7 @@ namespace OBeautifulCode.DataStructure.Test
         }
 
         [Fact]
-        public static void GetValidationStatus___Should_return_ValidationStatus_DeemedNotApplicable___When_last_event_in_ValidationEvents_is_CellValidationDeemedNotApplicableEvent()
+        public static void GetValidationStatus___Should_return_ValidationStatus_DeemedNotApplicable___When_last_event_of_ValidationEvents_is_CellValidationDeemedNotApplicableEvent()
         {
             // Arrange
             var events = new CellValidationEventBase[0]
@@ -403,7 +403,7 @@ namespace OBeautifulCode.DataStructure.Test
         }
 
         [Fact]
-        public static void GetValidationStatus___Should_return_ValidationStatus_DeterminedSubjectIsInvalid___When_last_event_in_ValidationEvents_is_CellValidationDeterminedCellInvalidEvent()
+        public static void GetValidationStatus___Should_return_ValidationStatus_DeterminedSubjectIsInvalid___When_last_event_of_ValidationEvents_is_CellValidationDeterminedCellInvalidEvent()
         {
             // Arrange
             var events = new CellValidationEventBase[0]
@@ -424,7 +424,7 @@ namespace OBeautifulCode.DataStructure.Test
         }
 
         [Fact]
-        public static void GetValidationStatus___Should_return_ValidationStatus_DeterminedSubjectIsValid___When_last_event_in_ValidationEvents_is_CellValidationDeterminedCellValidEvent()
+        public static void GetValidationStatus___Should_return_ValidationStatus_DeterminedSubjectIsValid___When_last_event_of_ValidationEvents_is_CellValidationDeterminedCellValidEvent()
         {
             // Arrange
             var events = new CellValidationEventBase[0]
@@ -445,7 +445,7 @@ namespace OBeautifulCode.DataStructure.Test
         }
 
         [Fact]
-        public static void GetValidationStatus___Should_return_ValidationStatus_Failed___When_last_event_in_ValidationEvents_is_CellValidationFailedEvent()
+        public static void GetValidationStatus___Should_return_ValidationStatus_Failed___When_last_event_of_ValidationEvents_is_CellValidationFailedEvent()
         {
             // Arrange
             var events = new CellValidationEventBase[0]
@@ -505,7 +505,7 @@ namespace OBeautifulCode.DataStructure.Test
         }
 
         [Fact]
-        public static void GetValidity___Should_return_Validity_Unknown___When_last_event_in_ValidationEvents_is_CellValidationClearedEvent()
+        public static void GetValidity___Should_return_Validity_Unknown___When_last_event_of_ValidationEvents_is_CellValidationClearedEvent()
         {
             // Arrange
             var events = new CellValidationEventBase[0]
@@ -526,7 +526,7 @@ namespace OBeautifulCode.DataStructure.Test
         }
 
         [Fact]
-        public static void GetValidity___Should_return_Validity_Aborted___When_last_event_in_ValidationEvents_is_CellValidationAbortedEvent()
+        public static void GetValidity___Should_return_Validity_Aborted___When_last_event_of_ValidationEvents_is_CellValidationAbortedEvent()
         {
             // Arrange
             var events = new CellValidationEventBase[0]
@@ -547,7 +547,7 @@ namespace OBeautifulCode.DataStructure.Test
         }
 
         [Fact]
-        public static void GetValidity___Should_return_Validity_NotApplicable___When_last_event_in_ValidationEvents_is_CellValidationDeemedNotApplicableEvent()
+        public static void GetValidity___Should_return_Validity_NotApplicable___When_last_event_of_ValidationEvents_is_CellValidationDeemedNotApplicableEvent()
         {
             // Arrange
             var events = new CellValidationEventBase[0]
@@ -568,7 +568,7 @@ namespace OBeautifulCode.DataStructure.Test
         }
 
         [Fact]
-        public static void GetValidity___Should_return_Validity_Invalid___When_last_event_in_ValidationEvents_is_CellValidationDeterminedCellInvalidEvent()
+        public static void GetValidity___Should_return_Validity_Invalid___When_last_event_of_ValidationEvents_is_CellValidationDeterminedCellInvalidEvent()
         {
             // Arrange
             var events = new CellValidationEventBase[0]
@@ -589,7 +589,7 @@ namespace OBeautifulCode.DataStructure.Test
         }
 
         [Fact]
-        public static void GetValidity___Should_return_Validity_Valid___When_last_event_in_ValidationEvents_is_CellValidationDeterminedCellValidEvent()
+        public static void GetValidity___Should_return_Validity_Valid___When_last_event_of_ValidationEvents_is_CellValidationDeterminedCellValidEvent()
         {
             // Arrange
             var events = new CellValidationEventBase[0]
@@ -610,7 +610,7 @@ namespace OBeautifulCode.DataStructure.Test
         }
 
         [Fact]
-        public static void GetValidity___Should_return_Validity_Unknown___When_last_event_in_ValidationEvents_is_CellValidationFailedEvent()
+        public static void GetValidity___Should_return_Validity_Unknown___When_last_event_of_ValidationEvents_is_CellValidationFailedEvent()
         {
             // Arrange
             var events = new CellValidationEventBase[0]

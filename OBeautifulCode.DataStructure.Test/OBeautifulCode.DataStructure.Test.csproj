@@ -204,7 +204,7 @@
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
     <Compile Include="Exception\CellValueMissingExceptionTest.cs" />
     <Compile Include="Exception\CellNotFoundExceptionTest.cs" />
-    <None Include="Logic\Builders\ReportCacheTest.cs" />
+    <Compile Include="Logic\Builders\ReportCacheTest.cs" />
     <Compile Include="Logic\Builders\OpTest.cs" />
     <Compile Include="Logic\Builders\CellTest.cs" />
     <Compile Include="Logic\Extensions\ReportExtensionsTest.cs" />

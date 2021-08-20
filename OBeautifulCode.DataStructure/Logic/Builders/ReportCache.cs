@@ -101,18 +101,20 @@ namespace OBeautifulCode.DataStructure
                 throw new ArgumentNullException(nameof(reportCellLocator));
             }
 
-            if (!this.sectionIdToCellIdToCellMap.ContainsKey(reportCellLocator.SectionId))
+            var sectionId = reportCellLocator.SectionId;
+
+            if (!this.sectionIdToCellIdToCellMap.ContainsKey(sectionId))
             {
-                throw new CellNotFoundException(Invariant($"There is no section with id {reportCellLocator.SectionId}."), reportCellLocator);
+                throw new CellNotFoundException(Invariant($"There is no section with id '{sectionId}'."), reportCellLocator);
             }
 
-            var cellIdToCellMap = this.sectionIdToCellIdToCellMap[reportCellLocator.SectionId];
+            var cellIdToCellMap = this.sectionIdToCellIdToCellMap[sectionId];
 
             var cellId = reportCellLocator.CellId;
 
             if (!cellIdToCellMap.TryGetValue(cellId, out var cell))
             {
-                throw new InvalidOperationException(Invariant($"There is no cell with id '{reportCellLocator.CellId}' in the specified section."));
+                throw new CellNotFoundException(Invariant($"There is no cell with id '{cellId}' in section '{sectionId}'."), reportCellLocator);
             }
 
             ICell result;
@@ -133,12 +135,12 @@ namespace OBeautifulCode.DataStructure
                     }
                     else
                     {
-                        throw new CellNotFoundException(Invariant($"Slot id '{slotId}' was specified, but the addressed cell ('{cellId}') does not contain a slot having that id."), reportCellLocator);
+                        throw new CellNotFoundException(Invariant($"Slot id '{slotId}' was specified, but the addressed cell '{cellId}' in section '{sectionId}' does not contain a slot having that id."), reportCellLocator);
                     }
                 }
                 else
                 {
-                    throw new CellNotFoundException(Invariant($"Slot id '{slotId}' was specified, but the addressed cell ('{cellId}') is not a slotted cell"), reportCellLocator);
+                    throw new CellNotFoundException(Invariant($"Slot id '{slotId}' was specified, but the addressed cell '{cellId}' in section '{sectionId}' is not a slotted cell."), reportCellLocator);
                 }
             }
 
