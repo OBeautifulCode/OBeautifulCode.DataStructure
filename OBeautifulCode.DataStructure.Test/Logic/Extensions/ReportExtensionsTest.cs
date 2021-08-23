@@ -1032,7 +1032,7 @@ namespace OBeautifulCode.DataStructure.Test
             public IReturningOperation<NamedDecimalSet> SetOp { get; private set; }
         }
 
-        private class ProprietaryProtocols : ISyncReturningProtocol<TileOp, NamedDecimalSet>
+        private class ProprietaryProtocols : SyncSpecificReturningProtocolBase<TileOp, NamedDecimalSet>
         {
             private readonly ISyncReturningProtocol<GetProtocolOp, IProtocol> protocolFactory;
 
@@ -1047,7 +1047,7 @@ namespace OBeautifulCode.DataStructure.Test
                 this.protocolFactory = protocolFactory;
             }
 
-            public NamedDecimalSet Execute(
+            public override NamedDecimalSet Execute(
                 TileOp operation)
             {
                 var set = this.protocolFactory.GetProtocolAndExecuteViaReflection<NamedDecimalSet>(operation.SetOp);
