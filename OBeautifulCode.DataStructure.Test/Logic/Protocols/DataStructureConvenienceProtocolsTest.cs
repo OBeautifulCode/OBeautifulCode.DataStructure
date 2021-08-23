@@ -1661,7 +1661,7 @@ namespace OBeautifulCode.DataStructure.Test
             actual.AsTest().Must().BeEqualTo(.5m);
         }
 
-        public class ConstProtocol<TValue> : SyncSpecificReturningProtocolBase<GetConstOp<TValue>, TValue>
+        private class ConstProtocol<TValue> : SyncSpecificReturningProtocolBase<GetConstOp<TValue>, TValue>
         {
             public override TValue Execute(
                 GetConstOp<TValue> operation)
@@ -1677,7 +1677,7 @@ namespace OBeautifulCode.DataStructure.Test
             }
         }
 
-        public class ThrowProtocol<TValue> : SyncSpecificReturningProtocolBase<ThrowOpExecutionAbortedExceptionOp<TValue>, TValue>
+        private class ThrowProtocol<TValue> : SyncSpecificReturningProtocolBase<ThrowOpExecutionAbortedExceptionOp<TValue>, TValue>
         {
             public override TValue Execute(
                 ThrowOpExecutionAbortedExceptionOp<TValue> operation)
