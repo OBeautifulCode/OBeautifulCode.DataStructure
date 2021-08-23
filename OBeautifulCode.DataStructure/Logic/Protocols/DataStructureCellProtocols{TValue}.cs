@@ -680,6 +680,10 @@ namespace OBeautifulCode.DataStructure
                     {
                         validationEvent = new CellValidationDeemedNotApplicableEvent(this.timestampUtc, null, message);
                     }
+                    else if (validity == Validity.Aborted)
+                    {
+                        validationEvent = new CellValidationAbortedEvent(this.timestampUtc, null, message);
+                    }
                     else
                     {
                         throw new NotSupportedException(Invariant($"This {nameof(Validity)} is not supported: {validity}."));
@@ -687,10 +691,14 @@ namespace OBeautifulCode.DataStructure
                 }
                 catch (OpExecutionAbortedExceptionBase ex)
                 {
-                    validationEvent = new CellValidationAbortedEvent(this.timestampUtc, ex.ToString());
+                    // Here are are purposefully setting message to null because we have no idea who the thrower is
+                    // nor whether the report author wants to emit this message to the user.
+                    validationEvent = new CellValidationAbortedEvent(this.timestampUtc, ex.ToString(), null);
                 }
                 catch (OpExecutionDeemedNotApplicableExceptionBase ex)
                 {
+                    // Here are are purposefully setting message to null because we have no idea who the thrower is
+                    // nor whether the report author wants to emit this message to the user.
                     validationEvent = new CellValidationDeemedNotApplicableEvent(this.timestampUtc, ex.ToString(), null);
                 }
                 catch (Exception ex)
@@ -749,6 +757,10 @@ namespace OBeautifulCode.DataStructure
                     {
                         validationEvent = new CellValidationDeemedNotApplicableEvent(this.timestampUtc, null, message);
                     }
+                    else if (validity == Validity.Aborted)
+                    {
+                        validationEvent = new CellValidationAbortedEvent(this.timestampUtc, null, message);
+                    }
                     else
                     {
                         throw new NotSupportedException(Invariant($"This {nameof(Validity)} is not supported: {validity}."));
@@ -756,10 +768,14 @@ namespace OBeautifulCode.DataStructure
                 }
                 catch (OpExecutionAbortedExceptionBase ex)
                 {
-                    validationEvent = new CellValidationAbortedEvent(this.timestampUtc, ex.ToString());
+                    // Here are are purposefully setting message to null because we have no idea who the thrower is
+                    // nor whether the report author wants to emit this message to the user.
+                    validationEvent = new CellValidationAbortedEvent(this.timestampUtc, ex.ToString(), null);
                 }
                 catch (OpExecutionDeemedNotApplicableExceptionBase ex)
                 {
+                    // Here are are purposefully setting message to null because we have no idea who the thrower is
+                    // nor whether the report author wants to emit this message to the user.
                     validationEvent = new CellValidationDeemedNotApplicableEvent(this.timestampUtc, ex.ToString(), null);
                 }
                 catch (Exception ex)

@@ -466,6 +466,189 @@ namespace OBeautifulCode.DataStructure.Test
         }
 
         [Fact]
+        public static void GetValidationMessageOrNull___Should_throw_ArgumentNullException___When_parameter_cell_is_null()
+        {
+            // Arrange, Act
+            var actual = Record.Exception(() => CellExtensions.GetValidationMessageOrNull(null));
+
+            // Assert
+            actual.AsTest().Must().BeOfType<ArgumentNullException>();
+        }
+
+        [Fact]
+        public static void GetValidationMessageOrNull___Should_return_null___When_Validation_is_null()
+        {
+            // Arrange
+            var cell = A.Dummy<NotSlottedCellBase>().DeepCloneWithValidationEvents(null).DeepCloneWithValidation(null);
+
+            // Act
+            var actual = cell.GetValidationMessageOrNull();
+
+            // Assert
+            actual.AsTest().Must().BeNull();
+        }
+
+        [Fact]
+        public static void GetValidationMessageOrNull___Should_return_null___When_ValidationEvents_is_null()
+        {
+            // Arrange
+            var cell = A.Dummy<NotSlottedCellBase>().DeepCloneWithValidationEvents(null);
+
+            // Act
+            var actual = cell.GetValidationMessageOrNull();
+
+            // Assert
+            actual.AsTest().Must().BeNull();
+        }
+
+        [Fact]
+        public static void GetValidationMessageOrNull___Should_return_null___When_ValidationEvents_is_empty()
+        {
+            // Arrange
+            var cell = A.Dummy<NotSlottedCellBase>().DeepCloneWithValidationEvents(new CellValidationEventBase[0]);
+
+            // Act
+            var actual = cell.GetValidationMessageOrNull();
+
+            // Assert
+            actual.AsTest().Must().BeNull();
+        }
+
+        [Fact]
+        public static void GetValidationMessageOrNull___Should_return_null___When_last_event_of_ValidationEvents_is_CellValidationClearedEvent()
+        {
+            // Arrange
+            var events = new CellValidationEventBase[0]
+                .Concat(Some.ReadOnlyDummies<CellValidationEventBase>())
+                .Concat(new[]
+                {
+                    A.Dummy<CellValidationClearedEvent>(),
+                })
+                .ToList();
+
+            var cell = A.Dummy<NotSlottedCellBase>().DeepCloneWithValidationEvents(events);
+
+            // Act
+            var actual = cell.GetValidationMessageOrNull();
+
+            // Assert
+            actual.AsTest().Must().BeNull();
+        }
+
+        [Fact]
+        public static void GetValidationMessageOrNull___Should_return_message___When_last_event_of_ValidationEvents_is_CellValidationAbortedEvent()
+        {
+            // Arrange
+            var cellValidationAbortedEvent = A.Dummy<CellValidationAbortedEvent>();
+
+            var events = new CellValidationEventBase[0]
+                .Concat(Some.ReadOnlyDummies<CellValidationEventBase>())
+                .Concat(new[]
+                {
+                    cellValidationAbortedEvent,
+                })
+                .ToList();
+
+            var cell = A.Dummy<NotSlottedCellBase>().DeepCloneWithValidationEvents(events);
+
+            // Act
+            var actual = cell.GetValidationMessageOrNull();
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(cellValidationAbortedEvent.Message);
+        }
+
+        [Fact]
+        public static void GetValidationMessageOrNull___Should_return_message___When_last_event_of_ValidationEvents_is_CellValidationDeemedNotApplicableEvent()
+        {
+            // Arrange
+            var cellValidationDeemedNotApplicableEvent = A.Dummy<CellValidationDeemedNotApplicableEvent>();
+
+            var events = new CellValidationEventBase[0]
+                .Concat(Some.ReadOnlyDummies<CellValidationEventBase>())
+                .Concat(new[]
+                {
+                    cellValidationDeemedNotApplicableEvent,
+                })
+                .ToList();
+
+            var cell = A.Dummy<NotSlottedCellBase>().DeepCloneWithValidationEvents(events);
+
+            // Act
+            var actual = cell.GetValidationMessageOrNull();
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(cellValidationDeemedNotApplicableEvent.Message);
+        }
+
+        [Fact]
+        public static void GetValidationMessageOrNull___Should_return_message___When_last_event_of_ValidationEvents_is_CellValidationDeterminedCellInvalidEvent()
+        {
+            // Arrange
+            var cellValidationDeterminedCellInvalidEvent = A.Dummy<CellValidationDeterminedCellInvalidEvent>();
+
+            var events = new CellValidationEventBase[0]
+                .Concat(Some.ReadOnlyDummies<CellValidationEventBase>())
+                .Concat(new[]
+                {
+                    cellValidationDeterminedCellInvalidEvent,
+                })
+                .ToList();
+
+            var cell = A.Dummy<NotSlottedCellBase>().DeepCloneWithValidationEvents(events);
+
+            // Act
+            var actual = cell.GetValidationMessageOrNull();
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(cellValidationDeterminedCellInvalidEvent.Message);
+        }
+
+        [Fact]
+        public static void GetValidationMessageOrNull___Should_return_message___When_last_event_of_ValidationEvents_is_CellValidationDeterminedCellValidEvent()
+        {
+            // Arrange
+            var cellValidationDeterminedCellValidEvent = A.Dummy<CellValidationDeterminedCellValidEvent>();
+
+            var events = new CellValidationEventBase[0]
+                .Concat(Some.ReadOnlyDummies<CellValidationEventBase>())
+                .Concat(new[]
+                {
+                    cellValidationDeterminedCellValidEvent,
+                })
+                .ToList();
+
+            var cell = A.Dummy<NotSlottedCellBase>().DeepCloneWithValidationEvents(events);
+
+            // Act
+            var actual = cell.GetValidationMessageOrNull();
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(cellValidationDeterminedCellValidEvent.Message);
+        }
+
+        [Fact]
+        public static void GetValidationMessageOrNull___Should_return_null___When_last_event_of_ValidationEvents_is_CellValidationFailedEvent()
+        {
+            // Arrange
+            var events = new CellValidationEventBase[0]
+                .Concat(Some.ReadOnlyDummies<CellValidationEventBase>())
+                .Concat(new[]
+                {
+                    A.Dummy<CellValidationFailedEvent>(),
+                })
+                .ToList();
+
+            var cell = A.Dummy<NotSlottedCellBase>().DeepCloneWithValidationEvents(events);
+
+            // Act
+            var actual = cell.GetValidationMessageOrNull();
+
+            // Assert
+            actual.AsTest().Must().BeNull();
+        }
+
+        [Fact]
         public static void GetValidity___Should_return_Validity_Valid___When_Validation_is_null()
         {
             // Arrange
@@ -761,6 +944,143 @@ namespace OBeautifulCode.DataStructure.Test
 
             // Assert
             actual.AsTest().Must().BeEqualTo(AvailabilityCheckStatus.Failed);
+        }
+
+        [Fact]
+        public static void GetAvailabilityCheckMessageOrNull___Should_throw_ArgumentNullException___When_parameter_cell_is_null()
+        {
+            // Arrange, Act
+            var actual = Record.Exception(() => CellExtensions.GetAvailabilityCheckMessageOrNull(null));
+
+            // Assert
+            actual.AsTest().Must().BeOfType<ArgumentNullException>();
+        }
+
+        [Fact]
+        public static void GetAvailabilityCheckMessageOrNull___Should_return_null___When_AvailabilityCheck_is_null()
+        {
+            // Arrange
+            var cell = A.Dummy<NotSlottedCellBase>().DeepCloneWithAvailabilityCheckEvents(null).DeepCloneWithAvailabilityCheck(null);
+
+            // Act
+            var actual = cell.GetAvailabilityCheckMessageOrNull();
+
+            // Assert
+            actual.AsTest().Must().BeNull();
+        }
+
+        [Fact]
+        public static void GetAvailabilityCheckMessageOrNull___Should_return_null___When_AvailabilityCheckEvents_is_null()
+        {
+            // Arrange
+            var cell = A.Dummy<NotSlottedCellBase>().DeepCloneWithAvailabilityCheckEvents(null);
+
+            // Act
+            var actual = cell.GetAvailabilityCheckMessageOrNull();
+
+            // Assert
+            actual.AsTest().Must().BeNull();
+        }
+
+        [Fact]
+        public static void GetAvailabilityCheckMessageOrNull___Should_return_null___When_AvailabilityCheckEvents_is_empty()
+        {
+            // Arrange
+            var cell = A.Dummy<NotSlottedCellBase>().DeepCloneWithAvailabilityCheckEvents(new CellAvailabilityCheckEventBase[0]);
+
+            // Act
+            var actual = cell.GetAvailabilityCheckMessageOrNull();
+
+            // Assert
+            actual.AsTest().Must().BeNull();
+        }
+
+        [Fact]
+        public static void GetAvailabilityCheckMessageOrNull___Should_return_null___When_last_event_in_AvailabilityCheckEvents_is_CellAvailabilityCheckClearedEvent()
+        {
+            // Arrange
+            var events = new CellAvailabilityCheckEventBase[0]
+                .Concat(Some.ReadOnlyDummies<CellAvailabilityCheckEventBase>())
+                .Concat(new[]
+                {
+                    A.Dummy<CellAvailabilityCheckClearedEvent>(),
+                })
+                .ToList();
+
+            var cell = A.Dummy<NotSlottedCellBase>().DeepCloneWithAvailabilityCheckEvents(events);
+
+            // Act
+            var actual = cell.GetAvailabilityCheckMessageOrNull();
+
+            // Assert
+            actual.AsTest().Must().BeNull();
+        }
+
+        [Fact]
+        public static void GetAvailabilityCheckMessageOrNull___Should_return_message___When_last_event_in_AvailabilityCheckEvents_is_CellAvailabilityCheckDeterminedCellDisabledEvent()
+        {
+            // Arrange
+            var cellAvailabilityCheckDeterminedCellDisabledEvent = A.Dummy<CellAvailabilityCheckDeterminedCellDisabledEvent>();
+
+            var events = new CellAvailabilityCheckEventBase[0]
+                .Concat(Some.ReadOnlyDummies<CellAvailabilityCheckEventBase>())
+                .Concat(new[]
+                {
+                    cellAvailabilityCheckDeterminedCellDisabledEvent,
+                })
+                .ToList();
+
+            var cell = A.Dummy<NotSlottedCellBase>().DeepCloneWithAvailabilityCheckEvents(events);
+
+            // Act
+            var actual = cell.GetAvailabilityCheckMessageOrNull();
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(cellAvailabilityCheckDeterminedCellDisabledEvent.Message);
+        }
+
+        [Fact]
+        public static void GetAvailabilityCheckMessageOrNull___Should_return_message___When_last_event_in_AvailabilityCheckEvents_is_CellAvailabilityCheckDeterminedCellEnabledEvent()
+        {
+            // Arrange
+            var cellAvailabilityCheckDeterminedCellEnabledEvent = A.Dummy<CellAvailabilityCheckDeterminedCellEnabledEvent>();
+
+            var events = new CellAvailabilityCheckEventBase[0]
+                .Concat(Some.ReadOnlyDummies<CellAvailabilityCheckEventBase>())
+                .Concat(new[]
+                {
+                    cellAvailabilityCheckDeterminedCellEnabledEvent,
+                })
+                .ToList();
+
+            var cell = A.Dummy<NotSlottedCellBase>().DeepCloneWithAvailabilityCheckEvents(events);
+
+            // Act
+            var actual = cell.GetAvailabilityCheckMessageOrNull();
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(cellAvailabilityCheckDeterminedCellEnabledEvent.Message);
+        }
+
+        [Fact]
+        public static void GetAvailabilityCheckMessageOrNull___Should_return_null___When_last_event_in_AvailabilityCheckEvents_is_CellAvailabilityCheckFailedEvent()
+        {
+            // Arrange
+            var events = new CellAvailabilityCheckEventBase[0]
+                .Concat(Some.ReadOnlyDummies<CellAvailabilityCheckEventBase>())
+                .Concat(new[]
+                {
+                    A.Dummy<CellAvailabilityCheckFailedEvent>(),
+                })
+                .ToList();
+
+            var cell = A.Dummy<NotSlottedCellBase>().DeepCloneWithAvailabilityCheckEvents(events);
+
+            // Act
+            var actual = cell.GetAvailabilityCheckMessageOrNull();
+
+            // Assert
+            actual.AsTest().Must().BeNull();
         }
 
         [Fact]

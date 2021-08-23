@@ -170,6 +170,8 @@ namespace OBeautifulCode.DataStructure.Test
                         A.Dummy<Guid>(),
                         A.Dummy<AndAlsoOp>(),
                         A.Dummy<CheckAvailabilityOfCellIfNecessaryOp>(),
+                        A.Dummy<CheckAvailabilityOp>(),
+                        A.Dummy<DivideOp>(),
                         A.Dummy<ExecuteOperationCellIfNecessaryOp<Version>>(),
                         A.Dummy<GetAvailabilityOp>(),
                         A.Dummy<GetCellOpExecutionOutcomeOp>(),
@@ -186,7 +188,7 @@ namespace OBeautifulCode.DataStructure.Test
                         A.Dummy<NullTwoStatementOp<Version, Version>>(),
                         A.Dummy<SumOp>(),
                         A.Dummy<ValidateCellIfNecessaryOp>(),
-                        A.Dummy<ValidateUsingConditionsOp>(),
+                        A.Dummy<ValidateOp>(),
                     },
                 });
 

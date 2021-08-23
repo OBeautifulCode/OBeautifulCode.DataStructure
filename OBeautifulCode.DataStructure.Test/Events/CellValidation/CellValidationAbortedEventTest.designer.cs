@@ -47,7 +47,7 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new SystemUnderTestExpectedStringRepresentation<CellValidationAbortedEvent>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.CellValidationAbortedEvent: TimestampUtc = {systemUnderTest.TimestampUtc.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Details = {systemUnderTest.Details?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.CellValidationAbortedEvent: TimestampUtc = {systemUnderTest.TimestampUtc.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Details = {systemUnderTest.Details?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Message = {systemUnderTest.Message?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}."),
                         };
 
                         return result;
@@ -65,7 +65,8 @@ namespace OBeautifulCode.DataStructure.Test
 
                         var result = new CellValidationAbortedEvent(
                                              referenceObject.TimestampUtc,
-                                             null);
+                                             null,
+                                             referenceObject.Message);
 
                         return result;
                     },
@@ -82,12 +83,49 @@ namespace OBeautifulCode.DataStructure.Test
 
                         var result = new CellValidationAbortedEvent(
                                              referenceObject.TimestampUtc,
-                                             Invariant($"  {Environment.NewLine}  "));
+                                             Invariant($"  {Environment.NewLine}  "),
+                                             referenceObject.Message);
 
                         return result;
                     },
                     ExpectedExceptionType = typeof(ArgumentException),
                     ExpectedExceptionMessageContains = new[] { "details", "white space", },
+                })
+            .AddScenario(() =>
+                new ConstructorArgumentValidationTestScenario<CellValidationAbortedEvent>
+                {
+                    Name = "constructor should throw ArgumentNullException when parameter 'message' is null scenario",
+                    ConstructionFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<CellValidationAbortedEvent>();
+
+                        var result = new CellValidationAbortedEvent(
+                                             referenceObject.TimestampUtc,
+                                             referenceObject.Details,
+                                             null);
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentNullException),
+                    ExpectedExceptionMessageContains = new[] { "message", },
+                })
+            .AddScenario(() =>
+                new ConstructorArgumentValidationTestScenario<CellValidationAbortedEvent>
+                {
+                    Name = "constructor should throw ArgumentException when parameter 'message' is white space scenario",
+                    ConstructionFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<CellValidationAbortedEvent>();
+
+                        var result = new CellValidationAbortedEvent(
+                                             referenceObject.TimestampUtc,
+                                             referenceObject.Details,
+                                             Invariant($"  {Environment.NewLine}  "));
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentException),
+                    ExpectedExceptionMessageContains = new[] { "message", "white space", },
                 });
 
         private static readonly ConstructorPropertyAssignmentTestScenarios<CellValidationAbortedEvent> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<CellValidationAbortedEvent>()
@@ -103,7 +141,8 @@ namespace OBeautifulCode.DataStructure.Test
                         {
                             SystemUnderTest = new CellValidationAbortedEvent(
                                                       referenceObject.TimestampUtc,
-                                                      referenceObject.Details),
+                                                      referenceObject.Details,
+                                                      referenceObject.Message),
                             ExpectedPropertyValue = referenceObject.TimestampUtc,
                         };
 
@@ -123,13 +162,35 @@ namespace OBeautifulCode.DataStructure.Test
                         {
                             SystemUnderTest = new CellValidationAbortedEvent(
                                                       referenceObject.TimestampUtc,
-                                                      referenceObject.Details),
+                                                      referenceObject.Details,
+                                                      referenceObject.Message),
                             ExpectedPropertyValue = referenceObject.Details,
                         };
 
                         return result;
                     },
                     PropertyName = "Details",
+                })
+            .AddScenario(() =>
+                new ConstructorPropertyAssignmentTestScenario<CellValidationAbortedEvent>
+                {
+                    Name = "Message should return same 'message' parameter passed to constructor when getting",
+                    SystemUnderTestExpectedPropertyValueFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<CellValidationAbortedEvent>();
+
+                        var result = new SystemUnderTestExpectedPropertyValue<CellValidationAbortedEvent>
+                        {
+                            SystemUnderTest = new CellValidationAbortedEvent(
+                                                      referenceObject.TimestampUtc,
+                                                      referenceObject.Details,
+                                                      referenceObject.Message),
+                            ExpectedPropertyValue = referenceObject.Message,
+                        };
+
+                        return result;
+                    },
+                    PropertyName = "Message",
                 });
 
         private static readonly DeepCloneWithTestScenarios<CellValidationAbortedEvent> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<CellValidationAbortedEvent>()
@@ -172,6 +233,26 @@ namespace OBeautifulCode.DataStructure.Test
 
                         return result;
                     },
+                })
+            .AddScenario(() =>
+                new DeepCloneWithTestScenario<CellValidationAbortedEvent>
+                {
+                    Name = "DeepCloneWithMessage should deep clone object and replace Message with the provided message",
+                    WithPropertyName = "Message",
+                    SystemUnderTestDeepCloneWithValueFunc = () =>
+                    {
+                        var systemUnderTest = A.Dummy<CellValidationAbortedEvent>();
+
+                        var referenceObject = A.Dummy<CellValidationAbortedEvent>().ThatIs(_ => !systemUnderTest.Message.IsEqualTo(_.Message));
+
+                        var result = new SystemUnderTestDeepCloneWithValue<CellValidationAbortedEvent>
+                        {
+                            SystemUnderTest = systemUnderTest,
+                            DeepCloneWithValue = referenceObject.Message,
+                        };
+
+                        return result;
+                    },
                 });
 
         private static readonly CellValidationAbortedEvent ReferenceObjectForEquatableTestScenarios = A.Dummy<CellValidationAbortedEvent>();
@@ -186,16 +267,23 @@ namespace OBeautifulCode.DataStructure.Test
                     {
                         new CellValidationAbortedEvent(
                                 ReferenceObjectForEquatableTestScenarios.TimestampUtc,
-                                ReferenceObjectForEquatableTestScenarios.Details),
+                                ReferenceObjectForEquatableTestScenarios.Details,
+                                ReferenceObjectForEquatableTestScenarios.Message),
                     },
                     ObjectsThatAreNotEqualToReferenceObject = new CellValidationAbortedEvent[]
                     {
                         new CellValidationAbortedEvent(
                                 A.Dummy<CellValidationAbortedEvent>().Whose(_ => !_.TimestampUtc.IsEqualTo(ReferenceObjectForEquatableTestScenarios.TimestampUtc)).TimestampUtc,
-                                ReferenceObjectForEquatableTestScenarios.Details),
+                                ReferenceObjectForEquatableTestScenarios.Details,
+                                ReferenceObjectForEquatableTestScenarios.Message),
                         new CellValidationAbortedEvent(
                                 ReferenceObjectForEquatableTestScenarios.TimestampUtc,
-                                A.Dummy<CellValidationAbortedEvent>().Whose(_ => !_.Details.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Details)).Details),
+                                A.Dummy<CellValidationAbortedEvent>().Whose(_ => !_.Details.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Details)).Details,
+                                ReferenceObjectForEquatableTestScenarios.Message),
+                        new CellValidationAbortedEvent(
+                                ReferenceObjectForEquatableTestScenarios.TimestampUtc,
+                                ReferenceObjectForEquatableTestScenarios.Details,
+                                A.Dummy<CellValidationAbortedEvent>().Whose(_ => !_.Message.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Message)).Message),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
                     {
@@ -488,7 +576,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "TimestampUtc", "Details" };
+                var propertyNames = new string[] { "TimestampUtc", "Details", "Message" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 

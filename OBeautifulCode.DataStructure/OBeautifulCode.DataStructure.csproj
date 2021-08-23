@@ -120,10 +120,10 @@
     <Compile Include="Events\CellValidationEventBase.designer.cs">
       <DependentUpon>CellValidationEventBase.cs</DependentUpon>
     </Compile>
-    <Compile Include="Events\CellValidation\CellValidationClearedEvent.cs" />
     <Compile Include="Events\CellValidation\CellValidationAbortedEvent.designer.cs">
       <DependentUpon>CellValidationAbortedEvent.cs</DependentUpon>
     </Compile>
+    <Compile Include="Events\CellValidation\CellValidationClearedEvent.cs" />
     <Compile Include="Events\CellValidation\CellValidationClearedEvent.designer.cs">
       <DependentUpon>CellValidationClearedEvent.cs</DependentUpon>
     </Compile>
@@ -168,6 +168,7 @@
     <Compile Include="Interfaces\Classification\Cell\Null\INullCell.cs" />
     <Compile Include="Interfaces\Classification\Cell\Slotted\ISlottedCell.cs" />
     <Compile Include="Interfaces\Classification\Format\ICellValueFormat{TValue}.cs" />
+    <Compile Include="Interfaces\Property\IHaveMessage.cs" />
     <Compile Include="Interfaces\Property\IHaveCellValueFormat{TValue}.cs" />
     <Compile Include="Interfaces\Property\IHaveStandardCellFeatures{TValue}.cs" />
     <Compile Include="Interfaces\Property\IHaveStandardCellFeatures.cs" />
@@ -191,9 +192,17 @@
     <Compile Include="Models\Classes\AvailabilityCheck\AvailabilityCheck.designer.cs">
       <DependentUpon>AvailabilityCheck.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\Classes\AvailabilityCheck\AvailabilityCheckChain.designer.cs">
+      <DependentUpon>AvailabilityCheckChain.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Classes\AvailabilityCheck\AvailabilityCheckResult.cs" />
     <Compile Include="Models\Classes\AvailabilityCheck\AvailabilityCheckResult.designer.cs">
       <DependentUpon>AvailabilityCheckResult.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\AvailabilityCheck\AvailabilityCheckChain.cs" />
+    <Compile Include="Models\Classes\AvailabilityCheck\AvailabilityCheckStep.cs" />
+    <Compile Include="Models\Classes\AvailabilityCheck\AvailabilityCheckStep.designer.cs">
+      <DependentUpon>AvailabilityCheckStep.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Classes\CellLocator\CellLocatorBase.cs" />
     <Compile Include="Models\Classes\CellLocator\CellLocatorBase.designer.cs">
@@ -442,14 +451,19 @@
     <Compile Include="Models\Classes\Validation\Validation.designer.cs">
       <DependentUpon>Validation.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Classes\Validation\ValidationCondition.cs" />
-    <Compile Include="Models\Classes\Validation\ValidationCondition.designer.cs">
-      <DependentUpon>ValidationCondition.cs</DependentUpon>
+    <Compile Include="Models\Classes\Validation\ValidationChain.cs" />
+    <Compile Include="Models\Classes\Validation\ValidationChain.designer.cs">
+      <DependentUpon>ValidationChain.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\Classes\Validation\ValidationStep.cs" />
     <Compile Include="Models\Classes\Validation\ValidationResult.cs" />
     <Compile Include="Models\Classes\Validation\ValidationResult.designer.cs">
       <DependentUpon>ValidationResult.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\Classes\Validation\ValidationStep.designer.cs">
+      <DependentUpon>ValidationStep.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Enums\AvailabilityCheck\AvailabilityCheckStepAction.cs" />
     <Compile Include="Models\Enums\CellValue\MediaReferenceKind.cs" />
     <Compile Include="Models\Enums\Formatting\MessageFormatKind.cs" />
     <Compile Include="Models\Enums\OperationCell\CellOpExecutionOutcome.cs" />
@@ -460,9 +474,13 @@
     <Compile Include="Models\Classes\Validation\Validation.cs" />
     <Compile Include="Models\Enums\AvailabilityCheck\AvailabilityCheckStatus.cs" />
     <Compile Include="Models\Enums\AvailabilityCheck\Availability.cs" />
-    <Compile Include="Models\Enums\Validation\ValidationConditionKind.cs" />
+    <Compile Include="Models\Enums\Validation\ValidationStepAction.cs" />
     <Compile Include="Models\Enums\Validation\Validity.cs" />
     <Compile Include="Models\Enums\Validation\ValidationStatus.cs" />
+    <Compile Include="Operations\AvailabilityCheckResult\CheckAvailabilityOp.cs" />
+    <Compile Include="Operations\AvailabilityCheckResult\CheckAvailabilityOp.designer.cs">
+      <DependentUpon>CheckAvailabilityOp.cs</DependentUpon>
+    </Compile>
     <Compile Include="Operations\Bool\AndAlsoOp.designer.cs">
       <DependentUpon>AndAlsoOp.cs</DependentUpon>
     </Compile>
@@ -514,6 +532,10 @@
     <Compile Include="Operations\Cell\Referenced\ValidateCellIfNecessaryOp.designer.cs">
       <DependentUpon>ValidateCellIfNecessaryOp.cs</DependentUpon>
     </Compile>
+    <Compile Include="Operations\Decimal\DivideOp.cs" />
+    <Compile Include="Operations\Decimal\DivideOp.designer.cs">
+      <DependentUpon>DivideOp.cs</DependentUpon>
+    </Compile>
     <Compile Include="Operations\Decimal\SumOp.designer.cs">
       <DependentUpon>SumOp.cs</DependentUpon>
     </Compile>
@@ -546,10 +568,7 @@
     <Compile Include="Operations\TwoStatementOpBase{TStatement,TResult}.designer.cs">
       <DependentUpon>TwoStatementOpBase{TStatement,TResult}.cs</DependentUpon>
     </Compile>
-    <Compile Include="Operations\ValidationResult\ValidateUsingConditionsOp.cs" />
-    <Compile Include="Operations\ValidationResult\ValidateUsingConditionsOp.designer.cs">
-      <DependentUpon>ValidateUsingConditionsOp.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Operations\ValidationResult\ValidateOp.cs" />
     <Compile Include="Models\Enums\Operations\CompareOperator.cs" />
     <Compile Include="Models\Enums\Formatting\FontFormatOptions.cs" />
     <Compile Include="Models\Enums\Linking\BytesPayloadLinkedResourceKind.cs" />
@@ -586,6 +605,9 @@
     <Compile Include="Operations\Cell\Located\HasCellValueOp.cs" />
     <Compile Include="Operations\GetConstOp{TValue}.cs" />
     <Compile Include="Operations\Cell\Located\GetCellValueOp{TResult}.cs" />
+    <Compile Include="Operations\ValidationResult\ValidateOp.designer.cs">
+      <DependentUpon>ValidateOp.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\GlobalSuppressions.cs" />
     <Compile Include="Models\Classes\Row\FlatRow.cs" />

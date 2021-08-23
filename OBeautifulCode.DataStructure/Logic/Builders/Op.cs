@@ -16,40 +16,6 @@ namespace OBeautifulCode.DataStructure
     public static class Op
     {
         /// <summary>
-        /// Builds an operation that returns an <see cref="AvailabilityCheckResult"/>.
-        /// </summary>
-        /// <param name="availability">The availability of the subject.</param>
-        /// <param name="messageOp">OPTIONAL operation to execute to get the message to emit about the availability.  DEFAULT is no message.</param>
-        /// <returns>
-        /// The operation.
-        /// </returns>
-        public static IReturningOperation<AvailabilityCheckResult> GetAvailabilityCheckResult(
-            this Availability availability,
-            IReturningOperation<string> messageOp = null)
-        {
-            var result = Op.Const(new AvailabilityCheckResult(Op.Const(availability), messageOp));
-
-            return result;
-        }
-
-        /// <summary>
-        /// Builds an operation that returns an <see cref="AvailabilityCheckResult"/>.
-        /// </summary>
-        /// <param name="availabilityOp">Operation to execute to get the availability of the subject.</param>
-        /// <param name="messageOp">OPTIONAL operation to execute to get the message to emit about the availability.  DEFAULT is no message.</param>
-        /// <returns>
-        /// The operation.
-        /// </returns>
-        public static IReturningOperation<AvailabilityCheckResult> GetAvailabilityCheckResult(
-            this IReturningOperation<Availability> availabilityOp,
-            IReturningOperation<string> messageOp = null)
-        {
-            var result = Op.Const(new AvailabilityCheckResult(availabilityOp, messageOp));
-
-            return result;
-        }
-
-        /// <summary>
         /// Builds an operation that throws a <see cref="OpExecutionAbortedException"/>.
         /// </summary>
         /// <typeparam name="TValue">The type of value.</typeparam>
@@ -279,16 +245,60 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <summary>
-        /// Builds an <see cref="ValidateUsingConditionsOp"/>.
+        /// Builds an <see cref="DivideOp"/>.
         /// </summary>
-        /// <param name="conditions">The conditions.</param>
+        /// <param name="numerator">The numerator.</param>
+        /// <param name="denominator">The denominator.</param>
         /// <returns>
         /// The operation.
         /// </returns>
-        public static ValidateUsingConditionsOp ValidateUsingConditions(
-            IReadOnlyList<ValidationCondition> conditions)
+        public static DivideOp Divide(
+            IReturningOperation<decimal> numerator,
+            IReturningOperation<decimal> denominator)
         {
-            var result = new ValidateUsingConditionsOp(conditions);
+            var result = new DivideOp(numerator, denominator);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Builds a <see cref="ValidateOp"/>.
+        /// </summary>
+        /// <param name="steps">The individual validation steps/checks.</param>
+        /// <param name="endMessageOp">OPTIONAL operation to execute to get the message that should be emitted when all <paramref name="steps"/> have been evaluated and none have stopped the validation (we've reached the end of the chain).  DEFAULT is to omit this message.</param>
+        /// <param name="endValidity">OPTIONAL value that specifies the validity of the subject when all <paramref name="steps"/> have been evaluated and none have stopped the validation (we've reached the end of the chain).  DEFAULT is to determine that the subject is valid.</param>
+        /// <returns>
+        /// The operation.
+        /// </returns>
+        public static ValidateOp Validate(
+            this IReadOnlyList<ValidationStep> steps,
+            IReturningOperation<string> endMessageOp = null,
+            Validity endValidity = Validity.Valid)
+        {
+            var validationChain = new ValidationChain(steps, endMessageOp, endValidity);
+
+            var result = new ValidateOp(validationChain);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Builds a <see cref="CheckAvailabilityOp"/>.
+        /// </summary>
+        /// <param name="steps">The individual availability check steps.</param>
+        /// <param name="endMessageOp">OPTIONAL operation to execute to get the message that should be emitted when all <paramref name="steps"/> have been evaluated and none have stopped the availability check (we've reached the end of the chain).  DEFAULT is to omit this message.</param>
+        /// <param name="endAvailability">OPTIONAL value that specifies the availability of the subject when all <paramref name="steps"/> have been evaluated and none have stopped the availability check (we've reached the end of the chain).  DEFAULT is to determine that the subject is enabled.</param>
+        /// <returns>
+        /// The operation.
+        /// </returns>
+        public static CheckAvailabilityOp CheckAvailability(
+            this IReadOnlyList<AvailabilityCheckStep> steps,
+            IReturningOperation<string> endMessageOp = null,
+            Availability endAvailability = Availability.Enabled)
+        {
+            var availabilityCheckChain = new AvailabilityCheckChain(steps, endMessageOp, endAvailability);
+
+            var result = new CheckAvailabilityOp(availabilityCheckChain);
 
             return result;
         }

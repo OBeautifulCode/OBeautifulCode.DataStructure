@@ -11,7 +11,7 @@ namespace OBeautifulCode.DataStructure
     using System.Linq;
 
     using OBeautifulCode.Equality.Recipes;
-
+    using OBeautifulCode.Type.Recipes;
     using static System.FormattableString;
 
     /// <summary>
@@ -158,6 +158,28 @@ namespace OBeautifulCode.DataStructure
                 {
                     throw new NotSupportedException(Invariant($"This {nameof(SlotSelectionStrategy)} is not supported: {reportCellLocator.SlotSelectionStrategy}."));
                 }
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Gets a cell.
+        /// </summary>
+        /// <typeparam name="TCell">The type of cell to return.</typeparam>
+        /// <param name="reportCellLocator">The report cell locator.</param>
+        /// <returns>
+        /// The cell.
+        /// </returns>
+        public TCell GetCell<TCell>(
+            ReportCellLocator reportCellLocator)
+            where TCell : ICell
+        {
+            var cell = this.GetCell(reportCellLocator);
+
+            if (!(cell is TCell result))
+            {
+                throw new CellNotFoundException(Invariant($"The operation addresses a cell of type {cell.GetType().ToStringReadable()}, which is not assignable to the specified {nameof(TCell)}."), reportCellLocator);
             }
 
             return result;

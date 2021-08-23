@@ -23,15 +23,15 @@ namespace OBeautifulCode.DataStructure
     using static global::System.FormattableString;
 
     [Serializable]
-    public partial class ValidateUsingConditionsOp : IModel<ValidateUsingConditionsOp>
+    public partial class ValidateOp : IModel<ValidateOp>
     {
         /// <summary>
-        /// Determines whether two objects of type <see cref="ValidateUsingConditionsOp"/> are equal.
+        /// Determines whether two objects of type <see cref="ValidateOp"/> are equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are equal; otherwise false.</returns>
-        public static bool operator ==(ValidateUsingConditionsOp left, ValidateUsingConditionsOp right)
+        public static bool operator ==(ValidateOp left, ValidateOp right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -49,15 +49,15 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <summary>
-        /// Determines whether two objects of type <see cref="ValidateUsingConditionsOp"/> are not equal.
+        /// Determines whether two objects of type <see cref="ValidateOp"/> are not equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are not equal; otherwise false.</returns>
-        public static bool operator !=(ValidateUsingConditionsOp left, ValidateUsingConditionsOp right) => !(left == right);
+        public static bool operator !=(ValidateOp left, ValidateOp right) => !(left == right);
 
         /// <inheritdoc />
-        public bool Equals(ValidateUsingConditionsOp other)
+        public bool Equals(ValidateOp other)
         {
             if (ReferenceEquals(this, other))
             {
@@ -69,27 +69,27 @@ namespace OBeautifulCode.DataStructure
                 return false;
             }
 
-            var result = this.Conditions.IsEqualTo(other.Conditions);
+            var result = this.ValidationChain.IsEqualTo(other.ValidationChain);
 
             return result;
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => this == (obj as ValidateUsingConditionsOp);
+        public override bool Equals(object obj) => this == (obj as ValidateOp);
 
         /// <inheritdoc />
         public override int GetHashCode() => HashCodeHelper.Initialize()
-            .Hash(this.Conditions)
+            .Hash(this.ValidationChain)
             .Value;
 
         /// <inheritdoc />
-        public new ValidateUsingConditionsOp DeepClone() => (ValidateUsingConditionsOp)this.DeepCloneInternal();
+        public new ValidateOp DeepClone() => (ValidateOp)this.DeepCloneInternal();
 
         /// <summary>
-        /// Deep clones this object with a new <see cref="Conditions" />.
+        /// Deep clones this object with a new <see cref="ValidationChain" />.
         /// </summary>
-        /// <param name="conditions">The new <see cref="Conditions" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="ValidateUsingConditionsOp" /> using the specified <paramref name="conditions" /> for <see cref="Conditions" /> and a deep clone of every other property.</returns>
+        /// <param name="validationChain">The new <see cref="ValidationChain" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="ValidateOp" /> using the specified <paramref name="validationChain" /> for <see cref="ValidationChain" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -107,10 +107,10 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public ValidateUsingConditionsOp DeepCloneWithConditions(IReadOnlyList<ValidationCondition> conditions)
+        public ValidateOp DeepCloneWithValidationChain(ValidationChain validationChain)
         {
-            var result = new ValidateUsingConditionsOp(
-                                 conditions);
+            var result = new ValidateOp(
+                                 validationChain);
 
             return result;
         }
@@ -119,8 +119,8 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         protected override OperationBase DeepCloneInternal()
         {
-            var result = new ValidateUsingConditionsOp(
-                                 this.Conditions?.DeepClone());
+            var result = new ValidateOp(
+                                 this.ValidationChain?.DeepClone());
 
             return result;
         }
@@ -129,7 +129,7 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"OBeautifulCode.DataStructure.ValidateUsingConditionsOp: Conditions = {this.Conditions?.ToString() ?? "<null>"}.");
+            var result = Invariant($"OBeautifulCode.DataStructure.ValidateOp: ValidationChain = {this.ValidationChain?.ToString() ?? "<null>"}.");
 
             return result;
         }

@@ -10,33 +10,30 @@ namespace OBeautifulCode.DataStructure
 
     using OBeautifulCode.Type;
 
-    using static System.FormattableString;
-
     /// <summary>
     /// The validation of a cell was aborted.
     /// </summary>
     // ReSharper disable once RedundantExtendsListEntry
-    public partial class CellValidationAbortedEvent : CellValidationEventBase, IModelViaCodeGen
+    public partial class CellValidationAbortedEvent : CellValidationEventBase, IHaveMessage, IModelViaCodeGen
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CellValidationAbortedEvent"/> class.
         /// </summary>
         /// <param name="timestampUtc">The timestamp.</param>
         /// <param name="details">Details about the aborted validation.</param>
+        /// <param name="message">The message to emit about the aborted validation.</param>
         public CellValidationAbortedEvent(
             DateTime timestampUtc,
-            string details)
+            string details,
+            string message)
             : base(timestampUtc, details)
         {
-            if (details == null)
-            {
-                throw new ArgumentNullException(nameof(details));
-            }
-
-            if (string.IsNullOrWhiteSpace(details))
-            {
-                throw new ArgumentException(Invariant($"{nameof(details)} is white space."));
-            }
+            this.Message = message;
         }
+
+        /// <summary>
+        /// Gets the message to emit about determination that the validation is not applicable.
+        /// </summary>
+        public string Message { get; private set; }
     }
 }

@@ -33,133 +33,169 @@ namespace OBeautifulCode.DataStructure.Test
 
     using static global::System.FormattableString;
 
-    public static partial class ValidateUsingConditionsOpTest
+    public static partial class DivideOpTest
     {
-        private static readonly StringRepresentationTestScenarios<ValidateUsingConditionsOp> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<ValidateUsingConditionsOp>()
+        private static readonly StringRepresentationTestScenarios<DivideOp> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<DivideOp>()
             .AddScenario(() =>
-                new StringRepresentationTestScenario<ValidateUsingConditionsOp>
+                new StringRepresentationTestScenario<DivideOp>
                 {
                     Name = "Default Code Generated Scenario",
                     SystemUnderTestExpectedStringRepresentationFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<ValidateUsingConditionsOp>();
+                        var systemUnderTest = A.Dummy<DivideOp>();
 
-                        var result = new SystemUnderTestExpectedStringRepresentation<ValidateUsingConditionsOp>
+                        var result = new SystemUnderTestExpectedStringRepresentation<DivideOp>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.ValidateUsingConditionsOp: Conditions = {systemUnderTest.Conditions?.ToString() ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.DivideOp: Numerator = {systemUnderTest.Numerator?.ToString() ?? "<null>"}, Denominator = {systemUnderTest.Denominator?.ToString() ?? "<null>"}."),
                         };
 
                         return result;
                     },
                 });
 
-        private static readonly ConstructorArgumentValidationTestScenarios<ValidateUsingConditionsOp> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<ValidateUsingConditionsOp>()
+        private static readonly ConstructorArgumentValidationTestScenarios<DivideOp> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<DivideOp>()
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<ValidateUsingConditionsOp>
+                new ConstructorArgumentValidationTestScenario<DivideOp>
                 {
-                    Name = "constructor should throw ArgumentNullException when parameter 'conditions' is null scenario",
+                    Name = "constructor should throw ArgumentNullException when parameter 'numerator' is null scenario",
                     ConstructionFunc = () =>
                     {
-                        var result = new ValidateUsingConditionsOp(
+                        var referenceObject = A.Dummy<DivideOp>();
+
+                        var result = new DivideOp(
+                                             null,
+                                             referenceObject.Denominator);
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentNullException),
+                    ExpectedExceptionMessageContains = new[] { "numerator", },
+                })
+            .AddScenario(() =>
+                new ConstructorArgumentValidationTestScenario<DivideOp>
+                {
+                    Name = "constructor should throw ArgumentNullException when parameter 'denominator' is null scenario",
+                    ConstructionFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<DivideOp>();
+
+                        var result = new DivideOp(
+                                             referenceObject.Numerator,
                                              null);
 
                         return result;
                     },
                     ExpectedExceptionType = typeof(ArgumentNullException),
-                    ExpectedExceptionMessageContains = new[] { "conditions", },
-                })
-            .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<ValidateUsingConditionsOp>
-                {
-                    Name = "constructor should throw ArgumentException when parameter 'conditions' is an empty enumerable scenario",
-                    ConstructionFunc = () =>
-                    {
-                        var result = new ValidateUsingConditionsOp(
-                                             new List<ValidationCondition>());
-
-                        return result;
-                    },
-                    ExpectedExceptionType = typeof(ArgumentException),
-                    ExpectedExceptionMessageContains = new[] { "conditions", "is an empty enumerable", },
-                })
-            .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<ValidateUsingConditionsOp>
-                {
-                    Name = "constructor should throw ArgumentException when parameter 'conditions' contains a null element scenario",
-                    ConstructionFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<ValidateUsingConditionsOp>();
-
-                        var result = new ValidateUsingConditionsOp(
-                                             new ValidationCondition[0].Concat(referenceObject.Conditions).Concat(new ValidationCondition[] { null }).Concat(referenceObject.Conditions).ToList());
-
-                        return result;
-                    },
-                    ExpectedExceptionType = typeof(ArgumentException),
-                    ExpectedExceptionMessageContains = new[] { "conditions", "contains at least one null element", },
+                    ExpectedExceptionMessageContains = new[] { "denominator", },
                 });
 
-        private static readonly ConstructorPropertyAssignmentTestScenarios<ValidateUsingConditionsOp> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<ValidateUsingConditionsOp>()
+        private static readonly ConstructorPropertyAssignmentTestScenarios<DivideOp> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<DivideOp>()
             .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<ValidateUsingConditionsOp>
+                new ConstructorPropertyAssignmentTestScenario<DivideOp>
                 {
-                    Name = "Conditions should return same 'conditions' parameter passed to constructor when getting",
+                    Name = "Numerator should return same 'numerator' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
-                        var referenceObject = A.Dummy<ValidateUsingConditionsOp>();
+                        var referenceObject = A.Dummy<DivideOp>();
 
-                        var result = new SystemUnderTestExpectedPropertyValue<ValidateUsingConditionsOp>
+                        var result = new SystemUnderTestExpectedPropertyValue<DivideOp>
                         {
-                            SystemUnderTest = new ValidateUsingConditionsOp(
-                                                      referenceObject.Conditions),
-                            ExpectedPropertyValue = referenceObject.Conditions,
+                            SystemUnderTest = new DivideOp(
+                                                      referenceObject.Numerator,
+                                                      referenceObject.Denominator),
+                            ExpectedPropertyValue = referenceObject.Numerator,
                         };
 
                         return result;
                     },
-                    PropertyName = "Conditions",
+                    PropertyName = "Numerator",
+                })
+            .AddScenario(() =>
+                new ConstructorPropertyAssignmentTestScenario<DivideOp>
+                {
+                    Name = "Denominator should return same 'denominator' parameter passed to constructor when getting",
+                    SystemUnderTestExpectedPropertyValueFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<DivideOp>();
+
+                        var result = new SystemUnderTestExpectedPropertyValue<DivideOp>
+                        {
+                            SystemUnderTest = new DivideOp(
+                                                      referenceObject.Numerator,
+                                                      referenceObject.Denominator),
+                            ExpectedPropertyValue = referenceObject.Denominator,
+                        };
+
+                        return result;
+                    },
+                    PropertyName = "Denominator",
                 });
 
-        private static readonly DeepCloneWithTestScenarios<ValidateUsingConditionsOp> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<ValidateUsingConditionsOp>()
+        private static readonly DeepCloneWithTestScenarios<DivideOp> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<DivideOp>()
             .AddScenario(() =>
-                new DeepCloneWithTestScenario<ValidateUsingConditionsOp>
+                new DeepCloneWithTestScenario<DivideOp>
                 {
-                    Name = "DeepCloneWithConditions should deep clone object and replace Conditions with the provided conditions",
-                    WithPropertyName = "Conditions",
+                    Name = "DeepCloneWithNumerator should deep clone object and replace Numerator with the provided numerator",
+                    WithPropertyName = "Numerator",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<ValidateUsingConditionsOp>();
+                        var systemUnderTest = A.Dummy<DivideOp>();
 
-                        var referenceObject = A.Dummy<ValidateUsingConditionsOp>().ThatIs(_ => !systemUnderTest.Conditions.IsEqualTo(_.Conditions));
+                        var referenceObject = A.Dummy<DivideOp>().ThatIs(_ => !systemUnderTest.Numerator.IsEqualTo(_.Numerator));
 
-                        var result = new SystemUnderTestDeepCloneWithValue<ValidateUsingConditionsOp>
+                        var result = new SystemUnderTestDeepCloneWithValue<DivideOp>
                         {
                             SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.Conditions,
+                            DeepCloneWithValue = referenceObject.Numerator,
+                        };
+
+                        return result;
+                    },
+                })
+            .AddScenario(() =>
+                new DeepCloneWithTestScenario<DivideOp>
+                {
+                    Name = "DeepCloneWithDenominator should deep clone object and replace Denominator with the provided denominator",
+                    WithPropertyName = "Denominator",
+                    SystemUnderTestDeepCloneWithValueFunc = () =>
+                    {
+                        var systemUnderTest = A.Dummy<DivideOp>();
+
+                        var referenceObject = A.Dummy<DivideOp>().ThatIs(_ => !systemUnderTest.Denominator.IsEqualTo(_.Denominator));
+
+                        var result = new SystemUnderTestDeepCloneWithValue<DivideOp>
+                        {
+                            SystemUnderTest = systemUnderTest,
+                            DeepCloneWithValue = referenceObject.Denominator,
                         };
 
                         return result;
                     },
                 });
 
-        private static readonly ValidateUsingConditionsOp ReferenceObjectForEquatableTestScenarios = A.Dummy<ValidateUsingConditionsOp>();
+        private static readonly DivideOp ReferenceObjectForEquatableTestScenarios = A.Dummy<DivideOp>();
 
-        private static readonly EquatableTestScenarios<ValidateUsingConditionsOp> EquatableTestScenarios = new EquatableTestScenarios<ValidateUsingConditionsOp>()
+        private static readonly EquatableTestScenarios<DivideOp> EquatableTestScenarios = new EquatableTestScenarios<DivideOp>()
             .AddScenario(() =>
-                new EquatableTestScenario<ValidateUsingConditionsOp>
+                new EquatableTestScenario<DivideOp>
                 {
                     Name = "Default Code Generated Scenario",
                     ReferenceObject = ReferenceObjectForEquatableTestScenarios,
-                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new ValidateUsingConditionsOp[]
+                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new DivideOp[]
                     {
-                        new ValidateUsingConditionsOp(
-                                ReferenceObjectForEquatableTestScenarios.Conditions),
+                        new DivideOp(
+                                ReferenceObjectForEquatableTestScenarios.Numerator,
+                                ReferenceObjectForEquatableTestScenarios.Denominator),
                     },
-                    ObjectsThatAreNotEqualToReferenceObject = new ValidateUsingConditionsOp[]
+                    ObjectsThatAreNotEqualToReferenceObject = new DivideOp[]
                     {
-                        new ValidateUsingConditionsOp(
-                                A.Dummy<ValidateUsingConditionsOp>().Whose(_ => !_.Conditions.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Conditions)).Conditions),
+                        new DivideOp(
+                                A.Dummy<DivideOp>().Whose(_ => !_.Numerator.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Numerator)).Numerator,
+                                ReferenceObjectForEquatableTestScenarios.Denominator),
+                        new DivideOp(
+                                ReferenceObjectForEquatableTestScenarios.Numerator,
+                                A.Dummy<DivideOp>().Whose(_ => !_.Denominator.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Denominator)).Denominator),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
                     {
@@ -170,6 +206,7 @@ namespace OBeautifulCode.DataStructure.Test
                         A.Dummy<Guid>(),
                         A.Dummy<AndAlsoOp>(),
                         A.Dummy<CheckAvailabilityOfCellIfNecessaryOp>(),
+                        A.Dummy<CheckAvailabilityOp>(),
                         A.Dummy<ExecuteOperationCellIfNecessaryOp<Version>>(),
                         A.Dummy<GetAvailabilityOp>(),
                         A.Dummy<GetCellOpExecutionOutcomeOp>(),
@@ -187,6 +224,7 @@ namespace OBeautifulCode.DataStructure.Test
                         A.Dummy<OrElseOp>(),
                         A.Dummy<SumOp>(),
                         A.Dummy<ValidateCellIfNecessaryOp>(),
+                        A.Dummy<ValidateOp>(),
                     },
                 });
 
@@ -208,12 +246,12 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void ValidateUsingConditionsOp___Should_implement_IModel_of_ValidateUsingConditionsOp___When_reflecting()
+            public static void DivideOp___Should_implement_IModel_of_DivideOp___When_reflecting()
             {
                 // Arrange
-                var type = typeof(ValidateUsingConditionsOp);
+                var type = typeof(DivideOp);
 
-                var expectedModelMethods = typeof(IModel<ValidateUsingConditionsOp>).GetInterfaceDeclaredAndImplementedMethods();
+                var expectedModelMethods = typeof(IModel<DivideOp>).GetInterfaceDeclaredAndImplementedMethods();
 
                 var expectedModelMethodHashes = expectedModelMethods.Select(_ => _.GetSignatureHash());
 
@@ -223,7 +261,7 @@ namespace OBeautifulCode.DataStructure.Test
                 var actualModelMethodHashes = actualModelMethods.Select(_ => _.GetSignatureHash());
 
                 // Assert
-                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<ValidateUsingConditionsOp>));
+                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<DivideOp>));
                 expectedModelMethodHashes.Except(actualModelMethodHashes).AsTest().Must().BeEmptyEnumerable();
             }
 
@@ -241,10 +279,10 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void ValidateUsingConditionsOp___Should_be_attributed_with_Serializable____When_reflecting()
+            public static void DivideOp___Should_be_attributed_with_Serializable____When_reflecting()
             {
                 // Arrange
-                var type = typeof(ValidateUsingConditionsOp);
+                var type = typeof(DivideOp);
 
                 // Act
                 var actualAttributes = type.GetCustomAttributes(typeof(SerializableAttribute), false);
@@ -402,10 +440,10 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Clone___Should_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<ValidateUsingConditionsOp>();
+                var systemUnderTest = A.Dummy<DivideOp>();
 
                 // Act
-                var actual = (ValidateUsingConditionsOp)systemUnderTest.Clone();
+                var actual = (DivideOp)systemUnderTest.Clone();
 
                 // Assert
                 actual.AsTest().Must().BeEqualTo(systemUnderTest);
@@ -429,7 +467,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void DeepClone___Should_deep_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<ValidateUsingConditionsOp>();
+                var systemUnderTest = A.Dummy<DivideOp>();
 
                 // Act
                 var actual = systemUnderTest.DeepClone();
@@ -438,16 +476,28 @@ namespace OBeautifulCode.DataStructure.Test
                 actual.AsTest().Must().BeEqualTo(systemUnderTest);
                 actual.AsTest().Must().NotBeSameReferenceAs(systemUnderTest);
 
-                if (systemUnderTest.Conditions == null)
+                if (systemUnderTest.Numerator == null)
                 {
-                    actual.Conditions.AsTest().Must().BeNull();
+                    actual.Numerator.AsTest().Must().BeNull();
                 }
-                else if (!actual.Conditions.GetType().IsValueType)
+                else if (!actual.Numerator.GetType().IsValueType)
                 {
                     // When the declared type is a reference type, we still have to check the runtime type.
                     // The object could be a boxed value type, which will fail this asseration because
                     // a deep clone of a value type object is the same object.
-                    actual.Conditions.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.Conditions);
+                    actual.Numerator.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.Numerator);
+                }
+
+                if (systemUnderTest.Denominator == null)
+                {
+                    actual.Denominator.AsTest().Must().BeNull();
+                }
+                else if (!actual.Denominator.GetType().IsValueType)
+                {
+                    // When the declared type is a reference type, we still have to check the runtime type.
+                    // The object could be a boxed value type, which will fail this asseration because
+                    // a deep clone of a value type object is the same object.
+                    actual.Denominator.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.Denominator);
                 }
             }
 
@@ -467,7 +517,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "Conditions" };
+                var propertyNames = new string[] { "Numerator", "Denominator" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 
@@ -480,12 +530,12 @@ namespace OBeautifulCode.DataStructure.Test
                     }
 
                     // Act
-                    var actual = (ValidateUsingConditionsOp)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
+                    var actual = (DivideOp)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
 
                     // Assert
                     foreach(var propertyName in propertyNames)
                     {
-                        var propertyInfo = typeof(ValidateUsingConditionsOp).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
+                        var propertyInfo = typeof(DivideOp).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
 
                         var actualPropertyValue = propertyInfo.GetValue(actual);
 
@@ -547,7 +597,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<ValidateUsingConditionsOp>();
+                var expected = A.Dummy<DivideOp>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -576,7 +626,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<ValidateUsingConditionsOp>();
+                var expected = A.Dummy<DivideOp>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -605,7 +655,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<ValidateUsingConditionsOp>();
+                var expected = A.Dummy<DivideOp>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -634,7 +684,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<ValidateUsingConditionsOp>();
+                var expected = A.Dummy<DivideOp>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -668,8 +718,8 @@ namespace OBeautifulCode.DataStructure.Test
             public static void EqualsOperator___Should_return_true___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                ValidateUsingConditionsOp systemUnderTest1 = null;
-                ValidateUsingConditionsOp systemUnderTest2 = null;
+                DivideOp systemUnderTest1 = null;
+                DivideOp systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 == systemUnderTest2;
@@ -699,7 +749,7 @@ namespace OBeautifulCode.DataStructure.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    ValidateUsingConditionsOp systemUnderTest = null;
+                    DivideOp systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest == scenario.ReferenceObject;
@@ -848,8 +898,8 @@ namespace OBeautifulCode.DataStructure.Test
             public static void NotEqualsOperator___Should_return_false___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                ValidateUsingConditionsOp systemUnderTest1 = null;
-                ValidateUsingConditionsOp systemUnderTest2 = null;
+                DivideOp systemUnderTest1 = null;
+                DivideOp systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 != systemUnderTest2;
@@ -879,7 +929,7 @@ namespace OBeautifulCode.DataStructure.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    ValidateUsingConditionsOp systemUnderTest = null;
+                    DivideOp systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest != scenario.ReferenceObject;
@@ -1175,10 +1225,10 @@ namespace OBeautifulCode.DataStructure.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    ReturningOperationBase<ValidationResult> systemUnderTest = null;
+                    ReturningOperationBase<decimal> systemUnderTest = null;
 
                     // Act
-                    var actual = scenario.ReferenceObject.Equals((ReturningOperationBase<ValidationResult>)systemUnderTest);
+                    var actual = scenario.ReferenceObject.Equals((ReturningOperationBase<decimal>)systemUnderTest);
 
                     // Assert
                     actual.AsTest().Must().BeFalse(because: scenario.Id);
@@ -1206,7 +1256,7 @@ namespace OBeautifulCode.DataStructure.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange, Act
-                    var actual = scenario.ReferenceObject.Equals((ReturningOperationBase<ValidationResult>)scenario.ReferenceObject);
+                    var actual = scenario.ReferenceObject.Equals((ReturningOperationBase<decimal>)scenario.ReferenceObject);
 
                     // Assert
                     actual.AsTest().Must().BeTrue(because: scenario.Id);
@@ -1234,7 +1284,7 @@ namespace OBeautifulCode.DataStructure.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange, Act
-                    var actuals = scenario.ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((ReturningOperationBase<ValidationResult>)_)).ToList();
+                    var actuals = scenario.ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((ReturningOperationBase<decimal>)_)).ToList();
 
                     // Assert
                     actuals.AsTest().Must().Each().BeFalse(because: scenario.Id);
@@ -1262,7 +1312,7 @@ namespace OBeautifulCode.DataStructure.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange, Act
-                    var actuals = scenario.ObjectsThatAreNotEqualToReferenceObject.Select(_ => scenario.ReferenceObject.Equals((ReturningOperationBase<ValidationResult>)_)).ToList();
+                    var actuals = scenario.ObjectsThatAreNotEqualToReferenceObject.Select(_ => scenario.ReferenceObject.Equals((ReturningOperationBase<decimal>)_)).ToList();
 
                     // Assert
                     actuals.AsTest().Must().Each().BeFalse(because: scenario.Id);
@@ -1290,7 +1340,7 @@ namespace OBeautifulCode.DataStructure.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange, Act
-                    var actuals = scenario.ObjectsThatAreEqualToButNotTheSameAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((ReturningOperationBase<ValidationResult>)_)).ToList();
+                    var actuals = scenario.ObjectsThatAreEqualToButNotTheSameAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((ReturningOperationBase<decimal>)_)).ToList();
 
                     // Assert
                     actuals.AsTest().Must().Each().BeTrue(because: scenario.Id);
@@ -1311,14 +1361,14 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_ValidateUsingConditionsOp___Should_return_false___When_parameter_other_is_null()
+            public static void Equals_with_DivideOp___Should_return_false___When_parameter_other_is_null()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    ValidateUsingConditionsOp systemUnderTest = null;
+                    DivideOp systemUnderTest = null;
 
                     // Act
                     var actual = scenario.ReferenceObject.Equals(systemUnderTest);
@@ -1342,7 +1392,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_ValidateUsingConditionsOp___Should_return_true___When_parameter_other_is_same_object()
+            public static void Equals_with_DivideOp___Should_return_true___When_parameter_other_is_same_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1370,7 +1420,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_ValidateUsingConditionsOp___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
+            public static void Equals_with_DivideOp___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1398,7 +1448,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_ValidateUsingConditionsOp___Should_return_false___When_objects_being_compared_have_different_property_values()
+            public static void Equals_with_DivideOp___Should_return_false___When_objects_being_compared_have_different_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1426,7 +1476,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_ValidateUsingConditionsOp___Should_return_true___When_objects_being_compared_have_same_property_values()
+            public static void Equals_with_DivideOp___Should_return_true___When_objects_being_compared_have_same_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 

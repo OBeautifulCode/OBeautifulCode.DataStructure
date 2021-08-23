@@ -28,7 +28,9 @@ namespace OBeautifulCode.DataStructure
           ISyncAndAsyncReturningProtocol<SumOp, decimal>,
           ISyncAndAsyncReturningProtocol<CompareOp, bool>,
           ISyncAndAsyncReturningProtocol<GetNumberOfSignificantDigitsOp, int>,
-          ISyncAndAsyncReturningProtocol<ValidateUsingConditionsOp, ValidationResult>
+          ISyncAndAsyncReturningProtocol<DivideOp, decimal>,
+          ISyncAndAsyncReturningProtocol<ValidateOp, ValidationResult>,
+          ISyncAndAsyncReturningProtocol<CheckAvailabilityOp, AvailabilityCheckResult>
     {
         private readonly IProtocolFactory protocolFactory;
 
@@ -350,8 +352,44 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <inheritdoc />
+        public decimal Execute(
+            DivideOp operation)
+        {
+            if (operation == null)
+            {
+                throw new ArgumentNullException(nameof(operation));
+            }
+
+            var numerator = this.protocolFactory.GetProtocolAndExecuteViaReflection<decimal>(operation.Numerator);
+
+            var denominator = this.protocolFactory.GetProtocolAndExecuteViaReflection<decimal>(operation.Denominator);
+
+            var result = numerator / denominator;
+
+            return result;
+        }
+
+        /// <inheritdoc />
+        public async Task<decimal> ExecuteAsync(
+            DivideOp operation)
+        {
+            if (operation == null)
+            {
+                throw new ArgumentNullException(nameof(operation));
+            }
+
+            var numerator = await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync<decimal>(operation.Numerator);
+
+            var denominator = await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync<decimal>(operation.Denominator);
+
+            var result = numerator / denominator;
+
+            return result;
+        }
+
+        /// <inheritdoc />
         public ValidationResult Execute(
-            ValidateUsingConditionsOp operation)
+            ValidateOp operation)
         {
             // NOTE: THIS CODE IS A NEAR DUPLICATE OF THE ASYNC METHOD BELOW; NO GOOD WAY TO D.R.Y. IT OUT
             if (operation == null)
@@ -361,27 +399,31 @@ namespace OBeautifulCode.DataStructure
 
             ValidationResult result = null;
 
-            foreach (var condition in operation.Conditions)
+            var validationChain = operation.ValidationChain;
+
+            foreach (var validationStep in validationChain.Steps)
             {
-                var conditionResult = this.protocolFactory.GetProtocolAndExecuteViaReflection<bool>(condition.Operation);
+                var operationResult = this.protocolFactory.GetProtocolAndExecuteViaReflection<bool>(validationStep.Operation);
 
-                var conditionWasMet = WasConditionMet(conditionResult, condition.Kind);
+                var validationStepAction = operationResult
+                    ? validationStep.TrueAction
+                    : validationStep.FalseAction;
 
-                if (!conditionWasMet)
+                if (validationStepAction == ValidationStepAction.NextStep)
                 {
-                    var validityOp = new GetConstOp<Validity>(Validity.Invalid);
-
-                    result = new ValidationResult(validityOp, condition.FailureMessageOp);
-
-                    break;
+                    continue;
                 }
+
+                var validity = GetValidity(validationStepAction);
+
+                result = new ValidationResult(Op.Const(validity), validationStep.StopMessageOp);
+
+                break;
             }
 
             if (result == null)
             {
-                var validityOp = new GetConstOp<Validity>(Validity.Valid);
-
-                result = new ValidationResult(validityOp);
+                result = new ValidationResult(Op.Const(validationChain.EndValidity), validationChain.EndMessageOp);
             }
 
             return result;
@@ -389,7 +431,7 @@ namespace OBeautifulCode.DataStructure
 
         /// <inheritdoc />
         public async Task<ValidationResult> ExecuteAsync(
-            ValidateUsingConditionsOp operation)
+            ValidateOp operation)
         {
             // NOTE: THIS CODE IS A NEAR DUPLICATE OF THE SYNC METHOD ABOVE; NO GOOD WAY TO D.R.Y. IT OUT
             if (operation == null)
@@ -399,27 +441,115 @@ namespace OBeautifulCode.DataStructure
 
             ValidationResult result = null;
 
-            foreach (var condition in operation.Conditions)
+            var validationChain = operation.ValidationChain;
+
+            foreach (var validationStep in validationChain.Steps)
             {
-                var conditionResult = await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync<bool>(condition.Operation);
+                var operationResult = await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync<bool>(validationStep.Operation);
 
-                var conditionWasMet = WasConditionMet(conditionResult, condition.Kind);
+                var validationStepAction = operationResult
+                    ? validationStep.TrueAction
+                    : validationStep.FalseAction;
 
-                if (!conditionWasMet)
+                if (validationStepAction == ValidationStepAction.NextStep)
                 {
-                    var validityOp = new GetConstOp<Validity>(Validity.Invalid);
-
-                    result = new ValidationResult(validityOp, condition.FailureMessageOp);
-
-                    break;
+                    continue;
                 }
+
+                var validity = GetValidity(validationStepAction);
+
+                result = new ValidationResult(Op.Const(validity), validationStep.StopMessageOp);
+
+                break;
             }
 
             if (result == null)
             {
-                var validityOp = new GetConstOp<Validity>(Validity.Valid);
+                result = new ValidationResult(Op.Const(validationChain.EndValidity), validationChain.EndMessageOp);
+            }
 
-                result = new ValidationResult(validityOp);
+            return result;
+        }
+
+        /// <inheritdoc />
+        public AvailabilityCheckResult Execute(
+            CheckAvailabilityOp operation)
+        {
+            // NOTE: THIS CODE IS A NEAR DUPLICATE OF THE ASYNC METHOD BELOW; NO GOOD WAY TO D.R.Y. IT OUT
+            if (operation == null)
+            {
+                throw new ArgumentNullException(nameof(operation));
+            }
+
+            AvailabilityCheckResult result = null;
+
+            var availabilityCheckChain = operation.AvailabilityCheckChain;
+
+            foreach (var availabilityCheckStep in availabilityCheckChain.Steps)
+            {
+                var operationResult = this.protocolFactory.GetProtocolAndExecuteViaReflection<bool>(availabilityCheckStep.Operation);
+
+                var availabilityCheckStepAction = operationResult
+                    ? availabilityCheckStep.TrueAction
+                    : availabilityCheckStep.FalseAction;
+
+                if (availabilityCheckStepAction == AvailabilityCheckStepAction.NextStep)
+                {
+                    continue;
+                }
+
+                var availability = GetAvailability(availabilityCheckStepAction);
+
+                result = new AvailabilityCheckResult(Op.Const(availability), availabilityCheckStep.StopMessageOp);
+
+                break;
+            }
+
+            if (result == null)
+            {
+                result = new AvailabilityCheckResult(Op.Const(availabilityCheckChain.EndAvailability), availabilityCheckChain.EndMessageOp);
+            }
+
+            return result;
+        }
+
+        /// <inheritdoc />
+        public async Task<AvailabilityCheckResult> ExecuteAsync(
+            CheckAvailabilityOp operation)
+        {
+            // NOTE: THIS CODE IS A NEAR DUPLICATE OF THE SYNC METHOD ABOVE; NO GOOD WAY TO D.R.Y. IT OUT
+            if (operation == null)
+            {
+                throw new ArgumentNullException(nameof(operation));
+            }
+
+            AvailabilityCheckResult result = null;
+
+            var availabilityCheckChain = operation.AvailabilityCheckChain;
+
+            foreach (var availabilityCheckStep in availabilityCheckChain.Steps)
+            {
+                var operationResult = await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync<bool>(availabilityCheckStep.Operation);
+
+                var availabilityCheckStepAction = operationResult
+                    ? availabilityCheckStep.TrueAction
+                    : availabilityCheckStep.FalseAction;
+
+                if (availabilityCheckStepAction == AvailabilityCheckStepAction.NextStep)
+                {
+                    continue;
+                }
+
+                var availability = GetAvailability(availabilityCheckStepAction);
+
+                result = new AvailabilityCheckResult(Op.Const(availability), availabilityCheckStep.StopMessageOp);
+
+                break;
+            }
+
+            if (result == null)
+            {
+                result = new AvailabilityCheckResult(Op.Const(availabilityCheckChain.EndAvailability), availabilityCheckChain.EndMessageOp);
             }
 
             return result;
@@ -471,28 +601,47 @@ namespace OBeautifulCode.DataStructure
             return result;
         }
 
-        private static bool WasConditionMet(
-            bool operationResult,
-            ValidationConditionKind validationConditionKind)
+        private static Validity GetValidity(
+            ValidationStepAction validationStepAction)
         {
-            bool result;
+            Validity result;
 
-            switch (validationConditionKind)
+            switch (validationStepAction)
             {
-                case ValidationConditionKind.PassWhenTrue:
-                    result = operationResult;
+                case ValidationStepAction.StopAsInvalid:
+                    result = Validity.Invalid;
                     break;
-                case ValidationConditionKind.PassWhenFalse:
-                    result = !operationResult;
+                case ValidationStepAction.StopAsNotApplicable:
+                    result = Validity.NotApplicable;
                     break;
-                case ValidationConditionKind.FailWhenTrue:
-                    result = !operationResult;
+                case ValidationStepAction.StopAsValid:
+                    result = Validity.Valid;
                     break;
-                case ValidationConditionKind.FailWhenFalse:
-                    result = operationResult;
+                case ValidationStepAction.StopToAbort:
+                    result = Validity.Aborted;
                     break;
                 default:
-                    throw new NotSupportedException(Invariant($"This {nameof(ValidationConditionKind)} is not supported: {validationConditionKind}."));
+                    throw new NotSupportedException(Invariant($"This {nameof(ValidationStepAction)} is not supported: {validationStepAction}."));
+            }
+
+            return result;
+        }
+
+        private static Availability GetAvailability(
+            AvailabilityCheckStepAction availabilityCheckStepAction)
+        {
+            Availability result;
+
+            switch (availabilityCheckStepAction)
+            {
+                case AvailabilityCheckStepAction.StopAsDisabled:
+                    result = Availability.Disabled;
+                    break;
+                case AvailabilityCheckStepAction.StopAsEnabled:
+                    result = Availability.Enabled;
+                    break;
+                default:
+                    throw new NotSupportedException(Invariant($"This {nameof(AvailabilityCheckStepAction)} is not supported: {availabilityCheckStepAction}."));
             }
 
             return result;

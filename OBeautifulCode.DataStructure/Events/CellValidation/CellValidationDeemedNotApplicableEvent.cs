@@ -14,7 +14,7 @@ namespace OBeautifulCode.DataStructure
     /// The validation of a cell was deemed not applicable.
     /// </summary>
     // ReSharper disable once RedundantExtendsListEntry
-    public partial class CellValidationDeemedNotApplicableEvent : CellValidationEventBase, IModelViaCodeGen
+    public partial class CellValidationDeemedNotApplicableEvent : CellValidationEventBase, IHaveMessage, IModelViaCodeGen
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CellValidationDeemedNotApplicableEvent"/> class.

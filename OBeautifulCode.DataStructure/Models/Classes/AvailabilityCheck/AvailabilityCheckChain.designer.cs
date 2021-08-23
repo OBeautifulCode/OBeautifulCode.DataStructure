@@ -23,15 +23,15 @@ namespace OBeautifulCode.DataStructure
     using static global::System.FormattableString;
 
     [Serializable]
-    public partial class ValidationCondition : IModel<ValidationCondition>
+    public partial class AvailabilityCheckChain : IModel<AvailabilityCheckChain>
     {
         /// <summary>
-        /// Determines whether two objects of type <see cref="ValidationCondition"/> are equal.
+        /// Determines whether two objects of type <see cref="AvailabilityCheckChain"/> are equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are equal; otherwise false.</returns>
-        public static bool operator ==(ValidationCondition left, ValidationCondition right)
+        public static bool operator ==(AvailabilityCheckChain left, AvailabilityCheckChain right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -49,15 +49,15 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <summary>
-        /// Determines whether two objects of type <see cref="ValidationCondition"/> are not equal.
+        /// Determines whether two objects of type <see cref="AvailabilityCheckChain"/> are not equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are not equal; otherwise false.</returns>
-        public static bool operator !=(ValidationCondition left, ValidationCondition right) => !(left == right);
+        public static bool operator !=(AvailabilityCheckChain left, AvailabilityCheckChain right) => !(left == right);
 
         /// <inheritdoc />
-        public bool Equals(ValidationCondition other)
+        public bool Equals(AvailabilityCheckChain other)
         {
             if (ReferenceEquals(this, other))
             {
@@ -69,45 +69,42 @@ namespace OBeautifulCode.DataStructure
                 return false;
             }
 
-            var result = this.Operation.IsEqualTo(other.Operation)
-                      && this.FailureMessageOp.IsEqualTo(other.FailureMessageOp)
-                      && this.Kind.IsEqualTo(other.Kind)
-                      && this.Details.IsEqualTo(other.Details, StringComparer.Ordinal);
+            var result = this.Steps.IsEqualTo(other.Steps)
+                      && this.EndMessageOp.IsEqualTo(other.EndMessageOp)
+                      && this.EndAvailability.IsEqualTo(other.EndAvailability);
 
             return result;
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => this == (obj as ValidationCondition);
+        public override bool Equals(object obj) => this == (obj as AvailabilityCheckChain);
 
         /// <inheritdoc />
         public override int GetHashCode() => HashCodeHelper.Initialize()
-            .Hash(this.Operation)
-            .Hash(this.FailureMessageOp)
-            .Hash(this.Kind)
-            .Hash(this.Details)
+            .Hash(this.Steps)
+            .Hash(this.EndMessageOp)
+            .Hash(this.EndAvailability)
             .Value;
 
         /// <inheritdoc />
         public object Clone() => this.DeepClone();
 
         /// <inheritdoc />
-        public ValidationCondition DeepClone()
+        public AvailabilityCheckChain DeepClone()
         {
-            var result = new ValidationCondition(
-                                 this.Operation?.DeepClone(),
-                                 this.FailureMessageOp?.DeepClone(),
-                                 this.Kind.DeepClone(),
-                                 this.Details?.DeepClone());
+            var result = new AvailabilityCheckChain(
+                                 this.Steps?.DeepClone(),
+                                 this.EndMessageOp?.DeepClone(),
+                                 this.EndAvailability.DeepClone());
 
             return result;
         }
 
         /// <summary>
-        /// Deep clones this object with a new <see cref="Operation" />.
+        /// Deep clones this object with a new <see cref="Steps" />.
         /// </summary>
-        /// <param name="operation">The new <see cref="Operation" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="ValidationCondition" /> using the specified <paramref name="operation" /> for <see cref="Operation" /> and a deep clone of every other property.</returns>
+        /// <param name="steps">The new <see cref="Steps" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="AvailabilityCheckChain" /> using the specified <paramref name="steps" /> for <see cref="Steps" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -125,22 +122,21 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public ValidationCondition DeepCloneWithOperation(IReturningOperation<bool> operation)
+        public AvailabilityCheckChain DeepCloneWithSteps(IReadOnlyList<AvailabilityCheckStep> steps)
         {
-            var result = new ValidationCondition(
-                                 operation,
-                                 this.FailureMessageOp?.DeepClone(),
-                                 this.Kind.DeepClone(),
-                                 this.Details?.DeepClone());
+            var result = new AvailabilityCheckChain(
+                                 steps,
+                                 this.EndMessageOp?.DeepClone(),
+                                 this.EndAvailability.DeepClone());
 
             return result;
         }
 
         /// <summary>
-        /// Deep clones this object with a new <see cref="FailureMessageOp" />.
+        /// Deep clones this object with a new <see cref="EndMessageOp" />.
         /// </summary>
-        /// <param name="failureMessageOp">The new <see cref="FailureMessageOp" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="ValidationCondition" /> using the specified <paramref name="failureMessageOp" /> for <see cref="FailureMessageOp" /> and a deep clone of every other property.</returns>
+        /// <param name="endMessageOp">The new <see cref="EndMessageOp" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="AvailabilityCheckChain" /> using the specified <paramref name="endMessageOp" /> for <see cref="EndMessageOp" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -158,22 +154,21 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public ValidationCondition DeepCloneWithFailureMessageOp(IReturningOperation<string> failureMessageOp)
+        public AvailabilityCheckChain DeepCloneWithEndMessageOp(IReturningOperation<string> endMessageOp)
         {
-            var result = new ValidationCondition(
-                                 this.Operation?.DeepClone(),
-                                 failureMessageOp,
-                                 this.Kind.DeepClone(),
-                                 this.Details?.DeepClone());
+            var result = new AvailabilityCheckChain(
+                                 this.Steps?.DeepClone(),
+                                 endMessageOp,
+                                 this.EndAvailability.DeepClone());
 
             return result;
         }
 
         /// <summary>
-        /// Deep clones this object with a new <see cref="Kind" />.
+        /// Deep clones this object with a new <see cref="EndAvailability" />.
         /// </summary>
-        /// <param name="kind">The new <see cref="Kind" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="ValidationCondition" /> using the specified <paramref name="kind" /> for <see cref="Kind" /> and a deep clone of every other property.</returns>
+        /// <param name="endAvailability">The new <see cref="EndAvailability" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="AvailabilityCheckChain" /> using the specified <paramref name="endAvailability" /> for <see cref="EndAvailability" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -191,46 +186,12 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public ValidationCondition DeepCloneWithKind(ValidationConditionKind kind)
+        public AvailabilityCheckChain DeepCloneWithEndAvailability(Availability endAvailability)
         {
-            var result = new ValidationCondition(
-                                 this.Operation?.DeepClone(),
-                                 this.FailureMessageOp?.DeepClone(),
-                                 kind,
-                                 this.Details?.DeepClone());
-
-            return result;
-        }
-
-        /// <summary>
-        /// Deep clones this object with a new <see cref="Details" />.
-        /// </summary>
-        /// <param name="details">The new <see cref="Details" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="ValidationCondition" /> using the specified <paramref name="details" /> for <see cref="Details" /> and a deep clone of every other property.</returns>
-        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
-        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
-        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
-        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public ValidationCondition DeepCloneWithDetails(string details)
-        {
-            var result = new ValidationCondition(
-                                 this.Operation?.DeepClone(),
-                                 this.FailureMessageOp?.DeepClone(),
-                                 this.Kind.DeepClone(),
-                                 details);
+            var result = new AvailabilityCheckChain(
+                                 this.Steps?.DeepClone(),
+                                 this.EndMessageOp?.DeepClone(),
+                                 endAvailability);
 
             return result;
         }
@@ -239,7 +200,7 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"OBeautifulCode.DataStructure.ValidationCondition: Operation = {this.Operation?.ToString() ?? "<null>"}, FailureMessageOp = {this.FailureMessageOp?.ToString() ?? "<null>"}, Kind = {this.Kind.ToString() ?? "<null>"}, Details = {this.Details?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}.");
+            var result = Invariant($"OBeautifulCode.DataStructure.AvailabilityCheckChain: Steps = {this.Steps?.ToString() ?? "<null>"}, EndMessageOp = {this.EndMessageOp?.ToString() ?? "<null>"}, EndAvailability = {this.EndAvailability.ToString() ?? "<null>"}.");
 
             return result;
         }

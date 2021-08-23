@@ -6,6 +6,8 @@
 
 namespace OBeautifulCode.DataStructure
 {
+    using System.Collections.Generic;
+
     using OBeautifulCode.Type;
 
     /// <summary>
@@ -284,6 +286,31 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <summary>
+        /// Builds a <see cref="Validation"/>.
+        /// </summary>
+        /// <param name="steps">The individual validation steps/checks.</param>
+        /// <param name="endMessageOp">OPTIONAL operation to execute to get the message that should be emitted when all <paramref name="steps"/> have been evaluated and none have stopped the validation (we've reached the end of the chain).  DEFAULT is to omit this message.</param>
+        /// <param name="endValidity">OPTIONAL value that specifies the validity of the subject when all <paramref name="steps"/> have been evaluated and none have stopped the validation (we've reached the end of the chain).  DEFAULT is to determine that the subject is valid.</param>
+        /// <param name="messageFormatKind">OPTIONAL kind of format to apply to the message that is emitted about the validity of the subject.  DEFAULT is to omit this specification.</param>
+        /// <param name="details">OPTIONAL details about this validation.  DEFAULT is to omit any details.</param>
+        /// <returns>
+        /// The validation.
+        /// </returns>
+        public static Validation CreateValidation(
+            IReadOnlyList<ValidationStep> steps,
+            IReturningOperation<string> endMessageOp = null,
+            Validity endValidity = Validity.Valid,
+            MessageFormatKind? messageFormatKind = null,
+            string details = null)
+        {
+            var operation = steps.Validate(endMessageOp, endValidity);
+
+            var result = operation.CreateValidation(messageFormatKind, details);
+
+            return result;
+        }
+
+        /// <summary>
         /// Builds an <see cref="AvailabilityCheck"/>.
         /// </summary>
         /// <param name="operation">The operation to execute to check the availability of the subject.</param>
@@ -298,6 +325,31 @@ namespace OBeautifulCode.DataStructure
             string details = null)
         {
             var result = new AvailabilityCheck(operation, messageFormatKind, details);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Builds a <see cref="AvailabilityCheck"/>.
+        /// </summary>
+        /// <param name="steps">The individual availability check steps.</param>
+        /// <param name="endMessageOp">OPTIONAL operation to execute to get the message that should be emitted when all <paramref name="steps"/> have been evaluated and none have stopped the availability check (we've reached the end of the chain).  DEFAULT is to omit this message.</param>
+        /// <param name="endAvailability">OPTIONAL value that specifies the availability of the subject when all <paramref name="steps"/> have been evaluated and none have stopped the availability check (we've reached the end of the chain).  DEFAULT is to determine that the subject is enabled.</param>
+        /// <param name="messageFormatKind">OPTIONAL kind of format to apply to the message that is emitted about the availability of the subject.  DEFAULT is to omit this specification.</param>
+        /// <param name="details">OPTIONAL details about this availability check.  DEFAULT is to omit any details.</param>
+        /// <returns>
+        /// The validation.
+        /// </returns>
+        public static AvailabilityCheck CreateAvailabilityCheck(
+            IReadOnlyList<AvailabilityCheckStep> steps,
+            IReturningOperation<string> endMessageOp = null,
+            Availability endAvailability = Availability.Enabled,
+            MessageFormatKind? messageFormatKind = null,
+            string details = null)
+        {
+            var operation = steps.CheckAvailability(endMessageOp, endAvailability);
+
+            var result = operation.CreateAvailabilityCheck(messageFormatKind, details);
 
             return result;
         }

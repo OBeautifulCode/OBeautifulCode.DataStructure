@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ValidationConditionTest.cs" company="OBeautifulCode">
+// <copyright file="ValidationStepTest.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -23,26 +23,27 @@ namespace OBeautifulCode.DataStructure.Test
     using static System.FormattableString;
 
     [SuppressMessage("Microsoft.Maintainability", "CA1505:AvoidUnmaintainableCode", Justification = ObcSuppressBecause.CA1505_AvoidUnmaintainableCode_DisagreeWithAssessment)]
-    public static partial class ValidationConditionTest
+    public static partial class ValidationStepTest
     {
         [SuppressMessage("Microsoft.Maintainability", "CA1505:AvoidUnmaintainableCode", Justification = ObcSuppressBecause.CA1505_AvoidUnmaintainableCode_DisagreeWithAssessment)]
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = ObcSuppressBecause.CA1810_InitializeReferenceTypeStaticFieldsInline_FieldsDeclaredInCodeGeneratedPartialTestClass)]
-        static ValidationConditionTest()
+        static ValidationStepTest()
         {
             ConstructorArgumentValidationTestScenarios
                 .RemoveAllScenarios()
                 .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<ValidationCondition>
+                    new ConstructorArgumentValidationTestScenario<ValidationStep>
                     {
                         Name = "constructor should throw ArgumentNullException when parameter 'operation' is null scenario",
                         ConstructionFunc = () =>
                         {
-                            var referenceObject = A.Dummy<ValidationCondition>();
+                            var referenceObject = A.Dummy<ValidationStep>();
 
-                            var result = new ValidationCondition(
+                            var result = new ValidationStep(
                                                  null,
-                                                 referenceObject.FailureMessageOp,
-                                                 referenceObject.Kind,
+                                                 referenceObject.StopMessageOp,
+                                                 referenceObject.TrueAction,
+                                                 referenceObject.FalseAction,
                                                  referenceObject.Details);
 
                             return result;
@@ -51,42 +52,44 @@ namespace OBeautifulCode.DataStructure.Test
                         ExpectedExceptionMessageContains = new[] { "operation", },
                     })
                 .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<ValidationCondition>
+                    new ConstructorArgumentValidationTestScenario<ValidationStep>
                     {
-                        Name = "constructor should throw ArgumentNullException when parameter 'failureMessageOp' is null scenario",
+                        Name = "constructor should throw ArgumentOutOfRangeException when parameter 'trueAction' is ValidationStepAction.Unknown",
                         ConstructionFunc = () =>
                         {
-                            var referenceObject = A.Dummy<ValidationCondition>();
+                            var referenceObject = A.Dummy<ValidationStep>();
 
-                            var result = new ValidationCondition(
+                            var result = new ValidationStep(
                                                  referenceObject.Operation,
-                                                 null,
-                                                 referenceObject.Kind,
-                                                 referenceObject.Details);
-
-                            return result;
-                        },
-                        ExpectedExceptionType = typeof(ArgumentNullException),
-                        ExpectedExceptionMessageContains = new[] { "failureMessageOp", },
-                    })
-                .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<ValidationCondition>
-                    {
-                        Name = "constructor should throw ArgumentOutOfRangeException when parameter 'kind' ValidationConditionKind.Unknown is null scenario",
-                        ConstructionFunc = () =>
-                        {
-                            var referenceObject = A.Dummy<ValidationCondition>();
-
-                            var result = new ValidationCondition(
-                                                 referenceObject.Operation,
-                                                 referenceObject.FailureMessageOp,
-                                                 ValidationConditionKind.Unknown,
+                                                 referenceObject.StopMessageOp,
+                                                 ValidationStepAction.Unknown,
+                                                 referenceObject.FalseAction,
                                                  referenceObject.Details);
 
                             return result;
                         },
                         ExpectedExceptionType = typeof(ArgumentOutOfRangeException),
-                        ExpectedExceptionMessageContains = new[] { "kind", "Unknown" },
+                        ExpectedExceptionMessageContains = new[] { "trueAction", "Unknown" },
+                    })
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<ValidationStep>
+                    {
+                        Name = "constructor should throw ArgumentOutOfRangeException when parameter 'falseAction' is ValidationStepAction.Unknown",
+                        ConstructionFunc = () =>
+                        {
+                            var referenceObject = A.Dummy<ValidationStep>();
+
+                            var result = new ValidationStep(
+                                referenceObject.Operation,
+                                referenceObject.StopMessageOp,
+                                referenceObject.TrueAction,
+                                ValidationStepAction.Unknown,
+                                referenceObject.Details);
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentOutOfRangeException),
+                        ExpectedExceptionMessageContains = new[] { "falseAction", "Unknown" },
                     });
         }
     }

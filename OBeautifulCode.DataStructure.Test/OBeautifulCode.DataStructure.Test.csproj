@@ -167,6 +167,7 @@
     <Compile Include=".recipes\OBeautifulCode.Equality\ObjectEqualityComparer.cs" />
     <Compile Include=".recipes\OBeautifulCode.Equality\ReadOnlyDictionaryEqualityComparer.cs" />
     <Compile Include=".recipes\OBeautifulCode.Equality\ReferenceEqualityComparer{T}.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Math\MathHelper.cs" />
     <Compile Include=".recipes\OBeautifulCode.Math\ThreadSafeRandom.cs" />
     <Compile Include=".recipes\OBeautifulCode.Reflection\AccessModifier.cs" />
     <Compile Include=".recipes\OBeautifulCode.Reflection\AppDomainHelper.cs" />
@@ -202,6 +203,22 @@
     <Compile Include=".recipes\OBeautifulCode.Type\TypeDummyFactory.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeDummyFactory.designer.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
+    <Compile Include="Models\Classes\AvailabilityCheck\AvailabilityCheckChainTest.cs" />
+    <Compile Include="Models\Classes\AvailabilityCheck\AvailabilityCheckChainTest.designer.cs">
+      <DependentUpon>AvailabilityCheckChainTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\AvailabilityCheck\AvailabilityCheckStepTest.cs" />
+    <Compile Include="Models\Classes\AvailabilityCheck\AvailabilityCheckStepTest.designer.cs">
+      <DependentUpon>AvailabilityCheckStepTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Operations\AvailabilityCheckResult\CheckAvailabilityOpTest.cs" />
+    <Compile Include="Operations\AvailabilityCheckResult\CheckAvailabilityOpTest.designer.cs">
+      <DependentUpon>CheckAvailabilityOpTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Operations\Decimal\DivideOpTest.cs" />
+    <Compile Include="Operations\Decimal\DivideOpTest.designer.cs">
+      <DependentUpon>DivideOpTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Exception\CellValueMissingExceptionTest.cs" />
     <Compile Include="Exception\CellNotFoundExceptionTest.cs" />
     <Compile Include="Logic\Builders\ReportCacheTest.cs" />
@@ -584,14 +601,6 @@
     <Compile Include="Models\Classes\Validation\ValidationResultTest.designer.cs">
       <DependentUpon>ValidationResultTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Operations\ValidationResult\ValidateUsingConditionsOpTest.cs" />
-    <Compile Include="Operations\ValidationResult\ValidateUsingConditionsOpTest.designer.cs">
-      <DependentUpon>ValidateUsingConditionsOpTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Validation\ValidationConditionTest.cs" />
-    <Compile Include="Models\Classes\Validation\ValidationConditionTest.designer.cs">
-      <DependentUpon>ValidationConditionTest.cs</DependentUpon>
-    </Compile>
     <Compile Include="Models\Classes\CellLocator\ThisCellLocatorTest.cs" />
     <Compile Include="Models\Classes\CellLocator\ThisCellLocatorTest.designer.cs">
       <DependentUpon>ThisCellLocatorTest.cs</DependentUpon>
@@ -605,6 +614,18 @@
       <DependentUpon>ValidateCellIfNecessaryOpTest.cs</DependentUpon>
     </Compile>
     <AdditionalFiles Include=".analyzers\stylecop.json" />
+    <Compile Include="Operations\ValidationResult\ValidateOpTest.cs" />
+    <Compile Include="Operations\ValidationResult\ValidateOpTest.designer.cs">
+      <DependentUpon>ValidateOpTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Validation\ValidationChainTest.cs" />
+    <Compile Include="Models\Classes\Validation\ValidationChainTest.designer.cs">
+      <DependentUpon>ValidationChainTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Validation\ValidationStepTest.cs" />
+    <Compile Include="Models\Classes\Validation\ValidationStepTest.designer.cs">
+      <DependentUpon>ValidationStepTest.cs</DependentUpon>
+    </Compile>
     <None Include=".analyzers\test.ruleset" />
     <Compile Include="Logic\Extensions\RowExtensionsTest.cs" />
     <Compile Include="Logic\Extensions\TreeTableExtensionsTest.cs" />

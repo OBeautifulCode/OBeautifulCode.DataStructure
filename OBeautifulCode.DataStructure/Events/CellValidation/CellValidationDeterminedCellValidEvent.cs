@@ -14,7 +14,7 @@ namespace OBeautifulCode.DataStructure
     /// The validation of a cell determined that the cell is valid.
     /// </summary>
     // ReSharper disable once RedundantExtendsListEntry
-    public partial class CellValidationDeterminedCellValidEvent : CellValidationEventBase, IModelViaCodeGen
+    public partial class CellValidationDeterminedCellValidEvent : CellValidationEventBase, IHaveMessage, IModelViaCodeGen
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CellValidationDeterminedCellValidEvent"/> class.

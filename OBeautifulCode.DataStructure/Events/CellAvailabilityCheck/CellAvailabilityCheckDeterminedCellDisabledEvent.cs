@@ -14,7 +14,7 @@ namespace OBeautifulCode.DataStructure
     /// The availability check on a cell determined that the cell is disabled.
     /// </summary>
     // ReSharper disable once RedundantExtendsListEntry
-    public partial class CellAvailabilityCheckDeterminedCellDisabledEvent : CellAvailabilityCheckEventBase, IModelViaCodeGen
+    public partial class CellAvailabilityCheckDeterminedCellDisabledEvent : CellAvailabilityCheckEventBase, IHaveMessage, IModelViaCodeGen
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CellAvailabilityCheckDeterminedCellDisabledEvent"/> class.

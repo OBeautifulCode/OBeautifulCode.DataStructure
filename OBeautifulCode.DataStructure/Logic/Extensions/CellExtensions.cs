@@ -161,6 +161,41 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <summary>
+        /// Gets the validation message for a specified cell or null if none exists.
+        /// </summary>
+        /// <param name="cell">The cell.</param>
+        /// <returns>
+        /// The validation message for the specified cell or null if none exists.
+        /// </returns>
+        public static string GetValidationMessageOrNull(
+            this IValidationCell cell)
+        {
+            if (cell == null)
+            {
+                throw new ArgumentNullException(nameof(cell));
+            }
+
+            string result;
+
+            var lastValidationEvent = cell.ValidationEvents?.LastOrDefault();
+
+            if (lastValidationEvent == null)
+            {
+                result = null;
+            }
+            else if (lastValidationEvent is IHaveMessage haveMessageEvent)
+            {
+                result = haveMessageEvent.Message;
+            }
+            else
+            {
+                result = null;
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Gets the validity of a specified cell.
         /// </summary>
         /// <param name="cell">The cell.</param>
@@ -239,6 +274,41 @@ namespace OBeautifulCode.DataStructure
             else
             {
                 throw new InvalidOperationException(Invariant($"Cannot determine the {nameof(AvailabilityCheckStatus)} of the specified cell."));
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Gets the availability check message for a specified cell or null if none exists.
+        /// </summary>
+        /// <param name="cell">The cell.</param>
+        /// <returns>
+        /// The availability check message for the specified cell or null if none exists.
+        /// </returns>
+        public static string GetAvailabilityCheckMessageOrNull(
+            this IAvailabilityCheckCell cell)
+        {
+            if (cell == null)
+            {
+                throw new ArgumentNullException(nameof(cell));
+            }
+
+            string result;
+
+            var lastAvailabilityCheckEvent = cell.AvailabilityCheckEvents?.LastOrDefault();
+
+            if (lastAvailabilityCheckEvent == null)
+            {
+                result = null;
+            }
+            else if (lastAvailabilityCheckEvent is IHaveMessage haveMessageEvent)
+            {
+                result = haveMessageEvent.Message;
+            }
+            else
+            {
+                result = null;
             }
 
             return result;

@@ -37,6 +37,7 @@ namespace OBeautifulCode.DataStructure.Test
             // <------------------- ENUMS ------------------------>
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(Availability.Unknown);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(AvailabilityCheckStatus.Unknown);
+            AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(AvailabilityCheckStepAction.Unknown);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(BorderStyle.Unknown);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(BorderWeight.Unknown);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(BytesPayloadLinkedResourceKind.Unknown);
@@ -56,8 +57,8 @@ namespace OBeautifulCode.DataStructure.Test
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(SlotSelectionStrategy.Unknown);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(StringPayloadLinkedResourceKind.Unknown);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(UrlLinkedResourceKind.Unknown);
-            AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(ValidationConditionKind.Unknown);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(ValidationStatus.Unknown);
+            AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(ValidationStepAction.Unknown);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(Validity.Unknown);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(VerticalAlignment.Unknown);
 
@@ -350,7 +351,7 @@ namespace OBeautifulCode.DataStructure.Test
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
             {
-                var result = new CellValidationAbortedEvent(A.Dummy<UtcDateTime>(), A.Dummy<string>());
+                var result = new CellValidationAbortedEvent(A.Dummy<UtcDateTime>(), A.Dummy<string>(), A.Dummy<string>());
 
                 return result;
             });

@@ -47,9 +47,23 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<string>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new AvailabilityCheckChain(
+                                 A.Dummy<IReadOnlyList<AvailabilityCheckStep>>(),
+                                 A.Dummy<IReturningOperation<string>>(),
+                                 A.Dummy<Availability>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new AvailabilityCheckResult(
                                  A.Dummy<IReturningOperation<Availability>>(),
                                  A.Dummy<IReturningOperation<string>>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new AvailabilityCheckStep(
+                                 A.Dummy<IReturningOperation<bool>>(),
+                                 A.Dummy<IReturningOperation<string>>(),
+                                 A.Dummy<AvailabilityCheckStepAction>(),
+                                 A.Dummy<AvailabilityCheckStepAction>(),
+                                 A.Dummy<string>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new BooleanCellValueFormat(
@@ -257,6 +271,7 @@ namespace OBeautifulCode.DataStructure.Test
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new CellValidationAbortedEvent(
                                  A.Dummy<DateTime>(),
+                                 A.Dummy<string>(),
                                  A.Dummy<string>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
@@ -330,6 +345,10 @@ namespace OBeautifulCode.DataStructure.Test
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new CheckAvailabilityOfCellIfNecessaryOp(
                                  A.Dummy<IAvailabilityCheckCell>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new CheckAvailabilityOp(
+                                 A.Dummy<AvailabilityCheckChain>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new Column(
@@ -406,6 +425,11 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<char?>(),
                                  A.Dummy<NumberFormatNegativeDisplayKind?>(),
                                  A.Dummy<string>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new DivideOp(
+                                 A.Dummy<IReturningOperation<decimal>>(),
+                                 A.Dummy<IReturningOperation<decimal>>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new ExecuteOperationCellIfNecessaryOp<Version>(
@@ -1028,8 +1052,8 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<IValidationCell>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new ValidateUsingConditionsOp(
-                                 A.Dummy<IReadOnlyList<ValidationCondition>>()));
+                () => new ValidateOp(
+                                 A.Dummy<ValidationChain>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new Validation(
@@ -1038,16 +1062,23 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<string>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new ValidationCondition(
-                                 A.Dummy<IReturningOperation<bool>>(),
+                () => new ValidationChain(
+                                 A.Dummy<IReadOnlyList<ValidationStep>>(),
                                  A.Dummy<IReturningOperation<string>>(),
-                                 A.Dummy<ValidationConditionKind>(),
-                                 A.Dummy<string>()));
+                                 A.Dummy<Validity>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new ValidationResult(
                                  A.Dummy<IReturningOperation<Validity>>(),
                                  A.Dummy<IReturningOperation<string>>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new ValidationStep(
+                                 A.Dummy<IReturningOperation<bool>>(),
+                                 A.Dummy<IReturningOperation<string>>(),
+                                 A.Dummy<ValidationStepAction>(),
+                                 A.Dummy<ValidationStepAction>(),
+                                 A.Dummy<string>()));
         }
 
         /// <inheritdoc />
