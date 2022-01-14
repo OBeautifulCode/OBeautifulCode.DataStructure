@@ -615,7 +615,6 @@
     <Compile Include="Operations\Cell\Referenced\ValidateCellIfNecessaryOpTest.designer.cs">
       <DependentUpon>ValidateCellIfNecessaryOpTest.cs</DependentUpon>
     </Compile>
-    <AdditionalFiles Include=".analyzers\stylecop.json" />
     <Compile Include="Operations\ValidationResult\ValidateOpTest.cs" />
     <Compile Include="Operations\ValidationResult\ValidateOpTest.designer.cs">
       <DependentUpon>ValidateOpTest.cs</DependentUpon>
@@ -628,7 +627,6 @@
     <Compile Include="Models\Classes\Validation\ValidationStepTest.designer.cs">
       <DependentUpon>ValidationStepTest.cs</DependentUpon>
     </Compile>
-    <None Include=".analyzers\test.ruleset" />
     <Compile Include="Logic\Extensions\RowExtensionsTest.cs" />
     <Compile Include="Logic\Extensions\TreeTableExtensionsTest.cs" />
     <Compile Include="Models\Classes\CellValue\MediaReferenceTest.cs" />
@@ -696,6 +694,8 @@
     <Compile Include="Operations\SingleStatementOpBase{TStatement,TResult}Test.cs" />
     <Compile Include="Models\Classes\Cell\Slotted\SlottedCellTest.cs" />
     <Compile Include="Operations\Decimal\SumOpTest.cs" />
+    <AdditionalFiles Include=".analyzers\stylecop.json" />
+    <None Include=".analyzers\test.ruleset" />
     <None Include="DummyFactory.recipe-nuspec" />
     <Compile Include="Models\Classes\CellLocator\ReportCellLocatorTest.cs" />
     <Compile Include="Models\Classes\CellLocator\ReportCellLocatorTest.designer.cs">
@@ -731,7 +731,6 @@
       <Name>OBeautifulCode.DataStructure</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Content Include=".analyzers\dictionary.xml" />
   </ItemGroup>
@@ -742,8 +741,8 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\xunit.core.2.4.1\build\xunit.core.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\xunit.core.2.4.1\build\xunit.core.props'))" />
     <Error Condition="!Exists('..\packages\xunit.core.2.4.1\build\xunit.core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\xunit.core.2.4.1\build\xunit.core.targets'))" />
-    <Error Condition="!Exists('..\packages\OBeautifulCode.Build.Analyzers.1.1.137\build\OBeautifulCode.Build.Analyzers.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\OBeautifulCode.Build.Analyzers.1.1.137\build\OBeautifulCode.Build.Analyzers.targets'))" />
+    <Error Condition="!Exists('..\packages\OBeautifulCode.Build.Analyzers.1.1.139\build\OBeautifulCode.Build.Analyzers.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\OBeautifulCode.Build.Analyzers.1.1.139\build\OBeautifulCode.Build.Analyzers.targets'))" />
   </Target>
   <Import Project="..\packages\xunit.core.2.4.1\build\xunit.core.targets" Condition="Exists('..\packages\xunit.core.2.4.1\build\xunit.core.targets')" />
-  <Import Project="..\packages\OBeautifulCode.Build.Analyzers.1.1.137\build\OBeautifulCode.Build.Analyzers.targets" Condition="Exists('..\packages\OBeautifulCode.Build.Analyzers.1.1.137\build\OBeautifulCode.Build.Analyzers.targets')" />
+  <Import Project="..\packages\OBeautifulCode.Build.Analyzers.1.1.139\build\OBeautifulCode.Build.Analyzers.targets" Condition="Exists('..\packages\OBeautifulCode.Build.Analyzers.1.1.139\build\OBeautifulCode.Build.Analyzers.targets')" />
 </Project>

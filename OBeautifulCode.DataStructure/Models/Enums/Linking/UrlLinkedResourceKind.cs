@@ -17,9 +17,9 @@ namespace OBeautifulCode.DataStructure
         Unknown,
 
         /// <summary>
-        /// A tree table.
+        /// A <see cref="Report"/>.
         /// </summary>
-        TreeTable,
+        Report,
 
         /// <summary>
         /// JSON document.
