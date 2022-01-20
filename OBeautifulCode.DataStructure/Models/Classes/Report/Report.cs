@@ -9,7 +9,6 @@ namespace OBeautifulCode.DataStructure
     using System;
     using System.Collections.Generic;
     using System.Linq;
-
     using OBeautifulCode.Equality.Recipes;
     using OBeautifulCode.Type;
 
@@ -26,11 +25,13 @@ namespace OBeautifulCode.DataStructure
         /// <param name="id">The report's unique identifier.</param>
         /// <param name="sections">The sections of the report.</param>
         /// <param name="title">OPTIONAL title of the report.  DEFAULT is a report with no title.</param>
+        /// <param name="timestampUtc">OPTIONAL timestamp of the report, in UTC.  DEFAULT is a report that is not timestamped.</param>
         /// <param name="format">OPTIONAL format to apply to the report.  DEFAULT is to leave the format unchanged.</param>
         public Report(
             string id,
             IReadOnlyCollection<Section> sections,
             string title = null,
+            DateTime? timestampUtc = null,
             ReportFormat format = null)
         {
             if (id == null)
@@ -72,9 +73,15 @@ namespace OBeautifulCode.DataStructure
                 throw new ArgumentException(Invariant($"One or more {nameof(ICell)} objects are used multiple times in the report."));
             }
 
+            if ((timestampUtc != null) && (((DateTime)timestampUtc).Kind != DateTimeKind.Utc))
+            {
+                throw new ArgumentException(Invariant($"{timestampUtc} is not in UTC."));
+            }
+
             this.Id = id;
             this.Sections = sections;
             this.Title = title;
+            this.TimestampUtc = timestampUtc;
             this.Format = format;
         }
 
@@ -92,6 +99,11 @@ namespace OBeautifulCode.DataStructure
         /// Gets the title of the report.
         /// </summary>
         public string Title { get; private set; }
+
+        /// <summary>
+        /// Gets the timestamp of the report, in UTC.
+        /// </summary>
+        public DateTime? TimestampUtc { get; private set; }
 
         /// <summary>
         /// Gets the format to apply to the report.

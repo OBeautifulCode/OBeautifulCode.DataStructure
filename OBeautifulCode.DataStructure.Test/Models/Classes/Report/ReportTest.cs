@@ -45,6 +45,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                  null,
                                                  referenceObject.Sections,
                                                  referenceObject.Title,
+                                                 referenceObject.TimestampUtc,
                                                  referenceObject.Format);
 
                             return result;
@@ -64,6 +65,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                  Invariant($"  {Environment.NewLine}  "),
                                                  referenceObject.Sections,
                                                  referenceObject.Title,
+                                                 referenceObject.TimestampUtc,
                                                  referenceObject.Format);
 
                             return result;
@@ -83,6 +85,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                  referenceObject.Id,
                                                  null,
                                                  referenceObject.Title,
+                                                 referenceObject.TimestampUtc,
                                                  referenceObject.Format);
 
                             return result;
@@ -102,6 +105,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                  referenceObject.Id,
                                                  new List<Section>(),
                                                  referenceObject.Title,
+                                                 referenceObject.TimestampUtc,
                                                  referenceObject.Format);
 
                             return result;
@@ -121,6 +125,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                  referenceObject.Id,
                                                  new Section[0].Concat(referenceObject.Sections).Concat(new Section[] { null }).Concat(referenceObject.Sections).ToList(),
                                                  referenceObject.Title,
+                                                 referenceObject.TimestampUtc,
                                                  referenceObject.Format);
 
                             return result;
@@ -146,6 +151,7 @@ namespace OBeautifulCode.DataStructure.Test
                                     new Section("duplicate", A.Dummy<TreeTable>()),
                                 },
                                 referenceObject.Title,
+                                referenceObject.TimestampUtc,
                                 referenceObject.Format);
 
                             return result;
@@ -172,12 +178,33 @@ namespace OBeautifulCode.DataStructure.Test
                                     new Section("id3", treeTable),
                                 },
                                 referenceObject.Title,
+                                referenceObject.TimestampUtc,
                                 referenceObject.Format);
 
                             return result;
                         },
                         ExpectedExceptionType = typeof(ArgumentException),
                         ExpectedExceptionMessageContains = new[] { "One or more ICell objects are used multiple times in the report", },
+                    })
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<Report>
+                    {
+                        Name = "constructor should throw ArgumentException when parameter 'timestampUtc' is a UTC DateTime",
+                        ConstructionFunc = () =>
+                        {
+                            var referenceObject = A.Dummy<Report>();
+
+                            var result = new Report(
+                                referenceObject.Id,
+                                referenceObject.Sections,
+                                referenceObject.Title,
+                                A.Dummy<DateTime>().Whose(_ => _.Kind != DateTimeKind.Utc),
+                                referenceObject.Format);
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentException),
+                        ExpectedExceptionMessageContains = new[] { "timestampUtc is not in UTC" },
                     });
 
             // Need to do this because ReportFormat is currently empty and so there isn't a way to create
@@ -195,6 +222,7 @@ namespace OBeautifulCode.DataStructure.Test
                                     ReferenceObjectForEquatableTestScenarios.Id,
                                     ReferenceObjectForEquatableTestScenarios.Sections,
                                     ReferenceObjectForEquatableTestScenarios.Title,
+                                    ReferenceObjectForEquatableTestScenarios.TimestampUtc,
                                     ReferenceObjectForEquatableTestScenarios.Format),
                         },
                         ObjectsThatAreNotEqualToReferenceObject = new Report[]
@@ -203,16 +231,19 @@ namespace OBeautifulCode.DataStructure.Test
                                     A.Dummy<Report>().Whose(_ => !_.Id.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Id)).Id,
                                     ReferenceObjectForEquatableTestScenarios.Sections,
                                     ReferenceObjectForEquatableTestScenarios.Title,
+                                    ReferenceObjectForEquatableTestScenarios.TimestampUtc,
                                     ReferenceObjectForEquatableTestScenarios.Format),
                             new Report(
                                     ReferenceObjectForEquatableTestScenarios.Id,
                                     A.Dummy<Report>().Whose(_ => !_.Sections.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Sections)).Sections,
                                     ReferenceObjectForEquatableTestScenarios.Title,
+                                    ReferenceObjectForEquatableTestScenarios.TimestampUtc,
                                     ReferenceObjectForEquatableTestScenarios.Format),
                             new Report(
                                     ReferenceObjectForEquatableTestScenarios.Id,
                                     ReferenceObjectForEquatableTestScenarios.Sections,
                                     A.Dummy<Report>().Whose(_ => !_.Title.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Title)).Title,
+                                    ReferenceObjectForEquatableTestScenarios.TimestampUtc,
                                     ReferenceObjectForEquatableTestScenarios.Format),
                         },
                         ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
