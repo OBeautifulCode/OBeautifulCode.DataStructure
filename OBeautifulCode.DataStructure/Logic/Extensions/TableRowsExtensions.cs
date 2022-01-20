@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="RowExtensions.cs" company="OBeautifulCode">
+// <copyright file="TableRowsExtensions.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -11,33 +11,10 @@ namespace OBeautifulCode.DataStructure
     using System.Linq;
 
     /// <summary>
-    /// Extension methods on <see cref="RowBase"/>.
+    /// Extension methods on <see cref="TableRows"/>.
     /// </summary>
-    public static class RowExtensions
+    public static class TableRowsExtensions
     {
-        /// <summary>
-        /// Gets the number of columns spanned by a row.
-        /// </summary>
-        /// <param name="row">The row.</param>
-        /// <returns>
-        /// The number of columns spanned the row.
-        /// </returns>
-        public static int GetNumberOfColumnsSpanned(
-            this RowBase row)
-        {
-            if (row == null)
-            {
-                throw new ArgumentNullException(nameof(row));
-            }
-
-            var result = row
-                .Cells
-                .Select(_ => _.ColumnsSpanned ?? 1)
-                .Sum();
-
-            return result;
-        }
-
         /// <summary>
         /// Gets all of the rows, header and descendants included, in the order they appear in the table.
         /// </summary>

@@ -185,6 +185,7 @@
     <Compile Include="Logic\Builders\ReportCache.cs" />
     <Compile Include="Logic\Enums\RecalcPhase.cs" />
     <Compile Include="Logic\Extensions\CellExtensions.cs" />
+    <Compile Include="Logic\Extensions\TableRowsExtensions.cs" />
     <Compile Include="Logic\Extensions\TreeTableExtensions.cs" />
     <Compile Include="Logic\Extensions\ReportExtensions.cs" />
     <Compile Include="Logic\Protocols\DataStructureCellProtocols.cs" />
@@ -379,7 +380,7 @@
     <Compile Include="Interfaces\Classification\Resource\IHoverOver.cs" />
     <Compile Include="Interfaces\Property\IHaveCellFormat.cs" />
     <Compile Include="Interfaces\Classification\Cell\ICell.cs" />
-    <Compile Include="Logic\Extensions\RowExtensions.cs" />
+    <Compile Include="Logic\Extensions\RowBaseExtensions.cs" />
     <Compile Include="Models\Classes\Format\Region\Regions\CellFormat.cs" />
     <Compile Include="Models\Classes\HoverOver\HoverOverBase.designer.cs">
       <DependentUpon>HoverOverBase.cs</DependentUpon>

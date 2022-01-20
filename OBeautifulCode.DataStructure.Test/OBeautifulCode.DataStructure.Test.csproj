@@ -205,6 +205,7 @@
     <Compile Include=".recipes\OBeautifulCode.Type\TypeDummyFactory.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeDummyFactory.designer.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
+    <Compile Include="Logic\Extensions\TableRowsExtensionsTest.cs" />
     <Compile Include="Models\Classes\AvailabilityCheck\AvailabilityCheckChainTest.cs" />
     <Compile Include="Models\Classes\AvailabilityCheck\AvailabilityCheckChainTest.designer.cs">
       <DependentUpon>AvailabilityCheckChainTest.cs</DependentUpon>
@@ -627,7 +628,7 @@
     <Compile Include="Models\Classes\Validation\ValidationStepTest.designer.cs">
       <DependentUpon>ValidationStepTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Logic\Extensions\RowExtensionsTest.cs" />
+    <Compile Include="Logic\Extensions\RowBaseExtensionsTest.cs" />
     <Compile Include="Logic\Extensions\TreeTableExtensionsTest.cs" />
     <Compile Include="Models\Classes\CellValue\MediaReferenceTest.cs" />
     <Compile Include="Models\Classes\Cell\CellBaseTest.cs" />
