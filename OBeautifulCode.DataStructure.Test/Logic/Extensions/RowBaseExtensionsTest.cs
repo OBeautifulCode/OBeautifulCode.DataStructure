@@ -18,10 +18,10 @@ namespace OBeautifulCode.DataStructure.Test
         [Fact]
         public static void GetNumberOfColumnsSpanned___Should_throw_ArgumentNullException___When_parameter_row_is_null()
         {
-            // Arrange
+            // Arrange, Act
             var actual = Record.Exception(() => RowBaseExtensions.GetNumberOfColumnsSpanned(null));
 
-            // Act, Assert
+            // Act
             actual.AsTest().Must().BeOfType<ArgumentNullException>();
             actual.Message.AsTest().Must().ContainString("row");
         }
@@ -140,6 +140,194 @@ namespace OBeautifulCode.DataStructure.Test
             // Assert
             actual1.AsTest().Must().BeEqualTo(expected1);
             actual2.AsTest().Must().BeEqualTo(expected2);
+        }
+
+        [Fact]
+        public static void Pad_FlatRow___Should_throw_ArgumentNullException___When_parameter_row_is_null()
+        {
+            // Arrange, Act
+            var actual = Record.Exception(() => RowBaseExtensions.Pad((FlatRow)null, 4));
+
+            // Assert
+            actual.AsTest().Must().BeOfType<ArgumentNullException>();
+            actual.Message.AsTest().Must().ContainString("row");
+        }
+
+        [Fact]
+        public static void Pad_FlatRow___Should_throw_ArgumentOutOfRangeException___When_parameter_row_is_null()
+        {
+            // Arrange
+            var row = A.Dummy<FlatRow>();
+
+            // Act
+            var actual1 = Record.Exception(() => row.Pad(0));
+            var actual2 = Record.Exception(() => row.Pad(A.Dummy<NegativeInteger>()));
+
+            // Assert
+            actual1.AsTest().Must().BeOfType<ArgumentOutOfRangeException>();
+            actual1.Message.AsTest().Must().ContainString("requiredNumberOfColumnsSpanned must be > 0; provided value: 0");
+
+            actual2.AsTest().Must().BeOfType<ArgumentOutOfRangeException>();
+            actual2.Message.AsTest().Must().ContainString("requiredNumberOfColumnsSpanned must be > 0; provided value");
+        }
+
+        [Fact]
+        public static void Pad_FlatRow___Should_return_same_row___When_row_spans_required_number_of_columns()
+        {
+            // Arrange
+            var expected1 = new FlatRow(
+                new[] { new NullCell() });
+
+            var expected2 = new FlatRow(
+                new[]
+                {
+                    new NullCell(columnsSpanned: 2),
+                    new NullCell(columnsSpanned: 3),
+                });
+
+            // Act
+            var actual1 = expected1.Pad(1);
+            var actual2a = expected2.Pad(1);
+            var actual2b = expected2.Pad(4);
+            var actual2c = expected2.Pad(5);
+
+            // Assert
+            actual1.AsTest().Must().BeSameReferenceAs(expected1);
+            actual2a.AsTest().Must().BeSameReferenceAs(expected2);
+            actual2b.AsTest().Must().BeSameReferenceAs(expected2);
+            actual2c.AsTest().Must().BeSameReferenceAs(expected2);
+        }
+
+        [Fact]
+        public static void Pad_FlatRow___Should_return_padded_row___When_row_spans_less_than_required_number_of_columns()
+        {
+            // Arrange
+            var row1 = new FlatRow(
+                new[] { new NullCell() });
+
+            var expected1 = new FlatRow(
+                new[] { new NullCell(), new NullCell(columnsSpanned: 1) });
+
+            var row2 = new FlatRow(
+                new[] { new NullCell(columnsSpanned: 2) });
+
+            var expected2a = new FlatRow(
+                new[] { new NullCell(columnsSpanned: 2), new NullCell(columnsSpanned: 1) });
+
+            var expected2b = new FlatRow(
+                new[] { new NullCell(columnsSpanned: 2), new NullCell(columnsSpanned: 2) });
+
+            var row3 = new FlatRow(
+                new[] { new NullCell(columnsSpanned: 2), new NullCell(columnsSpanned: 3) });
+
+            var expected3 = new FlatRow(
+                new[] { new NullCell(columnsSpanned: 2), new NullCell(columnsSpanned: 3), new NullCell(columnsSpanned: 4) });
+
+            // Act
+            var actual1 = row1.Pad(2);
+            var actual2a = row2.Pad(3);
+            var actual2b = row2.Pad(4);
+            var actual3 = row3.Pad(9);
+
+            // Assert
+            actual1.AsTest().Must().BeEqualTo(expected1);
+            actual2a.AsTest().Must().BeEqualTo(expected2a);
+            actual2b.AsTest().Must().BeEqualTo(expected2b);
+            actual3.AsTest().Must().BeEqualTo(expected3);
+        }
+
+        [Fact]
+        public static void Pad_Row___Should_throw_ArgumentNullException___When_parameter_row_is_null()
+        {
+            // Arrange, Act
+            var actual = Record.Exception(() => RowBaseExtensions.Pad((Row)null, 4));
+
+            // Assert
+            actual.AsTest().Must().BeOfType<ArgumentNullException>();
+            actual.Message.AsTest().Must().ContainString("row");
+        }
+
+        [Fact]
+        public static void Pad_Row___Should_throw_ArgumentOutOfRangeException___When_parameter_row_is_null()
+        {
+            // Arrange
+            var row = A.Dummy<Row>();
+
+            // Act
+            var actual1 = Record.Exception(() => row.Pad(0));
+            var actual2 = Record.Exception(() => row.Pad(A.Dummy<NegativeInteger>()));
+
+            // Assert
+            actual1.AsTest().Must().BeOfType<ArgumentOutOfRangeException>();
+            actual1.Message.AsTest().Must().ContainString("requiredNumberOfColumnsSpanned must be > 0; provided value: 0");
+
+            actual2.AsTest().Must().BeOfType<ArgumentOutOfRangeException>();
+            actual2.Message.AsTest().Must().ContainString("requiredNumberOfColumnsSpanned must be > 0; provided value");
+        }
+
+        [Fact]
+        public static void Pad_Row___Should_return_same_row___When_row_spans_required_number_of_columns()
+        {
+            // Arrange
+            var expected1 = new Row(
+                new[] { new NullCell() });
+
+            var expected2 = new Row(
+                new[]
+                {
+                    new NullCell(columnsSpanned: 2),
+                    new NullCell(columnsSpanned: 3),
+                });
+
+            // Act
+            var actual1 = expected1.Pad(1);
+            var actual2a = expected2.Pad(1);
+            var actual2b = expected2.Pad(4);
+            var actual2c = expected2.Pad(5);
+
+            // Assert
+            actual1.AsTest().Must().BeSameReferenceAs(expected1);
+            actual2a.AsTest().Must().BeSameReferenceAs(expected2);
+            actual2b.AsTest().Must().BeSameReferenceAs(expected2);
+            actual2c.AsTest().Must().BeSameReferenceAs(expected2);
+        }
+
+        [Fact]
+        public static void Pad_Row___Should_return_padded_row___When_row_spans_less_than_required_number_of_columns()
+        {
+            // Arrange
+            var row1 = new Row(
+                new[] { new NullCell() });
+
+            var expected1 = new Row(
+                new[] { new NullCell(), new NullCell(columnsSpanned: 1) });
+
+            var row2 = new Row(
+                new[] { new NullCell(columnsSpanned: 2) });
+
+            var expected2a = new Row(
+                new[] { new NullCell(columnsSpanned: 2), new NullCell(columnsSpanned: 1) });
+
+            var expected2b = new Row(
+                new[] { new NullCell(columnsSpanned: 2), new NullCell(columnsSpanned: 2) });
+
+            var row3 = new Row(
+                new[] { new NullCell(columnsSpanned: 2), new NullCell(columnsSpanned: 3) });
+
+            var expected3 = new Row(
+                new[] { new NullCell(columnsSpanned: 2), new NullCell(columnsSpanned: 3), new NullCell(columnsSpanned: 4) });
+
+            // Act
+            var actual1 = row1.Pad(2);
+            var actual2a = row2.Pad(3);
+            var actual2b = row2.Pad(4);
+            var actual3 = row3.Pad(9);
+
+            // Assert
+            actual1.AsTest().Must().BeEqualTo(expected1);
+            actual2a.AsTest().Must().BeEqualTo(expected2a);
+            actual2b.AsTest().Must().BeEqualTo(expected2b);
+            actual3.AsTest().Must().BeEqualTo(expected3);
         }
     }
 }

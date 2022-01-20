@@ -1224,6 +1224,7 @@ namespace OBeautifulCode.DataStructure.Test
 
             // Assert
             actual.AsTest().Must().BeOfType<ArgumentNullException>();
+            actual.Message.AsTest().Must().ContainString("cell");
         }
 
         [Fact]
@@ -1248,6 +1249,7 @@ namespace OBeautifulCode.DataStructure.Test
         {
             // Arrange, Act
             var actual = Record.Exception(() => CellExtensions.ToRow(null));
+            actual.Message.AsTest().Must().ContainString("cell");
 
             // Assert
             actual.AsTest().Must().BeOfType<ArgumentNullException>();
