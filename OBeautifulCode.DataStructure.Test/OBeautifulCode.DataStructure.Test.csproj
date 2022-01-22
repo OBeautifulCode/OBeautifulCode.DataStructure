@@ -359,8 +359,8 @@
     <Compile Include="Models\Classes\Row\FooterRowsTest.designer.cs">
       <DependentUpon>FooterRowsTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Classes\Format\CellValue\Standard\BooleanCellValueFormatTest.cs" />
-    <Compile Include="Models\Classes\Format\CellValue\Standard\BooleanCellValueFormatTest.designer.cs">
+    <Compile Include="Models\Classes\Format\CellValue\Boolean\BooleanCellValueFormatTest.cs" />
+    <Compile Include="Models\Classes\Format\CellValue\Boolean\BooleanCellValueFormatTest.designer.cs">
       <DependentUpon>BooleanCellValueFormatTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Classes\Format\CellValue\Standard\CategoricalCellValueFormat{TValue}Test.cs" />
