@@ -207,6 +207,31 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <summary>
+        /// Builds a <see cref="NullCell"/>.
+        /// </summary>
+        /// <param name="id">OPTIONAL unique identifier of the cell.  DEFAULT is a cell with no unique identifier.</param>
+        /// <param name="columnsSpanned">OPTIONAL number of columns spanned or null if none (cell occupies a single column).  DEFAULT is none.</param>
+        /// <param name="details">OPTIONAL details about the cell.  DEFAULT is to omit any details.</param>
+        /// <param name="format">OPTIONAL format to apply to the cell.  DEFAULT is to leave the format unchanged.</param>
+        /// <param name="hoverOver">OPTIONAL hover-over for the cell.  DEFAULT is no hover-over.</param>
+        /// <param name="link">OPTIONAL link to some resource.  DEFAULT is no link.</param>
+        /// <returns>
+        /// The cell.
+        /// </returns>
+        public static NullCell CreateNull(
+            string id = null,
+            int? columnsSpanned = null,
+            string details = null,
+            CellFormat format = null,
+            IHoverOver hoverOver = null,
+            ILink link = null)
+        {
+            var result = new NullCell(id, columnsSpanned, details, null, null, Availability.Enabled, null, null, format, hoverOver, link);
+
+            return result;
+        }
+
+        /// <summary>
         /// Builds an enabled <see cref="IConstOutputCell{TValue}"/>.
         /// </summary>
         /// <typeparam name="TValue">The type of value.</typeparam>
