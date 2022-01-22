@@ -23,15 +23,15 @@ namespace OBeautifulCode.DataStructure
     using static global::System.FormattableString;
 
     [Serializable]
-    public partial class ValidationChain : IModel<ValidationChain>
+    public partial class DateTimeFormat : IModel<DateTimeFormat>
     {
         /// <summary>
-        /// Determines whether two objects of type <see cref="ValidationChain"/> are equal.
+        /// Determines whether two objects of type <see cref="DateTimeFormat"/> are equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are equal; otherwise false.</returns>
-        public static bool operator ==(ValidationChain left, ValidationChain right)
+        public static bool operator ==(DateTimeFormat left, DateTimeFormat right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -49,15 +49,15 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <summary>
-        /// Determines whether two objects of type <see cref="ValidationChain"/> are not equal.
+        /// Determines whether two objects of type <see cref="DateTimeFormat"/> are not equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are not equal; otherwise false.</returns>
-        public static bool operator !=(ValidationChain left, ValidationChain right) => !(left == right);
+        public static bool operator !=(DateTimeFormat left, DateTimeFormat right) => !(left == right);
 
         /// <inheritdoc />
-        public bool Equals(ValidationChain other)
+        public bool Equals(DateTimeFormat other)
         {
             if (ReferenceEquals(this, other))
             {
@@ -69,42 +69,45 @@ namespace OBeautifulCode.DataStructure
                 return false;
             }
 
-            var result = this.Steps.IsEqualTo(other.Steps)
-                      && this.EndMessageOp.IsEqualTo(other.EndMessageOp)
-                      && this.EndValidity.IsEqualTo(other.EndValidity);
+            var result = this.FormatKind.IsEqualTo(other.FormatKind)
+                      && this.CultureKind.IsEqualTo(other.CultureKind)
+                      && this.Localize.IsEqualTo(other.Localize)
+                      && this.LocalTimeZone.IsEqualTo(other.LocalTimeZone);
 
             return result;
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => this == (obj as ValidationChain);
+        public override bool Equals(object obj) => this == (obj as DateTimeFormat);
 
         /// <inheritdoc />
         public override int GetHashCode() => HashCodeHelper.Initialize()
-            .Hash(this.Steps)
-            .Hash(this.EndMessageOp)
-            .Hash(this.EndValidity)
+            .Hash(this.FormatKind)
+            .Hash(this.CultureKind)
+            .Hash(this.Localize)
+            .Hash(this.LocalTimeZone)
             .Value;
 
         /// <inheritdoc />
         public object Clone() => this.DeepClone();
 
         /// <inheritdoc />
-        public ValidationChain DeepClone()
+        public DateTimeFormat DeepClone()
         {
-            var result = new ValidationChain(
-                                 this.Steps?.DeepClone(),
-                                 this.EndMessageOp?.DeepClone(),
-                                 this.EndValidity.DeepClone());
+            var result = new DateTimeFormat(
+                                 this.FormatKind?.DeepClone(),
+                                 this.CultureKind?.DeepClone(),
+                                 this.Localize?.DeepClone(),
+                                 this.LocalTimeZone?.DeepClone());
 
             return result;
         }
 
         /// <summary>
-        /// Deep clones this object with a new <see cref="Steps" />.
+        /// Deep clones this object with a new <see cref="FormatKind" />.
         /// </summary>
-        /// <param name="steps">The new <see cref="Steps" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="ValidationChain" /> using the specified <paramref name="steps" /> for <see cref="Steps" /> and a deep clone of every other property.</returns>
+        /// <param name="formatKind">The new <see cref="FormatKind" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="DateTimeFormat" /> using the specified <paramref name="formatKind" /> for <see cref="FormatKind" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -122,21 +125,22 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public ValidationChain DeepCloneWithSteps(IReadOnlyList<ValidationStep> steps)
+        public DateTimeFormat DeepCloneWithFormatKind(DateTimeFormatKind? formatKind)
         {
-            var result = new ValidationChain(
-                                 steps,
-                                 this.EndMessageOp?.DeepClone(),
-                                 this.EndValidity.DeepClone());
+            var result = new DateTimeFormat(
+                                 formatKind,
+                                 this.CultureKind?.DeepClone(),
+                                 this.Localize?.DeepClone(),
+                                 this.LocalTimeZone?.DeepClone());
 
             return result;
         }
 
         /// <summary>
-        /// Deep clones this object with a new <see cref="EndMessageOp" />.
+        /// Deep clones this object with a new <see cref="CultureKind" />.
         /// </summary>
-        /// <param name="endMessageOp">The new <see cref="EndMessageOp" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="ValidationChain" /> using the specified <paramref name="endMessageOp" /> for <see cref="EndMessageOp" /> and a deep clone of every other property.</returns>
+        /// <param name="cultureKind">The new <see cref="CultureKind" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="DateTimeFormat" /> using the specified <paramref name="cultureKind" /> for <see cref="CultureKind" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -154,21 +158,22 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public ValidationChain DeepCloneWithEndMessageOp(IReturningOperation<string> endMessageOp)
+        public DateTimeFormat DeepCloneWithCultureKind(CultureKind? cultureKind)
         {
-            var result = new ValidationChain(
-                                 this.Steps?.DeepClone(),
-                                 endMessageOp,
-                                 this.EndValidity.DeepClone());
+            var result = new DateTimeFormat(
+                                 this.FormatKind?.DeepClone(),
+                                 cultureKind,
+                                 this.Localize?.DeepClone(),
+                                 this.LocalTimeZone?.DeepClone());
 
             return result;
         }
 
         /// <summary>
-        /// Deep clones this object with a new <see cref="EndValidity" />.
+        /// Deep clones this object with a new <see cref="Localize" />.
         /// </summary>
-        /// <param name="endValidity">The new <see cref="EndValidity" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="ValidationChain" /> using the specified <paramref name="endValidity" /> for <see cref="EndValidity" /> and a deep clone of every other property.</returns>
+        /// <param name="localize">The new <see cref="Localize" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="DateTimeFormat" /> using the specified <paramref name="localize" /> for <see cref="Localize" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -186,12 +191,46 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public ValidationChain DeepCloneWithEndValidity(Validity endValidity)
+        public DateTimeFormat DeepCloneWithLocalize(bool? localize)
         {
-            var result = new ValidationChain(
-                                 this.Steps?.DeepClone(),
-                                 this.EndMessageOp?.DeepClone(),
-                                 endValidity);
+            var result = new DateTimeFormat(
+                                 this.FormatKind?.DeepClone(),
+                                 this.CultureKind?.DeepClone(),
+                                 localize,
+                                 this.LocalTimeZone?.DeepClone());
+
+            return result;
+        }
+
+        /// <summary>
+        /// Deep clones this object with a new <see cref="LocalTimeZone" />.
+        /// </summary>
+        /// <param name="localTimeZone">The new <see cref="LocalTimeZone" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="DateTimeFormat" /> using the specified <paramref name="localTimeZone" /> for <see cref="LocalTimeZone" /> and a deep clone of every other property.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
+        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
+        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
+        public DateTimeFormat DeepCloneWithLocalTimeZone(StandardTimeZone? localTimeZone)
+        {
+            var result = new DateTimeFormat(
+                                 this.FormatKind?.DeepClone(),
+                                 this.CultureKind?.DeepClone(),
+                                 this.Localize?.DeepClone(),
+                                 localTimeZone);
 
             return result;
         }
@@ -200,7 +239,7 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"OBeautifulCode.DataStructure.ValidationChain: Steps = {this.Steps?.ToString() ?? "<null>"}, EndMessageOp = {this.EndMessageOp?.ToString() ?? "<null>"}, EndValidity = {this.EndValidity.ToString() ?? "<null>"}.");
+            var result = Invariant($"OBeautifulCode.DataStructure.DateTimeFormat: FormatKind = {this.FormatKind?.ToString() ?? "<null>"}, CultureKind = {this.CultureKind?.ToString() ?? "<null>"}, Localize = {this.Localize?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, LocalTimeZone = {this.LocalTimeZone?.ToString() ?? "<null>"}.");
 
             return result;
         }

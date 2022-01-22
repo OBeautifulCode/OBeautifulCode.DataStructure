@@ -263,6 +263,26 @@ namespace OBeautifulCode.DataStructure.Test
                 return result;
             });
 
+            // DateTimeFormat
+            AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
+            {
+                var localize = A.Dummy<bool>();
+
+                var result = new DateTimeFormat(A.Dummy<DateTimeFormatKind>(), A.Dummy<CultureKind>(), localize, localize ? A.Dummy<StandardTimeZone>() : (StandardTimeZone?)null);
+
+                return result;
+            });
+
+            // ReportFormat
+            AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
+            {
+                var displayTimestamp = A.Dummy<bool>();
+
+                var result = new ReportFormat(displayTimestamp, displayTimestamp ? A.Dummy<DateTimeFormat>() : null);
+
+                return result;
+            });
+
             // Color
             AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
             {

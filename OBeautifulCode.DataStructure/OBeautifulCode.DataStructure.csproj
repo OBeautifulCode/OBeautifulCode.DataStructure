@@ -329,6 +329,9 @@
     <Compile Include="Models\Classes\Format\CellValue\StandardCellValueFormatBase{TValue}.designer.cs">
       <DependentUpon>StandardCellValueFormatBase{TValue}.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\Classes\Format\DateTimeFormat.designer.cs">
+      <DependentUpon>DateTimeFormat.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Classes\Format\Fill\FillPattern.cs" />
     <Compile Include="Models\Classes\Format\Fill\FillPattern.designer.cs">
       <DependentUpon>FillPattern.cs</DependentUpon>

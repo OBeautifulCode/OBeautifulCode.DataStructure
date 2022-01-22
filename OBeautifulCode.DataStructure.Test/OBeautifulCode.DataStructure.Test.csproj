@@ -205,6 +205,10 @@
     <Compile Include=".recipes\OBeautifulCode.Type\TypeDummyFactory.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeDummyFactory.designer.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
+    <Compile Include="Models\Classes\Format\DateTimeFormatTest.cs" />
+    <Compile Include="Models\Classes\Format\DateTimeFormatTest.designer.cs">
+      <DependentUpon>DateTimeFormatTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Logic\Extensions\TableRowsExtensionsTest.cs" />
     <Compile Include="Models\Classes\AvailabilityCheck\AvailabilityCheckChainTest.cs" />
     <Compile Include="Models\Classes\AvailabilityCheck\AvailabilityCheckChainTest.designer.cs">

@@ -20,33 +20,33 @@ namespace OBeautifulCode.DataStructure
         /// </summary>
         /// <param name="formatKind">OPTIONAL kind of formatting to apply.  DEFAULT is to let the consumer decide (e.g. use formatting kind from user's profile or always use a fixed formatting).</param>
         /// <param name="cultureKind">OPTIONAL kind of culture to apply when formatting.  DEFAULT is let the consumer decide (e.g. use culture from user's profile or always use invariant culture).</param>
-        /// <param name="convertToTimeZone">OPTIONAL value that determines whether to convert a <see cref="DateTimeKind.Utc"/> <see cref="DateTime"/> to that time in some time zone before generating it's string representation.  DEFAULT is to let the consumer decide (e.g. never convert unless explicitly set to true).</param>
-        /// <param name="timeZoneToConvertInto">OPTIONAL time zone to convert a <see cref="DateTimeKind.Utc"/> <see cref="DateTime"/> into before generating it's string representation.  DEFAULT is to let the consumer decide (e.g. when <paramref name="convertToTimeZone"/> is true, use the user's local timezone).</param>
+        /// <param name="localize">OPTIONAL value that determines whether to localize a <see cref="DateTimeKind.Utc"/> <see cref="DateTime"/> before generating it's string representation.  DEFAULT is to let the consumer decide (e.g. never localize unless explicitly set to true).</param>
+        /// <param name="localTimeZone">OPTIONAL time zone to use when localizing a <see cref="DateTimeKind.Utc"/> <see cref="DateTime"/> before generating it's string representation.  DEFAULT is to let the consumer decide (e.g. when <paramref name="localize"/> is true, use the user's local timezone).</param>
         public DateTimeFormat(
             DateTimeFormatKind? formatKind = null,
             CultureKind? cultureKind = null,
-            bool? convertToTimeZone = null,
-            StandardTimeZone? timeZoneToConvertInto = null)
+            bool? localize = null,
+            StandardTimeZone? localTimeZone = null)
         {
             if ((formatKind != null) && (formatKind == DateTimeFormatKind.Unknown))
             {
-                throw new ArgumentOutOfRangeException(Invariant($"{nameof(formatKind)} is {nameof(DateTimeFormatKind.Unknown)}."));
+                throw new ArgumentOutOfRangeException(nameof(formatKind), Invariant($"{nameof(formatKind)} is {nameof(DateTimeFormatKind.Unknown)}."));
             }
 
             if ((cultureKind != null) && (cultureKind == OBeautifulCode.Type.CultureKind.Unknown))
             {
-                throw new ArgumentOutOfRangeException(Invariant($"{nameof(cultureKind)} is {nameof(OBeautifulCode.Type.CultureKind.Unknown)}."));
+                throw new ArgumentOutOfRangeException(nameof(cultureKind), Invariant($"{nameof(cultureKind)} is {nameof(OBeautifulCode.Type.CultureKind.Unknown)}."));
             }
 
-            if ((convertToTimeZone == false) && (timeZoneToConvertInto != null))
+            if ((localize == false) && (localTimeZone != null))
             {
-                throw new ArgumentException(Invariant($"{nameof(convertToTimeZone)} is false, but {nameof(timeZoneToConvertInto)} is not null."));
+                throw new ArgumentException(Invariant($"{nameof(localize)} is false, but {nameof(localTimeZone)} is not null."));
             }
 
             this.FormatKind = formatKind;
             this.CultureKind = cultureKind;
-            this.ConvertToTimeZone = convertToTimeZone;
-            this.TimeZoneToConvertInto = timeZoneToConvertInto;
+            this.Localize = localize;
+            this.LocalTimeZone = localTimeZone;
         }
 
         /// <summary>
@@ -60,13 +60,13 @@ namespace OBeautifulCode.DataStructure
         public CultureKind? CultureKind { get; private set; }
 
         /// <summary>
-        /// Gets a value that determines whether to convert a <see cref="DateTimeKind.Utc"/> <see cref="DateTime"/> to that time in some time zone before generating it's string representation.
+        /// Gets a value value that determines whether to localize a <see cref="DateTimeKind.Utc"/> <see cref="DateTime"/> before generating it's string representation.
         /// </summary>
-        public bool? ConvertToTimeZone { get; private set; }
+        public bool? Localize { get; private set; }
 
         /// <summary>
-        /// Gets the time zone to convert a <see cref="DateTimeKind.Utc"/> <see cref="DateTime"/> into before generating it's string representation.
+        /// Gets the time zone to use when localizing a <see cref="DateTimeKind.Utc"/> <see cref="DateTime"/> before generating it's string representation.
         /// </summary>
-        public StandardTimeZone? TimeZoneToConvertInto { get; private set; }
+        public StandardTimeZone? LocalTimeZone { get; private set; }
     }
 }
