@@ -29,5 +29,20 @@ namespace OBeautifulCode.DataStructure
             : base(cells, id, format)
         {
         }
+
+        /// <summary>
+        /// Builds an empty row.
+        /// </summary>
+        /// <param name="requiredNumberOfColumnsSpanned">The required number of columns spanned in the resulting row.</param>
+        /// <returns>
+        /// The empty row.
+        /// </returns>
+        public static FlatRow BuildEmpty(
+            int requiredNumberOfColumnsSpanned)
+        {
+            var result = new NullCell(columnsSpanned: requiredNumberOfColumnsSpanned).ToFlatRow();
+
+            return result;
+        }
     }
 }
