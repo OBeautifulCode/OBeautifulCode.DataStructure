@@ -205,6 +205,10 @@
     <Compile Include=".recipes\OBeautifulCode.Type\TypeDummyFactory.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeDummyFactory.designer.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
+    <Compile Include="Models\Classes\Format\CellValue\Standard\DateTimeCellValueFormatTest.cs" />
+    <Compile Include="Models\Classes\Format\CellValue\Standard\DateTimeCellValueFormatTest.designer.cs">
+      <DependentUpon>DateTimeCellValueFormatTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Classes\Format\CellValue\Number\DecimalCellValueFormatTest.cs" />
     <Compile Include="Models\Classes\Format\CellValue\Number\DecimalCellValueFormatTest.designer.cs">
       <DependentUpon>DecimalCellValueFormatTest.cs</DependentUpon>

@@ -293,6 +293,7 @@
     <Compile Include="Models\Classes\Format\Border\OuterBorder.designer.cs">
       <DependentUpon>OuterBorder.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\Classes\Format\CellValue\Standard\DateTimeCellValueFormat.cs" />
     <Compile Include="Models\Classes\Format\CellValue\Standard\BooleanCellValueFormat.designer.cs">
       <DependentUpon>BooleanCellValueFormat.cs</DependentUpon>
     </Compile>
@@ -301,6 +302,9 @@
     </Compile>
     <Compile Include="Models\Classes\Format\CellValue\Number\DecimalCellValueFormat.designer.cs">
       <DependentUpon>DecimalCellValueFormat.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Format\CellValue\Standard\DateTimeCellValueFormat.designer.cs">
+      <DependentUpon>DateTimeCellValueFormat.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Classes\Format\CellValue\Standard\HtmlCellValueFormat.cs" />
     <Compile Include="Models\Classes\Format\CellValue\Standard\HtmlCellValueFormat.designer.cs">

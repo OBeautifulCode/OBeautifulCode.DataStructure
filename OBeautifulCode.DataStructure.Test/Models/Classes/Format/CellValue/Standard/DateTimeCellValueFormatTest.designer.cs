@@ -33,95 +33,55 @@ namespace OBeautifulCode.DataStructure.Test
 
     using static global::System.FormattableString;
 
-    public static partial class CategoricalCellValueFormatTValueTest
+    public static partial class DateTimeCellValueFormatTest
     {
-        private static readonly StringRepresentationTestScenarios<CategoricalCellValueFormat<Version>> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<CategoricalCellValueFormat<Version>>()
+        private static readonly StringRepresentationTestScenarios<DateTimeCellValueFormat> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<DateTimeCellValueFormat>()
             .AddScenario(() =>
-                new StringRepresentationTestScenario<CategoricalCellValueFormat<Version>>
+                new StringRepresentationTestScenario<DateTimeCellValueFormat>
                 {
                     Name = "Default Code Generated Scenario",
                     SystemUnderTestExpectedStringRepresentationFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<CategoricalCellValueFormat<Version>>();
+                        var systemUnderTest = A.Dummy<DateTimeCellValueFormat>();
 
-                        var result = new SystemUnderTestExpectedStringRepresentation<CategoricalCellValueFormat<Version>>
+                        var result = new SystemUnderTestExpectedStringRepresentation<DateTimeCellValueFormat>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.CategoricalCellValueFormat<Version>: MissingValueText = {systemUnderTest.MissingValueText?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, ValueToTextMap = {systemUnderTest.ValueToTextMap?.ToString() ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.DateTimeCellValueFormat: MissingValueText = {systemUnderTest.MissingValueText?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Format = {systemUnderTest.Format?.ToString() ?? "<null>"}."),
                         };
 
                         return result;
                     },
                 });
 
-        private static readonly ConstructorArgumentValidationTestScenarios<CategoricalCellValueFormat<Version>> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<CategoricalCellValueFormat<Version>>()
+        private static readonly ConstructorArgumentValidationTestScenarios<DateTimeCellValueFormat> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<DateTimeCellValueFormat>()
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<CategoricalCellValueFormat<Version>>
+                new ConstructorArgumentValidationTestScenario<DateTimeCellValueFormat>
                 {
-                    Name = "constructor should throw ArgumentNullException when parameter 'valueToTextMap' is null scenario",
+                    Name = "constructor should throw ArgumentNullException when parameter 'format' is null scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<CategoricalCellValueFormat<Version>>();
+                        var referenceObject = A.Dummy<DateTimeCellValueFormat>();
 
-                        var result = new CategoricalCellValueFormat<Version>(
+                        var result = new DateTimeCellValueFormat(
                                              null,
                                              referenceObject.MissingValueText);
 
                         return result;
                     },
                     ExpectedExceptionType = typeof(ArgumentNullException),
-                    ExpectedExceptionMessageContains = new[] { "valueToTextMap", },
+                    ExpectedExceptionMessageContains = new[] { "format", },
                 })
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<CategoricalCellValueFormat<Version>>
-                {
-                    Name = "constructor should throw ArgumentException when parameter 'valueToTextMap' is an empty dictionary scenario",
-                    ConstructionFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<CategoricalCellValueFormat<Version>>();
-
-                        var result = new CategoricalCellValueFormat<Version>(
-                                             new Dictionary<Version, string>(),
-                                             referenceObject.MissingValueText);
-
-                        return result;
-                    },
-                    ExpectedExceptionType = typeof(ArgumentException),
-                    ExpectedExceptionMessageContains = new[] { "valueToTextMap", "is an empty dictionary", },
-                })
-            .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<CategoricalCellValueFormat<Version>>
-                {
-                    Name = "constructor should throw ArgumentException when parameter 'valueToTextMap' contains a key-value pair with a null value scenario",
-                    ConstructionFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<CategoricalCellValueFormat<Version>>();
-
-                        var dictionaryWithNullValue = referenceObject.ValueToTextMap.ToDictionary(_ => _.Key, _ => _.Value);
-
-                        var randomKey = dictionaryWithNullValue.Keys.ElementAt(ThreadSafeRandom.Next(0, dictionaryWithNullValue.Count));
-
-                        dictionaryWithNullValue[randomKey] = null;
-
-                        var result = new CategoricalCellValueFormat<Version>(
-                                             dictionaryWithNullValue,
-                                             referenceObject.MissingValueText);
-
-                        return result;
-                    },
-                    ExpectedExceptionType = typeof(ArgumentException),
-                    ExpectedExceptionMessageContains = new[] { "valueToTextMap", "contains at least one key-value pair with a null value", },
-                })
-            .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<CategoricalCellValueFormat<Version>>
+                new ConstructorArgumentValidationTestScenario<DateTimeCellValueFormat>
                 {
                     Name = "constructor should throw ArgumentNullException when parameter 'missingValueText' is null scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<CategoricalCellValueFormat<Version>>();
+                        var referenceObject = A.Dummy<DateTimeCellValueFormat>();
 
-                        var result = new CategoricalCellValueFormat<Version>(
-                                             referenceObject.ValueToTextMap,
+                        var result = new DateTimeCellValueFormat(
+                                             referenceObject.Format,
                                              null);
 
                         return result;
@@ -130,15 +90,15 @@ namespace OBeautifulCode.DataStructure.Test
                     ExpectedExceptionMessageContains = new[] { "missingValueText", },
                 })
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<CategoricalCellValueFormat<Version>>
+                new ConstructorArgumentValidationTestScenario<DateTimeCellValueFormat>
                 {
                     Name = "constructor should throw ArgumentException when parameter 'missingValueText' is white space scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<CategoricalCellValueFormat<Version>>();
+                        var referenceObject = A.Dummy<DateTimeCellValueFormat>();
 
-                        var result = new CategoricalCellValueFormat<Version>(
-                                             referenceObject.ValueToTextMap,
+                        var result = new DateTimeCellValueFormat(
+                                             referenceObject.Format,
                                              Invariant($"  {Environment.NewLine}  "));
 
                         return result;
@@ -147,39 +107,39 @@ namespace OBeautifulCode.DataStructure.Test
                     ExpectedExceptionMessageContains = new[] { "missingValueText", "white space", },
                 });
 
-        private static readonly ConstructorPropertyAssignmentTestScenarios<CategoricalCellValueFormat<Version>> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<CategoricalCellValueFormat<Version>>()
+        private static readonly ConstructorPropertyAssignmentTestScenarios<DateTimeCellValueFormat> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<DateTimeCellValueFormat>()
             .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<CategoricalCellValueFormat<Version>>
+                new ConstructorPropertyAssignmentTestScenario<DateTimeCellValueFormat>
                 {
-                    Name = "ValueToTextMap should return same 'valueToTextMap' parameter passed to constructor when getting",
+                    Name = "Format should return same 'format' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
-                        var referenceObject = A.Dummy<CategoricalCellValueFormat<Version>>();
+                        var referenceObject = A.Dummy<DateTimeCellValueFormat>();
 
-                        var result = new SystemUnderTestExpectedPropertyValue<CategoricalCellValueFormat<Version>>
+                        var result = new SystemUnderTestExpectedPropertyValue<DateTimeCellValueFormat>
                         {
-                            SystemUnderTest = new CategoricalCellValueFormat<Version>(
-                                                      referenceObject.ValueToTextMap,
+                            SystemUnderTest = new DateTimeCellValueFormat(
+                                                      referenceObject.Format,
                                                       referenceObject.MissingValueText),
-                            ExpectedPropertyValue = referenceObject.ValueToTextMap,
+                            ExpectedPropertyValue = referenceObject.Format,
                         };
 
                         return result;
                     },
-                    PropertyName = "ValueToTextMap",
+                    PropertyName = "Format",
                 })
             .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<CategoricalCellValueFormat<Version>>
+                new ConstructorPropertyAssignmentTestScenario<DateTimeCellValueFormat>
                 {
                     Name = "MissingValueText should return same 'missingValueText' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
-                        var referenceObject = A.Dummy<CategoricalCellValueFormat<Version>>();
+                        var referenceObject = A.Dummy<DateTimeCellValueFormat>();
 
-                        var result = new SystemUnderTestExpectedPropertyValue<CategoricalCellValueFormat<Version>>
+                        var result = new SystemUnderTestExpectedPropertyValue<DateTimeCellValueFormat>
                         {
-                            SystemUnderTest = new CategoricalCellValueFormat<Version>(
-                                                      referenceObject.ValueToTextMap,
+                            SystemUnderTest = new DateTimeCellValueFormat(
+                                                      referenceObject.Format,
                                                       referenceObject.MissingValueText),
                             ExpectedPropertyValue = referenceObject.MissingValueText,
                         };
@@ -189,19 +149,19 @@ namespace OBeautifulCode.DataStructure.Test
                     PropertyName = "MissingValueText",
                 });
 
-        private static readonly DeepCloneWithTestScenarios<CategoricalCellValueFormat<Version>> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<CategoricalCellValueFormat<Version>>()
+        private static readonly DeepCloneWithTestScenarios<DateTimeCellValueFormat> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<DateTimeCellValueFormat>()
             .AddScenario(() =>
-                new DeepCloneWithTestScenario<CategoricalCellValueFormat<Version>>
+                new DeepCloneWithTestScenario<DateTimeCellValueFormat>
                 {
                     Name = "DeepCloneWithMissingValueText should deep clone object and replace MissingValueText with the provided missingValueText",
                     WithPropertyName = "MissingValueText",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<CategoricalCellValueFormat<Version>>();
+                        var systemUnderTest = A.Dummy<DateTimeCellValueFormat>();
 
-                        var referenceObject = A.Dummy<CategoricalCellValueFormat<Version>>().ThatIs(_ => !systemUnderTest.MissingValueText.IsEqualTo(_.MissingValueText));
+                        var referenceObject = A.Dummy<DateTimeCellValueFormat>().ThatIs(_ => !systemUnderTest.MissingValueText.IsEqualTo(_.MissingValueText));
 
-                        var result = new SystemUnderTestDeepCloneWithValue<CategoricalCellValueFormat<Version>>
+                        var result = new SystemUnderTestDeepCloneWithValue<DateTimeCellValueFormat>
                         {
                             SystemUnderTest = systemUnderTest,
                             DeepCloneWithValue = referenceObject.MissingValueText,
@@ -211,47 +171,47 @@ namespace OBeautifulCode.DataStructure.Test
                     },
                 })
             .AddScenario(() =>
-                new DeepCloneWithTestScenario<CategoricalCellValueFormat<Version>>
+                new DeepCloneWithTestScenario<DateTimeCellValueFormat>
                 {
-                    Name = "DeepCloneWithValueToTextMap should deep clone object and replace ValueToTextMap with the provided valueToTextMap",
-                    WithPropertyName = "ValueToTextMap",
+                    Name = "DeepCloneWithFormat should deep clone object and replace Format with the provided format",
+                    WithPropertyName = "Format",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<CategoricalCellValueFormat<Version>>();
+                        var systemUnderTest = A.Dummy<DateTimeCellValueFormat>();
 
-                        var referenceObject = A.Dummy<CategoricalCellValueFormat<Version>>().ThatIs(_ => !systemUnderTest.ValueToTextMap.IsEqualTo(_.ValueToTextMap));
+                        var referenceObject = A.Dummy<DateTimeCellValueFormat>().ThatIs(_ => !systemUnderTest.Format.IsEqualTo(_.Format));
 
-                        var result = new SystemUnderTestDeepCloneWithValue<CategoricalCellValueFormat<Version>>
+                        var result = new SystemUnderTestDeepCloneWithValue<DateTimeCellValueFormat>
                         {
                             SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.ValueToTextMap,
+                            DeepCloneWithValue = referenceObject.Format,
                         };
 
                         return result;
                     },
                 });
 
-        private static readonly CategoricalCellValueFormat<Version> ReferenceObjectForEquatableTestScenarios = A.Dummy<CategoricalCellValueFormat<Version>>();
+        private static readonly DateTimeCellValueFormat ReferenceObjectForEquatableTestScenarios = A.Dummy<DateTimeCellValueFormat>();
 
-        private static readonly EquatableTestScenarios<CategoricalCellValueFormat<Version>> EquatableTestScenarios = new EquatableTestScenarios<CategoricalCellValueFormat<Version>>()
+        private static readonly EquatableTestScenarios<DateTimeCellValueFormat> EquatableTestScenarios = new EquatableTestScenarios<DateTimeCellValueFormat>()
             .AddScenario(() =>
-                new EquatableTestScenario<CategoricalCellValueFormat<Version>>
+                new EquatableTestScenario<DateTimeCellValueFormat>
                 {
                     Name = "Default Code Generated Scenario",
                     ReferenceObject = ReferenceObjectForEquatableTestScenarios,
-                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new CategoricalCellValueFormat<Version>[]
+                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new DateTimeCellValueFormat[]
                     {
-                        new CategoricalCellValueFormat<Version>(
-                                ReferenceObjectForEquatableTestScenarios.ValueToTextMap,
+                        new DateTimeCellValueFormat(
+                                ReferenceObjectForEquatableTestScenarios.Format,
                                 ReferenceObjectForEquatableTestScenarios.MissingValueText),
                     },
-                    ObjectsThatAreNotEqualToReferenceObject = new CategoricalCellValueFormat<Version>[]
+                    ObjectsThatAreNotEqualToReferenceObject = new DateTimeCellValueFormat[]
                     {
-                        new CategoricalCellValueFormat<Version>(
-                                ReferenceObjectForEquatableTestScenarios.ValueToTextMap,
-                                A.Dummy<CategoricalCellValueFormat<Version>>().Whose(_ => !_.MissingValueText.IsEqualTo(ReferenceObjectForEquatableTestScenarios.MissingValueText)).MissingValueText),
-                        new CategoricalCellValueFormat<Version>(
-                                A.Dummy<CategoricalCellValueFormat<Version>>().Whose(_ => !_.ValueToTextMap.IsEqualTo(ReferenceObjectForEquatableTestScenarios.ValueToTextMap)).ValueToTextMap,
+                        new DateTimeCellValueFormat(
+                                ReferenceObjectForEquatableTestScenarios.Format,
+                                A.Dummy<DateTimeCellValueFormat>().Whose(_ => !_.MissingValueText.IsEqualTo(ReferenceObjectForEquatableTestScenarios.MissingValueText)).MissingValueText),
+                        new DateTimeCellValueFormat(
+                                A.Dummy<DateTimeCellValueFormat>().Whose(_ => !_.Format.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Format)).Format,
                                 ReferenceObjectForEquatableTestScenarios.MissingValueText),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
@@ -262,7 +222,7 @@ namespace OBeautifulCode.DataStructure.Test
                         A.Dummy<int?>(),
                         A.Dummy<Guid>(),
                         A.Dummy<BooleanCellValueFormat>(),
-                        A.Dummy<DateTimeCellValueFormat>(),
+                        A.Dummy<CategoricalCellValueFormat<Version>>(),
                         A.Dummy<DecimalCellValueFormat>(),
                         A.Dummy<HtmlCellValueFormat>(),
                         A.Dummy<NullNumberCellFormat<Version>>(),
@@ -288,12 +248,12 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void CategoricalCellValueFormat_of_Version___Should_implement_IModel_of_CategoricalCellValueFormat_of_Version___When_reflecting()
+            public static void DateTimeCellValueFormat___Should_implement_IModel_of_DateTimeCellValueFormat___When_reflecting()
             {
                 // Arrange
-                var type = typeof(CategoricalCellValueFormat<Version>);
+                var type = typeof(DateTimeCellValueFormat);
 
-                var expectedModelMethods = typeof(IModel<CategoricalCellValueFormat<Version>>).GetInterfaceDeclaredAndImplementedMethods();
+                var expectedModelMethods = typeof(IModel<DateTimeCellValueFormat>).GetInterfaceDeclaredAndImplementedMethods();
 
                 var expectedModelMethodHashes = expectedModelMethods.Select(_ => _.GetSignatureHash());
 
@@ -303,7 +263,7 @@ namespace OBeautifulCode.DataStructure.Test
                 var actualModelMethodHashes = actualModelMethods.Select(_ => _.GetSignatureHash());
 
                 // Assert
-                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<CategoricalCellValueFormat<Version>>));
+                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<DateTimeCellValueFormat>));
                 expectedModelMethodHashes.Except(actualModelMethodHashes).AsTest().Must().BeEmptyEnumerable();
             }
 
@@ -321,10 +281,10 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void CategoricalCellValueFormat_of_Version___Should_be_attributed_with_Serializable____When_reflecting()
+            public static void DateTimeCellValueFormat___Should_be_attributed_with_Serializable____When_reflecting()
             {
                 // Arrange
-                var type = typeof(CategoricalCellValueFormat<Version>);
+                var type = typeof(DateTimeCellValueFormat);
 
                 // Act
                 var actualAttributes = type.GetCustomAttributes(typeof(SerializableAttribute), false);
@@ -504,10 +464,10 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Clone___Should_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<CategoricalCellValueFormat<Version>>();
+                var systemUnderTest = A.Dummy<DateTimeCellValueFormat>();
 
                 // Act
-                var actual = (CategoricalCellValueFormat<Version>)systemUnderTest.Clone();
+                var actual = (DateTimeCellValueFormat)systemUnderTest.Clone();
 
                 // Assert
                 actual.AsTest().Must().BeEqualTo(systemUnderTest);
@@ -531,7 +491,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void DeepClone___Should_deep_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<CategoricalCellValueFormat<Version>>();
+                var systemUnderTest = A.Dummy<DateTimeCellValueFormat>();
 
                 // Act
                 var actual = systemUnderTest.DeepClone();
@@ -540,16 +500,16 @@ namespace OBeautifulCode.DataStructure.Test
                 actual.AsTest().Must().BeEqualTo(systemUnderTest);
                 actual.AsTest().Must().NotBeSameReferenceAs(systemUnderTest);
 
-                if (systemUnderTest.ValueToTextMap == null)
+                if (systemUnderTest.Format == null)
                 {
-                    actual.ValueToTextMap.AsTest().Must().BeNull();
+                    actual.Format.AsTest().Must().BeNull();
                 }
-                else if (!actual.ValueToTextMap.GetType().IsValueType)
+                else if (!actual.Format.GetType().IsValueType)
                 {
                     // When the declared type is a reference type, we still have to check the runtime type.
                     // The object could be a boxed value type, which will fail this asseration because
                     // a deep clone of a value type object is the same object.
-                    actual.ValueToTextMap.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.ValueToTextMap);
+                    actual.Format.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.Format);
                 }
             }
 
@@ -569,7 +529,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "MissingValueText", "ValueToTextMap" };
+                var propertyNames = new string[] { "MissingValueText", "Format" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 
@@ -582,12 +542,12 @@ namespace OBeautifulCode.DataStructure.Test
                     }
 
                     // Act
-                    var actual = (CategoricalCellValueFormat<Version>)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
+                    var actual = (DateTimeCellValueFormat)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
 
                     // Assert
                     foreach(var propertyName in propertyNames)
                     {
-                        var propertyInfo = typeof(CategoricalCellValueFormat<Version>).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
+                        var propertyInfo = typeof(DateTimeCellValueFormat).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
 
                         var actualPropertyValue = propertyInfo.GetValue(actual);
 
@@ -649,7 +609,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<CategoricalCellValueFormat<Version>>();
+                var expected = A.Dummy<DateTimeCellValueFormat>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -678,7 +638,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<CategoricalCellValueFormat<Version>>();
+                var expected = A.Dummy<DateTimeCellValueFormat>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -707,7 +667,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<CategoricalCellValueFormat<Version>>();
+                var expected = A.Dummy<DateTimeCellValueFormat>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -736,7 +696,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<CategoricalCellValueFormat<Version>>();
+                var expected = A.Dummy<DateTimeCellValueFormat>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -770,8 +730,8 @@ namespace OBeautifulCode.DataStructure.Test
             public static void EqualsOperator___Should_return_true___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                CategoricalCellValueFormat<Version> systemUnderTest1 = null;
-                CategoricalCellValueFormat<Version> systemUnderTest2 = null;
+                DateTimeCellValueFormat systemUnderTest1 = null;
+                DateTimeCellValueFormat systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 == systemUnderTest2;
@@ -801,7 +761,7 @@ namespace OBeautifulCode.DataStructure.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    CategoricalCellValueFormat<Version> systemUnderTest = null;
+                    DateTimeCellValueFormat systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest == scenario.ReferenceObject;
@@ -950,8 +910,8 @@ namespace OBeautifulCode.DataStructure.Test
             public static void NotEqualsOperator___Should_return_false___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                CategoricalCellValueFormat<Version> systemUnderTest1 = null;
-                CategoricalCellValueFormat<Version> systemUnderTest2 = null;
+                DateTimeCellValueFormat systemUnderTest1 = null;
+                DateTimeCellValueFormat systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 != systemUnderTest2;
@@ -981,7 +941,7 @@ namespace OBeautifulCode.DataStructure.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    CategoricalCellValueFormat<Version> systemUnderTest = null;
+                    DateTimeCellValueFormat systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest != scenario.ReferenceObject;
@@ -1127,17 +1087,17 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_CellValueFormatBase_of_Version___Should_return_false___When_parameter_other_is_null()
+            public static void Equals_with_CellValueFormatBase_of_DateTime___Should_return_false___When_parameter_other_is_null()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    CellValueFormatBase<Version> systemUnderTest = null;
+                    CellValueFormatBase<DateTime> systemUnderTest = null;
 
                     // Act
-                    var actual = scenario.ReferenceObject.Equals((CellValueFormatBase<Version>)systemUnderTest);
+                    var actual = scenario.ReferenceObject.Equals((CellValueFormatBase<DateTime>)systemUnderTest);
 
                     // Assert
                     actual.AsTest().Must().BeFalse(because: scenario.Id);
@@ -1158,14 +1118,14 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_CellValueFormatBase_of_Version___Should_return_true___When_parameter_other_is_same_object()
+            public static void Equals_with_CellValueFormatBase_of_DateTime___Should_return_true___When_parameter_other_is_same_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange, Act
-                    var actual = scenario.ReferenceObject.Equals((CellValueFormatBase<Version>)scenario.ReferenceObject);
+                    var actual = scenario.ReferenceObject.Equals((CellValueFormatBase<DateTime>)scenario.ReferenceObject);
 
                     // Assert
                     actual.AsTest().Must().BeTrue(because: scenario.Id);
@@ -1186,14 +1146,14 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_CellValueFormatBase_of_Version___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
+            public static void Equals_with_CellValueFormatBase_of_DateTime___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange, Act
-                    var actuals = scenario.ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((CellValueFormatBase<Version>)_)).ToList();
+                    var actuals = scenario.ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((CellValueFormatBase<DateTime>)_)).ToList();
 
                     // Assert
                     actuals.AsTest().Must().Each().BeFalse(because: scenario.Id);
@@ -1214,14 +1174,14 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_CellValueFormatBase_of_Version___Should_return_false___When_objects_being_compared_have_different_property_values()
+            public static void Equals_with_CellValueFormatBase_of_DateTime___Should_return_false___When_objects_being_compared_have_different_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange, Act
-                    var actuals = scenario.ObjectsThatAreNotEqualToReferenceObject.Select(_ => scenario.ReferenceObject.Equals((CellValueFormatBase<Version>)_)).ToList();
+                    var actuals = scenario.ObjectsThatAreNotEqualToReferenceObject.Select(_ => scenario.ReferenceObject.Equals((CellValueFormatBase<DateTime>)_)).ToList();
 
                     // Assert
                     actuals.AsTest().Must().Each().BeFalse(because: scenario.Id);
@@ -1242,14 +1202,14 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_CellValueFormatBase_of_Version___Should_return_true___When_objects_being_compared_have_same_property_values()
+            public static void Equals_with_CellValueFormatBase_of_DateTime___Should_return_true___When_objects_being_compared_have_same_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange, Act
-                    var actuals = scenario.ObjectsThatAreEqualToButNotTheSameAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((CellValueFormatBase<Version>)_)).ToList();
+                    var actuals = scenario.ObjectsThatAreEqualToButNotTheSameAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((CellValueFormatBase<DateTime>)_)).ToList();
 
                     // Assert
                     actuals.AsTest().Must().Each().BeTrue(because: scenario.Id);
@@ -1270,17 +1230,17 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_StandardCellValueFormatBase_of_Version___Should_return_false___When_parameter_other_is_null()
+            public static void Equals_with_StandardCellValueFormatBase_of_DateTime___Should_return_false___When_parameter_other_is_null()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    StandardCellValueFormatBase<Version> systemUnderTest = null;
+                    StandardCellValueFormatBase<DateTime> systemUnderTest = null;
 
                     // Act
-                    var actual = scenario.ReferenceObject.Equals((StandardCellValueFormatBase<Version>)systemUnderTest);
+                    var actual = scenario.ReferenceObject.Equals((StandardCellValueFormatBase<DateTime>)systemUnderTest);
 
                     // Assert
                     actual.AsTest().Must().BeFalse(because: scenario.Id);
@@ -1301,14 +1261,14 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_StandardCellValueFormatBase_of_Version___Should_return_true___When_parameter_other_is_same_object()
+            public static void Equals_with_StandardCellValueFormatBase_of_DateTime___Should_return_true___When_parameter_other_is_same_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange, Act
-                    var actual = scenario.ReferenceObject.Equals((StandardCellValueFormatBase<Version>)scenario.ReferenceObject);
+                    var actual = scenario.ReferenceObject.Equals((StandardCellValueFormatBase<DateTime>)scenario.ReferenceObject);
 
                     // Assert
                     actual.AsTest().Must().BeTrue(because: scenario.Id);
@@ -1329,14 +1289,14 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_StandardCellValueFormatBase_of_Version___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
+            public static void Equals_with_StandardCellValueFormatBase_of_DateTime___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange, Act
-                    var actuals = scenario.ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((StandardCellValueFormatBase<Version>)_)).ToList();
+                    var actuals = scenario.ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((StandardCellValueFormatBase<DateTime>)_)).ToList();
 
                     // Assert
                     actuals.AsTest().Must().Each().BeFalse(because: scenario.Id);
@@ -1357,14 +1317,14 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_StandardCellValueFormatBase_of_Version___Should_return_false___When_objects_being_compared_have_different_property_values()
+            public static void Equals_with_StandardCellValueFormatBase_of_DateTime___Should_return_false___When_objects_being_compared_have_different_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange, Act
-                    var actuals = scenario.ObjectsThatAreNotEqualToReferenceObject.Select(_ => scenario.ReferenceObject.Equals((StandardCellValueFormatBase<Version>)_)).ToList();
+                    var actuals = scenario.ObjectsThatAreNotEqualToReferenceObject.Select(_ => scenario.ReferenceObject.Equals((StandardCellValueFormatBase<DateTime>)_)).ToList();
 
                     // Assert
                     actuals.AsTest().Must().Each().BeFalse(because: scenario.Id);
@@ -1385,14 +1345,14 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_StandardCellValueFormatBase_of_Version___Should_return_true___When_objects_being_compared_have_same_property_values()
+            public static void Equals_with_StandardCellValueFormatBase_of_DateTime___Should_return_true___When_objects_being_compared_have_same_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange, Act
-                    var actuals = scenario.ObjectsThatAreEqualToButNotTheSameAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((StandardCellValueFormatBase<Version>)_)).ToList();
+                    var actuals = scenario.ObjectsThatAreEqualToButNotTheSameAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((StandardCellValueFormatBase<DateTime>)_)).ToList();
 
                     // Assert
                     actuals.AsTest().Must().Each().BeTrue(because: scenario.Id);
@@ -1413,14 +1373,14 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_CategoricalCellValueFormat_of_Version___Should_return_false___When_parameter_other_is_null()
+            public static void Equals_with_DateTimeCellValueFormat___Should_return_false___When_parameter_other_is_null()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    CategoricalCellValueFormat<Version> systemUnderTest = null;
+                    DateTimeCellValueFormat systemUnderTest = null;
 
                     // Act
                     var actual = scenario.ReferenceObject.Equals(systemUnderTest);
@@ -1444,7 +1404,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_CategoricalCellValueFormat_of_Version___Should_return_true___When_parameter_other_is_same_object()
+            public static void Equals_with_DateTimeCellValueFormat___Should_return_true___When_parameter_other_is_same_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1472,7 +1432,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_CategoricalCellValueFormat_of_Version___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
+            public static void Equals_with_DateTimeCellValueFormat___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1500,7 +1460,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_CategoricalCellValueFormat_of_Version___Should_return_false___When_objects_being_compared_have_different_property_values()
+            public static void Equals_with_DateTimeCellValueFormat___Should_return_false___When_objects_being_compared_have_different_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1528,7 +1488,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_CategoricalCellValueFormat_of_Version___Should_return_true___When_objects_being_compared_have_same_property_values()
+            public static void Equals_with_DateTimeCellValueFormat___Should_return_true___When_objects_being_compared_have_same_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 

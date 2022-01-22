@@ -14,7 +14,7 @@ namespace OBeautifulCode.DataStructure
     using static System.FormattableString;
 
     /// <summary>
-    /// A cell value format for a boolean value.
+    /// A cell value format for a <see cref="bool"/> value.
     /// </summary>
     // ReSharper disable once RedundantExtendsListEntry
     public partial class BooleanCellValueFormat : StandardCellValueFormatBase<bool>, IModelViaCodeGen

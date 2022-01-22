@@ -416,6 +416,11 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<IReadOnlyList<RowFormat>>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new DateTimeCellValueFormat(
+                                 A.Dummy<DateTimeFormat>(),
+                                 A.Dummy<string>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new DateTimeFormat(
                                  A.Dummy<DateTimeFormatKind?>(),
                                  A.Dummy<CultureKind?>(),
