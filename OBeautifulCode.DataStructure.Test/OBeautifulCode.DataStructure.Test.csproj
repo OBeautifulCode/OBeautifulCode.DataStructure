@@ -205,6 +205,18 @@
     <Compile Include=".recipes\OBeautifulCode.Type\TypeDummyFactory.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeDummyFactory.designer.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
+    <Compile Include="Models\Classes\Format\CellValue\Number\DecimalCellValueFormatTest.cs" />
+    <Compile Include="Models\Classes\Format\CellValue\Number\DecimalCellValueFormatTest.designer.cs">
+      <DependentUpon>DecimalCellValueFormatTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Format\CellValue\Number\NullNumberCellFormat{TValue}Test.cs" />
+    <Compile Include="Models\Classes\Format\CellValue\Number\NullNumberCellFormat{TValue}Test.designer.cs">
+      <DependentUpon>NullNumberCellFormat{TValue}Test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Format\CellValue\Number\PercentCellValueFormatTest.cs" />
+    <Compile Include="Models\Classes\Format\CellValue\Number\PercentCellValueFormatTest.designer.cs">
+      <DependentUpon>PercentCellValueFormatTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Classes\Format\DateTimeFormatTest.cs" />
     <Compile Include="Models\Classes\Format\DateTimeFormatTest.designer.cs">
       <DependentUpon>DateTimeFormatTest.cs</DependentUpon>
@@ -235,10 +247,6 @@
     <Compile Include="Logic\Extensions\CellExtensionsTest.cs" />
     <Compile Include="Logic\Protocols\DataStructureConvenienceProtocolsTest.cs" />
     <Compile Include="Logic\Protocols\DataStructureCellProtocolsTest.cs" />
-    <Compile Include="Models\Classes\Format\CellValue\Concrete\NullNumberCellFormat{TValue}Test.cs" />
-    <Compile Include="Models\Classes\Format\CellValue\Concrete\NullNumberCellFormat{TValue}Test.designer.cs">
-      <DependentUpon>NullNumberCellFormat{TValue}Test.cs</DependentUpon>
-    </Compile>
     <Compile Include="Operations\Null\NullMultiStatementOp{TStatement,TResult}Test.cs" />
     <Compile Include="Operations\Null\NullMultiStatementOp{TStatement,TResult}Test.designer.cs">
       <DependentUpon>NullMultiStatementOp{TStatement,TResult}Test.cs</DependentUpon>
@@ -351,20 +359,16 @@
     <Compile Include="Models\Classes\Row\FooterRowsTest.designer.cs">
       <DependentUpon>FooterRowsTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Classes\Format\CellValue\Concrete\BooleanCellValueFormatTest.cs" />
-    <Compile Include="Models\Classes\Format\CellValue\Concrete\BooleanCellValueFormatTest.designer.cs">
+    <Compile Include="Models\Classes\Format\CellValue\Standard\BooleanCellValueFormatTest.cs" />
+    <Compile Include="Models\Classes\Format\CellValue\Standard\BooleanCellValueFormatTest.designer.cs">
       <DependentUpon>BooleanCellValueFormatTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Classes\Format\CellValue\Concrete\CategoricalCellValueFormat{TValue}Test.cs" />
-    <Compile Include="Models\Classes\Format\CellValue\Concrete\CategoricalCellValueFormat{TValue}Test.designer.cs">
+    <Compile Include="Models\Classes\Format\CellValue\Standard\CategoricalCellValueFormat{TValue}Test.cs" />
+    <Compile Include="Models\Classes\Format\CellValue\Standard\CategoricalCellValueFormat{TValue}Test.designer.cs">
       <DependentUpon>CategoricalCellValueFormat{TValue}Test.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Classes\Format\CellValue\Concrete\DecimalCellValueFormatTest.cs" />
-    <Compile Include="Models\Classes\Format\CellValue\Concrete\DecimalCellValueFormatTest.designer.cs">
-      <DependentUpon>DecimalCellValueFormatTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Format\CellValue\Concrete\HtmlCellValueFormatTest.cs" />
-    <Compile Include="Models\Classes\Format\CellValue\Concrete\HtmlCellValueFormatTest.designer.cs">
+    <Compile Include="Models\Classes\Format\CellValue\Standard\HtmlCellValueFormatTest.cs" />
+    <Compile Include="Models\Classes\Format\CellValue\Standard\HtmlCellValueFormatTest.designer.cs">
       <DependentUpon>HtmlCellValueFormatTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Classes\Format\CellValue\CellValueFormatBase{TValue}Test.cs" />
@@ -549,8 +553,8 @@
     <Compile Include="Models\Classes\Report\TreeTableTest.designer.cs">
       <DependentUpon>TreeTableTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Classes\Format\CellValue\NumberCellFormatBase{TValue}Test.cs" />
-    <Compile Include="Models\Classes\Format\CellValue\NumberCellFormatBase{TValue}Test.designer.cs">
+    <Compile Include="Models\Classes\Format\CellValue\Number\NumberCellFormatBase{TValue}Test.cs" />
+    <Compile Include="Models\Classes\Format\CellValue\Number\NumberCellFormatBase{TValue}Test.designer.cs">
       <DependentUpon>NumberCellFormatBase{TValue}Test.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Classes\Cell\NotSlottedCellBaseTest.cs" />
@@ -688,10 +692,6 @@
     <Compile Include="Operations\SingleStatementOpBase{TStatement,TResult}Test.designer.cs">
       <DependentUpon>SingleStatementOpBase{TStatement,TResult}Test.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Classes\Format\CellValue\Concrete\PercentCellValueFormatTest.cs" />
-    <Compile Include="Models\Classes\Format\CellValue\Concrete\PercentCellValueFormatTest.designer.cs">
-      <DependentUpon>PercentCellValueFormatTest.cs</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\GlobalSuppressions.cs" />
     <Compile Include="DataStructureDummyFactory.cs" />
@@ -739,6 +739,7 @@
   <ItemGroup>
     <Content Include=".analyzers\dictionary.xml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
