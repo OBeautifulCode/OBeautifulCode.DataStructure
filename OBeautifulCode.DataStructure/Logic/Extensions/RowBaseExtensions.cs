@@ -7,6 +7,7 @@
 namespace OBeautifulCode.DataStructure
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using static System.FormattableString;
 
@@ -46,6 +47,7 @@ namespace OBeautifulCode.DataStructure
         /// <returns>
         /// The padded row.
         /// </returns>
+        [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "More useful to end-user to return concrete type.")]
         public static FlatRow Pad(
             this FlatRow row,
             int requiredNumberOfColumnsSpanned)
@@ -63,6 +65,7 @@ namespace OBeautifulCode.DataStructure
         /// <returns>
         /// The padded row.
         /// </returns>
+        [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "More useful to end-user to return concrete type.")]
         public static Row Pad(
             this Row row,
             int requiredNumberOfColumnsSpanned)

@@ -186,7 +186,6 @@ namespace OBeautifulCode.DataStructure.Test
                         return result;
                     },
                 });
-
         }
     }
 }
