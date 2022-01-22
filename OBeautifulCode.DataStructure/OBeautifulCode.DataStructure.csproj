@@ -39,8 +39,8 @@
     <CodeAnalysisRuleSet />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="OBeautifulCode.Type, Version=1.0.107.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OBeautifulCode.Type.1.0.107\lib\net462\OBeautifulCode.Type.dll</HintPath>
+    <Reference Include="OBeautifulCode.Type, Version=1.0.110.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Type.1.0.110\lib\net462\OBeautifulCode.Type.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
@@ -376,6 +376,7 @@
     <Compile Include="Models\Classes\Format\Report\SectionFormat.designer.cs">
       <DependentUpon>SectionFormat.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\Classes\Format\DateTimeFormat.cs" />
     <Compile Include="Models\Classes\HoverOver\HoverOverBase.cs" />
     <Compile Include="Interfaces\Classification\Resource\IHoverOver.cs" />
     <Compile Include="Interfaces\Property\IHaveCellFormat.cs" />
