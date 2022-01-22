@@ -293,7 +293,7 @@
     <Compile Include="Models\Classes\Format\Border\OuterBorder.designer.cs">
       <DependentUpon>OuterBorder.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Classes\Format\CellValue\Boolean\BooleanCellValueFormat.designer.cs">
+    <Compile Include="Models\Classes\Format\CellValue\Standard\BooleanCellValueFormat.designer.cs">
       <DependentUpon>BooleanCellValueFormat.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Classes\Format\CellValue\Standard\CategoricalCellValueFormat{TValue}.designer.cs">
@@ -312,7 +312,7 @@
     <Compile Include="Models\Classes\Format\CellValue\Number\PercentCellValueFormat.cs" />
     <Compile Include="Models\Classes\Format\CellValue\Number\DecimalCellValueFormat.cs" />
     <Compile Include="Models\Classes\Format\CellValue\Standard\CategoricalCellValueFormat{TValue}.cs" />
-    <Compile Include="Models\Classes\Format\CellValue\Boolean\BooleanCellValueFormat.cs" />
+    <Compile Include="Models\Classes\Format\CellValue\Standard\BooleanCellValueFormat.cs" />
     <Compile Include="Models\Classes\Format\CellValue\Number\PercentCellValueFormat.designer.cs">
       <DependentUpon>PercentCellValueFormat.cs</DependentUpon>
     </Compile>
