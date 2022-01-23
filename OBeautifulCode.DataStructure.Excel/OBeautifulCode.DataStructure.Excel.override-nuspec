@@ -1,0 +1,8 @@
+﻿<?xml version="1.0"?>
+<package>
+  <metadata>
+    <description>Renders OBeautifulCode.DataStructure types in Excel</description>
+    <tags>Excel DataStructure</tags>
+    <iconUrl>https://raw.githubusercontent.com/OBeautifulCode/OBeautifulCode.DataStructure/main/OBeautifulCode.DataStructure.Excel/nuget-icon.png</iconUrl>
+  </metadata>
+</package>

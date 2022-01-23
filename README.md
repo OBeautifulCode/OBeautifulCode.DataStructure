@@ -8,4 +8,6 @@
 
 [![Nuget status](https://img.shields.io/nuget/v/OBeautifulCode.DataStructure.Recipes.DummyFactory.svg)](https://www.nuget.org/packages/OBeautifulCode.DataStructure.Recipes.DummyFactory)  OBeautifulCode.DataStructure.Recipes.DummyFactory
 
+[![Nuget status](https://img.shields.io/nuget/v/OBeautifulCode.DataStructure.Excel.svg)](https://www.nuget.org/packages/OBeautifulCode.DataStructure.Excel)  OBeautifulCode.DataStructure.Excel
+
 # OBeautifulCode.DataStructure
