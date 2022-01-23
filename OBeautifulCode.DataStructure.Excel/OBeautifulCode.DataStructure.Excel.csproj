@@ -37,6 +37,18 @@
     <DocumentationFile>bin\Release\OBeautifulCode.DataStructure.Excel.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Aspose.Cells, Version=9.0.0.0, Culture=neutral, PublicKeyToken=716fcc553a201e56, processorArchitecture=MSIL">
+      <HintPath>..\packages\Aspose.Cells.9.0.0\lib\net40\Aspose.Cells.dll</HintPath>
+    </Reference>
+    <Reference Include="OBeautifulCode.Excel, Version=1.0.74.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Excel.1.0.74\lib\net462\OBeautifulCode.Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="OBeautifulCode.Excel.AsposeCells, Version=1.0.74.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Excel.AsposeCells.1.0.74\lib\net462\OBeautifulCode.Excel.AsposeCells.dll</HintPath>
+    </Reference>
+    <Reference Include="OBeautifulCode.Type, Version=1.0.104.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Type.1.0.104\lib\net462\OBeautifulCode.Type.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
@@ -47,6 +59,7 @@
     <Compile Include="ReportProjector.cs" />
     <Compile Include="Properties\ProjectInfo.cs" />
     <AdditionalFiles Include=".analyzers\stylecop.json" />
+    <Compile Include="ReportToWorkbookProjectionContext.cs" />
     <None Include=".analyzers\release.ruleset" />
     <None Include="OBeautifulCode.DataStructure.Excel.override-nuspec" />
     <None Include="packages.config" />
