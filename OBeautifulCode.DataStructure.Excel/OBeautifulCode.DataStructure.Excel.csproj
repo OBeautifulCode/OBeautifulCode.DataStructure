@@ -55,10 +55,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include=".recipes\OBeautifulCode.CodeAnalysis\ObcSuppressBecause.cs" />
+    <Compile Include="Delegates.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\GlobalSuppressions.cs" />
-    <Compile Include="ReportProjector.cs" />
     <Compile Include="Properties\ProjectInfo.cs" />
+    <Compile Include="ReportProjector.cs" />
     <Compile Include="ReportToWorkbookProjectionContext.cs" />
     <AdditionalFiles Include=".analyzers\stylecop.json" />
     <None Include=".analyzers\release.ruleset" />

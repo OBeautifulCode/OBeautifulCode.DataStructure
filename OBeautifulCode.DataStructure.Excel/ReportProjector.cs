@@ -6,8 +6,8 @@
 
 namespace OBeautifulCode.DataStructure.Excel
 {
-    using System;
     using Aspose.Cells;
+    using OBeautifulCode.Excel.AsposeCells;
 
     /// <summary>
     /// Projects a <see cref="Report"/> into an Excel workbook.
@@ -26,7 +26,14 @@ namespace OBeautifulCode.DataStructure.Excel
             this Report report,
             ReportToWorkbookProjectionContext context)
         {
-            throw new NotImplementedException();
+            var result = General.CreateStandardWorkbook().RemoveDefaultWorksheet();
+
+            if (context.BuildDocumentPropertiesDelegate != null)
+            {
+                result.SetDocumentProperties(context.BuildDocumentPropertiesDelegate(report.Title));
+            }
+
+            return result;
         }
     }
 }

@@ -13,5 +13,9 @@ namespace OBeautifulCode.DataStructure.Excel
     /// </summary>
     public class ReportToWorkbookProjectionContext
     {
+        /// <summary>
+        /// Gets or sets the delegate to use to build the Excel document properties.
+        /// </summary>
+        public BuildDocumentPropertiesDelegate BuildDocumentPropertiesDelegate { get; set; }
     }
 }
