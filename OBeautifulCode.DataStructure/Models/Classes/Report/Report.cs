@@ -75,7 +75,7 @@ namespace OBeautifulCode.DataStructure
 
             if ((timestampUtc != null) && (((DateTime)timestampUtc).Kind != DateTimeKind.Utc))
             {
-                throw new ArgumentException(Invariant($"{timestampUtc} is not in UTC."));
+                throw new ArgumentException(Invariant($"{nameof(timestampUtc)} is not in UTC."));
             }
 
             this.Id = id;
