@@ -6,7 +6,9 @@
 
 namespace OBeautifulCode.DataStructure.Excel
 {
+    using System;
     using Aspose.Cells;
+    using OBeautifulCode.Excel;
     using OBeautifulCode.Excel.AsposeCells;
 
     /// <summary>
@@ -18,20 +20,30 @@ namespace OBeautifulCode.DataStructure.Excel
         /// Projects a <see cref="Report"/> into a <see cref="Workbook"/>.
         /// </summary>
         /// <param name="report">The report.</param>
-        /// <param name="context">The context to use.</param>
+        /// <param name="context">OPTIONAL context to use.  DEFAULT is no context.</param>
         /// <returns>
         /// The <see cref="Workbook"/>.
         /// </returns>
         public static Workbook ToExcelWorkbook(
             this Report report,
-            ReportToWorkbookProjectionContext context)
+            ReportToWorkbookProjectionContext context = null)
         {
+            if (report == null)
+            {
+                throw new ArgumentNullException(nameof(report));
+            }
+
+            context = context ?? new ReportToWorkbookProjectionContext();
+
             var result = General.CreateStandardWorkbook().RemoveDefaultWorksheet();
 
-            if (context.BuildDocumentPropertiesDelegate != null)
-            {
-                result.SetDocumentProperties(context.BuildDocumentPropertiesDelegate(report.Title));
-            }
+            var documentProperties = context.BuildDocumentPropertiesDelegate == null
+                ? new DocumentProperties()
+                : context.BuildDocumentPropertiesDelegate(report.Title);
+
+            // If report has a timestamp, should we set BuiltInDocumentPropertyKind.CreationDate and LastSaveTime to that timestamp?
+            // Should those properties reflect when the workbook was created or when the report was created?
+            result.SetDocumentProperties(documentProperties);
 
             return result;
         }
