@@ -6,6 +6,8 @@
 
 namespace OBeautifulCode.DataStructure.Excel
 {
+    using System.Diagnostics.CodeAnalysis;
+    using OBeautifulCode.CodeAnalysis.Recipes;
     using OBeautifulCode.Excel;
 
     /// <summary>
@@ -15,5 +17,6 @@ namespace OBeautifulCode.DataStructure.Excel
     /// <returns>
     /// The Excel document properties to use.
     /// </returns>
+    [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix", Justification = ObcSuppressBecause.CA1711_IdentifiersShouldNotHaveIncorrectSuffix_PreferToUseDelegateForNonEventHandlingNonCallbackDelegates)]
     public delegate DocumentProperties BuildDocumentPropertiesDelegate(string title);
 }
