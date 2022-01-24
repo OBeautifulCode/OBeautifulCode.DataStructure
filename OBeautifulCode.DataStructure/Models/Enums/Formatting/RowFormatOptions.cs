@@ -33,5 +33,10 @@ namespace OBeautifulCode.DataStructure
         /// Disable the ability to collapse the row.
         /// </summary>
         DisableCollapsing = 4,
+
+        /// <summary>
+        /// When displaying the child rows, align them with their parent; do not indent.
+        /// </summary>
+        AlignChildRowsWithParent = 8,
     }
 }
