@@ -37,6 +37,11 @@ namespace OBeautifulCode.DataStructure.Test
         public DefaultDataStructureDummyFactory()
         {
             AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new AdditionalReportInfo(
+                                 A.Dummy<string>(),
+                                 A.Dummy<string>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new AndAlsoOp(
                                  A.Dummy<IReadOnlyCollection<IReturningOperation<bool>>>()));
 
@@ -886,6 +891,7 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<IReadOnlyCollection<Section>>(),
                                  A.Dummy<string>(),
                                  A.Dummy<DateTime?>(),
+                                 A.Dummy<AdditionalReportInfo>(),
                                  A.Dummy<ReportFormat>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(

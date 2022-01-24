@@ -73,6 +73,7 @@ namespace OBeautifulCode.DataStructure
                       && this.Sections.IsEqualTo(other.Sections)
                       && this.Title.IsEqualTo(other.Title, StringComparer.Ordinal)
                       && this.TimestampUtc.IsEqualTo(other.TimestampUtc)
+                      && this.AdditionalInfo.IsEqualTo(other.AdditionalInfo)
                       && this.Format.IsEqualTo(other.Format);
 
             return result;
@@ -87,6 +88,7 @@ namespace OBeautifulCode.DataStructure
             .Hash(this.Sections)
             .Hash(this.Title)
             .Hash(this.TimestampUtc)
+            .Hash(this.AdditionalInfo)
             .Hash(this.Format)
             .Value;
 
@@ -101,6 +103,7 @@ namespace OBeautifulCode.DataStructure
                                  this.Sections?.DeepClone(),
                                  this.Title?.DeepClone(),
                                  this.TimestampUtc?.DeepClone(),
+                                 this.AdditionalInfo?.DeepClone(),
                                  this.Format?.DeepClone());
 
             return result;
@@ -135,6 +138,7 @@ namespace OBeautifulCode.DataStructure
                                  this.Sections?.DeepClone(),
                                  this.Title?.DeepClone(),
                                  this.TimestampUtc?.DeepClone(),
+                                 this.AdditionalInfo?.DeepClone(),
                                  this.Format?.DeepClone());
 
             return result;
@@ -169,6 +173,7 @@ namespace OBeautifulCode.DataStructure
                                  sections,
                                  this.Title?.DeepClone(),
                                  this.TimestampUtc?.DeepClone(),
+                                 this.AdditionalInfo?.DeepClone(),
                                  this.Format?.DeepClone());
 
             return result;
@@ -203,6 +208,7 @@ namespace OBeautifulCode.DataStructure
                                  this.Sections?.DeepClone(),
                                  title,
                                  this.TimestampUtc?.DeepClone(),
+                                 this.AdditionalInfo?.DeepClone(),
                                  this.Format?.DeepClone());
 
             return result;
@@ -237,6 +243,42 @@ namespace OBeautifulCode.DataStructure
                                  this.Sections?.DeepClone(),
                                  this.Title?.DeepClone(),
                                  timestampUtc,
+                                 this.AdditionalInfo?.DeepClone(),
+                                 this.Format?.DeepClone());
+
+            return result;
+        }
+
+        /// <summary>
+        /// Deep clones this object with a new <see cref="AdditionalInfo" />.
+        /// </summary>
+        /// <param name="additionalInfo">The new <see cref="AdditionalInfo" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="Report" /> using the specified <paramref name="additionalInfo" /> for <see cref="AdditionalInfo" /> and a deep clone of every other property.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
+        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
+        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
+        public Report DeepCloneWithAdditionalInfo(AdditionalReportInfo additionalInfo)
+        {
+            var result = new Report(
+                                 this.Id?.DeepClone(),
+                                 this.Sections?.DeepClone(),
+                                 this.Title?.DeepClone(),
+                                 this.TimestampUtc?.DeepClone(),
+                                 additionalInfo,
                                  this.Format?.DeepClone());
 
             return result;
@@ -271,6 +313,7 @@ namespace OBeautifulCode.DataStructure
                                  this.Sections?.DeepClone(),
                                  this.Title?.DeepClone(),
                                  this.TimestampUtc?.DeepClone(),
+                                 this.AdditionalInfo?.DeepClone(),
                                  format);
 
             return result;
@@ -280,7 +323,7 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"OBeautifulCode.DataStructure.Report: Id = {this.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Sections = {this.Sections?.ToString() ?? "<null>"}, Title = {this.Title?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, TimestampUtc = {this.TimestampUtc?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Format = {this.Format?.ToString() ?? "<null>"}.");
+            var result = Invariant($"OBeautifulCode.DataStructure.Report: Id = {this.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Sections = {this.Sections?.ToString() ?? "<null>"}, Title = {this.Title?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, TimestampUtc = {this.TimestampUtc?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, AdditionalInfo = {this.AdditionalInfo?.ToString() ?? "<null>"}, Format = {this.Format?.ToString() ?? "<null>"}.");
 
             return result;
         }

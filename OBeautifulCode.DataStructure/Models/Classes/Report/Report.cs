@@ -26,12 +26,14 @@ namespace OBeautifulCode.DataStructure
         /// <param name="sections">The sections of the report.</param>
         /// <param name="title">OPTIONAL title of the report.  DEFAULT is a report with no title.</param>
         /// <param name="timestampUtc">OPTIONAL timestamp of the report, in UTC.  DEFAULT is a report that is not timestamped.</param>
+        /// <param name="additionalInfo">OPTIONAL additional information related to the report.  DEFAULT no additional information.</param>
         /// <param name="format">OPTIONAL format to apply to the report.  DEFAULT is to leave the format unchanged.</param>
         public Report(
             string id,
             IReadOnlyCollection<Section> sections,
             string title = null,
             DateTime? timestampUtc = null,
+            AdditionalReportInfo additionalInfo = null,
             ReportFormat format = null)
         {
             if (id == null)
@@ -82,6 +84,7 @@ namespace OBeautifulCode.DataStructure
             this.Sections = sections;
             this.Title = title;
             this.TimestampUtc = timestampUtc;
+            this.AdditionalInfo = additionalInfo;
             this.Format = format;
         }
 
@@ -104,6 +107,11 @@ namespace OBeautifulCode.DataStructure
         /// Gets the timestamp of the report, in UTC.
         /// </summary>
         public DateTime? TimestampUtc { get; private set; }
+
+        /// <summary>
+        /// Gets additional information related to the report.
+        /// </summary>
+        public AdditionalReportInfo AdditionalInfo { get; private set; }
 
         /// <summary>
         /// Gets the format to apply to the report.

@@ -424,9 +424,13 @@
       <DependentUpon>SimpleLink.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Classes\CellLocator\ReportCellLocator.cs" />
+    <Compile Include="Models\Classes\Report\AdditionalReportInfo.designer.cs">
+      <DependentUpon>AdditionalReportInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Classes\Report\Report.designer.cs">
       <DependentUpon>Report.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\Classes\Report\AdditionalReportInfo.cs" />
     <Compile Include="Models\Classes\Report\Section.cs" />
     <Compile Include="Models\Classes\Report\Section.designer.cs">
       <DependentUpon>Section.cs</DependentUpon>

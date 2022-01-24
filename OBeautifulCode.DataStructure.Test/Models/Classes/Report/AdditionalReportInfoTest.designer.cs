@@ -33,548 +33,203 @@ namespace OBeautifulCode.DataStructure.Test
 
     using static global::System.FormattableString;
 
-    public static partial class ReportTest
+    public static partial class AdditionalReportInfoTest
     {
-        private static readonly StringRepresentationTestScenarios<Report> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<Report>()
+        private static readonly StringRepresentationTestScenarios<AdditionalReportInfo> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<AdditionalReportInfo>()
             .AddScenario(() =>
-                new StringRepresentationTestScenario<Report>
+                new StringRepresentationTestScenario<AdditionalReportInfo>
                 {
                     Name = "Default Code Generated Scenario",
                     SystemUnderTestExpectedStringRepresentationFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<Report>();
+                        var systemUnderTest = A.Dummy<AdditionalReportInfo>();
 
-                        var result = new SystemUnderTestExpectedStringRepresentation<Report>
+                        var result = new SystemUnderTestExpectedStringRepresentation<AdditionalReportInfo>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.Report: Id = {systemUnderTest.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Sections = {systemUnderTest.Sections?.ToString() ?? "<null>"}, Title = {systemUnderTest.Title?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, TimestampUtc = {systemUnderTest.TimestampUtc?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, AdditionalInfo = {systemUnderTest.AdditionalInfo?.ToString() ?? "<null>"}, Format = {systemUnderTest.Format?.ToString() ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.AdditionalReportInfo: Copyright = {systemUnderTest.Copyright?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, TermsOfUse = {systemUnderTest.TermsOfUse?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}."),
                         };
 
                         return result;
                     },
                 });
 
-        private static readonly ConstructorArgumentValidationTestScenarios<Report> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<Report>()
+        private static readonly ConstructorArgumentValidationTestScenarios<AdditionalReportInfo> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<AdditionalReportInfo>()
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<Report>
+                new ConstructorArgumentValidationTestScenario<AdditionalReportInfo>
                 {
-                    Name = "constructor should throw ArgumentNullException when parameter 'id' is null scenario",
+                    Name = "constructor should throw ArgumentNullException when parameter 'copyright' is null scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<Report>();
+                        var referenceObject = A.Dummy<AdditionalReportInfo>();
 
-                        var result = new Report(
+                        var result = new AdditionalReportInfo(
                                              null,
-                                             referenceObject.Sections,
-                                             referenceObject.Title,
-                                             referenceObject.TimestampUtc,
-                                             referenceObject.AdditionalInfo,
-                                             referenceObject.Format);
+                                             referenceObject.TermsOfUse);
 
                         return result;
                     },
                     ExpectedExceptionType = typeof(ArgumentNullException),
-                    ExpectedExceptionMessageContains = new[] { "id", },
+                    ExpectedExceptionMessageContains = new[] { "copyright", },
                 })
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<Report>
+                new ConstructorArgumentValidationTestScenario<AdditionalReportInfo>
                 {
-                    Name = "constructor should throw ArgumentException when parameter 'id' is white space scenario",
+                    Name = "constructor should throw ArgumentException when parameter 'copyright' is white space scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<Report>();
+                        var referenceObject = A.Dummy<AdditionalReportInfo>();
 
-                        var result = new Report(
+                        var result = new AdditionalReportInfo(
                                              Invariant($"  {Environment.NewLine}  "),
-                                             referenceObject.Sections,
-                                             referenceObject.Title,
-                                             referenceObject.TimestampUtc,
-                                             referenceObject.AdditionalInfo,
-                                             referenceObject.Format);
+                                             referenceObject.TermsOfUse);
 
                         return result;
                     },
                     ExpectedExceptionType = typeof(ArgumentException),
-                    ExpectedExceptionMessageContains = new[] { "id", "white space", },
+                    ExpectedExceptionMessageContains = new[] { "copyright", "white space", },
                 })
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<Report>
+                new ConstructorArgumentValidationTestScenario<AdditionalReportInfo>
                 {
-                    Name = "constructor should throw ArgumentNullException when parameter 'sections' is null scenario",
+                    Name = "constructor should throw ArgumentNullException when parameter 'termsOfUse' is null scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<Report>();
+                        var referenceObject = A.Dummy<AdditionalReportInfo>();
 
-                        var result = new Report(
-                                             referenceObject.Id,
-                                             null,
-                                             referenceObject.Title,
-                                             referenceObject.TimestampUtc,
-                                             referenceObject.AdditionalInfo,
-                                             referenceObject.Format);
-
-                        return result;
-                    },
-                    ExpectedExceptionType = typeof(ArgumentNullException),
-                    ExpectedExceptionMessageContains = new[] { "sections", },
-                })
-            .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<Report>
-                {
-                    Name = "constructor should throw ArgumentException when parameter 'sections' is an empty enumerable scenario",
-                    ConstructionFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<Report>();
-
-                        var result = new Report(
-                                             referenceObject.Id,
-                                             new List<Section>(),
-                                             referenceObject.Title,
-                                             referenceObject.TimestampUtc,
-                                             referenceObject.AdditionalInfo,
-                                             referenceObject.Format);
-
-                        return result;
-                    },
-                    ExpectedExceptionType = typeof(ArgumentException),
-                    ExpectedExceptionMessageContains = new[] { "sections", "is an empty enumerable", },
-                })
-            .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<Report>
-                {
-                    Name = "constructor should throw ArgumentException when parameter 'sections' contains a null element scenario",
-                    ConstructionFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<Report>();
-
-                        var result = new Report(
-                                             referenceObject.Id,
-                                             new Section[0].Concat(referenceObject.Sections).Concat(new Section[] { null }).Concat(referenceObject.Sections).ToList(),
-                                             referenceObject.Title,
-                                             referenceObject.TimestampUtc,
-                                             referenceObject.AdditionalInfo,
-                                             referenceObject.Format);
-
-                        return result;
-                    },
-                    ExpectedExceptionType = typeof(ArgumentException),
-                    ExpectedExceptionMessageContains = new[] { "sections", "contains at least one null element", },
-                })
-            .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<Report>
-                {
-                    Name = "constructor should throw ArgumentNullException when parameter 'title' is null scenario",
-                    ConstructionFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<Report>();
-
-                        var result = new Report(
-                                             referenceObject.Id,
-                                             referenceObject.Sections,
-                                             null,
-                                             referenceObject.TimestampUtc,
-                                             referenceObject.AdditionalInfo,
-                                             referenceObject.Format);
-
-                        return result;
-                    },
-                    ExpectedExceptionType = typeof(ArgumentNullException),
-                    ExpectedExceptionMessageContains = new[] { "title", },
-                })
-            .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<Report>
-                {
-                    Name = "constructor should throw ArgumentException when parameter 'title' is white space scenario",
-                    ConstructionFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<Report>();
-
-                        var result = new Report(
-                                             referenceObject.Id,
-                                             referenceObject.Sections,
-                                             Invariant($"  {Environment.NewLine}  "),
-                                             referenceObject.TimestampUtc,
-                                             referenceObject.AdditionalInfo,
-                                             referenceObject.Format);
-
-                        return result;
-                    },
-                    ExpectedExceptionType = typeof(ArgumentException),
-                    ExpectedExceptionMessageContains = new[] { "title", "white space", },
-                })
-            .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<Report>
-                {
-                    Name = "constructor should throw ArgumentNullException when parameter 'additionalInfo' is null scenario",
-                    ConstructionFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<Report>();
-
-                        var result = new Report(
-                                             referenceObject.Id,
-                                             referenceObject.Sections,
-                                             referenceObject.Title,
-                                             referenceObject.TimestampUtc,
-                                             null,
-                                             referenceObject.Format);
-
-                        return result;
-                    },
-                    ExpectedExceptionType = typeof(ArgumentNullException),
-                    ExpectedExceptionMessageContains = new[] { "additionalInfo", },
-                })
-            .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<Report>
-                {
-                    Name = "constructor should throw ArgumentNullException when parameter 'format' is null scenario",
-                    ConstructionFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<Report>();
-
-                        var result = new Report(
-                                             referenceObject.Id,
-                                             referenceObject.Sections,
-                                             referenceObject.Title,
-                                             referenceObject.TimestampUtc,
-                                             referenceObject.AdditionalInfo,
+                        var result = new AdditionalReportInfo(
+                                             referenceObject.Copyright,
                                              null);
 
                         return result;
                     },
                     ExpectedExceptionType = typeof(ArgumentNullException),
-                    ExpectedExceptionMessageContains = new[] { "format", },
+                    ExpectedExceptionMessageContains = new[] { "termsOfUse", },
+                })
+            .AddScenario(() =>
+                new ConstructorArgumentValidationTestScenario<AdditionalReportInfo>
+                {
+                    Name = "constructor should throw ArgumentException when parameter 'termsOfUse' is white space scenario",
+                    ConstructionFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<AdditionalReportInfo>();
+
+                        var result = new AdditionalReportInfo(
+                                             referenceObject.Copyright,
+                                             Invariant($"  {Environment.NewLine}  "));
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentException),
+                    ExpectedExceptionMessageContains = new[] { "termsOfUse", "white space", },
                 });
 
-        private static readonly ConstructorPropertyAssignmentTestScenarios<Report> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<Report>()
+        private static readonly ConstructorPropertyAssignmentTestScenarios<AdditionalReportInfo> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<AdditionalReportInfo>()
             .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<Report>
+                new ConstructorPropertyAssignmentTestScenario<AdditionalReportInfo>
                 {
-                    Name = "Id should return same 'id' parameter passed to constructor when getting",
+                    Name = "Copyright should return same 'copyright' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
-                        var referenceObject = A.Dummy<Report>();
+                        var referenceObject = A.Dummy<AdditionalReportInfo>();
 
-                        var result = new SystemUnderTestExpectedPropertyValue<Report>
+                        var result = new SystemUnderTestExpectedPropertyValue<AdditionalReportInfo>
                         {
-                            SystemUnderTest = new Report(
-                                                      referenceObject.Id,
-                                                      referenceObject.Sections,
-                                                      referenceObject.Title,
-                                                      referenceObject.TimestampUtc,
-                                                      referenceObject.AdditionalInfo,
-                                                      referenceObject.Format),
-                            ExpectedPropertyValue = referenceObject.Id,
+                            SystemUnderTest = new AdditionalReportInfo(
+                                                      referenceObject.Copyright,
+                                                      referenceObject.TermsOfUse),
+                            ExpectedPropertyValue = referenceObject.Copyright,
                         };
 
                         return result;
                     },
-                    PropertyName = "Id",
+                    PropertyName = "Copyright",
                 })
             .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<Report>
+                new ConstructorPropertyAssignmentTestScenario<AdditionalReportInfo>
                 {
-                    Name = "Sections should return same 'sections' parameter passed to constructor when getting",
+                    Name = "TermsOfUse should return same 'termsOfUse' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
-                        var referenceObject = A.Dummy<Report>();
+                        var referenceObject = A.Dummy<AdditionalReportInfo>();
 
-                        var result = new SystemUnderTestExpectedPropertyValue<Report>
+                        var result = new SystemUnderTestExpectedPropertyValue<AdditionalReportInfo>
                         {
-                            SystemUnderTest = new Report(
-                                                      referenceObject.Id,
-                                                      referenceObject.Sections,
-                                                      referenceObject.Title,
-                                                      referenceObject.TimestampUtc,
-                                                      referenceObject.AdditionalInfo,
-                                                      referenceObject.Format),
-                            ExpectedPropertyValue = referenceObject.Sections,
+                            SystemUnderTest = new AdditionalReportInfo(
+                                                      referenceObject.Copyright,
+                                                      referenceObject.TermsOfUse),
+                            ExpectedPropertyValue = referenceObject.TermsOfUse,
                         };
 
                         return result;
                     },
-                    PropertyName = "Sections",
-                })
-            .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<Report>
-                {
-                    Name = "Title should return same 'title' parameter passed to constructor when getting",
-                    SystemUnderTestExpectedPropertyValueFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<Report>();
-
-                        var result = new SystemUnderTestExpectedPropertyValue<Report>
-                        {
-                            SystemUnderTest = new Report(
-                                                      referenceObject.Id,
-                                                      referenceObject.Sections,
-                                                      referenceObject.Title,
-                                                      referenceObject.TimestampUtc,
-                                                      referenceObject.AdditionalInfo,
-                                                      referenceObject.Format),
-                            ExpectedPropertyValue = referenceObject.Title,
-                        };
-
-                        return result;
-                    },
-                    PropertyName = "Title",
-                })
-            .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<Report>
-                {
-                    Name = "TimestampUtc should return same 'timestampUtc' parameter passed to constructor when getting",
-                    SystemUnderTestExpectedPropertyValueFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<Report>();
-
-                        var result = new SystemUnderTestExpectedPropertyValue<Report>
-                        {
-                            SystemUnderTest = new Report(
-                                                      referenceObject.Id,
-                                                      referenceObject.Sections,
-                                                      referenceObject.Title,
-                                                      referenceObject.TimestampUtc,
-                                                      referenceObject.AdditionalInfo,
-                                                      referenceObject.Format),
-                            ExpectedPropertyValue = referenceObject.TimestampUtc,
-                        };
-
-                        return result;
-                    },
-                    PropertyName = "TimestampUtc",
-                })
-            .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<Report>
-                {
-                    Name = "AdditionalInfo should return same 'additionalInfo' parameter passed to constructor when getting",
-                    SystemUnderTestExpectedPropertyValueFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<Report>();
-
-                        var result = new SystemUnderTestExpectedPropertyValue<Report>
-                        {
-                            SystemUnderTest = new Report(
-                                                      referenceObject.Id,
-                                                      referenceObject.Sections,
-                                                      referenceObject.Title,
-                                                      referenceObject.TimestampUtc,
-                                                      referenceObject.AdditionalInfo,
-                                                      referenceObject.Format),
-                            ExpectedPropertyValue = referenceObject.AdditionalInfo,
-                        };
-
-                        return result;
-                    },
-                    PropertyName = "AdditionalInfo",
-                })
-            .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<Report>
-                {
-                    Name = "Format should return same 'format' parameter passed to constructor when getting",
-                    SystemUnderTestExpectedPropertyValueFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<Report>();
-
-                        var result = new SystemUnderTestExpectedPropertyValue<Report>
-                        {
-                            SystemUnderTest = new Report(
-                                                      referenceObject.Id,
-                                                      referenceObject.Sections,
-                                                      referenceObject.Title,
-                                                      referenceObject.TimestampUtc,
-                                                      referenceObject.AdditionalInfo,
-                                                      referenceObject.Format),
-                            ExpectedPropertyValue = referenceObject.Format,
-                        };
-
-                        return result;
-                    },
-                    PropertyName = "Format",
+                    PropertyName = "TermsOfUse",
                 });
 
-        private static readonly DeepCloneWithTestScenarios<Report> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<Report>()
+        private static readonly DeepCloneWithTestScenarios<AdditionalReportInfo> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<AdditionalReportInfo>()
             .AddScenario(() =>
-                new DeepCloneWithTestScenario<Report>
+                new DeepCloneWithTestScenario<AdditionalReportInfo>
                 {
-                    Name = "DeepCloneWithId should deep clone object and replace Id with the provided id",
-                    WithPropertyName = "Id",
+                    Name = "DeepCloneWithCopyright should deep clone object and replace Copyright with the provided copyright",
+                    WithPropertyName = "Copyright",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<Report>();
+                        var systemUnderTest = A.Dummy<AdditionalReportInfo>();
 
-                        var referenceObject = A.Dummy<Report>().ThatIs(_ => !systemUnderTest.Id.IsEqualTo(_.Id));
+                        var referenceObject = A.Dummy<AdditionalReportInfo>().ThatIs(_ => !systemUnderTest.Copyright.IsEqualTo(_.Copyright));
 
-                        var result = new SystemUnderTestDeepCloneWithValue<Report>
+                        var result = new SystemUnderTestDeepCloneWithValue<AdditionalReportInfo>
                         {
                             SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.Id,
+                            DeepCloneWithValue = referenceObject.Copyright,
                         };
 
                         return result;
                     },
                 })
             .AddScenario(() =>
-                new DeepCloneWithTestScenario<Report>
+                new DeepCloneWithTestScenario<AdditionalReportInfo>
                 {
-                    Name = "DeepCloneWithSections should deep clone object and replace Sections with the provided sections",
-                    WithPropertyName = "Sections",
+                    Name = "DeepCloneWithTermsOfUse should deep clone object and replace TermsOfUse with the provided termsOfUse",
+                    WithPropertyName = "TermsOfUse",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<Report>();
+                        var systemUnderTest = A.Dummy<AdditionalReportInfo>();
 
-                        var referenceObject = A.Dummy<Report>().ThatIs(_ => !systemUnderTest.Sections.IsEqualTo(_.Sections));
+                        var referenceObject = A.Dummy<AdditionalReportInfo>().ThatIs(_ => !systemUnderTest.TermsOfUse.IsEqualTo(_.TermsOfUse));
 
-                        var result = new SystemUnderTestDeepCloneWithValue<Report>
+                        var result = new SystemUnderTestDeepCloneWithValue<AdditionalReportInfo>
                         {
                             SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.Sections,
-                        };
-
-                        return result;
-                    },
-                })
-            .AddScenario(() =>
-                new DeepCloneWithTestScenario<Report>
-                {
-                    Name = "DeepCloneWithTitle should deep clone object and replace Title with the provided title",
-                    WithPropertyName = "Title",
-                    SystemUnderTestDeepCloneWithValueFunc = () =>
-                    {
-                        var systemUnderTest = A.Dummy<Report>();
-
-                        var referenceObject = A.Dummy<Report>().ThatIs(_ => !systemUnderTest.Title.IsEqualTo(_.Title));
-
-                        var result = new SystemUnderTestDeepCloneWithValue<Report>
-                        {
-                            SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.Title,
-                        };
-
-                        return result;
-                    },
-                })
-            .AddScenario(() =>
-                new DeepCloneWithTestScenario<Report>
-                {
-                    Name = "DeepCloneWithTimestampUtc should deep clone object and replace TimestampUtc with the provided timestampUtc",
-                    WithPropertyName = "TimestampUtc",
-                    SystemUnderTestDeepCloneWithValueFunc = () =>
-                    {
-                        var systemUnderTest = A.Dummy<Report>();
-
-                        var referenceObject = A.Dummy<Report>().ThatIs(_ => !systemUnderTest.TimestampUtc.IsEqualTo(_.TimestampUtc));
-
-                        var result = new SystemUnderTestDeepCloneWithValue<Report>
-                        {
-                            SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.TimestampUtc,
-                        };
-
-                        return result;
-                    },
-                })
-            .AddScenario(() =>
-                new DeepCloneWithTestScenario<Report>
-                {
-                    Name = "DeepCloneWithAdditionalInfo should deep clone object and replace AdditionalInfo with the provided additionalInfo",
-                    WithPropertyName = "AdditionalInfo",
-                    SystemUnderTestDeepCloneWithValueFunc = () =>
-                    {
-                        var systemUnderTest = A.Dummy<Report>();
-
-                        var referenceObject = A.Dummy<Report>().ThatIs(_ => !systemUnderTest.AdditionalInfo.IsEqualTo(_.AdditionalInfo));
-
-                        var result = new SystemUnderTestDeepCloneWithValue<Report>
-                        {
-                            SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.AdditionalInfo,
-                        };
-
-                        return result;
-                    },
-                })
-            .AddScenario(() =>
-                new DeepCloneWithTestScenario<Report>
-                {
-                    Name = "DeepCloneWithFormat should deep clone object and replace Format with the provided format",
-                    WithPropertyName = "Format",
-                    SystemUnderTestDeepCloneWithValueFunc = () =>
-                    {
-                        var systemUnderTest = A.Dummy<Report>();
-
-                        var referenceObject = A.Dummy<Report>().ThatIs(_ => !systemUnderTest.Format.IsEqualTo(_.Format));
-
-                        var result = new SystemUnderTestDeepCloneWithValue<Report>
-                        {
-                            SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.Format,
+                            DeepCloneWithValue = referenceObject.TermsOfUse,
                         };
 
                         return result;
                     },
                 });
 
-        private static readonly Report ReferenceObjectForEquatableTestScenarios = A.Dummy<Report>();
+        private static readonly AdditionalReportInfo ReferenceObjectForEquatableTestScenarios = A.Dummy<AdditionalReportInfo>();
 
-        private static readonly EquatableTestScenarios<Report> EquatableTestScenarios = new EquatableTestScenarios<Report>()
+        private static readonly EquatableTestScenarios<AdditionalReportInfo> EquatableTestScenarios = new EquatableTestScenarios<AdditionalReportInfo>()
             .AddScenario(() =>
-                new EquatableTestScenario<Report>
+                new EquatableTestScenario<AdditionalReportInfo>
                 {
                     Name = "Default Code Generated Scenario",
                     ReferenceObject = ReferenceObjectForEquatableTestScenarios,
-                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new Report[]
+                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new AdditionalReportInfo[]
                     {
-                        new Report(
-                                ReferenceObjectForEquatableTestScenarios.Id,
-                                ReferenceObjectForEquatableTestScenarios.Sections,
-                                ReferenceObjectForEquatableTestScenarios.Title,
-                                ReferenceObjectForEquatableTestScenarios.TimestampUtc,
-                                ReferenceObjectForEquatableTestScenarios.AdditionalInfo,
-                                ReferenceObjectForEquatableTestScenarios.Format),
+                        new AdditionalReportInfo(
+                                ReferenceObjectForEquatableTestScenarios.Copyright,
+                                ReferenceObjectForEquatableTestScenarios.TermsOfUse),
                     },
-                    ObjectsThatAreNotEqualToReferenceObject = new Report[]
+                    ObjectsThatAreNotEqualToReferenceObject = new AdditionalReportInfo[]
                     {
-                        new Report(
-                                A.Dummy<Report>().Whose(_ => !_.Id.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Id)).Id,
-                                ReferenceObjectForEquatableTestScenarios.Sections,
-                                ReferenceObjectForEquatableTestScenarios.Title,
-                                ReferenceObjectForEquatableTestScenarios.TimestampUtc,
-                                ReferenceObjectForEquatableTestScenarios.AdditionalInfo,
-                                ReferenceObjectForEquatableTestScenarios.Format),
-                        new Report(
-                                ReferenceObjectForEquatableTestScenarios.Id,
-                                A.Dummy<Report>().Whose(_ => !_.Sections.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Sections)).Sections,
-                                ReferenceObjectForEquatableTestScenarios.Title,
-                                ReferenceObjectForEquatableTestScenarios.TimestampUtc,
-                                ReferenceObjectForEquatableTestScenarios.AdditionalInfo,
-                                ReferenceObjectForEquatableTestScenarios.Format),
-                        new Report(
-                                ReferenceObjectForEquatableTestScenarios.Id,
-                                ReferenceObjectForEquatableTestScenarios.Sections,
-                                A.Dummy<Report>().Whose(_ => !_.Title.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Title)).Title,
-                                ReferenceObjectForEquatableTestScenarios.TimestampUtc,
-                                ReferenceObjectForEquatableTestScenarios.AdditionalInfo,
-                                ReferenceObjectForEquatableTestScenarios.Format),
-                        new Report(
-                                ReferenceObjectForEquatableTestScenarios.Id,
-                                ReferenceObjectForEquatableTestScenarios.Sections,
-                                ReferenceObjectForEquatableTestScenarios.Title,
-                                A.Dummy<Report>().Whose(_ => !_.TimestampUtc.IsEqualTo(ReferenceObjectForEquatableTestScenarios.TimestampUtc)).TimestampUtc,
-                                ReferenceObjectForEquatableTestScenarios.AdditionalInfo,
-                                ReferenceObjectForEquatableTestScenarios.Format),
-                        new Report(
-                                ReferenceObjectForEquatableTestScenarios.Id,
-                                ReferenceObjectForEquatableTestScenarios.Sections,
-                                ReferenceObjectForEquatableTestScenarios.Title,
-                                ReferenceObjectForEquatableTestScenarios.TimestampUtc,
-                                A.Dummy<Report>().Whose(_ => !_.AdditionalInfo.IsEqualTo(ReferenceObjectForEquatableTestScenarios.AdditionalInfo)).AdditionalInfo,
-                                ReferenceObjectForEquatableTestScenarios.Format),
-                        new Report(
-                                ReferenceObjectForEquatableTestScenarios.Id,
-                                ReferenceObjectForEquatableTestScenarios.Sections,
-                                ReferenceObjectForEquatableTestScenarios.Title,
-                                ReferenceObjectForEquatableTestScenarios.TimestampUtc,
-                                ReferenceObjectForEquatableTestScenarios.AdditionalInfo,
-                                A.Dummy<Report>().Whose(_ => !_.Format.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Format)).Format),
+                        new AdditionalReportInfo(
+                                A.Dummy<AdditionalReportInfo>().Whose(_ => !_.Copyright.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Copyright)).Copyright,
+                                ReferenceObjectForEquatableTestScenarios.TermsOfUse),
+                        new AdditionalReportInfo(
+                                ReferenceObjectForEquatableTestScenarios.Copyright,
+                                A.Dummy<AdditionalReportInfo>().Whose(_ => !_.TermsOfUse.IsEqualTo(ReferenceObjectForEquatableTestScenarios.TermsOfUse)).TermsOfUse),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
                     {
@@ -604,12 +259,12 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Report___Should_implement_IModel_of_Report___When_reflecting()
+            public static void AdditionalReportInfo___Should_implement_IModel_of_AdditionalReportInfo___When_reflecting()
             {
                 // Arrange
-                var type = typeof(Report);
+                var type = typeof(AdditionalReportInfo);
 
-                var expectedModelMethods = typeof(IModel<Report>).GetInterfaceDeclaredAndImplementedMethods();
+                var expectedModelMethods = typeof(IModel<AdditionalReportInfo>).GetInterfaceDeclaredAndImplementedMethods();
 
                 var expectedModelMethodHashes = expectedModelMethods.Select(_ => _.GetSignatureHash());
 
@@ -619,7 +274,7 @@ namespace OBeautifulCode.DataStructure.Test
                 var actualModelMethodHashes = actualModelMethods.Select(_ => _.GetSignatureHash());
 
                 // Assert
-                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<Report>));
+                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<AdditionalReportInfo>));
                 expectedModelMethodHashes.Except(actualModelMethodHashes).AsTest().Must().BeEmptyEnumerable();
             }
 
@@ -637,10 +292,10 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Report___Should_be_attributed_with_Serializable____When_reflecting()
+            public static void AdditionalReportInfo___Should_be_attributed_with_Serializable____When_reflecting()
             {
                 // Arrange
-                var type = typeof(Report);
+                var type = typeof(AdditionalReportInfo);
 
                 // Act
                 var actualAttributes = type.GetCustomAttributes(typeof(SerializableAttribute), false);
@@ -820,10 +475,10 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Clone___Should_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<Report>();
+                var systemUnderTest = A.Dummy<AdditionalReportInfo>();
 
                 // Act
-                var actual = (Report)systemUnderTest.Clone();
+                var actual = (AdditionalReportInfo)systemUnderTest.Clone();
 
                 // Assert
                 actual.AsTest().Must().BeEqualTo(systemUnderTest);
@@ -847,7 +502,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void DeepClone___Should_deep_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<Report>();
+                var systemUnderTest = A.Dummy<AdditionalReportInfo>();
 
                 // Act
                 var actual = systemUnderTest.DeepClone();
@@ -855,42 +510,6 @@ namespace OBeautifulCode.DataStructure.Test
                 // Assert
                 actual.AsTest().Must().BeEqualTo(systemUnderTest);
                 actual.AsTest().Must().NotBeSameReferenceAs(systemUnderTest);
-
-                if (systemUnderTest.Sections == null)
-                {
-                    actual.Sections.AsTest().Must().BeNull();
-                }
-                else if (!actual.Sections.GetType().IsValueType)
-                {
-                    // When the declared type is a reference type, we still have to check the runtime type.
-                    // The object could be a boxed value type, which will fail this asseration because
-                    // a deep clone of a value type object is the same object.
-                    actual.Sections.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.Sections);
-                }
-
-                if (systemUnderTest.AdditionalInfo == null)
-                {
-                    actual.AdditionalInfo.AsTest().Must().BeNull();
-                }
-                else if (!actual.AdditionalInfo.GetType().IsValueType)
-                {
-                    // When the declared type is a reference type, we still have to check the runtime type.
-                    // The object could be a boxed value type, which will fail this asseration because
-                    // a deep clone of a value type object is the same object.
-                    actual.AdditionalInfo.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.AdditionalInfo);
-                }
-
-                if (systemUnderTest.Format == null)
-                {
-                    actual.Format.AsTest().Must().BeNull();
-                }
-                else if (!actual.Format.GetType().IsValueType)
-                {
-                    // When the declared type is a reference type, we still have to check the runtime type.
-                    // The object could be a boxed value type, which will fail this asseration because
-                    // a deep clone of a value type object is the same object.
-                    actual.Format.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.Format);
-                }
             }
 
             [Fact]
@@ -909,7 +528,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "Id", "Sections", "Title", "TimestampUtc", "AdditionalInfo", "Format" };
+                var propertyNames = new string[] { "Copyright", "TermsOfUse" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 
@@ -922,12 +541,12 @@ namespace OBeautifulCode.DataStructure.Test
                     }
 
                     // Act
-                    var actual = (Report)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
+                    var actual = (AdditionalReportInfo)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
 
                     // Assert
                     foreach(var propertyName in propertyNames)
                     {
-                        var propertyInfo = typeof(Report).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
+                        var propertyInfo = typeof(AdditionalReportInfo).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
 
                         var actualPropertyValue = propertyInfo.GetValue(actual);
 
@@ -989,7 +608,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<Report>();
+                var expected = A.Dummy<AdditionalReportInfo>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -1018,7 +637,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<Report>();
+                var expected = A.Dummy<AdditionalReportInfo>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -1047,7 +666,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<Report>();
+                var expected = A.Dummy<AdditionalReportInfo>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -1076,7 +695,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<Report>();
+                var expected = A.Dummy<AdditionalReportInfo>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -1110,8 +729,8 @@ namespace OBeautifulCode.DataStructure.Test
             public static void EqualsOperator___Should_return_true___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                Report systemUnderTest1 = null;
-                Report systemUnderTest2 = null;
+                AdditionalReportInfo systemUnderTest1 = null;
+                AdditionalReportInfo systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 == systemUnderTest2;
@@ -1141,7 +760,7 @@ namespace OBeautifulCode.DataStructure.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    Report systemUnderTest = null;
+                    AdditionalReportInfo systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest == scenario.ReferenceObject;
@@ -1290,8 +909,8 @@ namespace OBeautifulCode.DataStructure.Test
             public static void NotEqualsOperator___Should_return_false___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                Report systemUnderTest1 = null;
-                Report systemUnderTest2 = null;
+                AdditionalReportInfo systemUnderTest1 = null;
+                AdditionalReportInfo systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 != systemUnderTest2;
@@ -1321,7 +940,7 @@ namespace OBeautifulCode.DataStructure.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    Report systemUnderTest = null;
+                    AdditionalReportInfo systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest != scenario.ReferenceObject;
@@ -1467,14 +1086,14 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_Report___Should_return_false___When_parameter_other_is_null()
+            public static void Equals_with_AdditionalReportInfo___Should_return_false___When_parameter_other_is_null()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    Report systemUnderTest = null;
+                    AdditionalReportInfo systemUnderTest = null;
 
                     // Act
                     var actual = scenario.ReferenceObject.Equals(systemUnderTest);
@@ -1498,7 +1117,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_Report___Should_return_true___When_parameter_other_is_same_object()
+            public static void Equals_with_AdditionalReportInfo___Should_return_true___When_parameter_other_is_same_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1526,7 +1145,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_Report___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
+            public static void Equals_with_AdditionalReportInfo___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1554,7 +1173,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_Report___Should_return_false___When_objects_being_compared_have_different_property_values()
+            public static void Equals_with_AdditionalReportInfo___Should_return_false___When_objects_being_compared_have_different_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1582,7 +1201,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_Report___Should_return_true___When_objects_being_compared_have_same_property_values()
+            public static void Equals_with_AdditionalReportInfo___Should_return_true___When_objects_being_compared_have_same_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1743,7 +1362,7 @@ namespace OBeautifulCode.DataStructure.Test
         [SuppressMessage("Microsoft.Naming", "CA1724:TypeNamesShouldNotMatchNamespaces")]
         public static class Hashing
         {
-            [Fact(Skip = "It's possible (and even probable after a few runs of this test) that two dummy, unequal models will have the same hash code.  The model being tested contains at least one property who's type (or a type nested within the generic type, or a property of the IModel type) is a dictionary with keys that are not comparable or an unordered collection with elements that are not comparable.  In these cases the hashing method cannot hash the elements and must resort to hashing the element count.  Two dummies could easily have the same element count for such a type.")]
+            [Fact]
             [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
             [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
             [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]

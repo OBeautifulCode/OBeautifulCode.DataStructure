@@ -46,6 +46,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                  referenceObject.Sections,
                                                  referenceObject.Title,
                                                  referenceObject.TimestampUtc,
+                                                 referenceObject.AdditionalInfo,
                                                  referenceObject.Format);
 
                             return result;
@@ -66,6 +67,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                  referenceObject.Sections,
                                                  referenceObject.Title,
                                                  referenceObject.TimestampUtc,
+                                                 referenceObject.AdditionalInfo,
                                                  referenceObject.Format);
 
                             return result;
@@ -86,6 +88,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                  null,
                                                  referenceObject.Title,
                                                  referenceObject.TimestampUtc,
+                                                 referenceObject.AdditionalInfo,
                                                  referenceObject.Format);
 
                             return result;
@@ -106,6 +109,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                  new List<Section>(),
                                                  referenceObject.Title,
                                                  referenceObject.TimestampUtc,
+                                                 referenceObject.AdditionalInfo,
                                                  referenceObject.Format);
 
                             return result;
@@ -126,6 +130,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                  new Section[0].Concat(referenceObject.Sections).Concat(new Section[] { null }).Concat(referenceObject.Sections).ToList(),
                                                  referenceObject.Title,
                                                  referenceObject.TimestampUtc,
+                                                 referenceObject.AdditionalInfo,
                                                  referenceObject.Format);
 
                             return result;
@@ -152,6 +157,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 },
                                 referenceObject.Title,
                                 referenceObject.TimestampUtc,
+                                referenceObject.AdditionalInfo,
                                 referenceObject.Format);
 
                             return result;
@@ -179,6 +185,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 },
                                 referenceObject.Title,
                                 referenceObject.TimestampUtc,
+                                referenceObject.AdditionalInfo,
                                 referenceObject.Format);
 
                             return result;
@@ -199,6 +206,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 referenceObject.Sections,
                                 referenceObject.Title,
                                 A.Dummy<DateTime>().Whose(_ => _.Kind != DateTimeKind.Utc),
+                                referenceObject.AdditionalInfo,
                                 referenceObject.Format);
 
                             return result;
@@ -223,6 +231,7 @@ namespace OBeautifulCode.DataStructure.Test
                                     ReferenceObjectForEquatableTestScenarios.Sections,
                                     ReferenceObjectForEquatableTestScenarios.Title,
                                     ReferenceObjectForEquatableTestScenarios.TimestampUtc,
+                                    ReferenceObjectForEquatableTestScenarios.AdditionalInfo,
                                     ReferenceObjectForEquatableTestScenarios.Format),
                         },
                         ObjectsThatAreNotEqualToReferenceObject = new Report[]
@@ -232,18 +241,21 @@ namespace OBeautifulCode.DataStructure.Test
                                     ReferenceObjectForEquatableTestScenarios.Sections,
                                     ReferenceObjectForEquatableTestScenarios.Title,
                                     ReferenceObjectForEquatableTestScenarios.TimestampUtc,
+                                    ReferenceObjectForEquatableTestScenarios.AdditionalInfo,
                                     ReferenceObjectForEquatableTestScenarios.Format),
                             new Report(
                                     ReferenceObjectForEquatableTestScenarios.Id,
                                     A.Dummy<Report>().Whose(_ => !_.Sections.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Sections)).Sections,
                                     ReferenceObjectForEquatableTestScenarios.Title,
                                     ReferenceObjectForEquatableTestScenarios.TimestampUtc,
+                                    ReferenceObjectForEquatableTestScenarios.AdditionalInfo,
                                     ReferenceObjectForEquatableTestScenarios.Format),
                             new Report(
                                     ReferenceObjectForEquatableTestScenarios.Id,
                                     ReferenceObjectForEquatableTestScenarios.Sections,
                                     A.Dummy<Report>().Whose(_ => !_.Title.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Title)).Title,
                                     ReferenceObjectForEquatableTestScenarios.TimestampUtc,
+                                    ReferenceObjectForEquatableTestScenarios.AdditionalInfo,
                                     ReferenceObjectForEquatableTestScenarios.Format),
                         },
                         ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
