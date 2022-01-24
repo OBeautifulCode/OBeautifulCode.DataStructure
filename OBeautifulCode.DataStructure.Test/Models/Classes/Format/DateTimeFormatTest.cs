@@ -43,7 +43,7 @@ namespace OBeautifulCode.DataStructure.Test
                             var result = new DateTimeFormat(
                                 DateTimeFormatKind.Unknown,
                                 referenceObject.CultureKind,
-                                referenceObject.Localize,
+                                referenceObject.LocalizeTimeZone,
                                 referenceObject.LocalTimeZone);
 
                             return result;
@@ -62,7 +62,7 @@ namespace OBeautifulCode.DataStructure.Test
                             var result = new DateTimeFormat(
                                 referenceObject.FormatKind,
                                 CultureKind.Unknown,
-                                referenceObject.Localize,
+                                referenceObject.LocalizeTimeZone,
                                 referenceObject.LocalTimeZone);
 
                             return result;
@@ -73,7 +73,7 @@ namespace OBeautifulCode.DataStructure.Test
                 .AddScenario(() =>
                     new ConstructorArgumentValidationTestScenario<DateTimeFormat>
                     {
-                        Name = "constructor should throw ArgumentException when parameter 'localize' is false and parameter 'localTimeZone' is not null",
+                        Name = "constructor should throw ArgumentException when parameter 'localizeTimeZone' is false and parameter 'localTimeZone' is not null",
                         ConstructionFunc = () =>
                         {
                             var referenceObject = A.Dummy<DateTimeFormat>();
@@ -87,14 +87,14 @@ namespace OBeautifulCode.DataStructure.Test
                             return result;
                         },
                         ExpectedExceptionType = typeof(ArgumentException),
-                        ExpectedExceptionMessageContains = new[] { "localize is false, but localTimeZone is not null", },
+                        ExpectedExceptionMessageContains = new[] { "localizeTimeZone is false, but localTimeZone is not null", },
                     });
 
             EquatableTestScenarios
                 .RemoveAllScenarios()
                 .AddScenario(() =>
                 {
-                    var referenceObjectForEquatableTestScenarios = A.Dummy<DateTimeFormat>().Whose(_ => _.Localize == true);
+                    var referenceObjectForEquatableTestScenarios = A.Dummy<DateTimeFormat>().Whose(_ => _.LocalizeTimeZone == true);
 
                     var result = new EquatableTestScenario<DateTimeFormat>
                     {
@@ -105,7 +105,7 @@ namespace OBeautifulCode.DataStructure.Test
                             new DateTimeFormat(
                                     referenceObjectForEquatableTestScenarios.FormatKind,
                                     referenceObjectForEquatableTestScenarios.CultureKind,
-                                    referenceObjectForEquatableTestScenarios.Localize,
+                                    referenceObjectForEquatableTestScenarios.LocalizeTimeZone,
                                     referenceObjectForEquatableTestScenarios.LocalTimeZone),
                         },
                         ObjectsThatAreNotEqualToReferenceObject = new DateTimeFormat[]
@@ -113,22 +113,22 @@ namespace OBeautifulCode.DataStructure.Test
                             new DateTimeFormat(
                                     A.Dummy<DateTimeFormat>().Whose(_ => !_.FormatKind.IsEqualTo(referenceObjectForEquatableTestScenarios.FormatKind)).FormatKind,
                                     referenceObjectForEquatableTestScenarios.CultureKind,
-                                    referenceObjectForEquatableTestScenarios.Localize,
+                                    referenceObjectForEquatableTestScenarios.LocalizeTimeZone,
                                     referenceObjectForEquatableTestScenarios.LocalTimeZone),
                             new DateTimeFormat(
                                     referenceObjectForEquatableTestScenarios.FormatKind,
                                     A.Dummy<DateTimeFormat>().Whose(_ => !_.CultureKind.IsEqualTo(referenceObjectForEquatableTestScenarios.CultureKind)).CultureKind,
-                                    referenceObjectForEquatableTestScenarios.Localize,
+                                    referenceObjectForEquatableTestScenarios.LocalizeTimeZone,
                                     referenceObjectForEquatableTestScenarios.LocalTimeZone),
                             new DateTimeFormat(
                                     referenceObjectForEquatableTestScenarios.FormatKind,
                                     referenceObjectForEquatableTestScenarios.CultureKind,
-                                    A.Dummy<DateTimeFormat>().Whose(_ => !_.Localize.IsEqualTo(referenceObjectForEquatableTestScenarios.Localize)).Localize,
+                                    A.Dummy<DateTimeFormat>().Whose(_ => !_.LocalizeTimeZone.IsEqualTo(referenceObjectForEquatableTestScenarios.LocalizeTimeZone)).LocalizeTimeZone,
                                     null),
                             new DateTimeFormat(
                                     referenceObjectForEquatableTestScenarios.FormatKind,
                                     referenceObjectForEquatableTestScenarios.CultureKind,
-                                    referenceObjectForEquatableTestScenarios.Localize,
+                                    referenceObjectForEquatableTestScenarios.LocalizeTimeZone,
                                     A.Dummy<DateTimeFormat>().Whose(_ => !_.LocalTimeZone.IsEqualTo(referenceObjectForEquatableTestScenarios.LocalTimeZone)).LocalTimeZone),
                         },
                         ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]

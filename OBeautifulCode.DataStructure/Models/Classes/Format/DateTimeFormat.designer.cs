@@ -71,7 +71,7 @@ namespace OBeautifulCode.DataStructure
 
             var result = this.FormatKind.IsEqualTo(other.FormatKind)
                       && this.CultureKind.IsEqualTo(other.CultureKind)
-                      && this.Localize.IsEqualTo(other.Localize)
+                      && this.LocalizeTimeZone.IsEqualTo(other.LocalizeTimeZone)
                       && this.LocalTimeZone.IsEqualTo(other.LocalTimeZone);
 
             return result;
@@ -84,7 +84,7 @@ namespace OBeautifulCode.DataStructure
         public override int GetHashCode() => HashCodeHelper.Initialize()
             .Hash(this.FormatKind)
             .Hash(this.CultureKind)
-            .Hash(this.Localize)
+            .Hash(this.LocalizeTimeZone)
             .Hash(this.LocalTimeZone)
             .Value;
 
@@ -97,7 +97,7 @@ namespace OBeautifulCode.DataStructure
             var result = new DateTimeFormat(
                                  this.FormatKind?.DeepClone(),
                                  this.CultureKind?.DeepClone(),
-                                 this.Localize?.DeepClone(),
+                                 this.LocalizeTimeZone?.DeepClone(),
                                  this.LocalTimeZone?.DeepClone());
 
             return result;
@@ -130,7 +130,7 @@ namespace OBeautifulCode.DataStructure
             var result = new DateTimeFormat(
                                  formatKind,
                                  this.CultureKind?.DeepClone(),
-                                 this.Localize?.DeepClone(),
+                                 this.LocalizeTimeZone?.DeepClone(),
                                  this.LocalTimeZone?.DeepClone());
 
             return result;
@@ -163,17 +163,17 @@ namespace OBeautifulCode.DataStructure
             var result = new DateTimeFormat(
                                  this.FormatKind?.DeepClone(),
                                  cultureKind,
-                                 this.Localize?.DeepClone(),
+                                 this.LocalizeTimeZone?.DeepClone(),
                                  this.LocalTimeZone?.DeepClone());
 
             return result;
         }
 
         /// <summary>
-        /// Deep clones this object with a new <see cref="Localize" />.
+        /// Deep clones this object with a new <see cref="LocalizeTimeZone" />.
         /// </summary>
-        /// <param name="localize">The new <see cref="Localize" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="DateTimeFormat" /> using the specified <paramref name="localize" /> for <see cref="Localize" /> and a deep clone of every other property.</returns>
+        /// <param name="localizeTimeZone">The new <see cref="LocalizeTimeZone" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="DateTimeFormat" /> using the specified <paramref name="localizeTimeZone" /> for <see cref="LocalizeTimeZone" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -191,12 +191,12 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public DateTimeFormat DeepCloneWithLocalize(bool? localize)
+        public DateTimeFormat DeepCloneWithLocalizeTimeZone(bool? localizeTimeZone)
         {
             var result = new DateTimeFormat(
                                  this.FormatKind?.DeepClone(),
                                  this.CultureKind?.DeepClone(),
-                                 localize,
+                                 localizeTimeZone,
                                  this.LocalTimeZone?.DeepClone());
 
             return result;
@@ -229,7 +229,7 @@ namespace OBeautifulCode.DataStructure
             var result = new DateTimeFormat(
                                  this.FormatKind?.DeepClone(),
                                  this.CultureKind?.DeepClone(),
-                                 this.Localize?.DeepClone(),
+                                 this.LocalizeTimeZone?.DeepClone(),
                                  localTimeZone);
 
             return result;
@@ -239,7 +239,7 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"OBeautifulCode.DataStructure.DateTimeFormat: FormatKind = {this.FormatKind?.ToString() ?? "<null>"}, CultureKind = {this.CultureKind?.ToString() ?? "<null>"}, Localize = {this.Localize?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, LocalTimeZone = {this.LocalTimeZone?.ToString() ?? "<null>"}.");
+            var result = Invariant($"OBeautifulCode.DataStructure.DateTimeFormat: FormatKind = {this.FormatKind?.ToString() ?? "<null>"}, CultureKind = {this.CultureKind?.ToString() ?? "<null>"}, LocalizeTimeZone = {this.LocalizeTimeZone?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, LocalTimeZone = {this.LocalTimeZone?.ToString() ?? "<null>"}.");
 
             return result;
         }

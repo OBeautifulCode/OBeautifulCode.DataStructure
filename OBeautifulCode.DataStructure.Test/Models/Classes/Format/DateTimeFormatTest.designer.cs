@@ -47,7 +47,7 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new SystemUnderTestExpectedStringRepresentation<DateTimeFormat>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.DateTimeFormat: FormatKind = {systemUnderTest.FormatKind?.ToString() ?? "<null>"}, CultureKind = {systemUnderTest.CultureKind?.ToString() ?? "<null>"}, Localize = {systemUnderTest.Localize?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, LocalTimeZone = {systemUnderTest.LocalTimeZone?.ToString() ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.DateTimeFormat: FormatKind = {systemUnderTest.FormatKind?.ToString() ?? "<null>"}, CultureKind = {systemUnderTest.CultureKind?.ToString() ?? "<null>"}, LocalizeTimeZone = {systemUnderTest.LocalizeTimeZone?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, LocalTimeZone = {systemUnderTest.LocalTimeZone?.ToString() ?? "<null>"}."),
                         };
 
                         return result;
@@ -70,7 +70,7 @@ namespace OBeautifulCode.DataStructure.Test
                             SystemUnderTest = new DateTimeFormat(
                                                       referenceObject.FormatKind,
                                                       referenceObject.CultureKind,
-                                                      referenceObject.Localize,
+                                                      referenceObject.LocalizeTimeZone,
                                                       referenceObject.LocalTimeZone),
                             ExpectedPropertyValue = referenceObject.FormatKind,
                         };
@@ -92,7 +92,7 @@ namespace OBeautifulCode.DataStructure.Test
                             SystemUnderTest = new DateTimeFormat(
                                                       referenceObject.FormatKind,
                                                       referenceObject.CultureKind,
-                                                      referenceObject.Localize,
+                                                      referenceObject.LocalizeTimeZone,
                                                       referenceObject.LocalTimeZone),
                             ExpectedPropertyValue = referenceObject.CultureKind,
                         };
@@ -104,7 +104,7 @@ namespace OBeautifulCode.DataStructure.Test
             .AddScenario(() =>
                 new ConstructorPropertyAssignmentTestScenario<DateTimeFormat>
                 {
-                    Name = "Localize should return same 'localize' parameter passed to constructor when getting",
+                    Name = "LocalizeTimeZone should return same 'localizeTimeZone' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
                         var referenceObject = A.Dummy<DateTimeFormat>();
@@ -114,14 +114,14 @@ namespace OBeautifulCode.DataStructure.Test
                             SystemUnderTest = new DateTimeFormat(
                                                       referenceObject.FormatKind,
                                                       referenceObject.CultureKind,
-                                                      referenceObject.Localize,
+                                                      referenceObject.LocalizeTimeZone,
                                                       referenceObject.LocalTimeZone),
-                            ExpectedPropertyValue = referenceObject.Localize,
+                            ExpectedPropertyValue = referenceObject.LocalizeTimeZone,
                         };
 
                         return result;
                     },
-                    PropertyName = "Localize",
+                    PropertyName = "LocalizeTimeZone",
                 })
             .AddScenario(() =>
                 new ConstructorPropertyAssignmentTestScenario<DateTimeFormat>
@@ -136,7 +136,7 @@ namespace OBeautifulCode.DataStructure.Test
                             SystemUnderTest = new DateTimeFormat(
                                                       referenceObject.FormatKind,
                                                       referenceObject.CultureKind,
-                                                      referenceObject.Localize,
+                                                      referenceObject.LocalizeTimeZone,
                                                       referenceObject.LocalTimeZone),
                             ExpectedPropertyValue = referenceObject.LocalTimeZone,
                         };
@@ -190,18 +190,18 @@ namespace OBeautifulCode.DataStructure.Test
             .AddScenario(() =>
                 new DeepCloneWithTestScenario<DateTimeFormat>
                 {
-                    Name = "DeepCloneWithLocalize should deep clone object and replace Localize with the provided localize",
-                    WithPropertyName = "Localize",
+                    Name = "DeepCloneWithLocalizeTimeZone should deep clone object and replace LocalizeTimeZone with the provided localizeTimeZone",
+                    WithPropertyName = "LocalizeTimeZone",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
                         var systemUnderTest = A.Dummy<DateTimeFormat>();
 
-                        var referenceObject = A.Dummy<DateTimeFormat>().ThatIs(_ => !systemUnderTest.Localize.IsEqualTo(_.Localize));
+                        var referenceObject = A.Dummy<DateTimeFormat>().ThatIs(_ => !systemUnderTest.LocalizeTimeZone.IsEqualTo(_.LocalizeTimeZone));
 
                         var result = new SystemUnderTestDeepCloneWithValue<DateTimeFormat>
                         {
                             SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.Localize,
+                            DeepCloneWithValue = referenceObject.LocalizeTimeZone,
                         };
 
                         return result;
@@ -241,7 +241,7 @@ namespace OBeautifulCode.DataStructure.Test
                         new DateTimeFormat(
                                 ReferenceObjectForEquatableTestScenarios.FormatKind,
                                 ReferenceObjectForEquatableTestScenarios.CultureKind,
-                                ReferenceObjectForEquatableTestScenarios.Localize,
+                                ReferenceObjectForEquatableTestScenarios.LocalizeTimeZone,
                                 ReferenceObjectForEquatableTestScenarios.LocalTimeZone),
                     },
                     ObjectsThatAreNotEqualToReferenceObject = new DateTimeFormat[]
@@ -249,22 +249,22 @@ namespace OBeautifulCode.DataStructure.Test
                         new DateTimeFormat(
                                 A.Dummy<DateTimeFormat>().Whose(_ => !_.FormatKind.IsEqualTo(ReferenceObjectForEquatableTestScenarios.FormatKind)).FormatKind,
                                 ReferenceObjectForEquatableTestScenarios.CultureKind,
-                                ReferenceObjectForEquatableTestScenarios.Localize,
+                                ReferenceObjectForEquatableTestScenarios.LocalizeTimeZone,
                                 ReferenceObjectForEquatableTestScenarios.LocalTimeZone),
                         new DateTimeFormat(
                                 ReferenceObjectForEquatableTestScenarios.FormatKind,
                                 A.Dummy<DateTimeFormat>().Whose(_ => !_.CultureKind.IsEqualTo(ReferenceObjectForEquatableTestScenarios.CultureKind)).CultureKind,
-                                ReferenceObjectForEquatableTestScenarios.Localize,
+                                ReferenceObjectForEquatableTestScenarios.LocalizeTimeZone,
                                 ReferenceObjectForEquatableTestScenarios.LocalTimeZone),
                         new DateTimeFormat(
                                 ReferenceObjectForEquatableTestScenarios.FormatKind,
                                 ReferenceObjectForEquatableTestScenarios.CultureKind,
-                                A.Dummy<DateTimeFormat>().Whose(_ => !_.Localize.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Localize)).Localize,
+                                A.Dummy<DateTimeFormat>().Whose(_ => !_.LocalizeTimeZone.IsEqualTo(ReferenceObjectForEquatableTestScenarios.LocalizeTimeZone)).LocalizeTimeZone,
                                 ReferenceObjectForEquatableTestScenarios.LocalTimeZone),
                         new DateTimeFormat(
                                 ReferenceObjectForEquatableTestScenarios.FormatKind,
                                 ReferenceObjectForEquatableTestScenarios.CultureKind,
-                                ReferenceObjectForEquatableTestScenarios.Localize,
+                                ReferenceObjectForEquatableTestScenarios.LocalizeTimeZone,
                                 A.Dummy<DateTimeFormat>().Whose(_ => !_.LocalTimeZone.IsEqualTo(ReferenceObjectForEquatableTestScenarios.LocalTimeZone)).LocalTimeZone),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
@@ -564,7 +564,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "FormatKind", "CultureKind", "Localize", "LocalTimeZone" };
+                var propertyNames = new string[] { "FormatKind", "CultureKind", "LocalizeTimeZone", "LocalTimeZone" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 
