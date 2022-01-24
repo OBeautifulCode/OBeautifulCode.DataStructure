@@ -71,6 +71,7 @@ namespace OBeautifulCode.DataStructure
 
             var result = this.Id.IsEqualTo(other.Id, StringComparer.Ordinal)
                       && this.TreeTable.IsEqualTo(other.TreeTable)
+                      && this.Name.IsEqualTo(other.Name, StringComparer.Ordinal)
                       && this.Title.IsEqualTo(other.Title, StringComparer.Ordinal)
                       && this.Format.IsEqualTo(other.Format);
 
@@ -84,6 +85,7 @@ namespace OBeautifulCode.DataStructure
         public override int GetHashCode() => HashCodeHelper.Initialize()
             .Hash(this.Id)
             .Hash(this.TreeTable)
+            .Hash(this.Name)
             .Hash(this.Title)
             .Hash(this.Format)
             .Value;
@@ -97,6 +99,7 @@ namespace OBeautifulCode.DataStructure
             var result = new Section(
                                  this.Id?.DeepClone(),
                                  this.TreeTable?.DeepClone(),
+                                 this.Name?.DeepClone(),
                                  this.Title?.DeepClone(),
                                  this.Format?.DeepClone());
 
@@ -130,6 +133,7 @@ namespace OBeautifulCode.DataStructure
             var result = new Section(
                                  id,
                                  this.TreeTable?.DeepClone(),
+                                 this.Name?.DeepClone(),
                                  this.Title?.DeepClone(),
                                  this.Format?.DeepClone());
 
@@ -163,6 +167,41 @@ namespace OBeautifulCode.DataStructure
             var result = new Section(
                                  this.Id?.DeepClone(),
                                  treeTable,
+                                 this.Name?.DeepClone(),
+                                 this.Title?.DeepClone(),
+                                 this.Format?.DeepClone());
+
+            return result;
+        }
+
+        /// <summary>
+        /// Deep clones this object with a new <see cref="Name" />.
+        /// </summary>
+        /// <param name="name">The new <see cref="Name" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="Section" /> using the specified <paramref name="name" /> for <see cref="Name" /> and a deep clone of every other property.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
+        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
+        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
+        public Section DeepCloneWithName(string name)
+        {
+            var result = new Section(
+                                 this.Id?.DeepClone(),
+                                 this.TreeTable?.DeepClone(),
+                                 name,
                                  this.Title?.DeepClone(),
                                  this.Format?.DeepClone());
 
@@ -196,6 +235,7 @@ namespace OBeautifulCode.DataStructure
             var result = new Section(
                                  this.Id?.DeepClone(),
                                  this.TreeTable?.DeepClone(),
+                                 this.Name?.DeepClone(),
                                  title,
                                  this.Format?.DeepClone());
 
@@ -229,6 +269,7 @@ namespace OBeautifulCode.DataStructure
             var result = new Section(
                                  this.Id?.DeepClone(),
                                  this.TreeTable?.DeepClone(),
+                                 this.Name?.DeepClone(),
                                  this.Title?.DeepClone(),
                                  format);
 
@@ -239,7 +280,7 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"OBeautifulCode.DataStructure.Section: Id = {this.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, TreeTable = {this.TreeTable?.ToString() ?? "<null>"}, Title = {this.Title?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Format = {this.Format?.ToString() ?? "<null>"}.");
+            var result = Invariant($"OBeautifulCode.DataStructure.Section: Id = {this.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, TreeTable = {this.TreeTable?.ToString() ?? "<null>"}, Name = {this.Name?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Title = {this.Title?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Format = {this.Format?.ToString() ?? "<null>"}.");
 
             return result;
         }

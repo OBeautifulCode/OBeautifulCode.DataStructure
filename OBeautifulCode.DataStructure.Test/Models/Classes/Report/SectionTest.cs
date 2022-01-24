@@ -43,6 +43,7 @@ namespace OBeautifulCode.DataStructure.Test
                             var result = new Section(
                                                  null,
                                                  referenceObject.TreeTable,
+                                                 referenceObject.Name,
                                                  referenceObject.Title,
                                                  referenceObject.Format);
 
@@ -62,6 +63,7 @@ namespace OBeautifulCode.DataStructure.Test
                             var result = new Section(
                                                  Invariant($"  {Environment.NewLine}  "),
                                                  referenceObject.TreeTable,
+                                                 referenceObject.Name,
                                                  referenceObject.Title,
                                                  referenceObject.Format);
 
@@ -81,6 +83,7 @@ namespace OBeautifulCode.DataStructure.Test
                             var result = new Section(
                                                  referenceObject.Id,
                                                  null,
+                                                 referenceObject.Name,
                                                  referenceObject.Title,
                                                  referenceObject.Format);
 
@@ -169,6 +172,7 @@ namespace OBeautifulCode.DataStructure.Test
                             new Section(
                                     ReferenceObjectForEquatableTestScenarios.Id,
                                     ReferenceObjectForEquatableTestScenarios.TreeTable,
+                                    ReferenceObjectForEquatableTestScenarios.Name,
                                     ReferenceObjectForEquatableTestScenarios.Title,
                                     ReferenceObjectForEquatableTestScenarios.Format),
                         },
@@ -177,18 +181,27 @@ namespace OBeautifulCode.DataStructure.Test
                             new Section(
                                     A.Dummy<Section>().Whose(_ => !_.Id.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Id)).Id,
                                     ReferenceObjectForEquatableTestScenarios.TreeTable,
+                                    ReferenceObjectForEquatableTestScenarios.Name,
                                     ReferenceObjectForEquatableTestScenarios.Title,
                                     ReferenceObjectForEquatableTestScenarios.Format),
                             new Section(
                                     ReferenceObjectForEquatableTestScenarios.Id,
                                     A.Dummy<Section>().Whose(_ => !_.TreeTable.IsEqualTo(ReferenceObjectForEquatableTestScenarios.TreeTable)).TreeTable,
+                                    ReferenceObjectForEquatableTestScenarios.Name,
                                     ReferenceObjectForEquatableTestScenarios.Title,
                                     ReferenceObjectForEquatableTestScenarios.Format),
                             new Section(
                                     ReferenceObjectForEquatableTestScenarios.Id,
                                     ReferenceObjectForEquatableTestScenarios.TreeTable,
+                                    ReferenceObjectForEquatableTestScenarios.Name,
                                     A.Dummy<Section>().Whose(_ => !_.Title.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Title)).Title,
                                     ReferenceObjectForEquatableTestScenarios.Format),
+                            new Section(
+                                ReferenceObjectForEquatableTestScenarios.Id,
+                                ReferenceObjectForEquatableTestScenarios.TreeTable,
+                                A.Dummy<Section>().Whose(_ => !_.Name.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Name)).Name,
+                                ReferenceObjectForEquatableTestScenarios.Title,
+                                ReferenceObjectForEquatableTestScenarios.Format),
                         },
                         ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
                         {

@@ -940,6 +940,7 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<string>(),
                                  A.Dummy<TreeTable>(),
                                  A.Dummy<string>(),
+                                 A.Dummy<string>(),
                                  A.Dummy<SectionFormat>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(

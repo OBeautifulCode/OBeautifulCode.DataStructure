@@ -47,7 +47,7 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new SystemUnderTestExpectedStringRepresentation<Section>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.Section: Id = {systemUnderTest.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, TreeTable = {systemUnderTest.TreeTable?.ToString() ?? "<null>"}, Title = {systemUnderTest.Title?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Format = {systemUnderTest.Format?.ToString() ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.Section: Id = {systemUnderTest.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, TreeTable = {systemUnderTest.TreeTable?.ToString() ?? "<null>"}, Name = {systemUnderTest.Name?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Title = {systemUnderTest.Title?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Format = {systemUnderTest.Format?.ToString() ?? "<null>"}."),
                         };
 
                         return result;
@@ -66,6 +66,7 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new Section(
                                              null,
                                              referenceObject.TreeTable,
+                                             referenceObject.Name,
                                              referenceObject.Title,
                                              referenceObject.Format);
 
@@ -85,6 +86,7 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new Section(
                                              Invariant($"  {Environment.NewLine}  "),
                                              referenceObject.TreeTable,
+                                             referenceObject.Name,
                                              referenceObject.Title,
                                              referenceObject.Format);
 
@@ -104,6 +106,7 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new Section(
                                              referenceObject.Id,
                                              null,
+                                             referenceObject.Name,
                                              referenceObject.Title,
                                              referenceObject.Format);
 
@@ -111,6 +114,46 @@ namespace OBeautifulCode.DataStructure.Test
                     },
                     ExpectedExceptionType = typeof(ArgumentNullException),
                     ExpectedExceptionMessageContains = new[] { "treeTable", },
+                })
+            .AddScenario(() =>
+                new ConstructorArgumentValidationTestScenario<Section>
+                {
+                    Name = "constructor should throw ArgumentNullException when parameter 'name' is null scenario",
+                    ConstructionFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<Section>();
+
+                        var result = new Section(
+                                             referenceObject.Id,
+                                             referenceObject.TreeTable,
+                                             null,
+                                             referenceObject.Title,
+                                             referenceObject.Format);
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentNullException),
+                    ExpectedExceptionMessageContains = new[] { "name", },
+                })
+            .AddScenario(() =>
+                new ConstructorArgumentValidationTestScenario<Section>
+                {
+                    Name = "constructor should throw ArgumentException when parameter 'name' is white space scenario",
+                    ConstructionFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<Section>();
+
+                        var result = new Section(
+                                             referenceObject.Id,
+                                             referenceObject.TreeTable,
+                                             Invariant($"  {Environment.NewLine}  "),
+                                             referenceObject.Title,
+                                             referenceObject.Format);
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentException),
+                    ExpectedExceptionMessageContains = new[] { "name", "white space", },
                 })
             .AddScenario(() =>
                 new ConstructorArgumentValidationTestScenario<Section>
@@ -123,6 +166,7 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new Section(
                                              referenceObject.Id,
                                              referenceObject.TreeTable,
+                                             referenceObject.Name,
                                              null,
                                              referenceObject.Format);
 
@@ -142,6 +186,7 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new Section(
                                              referenceObject.Id,
                                              referenceObject.TreeTable,
+                                             referenceObject.Name,
                                              Invariant($"  {Environment.NewLine}  "),
                                              referenceObject.Format);
 
@@ -161,6 +206,7 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new Section(
                                              referenceObject.Id,
                                              referenceObject.TreeTable,
+                                             referenceObject.Name,
                                              referenceObject.Title,
                                              null);
 
@@ -184,6 +230,7 @@ namespace OBeautifulCode.DataStructure.Test
                             SystemUnderTest = new Section(
                                                       referenceObject.Id,
                                                       referenceObject.TreeTable,
+                                                      referenceObject.Name,
                                                       referenceObject.Title,
                                                       referenceObject.Format),
                             ExpectedPropertyValue = referenceObject.Id,
@@ -206,6 +253,7 @@ namespace OBeautifulCode.DataStructure.Test
                             SystemUnderTest = new Section(
                                                       referenceObject.Id,
                                                       referenceObject.TreeTable,
+                                                      referenceObject.Name,
                                                       referenceObject.Title,
                                                       referenceObject.Format),
                             ExpectedPropertyValue = referenceObject.TreeTable,
@@ -214,6 +262,29 @@ namespace OBeautifulCode.DataStructure.Test
                         return result;
                     },
                     PropertyName = "TreeTable",
+                })
+            .AddScenario(() =>
+                new ConstructorPropertyAssignmentTestScenario<Section>
+                {
+                    Name = "Name should return same 'name' parameter passed to constructor when getting",
+                    SystemUnderTestExpectedPropertyValueFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<Section>();
+
+                        var result = new SystemUnderTestExpectedPropertyValue<Section>
+                        {
+                            SystemUnderTest = new Section(
+                                                      referenceObject.Id,
+                                                      referenceObject.TreeTable,
+                                                      referenceObject.Name,
+                                                      referenceObject.Title,
+                                                      referenceObject.Format),
+                            ExpectedPropertyValue = referenceObject.Name,
+                        };
+
+                        return result;
+                    },
+                    PropertyName = "Name",
                 })
             .AddScenario(() =>
                 new ConstructorPropertyAssignmentTestScenario<Section>
@@ -228,6 +299,7 @@ namespace OBeautifulCode.DataStructure.Test
                             SystemUnderTest = new Section(
                                                       referenceObject.Id,
                                                       referenceObject.TreeTable,
+                                                      referenceObject.Name,
                                                       referenceObject.Title,
                                                       referenceObject.Format),
                             ExpectedPropertyValue = referenceObject.Title,
@@ -250,6 +322,7 @@ namespace OBeautifulCode.DataStructure.Test
                             SystemUnderTest = new Section(
                                                       referenceObject.Id,
                                                       referenceObject.TreeTable,
+                                                      referenceObject.Name,
                                                       referenceObject.Title,
                                                       referenceObject.Format),
                             ExpectedPropertyValue = referenceObject.Format,
@@ -296,6 +369,26 @@ namespace OBeautifulCode.DataStructure.Test
                         {
                             SystemUnderTest = systemUnderTest,
                             DeepCloneWithValue = referenceObject.TreeTable,
+                        };
+
+                        return result;
+                    },
+                })
+            .AddScenario(() =>
+                new DeepCloneWithTestScenario<Section>
+                {
+                    Name = "DeepCloneWithName should deep clone object and replace Name with the provided name",
+                    WithPropertyName = "Name",
+                    SystemUnderTestDeepCloneWithValueFunc = () =>
+                    {
+                        var systemUnderTest = A.Dummy<Section>();
+
+                        var referenceObject = A.Dummy<Section>().ThatIs(_ => !systemUnderTest.Name.IsEqualTo(_.Name));
+
+                        var result = new SystemUnderTestDeepCloneWithValue<Section>
+                        {
+                            SystemUnderTest = systemUnderTest,
+                            DeepCloneWithValue = referenceObject.Name,
                         };
 
                         return result;
@@ -355,6 +448,7 @@ namespace OBeautifulCode.DataStructure.Test
                         new Section(
                                 ReferenceObjectForEquatableTestScenarios.Id,
                                 ReferenceObjectForEquatableTestScenarios.TreeTable,
+                                ReferenceObjectForEquatableTestScenarios.Name,
                                 ReferenceObjectForEquatableTestScenarios.Title,
                                 ReferenceObjectForEquatableTestScenarios.Format),
                     },
@@ -363,21 +457,31 @@ namespace OBeautifulCode.DataStructure.Test
                         new Section(
                                 A.Dummy<Section>().Whose(_ => !_.Id.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Id)).Id,
                                 ReferenceObjectForEquatableTestScenarios.TreeTable,
+                                ReferenceObjectForEquatableTestScenarios.Name,
                                 ReferenceObjectForEquatableTestScenarios.Title,
                                 ReferenceObjectForEquatableTestScenarios.Format),
                         new Section(
                                 ReferenceObjectForEquatableTestScenarios.Id,
                                 A.Dummy<Section>().Whose(_ => !_.TreeTable.IsEqualTo(ReferenceObjectForEquatableTestScenarios.TreeTable)).TreeTable,
+                                ReferenceObjectForEquatableTestScenarios.Name,
                                 ReferenceObjectForEquatableTestScenarios.Title,
                                 ReferenceObjectForEquatableTestScenarios.Format),
                         new Section(
                                 ReferenceObjectForEquatableTestScenarios.Id,
                                 ReferenceObjectForEquatableTestScenarios.TreeTable,
+                                A.Dummy<Section>().Whose(_ => !_.Name.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Name)).Name,
+                                ReferenceObjectForEquatableTestScenarios.Title,
+                                ReferenceObjectForEquatableTestScenarios.Format),
+                        new Section(
+                                ReferenceObjectForEquatableTestScenarios.Id,
+                                ReferenceObjectForEquatableTestScenarios.TreeTable,
+                                ReferenceObjectForEquatableTestScenarios.Name,
                                 A.Dummy<Section>().Whose(_ => !_.Title.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Title)).Title,
                                 ReferenceObjectForEquatableTestScenarios.Format),
                         new Section(
                                 ReferenceObjectForEquatableTestScenarios.Id,
                                 ReferenceObjectForEquatableTestScenarios.TreeTable,
+                                ReferenceObjectForEquatableTestScenarios.Name,
                                 ReferenceObjectForEquatableTestScenarios.Title,
                                 A.Dummy<Section>().Whose(_ => !_.Format.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Format)).Format),
                     },
@@ -702,7 +806,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "Id", "TreeTable", "Title", "Format" };
+                var propertyNames = new string[] { "Id", "TreeTable", "Name", "Title", "Format" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 

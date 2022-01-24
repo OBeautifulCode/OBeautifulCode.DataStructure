@@ -22,11 +22,13 @@ namespace OBeautifulCode.DataStructure
         /// </summary>
         /// <param name="id">The section's unique identifier.</param>
         /// <param name="treeTable">The tree table.</param>
+        /// <param name="name">OPTIONAL name of the section.  DEFAULT is a section with no name.</param>
         /// <param name="title">OPTIONAL title of the section.  DEFAULT is a section with no title.</param>
         /// <param name="format">OPTIONAL format to apply to the section.  DEFAULT is to leave the format unchanged.</param>
         public Section(
             string id,
             TreeTable treeTable,
+            string name = null,
             string title = null,
             SectionFormat format = null)
         {
@@ -47,6 +49,7 @@ namespace OBeautifulCode.DataStructure
 
             this.Id = id;
             this.TreeTable = treeTable;
+            this.Name = name;
             this.Title = title;
             this.Format = format;
         }
@@ -60,6 +63,11 @@ namespace OBeautifulCode.DataStructure
         /// Gets the tree table.
         /// </summary>
         public TreeTable TreeTable { get; private set; }
+
+        /// <summary>
+        /// Gets the section's name.
+        /// </summary>
+        public string Name { get; private set; }
 
         /// <summary>
         /// Gets the title of the section.
