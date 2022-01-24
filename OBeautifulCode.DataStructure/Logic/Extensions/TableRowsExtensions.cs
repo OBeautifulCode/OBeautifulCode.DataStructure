@@ -85,16 +85,16 @@ namespace OBeautifulCode.DataStructure
             {
                 result.Add(row);
 
-                if (row.CollapsedSummaryRow != null)
+                if (row.CollapsedSummaryRows != null)
                 {
-                    result.Add(row.CollapsedSummaryRow);
+                    result.AddRange(row.CollapsedSummaryRows);
                 }
 
                 result.AddRange(GetAllDataRowsInOrder(row.ChildRows ?? new Row[0]));
 
-                if (row.ExpandedSummaryRow != null)
+                if (row.ExpandedSummaryRows != null)
                 {
-                    result.Add(row.ExpandedSummaryRow);
+                    result.AddRange(row.ExpandedSummaryRows);
                 }
             }
 

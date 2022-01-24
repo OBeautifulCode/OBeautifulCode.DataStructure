@@ -492,11 +492,11 @@ namespace OBeautifulCode.DataStructure.Test
                 : BuildDataRows(numberOfColumns, depth + 1);
 
             var expandedSummaryRow = childRows.Any()
-                ? BuildFlatRow(numberOfColumns, allowSpanningCells: true)
+                ? new[] { BuildFlatRow(numberOfColumns, allowSpanningCells: true) }
                 : null;
 
             var collapsedSummaryRow = childRows.Any()
-                ? BuildFlatRow(numberOfColumns, allowSpanningCells: true)
+                ? new[] { BuildFlatRow(numberOfColumns, allowSpanningCells: true) }
                 : null;
 
             var result = new Row(cells, A.Dummy<string>(), A.Dummy<RowFormat>(), childRows, expandedSummaryRow, collapsedSummaryRow);

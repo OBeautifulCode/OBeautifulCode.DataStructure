@@ -912,8 +912,8 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<string>(),
                                  A.Dummy<RowFormat>(),
                                  A.Dummy<IReadOnlyList<Row>>(),
-                                 A.Dummy<FlatRow>(),
-                                 A.Dummy<FlatRow>()));
+                                 A.Dummy<IReadOnlyList<FlatRow>>(),
+                                 A.Dummy<IReadOnlyList<FlatRow>>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () =>

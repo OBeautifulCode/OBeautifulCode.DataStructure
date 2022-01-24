@@ -73,8 +73,8 @@ namespace OBeautifulCode.DataStructure
                       && this.Cells.IsEqualTo(other.Cells)
                       && this.Format.IsEqualTo(other.Format)
                       && this.ChildRows.IsEqualTo(other.ChildRows)
-                      && this.ExpandedSummaryRow.IsEqualTo(other.ExpandedSummaryRow)
-                      && this.CollapsedSummaryRow.IsEqualTo(other.CollapsedSummaryRow);
+                      && this.ExpandedSummaryRows.IsEqualTo(other.ExpandedSummaryRows)
+                      && this.CollapsedSummaryRows.IsEqualTo(other.CollapsedSummaryRows);
 
             return result;
         }
@@ -88,8 +88,8 @@ namespace OBeautifulCode.DataStructure
             .Hash(this.Cells)
             .Hash(this.Format)
             .Hash(this.ChildRows)
-            .Hash(this.ExpandedSummaryRow)
-            .Hash(this.CollapsedSummaryRow)
+            .Hash(this.ExpandedSummaryRows)
+            .Hash(this.CollapsedSummaryRows)
             .Value;
 
         /// <inheritdoc />
@@ -120,8 +120,8 @@ namespace OBeautifulCode.DataStructure
                                  id,
                                  this.Format?.DeepClone(),
                                  this.ChildRows?.DeepClone(),
-                                 this.ExpandedSummaryRow?.DeepClone(),
-                                 this.CollapsedSummaryRow?.DeepClone());
+                                 this.ExpandedSummaryRows?.DeepClone(),
+                                 this.CollapsedSummaryRows?.DeepClone());
 
             return result;
         }
@@ -151,8 +151,8 @@ namespace OBeautifulCode.DataStructure
                                  this.Id?.DeepClone(),
                                  this.Format?.DeepClone(),
                                  this.ChildRows?.DeepClone(),
-                                 this.ExpandedSummaryRow?.DeepClone(),
-                                 this.CollapsedSummaryRow?.DeepClone());
+                                 this.ExpandedSummaryRows?.DeepClone(),
+                                 this.CollapsedSummaryRows?.DeepClone());
 
             return result;
         }
@@ -182,8 +182,8 @@ namespace OBeautifulCode.DataStructure
                                  this.Id?.DeepClone(),
                                  format,
                                  this.ChildRows?.DeepClone(),
-                                 this.ExpandedSummaryRow?.DeepClone(),
-                                 this.CollapsedSummaryRow?.DeepClone());
+                                 this.ExpandedSummaryRows?.DeepClone(),
+                                 this.CollapsedSummaryRows?.DeepClone());
 
             return result;
         }
@@ -217,17 +217,17 @@ namespace OBeautifulCode.DataStructure
                                  this.Id?.DeepClone(),
                                  this.Format?.DeepClone(),
                                  childRows,
-                                 this.ExpandedSummaryRow?.DeepClone(),
-                                 this.CollapsedSummaryRow?.DeepClone());
+                                 this.ExpandedSummaryRows?.DeepClone(),
+                                 this.CollapsedSummaryRows?.DeepClone());
 
             return result;
         }
 
         /// <summary>
-        /// Deep clones this object with a new <see cref="ExpandedSummaryRow" />.
+        /// Deep clones this object with a new <see cref="ExpandedSummaryRows" />.
         /// </summary>
-        /// <param name="expandedSummaryRow">The new <see cref="ExpandedSummaryRow" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="Row" /> using the specified <paramref name="expandedSummaryRow" /> for <see cref="ExpandedSummaryRow" /> and a deep clone of every other property.</returns>
+        /// <param name="expandedSummaryRows">The new <see cref="ExpandedSummaryRows" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="Row" /> using the specified <paramref name="expandedSummaryRows" /> for <see cref="ExpandedSummaryRows" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -245,24 +245,24 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public Row DeepCloneWithExpandedSummaryRow(FlatRow expandedSummaryRow)
+        public Row DeepCloneWithExpandedSummaryRows(IReadOnlyList<FlatRow> expandedSummaryRows)
         {
             var result = new Row(
                                  this.Cells?.DeepClone(),
                                  this.Id?.DeepClone(),
                                  this.Format?.DeepClone(),
                                  this.ChildRows?.DeepClone(),
-                                 expandedSummaryRow,
-                                 this.CollapsedSummaryRow?.DeepClone());
+                                 expandedSummaryRows,
+                                 this.CollapsedSummaryRows?.DeepClone());
 
             return result;
         }
 
         /// <summary>
-        /// Deep clones this object with a new <see cref="CollapsedSummaryRow" />.
+        /// Deep clones this object with a new <see cref="CollapsedSummaryRows" />.
         /// </summary>
-        /// <param name="collapsedSummaryRow">The new <see cref="CollapsedSummaryRow" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="Row" /> using the specified <paramref name="collapsedSummaryRow" /> for <see cref="CollapsedSummaryRow" /> and a deep clone of every other property.</returns>
+        /// <param name="collapsedSummaryRows">The new <see cref="CollapsedSummaryRows" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="Row" /> using the specified <paramref name="collapsedSummaryRows" /> for <see cref="CollapsedSummaryRows" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -280,15 +280,15 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public Row DeepCloneWithCollapsedSummaryRow(FlatRow collapsedSummaryRow)
+        public Row DeepCloneWithCollapsedSummaryRows(IReadOnlyList<FlatRow> collapsedSummaryRows)
         {
             var result = new Row(
                                  this.Cells?.DeepClone(),
                                  this.Id?.DeepClone(),
                                  this.Format?.DeepClone(),
                                  this.ChildRows?.DeepClone(),
-                                 this.ExpandedSummaryRow?.DeepClone(),
-                                 collapsedSummaryRow);
+                                 this.ExpandedSummaryRows?.DeepClone(),
+                                 collapsedSummaryRows);
 
             return result;
         }
@@ -302,8 +302,8 @@ namespace OBeautifulCode.DataStructure
                                  this.Id?.DeepClone(),
                                  this.Format?.DeepClone(),
                                  this.ChildRows?.DeepClone(),
-                                 this.ExpandedSummaryRow?.DeepClone(),
-                                 this.CollapsedSummaryRow?.DeepClone());
+                                 this.ExpandedSummaryRows?.DeepClone(),
+                                 this.CollapsedSummaryRows?.DeepClone());
 
             return result;
         }
@@ -312,7 +312,7 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"OBeautifulCode.DataStructure.Row: Id = {this.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Cells = {this.Cells?.ToString() ?? "<null>"}, Format = {this.Format?.ToString() ?? "<null>"}, ChildRows = {this.ChildRows?.ToString() ?? "<null>"}, ExpandedSummaryRow = {this.ExpandedSummaryRow?.ToString() ?? "<null>"}, CollapsedSummaryRow = {this.CollapsedSummaryRow?.ToString() ?? "<null>"}.");
+            var result = Invariant($"OBeautifulCode.DataStructure.Row: Id = {this.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Cells = {this.Cells?.ToString() ?? "<null>"}, Format = {this.Format?.ToString() ?? "<null>"}, ChildRows = {this.ChildRows?.ToString() ?? "<null>"}, ExpandedSummaryRows = {this.ExpandedSummaryRows?.ToString() ?? "<null>"}, CollapsedSummaryRows = {this.CollapsedSummaryRows?.ToString() ?? "<null>"}.");
 
             return result;
         }

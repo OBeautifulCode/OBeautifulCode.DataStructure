@@ -47,7 +47,7 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new SystemUnderTestExpectedStringRepresentation<Row>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.Row: Id = {systemUnderTest.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Cells = {systemUnderTest.Cells?.ToString() ?? "<null>"}, Format = {systemUnderTest.Format?.ToString() ?? "<null>"}, ChildRows = {systemUnderTest.ChildRows?.ToString() ?? "<null>"}, ExpandedSummaryRow = {systemUnderTest.ExpandedSummaryRow?.ToString() ?? "<null>"}, CollapsedSummaryRow = {systemUnderTest.CollapsedSummaryRow?.ToString() ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.Row: Id = {systemUnderTest.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Cells = {systemUnderTest.Cells?.ToString() ?? "<null>"}, Format = {systemUnderTest.Format?.ToString() ?? "<null>"}, ChildRows = {systemUnderTest.ChildRows?.ToString() ?? "<null>"}, ExpandedSummaryRows = {systemUnderTest.ExpandedSummaryRows?.ToString() ?? "<null>"}, CollapsedSummaryRows = {systemUnderTest.CollapsedSummaryRows?.ToString() ?? "<null>"}."),
                         };
 
                         return result;
@@ -68,8 +68,8 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Id,
                                              referenceObject.Format,
                                              referenceObject.ChildRows,
-                                             referenceObject.ExpandedSummaryRow,
-                                             referenceObject.CollapsedSummaryRow);
+                                             referenceObject.ExpandedSummaryRows,
+                                             referenceObject.CollapsedSummaryRows);
 
                         return result;
                     },
@@ -89,8 +89,8 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Id,
                                              referenceObject.Format,
                                              referenceObject.ChildRows,
-                                             referenceObject.ExpandedSummaryRow,
-                                             referenceObject.CollapsedSummaryRow);
+                                             referenceObject.ExpandedSummaryRows,
+                                             referenceObject.CollapsedSummaryRows);
 
                         return result;
                     },
@@ -110,8 +110,8 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Id,
                                              referenceObject.Format,
                                              referenceObject.ChildRows,
-                                             referenceObject.ExpandedSummaryRow,
-                                             referenceObject.CollapsedSummaryRow);
+                                             referenceObject.ExpandedSummaryRows,
+                                             referenceObject.CollapsedSummaryRows);
 
                         return result;
                     },
@@ -131,8 +131,8 @@ namespace OBeautifulCode.DataStructure.Test
                                              null,
                                              referenceObject.Format,
                                              referenceObject.ChildRows,
-                                             referenceObject.ExpandedSummaryRow,
-                                             referenceObject.CollapsedSummaryRow);
+                                             referenceObject.ExpandedSummaryRows,
+                                             referenceObject.CollapsedSummaryRows);
 
                         return result;
                     },
@@ -152,8 +152,8 @@ namespace OBeautifulCode.DataStructure.Test
                                              Invariant($"  {Environment.NewLine}  "),
                                              referenceObject.Format,
                                              referenceObject.ChildRows,
-                                             referenceObject.ExpandedSummaryRow,
-                                             referenceObject.CollapsedSummaryRow);
+                                             referenceObject.ExpandedSummaryRows,
+                                             referenceObject.CollapsedSummaryRows);
 
                         return result;
                     },
@@ -173,8 +173,8 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Id,
                                              null,
                                              referenceObject.ChildRows,
-                                             referenceObject.ExpandedSummaryRow,
-                                             referenceObject.CollapsedSummaryRow);
+                                             referenceObject.ExpandedSummaryRows,
+                                             referenceObject.CollapsedSummaryRows);
 
                         return result;
                     },
@@ -194,8 +194,8 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Id,
                                              referenceObject.Format,
                                              null,
-                                             referenceObject.ExpandedSummaryRow,
-                                             referenceObject.CollapsedSummaryRow);
+                                             referenceObject.ExpandedSummaryRows,
+                                             referenceObject.CollapsedSummaryRows);
 
                         return result;
                     },
@@ -215,8 +215,8 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Id,
                                              referenceObject.Format,
                                              new List<Row>(),
-                                             referenceObject.ExpandedSummaryRow,
-                                             referenceObject.CollapsedSummaryRow);
+                                             referenceObject.ExpandedSummaryRows,
+                                             referenceObject.CollapsedSummaryRows);
 
                         return result;
                     },
@@ -236,8 +236,8 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Id,
                                              referenceObject.Format,
                                              new Row[0].Concat(referenceObject.ChildRows).Concat(new Row[] { null }).Concat(referenceObject.ChildRows).ToList(),
-                                             referenceObject.ExpandedSummaryRow,
-                                             referenceObject.CollapsedSummaryRow);
+                                             referenceObject.ExpandedSummaryRows,
+                                             referenceObject.CollapsedSummaryRows);
 
                         return result;
                     },
@@ -247,7 +247,7 @@ namespace OBeautifulCode.DataStructure.Test
             .AddScenario(() =>
                 new ConstructorArgumentValidationTestScenario<Row>
                 {
-                    Name = "constructor should throw ArgumentNullException when parameter 'expandedSummaryRow' is null scenario",
+                    Name = "constructor should throw ArgumentNullException when parameter 'expandedSummaryRows' is null scenario",
                     ConstructionFunc = () =>
                     {
                         var referenceObject = A.Dummy<Row>();
@@ -258,17 +258,17 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Format,
                                              referenceObject.ChildRows,
                                              null,
-                                             referenceObject.CollapsedSummaryRow);
+                                             referenceObject.CollapsedSummaryRows);
 
                         return result;
                     },
                     ExpectedExceptionType = typeof(ArgumentNullException),
-                    ExpectedExceptionMessageContains = new[] { "expandedSummaryRow", },
+                    ExpectedExceptionMessageContains = new[] { "expandedSummaryRows", },
                 })
             .AddScenario(() =>
                 new ConstructorArgumentValidationTestScenario<Row>
                 {
-                    Name = "constructor should throw ArgumentNullException when parameter 'collapsedSummaryRow' is null scenario",
+                    Name = "constructor should throw ArgumentException when parameter 'expandedSummaryRows' is an empty enumerable scenario",
                     ConstructionFunc = () =>
                     {
                         var referenceObject = A.Dummy<Row>();
@@ -278,13 +278,97 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Id,
                                              referenceObject.Format,
                                              referenceObject.ChildRows,
-                                             referenceObject.ExpandedSummaryRow,
+                                             new List<FlatRow>(),
+                                             referenceObject.CollapsedSummaryRows);
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentException),
+                    ExpectedExceptionMessageContains = new[] { "expandedSummaryRows", "is an empty enumerable", },
+                })
+            .AddScenario(() =>
+                new ConstructorArgumentValidationTestScenario<Row>
+                {
+                    Name = "constructor should throw ArgumentException when parameter 'expandedSummaryRows' contains a null element scenario",
+                    ConstructionFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<Row>();
+
+                        var result = new Row(
+                                             referenceObject.Cells,
+                                             referenceObject.Id,
+                                             referenceObject.Format,
+                                             referenceObject.ChildRows,
+                                             new FlatRow[0].Concat(referenceObject.ExpandedSummaryRows).Concat(new FlatRow[] { null }).Concat(referenceObject.ExpandedSummaryRows).ToList(),
+                                             referenceObject.CollapsedSummaryRows);
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentException),
+                    ExpectedExceptionMessageContains = new[] { "expandedSummaryRows", "contains at least one null element", },
+                })
+            .AddScenario(() =>
+                new ConstructorArgumentValidationTestScenario<Row>
+                {
+                    Name = "constructor should throw ArgumentNullException when parameter 'collapsedSummaryRows' is null scenario",
+                    ConstructionFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<Row>();
+
+                        var result = new Row(
+                                             referenceObject.Cells,
+                                             referenceObject.Id,
+                                             referenceObject.Format,
+                                             referenceObject.ChildRows,
+                                             referenceObject.ExpandedSummaryRows,
                                              null);
 
                         return result;
                     },
                     ExpectedExceptionType = typeof(ArgumentNullException),
-                    ExpectedExceptionMessageContains = new[] { "collapsedSummaryRow", },
+                    ExpectedExceptionMessageContains = new[] { "collapsedSummaryRows", },
+                })
+            .AddScenario(() =>
+                new ConstructorArgumentValidationTestScenario<Row>
+                {
+                    Name = "constructor should throw ArgumentException when parameter 'collapsedSummaryRows' is an empty enumerable scenario",
+                    ConstructionFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<Row>();
+
+                        var result = new Row(
+                                             referenceObject.Cells,
+                                             referenceObject.Id,
+                                             referenceObject.Format,
+                                             referenceObject.ChildRows,
+                                             referenceObject.ExpandedSummaryRows,
+                                             new List<FlatRow>());
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentException),
+                    ExpectedExceptionMessageContains = new[] { "collapsedSummaryRows", "is an empty enumerable", },
+                })
+            .AddScenario(() =>
+                new ConstructorArgumentValidationTestScenario<Row>
+                {
+                    Name = "constructor should throw ArgumentException when parameter 'collapsedSummaryRows' contains a null element scenario",
+                    ConstructionFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<Row>();
+
+                        var result = new Row(
+                                             referenceObject.Cells,
+                                             referenceObject.Id,
+                                             referenceObject.Format,
+                                             referenceObject.ChildRows,
+                                             referenceObject.ExpandedSummaryRows,
+                                             new FlatRow[0].Concat(referenceObject.CollapsedSummaryRows).Concat(new FlatRow[] { null }).Concat(referenceObject.CollapsedSummaryRows).ToList());
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentException),
+                    ExpectedExceptionMessageContains = new[] { "collapsedSummaryRows", "contains at least one null element", },
                 });
 
         private static readonly ConstructorPropertyAssignmentTestScenarios<Row> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<Row>()
@@ -303,8 +387,8 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Id,
                                                       referenceObject.Format,
                                                       referenceObject.ChildRows,
-                                                      referenceObject.ExpandedSummaryRow,
-                                                      referenceObject.CollapsedSummaryRow),
+                                                      referenceObject.ExpandedSummaryRows,
+                                                      referenceObject.CollapsedSummaryRows),
                             ExpectedPropertyValue = referenceObject.Cells,
                         };
 
@@ -327,8 +411,8 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Id,
                                                       referenceObject.Format,
                                                       referenceObject.ChildRows,
-                                                      referenceObject.ExpandedSummaryRow,
-                                                      referenceObject.CollapsedSummaryRow),
+                                                      referenceObject.ExpandedSummaryRows,
+                                                      referenceObject.CollapsedSummaryRows),
                             ExpectedPropertyValue = referenceObject.Id,
                         };
 
@@ -351,8 +435,8 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Id,
                                                       referenceObject.Format,
                                                       referenceObject.ChildRows,
-                                                      referenceObject.ExpandedSummaryRow,
-                                                      referenceObject.CollapsedSummaryRow),
+                                                      referenceObject.ExpandedSummaryRows,
+                                                      referenceObject.CollapsedSummaryRows),
                             ExpectedPropertyValue = referenceObject.Format,
                         };
 
@@ -375,8 +459,8 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Id,
                                                       referenceObject.Format,
                                                       referenceObject.ChildRows,
-                                                      referenceObject.ExpandedSummaryRow,
-                                                      referenceObject.CollapsedSummaryRow),
+                                                      referenceObject.ExpandedSummaryRows,
+                                                      referenceObject.CollapsedSummaryRows),
                             ExpectedPropertyValue = referenceObject.ChildRows,
                         };
 
@@ -387,7 +471,7 @@ namespace OBeautifulCode.DataStructure.Test
             .AddScenario(() =>
                 new ConstructorPropertyAssignmentTestScenario<Row>
                 {
-                    Name = "ExpandedSummaryRow should return same 'expandedSummaryRow' parameter passed to constructor when getting",
+                    Name = "ExpandedSummaryRows should return same 'expandedSummaryRows' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
                         var referenceObject = A.Dummy<Row>();
@@ -399,19 +483,19 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Id,
                                                       referenceObject.Format,
                                                       referenceObject.ChildRows,
-                                                      referenceObject.ExpandedSummaryRow,
-                                                      referenceObject.CollapsedSummaryRow),
-                            ExpectedPropertyValue = referenceObject.ExpandedSummaryRow,
+                                                      referenceObject.ExpandedSummaryRows,
+                                                      referenceObject.CollapsedSummaryRows),
+                            ExpectedPropertyValue = referenceObject.ExpandedSummaryRows,
                         };
 
                         return result;
                     },
-                    PropertyName = "ExpandedSummaryRow",
+                    PropertyName = "ExpandedSummaryRows",
                 })
             .AddScenario(() =>
                 new ConstructorPropertyAssignmentTestScenario<Row>
                 {
-                    Name = "CollapsedSummaryRow should return same 'collapsedSummaryRow' parameter passed to constructor when getting",
+                    Name = "CollapsedSummaryRows should return same 'collapsedSummaryRows' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
                         var referenceObject = A.Dummy<Row>();
@@ -423,14 +507,14 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Id,
                                                       referenceObject.Format,
                                                       referenceObject.ChildRows,
-                                                      referenceObject.ExpandedSummaryRow,
-                                                      referenceObject.CollapsedSummaryRow),
-                            ExpectedPropertyValue = referenceObject.CollapsedSummaryRow,
+                                                      referenceObject.ExpandedSummaryRows,
+                                                      referenceObject.CollapsedSummaryRows),
+                            ExpectedPropertyValue = referenceObject.CollapsedSummaryRows,
                         };
 
                         return result;
                     },
-                    PropertyName = "CollapsedSummaryRow",
+                    PropertyName = "CollapsedSummaryRows",
                 });
 
         private static readonly DeepCloneWithTestScenarios<Row> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<Row>()
@@ -517,18 +601,18 @@ namespace OBeautifulCode.DataStructure.Test
             .AddScenario(() =>
                 new DeepCloneWithTestScenario<Row>
                 {
-                    Name = "DeepCloneWithExpandedSummaryRow should deep clone object and replace ExpandedSummaryRow with the provided expandedSummaryRow",
-                    WithPropertyName = "ExpandedSummaryRow",
+                    Name = "DeepCloneWithExpandedSummaryRows should deep clone object and replace ExpandedSummaryRows with the provided expandedSummaryRows",
+                    WithPropertyName = "ExpandedSummaryRows",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
                         var systemUnderTest = A.Dummy<Row>();
 
-                        var referenceObject = A.Dummy<Row>().ThatIs(_ => !systemUnderTest.ExpandedSummaryRow.IsEqualTo(_.ExpandedSummaryRow));
+                        var referenceObject = A.Dummy<Row>().ThatIs(_ => !systemUnderTest.ExpandedSummaryRows.IsEqualTo(_.ExpandedSummaryRows));
 
                         var result = new SystemUnderTestDeepCloneWithValue<Row>
                         {
                             SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.ExpandedSummaryRow,
+                            DeepCloneWithValue = referenceObject.ExpandedSummaryRows,
                         };
 
                         return result;
@@ -537,18 +621,18 @@ namespace OBeautifulCode.DataStructure.Test
             .AddScenario(() =>
                 new DeepCloneWithTestScenario<Row>
                 {
-                    Name = "DeepCloneWithCollapsedSummaryRow should deep clone object and replace CollapsedSummaryRow with the provided collapsedSummaryRow",
-                    WithPropertyName = "CollapsedSummaryRow",
+                    Name = "DeepCloneWithCollapsedSummaryRows should deep clone object and replace CollapsedSummaryRows with the provided collapsedSummaryRows",
+                    WithPropertyName = "CollapsedSummaryRows",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
                         var systemUnderTest = A.Dummy<Row>();
 
-                        var referenceObject = A.Dummy<Row>().ThatIs(_ => !systemUnderTest.CollapsedSummaryRow.IsEqualTo(_.CollapsedSummaryRow));
+                        var referenceObject = A.Dummy<Row>().ThatIs(_ => !systemUnderTest.CollapsedSummaryRows.IsEqualTo(_.CollapsedSummaryRows));
 
                         var result = new SystemUnderTestDeepCloneWithValue<Row>
                         {
                             SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.CollapsedSummaryRow,
+                            DeepCloneWithValue = referenceObject.CollapsedSummaryRows,
                         };
 
                         return result;
@@ -570,8 +654,8 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.Id,
                                 ReferenceObjectForEquatableTestScenarios.Format,
                                 ReferenceObjectForEquatableTestScenarios.ChildRows,
-                                ReferenceObjectForEquatableTestScenarios.ExpandedSummaryRow,
-                                ReferenceObjectForEquatableTestScenarios.CollapsedSummaryRow),
+                                ReferenceObjectForEquatableTestScenarios.ExpandedSummaryRows,
+                                ReferenceObjectForEquatableTestScenarios.CollapsedSummaryRows),
                     },
                     ObjectsThatAreNotEqualToReferenceObject = new Row[]
                     {
@@ -580,43 +664,43 @@ namespace OBeautifulCode.DataStructure.Test
                                 A.Dummy<Row>().Whose(_ => !_.Id.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Id)).Id,
                                 ReferenceObjectForEquatableTestScenarios.Format,
                                 ReferenceObjectForEquatableTestScenarios.ChildRows,
-                                ReferenceObjectForEquatableTestScenarios.ExpandedSummaryRow,
-                                ReferenceObjectForEquatableTestScenarios.CollapsedSummaryRow),
+                                ReferenceObjectForEquatableTestScenarios.ExpandedSummaryRows,
+                                ReferenceObjectForEquatableTestScenarios.CollapsedSummaryRows),
                         new Row(
                                 A.Dummy<Row>().Whose(_ => !_.Cells.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Cells)).Cells,
                                 ReferenceObjectForEquatableTestScenarios.Id,
                                 ReferenceObjectForEquatableTestScenarios.Format,
                                 ReferenceObjectForEquatableTestScenarios.ChildRows,
-                                ReferenceObjectForEquatableTestScenarios.ExpandedSummaryRow,
-                                ReferenceObjectForEquatableTestScenarios.CollapsedSummaryRow),
+                                ReferenceObjectForEquatableTestScenarios.ExpandedSummaryRows,
+                                ReferenceObjectForEquatableTestScenarios.CollapsedSummaryRows),
                         new Row(
                                 ReferenceObjectForEquatableTestScenarios.Cells,
                                 ReferenceObjectForEquatableTestScenarios.Id,
                                 A.Dummy<Row>().Whose(_ => !_.Format.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Format)).Format,
                                 ReferenceObjectForEquatableTestScenarios.ChildRows,
-                                ReferenceObjectForEquatableTestScenarios.ExpandedSummaryRow,
-                                ReferenceObjectForEquatableTestScenarios.CollapsedSummaryRow),
+                                ReferenceObjectForEquatableTestScenarios.ExpandedSummaryRows,
+                                ReferenceObjectForEquatableTestScenarios.CollapsedSummaryRows),
                         new Row(
                                 ReferenceObjectForEquatableTestScenarios.Cells,
                                 ReferenceObjectForEquatableTestScenarios.Id,
                                 ReferenceObjectForEquatableTestScenarios.Format,
                                 A.Dummy<Row>().Whose(_ => !_.ChildRows.IsEqualTo(ReferenceObjectForEquatableTestScenarios.ChildRows)).ChildRows,
-                                ReferenceObjectForEquatableTestScenarios.ExpandedSummaryRow,
-                                ReferenceObjectForEquatableTestScenarios.CollapsedSummaryRow),
+                                ReferenceObjectForEquatableTestScenarios.ExpandedSummaryRows,
+                                ReferenceObjectForEquatableTestScenarios.CollapsedSummaryRows),
                         new Row(
                                 ReferenceObjectForEquatableTestScenarios.Cells,
                                 ReferenceObjectForEquatableTestScenarios.Id,
                                 ReferenceObjectForEquatableTestScenarios.Format,
                                 ReferenceObjectForEquatableTestScenarios.ChildRows,
-                                A.Dummy<Row>().Whose(_ => !_.ExpandedSummaryRow.IsEqualTo(ReferenceObjectForEquatableTestScenarios.ExpandedSummaryRow)).ExpandedSummaryRow,
-                                ReferenceObjectForEquatableTestScenarios.CollapsedSummaryRow),
+                                A.Dummy<Row>().Whose(_ => !_.ExpandedSummaryRows.IsEqualTo(ReferenceObjectForEquatableTestScenarios.ExpandedSummaryRows)).ExpandedSummaryRows,
+                                ReferenceObjectForEquatableTestScenarios.CollapsedSummaryRows),
                         new Row(
                                 ReferenceObjectForEquatableTestScenarios.Cells,
                                 ReferenceObjectForEquatableTestScenarios.Id,
                                 ReferenceObjectForEquatableTestScenarios.Format,
                                 ReferenceObjectForEquatableTestScenarios.ChildRows,
-                                ReferenceObjectForEquatableTestScenarios.ExpandedSummaryRow,
-                                A.Dummy<Row>().Whose(_ => !_.CollapsedSummaryRow.IsEqualTo(ReferenceObjectForEquatableTestScenarios.CollapsedSummaryRow)).CollapsedSummaryRow),
+                                ReferenceObjectForEquatableTestScenarios.ExpandedSummaryRows,
+                                A.Dummy<Row>().Whose(_ => !_.CollapsedSummaryRows.IsEqualTo(ReferenceObjectForEquatableTestScenarios.CollapsedSummaryRows)).CollapsedSummaryRows),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
                     {
@@ -935,28 +1019,28 @@ namespace OBeautifulCode.DataStructure.Test
                     actual.ChildRows.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.ChildRows);
                 }
 
-                if (systemUnderTest.ExpandedSummaryRow == null)
+                if (systemUnderTest.ExpandedSummaryRows == null)
                 {
-                    actual.ExpandedSummaryRow.AsTest().Must().BeNull();
+                    actual.ExpandedSummaryRows.AsTest().Must().BeNull();
                 }
-                else if (!actual.ExpandedSummaryRow.GetType().IsValueType)
+                else if (!actual.ExpandedSummaryRows.GetType().IsValueType)
                 {
                     // When the declared type is a reference type, we still have to check the runtime type.
                     // The object could be a boxed value type, which will fail this asseration because
                     // a deep clone of a value type object is the same object.
-                    actual.ExpandedSummaryRow.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.ExpandedSummaryRow);
+                    actual.ExpandedSummaryRows.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.ExpandedSummaryRows);
                 }
 
-                if (systemUnderTest.CollapsedSummaryRow == null)
+                if (systemUnderTest.CollapsedSummaryRows == null)
                 {
-                    actual.CollapsedSummaryRow.AsTest().Must().BeNull();
+                    actual.CollapsedSummaryRows.AsTest().Must().BeNull();
                 }
-                else if (!actual.CollapsedSummaryRow.GetType().IsValueType)
+                else if (!actual.CollapsedSummaryRows.GetType().IsValueType)
                 {
                     // When the declared type is a reference type, we still have to check the runtime type.
                     // The object could be a boxed value type, which will fail this asseration because
                     // a deep clone of a value type object is the same object.
-                    actual.CollapsedSummaryRow.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.CollapsedSummaryRow);
+                    actual.CollapsedSummaryRows.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.CollapsedSummaryRows);
                 }
             }
 
@@ -976,7 +1060,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "Id", "Cells", "Format", "ChildRows", "ExpandedSummaryRow", "CollapsedSummaryRow" };
+                var propertyNames = new string[] { "Id", "Cells", "Format", "ChildRows", "ExpandedSummaryRows", "CollapsedSummaryRows" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 

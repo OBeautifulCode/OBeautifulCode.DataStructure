@@ -27,15 +27,15 @@ namespace OBeautifulCode.DataStructure
         /// <param name="id">OPTIONAL row identifier.  DEFAULT is a row without an identifier.</param>
         /// <param name="format">OPTIONAL format to apply to the whole row.  DEFAULT is to leave the format unchanged.</param>
         /// <param name="childRows">OPTIONAL child rows.  DEFAULT is none.</param>
-        /// <param name="expandedSummaryRow">OPTIONAL row that summarizes the children (e.g. a Total row) when this row is expanded.  DEFAULT is to forgo a summary row when this row is expanded.</param>
-        /// <param name="collapsedSummaryRow">OPTIONAL row that summarizes the children (e.g. a Total row) when this row is collapsed.  DEFAULT is to forgo a summary row when this row is collapsed.</param>
+        /// <param name="expandedSummaryRows">OPTIONAL rows that summarizes the children (e.g. a Total row) when this row is expanded.  DEFAULT is to forgo summary rows when this row is expanded.</param>
+        /// <param name="collapsedSummaryRows">OPTIONAL rows that summarizes the children (e.g. a Total row) when this row is collapsed.  DEFAULT is to forgo summary rows when this row is collapsed.</param>
         public Row(
             IReadOnlyList<ICell> cells,
             string id = null,
             RowFormat format = null,
             IReadOnlyList<Row> childRows = null,
-            FlatRow expandedSummaryRow = null,
-            FlatRow collapsedSummaryRow = null)
+            IReadOnlyList<FlatRow> expandedSummaryRows = null,
+            IReadOnlyList<FlatRow> collapsedSummaryRows = null)
             : base(cells, id, format)
         {
             if ((childRows != null) && childRows.Any(_ => _ == null))
@@ -43,19 +43,35 @@ namespace OBeautifulCode.DataStructure
                 throw new ArgumentException(Invariant($"{nameof(childRows)} contains at least one null element."));
             }
 
-            if ((expandedSummaryRow != null) && ((childRows == null) || (!childRows.Any())))
+            if (expandedSummaryRows != null)
             {
-                throw new ArgumentException(Invariant($"{nameof(expandedSummaryRow)} is specified when there are no rows in {nameof(childRows)}."));
+                if (expandedSummaryRows.Any(_ => _ == null))
+                {
+                    throw new ArgumentException(Invariant($"{nameof(expandedSummaryRows)} contains a null element."));
+                }
+
+                if (expandedSummaryRows.Any() && ((childRows == null) || (!childRows.Any())))
+                {
+                    throw new ArgumentException(Invariant($"{nameof(expandedSummaryRows)} is specified when there are no rows in {nameof(childRows)}."));
+                }
             }
 
-            if ((collapsedSummaryRow != null) && ((childRows == null) || (!childRows.Any())))
+            if (collapsedSummaryRows != null)
             {
-                throw new ArgumentException(Invariant($"{nameof(collapsedSummaryRow)} is specified when there are no rows in {nameof(childRows)}."));
+                if (collapsedSummaryRows.Any(_ => _ == null))
+                {
+                    throw new ArgumentException(Invariant($"{nameof(collapsedSummaryRows)} contains a null element."));
+                }
+
+                if (collapsedSummaryRows.Any() && ((childRows == null) || (!childRows.Any())))
+                {
+                    throw new ArgumentException(Invariant($"{nameof(collapsedSummaryRows)} is specified when there are no rows in {nameof(childRows)}."));
+                }
             }
 
             this.ChildRows = childRows;
-            this.ExpandedSummaryRow = expandedSummaryRow;
-            this.CollapsedSummaryRow = collapsedSummaryRow;
+            this.ExpandedSummaryRows = expandedSummaryRows;
+            this.CollapsedSummaryRows = collapsedSummaryRows;
         }
 
         /// <summary>
@@ -64,14 +80,14 @@ namespace OBeautifulCode.DataStructure
         public IReadOnlyList<Row> ChildRows { get; private set; }
 
         /// <summary>
-        /// Gets a row that summarizes the children (e.g. a Total row) when this row is expanded.
+        /// Gets rows that summarizes the children (e.g. a Total row) when this row is expanded.
         /// </summary>
-        public FlatRow ExpandedSummaryRow { get; private set; }
+        public IReadOnlyList<FlatRow> ExpandedSummaryRows { get; private set; }
 
         /// <summary>
-        /// Gets a row that summarizes the children (e.g. a Total row) when this row is collapsed.
+        /// Gets rows that summarizes the children (e.g. a Total row) when this row is collapsed.
         /// </summary>
-        public FlatRow CollapsedSummaryRow { get; private set; }
+        public IReadOnlyList<FlatRow> CollapsedSummaryRows { get; private set; }
 
         /// <summary>
         /// Builds an empty row.
