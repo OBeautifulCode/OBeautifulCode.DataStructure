@@ -55,11 +55,23 @@
     <Reference Include="OBeautifulCode.AutoFakeItEasy, Version=1.0.138.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\OBeautifulCode.AutoFakeItEasy.1.0.138\lib\net462\OBeautifulCode.AutoFakeItEasy.dll</HintPath>
     </Reference>
+    <Reference Include="OBeautifulCode.Compression, Version=1.0.24.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Compression.1.0.24\lib\net462\OBeautifulCode.Compression.dll</HintPath>
+    </Reference>
     <Reference Include="OBeautifulCode.Excel, Version=1.0.75.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\OBeautifulCode.Excel.1.0.75\lib\net462\OBeautifulCode.Excel.dll</HintPath>
     </Reference>
     <Reference Include="OBeautifulCode.Excel.AsposeCells, Version=1.0.75.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\OBeautifulCode.Excel.AsposeCells.1.0.75\lib\net462\OBeautifulCode.Excel.AsposeCells.dll</HintPath>
+    </Reference>
+    <Reference Include="OBeautifulCode.Representation.System, Version=1.0.61.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Representation.System.1.0.61\lib\net462\OBeautifulCode.Representation.System.dll</HintPath>
+    </Reference>
+    <Reference Include="OBeautifulCode.Serialization, Version=1.0.120.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Serialization.1.0.120\lib\net462\OBeautifulCode.Serialization.dll</HintPath>
+    </Reference>
+    <Reference Include="OBeautifulCode.Serialization.Json, Version=1.0.120.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Serialization.Json.1.0.120\lib\net462\OBeautifulCode.Serialization.Json.dll</HintPath>
     </Reference>
     <Reference Include="OBeautifulCode.Type, Version=1.0.111.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\OBeautifulCode.Type.1.0.111\lib\net462\OBeautifulCode.Type.dll</HintPath>
@@ -146,6 +158,14 @@
     <ProjectReference Include="..\OBeautifulCode.DataStructure.Excel\OBeautifulCode.DataStructure.Excel.csproj">
       <Project>{987573D0-35CB-4157-9ACE-079809724156}</Project>
       <Name>OBeautifulCode.DataStructure.Excel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OBeautifulCode.DataStructure.Serialization.Json\OBeautifulCode.DataStructure.Serialization.Json.csproj">
+      <Project>{a64a0a68-18d4-436b-aee2-562050ec6cfa}</Project>
+      <Name>OBeautifulCode.DataStructure.Serialization.Json</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OBeautifulCode.DataStructure\OBeautifulCode.DataStructure.csproj">
+      <Project>{690B6894-4D9A-4BB3-AA5D-D9AC800EB7E9}</Project>
+      <Name>OBeautifulCode.DataStructure</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

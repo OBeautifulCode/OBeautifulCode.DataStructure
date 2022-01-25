@@ -7,14 +7,17 @@
 namespace OBeautifulCode.DataStructure.Excel
 {
     using System;
+    using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
+    using System.Reflection;
     using Aspose.Cells;
     using OBeautifulCode.CodeAnalysis.Recipes;
     using OBeautifulCode.Enum.Recipes;
     using OBeautifulCode.Excel;
     using OBeautifulCode.Excel.AsposeCells;
+    using OBeautifulCode.Reflection.Recipes;
     using OBeautifulCode.Type.Recipes;
     using static System.FormattableString;
 
@@ -23,6 +26,9 @@ namespace OBeautifulCode.DataStructure.Excel
     /// </summary>
     public static class ReportProjector
     {
+        private static readonly ConcurrentDictionary<Type, IReadOnlyCollection<PropertyInfo>> CachedTypeToNotImplementedPropertiesMap =
+            new ConcurrentDictionary<Type, IReadOnlyCollection<PropertyInfo>>();
+
         /// <summary>
         /// Projects a <see cref="Report"/> into a <see cref="Workbook"/>.
         /// </summary>
@@ -64,6 +70,8 @@ namespace OBeautifulCode.DataStructure.Excel
                 result.AddSection(section, internalContext);
             }
 
+            // TODO: ADD copyright and terms of use
+            // TODO: ADD report timestamp
             return result;
         }
 
@@ -72,23 +80,7 @@ namespace OBeautifulCode.DataStructure.Excel
             Section section,
             InternalReportToWorkbookProjectionContext context)
         {
-            // TODO: add worksheet name.
-            if (context == null)
-            {
-                throw new ArgumentNullException(nameof(context));
-            }
-
-            if (context.ExternalContext == null)
-            {
-                throw new ArgumentNullException(nameof(context));
-            }
-
-            if (context.Report == null)
-            {
-                throw new ArgumentNullException(nameof(context));
-            }
-
-            var worksheet = workbook.Worksheets.Add("TODO: CHANGE THIS");
+            var worksheet = workbook.Worksheets.Add(section.Name);
 
             var cursor = new CellCursor(worksheet);
 
@@ -112,18 +104,12 @@ namespace OBeautifulCode.DataStructure.Excel
                 return;
             }
 
-            var notImplemented = new Dictionary<string, object>
+            var implementedProperties = new[]
             {
-                { Invariant($"{nameof(CellFormat)}.{nameof(CellFormat.OuterBorders)}"), format.OuterBorders },
-                { Invariant($"{nameof(CellFormat)}.{nameof(CellFormat.BackgroundColor)}"), format.BackgroundColor },
-                { Invariant($"{nameof(CellFormat)}.{nameof(CellFormat.VerticalAlignment)}"), format.VerticalAlignment },
-                { Invariant($"{nameof(CellFormat)}.{nameof(CellFormat.HorizontalAlignment)}"), format.HorizontalAlignment },
-                { Invariant($"{nameof(CellFormat)}.{nameof(CellFormat.FontRotationAngle)}"), format.FontRotationAngle },
-                { Invariant($"{nameof(CellFormat)}.{nameof(CellFormat.FillPattern)}"), format.FillPattern },
-                { Invariant($"{nameof(CellFormat)}.{nameof(CellFormat.Options)}"), format.Options },
+                nameof(CellFormat.FontFormat),
             };
 
-            notImplemented.ThrowOnNotImplementedProperty();
+            format.ThrowOnNotImplementedProperty(implementedProperties);
 
             cell.ApplyFormat(format.FontFormat);
         }
@@ -137,6 +123,16 @@ namespace OBeautifulCode.DataStructure.Excel
                 return;
             }
 
+            var implementedProperties = new[]
+            {
+                nameof(FontFormat.FontColor),
+                nameof(FontFormat.FontNamesInFallbackOrder),
+                nameof(FontFormat.FontSizeInPoints),
+                nameof(FontFormat.Options),
+            };
+
+            format.ThrowOnNotImplementedProperty(implementedProperties);
+
             var cellRange = cell.GetRange();
 
             cellRange.SetFontColor(format.FontColor);
@@ -145,53 +141,83 @@ namespace OBeautifulCode.DataStructure.Excel
 
             cellRange.SetFontSize(format.FontSizeInPoints == null ? (int?)null : decimal.ToInt32(Math.Round((decimal)format.FontSizeInPoints)));
 
-            if (format.Options != null)
+            cell.ApplyFormat(format.Options);
+        }
+
+        private static void ApplyFormat(
+            this Cell cell,
+            FontFormatOptions? format)
+        {
+            if (format == null)
             {
-                var notImplementedFontFormatOptions = EnumExtensions.GetIndividualFlags<FontFormatOptions>().Except(new[] { FontFormatOptions.None, FontFormatOptions.Bold, FontFormatOptions.Italics, FontFormatOptions.Underline }).ToList();
+                return;
+            }
 
-                var fontFormatOptions = (FontFormatOptions)format.Options;
+            var implementedFontFormatOptions = new[]
+            {
+                FontFormatOptions.None,
+                FontFormatOptions.Bold,
+                FontFormatOptions.Italics,
+                FontFormatOptions.Underline,
+            };
 
-                fontFormatOptions.ThrowOnNotImplementedEnumFlag(notImplementedFontFormatOptions);
+            var fontFormatOptions = (FontFormatOptions)format;
 
-                if (fontFormatOptions.HasFlag(FontFormatOptions.Bold))
-                {
-                    cellRange.SetFontIsBold(true);
-                }
+            fontFormatOptions.ThrowOnNotImplementedEnumFlag(implementedFontFormatOptions);
 
-                if (fontFormatOptions.HasFlag(FontFormatOptions.Italics))
-                {
-                    cellRange.SetFontIsItalic(true);
-                }
+            var cellRange = cell.GetRange();
 
-                if (fontFormatOptions.HasFlag(FontFormatOptions.Underline))
-                {
-                    cellRange.SetFontUnderline(UnderlineKind.Single);
-                }
+            if (fontFormatOptions.HasFlag(FontFormatOptions.Bold))
+            {
+                cellRange.SetFontIsBold(true);
+            }
+
+            if (fontFormatOptions.HasFlag(FontFormatOptions.Italics))
+            {
+                cellRange.SetFontIsItalic(true);
+            }
+
+            if (fontFormatOptions.HasFlag(FontFormatOptions.Underline))
+            {
+                cellRange.SetFontUnderline(UnderlineKind.Single);
             }
         }
 
-        private static void ThrowOnNotImplementedProperty(
-            this IReadOnlyDictionary<string, object> notImplementedPropertyNameToValueMap)
+        private static void ThrowOnNotImplementedProperty<TObject>(
+            this TObject item,
+            IReadOnlyCollection<string> implementedPropertyNames)
         {
-            foreach (var kvp in notImplementedPropertyNameToValueMap)
+            if (!CachedTypeToNotImplementedPropertiesMap.TryGetValue(typeof(TObject), out var notImplementedProperties))
             {
-                if (kvp.Value != null)
+                notImplementedProperties = typeof(TObject)
+                    .GetPropertiesFiltered(MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.PublicGet)
+                    .Where(_ => !implementedPropertyNames.Contains(_.Name))
+                    .ToList();
+
+                CachedTypeToNotImplementedPropertiesMap.TryAdd(typeof(TObject), notImplementedProperties);
+            }
+
+            foreach (var notImplementedProperty in notImplementedProperties)
+            {
+                if (notImplementedProperty.GetValue(item) != null)
                 {
-                    throw new NotImplementedException(kvp.Key);
+                    throw new NotImplementedException(Invariant($"{typeof(TObject).ToStringReadable()}.{notImplementedProperty.Name}"));
                 }
             }
         }
 
         private static void ThrowOnNotImplementedEnumFlag<TEnum>(
             this TEnum value,
-            IReadOnlyCollection<TEnum> notImplementedFlags)
-            where TEnum : Enum
+            IReadOnlyCollection<TEnum> implementedFlags)
+            where TEnum : struct, Enum
         {
-            foreach (var flag in notImplementedFlags)
+            var notImplementedFlags = EnumExtensions.GetIndividualFlags<TEnum>().Except(implementedFlags).ToList();
+
+            foreach (var notImplementedFlag in notImplementedFlags)
             {
-                if (value.HasFlag(flag))
+                if (value.HasFlag(notImplementedFlag))
                 {
-                    throw new NotImplementedException(Invariant($"{typeof(TEnum).ToStringReadable()}.{flag}"));
+                    throw new NotImplementedException(Invariant($"{typeof(TEnum).ToStringReadable()}.{notImplementedFlag}"));
                 }
             }
         }
