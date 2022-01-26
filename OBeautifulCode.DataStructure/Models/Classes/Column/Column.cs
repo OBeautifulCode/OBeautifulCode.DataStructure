@@ -21,7 +21,13 @@ namespace OBeautifulCode.DataStructure
         /// Initializes a new instance of the <see cref="Column"/> class.
         /// </summary>
         /// <param name="id">OPTIONAL id of the column.  DEFAULT is non-identified column.</param>
-        /// <param name="format">OPTIONAL format to apply to the whole column.  DEFAULT is to leave the format unchanged.</param>
+        /// <param name="format">
+        /// OPTIONAL format to apply to the whole column.
+        /// Some format-items, by their nature, apply to the whole column (e.g. <see cref="ColumnFormat.WidthInPixels"/>).
+        /// All others will be applied to just the <see cref="DataRows"/> within the column (e.g. <see cref="ColumnFormat.CellsFormat"/>
+        /// will NOT be applied to <see cref="HeaderRows"/> nor <see cref="FooterRows"/>).
+        /// DEFAULT is to leave the format unchanged.
+        /// </param>
         public Column(
             string id = null,
             ColumnFormat format = null)
@@ -42,6 +48,9 @@ namespace OBeautifulCode.DataStructure
 
         /// <summary>
         /// Gets the format to apply to the whole column.
+        /// Some format-items, by their nature, apply to the whole column (e.g. <see cref="ColumnFormat.WidthInPixels"/>).
+        /// All others will be applied to just the <see cref="DataRows"/> within the column (e.g. <see cref="ColumnFormat.CellsFormat"/>
+        /// will NOT be applied to <see cref="HeaderRows"/> nor <see cref="FooterRows"/>).
         /// </summary>
         public ColumnFormat Format { get; private set; }
     }

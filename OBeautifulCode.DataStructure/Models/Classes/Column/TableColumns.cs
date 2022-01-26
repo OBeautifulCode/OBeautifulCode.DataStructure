@@ -23,7 +23,13 @@ namespace OBeautifulCode.DataStructure
         /// Initializes a new instance of the <see cref="TableColumns"/> class.
         /// </summary>
         /// <param name="columns">The columns.</param>
-        /// <param name="columnsFormat">OPTIONAL format to apply to all columns in the table, individually.  DEFAULT is to leave the format unchanged.</param>
+        /// <param name="columnsFormat">
+        /// OPTIONAL format to apply to all columns in the table, individually.
+        /// Some format-items, by their nature, apply to the whole column (e.g. <see cref="ColumnFormat.WidthInPixels"/>).
+        /// All others will be applied to just the <see cref="DataRows"/> within the column (e.g. <see cref="ColumnFormat.CellsFormat"/>
+        /// will NOT be applied to <see cref="HeaderRows"/> nor <see cref="FooterRows"/>).
+        /// DEFAULT is to leave the format unchanged.
+        /// </param>
         public TableColumns(
             IReadOnlyList<Column> columns,
             ColumnFormat columnsFormat = null)
@@ -54,6 +60,9 @@ namespace OBeautifulCode.DataStructure
 
         /// <summary>
         /// Gets the format to apply to all columns in the table, individually.
+        /// Some format-items, by their nature, apply to the whole column (e.g. <see cref="ColumnFormat.WidthInPixels"/>).
+        /// All others will be applied to just the <see cref="DataRows"/> within the column (e.g. <see cref="ColumnFormat.CellsFormat"/>
+        /// will NOT be applied to <see cref="HeaderRows"/> nor <see cref="FooterRows"/>).
         /// </summary>
         public ColumnFormat ColumnsFormat { get; private set; }
     }
