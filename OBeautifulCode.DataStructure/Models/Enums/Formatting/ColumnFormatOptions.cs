@@ -35,21 +35,8 @@ namespace OBeautifulCode.DataStructure
         Sortable = 4,
 
         /// <summary>
-        /// In addition to <see cref="Sortable"/>, exercises the features to perform an ascending sort.
+        /// Makes the column filterable.
         /// </summary>
-        /// <remarks>
-        /// If two or more columns have this option or <see cref="SortedDescending"/>,
-        /// then a double/triple/etc. sort is performed on all of those columns.
-        /// </remarks>
-        SortedAscending = 8,
-
-        /// <summary>
-        /// In addition to <see cref="Sortable"/>, exercises the feature to perform a descending sort.
-        /// </summary>
-        /// <remarks>
-        /// If two or more columns have this option or <see cref="SortedDescending"/>,
-        /// then a double/triple/etc. sort is performed on all of those columns.
-        /// </remarks>
-        SortedDescending = 16,
+        Filterable = 8,
     }
 }

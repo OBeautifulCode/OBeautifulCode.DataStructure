@@ -19,12 +19,12 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Initializes a new instance of the <see cref="ColumnFormat"/> class.
         /// </summary>
-        /// <param name="outerBorders">OPTIONAL borders to apply to the outside of the column, in the order that they should be applied.  DEFAULT is no border.</param>
-        /// <param name="innerBorders">OPTIONAL borders to apply to the cells inside the column, in the order that they should be applied.  DEFAULT is no border.</param>
-        /// <param name="cellsFormat">OPTIONAL format to apply to all cells in the column, individually.  DEFAULT is to leave the format unchanged.</param>
-        /// <param name="widthInPixels">OPTIONAL width, in pixels, to apply to the column.  DEFAULT is to leave the width unchanged.</param>
-        /// <param name="autofitColumnWidth">OPTIONAL value indicating whether to auto-fit the width of the column.</param>
-        /// <param name="options">OPTIONAL formatting options to apply to the column.  DEFAULT is to not apply any of the formatting options.</param>
+        /// <param name="outerBorders">OPTIONAL borders to apply to the outside of the data rows in the column, in the order that they should be applied.  DEFAULT is no border.</param>
+        /// <param name="innerBorders">OPTIONAL borders to apply to the cells inside the data rows in the column, in the order that they should be applied.  DEFAULT is no border.</param>
+        /// <param name="cellsFormat">OPTIONAL format to apply to all data row cells in the column, individually.  DEFAULT is to leave the format unchanged.</param>
+        /// <param name="widthInPixels">OPTIONAL width, in pixels, to apply to the whole column.  DEFAULT is to leave the width unchanged.</param>
+        /// <param name="autofitColumnWidth">OPTIONAL value indicating whether to auto-fit the width of the whole column.</param>
+        /// <param name="options">OPTIONAL formatting options to apply to the whole column.  DEFAULT is to not apply any of the formatting options.</param>
         public ColumnFormat(
             IReadOnlyList<OuterBorder> outerBorders = null,
             IReadOnlyList<InnerBorder> innerBorders = null,
@@ -41,22 +41,22 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <summary>
-        /// Gets the format to apply to all cells in the column, individually.
+        /// Gets the format to apply to all data row cells in the column, individually.
         /// </summary>
         public CellFormat CellsFormat { get; private set; }
 
         /// <summary>
-        /// Gets the width, in pixels, to apply to the column.
+        /// Gets the width, in pixels, to apply to the whole column.
         /// </summary>
         public int? WidthInPixels { get; private set; }
 
         /// <summary>
-        /// Gets a value indicating whether to auto-fit the width of the column.
+        /// Gets a value indicating whether to auto-fit the width of the whole column.
         /// </summary>
         public bool? AutofitColumnWidth { get; private set; }
 
         /// <summary>
-        /// Gets the formatting options to apply to the column.
+        /// Gets the formatting options to apply to the whole column.
         /// </summary>
         public ColumnFormatOptions? Options { get; private set; }
     }

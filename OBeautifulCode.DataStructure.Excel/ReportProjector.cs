@@ -14,18 +14,26 @@ namespace OBeautifulCode.DataStructure.Excel
     using System.Reflection;
     using Aspose.Cells;
     using OBeautifulCode.CodeAnalysis.Recipes;
-    using OBeautifulCode.Enum.Recipes;
     using OBeautifulCode.Excel;
     using OBeautifulCode.Excel.AsposeCells;
-    using OBeautifulCode.Reflection.Recipes;
     using OBeautifulCode.Type.Recipes;
     using static System.FormattableString;
 
     /// <summary>
     /// Projects a <see cref="Report"/> into an Excel workbook.
     /// </summary>
-    public static class ReportProjector
+    public static partial class ReportProjector
     {
+        private const string TopLeftHeaderCellMarker = "top-left-header-cell";
+
+        private const string BottomRightHeaderCellMarker = "bottom-right-header-cell-marker";
+
+        private const string TopLeftDataCellMarker = "top-left-data-cell-marker";
+
+        private const string BottomRightDataCellMarker = "bottom-right-data-cell-marker";
+
+        private const string BottomRightNonSummaryDataCellMarker = "bottom-right-non-summary-data-cell-marker";
+
         private static readonly ConcurrentDictionary<Type, IReadOnlyCollection<PropertyInfo>> CachedTypeToNotImplementedPropertiesMap =
             new ConcurrentDictionary<Type, IReadOnlyCollection<PropertyInfo>>();
 
@@ -49,8 +57,10 @@ namespace OBeautifulCode.DataStructure.Excel
 
             context = context ?? new ReportToWorkbookProjectionContext();
 
+            // Setup the workbook
             var result = General.CreateStandardWorkbook().RemoveDefaultWorksheet();
 
+            // Add document properties
             var documentProperties = context.BuildDocumentPropertiesDelegate == null
                 ? new DocumentProperties()
                 : context.BuildDocumentPropertiesDelegate(report.Title);
@@ -59,174 +69,405 @@ namespace OBeautifulCode.DataStructure.Excel
             // Should those properties reflect when the workbook was created or when the report was created?
             result.SetDocumentProperties(documentProperties);
 
-            var internalContext = new InternalReportToWorkbookProjectionContext
-            {
-                Report = report,
-                ExternalContext = context,
-            };
-
+            // Add sections
             foreach (var section in report.Sections)
             {
-                result.AddSection(section, internalContext);
+                var worksheet = result.Worksheets.Add(section.Name);
+
+                var cursors = new Cursors
+                {
+                    ChromeCursor = new CellCursor(worksheet),
+                };
+
+                // On first pass, add data.
+                result.AddSection(section, context, PassKind.Data, cursors);
+
+                // On second pass, apply formatting.
+                result.AddSection(section, context, PassKind.Formatting, cursors);
             }
 
-            // TODO: ADD copyright and terms of use
-            // TODO: ADD report timestamp
             return result;
         }
 
         private static void AddSection(
             this Workbook workbook,
             Section section,
-            InternalReportToWorkbookProjectionContext context)
+            ReportToWorkbookProjectionContext context,
+            PassKind passKind,
+            Cursors cursors)
         {
-            var worksheet = workbook.Worksheets.Add(section.Name);
+            // Add upper chrome (e.g. section title)
+            var chromeCursor = cursors.ChromeCursor;
 
-            var cursor = new CellCursor(worksheet);
+            chromeCursor.Reset();
 
             if (section.Title != null)
             {
-                cursor.Cell.Value = section.Title;
-
-                // Section model doesn't have any formatting for title.
-                cursor.Cell.ApplyFormat(new CellFormat(fontFormat: new FontFormat(fontSizeInPoints: 18)));
-
-                cursor.MoveDown();
-            }
-        }
-
-        private static void ApplyFormat(
-            this Cell cell,
-            CellFormat format)
-        {
-            if (format == null)
-            {
-                return;
-            }
-
-            var implementedProperties = new[]
-            {
-                nameof(CellFormat.FontFormat),
-            };
-
-            format.ThrowOnNotImplementedProperty(implementedProperties);
-
-            cell.ApplyFormat(format.FontFormat);
-        }
-
-        private static void ApplyFormat(
-            this Cell cell,
-            FontFormat format)
-        {
-            if (format == null)
-            {
-                return;
-            }
-
-            var implementedProperties = new[]
-            {
-                nameof(FontFormat.FontColor),
-                nameof(FontFormat.FontNamesInFallbackOrder),
-                nameof(FontFormat.FontSizeInPoints),
-                nameof(FontFormat.Options),
-            };
-
-            format.ThrowOnNotImplementedProperty(implementedProperties);
-
-            var cellRange = cell.GetRange();
-
-            cellRange.SetFontColor(format.FontColor);
-
-            cellRange.SetFontName(format.FontNamesInFallbackOrder?.FirstOrDefault());
-
-            cellRange.SetFontSize(format.FontSizeInPoints == null ? (int?)null : decimal.ToInt32(Math.Round((decimal)format.FontSizeInPoints)));
-
-            cell.ApplyFormat(format.Options);
-        }
-
-        private static void ApplyFormat(
-            this Cell cell,
-            FontFormatOptions? format)
-        {
-            if (format == null)
-            {
-                return;
-            }
-
-            var implementedFontFormatOptions = new[]
-            {
-                FontFormatOptions.None,
-                FontFormatOptions.Bold,
-                FontFormatOptions.Italics,
-                FontFormatOptions.Underline,
-            };
-
-            var fontFormatOptions = (FontFormatOptions)format;
-
-            fontFormatOptions.ThrowOnNotImplementedEnumFlag(implementedFontFormatOptions);
-
-            var cellRange = cell.GetRange();
-
-            if (fontFormatOptions.HasFlag(FontFormatOptions.Bold))
-            {
-                cellRange.SetFontIsBold(true);
-            }
-
-            if (fontFormatOptions.HasFlag(FontFormatOptions.Italics))
-            {
-                cellRange.SetFontIsItalic(true);
-            }
-
-            if (fontFormatOptions.HasFlag(FontFormatOptions.Underline))
-            {
-                cellRange.SetFontUnderline(UnderlineKind.Single);
-            }
-        }
-
-        private static void ThrowOnNotImplementedProperty<TObject>(
-            this TObject item,
-            IReadOnlyCollection<string> implementedPropertyNames)
-        {
-            if (!CachedTypeToNotImplementedPropertiesMap.TryGetValue(typeof(TObject), out var notImplementedProperties))
-            {
-                notImplementedProperties = typeof(TObject)
-                    .GetPropertiesFiltered(MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.PublicGet)
-                    .Where(_ => !implementedPropertyNames.Contains(_.Name))
-                    .ToList();
-
-                CachedTypeToNotImplementedPropertiesMap.TryAdd(typeof(TObject), notImplementedProperties);
-            }
-
-            foreach (var notImplementedProperty in notImplementedProperties)
-            {
-                if (notImplementedProperty.GetValue(item) != null)
+                if (passKind == PassKind.Data)
                 {
-                    throw new NotImplementedException(Invariant($"{typeof(TObject).ToStringReadable()}.{notImplementedProperty.Name}"));
+                    chromeCursor.Cell.Value = section.Title;
+                }
+
+                if (passKind == PassKind.Formatting)
+                {
+                    // Section model doesn't have any formatting for title.
+                    chromeCursor.Cell.GetRange().ApplyCellFormat(new CellFormat(fontFormat: new FontFormat(fontSizeInPoints: 18)));
+                }
+            }
+
+            // Add tree table
+            if (cursors.TreeTableCursor == null)
+            {
+                cursors.TreeTableCursor = new CellCursor(chromeCursor.Worksheet, chromeCursor.RowNumber, chromeCursor.StartColumnNumber);
+            }
+            else
+            {
+                cursors.TreeTableCursor.Reset();
+            }
+
+            cursors.TreeTableCursor.AddTreeTable(section.TreeTable, context, passKind);
+
+            // Add bottom chrome (e.g. copyright and terms of use)
+            // TODO: ADD copyright and terms of use
+            // TODO: ADD report timestamp
+        }
+
+        private static void AddTreeTable(
+            this CellCursor cursor,
+            TreeTable treeTable,
+            ReportToWorkbookProjectionContext context,
+            PassKind passKind)
+        {
+            if (passKind == PassKind.Formatting)
+            {
+                // Format whole table
+                cursor.CanvassedRange.ApplyTableFormat(treeTable.Format);
+
+                // Format columns
+                var tableColumns = treeTable.TableColumns;
+
+                var topLeftDataCellReference = cursor.HasMarker(TopLeftDataCellMarker) ? cursor.GetMarkedCellReference(TopLeftDataCellMarker) : null;
+
+                var bottomRightNonSummaryDataCellReference = cursor.HasMarker(BottomRightNonSummaryDataCellMarker) ? cursor.GetMarkedCellReference(BottomRightNonSummaryDataCellMarker) : null;
+
+                var bottomRightHeaderCellReference = cursor.HasMarker(BottomRightHeaderCellMarker) ? cursor.GetMarkedCellReference(BottomRightHeaderCellMarker) : null;
+
+                foreach (var column in tableColumns.Columns)
+                {
+                    var wholeColumnRange = cursor.Worksheet.GetRange(cursor.RowNumber, cursor.MaxRowNumber, cursor.ColumnNumber, cursor.ColumnNumber);
+
+                    // ReSharper disable once PossibleNullReferenceException
+                    var dataCellsRange = topLeftDataCellReference == null
+                        ? null
+                        : cursor.Worksheet.GetRange(topLeftDataCellReference.RowNumber, bottomRightNonSummaryDataCellReference.RowNumber, cursor.ColumnNumber, cursor.ColumnNumber);
+
+                    var lastHeaderCellToLastNonSummaryDataCellRange = bottomRightHeaderCellReference == null
+                        ? null
+                        : dataCellsRange == null
+                            ? null
+                            : cursor.Worksheet.GetRange(bottomRightHeaderCellReference.RowNumber, bottomRightNonSummaryDataCellReference.RowNumber, cursor.ColumnNumber, cursor.ColumnNumber);
+
+                    // Individual column format will override the format applied to all table columns,
+                    // that's why we first apply the table columns format and then the individual column's format.
+                    wholeColumnRange.ApplyColumnFormat(dataCellsRange, lastHeaderCellToLastNonSummaryDataCellRange, tableColumns.ColumnsFormat);
+
+                    wholeColumnRange.ApplyColumnFormat(dataCellsRange, lastHeaderCellToLastNonSummaryDataCellRange, column.Format);
+
+                    cursor.MoveRight();
+                }
+
+                cursor.ResetColumn();
+            }
+
+            // Add rows
+            cursor.AddTableRows(treeTable.TableRows, context, passKind);
+        }
+
+        private static void AddTableRows(
+            this CellCursor cursor,
+            TableRows tableRows,
+            ReportToWorkbookProjectionContext context,
+            PassKind passKind)
+        {
+            if (tableRows == null)
+            {
+                return;
+            }
+
+            cursor.AddHeaderRows(tableRows.HeaderRows, context, passKind);
+
+            cursor.AddDataRows(tableRows.DataRows, context, passKind);
+
+            cursor.AddFooterRows(tableRows.FooterRows, context, passKind);
+        }
+
+        private static void AddHeaderRows(
+            this CellCursor cursor,
+            HeaderRows headerRows,
+            ReportToWorkbookProjectionContext context,
+            PassKind passKind)
+        {
+            if (headerRows == null)
+            {
+                return;
+            }
+
+            if (headerRows.Rows.Any())
+            {
+                for (var x = 0; x < headerRows.Rows.Count; x++)
+                {
+                    cursor.ResetColumn();
+
+                    cursor.MoveDown();
+
+                    if ((x == 0) && (passKind == PassKind.Data))
+                    {
+                        cursor.AddMarker(TopLeftHeaderCellMarker);
+                    }
+
+                    if (passKind == PassKind.Formatting)
+                    {
+                        cursor.CanvassedRowRange.ApplyHeaderRowsFormat(headerRows.Format);
+                    }
+
+                    cursor.AddFlatRow(headerRows.Rows[x], context, passKind);
+                }
+
+                if (passKind == PassKind.Data)
+                {
+                    cursor.AddMarker(BottomRightHeaderCellMarker);
                 }
             }
         }
 
-        private static void ThrowOnNotImplementedEnumFlag<TEnum>(
-            this TEnum value,
-            IReadOnlyCollection<TEnum> implementedFlags)
-            where TEnum : struct, Enum
+        private static void AddFooterRows(
+            this CellCursor cursor,
+            FooterRows footerRows,
+            ReportToWorkbookProjectionContext context,
+            PassKind passKind)
         {
-            var notImplementedFlags = EnumExtensions.GetIndividualFlags<TEnum>().Except(implementedFlags).ToList();
-
-            foreach (var notImplementedFlag in notImplementedFlags)
+            if (footerRows == null)
             {
-                if (value.HasFlag(notImplementedFlag))
+                return;
+            }
+
+            if (footerRows.Rows.Any())
+            {
+                foreach (var flatRow in footerRows.Rows)
                 {
-                    throw new NotImplementedException(Invariant($"{typeof(TEnum).ToStringReadable()}.{notImplementedFlag}"));
+                    cursor.ResetColumn();
+
+                    cursor.MoveDown();
+
+                    if (passKind == PassKind.Formatting)
+                    {
+                        cursor.CanvassedRowRange.ApplyFooterRowsFormat(footerRows.Format);
+                    }
+
+                    cursor.AddFlatRow(flatRow, context, passKind);
                 }
             }
         }
 
-        private class InternalReportToWorkbookProjectionContext
+        private static void AddDataRows(
+            this CellCursor cursor,
+            DataRows dataRows,
+            ReportToWorkbookProjectionContext context,
+            PassKind passKind)
         {
-            public Report Report { get; set; }
+            if (dataRows == null)
+            {
+                return;
+            }
 
-            public ReportToWorkbookProjectionContext ExternalContext { get; set; }
+            if (dataRows.Rows.Any())
+            {
+                for (var x = 0; x < dataRows.Rows.Count; x++)
+                {
+                    cursor.ResetColumn();
+
+                    cursor.MoveDown();
+
+                    if (x == 0)
+                    {
+                        cursor.AddMarker(TopLeftDataCellMarker);
+                    }
+
+                    if (passKind == PassKind.Formatting)
+                    {
+                        cursor.CanvassedRowRange.ApplyDataRowsFormat(dataRows.Format);
+                    }
+
+                    cursor.AddRow(dataRows.Rows[x], context, passKind, dataRows.Format);
+                }
+
+                cursor.AddMarker(BottomRightDataCellMarker);
+            }
+        }
+
+        private static void AddFlatRow(
+            this CellCursor cursor,
+            FlatRow flatRow,
+            ReportToWorkbookProjectionContext context,
+            PassKind passKind)
+        {
+            cursor.AddRowBase(flatRow, context, passKind);
+        }
+
+        private static void AddRow(
+            this CellCursor cursor,
+            DataStructure.Row row,
+            ReportToWorkbookProjectionContext context,
+            PassKind passKind,
+            DataRowsFormat dataRowsFormat)
+        {
+            cursor.AddRowBase(row, context, passKind);
+
+            if (cursor.HasMarker(BottomRightNonSummaryDataCellMarker))
+            {
+                cursor.RemoveMarker(BottomRightNonSummaryDataCellMarker);
+            }
+
+            cursor.AddMarker(BottomRightNonSummaryDataCellMarker);
+
+            if ((row.ChildRows != null) && row.ChildRows.Any())
+            {
+                foreach (var childRow in row.ChildRows)
+                {
+                    cursor.ResetColumn();
+
+                    cursor.MoveDown();
+
+                    if (passKind == PassKind.Formatting)
+                    {
+                        cursor.CanvassedRowRange.ApplyDataRowsFormat(dataRowsFormat);
+                    }
+
+                    cursor.AddRow(childRow, context, passKind, dataRowsFormat);
+                }
+            }
+
+            if (row.CollapsedSummaryRows != null && row.CollapsedSummaryRows.Any())
+            {
+                throw new NotSupportedException("collapsed summary rows are not supported");
+            }
+
+            if (row.ExpandedSummaryRows != null)
+            {
+                foreach (var expandedSummaryRow in row.ExpandedSummaryRows)
+                {
+                    cursor.ResetColumn();
+
+                    cursor.MoveDown();
+
+                    if (passKind == PassKind.Formatting)
+                    {
+                        cursor.CanvassedRowRange.ApplyDataRowsFormat(dataRowsFormat);
+                    }
+
+                    cursor.AddFlatRow(expandedSummaryRow, context, passKind);
+                }
+            }
+        }
+
+        private static void AddRowBase(
+            this CellCursor cursor,
+            RowBase rowBase,
+            ReportToWorkbookProjectionContext context,
+            PassKind passKind)
+        {
+            if (passKind == PassKind.Formatting)
+            {
+                cursor.CanvassedRowRange.ApplyRowFormat(rowBase.Format);
+            }
+
+            for (var x = 0; x < rowBase.Cells.Count; x++)
+            {
+                if (x > 0)
+                {
+                    cursor.MoveRight(rowBase.Cells[x - 1].ColumnsSpanned ?? 1);
+                }
+
+                if (passKind == PassKind.Formatting)
+                {
+                    cursor.CanvassedRowRange.ApplyRowFormat(rowBase.Format);
+                }
+
+                cursor.AddCell(rowBase.Cells[x], context, passKind);
+            }
+        }
+
+        private static void AddCell(
+            this CellCursor cursor,
+            ICell cell,
+            ReportToWorkbookProjectionContext context,
+            PassKind passKind)
+        {
+            if (passKind == PassKind.Data)
+            {
+                if ((cell.ColumnsSpanned ?? 1) > 1)
+                {
+                    var mergeRange = cursor.Worksheet.GetRange(cursor.RowNumber, cursor.RowNumber, cursor.ColumnNumber, cursor.ColumnNumber + (int)cell.ColumnsSpanned - 1);
+
+                    mergeRange.SetMergeCells(true);
+                }
+            }
+
+            if ((passKind == PassKind.Formatting) && (cell is IHaveCellFormat haveCellFormat))
+            {
+                cursor.CellRange.ApplyCellFormat(haveCellFormat.Format);
+            }
+
+            var notSupportedException = new NotSupportedException(Invariant($"This type of cell is not supported: {cell.GetType().ToStringReadable()}."));
+
+            if (cell is INotSlottedCell)
+            {
+                if (cell is INullCell)
+                {
+                }
+                else if (cell is ConstCell<string> stringConstCell)
+                {
+                    if (passKind == PassKind.Data)
+                    {
+                        cursor.Cell.Value = stringConstCell.Value;
+                    }
+                }
+                else if (cell is ConstCell<int> intConstCell)
+                {
+                    if (passKind == PassKind.Data)
+                    {
+                        cursor.Cell.Value = intConstCell.Value;
+                    }
+                }
+                else
+                {
+                    throw notSupportedException;
+                }
+            }
+            else if (cell is ISlottedCell)
+            {
+                throw notSupportedException;
+            }
+            else
+            {
+                throw notSupportedException;
+            }
+        }
+
+#pragma warning disable SA1201 // Elements should appear in the correct order
+        private enum PassKind
+        {
+            Formatting,
+
+            Data,
+        }
+        #pragma warning restore SA1201 // Elements should appear in the correct order
+
+        private class Cursors
+        {
+            public CellCursor ChromeCursor { get; set; }
+
+            public CellCursor TreeTableCursor { get; set; }
         }
     }
 }
