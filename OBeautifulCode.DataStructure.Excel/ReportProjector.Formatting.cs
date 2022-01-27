@@ -68,7 +68,10 @@ namespace OBeautifulCode.DataStructure.Excel
 
             if (columnFormat.AutofitColumnWidth == true)
             {
-                wholeColumnRange.Worksheet.AutoFitColumn(wholeColumnRange.FirstColumn);
+                wholeColumnRange.Worksheet.AutoFitColumn(
+                    lastHeaderCellToLastNonSummaryDataCellRange.FirstColumn,
+                    lastHeaderCellToLastNonSummaryDataCellRange.FirstRow,
+                    lastHeaderCellToLastNonSummaryDataCellRange.FirstRow + lastHeaderCellToLastNonSummaryDataCellRange.RowCount - 1);
             }
         }
 
@@ -278,7 +281,7 @@ namespace OBeautifulCode.DataStructure.Excel
 
             if (rowFormatOptions.HasFlag(RowFormatOptions.AlignChildRowsWithParent))
             {
-                // todo: fix
+                // todo: honor this option
             }
         }
 

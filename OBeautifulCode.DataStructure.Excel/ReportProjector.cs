@@ -81,10 +81,10 @@ namespace OBeautifulCode.DataStructure.Excel
                 };
 
                 // On first pass, add data.
-                cursors.AddSection(section, context, PassKind.Data);
+                cursors.AddSection(section, context, PassKind.Data, report.AdditionalInfo);
 
                 // On second pass, apply formatting.
-                cursors.AddSection(section, context, PassKind.Formatting);
+                cursors.AddSection(section, context, PassKind.Formatting, report.AdditionalInfo);
             }
 
             return result;
@@ -94,7 +94,8 @@ namespace OBeautifulCode.DataStructure.Excel
             this Cursors cursors,
             Section section,
             ReportToWorkbookProjectionContext context,
-            PassKind passKind)
+            PassKind passKind,
+            AdditionalReportInfo additionalInfo)
         {
             // Add upper chrome (e.g. section title)
             var chromeCursor = cursors.ChromeCursor;
@@ -116,20 +117,36 @@ namespace OBeautifulCode.DataStructure.Excel
             }
 
             // Add tree table
-            if (cursors.TreeTableCursor == null)
-            {
-                cursors.TreeTableCursor = new CellCursor(chromeCursor.Worksheet, chromeCursor.RowNumber, chromeCursor.StartColumnNumber);
-            }
-            else
-            {
-                cursors.TreeTableCursor.Reset();
-            }
+            cursors.TreeTableCursor = cursors.TreeTableCursor ?? new CellCursor(chromeCursor.Worksheet, chromeCursor.RowNumber, chromeCursor.StartColumnNumber);
 
-            cursors.TreeTableCursor.AddTreeTable(section.TreeTable, context, passKind);
+            var treeTableCursor = cursors.TreeTableCursor;
+
+            treeTableCursor.Reset();
+
+            treeTableCursor.AddTreeTable(section.TreeTable, context, passKind);
 
             // Add bottom chrome (e.g. copyright and terms of use)
-            // TODO: ADD copyright and terms of use
-            // TODO: ADD report timestamp
+            chromeCursor.MoveDown(treeTableCursor.MaxRowNumber - chromeCursor.RowNumber + 1);
+
+            if (passKind == PassKind.Data)
+            {
+                if (additionalInfo != null)
+                {
+                    if (additionalInfo.Copyright != null)
+                    {
+                        chromeCursor.MoveDown();
+
+                        chromeCursor.Cell.Value = additionalInfo.Copyright;
+                    }
+
+                    if (additionalInfo.TermsOfUse != null)
+                    {
+                        chromeCursor.MoveDown();
+
+                        chromeCursor.Cell.Value = additionalInfo.TermsOfUse;
+                    }
+                }
+            }
         }
 
         private static void AddTreeTable(
@@ -408,6 +425,7 @@ namespace OBeautifulCode.DataStructure.Excel
             {
                 if ((cell.ColumnsSpanned ?? 1) > 1)
                 {
+                    // ReSharper disable once PossibleInvalidOperationException
                     var mergeRange = cursor.Worksheet.GetRange(cursor.RowNumber, cursor.RowNumber, cursor.ColumnNumber, cursor.ColumnNumber + (int)cell.ColumnsSpanned - 1);
 
                     mergeRange.SetMergeCells(true);
