@@ -15,7 +15,7 @@ namespace OBeautifulCode.DataStructure.Excel.Test
 
     public static partial class ReportProjectorTest
     {
-        [Fact]
+        [Fact(Skip = "For local testing only.")]
         public static void ToExcelWorkbook___Should_project_report_into_Excel_Workbook___When_called()
         {
             // Arrange

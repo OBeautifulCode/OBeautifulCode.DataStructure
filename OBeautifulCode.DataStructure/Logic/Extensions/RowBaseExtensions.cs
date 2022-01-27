@@ -40,8 +40,12 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <summary>
-        /// Pads a row, adding a <see cref="NullCell" /> if needed, such that the resulting row spans a specified number of columns.
+        /// Pads a row, adding one or more <see cref="NullCell" /> as needed, such that the resulting row spans a specified number of columns.
         /// </summary>
+        /// <remarks>
+        /// This approach is used over a single NullCell that spans the missing number of columns
+        /// because spanning cells can be problematic with other features such as sorting.
+        /// </remarks>
         /// <param name="row">The row.</param>
         /// <param name="requiredNumberOfColumnsSpanned">The required number of columns spanned in the resulting row.</param>
         /// <returns>
@@ -58,8 +62,12 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <summary>
-        /// Pads a row, adding a <see cref="NullCell" /> if needed, such that the resulting row spans a specified number of columns.
+        /// Pads a row, adding one or more <see cref="NullCell" /> as needed, such that the resulting row spans a specified number of columns.
         /// </summary>
+        /// <remarks>
+        /// This approach is used over a single NullCell that spans the missing number of columns
+        /// because spanning cells can be problematic with other features such as sorting.
+        /// </remarks>
         /// <param name="row">The row.</param>
         /// <param name="requiredNumberOfColumnsSpanned">The required number of columns spanned in the resulting row.</param>
         /// <returns>
@@ -103,7 +111,7 @@ namespace OBeautifulCode.DataStructure
 
                 var newCells = row.Cells.ToList();
 
-                newCells.Add(new NullCell(columnsSpanned: additionalColumnsSpanned));
+                newCells.AddRange(Enumerable.Repeat(new NullCell(), additionalColumnsSpanned));
 
                 result = row.DeepCloneWithCells(newCells);
             }

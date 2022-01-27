@@ -206,22 +206,22 @@ namespace OBeautifulCode.DataStructure.Test
                 new[] { new NullCell() });
 
             var expected1 = new FlatRow(
-                new[] { new NullCell(), new NullCell(columnsSpanned: 1) });
+                new[] { new NullCell(), new NullCell() });
 
             var row2 = new FlatRow(
                 new[] { new NullCell(columnsSpanned: 2) });
 
             var expected2a = new FlatRow(
-                new[] { new NullCell(columnsSpanned: 2), new NullCell(columnsSpanned: 1) });
+                new[] { new NullCell(columnsSpanned: 2), new NullCell() });
 
             var expected2b = new FlatRow(
-                new[] { new NullCell(columnsSpanned: 2), new NullCell(columnsSpanned: 2) });
+                new[] { new NullCell(columnsSpanned: 2), new NullCell(), new NullCell() });
 
             var row3 = new FlatRow(
                 new[] { new NullCell(columnsSpanned: 2), new NullCell(columnsSpanned: 3) });
 
             var expected3 = new FlatRow(
-                new[] { new NullCell(columnsSpanned: 2), new NullCell(columnsSpanned: 3), new NullCell(columnsSpanned: 4) });
+                new[] { new NullCell(columnsSpanned: 2), new NullCell(columnsSpanned: 3), new NullCell(), new NullCell(), new NullCell(), new NullCell() });
 
             // Act
             var actual1 = row1.Pad(2);
@@ -300,22 +300,22 @@ namespace OBeautifulCode.DataStructure.Test
                 new[] { new NullCell() });
 
             var expected1 = new Row(
-                new[] { new NullCell(), new NullCell(columnsSpanned: 1) });
+                new[] { new NullCell(), new NullCell() });
 
             var row2 = new Row(
                 new[] { new NullCell(columnsSpanned: 2) });
 
             var expected2a = new Row(
-                new[] { new NullCell(columnsSpanned: 2), new NullCell(columnsSpanned: 1) });
+                new[] { new NullCell(columnsSpanned: 2), new NullCell() });
 
             var expected2b = new Row(
-                new[] { new NullCell(columnsSpanned: 2), new NullCell(columnsSpanned: 2) });
+                new[] { new NullCell(columnsSpanned: 2), new NullCell(), new NullCell() });
 
             var row3 = new Row(
                 new[] { new NullCell(columnsSpanned: 2), new NullCell(columnsSpanned: 3) });
 
             var expected3 = new Row(
-                new[] { new NullCell(columnsSpanned: 2), new NullCell(columnsSpanned: 3), new NullCell(columnsSpanned: 4) });
+                new[] { new NullCell(columnsSpanned: 2), new NullCell(columnsSpanned: 3), new NullCell(), new NullCell(), new NullCell(), new NullCell() });
 
             // Act
             var actual1 = row1.Pad(2);
