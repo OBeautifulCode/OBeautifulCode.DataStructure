@@ -22,6 +22,7 @@ namespace OBeautifulCode.DataStructure.Excel
     /// <summary>
     /// Projects a <see cref="Report"/> into an Excel workbook.
     /// </summary>
+    [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = ObcSuppressBecause.CA1506_AvoidExcessiveClassCoupling_DisagreeWithAssessment)]
     public static partial class ReportProjector
     {
         private const string TopLeftHeaderCellMarker = "top-left-header-cell";
@@ -80,21 +81,20 @@ namespace OBeautifulCode.DataStructure.Excel
                 };
 
                 // On first pass, add data.
-                result.AddSection(section, context, PassKind.Data, cursors);
+                cursors.AddSection(section, context, PassKind.Data);
 
                 // On second pass, apply formatting.
-                result.AddSection(section, context, PassKind.Formatting, cursors);
+                cursors.AddSection(section, context, PassKind.Formatting);
             }
 
             return result;
         }
 
         private static void AddSection(
-            this Workbook workbook,
+            this Cursors cursors,
             Section section,
             ReportToWorkbookProjectionContext context,
-            PassKind passKind,
-            Cursors cursors)
+            PassKind passKind)
         {
             // Add upper chrome (e.g. section title)
             var chromeCursor = cursors.ChromeCursor;
@@ -397,6 +397,7 @@ namespace OBeautifulCode.DataStructure.Excel
             }
         }
 
+        [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "context", Justification = "Future-proof usage.")]
         private static void AddCell(
             this CellCursor cursor,
             ICell cell,
