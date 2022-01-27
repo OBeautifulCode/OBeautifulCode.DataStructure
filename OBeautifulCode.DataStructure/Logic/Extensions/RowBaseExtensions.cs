@@ -111,7 +111,7 @@ namespace OBeautifulCode.DataStructure
 
                 var newCells = row.Cells.ToList();
 
-                newCells.AddRange(Enumerable.Repeat(new NullCell(), additionalColumnsSpanned));
+                newCells.AddRange(Enumerable.Range(0, additionalColumnsSpanned).Select(_ => new NullCell()));
 
                 result = row.DeepCloneWithCells(newCells);
             }
