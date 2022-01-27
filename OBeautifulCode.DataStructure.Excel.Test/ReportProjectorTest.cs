@@ -34,6 +34,11 @@ namespace OBeautifulCode.DataStructure.Excel.Test
 
             var report = serializer.Deserialize<Report>(File.ReadAllText(reportSerializedJsonFile));
 
+            if (report.AdditionalInfo == null)
+            {
+                report = report.DeepCloneWithAdditionalInfo(new AdditionalReportInfo("Copyright (c) 2021 The Company. All rights reserved.", "This file is for authorized users only.  All data is private and confidential to its owner and is only viewable by the owner's authorized parties."));
+            }
+
             File.Delete(excelWorkbookFilePath);
 
             // Act
