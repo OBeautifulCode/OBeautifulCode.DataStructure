@@ -16,6 +16,7 @@ namespace OBeautifulCode.DataStructure.Excel
     using OBeautifulCode.CodeAnalysis.Recipes;
     using OBeautifulCode.Excel;
     using OBeautifulCode.Excel.AsposeCells;
+    using OBeautifulCode.Type;
     using OBeautifulCode.Type.Recipes;
     using static System.FormattableString;
 
@@ -81,10 +82,10 @@ namespace OBeautifulCode.DataStructure.Excel
                 };
 
                 // On first pass, add data.
-                cursors.AddSection(section, context, PassKind.Data, report.AdditionalInfo);
+                cursors.AddSection(section, context, PassKind.Data, report);
 
                 // On second pass, apply formatting.
-                cursors.AddSection(section, context, PassKind.Formatting, report.AdditionalInfo);
+                cursors.AddSection(section, context, PassKind.Formatting, report);
             }
 
             return result;
@@ -95,7 +96,7 @@ namespace OBeautifulCode.DataStructure.Excel
             Section section,
             ReportToWorkbookProjectionContext context,
             PassKind passKind,
-            AdditionalReportInfo additionalInfo)
+            Report report)
         {
             // Add upper chrome (e.g. section title)
             var chromeCursor = cursors.ChromeCursor;
@@ -130,6 +131,16 @@ namespace OBeautifulCode.DataStructure.Excel
 
             if (passKind == PassKind.Data)
             {
+                // By default, display the timestamp if available.
+                if ((report.TimestampUtc != null) && (report.Format?.DisplayTimestamp ?? true))
+                {
+                    chromeCursor.MoveDown();
+
+                    chromeCursor.Cell.Value = ((DateTime)report.TimestampUtc).Format(report.Format?.TimestampFormat, context);
+                }
+
+                var additionalInfo = report.AdditionalInfo;
+
                 if (additionalInfo != null)
                 {
                     if (additionalInfo.Copyright != null)

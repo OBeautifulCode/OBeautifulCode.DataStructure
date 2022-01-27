@@ -11,6 +11,7 @@ namespace OBeautifulCode.DataStructure.Excel.Test
     using Aspose.Cells;
     using OBeautifulCode.DataStructure.Serialization.Json;
     using OBeautifulCode.Serialization.Json;
+    using OBeautifulCode.Type;
     using Xunit;
 
     public static partial class ReportProjectorTest
@@ -24,6 +25,8 @@ namespace OBeautifulCode.DataStructure.Excel.Test
             var excelWorkbookFilePath = "FILE_PATH_HERE";
 
             var asposeLicense = @"PASTE_LICENSE_HERE";
+
+            var cultureKind = CultureKind.EnglishUnitedStates;
 
             using (var licenseStream = new MemoryStream(Encoding.ASCII.GetBytes(asposeLicense)))
             {
@@ -39,10 +42,15 @@ namespace OBeautifulCode.DataStructure.Excel.Test
                 report = report.DeepCloneWithAdditionalInfo(new AdditionalReportInfo("Copyright (c) 2021 The Company. All rights reserved.", "This file is for authorized users only.  All data is private and confidential to its owner and is only viewable by the owner's authorized parties."));
             }
 
+            var context = new ReportToWorkbookProjectionContext
+            {
+                CultureKind = cultureKind,
+            };
+
             File.Delete(excelWorkbookFilePath);
 
             // Act
-            var workbook = report.ToExcelWorkbook();
+            var workbook = report.ToExcelWorkbook(context);
 
             // Assert
             workbook.Save(excelWorkbookFilePath);

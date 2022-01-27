@@ -14,6 +14,7 @@ namespace OBeautifulCode.DataStructure.Excel
     using OBeautifulCode.Excel;
     using OBeautifulCode.Excel.AsposeCells;
     using OBeautifulCode.Reflection.Recipes;
+    using OBeautifulCode.Type;
     using OBeautifulCode.Type.Recipes;
     using static System.FormattableString;
 
@@ -373,6 +374,34 @@ namespace OBeautifulCode.DataStructure.Excel
             {
                 range.SetFontUnderline(UnderlineKind.Single);
             }
+        }
+
+        private static string Format(
+            this DateTime value,
+            DateTimeFormat dateTimeFormat,
+            ReportToWorkbookProjectionContext context)
+        {
+            var cultureKind = dateTimeFormat?.CultureKind ?? context.CultureKind ?? CultureKind.Invariant;
+
+            var dateTimeFormatKind = dateTimeFormat?.FormatKind ?? DateTimeFormatKind.FullDateTimePatternShortTime;
+
+            var localizeTimeZone = dateTimeFormat?.LocalizeTimeZone ?? false;
+
+            var localTimeZone = dateTimeFormat?.LocalTimeZone ?? context.LocalTimeZone ?? StandardTimeZone.Unknown;
+
+            if (localizeTimeZone && (localTimeZone == StandardTimeZone.Unknown))
+            {
+                throw new InvalidOperationException("Cannot localize time zone of timestamp unless the local time zone is specified.");
+            }
+
+            if (localizeTimeZone)
+            {
+                value = TimeZoneInfo.ConvertTimeFromUtc(value, localTimeZone.ToTimeZoneInfo());
+            }
+
+            var result = value.ToString(dateTimeFormatKind, cultureKind);
+
+            return result;
         }
 
         private static void ThrowOnNotImplementedProperty<TObject>(
