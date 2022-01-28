@@ -103,11 +103,18 @@ namespace OBeautifulCode.DataStructure.Excel
 
             chromeCursor.Reset();
 
-            if (section.Title != null)
+            if ((!string.IsNullOrWhiteSpace(report.Title)) || (!string.IsNullOrWhiteSpace(section.Title)))
             {
                 if (passKind == PassKind.Data)
                 {
-                    chromeCursor.Cell.Value = section.Title;
+                    var title = string.IsNullOrWhiteSpace(report.Title) ? string.Empty : report.Title;
+
+                    if (!string.IsNullOrWhiteSpace(section.Title))
+                    {
+                        title = title + ": " + section.Title;
+                    }
+
+                    chromeCursor.Cell.Value = title;
                 }
 
                 if (passKind == PassKind.Formatting)
