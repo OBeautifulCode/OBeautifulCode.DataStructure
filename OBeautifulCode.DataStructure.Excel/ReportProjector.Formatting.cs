@@ -8,6 +8,7 @@ namespace OBeautifulCode.DataStructure.Excel
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using Aspose.Cells;
     using OBeautifulCode.Enum.Recipes;
@@ -42,6 +43,7 @@ namespace OBeautifulCode.DataStructure.Excel
             range.ApplyReportFormatOptions(reportFormat.Options);
         }
 
+        [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "range", Justification = "Future-proofing.")]
         private static void ApplyReportFormatOptions(
             this Range range,
             ReportFormatOptions? options)
@@ -79,6 +81,7 @@ namespace OBeautifulCode.DataStructure.Excel
             range.ApplySectionFormatOptions(sectionFormat.Options);
         }
 
+        [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "range", Justification = "Future-proofing.")]
         private static void ApplySectionFormatOptions(
             this Range range,
             SectionFormatOptions? options)
