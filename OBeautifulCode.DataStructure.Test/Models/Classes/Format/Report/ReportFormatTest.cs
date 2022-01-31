@@ -62,7 +62,8 @@ namespace OBeautifulCode.DataStructure.Test
                         {
                             new ReportFormat(
                                 referenceObjectForEquatableTestScenarios.DisplayTimestamp,
-                                referenceObjectForEquatableTestScenarios.TimestampFormat),
+                                referenceObjectForEquatableTestScenarios.TimestampFormat,
+                                referenceObjectForEquatableTestScenarios.Options),
                         },
                         ObjectsThatAreNotEqualToReferenceObject = new ReportFormat[]
                         {
@@ -72,6 +73,10 @@ namespace OBeautifulCode.DataStructure.Test
                             new ReportFormat(
                                 referenceObjectForEquatableTestScenarios.DisplayTimestamp,
                                 A.Dummy<ReportFormat>().Whose(_ => !_.TimestampFormat.IsEqualTo(referenceObjectForEquatableTestScenarios.TimestampFormat)).TimestampFormat),
+                            new ReportFormat(
+                                referenceObjectForEquatableTestScenarios.DisplayTimestamp,
+                                referenceObjectForEquatableTestScenarios.TimestampFormat,
+                                A.Dummy<ReportFormat>().Whose(_ => !_.Options.IsEqualTo(referenceObjectForEquatableTestScenarios.Options)).Options),
                         },
                         ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
                         {
@@ -103,6 +108,26 @@ namespace OBeautifulCode.DataStructure.Test
                             {
                                 SystemUnderTest = systemUnderTest,
                                 DeepCloneWithValue = referenceObject.TimestampFormat,
+                            };
+
+                            return result;
+                        },
+                    })
+                .AddScenario(() =>
+                    new DeepCloneWithTestScenario<ReportFormat>
+                    {
+                        Name = "DeepCloneWithOptions should deep clone object and replace Options with the provided options",
+                        WithPropertyName = "Options",
+                        SystemUnderTestDeepCloneWithValueFunc = () =>
+                        {
+                            var systemUnderTest = A.Dummy<ReportFormat>();
+
+                            var referenceObject = A.Dummy<ReportFormat>().ThatIs(_ => !systemUnderTest.Options.IsEqualTo(_.Options));
+
+                            var result = new SystemUnderTestDeepCloneWithValue<ReportFormat>
+                            {
+                                SystemUnderTest = systemUnderTest,
+                                DeepCloneWithValue = referenceObject.Options,
                             };
 
                             return result;

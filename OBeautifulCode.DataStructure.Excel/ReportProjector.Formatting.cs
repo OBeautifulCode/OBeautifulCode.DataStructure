@@ -20,6 +20,83 @@ namespace OBeautifulCode.DataStructure.Excel
 
     public static partial class ReportProjector
     {
+        private static void ApplyReportFormat(
+            this Range range,
+            ReportFormat reportFormat)
+        {
+            if (reportFormat == null)
+            {
+                return;
+            }
+
+            var implementedProperties = new[]
+            {
+                nameof(ReportFormat.DisplayTimestamp),
+                nameof(ReportFormat.TimestampFormat),
+                nameof(ReportFormat.Options),
+            };
+
+            reportFormat.ThrowOnNotImplementedProperty(implementedProperties);
+
+            // Timestamp is added to bottom chrome of worksheet and formatting is managed there.
+            range.ApplyReportFormatOptions(reportFormat.Options);
+        }
+
+        private static void ApplyReportFormatOptions(
+            this Range range,
+            ReportFormatOptions? options)
+        {
+            if (options == null)
+            {
+                return;
+            }
+
+            var implementedOptions = new ReportFormatOptions[]
+            {
+            };
+
+            var reportFormatOptions = (ReportFormatOptions)options;
+
+            reportFormatOptions.ThrowOnNotImplementedEnumFlag(implementedOptions);
+        }
+
+        private static void ApplySectionFormat(
+            this Range range,
+            SectionFormat sectionFormat)
+        {
+            if (sectionFormat == null)
+            {
+                return;
+            }
+
+            var implementedProperties = new[]
+            {
+                nameof(SectionFormat.Options),
+            };
+
+            sectionFormat.ThrowOnNotImplementedProperty(implementedProperties);
+
+            range.ApplySectionFormatOptions(sectionFormat.Options);
+        }
+
+        private static void ApplySectionFormatOptions(
+            this Range range,
+            SectionFormatOptions? options)
+        {
+            if (options == null)
+            {
+                return;
+            }
+
+            var implementedOptions = new SectionFormatOptions[]
+            {
+            };
+
+            var sectionFormatOptions = (SectionFormatOptions)options;
+
+            sectionFormatOptions.ThrowOnNotImplementedEnumFlag(implementedOptions);
+        }
+
         private static void ApplyTableFormat(
             this Range range,
             TableFormat tableFormat)
@@ -79,9 +156,9 @@ namespace OBeautifulCode.DataStructure.Excel
         private static void ApplyColumnFormatOptions(
             this Range wholeColumnRange,
             Range lastHeaderCellToLastNonSummaryDataCellRange,
-            ColumnFormatOptions? format)
+            ColumnFormatOptions? options)
         {
-            if (format == null)
+            if (options == null)
             {
                 return;
             }
@@ -95,7 +172,7 @@ namespace OBeautifulCode.DataStructure.Excel
                 ColumnFormatOptions.Filterable,
             };
 
-            var columnFormatOptions = (ColumnFormatOptions)format;
+            var columnFormatOptions = (ColumnFormatOptions)options;
 
             columnFormatOptions.ThrowOnNotImplementedEnumFlag(implementedOptions);
 
@@ -239,9 +316,9 @@ namespace OBeautifulCode.DataStructure.Excel
 
         private static void ApplyRowFormatOptions(
             this Range range,
-            RowFormatOptions? format)
+            RowFormatOptions? options)
         {
-            if (format == null)
+            if (options == null)
             {
                 return;
             }
@@ -255,7 +332,7 @@ namespace OBeautifulCode.DataStructure.Excel
                 RowFormatOptions.DisableCollapsing,
             };
 
-            var rowFormatOptions = (RowFormatOptions)format;
+            var rowFormatOptions = (RowFormatOptions)options;
 
             rowFormatOptions.ThrowOnNotImplementedEnumFlag(implementedOptions);
 
@@ -341,9 +418,9 @@ namespace OBeautifulCode.DataStructure.Excel
 
         private static void ApplyFontFormatOptions(
             this Range range,
-            FontFormatOptions? format)
+            FontFormatOptions? options)
         {
-            if (format == null)
+            if (options == null)
             {
                 return;
             }
@@ -356,7 +433,7 @@ namespace OBeautifulCode.DataStructure.Excel
                 FontFormatOptions.Underline,
             };
 
-            var fontFormatOptions = (FontFormatOptions)format;
+            var fontFormatOptions = (FontFormatOptions)options;
 
             fontFormatOptions.ThrowOnNotImplementedEnumFlag(implementedOptions);
 

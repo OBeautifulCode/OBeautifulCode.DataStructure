@@ -891,6 +891,7 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<IReadOnlyCollection<Section>>(),
                                  A.Dummy<string>(),
                                  A.Dummy<DateTime?>(),
+                                 A.Dummy<IReadOnlyList<ILink>>(),
                                  A.Dummy<AdditionalReportInfo>(),
                                  A.Dummy<ReportFormat>()));
 
@@ -904,7 +905,8 @@ namespace OBeautifulCode.DataStructure.Test
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new ReportFormat(
                                  A.Dummy<bool?>(),
-                                 A.Dummy<DateTimeFormat>()));
+                                 A.Dummy<DateTimeFormat>(),
+                                 A.Dummy<ReportFormatOptions?>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new Row(
@@ -956,7 +958,8 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<SlotSelectionStrategy>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new SectionFormat());
+                () => new SectionFormat(
+                                 A.Dummy<SectionFormatOptions?>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new SimpleLink(

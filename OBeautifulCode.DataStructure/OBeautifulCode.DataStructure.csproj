@@ -427,10 +427,10 @@
     <Compile Include="Models\Classes\Report\AdditionalReportInfo.designer.cs">
       <DependentUpon>AdditionalReportInfo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\Classes\Report\AdditionalReportInfo.cs" />
     <Compile Include="Models\Classes\Report\Report.designer.cs">
       <DependentUpon>Report.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Classes\Report\AdditionalReportInfo.cs" />
     <Compile Include="Models\Classes\Report\Section.cs" />
     <Compile Include="Models\Classes\Report\Section.designer.cs">
       <DependentUpon>Section.cs</DependentUpon>
@@ -480,6 +480,8 @@
     </Compile>
     <Compile Include="Models\Enums\AvailabilityCheck\AvailabilityCheckStepAction.cs" />
     <Compile Include="Models\Enums\CellValue\MediaReferenceKind.cs" />
+    <Compile Include="Models\Enums\Formatting\SectionFormatOptions.cs" />
+    <Compile Include="Models\Enums\Formatting\ReportFormatOptions.cs" />
     <Compile Include="Models\Enums\Formatting\MessageFormatKind.cs" />
     <Compile Include="Models\Enums\OperationCell\CellOpExecutionOutcome.cs" />
     <Compile Include="Models\Enums\OperationCell\CellOpExecutionStatus.cs" />

@@ -103,9 +103,11 @@ namespace OBeautifulCode.DataStructure.Excel
 
             chromeCursor.Reset();
 
-            if ((!string.IsNullOrWhiteSpace(report.Title)) || (!string.IsNullOrWhiteSpace(section.Title)))
+            var hasTitle = (!string.IsNullOrWhiteSpace(report.Title)) || (!string.IsNullOrWhiteSpace(section.Title));
+
+            if (passKind == PassKind.Data)
             {
-                if (passKind == PassKind.Data)
+                if (hasTitle)
                 {
                     var title = string.IsNullOrWhiteSpace(report.Title) ? string.Empty : report.Title;
 
@@ -116,8 +118,11 @@ namespace OBeautifulCode.DataStructure.Excel
 
                     chromeCursor.Cell.Value = title;
                 }
+            }
 
-                if (passKind == PassKind.Formatting)
+            if (passKind == PassKind.Formatting)
+            {
+                if (hasTitle)
                 {
                     // Section model doesn't have any formatting for title.
                     chromeCursor.Cell.GetRange().ApplyCellFormat(new CellFormat(fontFormat: new FontFormat(fontSizeInPoints: 18)));
@@ -164,6 +169,14 @@ namespace OBeautifulCode.DataStructure.Excel
                         chromeCursor.Cell.Value = additionalInfo.TermsOfUse;
                     }
                 }
+            }
+
+            // Overall formatting
+            if (passKind == PassKind.Formatting)
+            {
+                chromeCursor.CanvassedRange.ApplySectionFormat(section.Format);
+
+                chromeCursor.CanvassedRange.ApplyReportFormat(report.Format);
             }
         }
 

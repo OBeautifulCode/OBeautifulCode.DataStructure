@@ -47,7 +47,52 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new SystemUnderTestExpectedStringRepresentation<SectionFormat>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.SectionFormat: <no properties>."),
+                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.SectionFormat: Options = {systemUnderTest.Options?.ToString() ?? "<null>"}."),
+                        };
+
+                        return result;
+                    },
+                });
+
+        private static readonly ConstructorArgumentValidationTestScenarios<SectionFormat> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<SectionFormat>();
+
+        private static readonly ConstructorPropertyAssignmentTestScenarios<SectionFormat> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<SectionFormat>()
+            .AddScenario(() =>
+                new ConstructorPropertyAssignmentTestScenario<SectionFormat>
+                {
+                    Name = "Options should return same 'options' parameter passed to constructor when getting",
+                    SystemUnderTestExpectedPropertyValueFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<SectionFormat>();
+
+                        var result = new SystemUnderTestExpectedPropertyValue<SectionFormat>
+                        {
+                            SystemUnderTest = new SectionFormat(
+                                                      referenceObject.Options),
+                            ExpectedPropertyValue = referenceObject.Options,
+                        };
+
+                        return result;
+                    },
+                    PropertyName = "Options",
+                });
+
+        private static readonly DeepCloneWithTestScenarios<SectionFormat> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<SectionFormat>()
+            .AddScenario(() =>
+                new DeepCloneWithTestScenario<SectionFormat>
+                {
+                    Name = "DeepCloneWithOptions should deep clone object and replace Options with the provided options",
+                    WithPropertyName = "Options",
+                    SystemUnderTestDeepCloneWithValueFunc = () =>
+                    {
+                        var systemUnderTest = A.Dummy<SectionFormat>();
+
+                        var referenceObject = A.Dummy<SectionFormat>().ThatIs(_ => !systemUnderTest.Options.IsEqualTo(_.Options));
+
+                        var result = new SystemUnderTestDeepCloneWithValue<SectionFormat>
+                        {
+                            SystemUnderTest = systemUnderTest,
+                            DeepCloneWithValue = referenceObject.Options,
                         };
 
                         return result;
@@ -64,10 +109,13 @@ namespace OBeautifulCode.DataStructure.Test
                     ReferenceObject = ReferenceObjectForEquatableTestScenarios,
                     ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new SectionFormat[]
                     {
-                        new SectionFormat(),
+                        new SectionFormat(
+                                ReferenceObjectForEquatableTestScenarios.Options),
                     },
                     ObjectsThatAreNotEqualToReferenceObject = new SectionFormat[]
                     {
+                        new SectionFormat(
+                                A.Dummy<SectionFormat>().Whose(_ => !_.Options.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Options)).Options),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
                     {
@@ -178,6 +226,122 @@ namespace OBeautifulCode.DataStructure.Test
 
         [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
         [SuppressMessage("Microsoft.Naming", "CA1724:TypeNamesShouldNotMatchNamespaces")]
+        public static class Constructing
+        {
+            [Fact]
+            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+            public static void Constructor___Should_throw___When_parameters_are_not_valid()
+            {
+                var scenarios = ConstructorArgumentValidationTestScenarios.ValidateAndPrepareForTesting();
+
+                foreach (var scenario in scenarios)
+                {
+                    // Arrange, Act
+                    var actual = Record.Exception(scenario.ConstructionFunc);
+
+                    // Assert
+                    actual.AsTest().Must().BeOfType(scenario.ExpectedExceptionType, because: scenario.Id);
+
+                    foreach(var expected in scenario.ExpectedExceptionMessageContains ?? new List<string>())
+                    {
+                        actual.Message.AsTest().Must().ContainString(expected, because: scenario.Id);
+                    }
+
+                    if (scenario.ExpectedExceptionMessageEquals != null)
+                    {
+                        actual.Message.AsTest().Must().BeEqualTo(scenario.ExpectedExceptionMessageEquals, because: scenario.Id);
+                    }
+                }
+            }
+
+            [Fact]
+            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+            [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "referenceObject")]
+            public static void Properties___Should_be_assigned_by_constructor_to_expected_value___When_getting()
+            {
+                var scenarios = ConstructorPropertyAssignmentTestScenarios.ValidateAndPrepareForTesting();
+
+                var asTestMethodInfo = typeof(WorkflowExtensions).GetMethodFiltered(nameof(WorkflowExtensions.AsTest));
+
+                var beEqualToMethodInfo = typeof(Verifications).GetMethodFiltered(nameof(Verifications.BeEqualTo));
+
+                foreach (var scenario in scenarios)
+                {
+                    // Arrange
+                    if ((scenario.PropertyName == ConstructorPropertyAssignmentTestScenario.NoPropertiesAssignedInConstructorScenarioPropertyName) || (scenario.PropertyName == ConstructorPropertyAssignmentTestScenario.ForceGeneratedTestsToPassAndWriteMyOwnScenarioPropertyName))
+                    {
+                        continue;
+                    }
+
+                    // Act
+                    var actual = scenario.Property.GetValue(scenario.SystemUnderTest);
+
+                    // Assert
+                    // When the scenario specifies CompareActualToExpectedUsing.DefaultStrategy, ValidateAndPrepareForTesting()
+                    // will check if ExpectedPropertyValue == null.  If so, it sets CompareActualToExpectedUsing = ReferenceEquality.
+                    // If not, then it checks the runtime type of ExpectedPropertyValue and if it's a value type,
+                    // then it sets CompareActualToExpectedUsing = ValueEquality, otherwise it uses ValueEquality.
+                    // So a boxed value type is handled properly (using ValueEquality instead of ReferenceEquality).
+                    if (scenario.CompareActualToExpectedUsing == CompareActualToExpectedUsing.ValueEquality)
+                    {
+                        // The below reflection code is used in lieu of the following single line of code
+                        // so that equality is determined based on the property type instead of using
+                        // OBeautifulCode.Equality.Recipes.ObjectEqualityComparer, which will return false
+                        // when the objects being compared have different runtime types.  For example, if
+                        // the property type is IReadOnlyCollection<string> and we are comparing an empty array
+                        // an empty List, the assertion below would fail inappropriately.
+                        // actual.AsTest().Must().BeEqualTo(scenario.ExpectedPropertyValue, because: scenario.Id);
+
+                        var propertyType = scenario.Property.PropertyType;
+
+                        var asTestMethodInfoToInvoke = asTestMethodInfo.MakeGenericMethod(propertyType);
+
+                        var assertionTracker = asTestMethodInfoToInvoke.Invoke(null, new[] { actual, Type.Missing });
+
+                        assertionTracker.Must();
+
+                        var mustBeEqualToMethodInfoToInvoke = beEqualToMethodInfo.MakeGenericMethod(propertyType);
+
+                        mustBeEqualToMethodInfoToInvoke.Invoke(null, new[]{ assertionTracker, scenario.ExpectedPropertyValue, scenario.Id, Type.Missing, Type.Missing });
+                    }
+                    else if (scenario.CompareActualToExpectedUsing == CompareActualToExpectedUsing.ReferenceEquality)
+                    {
+                        actual.AsTest().Must().BeSameReferenceAs(scenario.ExpectedPropertyValue, because: scenario.Id);
+                    }
+                    else
+                    {
+                        throw new NotSupportedException("This CompareActualToExpectedUsing is not supported: " + scenario.CompareActualToExpectedUsing);
+                    }
+                }
+            }
+        }
+
+        [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
+        [SuppressMessage("Microsoft.Naming", "CA1724:TypeNamesShouldNotMatchNamespaces")]
         public static class Cloning
         {
             [Fact]
@@ -232,6 +396,80 @@ namespace OBeautifulCode.DataStructure.Test
                 // Assert
                 actual.AsTest().Must().BeEqualTo(systemUnderTest);
                 actual.AsTest().Must().NotBeSameReferenceAs(systemUnderTest);
+            }
+
+            [Fact]
+            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+            public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
+            {
+                var propertyNames = new string[] { "Options" };
+
+                var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
+
+                foreach (var scenario in scenarios)
+                {
+                    // Arrange
+                    if (scenario.WithPropertyName == DeepCloneWithTestScenario.ForceGeneratedTestsToPassAndWriteMyOwnScenarioWithPropertyName)
+                    {
+                        continue;
+                    }
+
+                    // Act
+                    var actual = (SectionFormat)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
+
+                    // Assert
+                    foreach(var propertyName in propertyNames)
+                    {
+                        var propertyInfo = typeof(SectionFormat).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
+
+                        var actualPropertyValue = propertyInfo.GetValue(actual);
+
+                        var comparisonValue = propertyName == scenario.WithPropertyName
+                            ? scenario.WithValue
+                            : propertyInfo.GetValue(scenario.SystemUnderTest);
+
+                        if (actualPropertyValue == null)
+                        {
+                            comparisonValue.Must().BeNull(because: scenario.Id);
+                        }
+                        else
+                        {
+                            // We use the runtime type here to solve for the case where the object is a boxed value type.
+                            var actualPropertyValueRuntimeType = actualPropertyValue.GetType();
+
+                            if (actualPropertyValueRuntimeType.IsValueType || (actualPropertyValueRuntimeType == typeof(string)))
+                            {
+                                // actualPropertyValue and comparisonValue are declared as typeof(object), but
+                                // BeEqualTo (which uses IsEqualTo), will do the right thing by comparing the
+                                // objects using their runtime type.
+                                actualPropertyValue.AsTest().Must().BeEqualTo(comparisonValue, because: scenario.Id);
+                            }
+                            else
+                            {
+                                if (propertyName == scenario.WithPropertyName)
+                                {
+                                    actualPropertyValue.AsTest().Must().BeSameReferenceAs(comparisonValue, because: scenario.Id);
+                                }
+                                else
+                                {
+                                    actualPropertyValue.AsTest().Must().NotBeSameReferenceAs(comparisonValue, because: scenario.Id);
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
 

@@ -91,7 +91,7 @@ namespace OBeautifulCode.DataStructure.Test
             {
                 var numberOfSections = ThreadSafeRandom.Next(1, 4);
 
-                var result = new Report(A.Dummy<string>(), Some.ReadOnlyDummies<Section>(numberOfSections).ToList(), A.Dummy<string>(), A.Dummy<UtcDateTime>(), A.Dummy<AdditionalReportInfo>(), A.Dummy<ReportFormat>());
+                var result = new Report(A.Dummy<string>(), Some.ReadOnlyDummies<Section>(numberOfSections).ToList(), A.Dummy<string>(), A.Dummy<UtcDateTime>(), Some.ReadOnlyDummies<SimpleLink>().ToList(), A.Dummy<AdditionalReportInfo>(), A.Dummy<ReportFormat>());
 
                 return result;
             });
@@ -278,7 +278,7 @@ namespace OBeautifulCode.DataStructure.Test
             {
                 var displayTimestamp = A.Dummy<bool>();
 
-                var result = new ReportFormat(displayTimestamp, displayTimestamp ? A.Dummy<DateTimeFormat>() : null);
+                var result = new ReportFormat(displayTimestamp, displayTimestamp ? A.Dummy<DateTimeFormat>() : null, A.Dummy<ReportFormatOptions>());
 
                 return result;
             });

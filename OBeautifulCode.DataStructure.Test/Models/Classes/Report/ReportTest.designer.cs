@@ -47,7 +47,7 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new SystemUnderTestExpectedStringRepresentation<Report>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.Report: Id = {systemUnderTest.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Sections = {systemUnderTest.Sections?.ToString() ?? "<null>"}, Title = {systemUnderTest.Title?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, TimestampUtc = {systemUnderTest.TimestampUtc?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, AdditionalInfo = {systemUnderTest.AdditionalInfo?.ToString() ?? "<null>"}, Format = {systemUnderTest.Format?.ToString() ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.Report: Id = {systemUnderTest.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Sections = {systemUnderTest.Sections?.ToString() ?? "<null>"}, Title = {systemUnderTest.Title?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, TimestampUtc = {systemUnderTest.TimestampUtc?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, DownloadLinks = {systemUnderTest.DownloadLinks?.ToString() ?? "<null>"}, AdditionalInfo = {systemUnderTest.AdditionalInfo?.ToString() ?? "<null>"}, Format = {systemUnderTest.Format?.ToString() ?? "<null>"}."),
                         };
 
                         return result;
@@ -68,6 +68,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Sections,
                                              referenceObject.Title,
                                              referenceObject.TimestampUtc,
+                                             referenceObject.DownloadLinks,
                                              referenceObject.AdditionalInfo,
                                              referenceObject.Format);
 
@@ -89,6 +90,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Sections,
                                              referenceObject.Title,
                                              referenceObject.TimestampUtc,
+                                             referenceObject.DownloadLinks,
                                              referenceObject.AdditionalInfo,
                                              referenceObject.Format);
 
@@ -110,6 +112,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              null,
                                              referenceObject.Title,
                                              referenceObject.TimestampUtc,
+                                             referenceObject.DownloadLinks,
                                              referenceObject.AdditionalInfo,
                                              referenceObject.Format);
 
@@ -131,6 +134,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              new List<Section>(),
                                              referenceObject.Title,
                                              referenceObject.TimestampUtc,
+                                             referenceObject.DownloadLinks,
                                              referenceObject.AdditionalInfo,
                                              referenceObject.Format);
 
@@ -152,6 +156,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              new Section[0].Concat(referenceObject.Sections).Concat(new Section[] { null }).Concat(referenceObject.Sections).ToList(),
                                              referenceObject.Title,
                                              referenceObject.TimestampUtc,
+                                             referenceObject.DownloadLinks,
                                              referenceObject.AdditionalInfo,
                                              referenceObject.Format);
 
@@ -173,6 +178,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Sections,
                                              null,
                                              referenceObject.TimestampUtc,
+                                             referenceObject.DownloadLinks,
                                              referenceObject.AdditionalInfo,
                                              referenceObject.Format);
 
@@ -194,6 +200,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Sections,
                                              Invariant($"  {Environment.NewLine}  "),
                                              referenceObject.TimestampUtc,
+                                             referenceObject.DownloadLinks,
                                              referenceObject.AdditionalInfo,
                                              referenceObject.Format);
 
@@ -201,6 +208,72 @@ namespace OBeautifulCode.DataStructure.Test
                     },
                     ExpectedExceptionType = typeof(ArgumentException),
                     ExpectedExceptionMessageContains = new[] { "title", "white space", },
+                })
+            .AddScenario(() =>
+                new ConstructorArgumentValidationTestScenario<Report>
+                {
+                    Name = "constructor should throw ArgumentNullException when parameter 'downloadLinks' is null scenario",
+                    ConstructionFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<Report>();
+
+                        var result = new Report(
+                                             referenceObject.Id,
+                                             referenceObject.Sections,
+                                             referenceObject.Title,
+                                             referenceObject.TimestampUtc,
+                                             null,
+                                             referenceObject.AdditionalInfo,
+                                             referenceObject.Format);
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentNullException),
+                    ExpectedExceptionMessageContains = new[] { "downloadLinks", },
+                })
+            .AddScenario(() =>
+                new ConstructorArgumentValidationTestScenario<Report>
+                {
+                    Name = "constructor should throw ArgumentException when parameter 'downloadLinks' is an empty enumerable scenario",
+                    ConstructionFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<Report>();
+
+                        var result = new Report(
+                                             referenceObject.Id,
+                                             referenceObject.Sections,
+                                             referenceObject.Title,
+                                             referenceObject.TimestampUtc,
+                                             new List<ILink>(),
+                                             referenceObject.AdditionalInfo,
+                                             referenceObject.Format);
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentException),
+                    ExpectedExceptionMessageContains = new[] { "downloadLinks", "is an empty enumerable", },
+                })
+            .AddScenario(() =>
+                new ConstructorArgumentValidationTestScenario<Report>
+                {
+                    Name = "constructor should throw ArgumentException when parameter 'downloadLinks' contains a null element scenario",
+                    ConstructionFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<Report>();
+
+                        var result = new Report(
+                                             referenceObject.Id,
+                                             referenceObject.Sections,
+                                             referenceObject.Title,
+                                             referenceObject.TimestampUtc,
+                                             new ILink[0].Concat(referenceObject.DownloadLinks).Concat(new ILink[] { null }).Concat(referenceObject.DownloadLinks).ToList(),
+                                             referenceObject.AdditionalInfo,
+                                             referenceObject.Format);
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentException),
+                    ExpectedExceptionMessageContains = new[] { "downloadLinks", "contains at least one null element", },
                 })
             .AddScenario(() =>
                 new ConstructorArgumentValidationTestScenario<Report>
@@ -215,6 +288,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Sections,
                                              referenceObject.Title,
                                              referenceObject.TimestampUtc,
+                                             referenceObject.DownloadLinks,
                                              null,
                                              referenceObject.Format);
 
@@ -236,6 +310,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Sections,
                                              referenceObject.Title,
                                              referenceObject.TimestampUtc,
+                                             referenceObject.DownloadLinks,
                                              referenceObject.AdditionalInfo,
                                              null);
 
@@ -261,6 +336,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Sections,
                                                       referenceObject.Title,
                                                       referenceObject.TimestampUtc,
+                                                      referenceObject.DownloadLinks,
                                                       referenceObject.AdditionalInfo,
                                                       referenceObject.Format),
                             ExpectedPropertyValue = referenceObject.Id,
@@ -285,6 +361,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Sections,
                                                       referenceObject.Title,
                                                       referenceObject.TimestampUtc,
+                                                      referenceObject.DownloadLinks,
                                                       referenceObject.AdditionalInfo,
                                                       referenceObject.Format),
                             ExpectedPropertyValue = referenceObject.Sections,
@@ -309,6 +386,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Sections,
                                                       referenceObject.Title,
                                                       referenceObject.TimestampUtc,
+                                                      referenceObject.DownloadLinks,
                                                       referenceObject.AdditionalInfo,
                                                       referenceObject.Format),
                             ExpectedPropertyValue = referenceObject.Title,
@@ -333,6 +411,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Sections,
                                                       referenceObject.Title,
                                                       referenceObject.TimestampUtc,
+                                                      referenceObject.DownloadLinks,
                                                       referenceObject.AdditionalInfo,
                                                       referenceObject.Format),
                             ExpectedPropertyValue = referenceObject.TimestampUtc,
@@ -341,6 +420,31 @@ namespace OBeautifulCode.DataStructure.Test
                         return result;
                     },
                     PropertyName = "TimestampUtc",
+                })
+            .AddScenario(() =>
+                new ConstructorPropertyAssignmentTestScenario<Report>
+                {
+                    Name = "DownloadLinks should return same 'downloadLinks' parameter passed to constructor when getting",
+                    SystemUnderTestExpectedPropertyValueFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<Report>();
+
+                        var result = new SystemUnderTestExpectedPropertyValue<Report>
+                        {
+                            SystemUnderTest = new Report(
+                                                      referenceObject.Id,
+                                                      referenceObject.Sections,
+                                                      referenceObject.Title,
+                                                      referenceObject.TimestampUtc,
+                                                      referenceObject.DownloadLinks,
+                                                      referenceObject.AdditionalInfo,
+                                                      referenceObject.Format),
+                            ExpectedPropertyValue = referenceObject.DownloadLinks,
+                        };
+
+                        return result;
+                    },
+                    PropertyName = "DownloadLinks",
                 })
             .AddScenario(() =>
                 new ConstructorPropertyAssignmentTestScenario<Report>
@@ -357,6 +461,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Sections,
                                                       referenceObject.Title,
                                                       referenceObject.TimestampUtc,
+                                                      referenceObject.DownloadLinks,
                                                       referenceObject.AdditionalInfo,
                                                       referenceObject.Format),
                             ExpectedPropertyValue = referenceObject.AdditionalInfo,
@@ -381,6 +486,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Sections,
                                                       referenceObject.Title,
                                                       referenceObject.TimestampUtc,
+                                                      referenceObject.DownloadLinks,
                                                       referenceObject.AdditionalInfo,
                                                       referenceObject.Format),
                             ExpectedPropertyValue = referenceObject.Format,
@@ -475,6 +581,26 @@ namespace OBeautifulCode.DataStructure.Test
             .AddScenario(() =>
                 new DeepCloneWithTestScenario<Report>
                 {
+                    Name = "DeepCloneWithDownloadLinks should deep clone object and replace DownloadLinks with the provided downloadLinks",
+                    WithPropertyName = "DownloadLinks",
+                    SystemUnderTestDeepCloneWithValueFunc = () =>
+                    {
+                        var systemUnderTest = A.Dummy<Report>();
+
+                        var referenceObject = A.Dummy<Report>().ThatIs(_ => !systemUnderTest.DownloadLinks.IsEqualTo(_.DownloadLinks));
+
+                        var result = new SystemUnderTestDeepCloneWithValue<Report>
+                        {
+                            SystemUnderTest = systemUnderTest,
+                            DeepCloneWithValue = referenceObject.DownloadLinks,
+                        };
+
+                        return result;
+                    },
+                })
+            .AddScenario(() =>
+                new DeepCloneWithTestScenario<Report>
+                {
                     Name = "DeepCloneWithAdditionalInfo should deep clone object and replace AdditionalInfo with the provided additionalInfo",
                     WithPropertyName = "AdditionalInfo",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
@@ -528,6 +654,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.Sections,
                                 ReferenceObjectForEquatableTestScenarios.Title,
                                 ReferenceObjectForEquatableTestScenarios.TimestampUtc,
+                                ReferenceObjectForEquatableTestScenarios.DownloadLinks,
                                 ReferenceObjectForEquatableTestScenarios.AdditionalInfo,
                                 ReferenceObjectForEquatableTestScenarios.Format),
                     },
@@ -538,6 +665,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.Sections,
                                 ReferenceObjectForEquatableTestScenarios.Title,
                                 ReferenceObjectForEquatableTestScenarios.TimestampUtc,
+                                ReferenceObjectForEquatableTestScenarios.DownloadLinks,
                                 ReferenceObjectForEquatableTestScenarios.AdditionalInfo,
                                 ReferenceObjectForEquatableTestScenarios.Format),
                         new Report(
@@ -545,6 +673,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 A.Dummy<Report>().Whose(_ => !_.Sections.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Sections)).Sections,
                                 ReferenceObjectForEquatableTestScenarios.Title,
                                 ReferenceObjectForEquatableTestScenarios.TimestampUtc,
+                                ReferenceObjectForEquatableTestScenarios.DownloadLinks,
                                 ReferenceObjectForEquatableTestScenarios.AdditionalInfo,
                                 ReferenceObjectForEquatableTestScenarios.Format),
                         new Report(
@@ -552,6 +681,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.Sections,
                                 A.Dummy<Report>().Whose(_ => !_.Title.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Title)).Title,
                                 ReferenceObjectForEquatableTestScenarios.TimestampUtc,
+                                ReferenceObjectForEquatableTestScenarios.DownloadLinks,
                                 ReferenceObjectForEquatableTestScenarios.AdditionalInfo,
                                 ReferenceObjectForEquatableTestScenarios.Format),
                         new Report(
@@ -559,6 +689,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.Sections,
                                 ReferenceObjectForEquatableTestScenarios.Title,
                                 A.Dummy<Report>().Whose(_ => !_.TimestampUtc.IsEqualTo(ReferenceObjectForEquatableTestScenarios.TimestampUtc)).TimestampUtc,
+                                ReferenceObjectForEquatableTestScenarios.DownloadLinks,
                                 ReferenceObjectForEquatableTestScenarios.AdditionalInfo,
                                 ReferenceObjectForEquatableTestScenarios.Format),
                         new Report(
@@ -566,6 +697,15 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.Sections,
                                 ReferenceObjectForEquatableTestScenarios.Title,
                                 ReferenceObjectForEquatableTestScenarios.TimestampUtc,
+                                A.Dummy<Report>().Whose(_ => !_.DownloadLinks.IsEqualTo(ReferenceObjectForEquatableTestScenarios.DownloadLinks)).DownloadLinks,
+                                ReferenceObjectForEquatableTestScenarios.AdditionalInfo,
+                                ReferenceObjectForEquatableTestScenarios.Format),
+                        new Report(
+                                ReferenceObjectForEquatableTestScenarios.Id,
+                                ReferenceObjectForEquatableTestScenarios.Sections,
+                                ReferenceObjectForEquatableTestScenarios.Title,
+                                ReferenceObjectForEquatableTestScenarios.TimestampUtc,
+                                ReferenceObjectForEquatableTestScenarios.DownloadLinks,
                                 A.Dummy<Report>().Whose(_ => !_.AdditionalInfo.IsEqualTo(ReferenceObjectForEquatableTestScenarios.AdditionalInfo)).AdditionalInfo,
                                 ReferenceObjectForEquatableTestScenarios.Format),
                         new Report(
@@ -573,6 +713,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.Sections,
                                 ReferenceObjectForEquatableTestScenarios.Title,
                                 ReferenceObjectForEquatableTestScenarios.TimestampUtc,
+                                ReferenceObjectForEquatableTestScenarios.DownloadLinks,
                                 ReferenceObjectForEquatableTestScenarios.AdditionalInfo,
                                 A.Dummy<Report>().Whose(_ => !_.Format.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Format)).Format),
                     },
@@ -868,6 +1009,18 @@ namespace OBeautifulCode.DataStructure.Test
                     actual.Sections.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.Sections);
                 }
 
+                if (systemUnderTest.DownloadLinks == null)
+                {
+                    actual.DownloadLinks.AsTest().Must().BeNull();
+                }
+                else if (!actual.DownloadLinks.GetType().IsValueType)
+                {
+                    // When the declared type is a reference type, we still have to check the runtime type.
+                    // The object could be a boxed value type, which will fail this asseration because
+                    // a deep clone of a value type object is the same object.
+                    actual.DownloadLinks.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.DownloadLinks);
+                }
+
                 if (systemUnderTest.AdditionalInfo == null)
                 {
                     actual.AdditionalInfo.AsTest().Must().BeNull();
@@ -909,7 +1062,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "Id", "Sections", "Title", "TimestampUtc", "AdditionalInfo", "Format" };
+                var propertyNames = new string[] { "Id", "Sections", "Title", "TimestampUtc", "DownloadLinks", "AdditionalInfo", "Format" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 

@@ -20,9 +20,11 @@ namespace OBeautifulCode.DataStructure
         /// </summary>
         /// <param name="displayTimestamp">OPTIONAL value that specifies whether to display the report's timestamp.  DEFAULT is to let the consumer decide (e.g. always display the timestamp when it's not null).</param>
         /// <param name="timestampFormat">OPTIONAL format to apply to the timestamp when displaying it.  DEFAULT is to let the consumer decide (e.g. when displaying the timestamp, use a pre-specified/standard format).</param>
+        /// <param name="options">OPTIONAL formatting options to apply to the report.  DEFAULT is to not apply any of the formatting options.</param>
         public ReportFormat(
             bool? displayTimestamp = null,
-            DateTimeFormat timestampFormat = null)
+            DateTimeFormat timestampFormat = null,
+            ReportFormatOptions? options = null)
         {
             if ((displayTimestamp == false) && (timestampFormat != null))
             {
@@ -31,16 +33,28 @@ namespace OBeautifulCode.DataStructure
 
             this.DisplayTimestamp = displayTimestamp;
             this.TimestampFormat = timestampFormat;
+            this.Options = options;
         }
 
         /// <summary>
         /// Gets a value that specifies whether to display the report's timestamp.
         /// </summary>
+        /// <remarks>
+        /// We purposefully did NOT put this in <see cref="Options"/>.
+        /// Unlike other "options" in this project, this setting is not something you would clearly
+        /// do or not do (i.e. display the timestamp or hide the timestamp).  We would need an option
+        /// for both.  Also, the option is not isolated, given <see cref="TimestampFormat"/>.
+        /// </remarks>
         public bool? DisplayTimestamp { get; private set; }
 
         /// <summary>
         /// Gets the format to apply to the timestamp when displaying it.
         /// </summary>
         public DateTimeFormat TimestampFormat { get; private set; }
+
+        /// <summary>
+        /// Gets the formatting options to apply to the report.
+        /// </summary>
+        public ReportFormatOptions? Options { get; private set; }
     }
 }

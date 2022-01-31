@@ -45,5 +45,20 @@ namespace OBeautifulCode.DataStructure
         /// HTML.
         /// </summary>
         Html,
+
+        /// <summary>
+        /// A Microsoft Excel file.
+        /// </summary>
+        Excel,
+
+        /// <summary>
+        /// A CSV file.
+        /// </summary>
+        Csv,
+
+        /// <summary>
+        /// A PDF file.
+        /// </summary>
+        Pdf,
     }
 }

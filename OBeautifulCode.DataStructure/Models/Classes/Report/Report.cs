@@ -26,6 +26,7 @@ namespace OBeautifulCode.DataStructure
         /// <param name="sections">The sections of the report.</param>
         /// <param name="title">OPTIONAL title of the report.  DEFAULT is a report with no title.</param>
         /// <param name="timestampUtc">OPTIONAL timestamp of the report, in UTC.  DEFAULT is a report that is not timestamped.</param>
+        /// <param name="downloadLinks">OPTIONAL download options for the report as links.  DEFAULT is no download options.</param>
         /// <param name="additionalInfo">OPTIONAL additional information related to the report.  DEFAULT no additional information.</param>
         /// <param name="format">OPTIONAL format to apply to the report.  DEFAULT is to leave the format unchanged.</param>
         public Report(
@@ -33,6 +34,7 @@ namespace OBeautifulCode.DataStructure
             IReadOnlyCollection<Section> sections,
             string title = null,
             DateTime? timestampUtc = null,
+            IReadOnlyList<ILink> downloadLinks = null,
             AdditionalReportInfo additionalInfo = null,
             ReportFormat format = null)
         {
@@ -80,10 +82,16 @@ namespace OBeautifulCode.DataStructure
                 throw new ArgumentException(Invariant($"{nameof(timestampUtc)} is not in UTC."));
             }
 
+            if ((downloadLinks != null) && downloadLinks.Any(_ => _ == null))
+            {
+                throw new ArgumentException(Invariant($"{nameof(downloadLinks)} contains a null element."));
+            }
+
             this.Id = id;
             this.Sections = sections;
             this.Title = title;
             this.TimestampUtc = timestampUtc;
+            this.DownloadLinks = downloadLinks;
             this.AdditionalInfo = additionalInfo;
             this.Format = format;
         }
@@ -107,6 +115,11 @@ namespace OBeautifulCode.DataStructure
         /// Gets the timestamp of the report, in UTC.
         /// </summary>
         public DateTime? TimestampUtc { get; private set; }
+
+        /// <summary>
+        /// Gets download options for the report as links.
+        /// </summary>
+        public IReadOnlyList<ILink> DownloadLinks { get; private set; }
 
         /// <summary>
         /// Gets additional information related to the report.
