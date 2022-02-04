@@ -7,7 +7,7 @@
     <iconUrl>https://raw.githubusercontent.com/OBeautifulCode/OBeautifulCode.DataStructure/main/OBeautifulCode.DataStructure.Test/nuget-icon.png</iconUrl>
     <dependencies>
       <dependency id="OBeautifulCode.DataStructure" version="$version$" />
-      <dependency id="OBeautifulCode.AutoFakeItEasy" version="1.0.138" />
+      <dependency id="OBeautifulCode.AutoFakeItEasy" version="1.0.139" />
       <dependency id="OBeautifulCode.CodeAnalysis.Recipes.SuppressBecause" version="1.0.17" />
     </dependencies>
   </metadata>
