@@ -104,7 +104,8 @@
     <Compile Include="Properties\ProjectInfo.cs" />
     <Compile Include="ReportProjector.Formatting.cs" />
     <Compile Include="ReportProjector.cs" />
-    <Compile Include="ReportToWorkbookProjectionContext.cs" />
+    <Compile Include="Context\InternalSectionProjectionContext.cs" />
+    <Compile Include="Context\ReportToWorkbookProjectionContext.cs" />
     <AdditionalFiles Include=".analyzers\stylecop.json" />
     <None Include=".analyzers\release.ruleset" />
     <None Include="OBeautifulCode.DataStructure.Excel.override-nuspec" />
@@ -126,6 +127,7 @@
   <ItemGroup>
     <Content Include=".analyzers\dictionary.xml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\OBeautifulCode.Build.Analyzers.1.1.139\build\OBeautifulCode.Build.Analyzers.targets" Condition="Exists('..\packages\OBeautifulCode.Build.Analyzers.1.1.139\build\OBeautifulCode.Build.Analyzers.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -200,7 +200,7 @@ namespace OBeautifulCode.DataStructure.Excel
                 freezePanesCell.SetFreezePanes(paneKinds);
             }
 
-            if (columnFormatOptions.HasFlag(ColumnFormatOptions.Sortable) || columnFormatOptions.HasFlag(ColumnFormatOptions.Filterable))
+            if (options.RequiresAutoFilter())
             {
                 if (lastHeaderCellToLastNonSummaryDataCellRange == null)
                 {
@@ -521,6 +521,26 @@ namespace OBeautifulCode.DataStructure.Excel
                     throw new NotImplementedException(Invariant($"{typeof(TEnum).ToStringReadable()}.{notImplementedFlag}"));
                 }
             }
+        }
+
+        private static bool RequiresAutoFilter(
+            this ColumnFormatOptions? options)
+        {
+            bool result;
+
+            if (options == null)
+            {
+                result = false;
+            }
+            else
+            {
+                var columnFormatOptions = (ColumnFormatOptions)options;
+
+                result = columnFormatOptions.HasFlag(ColumnFormatOptions.Sortable) ||
+                             columnFormatOptions.HasFlag(ColumnFormatOptions.Filterable);
+            }
+
+            return result;
         }
     }
 }

@@ -16,7 +16,6 @@ namespace OBeautifulCode.DataStructure.Excel
     using OBeautifulCode.CodeAnalysis.Recipes;
     using OBeautifulCode.Excel;
     using OBeautifulCode.Excel.AsposeCells;
-    using OBeautifulCode.Type;
     using OBeautifulCode.Type.Recipes;
     using static System.FormattableString;
 
@@ -98,6 +97,11 @@ namespace OBeautifulCode.DataStructure.Excel
             PassKind passKind,
             Report report)
         {
+            var sectionContext = new InternalSectionProjectionContext
+            {
+                UsesAutoFilter = section.RequiresAutoFilter(),
+            };
+
             // Add upper chrome (e.g. section title)
             var chromeCursor = cursors.ChromeCursor;
 
@@ -136,7 +140,7 @@ namespace OBeautifulCode.DataStructure.Excel
 
             treeTableCursor.Reset();
 
-            treeTableCursor.AddTreeTable(section.TreeTable, context, passKind);
+            treeTableCursor.AddTreeTable(section.TreeTable, context, sectionContext, passKind);
 
             // Add bottom chrome (e.g. copyright and terms of use)
             chromeCursor.MoveDown(treeTableCursor.MaxRowNumber - chromeCursor.RowNumber + 1);
@@ -184,6 +188,7 @@ namespace OBeautifulCode.DataStructure.Excel
             this CellCursor cursor,
             TreeTable treeTable,
             ReportToWorkbookProjectionContext context,
+            InternalSectionProjectionContext sectionContext,
             PassKind passKind)
         {
             if (passKind == PassKind.Formatting)
@@ -228,13 +233,14 @@ namespace OBeautifulCode.DataStructure.Excel
             }
 
             // Add rows
-            cursor.AddTableRows(treeTable.TableRows, context, passKind);
+            cursor.AddTableRows(treeTable.TableRows, context, sectionContext, passKind);
         }
 
         private static void AddTableRows(
             this CellCursor cursor,
             TableRows tableRows,
             ReportToWorkbookProjectionContext context,
+            InternalSectionProjectionContext sectionContext,
             PassKind passKind)
         {
             if (tableRows == null)
@@ -244,7 +250,7 @@ namespace OBeautifulCode.DataStructure.Excel
 
             cursor.AddHeaderRows(tableRows.HeaderRows, context, passKind);
 
-            cursor.AddDataRows(tableRows.DataRows, context, passKind);
+            cursor.AddDataRows(tableRows.DataRows, context, sectionContext, passKind);
 
             cursor.AddFooterRows(tableRows.FooterRows, context, passKind);
         }
@@ -321,6 +327,7 @@ namespace OBeautifulCode.DataStructure.Excel
             this CellCursor cursor,
             DataRows dataRows,
             ReportToWorkbookProjectionContext context,
+            InternalSectionProjectionContext sectionContext,
             PassKind passKind)
         {
             if (dataRows == null)
@@ -346,7 +353,7 @@ namespace OBeautifulCode.DataStructure.Excel
                         cursor.CanvassedRowRange.ApplyDataRowsFormat(dataRows.Format);
                     }
 
-                    cursor.AddRow(dataRows.Rows[x], context, passKind, dataRows.Format);
+                    cursor.AddRow(dataRows.Rows[x], context, sectionContext, passKind, dataRows.Format);
                 }
 
                 cursor.AddMarker(BottomRightDataCellMarker);
@@ -366,6 +373,7 @@ namespace OBeautifulCode.DataStructure.Excel
             this CellCursor cursor,
             DataStructure.Row row,
             ReportToWorkbookProjectionContext context,
+            InternalSectionProjectionContext sectionContext,
             PassKind passKind,
             DataRowsFormat dataRowsFormat)
         {
@@ -391,7 +399,7 @@ namespace OBeautifulCode.DataStructure.Excel
                         cursor.CanvassedRowRange.ApplyDataRowsFormat(dataRowsFormat);
                     }
 
-                    cursor.AddRow(childRow, context, passKind, dataRowsFormat);
+                    cursor.AddRow(childRow, context, sectionContext, passKind, dataRowsFormat);
                 }
             }
 
@@ -402,6 +410,13 @@ namespace OBeautifulCode.DataStructure.Excel
 
             if (row.ExpandedSummaryRows != null)
             {
+                // Auto-filters will include summary rows (e.g. a total row will get sorted along with data rows)
+                // unless there's a blank row separating the last data row and first summary row.
+                if (row.ExpandedSummaryRows.Any() && sectionContext.UsesAutoFilter)
+                {
+                    cursor.MoveDown();
+                }
+
                 foreach (var expandedSummaryRow in row.ExpandedSummaryRows)
                 {
                     cursor.ResetColumn();
@@ -502,6 +517,17 @@ namespace OBeautifulCode.DataStructure.Excel
             {
                 throw notSupportedException;
             }
+        }
+
+        private static bool RequiresAutoFilter(
+            this Section section)
+        {
+            var options = section.TreeTable.TableColumns.ColumnsFormat?.Options;
+
+            var result = options.RequiresAutoFilter() ||
+                         section.TreeTable.TableColumns.Columns.Any(_ => (_.Format?.Options).RequiresAutoFilter());
+
+            return result;
         }
 
 #pragma warning disable SA1201 // Elements should appear in the correct order
