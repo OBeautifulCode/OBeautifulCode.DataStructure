@@ -455,7 +455,7 @@ namespace OBeautifulCode.DataStructure.Test
         public static void GetCell_sectionCellLocator___Should_return_cell___When_cell_is_not_slotted()
         {
             // Arrange
-            var report = A.Dummy<Report>();
+            var report = A.Dummy<Report>().Whose(_ => _.Sections.First().TreeTable.GetAllCells().Any(c => c is INotSlottedCell));
 
             var section = report.Sections.First();
 
