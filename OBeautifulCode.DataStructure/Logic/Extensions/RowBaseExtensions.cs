@@ -42,21 +42,19 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Pads a row, adding one or more <see cref="NullCell" /> as needed, such that the resulting row spans a specified number of columns.
         /// </summary>
-        /// <remarks>
-        /// This approach is used over a single NullCell that spans the missing number of columns
-        /// because spanning cells can be problematic with other features such as sorting.
-        /// </remarks>
         /// <param name="row">The row.</param>
         /// <param name="requiredNumberOfColumnsSpanned">The required number of columns spanned in the resulting row.</param>
+        /// <param name="useSingleCell">OPTIONAL value that determines whether to pad using a single cell (i.e. a cell that spans the missing number of columns) or add one cell per missing column.  DEFAULT is to add one cell per missing columns.</param>
         /// <returns>
         /// The padded row.
         /// </returns>
         [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "More useful to end-user to return concrete type.")]
         public static FlatRow Pad(
             this FlatRow row,
-            int requiredNumberOfColumnsSpanned)
+            int requiredNumberOfColumnsSpanned,
+            bool useSingleCell = false)
         {
-            var result = (FlatRow)row.PadInternal(requiredNumberOfColumnsSpanned);
+            var result = (FlatRow)row.PadInternal(requiredNumberOfColumnsSpanned, useSingleCell);
 
             return result;
         }
@@ -64,28 +62,27 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Pads a row, adding one or more <see cref="NullCell" /> as needed, such that the resulting row spans a specified number of columns.
         /// </summary>
-        /// <remarks>
-        /// This approach is used over a single NullCell that spans the missing number of columns
-        /// because spanning cells can be problematic with other features such as sorting.
-        /// </remarks>
         /// <param name="row">The row.</param>
         /// <param name="requiredNumberOfColumnsSpanned">The required number of columns spanned in the resulting row.</param>
+        /// <param name="useSingleCell">OPTIONAL value that determines whether to pad using a single cell (i.e. a cell that spans the missing number of columns) or add one cell per missing column.  DEFAULT is to add one cell per missing columns.</param>
         /// <returns>
         /// The padded row.
         /// </returns>
         [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "More useful to end-user to return concrete type.")]
         public static Row Pad(
             this Row row,
-            int requiredNumberOfColumnsSpanned)
+            int requiredNumberOfColumnsSpanned,
+            bool useSingleCell = false)
         {
-            var result = (Row)row.PadInternal(requiredNumberOfColumnsSpanned);
+            var result = (Row)row.PadInternal(requiredNumberOfColumnsSpanned, useSingleCell);
 
             return result;
         }
 
         private static RowBase PadInternal(
             this RowBase row,
-            int requiredNumberOfColumnsSpanned)
+            int requiredNumberOfColumnsSpanned,
+            bool useSingleCell)
         {
             if (row == null)
             {
@@ -111,7 +108,14 @@ namespace OBeautifulCode.DataStructure
 
                 var newCells = row.Cells.ToList();
 
-                newCells.AddRange(Enumerable.Range(0, additionalColumnsSpanned).Select(_ => new NullCell()));
+                if (useSingleCell)
+                {
+                    newCells.Add(new NullCell(columnsSpanned: additionalColumnsSpanned));
+                }
+                else
+                {
+                    newCells.AddRange(Enumerable.Range(0, additionalColumnsSpanned).Select(_ => new NullCell()));
+                }
 
                 result = row.DeepCloneWithCells(newCells);
             }

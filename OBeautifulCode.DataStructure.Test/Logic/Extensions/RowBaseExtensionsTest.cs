@@ -186,10 +186,10 @@ namespace OBeautifulCode.DataStructure.Test
                 });
 
             // Act
-            var actual1 = expected1.Pad(1);
-            var actual2a = expected2.Pad(1);
-            var actual2b = expected2.Pad(4);
-            var actual2c = expected2.Pad(5);
+            var actual1 = expected1.Pad(1, useSingleCell: A.Dummy<bool>());
+            var actual2a = expected2.Pad(1, useSingleCell: A.Dummy<bool>());
+            var actual2b = expected2.Pad(4, useSingleCell: A.Dummy<bool>());
+            var actual2c = expected2.Pad(5, useSingleCell: A.Dummy<bool>());
 
             // Assert
             actual1.AsTest().Must().BeSameReferenceAs(expected1);
@@ -199,7 +199,7 @@ namespace OBeautifulCode.DataStructure.Test
         }
 
         [Fact]
-        public static void Pad_FlatRow___Should_return_padded_row___When_row_spans_less_than_required_number_of_columns()
+        public static void Pad_FlatRow___Should_return_padded_row___When_row_spans_less_than_required_number_of_columns_and_useSingleCell_is_false()
         {
             // Arrange
             var row1 = new FlatRow(
@@ -224,10 +224,48 @@ namespace OBeautifulCode.DataStructure.Test
                 new[] { new NullCell(columnsSpanned: 2), new NullCell(columnsSpanned: 3), new NullCell(), new NullCell(), new NullCell(), new NullCell() });
 
             // Act
-            var actual1 = row1.Pad(2);
-            var actual2a = row2.Pad(3);
-            var actual2b = row2.Pad(4);
-            var actual3 = row3.Pad(9);
+            var actual1 = row1.Pad(2, useSingleCell: false);
+            var actual2a = row2.Pad(3, useSingleCell: false);
+            var actual2b = row2.Pad(4, useSingleCell: false);
+            var actual3 = row3.Pad(9, useSingleCell: false);
+
+            // Assert
+            actual1.AsTest().Must().BeEqualTo(expected1);
+            actual2a.AsTest().Must().BeEqualTo(expected2a);
+            actual2b.AsTest().Must().BeEqualTo(expected2b);
+            actual3.AsTest().Must().BeEqualTo(expected3);
+        }
+
+        [Fact]
+        public static void Pad_FlatRow___Should_return_padded_row___When_row_spans_less_than_required_number_of_columns_and_useSingleCell_is_true()
+        {
+            // Arrange
+            var row1 = new FlatRow(
+                new[] { new NullCell() });
+
+            var expected1 = new FlatRow(
+                new[] { new NullCell(), new NullCell(columnsSpanned: 1) });
+
+            var row2 = new FlatRow(
+                new[] { new NullCell(columnsSpanned: 2) });
+
+            var expected2a = new FlatRow(
+                new[] { new NullCell(columnsSpanned: 2), new NullCell(columnsSpanned: 1) });
+
+            var expected2b = new FlatRow(
+                new[] { new NullCell(columnsSpanned: 2), new NullCell(columnsSpanned: 2) });
+
+            var row3 = new FlatRow(
+                new[] { new NullCell(columnsSpanned: 2), new NullCell(columnsSpanned: 3) });
+
+            var expected3 = new FlatRow(
+                new[] { new NullCell(columnsSpanned: 2), new NullCell(columnsSpanned: 3), new NullCell(columnsSpanned: 4) });
+
+            // Act
+            var actual1 = row1.Pad(2, useSingleCell: true);
+            var actual2a = row2.Pad(3, useSingleCell: true);
+            var actual2b = row2.Pad(4, useSingleCell: true);
+            var actual3 = row3.Pad(9, useSingleCell: true);
 
             // Assert
             actual1.AsTest().Must().BeEqualTo(expected1);
@@ -280,10 +318,10 @@ namespace OBeautifulCode.DataStructure.Test
                 });
 
             // Act
-            var actual1 = expected1.Pad(1);
-            var actual2a = expected2.Pad(1);
-            var actual2b = expected2.Pad(4);
-            var actual2c = expected2.Pad(5);
+            var actual1 = expected1.Pad(1, useSingleCell: A.Dummy<bool>());
+            var actual2a = expected2.Pad(1, useSingleCell: A.Dummy<bool>());
+            var actual2b = expected2.Pad(4, useSingleCell: A.Dummy<bool>());
+            var actual2c = expected2.Pad(5, useSingleCell: A.Dummy<bool>());
 
             // Assert
             actual1.AsTest().Must().BeSameReferenceAs(expected1);
@@ -293,7 +331,7 @@ namespace OBeautifulCode.DataStructure.Test
         }
 
         [Fact]
-        public static void Pad_Row___Should_return_padded_row___When_row_spans_less_than_required_number_of_columns()
+        public static void Pad_Row___Should_return_padded_row___When_row_spans_less_than_required_number_of_columns_and_useSingleCell_is_false()
         {
             // Arrange
             var row1 = new Row(
@@ -318,10 +356,48 @@ namespace OBeautifulCode.DataStructure.Test
                 new[] { new NullCell(columnsSpanned: 2), new NullCell(columnsSpanned: 3), new NullCell(), new NullCell(), new NullCell(), new NullCell() });
 
             // Act
-            var actual1 = row1.Pad(2);
-            var actual2a = row2.Pad(3);
-            var actual2b = row2.Pad(4);
-            var actual3 = row3.Pad(9);
+            var actual1 = row1.Pad(2, useSingleCell: false);
+            var actual2a = row2.Pad(3, useSingleCell: false);
+            var actual2b = row2.Pad(4, useSingleCell: false);
+            var actual3 = row3.Pad(9, useSingleCell: false);
+
+            // Assert
+            actual1.AsTest().Must().BeEqualTo(expected1);
+            actual2a.AsTest().Must().BeEqualTo(expected2a);
+            actual2b.AsTest().Must().BeEqualTo(expected2b);
+            actual3.AsTest().Must().BeEqualTo(expected3);
+        }
+
+        [Fact]
+        public static void Pad_Row___Should_return_padded_row___When_row_spans_less_than_required_number_of_columns_and_useSingleCell_is_true()
+        {
+            // Arrange
+            var row1 = new Row(
+                new[] { new NullCell() });
+
+            var expected1 = new Row(
+                new[] { new NullCell(), new NullCell(columnsSpanned: 1) });
+
+            var row2 = new Row(
+                new[] { new NullCell(columnsSpanned: 2) });
+
+            var expected2a = new Row(
+                new[] { new NullCell(columnsSpanned: 2), new NullCell(columnsSpanned: 1) });
+
+            var expected2b = new Row(
+                new[] { new NullCell(columnsSpanned: 2), new NullCell(columnsSpanned: 2) });
+
+            var row3 = new Row(
+                new[] { new NullCell(columnsSpanned: 2), new NullCell(columnsSpanned: 3) });
+
+            var expected3 = new Row(
+                new[] { new NullCell(columnsSpanned: 2), new NullCell(columnsSpanned: 3), new NullCell(columnsSpanned: 4) });
+
+            // Act
+            var actual1 = row1.Pad(2, useSingleCell: true);
+            var actual2a = row2.Pad(3, useSingleCell: true);
+            var actual2b = row2.Pad(4, useSingleCell: true);
+            var actual3 = row3.Pad(9, useSingleCell: true);
 
             // Assert
             actual1.AsTest().Must().BeEqualTo(expected1);
