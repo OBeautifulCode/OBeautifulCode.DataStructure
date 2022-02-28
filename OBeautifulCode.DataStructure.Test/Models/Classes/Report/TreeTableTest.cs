@@ -283,7 +283,9 @@ namespace OBeautifulCode.DataStructure.Test
                         {
                             var tableColumns = new TableColumns(Some.ReadOnlyDummies<Column>(3).ToList());
 
-                            var cell = A.Dummy<CellBase>().DeepCloneWithColumnsSpanned(1).DeepCloneWithId(null);
+                            // If we use a CellBase the result is a slotted cell, then the constructor will throw
+                            // earlier because it will detect two or more cells having the same id (the cells contained in the slots).
+                            var cell = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1).DeepCloneWithId(null);
 
                             var headerRows = new HeaderRows(
                                 new[]
