@@ -205,6 +205,7 @@ namespace OBeautifulCode.DataStructure.Test
                         A.Dummy<int?>(),
                         A.Dummy<Guid>(),
                         A.Dummy<BytesPayloadLinkedResource>(),
+                        A.Dummy<NullLinkedResource>(),
                         A.Dummy<StringPayloadLinkedResource>(),
                     },
                 });

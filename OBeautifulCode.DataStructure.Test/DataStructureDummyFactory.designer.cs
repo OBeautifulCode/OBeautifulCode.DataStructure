@@ -620,6 +620,7 @@ namespace OBeautifulCode.DataStructure.Test
                     var availableTypes = new[]
                     {
                         typeof(BytesPayloadLinkedResource),
+                        typeof(NullLinkedResource),
                         typeof(StringPayloadLinkedResource),
                         typeof(UrlLinkedResource)
                     };
@@ -749,6 +750,9 @@ namespace OBeautifulCode.DataStructure.Test
 
                     return result;
                 });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new NullLinkedResource());
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new NullMultiStatementOp<Version, Version>(

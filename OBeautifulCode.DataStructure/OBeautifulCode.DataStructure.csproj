@@ -407,9 +407,13 @@
     <Compile Include="Models\Classes\Link\LinkedResourceBase.designer.cs">
       <DependentUpon>LinkedResourceBase.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\Classes\Link\Resource\NullLinkedResource.cs" />
     <Compile Include="Models\Classes\Link\Resource\BytesPayloadLinkedResource.cs" />
     <Compile Include="Models\Classes\Link\Resource\BytesPayloadLinkedResource.designer.cs">
       <DependentUpon>BytesPayloadLinkedResource.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Link\Resource\NullLinkedResource.designer.cs">
+      <DependentUpon>NullLinkedResource.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Classes\Link\Resource\StringPayloadLinkedResource.cs" />
     <Compile Include="Models\Classes\Link\Resource\StringPayloadLinkedResource.designer.cs">
