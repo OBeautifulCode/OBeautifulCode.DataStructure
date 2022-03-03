@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="AdditionalReportInfoTest.cs" company="OBeautifulCode">
+// <copyright file="AdditionalSectionInfoTest.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -23,25 +23,23 @@ namespace OBeautifulCode.DataStructure.Test
     using static System.FormattableString;
 
     [SuppressMessage("Microsoft.Maintainability", "CA1505:AvoidUnmaintainableCode", Justification = ObcSuppressBecause.CA1505_AvoidUnmaintainableCode_DisagreeWithAssessment)]
-    public static partial class AdditionalReportInfoTest
+    public static partial class AdditionalSectionInfoTest
     {
         [SuppressMessage("Microsoft.Maintainability", "CA1505:AvoidUnmaintainableCode", Justification = ObcSuppressBecause.CA1505_AvoidUnmaintainableCode_DisagreeWithAssessment)]
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = ObcSuppressBecause.CA1810_InitializeReferenceTypeStaticFieldsInline_FieldsDeclaredInCodeGeneratedPartialTestClass)]
-        static AdditionalReportInfoTest()
+        static AdditionalSectionInfoTest()
         {
             ConstructorArgumentValidationTestScenarios
                 .RemoveAllScenarios()
                 .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<AdditionalReportInfo>
+                    new ConstructorArgumentValidationTestScenario<AdditionalSectionInfo>
                     {
                         Name = "constructor should throw ArgumentException when parameter 'details' contains a null element scenario",
                         ConstructionFunc = () =>
                         {
-                            var referenceObject = A.Dummy<AdditionalReportInfo>();
+                            var referenceObject = A.Dummy<AdditionalSectionInfo>();
 
-                            var result = new AdditionalReportInfo(
-                                referenceObject.Copyright,
-                                referenceObject.TermsOfUse,
+                            var result = new AdditionalSectionInfo(
                                 new IDetails[0].Concat(referenceObject.Details).Concat(new IDetails[] { null }).Concat(referenceObject.Details).ToList());
 
                             return result;

@@ -72,6 +72,7 @@ namespace OBeautifulCode.DataStructure.Test
             AutoFixtureBackedDummyFactory.AddDummyCreator<ILink>(A.Dummy<SimpleLink>);
             AutoFixtureBackedDummyFactory.AddDummyCreator<ILinkedResource>(A.Dummy<LinkedResourceBase>);
             AutoFixtureBackedDummyFactory.AddDummyCreator<IOperationOutputCell<Version>>(A.Dummy<OperationCell<Version>>);
+            AutoFixtureBackedDummyFactory.AddDummyCreator<IDetails>(A.Dummy<DetailsBase>);
 
             // <------------------- OPERATIONS ------------------------>
             RegisterReturningOperation<bool>();

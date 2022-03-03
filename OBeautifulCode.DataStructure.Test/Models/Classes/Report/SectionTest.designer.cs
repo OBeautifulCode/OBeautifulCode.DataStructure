@@ -47,7 +47,7 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new SystemUnderTestExpectedStringRepresentation<Section>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.Section: Id = {systemUnderTest.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, TreeTable = {systemUnderTest.TreeTable?.ToString() ?? "<null>"}, Name = {systemUnderTest.Name?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Title = {systemUnderTest.Title?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Format = {systemUnderTest.Format?.ToString() ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.Section: Id = {systemUnderTest.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, TreeTable = {systemUnderTest.TreeTable?.ToString() ?? "<null>"}, Name = {systemUnderTest.Name?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Title = {systemUnderTest.Title?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, AdditionalInfo = {systemUnderTest.AdditionalInfo?.ToString() ?? "<null>"}, Format = {systemUnderTest.Format?.ToString() ?? "<null>"}."),
                         };
 
                         return result;
@@ -68,6 +68,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.TreeTable,
                                              referenceObject.Name,
                                              referenceObject.Title,
+                                             referenceObject.AdditionalInfo,
                                              referenceObject.Format);
 
                         return result;
@@ -88,6 +89,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.TreeTable,
                                              referenceObject.Name,
                                              referenceObject.Title,
+                                             referenceObject.AdditionalInfo,
                                              referenceObject.Format);
 
                         return result;
@@ -108,6 +110,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              null,
                                              referenceObject.Name,
                                              referenceObject.Title,
+                                             referenceObject.AdditionalInfo,
                                              referenceObject.Format);
 
                         return result;
@@ -128,6 +131,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.TreeTable,
                                              null,
                                              referenceObject.Title,
+                                             referenceObject.AdditionalInfo,
                                              referenceObject.Format);
 
                         return result;
@@ -148,6 +152,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.TreeTable,
                                              Invariant($"  {Environment.NewLine}  "),
                                              referenceObject.Title,
+                                             referenceObject.AdditionalInfo,
                                              referenceObject.Format);
 
                         return result;
@@ -168,6 +173,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.TreeTable,
                                              referenceObject.Name,
                                              null,
+                                             referenceObject.AdditionalInfo,
                                              referenceObject.Format);
 
                         return result;
@@ -188,12 +194,34 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.TreeTable,
                                              referenceObject.Name,
                                              Invariant($"  {Environment.NewLine}  "),
+                                             referenceObject.AdditionalInfo,
                                              referenceObject.Format);
 
                         return result;
                     },
                     ExpectedExceptionType = typeof(ArgumentException),
                     ExpectedExceptionMessageContains = new[] { "title", "white space", },
+                })
+            .AddScenario(() =>
+                new ConstructorArgumentValidationTestScenario<Section>
+                {
+                    Name = "constructor should throw ArgumentNullException when parameter 'additionalInfo' is null scenario",
+                    ConstructionFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<Section>();
+
+                        var result = new Section(
+                                             referenceObject.Id,
+                                             referenceObject.TreeTable,
+                                             referenceObject.Name,
+                                             referenceObject.Title,
+                                             null,
+                                             referenceObject.Format);
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentNullException),
+                    ExpectedExceptionMessageContains = new[] { "additionalInfo", },
                 })
             .AddScenario(() =>
                 new ConstructorArgumentValidationTestScenario<Section>
@@ -208,6 +236,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.TreeTable,
                                              referenceObject.Name,
                                              referenceObject.Title,
+                                             referenceObject.AdditionalInfo,
                                              null);
 
                         return result;
@@ -232,6 +261,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.TreeTable,
                                                       referenceObject.Name,
                                                       referenceObject.Title,
+                                                      referenceObject.AdditionalInfo,
                                                       referenceObject.Format),
                             ExpectedPropertyValue = referenceObject.Id,
                         };
@@ -255,6 +285,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.TreeTable,
                                                       referenceObject.Name,
                                                       referenceObject.Title,
+                                                      referenceObject.AdditionalInfo,
                                                       referenceObject.Format),
                             ExpectedPropertyValue = referenceObject.TreeTable,
                         };
@@ -278,6 +309,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.TreeTable,
                                                       referenceObject.Name,
                                                       referenceObject.Title,
+                                                      referenceObject.AdditionalInfo,
                                                       referenceObject.Format),
                             ExpectedPropertyValue = referenceObject.Name,
                         };
@@ -301,6 +333,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.TreeTable,
                                                       referenceObject.Name,
                                                       referenceObject.Title,
+                                                      referenceObject.AdditionalInfo,
                                                       referenceObject.Format),
                             ExpectedPropertyValue = referenceObject.Title,
                         };
@@ -308,6 +341,30 @@ namespace OBeautifulCode.DataStructure.Test
                         return result;
                     },
                     PropertyName = "Title",
+                })
+            .AddScenario(() =>
+                new ConstructorPropertyAssignmentTestScenario<Section>
+                {
+                    Name = "AdditionalInfo should return same 'additionalInfo' parameter passed to constructor when getting",
+                    SystemUnderTestExpectedPropertyValueFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<Section>();
+
+                        var result = new SystemUnderTestExpectedPropertyValue<Section>
+                        {
+                            SystemUnderTest = new Section(
+                                                      referenceObject.Id,
+                                                      referenceObject.TreeTable,
+                                                      referenceObject.Name,
+                                                      referenceObject.Title,
+                                                      referenceObject.AdditionalInfo,
+                                                      referenceObject.Format),
+                            ExpectedPropertyValue = referenceObject.AdditionalInfo,
+                        };
+
+                        return result;
+                    },
+                    PropertyName = "AdditionalInfo",
                 })
             .AddScenario(() =>
                 new ConstructorPropertyAssignmentTestScenario<Section>
@@ -324,6 +381,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.TreeTable,
                                                       referenceObject.Name,
                                                       referenceObject.Title,
+                                                      referenceObject.AdditionalInfo,
                                                       referenceObject.Format),
                             ExpectedPropertyValue = referenceObject.Format,
                         };
@@ -417,6 +475,26 @@ namespace OBeautifulCode.DataStructure.Test
             .AddScenario(() =>
                 new DeepCloneWithTestScenario<Section>
                 {
+                    Name = "DeepCloneWithAdditionalInfo should deep clone object and replace AdditionalInfo with the provided additionalInfo",
+                    WithPropertyName = "AdditionalInfo",
+                    SystemUnderTestDeepCloneWithValueFunc = () =>
+                    {
+                        var systemUnderTest = A.Dummy<Section>();
+
+                        var referenceObject = A.Dummy<Section>().ThatIs(_ => !systemUnderTest.AdditionalInfo.IsEqualTo(_.AdditionalInfo));
+
+                        var result = new SystemUnderTestDeepCloneWithValue<Section>
+                        {
+                            SystemUnderTest = systemUnderTest,
+                            DeepCloneWithValue = referenceObject.AdditionalInfo,
+                        };
+
+                        return result;
+                    },
+                })
+            .AddScenario(() =>
+                new DeepCloneWithTestScenario<Section>
+                {
                     Name = "DeepCloneWithFormat should deep clone object and replace Format with the provided format",
                     WithPropertyName = "Format",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
@@ -450,6 +528,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.TreeTable,
                                 ReferenceObjectForEquatableTestScenarios.Name,
                                 ReferenceObjectForEquatableTestScenarios.Title,
+                                ReferenceObjectForEquatableTestScenarios.AdditionalInfo,
                                 ReferenceObjectForEquatableTestScenarios.Format),
                     },
                     ObjectsThatAreNotEqualToReferenceObject = new Section[]
@@ -459,30 +538,42 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.TreeTable,
                                 ReferenceObjectForEquatableTestScenarios.Name,
                                 ReferenceObjectForEquatableTestScenarios.Title,
+                                ReferenceObjectForEquatableTestScenarios.AdditionalInfo,
                                 ReferenceObjectForEquatableTestScenarios.Format),
                         new Section(
                                 ReferenceObjectForEquatableTestScenarios.Id,
                                 A.Dummy<Section>().Whose(_ => !_.TreeTable.IsEqualTo(ReferenceObjectForEquatableTestScenarios.TreeTable)).TreeTable,
                                 ReferenceObjectForEquatableTestScenarios.Name,
                                 ReferenceObjectForEquatableTestScenarios.Title,
+                                ReferenceObjectForEquatableTestScenarios.AdditionalInfo,
                                 ReferenceObjectForEquatableTestScenarios.Format),
                         new Section(
                                 ReferenceObjectForEquatableTestScenarios.Id,
                                 ReferenceObjectForEquatableTestScenarios.TreeTable,
                                 A.Dummy<Section>().Whose(_ => !_.Name.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Name)).Name,
                                 ReferenceObjectForEquatableTestScenarios.Title,
+                                ReferenceObjectForEquatableTestScenarios.AdditionalInfo,
                                 ReferenceObjectForEquatableTestScenarios.Format),
                         new Section(
                                 ReferenceObjectForEquatableTestScenarios.Id,
                                 ReferenceObjectForEquatableTestScenarios.TreeTable,
                                 ReferenceObjectForEquatableTestScenarios.Name,
                                 A.Dummy<Section>().Whose(_ => !_.Title.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Title)).Title,
+                                ReferenceObjectForEquatableTestScenarios.AdditionalInfo,
                                 ReferenceObjectForEquatableTestScenarios.Format),
                         new Section(
                                 ReferenceObjectForEquatableTestScenarios.Id,
                                 ReferenceObjectForEquatableTestScenarios.TreeTable,
                                 ReferenceObjectForEquatableTestScenarios.Name,
                                 ReferenceObjectForEquatableTestScenarios.Title,
+                                A.Dummy<Section>().Whose(_ => !_.AdditionalInfo.IsEqualTo(ReferenceObjectForEquatableTestScenarios.AdditionalInfo)).AdditionalInfo,
+                                ReferenceObjectForEquatableTestScenarios.Format),
+                        new Section(
+                                ReferenceObjectForEquatableTestScenarios.Id,
+                                ReferenceObjectForEquatableTestScenarios.TreeTable,
+                                ReferenceObjectForEquatableTestScenarios.Name,
+                                ReferenceObjectForEquatableTestScenarios.Title,
+                                ReferenceObjectForEquatableTestScenarios.AdditionalInfo,
                                 A.Dummy<Section>().Whose(_ => !_.Format.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Format)).Format),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
@@ -777,6 +868,18 @@ namespace OBeautifulCode.DataStructure.Test
                     actual.TreeTable.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.TreeTable);
                 }
 
+                if (systemUnderTest.AdditionalInfo == null)
+                {
+                    actual.AdditionalInfo.AsTest().Must().BeNull();
+                }
+                else if (!actual.AdditionalInfo.GetType().IsValueType)
+                {
+                    // When the declared type is a reference type, we still have to check the runtime type.
+                    // The object could be a boxed value type, which will fail this asseration because
+                    // a deep clone of a value type object is the same object.
+                    actual.AdditionalInfo.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.AdditionalInfo);
+                }
+
                 if (systemUnderTest.Format == null)
                 {
                     actual.Format.AsTest().Must().BeNull();
@@ -806,7 +909,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "Id", "TreeTable", "Name", "Title", "Format" };
+                var propertyNames = new string[] { "Id", "TreeTable", "Name", "Title", "AdditionalInfo", "Format" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 

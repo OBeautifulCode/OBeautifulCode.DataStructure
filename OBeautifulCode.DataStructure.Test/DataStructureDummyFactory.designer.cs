@@ -39,7 +39,12 @@ namespace OBeautifulCode.DataStructure.Test
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new AdditionalReportInfo(
                                  A.Dummy<string>(),
-                                 A.Dummy<string>()));
+                                 A.Dummy<string>(),
+                                 A.Dummy<IReadOnlyList<IDetails>>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new AdditionalSectionInfo(
+                                 A.Dummy<IReadOnlyList<IDetails>>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new AndAlsoOp(
@@ -444,6 +449,24 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<string>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var availableTypes = new[]
+                    {
+                        typeof(GenericDetails),
+                        typeof(NullDetails)
+                    };
+
+                    var randomIndex = ThreadSafeRandom.Next(0, availableTypes.Length);
+
+                    var randomType = availableTypes[randomIndex];
+
+                    var result = (DetailsBase)AD.ummy(randomType);
+
+                    return result;
+                });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new DivideOp(
                                  A.Dummy<IReturningOperation<decimal>>(),
                                  A.Dummy<IReturningOperation<decimal>>()));
@@ -480,6 +503,10 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<IReadOnlyList<OuterBorder>>(),
                                  A.Dummy<IReadOnlyList<InnerBorder>>(),
                                  A.Dummy<RowFormat>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new GenericDetails(
+                                 A.Dummy<string>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new GetAvailabilityOp(
@@ -752,6 +779,9 @@ namespace OBeautifulCode.DataStructure.Test
                 });
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new NullDetails());
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new NullLinkedResource());
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
@@ -953,6 +983,7 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<TreeTable>(),
                                  A.Dummy<string>(),
                                  A.Dummy<string>(),
+                                 A.Dummy<AdditionalSectionInfo>(),
                                  A.Dummy<SectionFormat>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(

@@ -33,111 +33,35 @@ namespace OBeautifulCode.DataStructure.Test
 
     using static global::System.FormattableString;
 
-    public static partial class AdditionalReportInfoTest
+    public static partial class GenericDetailsTest
     {
-        private static readonly StringRepresentationTestScenarios<AdditionalReportInfo> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<AdditionalReportInfo>()
+        private static readonly StringRepresentationTestScenarios<GenericDetails> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<GenericDetails>()
             .AddScenario(() =>
-                new StringRepresentationTestScenario<AdditionalReportInfo>
+                new StringRepresentationTestScenario<GenericDetails>
                 {
                     Name = "Default Code Generated Scenario",
                     SystemUnderTestExpectedStringRepresentationFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<AdditionalReportInfo>();
+                        var systemUnderTest = A.Dummy<GenericDetails>();
 
-                        var result = new SystemUnderTestExpectedStringRepresentation<AdditionalReportInfo>
+                        var result = new SystemUnderTestExpectedStringRepresentation<GenericDetails>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.AdditionalReportInfo: Copyright = {systemUnderTest.Copyright?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, TermsOfUse = {systemUnderTest.TermsOfUse?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Details = {systemUnderTest.Details?.ToString() ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.GenericDetails: Details = {systemUnderTest.Details?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}."),
                         };
 
                         return result;
                     },
                 });
 
-        private static readonly ConstructorArgumentValidationTestScenarios<AdditionalReportInfo> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<AdditionalReportInfo>()
+        private static readonly ConstructorArgumentValidationTestScenarios<GenericDetails> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<GenericDetails>()
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<AdditionalReportInfo>
-                {
-                    Name = "constructor should throw ArgumentNullException when parameter 'copyright' is null scenario",
-                    ConstructionFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<AdditionalReportInfo>();
-
-                        var result = new AdditionalReportInfo(
-                                             null,
-                                             referenceObject.TermsOfUse,
-                                             referenceObject.Details);
-
-                        return result;
-                    },
-                    ExpectedExceptionType = typeof(ArgumentNullException),
-                    ExpectedExceptionMessageContains = new[] { "copyright", },
-                })
-            .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<AdditionalReportInfo>
-                {
-                    Name = "constructor should throw ArgumentException when parameter 'copyright' is white space scenario",
-                    ConstructionFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<AdditionalReportInfo>();
-
-                        var result = new AdditionalReportInfo(
-                                             Invariant($"  {Environment.NewLine}  "),
-                                             referenceObject.TermsOfUse,
-                                             referenceObject.Details);
-
-                        return result;
-                    },
-                    ExpectedExceptionType = typeof(ArgumentException),
-                    ExpectedExceptionMessageContains = new[] { "copyright", "white space", },
-                })
-            .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<AdditionalReportInfo>
-                {
-                    Name = "constructor should throw ArgumentNullException when parameter 'termsOfUse' is null scenario",
-                    ConstructionFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<AdditionalReportInfo>();
-
-                        var result = new AdditionalReportInfo(
-                                             referenceObject.Copyright,
-                                             null,
-                                             referenceObject.Details);
-
-                        return result;
-                    },
-                    ExpectedExceptionType = typeof(ArgumentNullException),
-                    ExpectedExceptionMessageContains = new[] { "termsOfUse", },
-                })
-            .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<AdditionalReportInfo>
-                {
-                    Name = "constructor should throw ArgumentException when parameter 'termsOfUse' is white space scenario",
-                    ConstructionFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<AdditionalReportInfo>();
-
-                        var result = new AdditionalReportInfo(
-                                             referenceObject.Copyright,
-                                             Invariant($"  {Environment.NewLine}  "),
-                                             referenceObject.Details);
-
-                        return result;
-                    },
-                    ExpectedExceptionType = typeof(ArgumentException),
-                    ExpectedExceptionMessageContains = new[] { "termsOfUse", "white space", },
-                })
-            .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<AdditionalReportInfo>
+                new ConstructorArgumentValidationTestScenario<GenericDetails>
                 {
                     Name = "constructor should throw ArgumentNullException when parameter 'details' is null scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<AdditionalReportInfo>();
-
-                        var result = new AdditionalReportInfo(
-                                             referenceObject.Copyright,
-                                             referenceObject.TermsOfUse,
+                        var result = new GenericDetails(
                                              null);
 
                         return result;
@@ -146,98 +70,32 @@ namespace OBeautifulCode.DataStructure.Test
                     ExpectedExceptionMessageContains = new[] { "details", },
                 })
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<AdditionalReportInfo>
+                new ConstructorArgumentValidationTestScenario<GenericDetails>
                 {
-                    Name = "constructor should throw ArgumentException when parameter 'details' is an empty enumerable scenario",
+                    Name = "constructor should throw ArgumentException when parameter 'details' is white space scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<AdditionalReportInfo>();
-
-                        var result = new AdditionalReportInfo(
-                                             referenceObject.Copyright,
-                                             referenceObject.TermsOfUse,
-                                             new List<IDetails>());
+                        var result = new GenericDetails(
+                                             Invariant($"  {Environment.NewLine}  "));
 
                         return result;
                     },
                     ExpectedExceptionType = typeof(ArgumentException),
-                    ExpectedExceptionMessageContains = new[] { "details", "is an empty enumerable", },
-                })
-            .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<AdditionalReportInfo>
-                {
-                    Name = "constructor should throw ArgumentException when parameter 'details' contains a null element scenario",
-                    ConstructionFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<AdditionalReportInfo>();
-
-                        var result = new AdditionalReportInfo(
-                                             referenceObject.Copyright,
-                                             referenceObject.TermsOfUse,
-                                             new IDetails[0].Concat(referenceObject.Details).Concat(new IDetails[] { null }).Concat(referenceObject.Details).ToList());
-
-                        return result;
-                    },
-                    ExpectedExceptionType = typeof(ArgumentException),
-                    ExpectedExceptionMessageContains = new[] { "details", "contains at least one null element", },
+                    ExpectedExceptionMessageContains = new[] { "details", "white space", },
                 });
 
-        private static readonly ConstructorPropertyAssignmentTestScenarios<AdditionalReportInfo> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<AdditionalReportInfo>()
+        private static readonly ConstructorPropertyAssignmentTestScenarios<GenericDetails> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<GenericDetails>()
             .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<AdditionalReportInfo>
-                {
-                    Name = "Copyright should return same 'copyright' parameter passed to constructor when getting",
-                    SystemUnderTestExpectedPropertyValueFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<AdditionalReportInfo>();
-
-                        var result = new SystemUnderTestExpectedPropertyValue<AdditionalReportInfo>
-                        {
-                            SystemUnderTest = new AdditionalReportInfo(
-                                                      referenceObject.Copyright,
-                                                      referenceObject.TermsOfUse,
-                                                      referenceObject.Details),
-                            ExpectedPropertyValue = referenceObject.Copyright,
-                        };
-
-                        return result;
-                    },
-                    PropertyName = "Copyright",
-                })
-            .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<AdditionalReportInfo>
-                {
-                    Name = "TermsOfUse should return same 'termsOfUse' parameter passed to constructor when getting",
-                    SystemUnderTestExpectedPropertyValueFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<AdditionalReportInfo>();
-
-                        var result = new SystemUnderTestExpectedPropertyValue<AdditionalReportInfo>
-                        {
-                            SystemUnderTest = new AdditionalReportInfo(
-                                                      referenceObject.Copyright,
-                                                      referenceObject.TermsOfUse,
-                                                      referenceObject.Details),
-                            ExpectedPropertyValue = referenceObject.TermsOfUse,
-                        };
-
-                        return result;
-                    },
-                    PropertyName = "TermsOfUse",
-                })
-            .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<AdditionalReportInfo>
+                new ConstructorPropertyAssignmentTestScenario<GenericDetails>
                 {
                     Name = "Details should return same 'details' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
-                        var referenceObject = A.Dummy<AdditionalReportInfo>();
+                        var referenceObject = A.Dummy<GenericDetails>();
 
-                        var result = new SystemUnderTestExpectedPropertyValue<AdditionalReportInfo>
+                        var result = new SystemUnderTestExpectedPropertyValue<GenericDetails>
                         {
-                            SystemUnderTest = new AdditionalReportInfo(
-                                                      referenceObject.Copyright,
-                                                      referenceObject.TermsOfUse,
+                            SystemUnderTest = new GenericDetails(
                                                       referenceObject.Details),
                             ExpectedPropertyValue = referenceObject.Details,
                         };
@@ -247,59 +105,19 @@ namespace OBeautifulCode.DataStructure.Test
                     PropertyName = "Details",
                 });
 
-        private static readonly DeepCloneWithTestScenarios<AdditionalReportInfo> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<AdditionalReportInfo>()
+        private static readonly DeepCloneWithTestScenarios<GenericDetails> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<GenericDetails>()
             .AddScenario(() =>
-                new DeepCloneWithTestScenario<AdditionalReportInfo>
-                {
-                    Name = "DeepCloneWithCopyright should deep clone object and replace Copyright with the provided copyright",
-                    WithPropertyName = "Copyright",
-                    SystemUnderTestDeepCloneWithValueFunc = () =>
-                    {
-                        var systemUnderTest = A.Dummy<AdditionalReportInfo>();
-
-                        var referenceObject = A.Dummy<AdditionalReportInfo>().ThatIs(_ => !systemUnderTest.Copyright.IsEqualTo(_.Copyright));
-
-                        var result = new SystemUnderTestDeepCloneWithValue<AdditionalReportInfo>
-                        {
-                            SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.Copyright,
-                        };
-
-                        return result;
-                    },
-                })
-            .AddScenario(() =>
-                new DeepCloneWithTestScenario<AdditionalReportInfo>
-                {
-                    Name = "DeepCloneWithTermsOfUse should deep clone object and replace TermsOfUse with the provided termsOfUse",
-                    WithPropertyName = "TermsOfUse",
-                    SystemUnderTestDeepCloneWithValueFunc = () =>
-                    {
-                        var systemUnderTest = A.Dummy<AdditionalReportInfo>();
-
-                        var referenceObject = A.Dummy<AdditionalReportInfo>().ThatIs(_ => !systemUnderTest.TermsOfUse.IsEqualTo(_.TermsOfUse));
-
-                        var result = new SystemUnderTestDeepCloneWithValue<AdditionalReportInfo>
-                        {
-                            SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.TermsOfUse,
-                        };
-
-                        return result;
-                    },
-                })
-            .AddScenario(() =>
-                new DeepCloneWithTestScenario<AdditionalReportInfo>
+                new DeepCloneWithTestScenario<GenericDetails>
                 {
                     Name = "DeepCloneWithDetails should deep clone object and replace Details with the provided details",
                     WithPropertyName = "Details",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<AdditionalReportInfo>();
+                        var systemUnderTest = A.Dummy<GenericDetails>();
 
-                        var referenceObject = A.Dummy<AdditionalReportInfo>().ThatIs(_ => !systemUnderTest.Details.IsEqualTo(_.Details));
+                        var referenceObject = A.Dummy<GenericDetails>().ThatIs(_ => !systemUnderTest.Details.IsEqualTo(_.Details));
 
-                        var result = new SystemUnderTestDeepCloneWithValue<AdditionalReportInfo>
+                        var result = new SystemUnderTestDeepCloneWithValue<GenericDetails>
                         {
                             SystemUnderTest = systemUnderTest,
                             DeepCloneWithValue = referenceObject.Details,
@@ -309,35 +127,23 @@ namespace OBeautifulCode.DataStructure.Test
                     },
                 });
 
-        private static readonly AdditionalReportInfo ReferenceObjectForEquatableTestScenarios = A.Dummy<AdditionalReportInfo>();
+        private static readonly GenericDetails ReferenceObjectForEquatableTestScenarios = A.Dummy<GenericDetails>();
 
-        private static readonly EquatableTestScenarios<AdditionalReportInfo> EquatableTestScenarios = new EquatableTestScenarios<AdditionalReportInfo>()
+        private static readonly EquatableTestScenarios<GenericDetails> EquatableTestScenarios = new EquatableTestScenarios<GenericDetails>()
             .AddScenario(() =>
-                new EquatableTestScenario<AdditionalReportInfo>
+                new EquatableTestScenario<GenericDetails>
                 {
                     Name = "Default Code Generated Scenario",
                     ReferenceObject = ReferenceObjectForEquatableTestScenarios,
-                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new AdditionalReportInfo[]
+                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new GenericDetails[]
                     {
-                        new AdditionalReportInfo(
-                                ReferenceObjectForEquatableTestScenarios.Copyright,
-                                ReferenceObjectForEquatableTestScenarios.TermsOfUse,
+                        new GenericDetails(
                                 ReferenceObjectForEquatableTestScenarios.Details),
                     },
-                    ObjectsThatAreNotEqualToReferenceObject = new AdditionalReportInfo[]
+                    ObjectsThatAreNotEqualToReferenceObject = new GenericDetails[]
                     {
-                        new AdditionalReportInfo(
-                                A.Dummy<AdditionalReportInfo>().Whose(_ => !_.Copyright.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Copyright)).Copyright,
-                                ReferenceObjectForEquatableTestScenarios.TermsOfUse,
-                                ReferenceObjectForEquatableTestScenarios.Details),
-                        new AdditionalReportInfo(
-                                ReferenceObjectForEquatableTestScenarios.Copyright,
-                                A.Dummy<AdditionalReportInfo>().Whose(_ => !_.TermsOfUse.IsEqualTo(ReferenceObjectForEquatableTestScenarios.TermsOfUse)).TermsOfUse,
-                                ReferenceObjectForEquatableTestScenarios.Details),
-                        new AdditionalReportInfo(
-                                ReferenceObjectForEquatableTestScenarios.Copyright,
-                                ReferenceObjectForEquatableTestScenarios.TermsOfUse,
-                                A.Dummy<AdditionalReportInfo>().Whose(_ => !_.Details.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Details)).Details),
+                        new GenericDetails(
+                                A.Dummy<GenericDetails>().Whose(_ => !_.Details.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Details)).Details),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
                     {
@@ -346,6 +152,7 @@ namespace OBeautifulCode.DataStructure.Test
                         A.Dummy<int>(),
                         A.Dummy<int?>(),
                         A.Dummy<Guid>(),
+                        A.Dummy<NullDetails>(),
                     },
                 });
 
@@ -367,12 +174,12 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void AdditionalReportInfo___Should_implement_IModel_of_AdditionalReportInfo___When_reflecting()
+            public static void GenericDetails___Should_implement_IModel_of_GenericDetails___When_reflecting()
             {
                 // Arrange
-                var type = typeof(AdditionalReportInfo);
+                var type = typeof(GenericDetails);
 
-                var expectedModelMethods = typeof(IModel<AdditionalReportInfo>).GetInterfaceDeclaredAndImplementedMethods();
+                var expectedModelMethods = typeof(IModel<GenericDetails>).GetInterfaceDeclaredAndImplementedMethods();
 
                 var expectedModelMethodHashes = expectedModelMethods.Select(_ => _.GetSignatureHash());
 
@@ -382,7 +189,7 @@ namespace OBeautifulCode.DataStructure.Test
                 var actualModelMethodHashes = actualModelMethods.Select(_ => _.GetSignatureHash());
 
                 // Assert
-                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<AdditionalReportInfo>));
+                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<GenericDetails>));
                 expectedModelMethodHashes.Except(actualModelMethodHashes).AsTest().Must().BeEmptyEnumerable();
             }
 
@@ -400,10 +207,10 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void AdditionalReportInfo___Should_be_attributed_with_Serializable____When_reflecting()
+            public static void GenericDetails___Should_be_attributed_with_Serializable____When_reflecting()
             {
                 // Arrange
-                var type = typeof(AdditionalReportInfo);
+                var type = typeof(GenericDetails);
 
                 // Act
                 var actualAttributes = type.GetCustomAttributes(typeof(SerializableAttribute), false);
@@ -583,10 +390,10 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Clone___Should_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<AdditionalReportInfo>();
+                var systemUnderTest = A.Dummy<GenericDetails>();
 
                 // Act
-                var actual = (AdditionalReportInfo)systemUnderTest.Clone();
+                var actual = (GenericDetails)systemUnderTest.Clone();
 
                 // Assert
                 actual.AsTest().Must().BeEqualTo(systemUnderTest);
@@ -610,7 +417,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void DeepClone___Should_deep_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<AdditionalReportInfo>();
+                var systemUnderTest = A.Dummy<GenericDetails>();
 
                 // Act
                 var actual = systemUnderTest.DeepClone();
@@ -618,18 +425,6 @@ namespace OBeautifulCode.DataStructure.Test
                 // Assert
                 actual.AsTest().Must().BeEqualTo(systemUnderTest);
                 actual.AsTest().Must().NotBeSameReferenceAs(systemUnderTest);
-
-                if (systemUnderTest.Details == null)
-                {
-                    actual.Details.AsTest().Must().BeNull();
-                }
-                else if (!actual.Details.GetType().IsValueType)
-                {
-                    // When the declared type is a reference type, we still have to check the runtime type.
-                    // The object could be a boxed value type, which will fail this asseration because
-                    // a deep clone of a value type object is the same object.
-                    actual.Details.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.Details);
-                }
             }
 
             [Fact]
@@ -648,7 +443,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "Copyright", "TermsOfUse", "Details" };
+                var propertyNames = new string[] { "Details" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 
@@ -661,12 +456,12 @@ namespace OBeautifulCode.DataStructure.Test
                     }
 
                     // Act
-                    var actual = (AdditionalReportInfo)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
+                    var actual = (GenericDetails)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
 
                     // Assert
                     foreach(var propertyName in propertyNames)
                     {
-                        var propertyInfo = typeof(AdditionalReportInfo).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
+                        var propertyInfo = typeof(GenericDetails).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
 
                         var actualPropertyValue = propertyInfo.GetValue(actual);
 
@@ -728,7 +523,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<AdditionalReportInfo>();
+                var expected = A.Dummy<GenericDetails>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -757,7 +552,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<AdditionalReportInfo>();
+                var expected = A.Dummy<GenericDetails>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -786,7 +581,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<AdditionalReportInfo>();
+                var expected = A.Dummy<GenericDetails>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -815,7 +610,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<AdditionalReportInfo>();
+                var expected = A.Dummy<GenericDetails>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -849,8 +644,8 @@ namespace OBeautifulCode.DataStructure.Test
             public static void EqualsOperator___Should_return_true___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                AdditionalReportInfo systemUnderTest1 = null;
-                AdditionalReportInfo systemUnderTest2 = null;
+                GenericDetails systemUnderTest1 = null;
+                GenericDetails systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 == systemUnderTest2;
@@ -880,7 +675,7 @@ namespace OBeautifulCode.DataStructure.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    AdditionalReportInfo systemUnderTest = null;
+                    GenericDetails systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest == scenario.ReferenceObject;
@@ -1029,8 +824,8 @@ namespace OBeautifulCode.DataStructure.Test
             public static void NotEqualsOperator___Should_return_false___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                AdditionalReportInfo systemUnderTest1 = null;
-                AdditionalReportInfo systemUnderTest2 = null;
+                GenericDetails systemUnderTest1 = null;
+                GenericDetails systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 != systemUnderTest2;
@@ -1060,7 +855,7 @@ namespace OBeautifulCode.DataStructure.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    AdditionalReportInfo systemUnderTest = null;
+                    GenericDetails systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest != scenario.ReferenceObject;
@@ -1206,14 +1001,157 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_AdditionalReportInfo___Should_return_false___When_parameter_other_is_null()
+            public static void Equals_with_DetailsBase___Should_return_false___When_parameter_other_is_null()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    AdditionalReportInfo systemUnderTest = null;
+                    DetailsBase systemUnderTest = null;
+
+                    // Act
+                    var actual = scenario.ReferenceObject.Equals((DetailsBase)systemUnderTest);
+
+                    // Assert
+                    actual.AsTest().Must().BeFalse(because: scenario.Id);
+                }
+            }
+
+            [Fact]
+            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+            public static void Equals_with_DetailsBase___Should_return_true___When_parameter_other_is_same_object()
+            {
+                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
+
+                foreach (var scenario in scenarios)
+                {
+                    // Arrange, Act
+                    var actual = scenario.ReferenceObject.Equals((DetailsBase)scenario.ReferenceObject);
+
+                    // Assert
+                    actual.AsTest().Must().BeTrue(because: scenario.Id);
+                }
+            }
+
+            [Fact]
+            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+            public static void Equals_with_DetailsBase___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
+            {
+                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
+
+                foreach (var scenario in scenarios)
+                {
+                    // Arrange, Act
+                    var actuals = scenario.ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((DetailsBase)_)).ToList();
+
+                    // Assert
+                    actuals.AsTest().Must().Each().BeFalse(because: scenario.Id);
+                }
+            }
+
+            [Fact]
+            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+            public static void Equals_with_DetailsBase___Should_return_false___When_objects_being_compared_have_different_property_values()
+            {
+                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
+
+                foreach (var scenario in scenarios)
+                {
+                    // Arrange, Act
+                    var actuals = scenario.ObjectsThatAreNotEqualToReferenceObject.Select(_ => scenario.ReferenceObject.Equals((DetailsBase)_)).ToList();
+
+                    // Assert
+                    actuals.AsTest().Must().Each().BeFalse(because: scenario.Id);
+                }
+            }
+
+            [Fact]
+            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+            public static void Equals_with_DetailsBase___Should_return_true___When_objects_being_compared_have_same_property_values()
+            {
+                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
+
+                foreach (var scenario in scenarios)
+                {
+                    // Arrange, Act
+                    var actuals = scenario.ObjectsThatAreEqualToButNotTheSameAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((DetailsBase)_)).ToList();
+
+                    // Assert
+                    actuals.AsTest().Must().Each().BeTrue(because: scenario.Id);
+                }
+            }
+
+            [Fact]
+            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+            public static void Equals_with_GenericDetails___Should_return_false___When_parameter_other_is_null()
+            {
+                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
+
+                foreach (var scenario in scenarios)
+                {
+                    // Arrange
+                    GenericDetails systemUnderTest = null;
 
                     // Act
                     var actual = scenario.ReferenceObject.Equals(systemUnderTest);
@@ -1237,7 +1175,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_AdditionalReportInfo___Should_return_true___When_parameter_other_is_same_object()
+            public static void Equals_with_GenericDetails___Should_return_true___When_parameter_other_is_same_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1265,7 +1203,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_AdditionalReportInfo___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
+            public static void Equals_with_GenericDetails___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1293,7 +1231,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_AdditionalReportInfo___Should_return_false___When_objects_being_compared_have_different_property_values()
+            public static void Equals_with_GenericDetails___Should_return_false___When_objects_being_compared_have_different_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1321,7 +1259,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_AdditionalReportInfo___Should_return_true___When_objects_being_compared_have_same_property_values()
+            public static void Equals_with_GenericDetails___Should_return_true___When_objects_being_compared_have_same_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 

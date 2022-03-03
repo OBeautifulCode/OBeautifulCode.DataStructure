@@ -170,6 +170,7 @@
     <Compile Include="Interfaces\Classification\Cell\Null\INullCell.cs" />
     <Compile Include="Interfaces\Classification\Cell\Slotted\ISlottedCell.cs" />
     <Compile Include="Interfaces\Classification\Format\ICellValueFormat{TValue}.cs" />
+    <Compile Include="Interfaces\Classification\Details\IDetails.cs" />
     <Compile Include="Interfaces\Property\IHaveMessage.cs" />
     <Compile Include="Interfaces\Property\IHaveCellValueFormat{TValue}.cs" />
     <Compile Include="Interfaces\Property\IHaveStandardCellFeatures{TValue}.cs" />
@@ -280,6 +281,18 @@
     </Compile>
     <Compile Include="Models\Classes\Column\TableColumns.designer.cs">
       <DependentUpon>TableColumns.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Details\DetailsBase.designer.cs">
+      <DependentUpon>DetailsBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Details\GenericDetails.cs" />
+    <Compile Include="Models\Classes\Details\GenericDetails.designer.cs">
+      <DependentUpon>GenericDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Details\NullDetails.cs" />
+    <Compile Include="Models\Classes\Details\DetailsBase.cs" />
+    <Compile Include="Models\Classes\Details\NullDetails.designer.cs">
+      <DependentUpon>NullDetails.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Classes\Format\Border\BorderBase.designer.cs">
       <DependentUpon>BorderBase.cs</DependentUpon>
@@ -428,10 +441,14 @@
       <DependentUpon>SimpleLink.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Classes\CellLocator\ReportCellLocator.cs" />
+    <Compile Include="Models\Classes\Report\AdditionalSectionInfo.cs" />
     <Compile Include="Models\Classes\Report\AdditionalReportInfo.designer.cs">
       <DependentUpon>AdditionalReportInfo.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Classes\Report\AdditionalReportInfo.cs" />
+    <Compile Include="Models\Classes\Report\AdditionalSectionInfo.designer.cs">
+      <DependentUpon>AdditionalSectionInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Classes\Report\Report.designer.cs">
       <DependentUpon>Report.cs</DependentUpon>
     </Compile>

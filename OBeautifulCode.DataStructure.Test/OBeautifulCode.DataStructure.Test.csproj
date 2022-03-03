@@ -205,6 +205,18 @@
     <Compile Include=".recipes\OBeautifulCode.Type\TypeDummyFactory.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeDummyFactory.designer.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
+    <Compile Include="Models\Classes\Details\GenericDetailsTest.cs" />
+    <Compile Include="Models\Classes\Details\GenericDetailsTest.designer.cs">
+      <DependentUpon>GenericDetailsTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Report\AdditionalSectionInfoTest.cs" />
+    <Compile Include="Models\Classes\Report\AdditionalSectionInfoTest.designer.cs">
+      <DependentUpon>AdditionalSectionInfoTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Details\DetailsBaseTest.cs" />
+    <Compile Include="Models\Classes\Details\DetailsBaseTest.designer.cs">
+      <DependentUpon>DetailsBaseTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Classes\Report\AdditionalReportInfoTest.cs" />
     <Compile Include="Models\Classes\Report\AdditionalReportInfoTest.designer.cs">
       <DependentUpon>AdditionalReportInfoTest.cs</DependentUpon>
@@ -241,6 +253,10 @@
     <Compile Include="Models\Classes\Link\Resource\NullLinkedResourceTest.cs" />
     <Compile Include="Models\Classes\Link\Resource\NullLinkedResourceTest.designer.cs">
       <DependentUpon>NullLinkedResourceTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Details\NullDetailsTest.cs" />
+    <Compile Include="Models\Classes\Details\NullDetailsTest.designer.cs">
+      <DependentUpon>NullDetailsTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Operations\AvailabilityCheckResult\CheckAvailabilityOpTest.cs" />
     <Compile Include="Operations\AvailabilityCheckResult\CheckAvailabilityOpTest.designer.cs">

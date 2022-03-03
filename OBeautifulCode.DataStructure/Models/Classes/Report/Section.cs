@@ -7,9 +7,7 @@
 namespace OBeautifulCode.DataStructure
 {
     using System;
-
     using OBeautifulCode.Type;
-
     using static System.FormattableString;
 
     /// <summary>
@@ -24,12 +22,14 @@ namespace OBeautifulCode.DataStructure
         /// <param name="treeTable">The tree table.</param>
         /// <param name="name">OPTIONAL name of the section.  DEFAULT is a section with no name.</param>
         /// <param name="title">OPTIONAL title of the section.  DEFAULT is a section with no title.</param>
+        /// <param name="additionalInfo">OPTIONAL additional information related to the section.  DEFAULT no additional information.</param>
         /// <param name="format">OPTIONAL format to apply to the section.  DEFAULT is to leave the format unchanged.</param>
         public Section(
             string id,
             TreeTable treeTable,
             string name = null,
             string title = null,
+            AdditionalSectionInfo additionalInfo = null,
             SectionFormat format = null)
         {
             if (id == null)
@@ -51,6 +51,7 @@ namespace OBeautifulCode.DataStructure
             this.TreeTable = treeTable;
             this.Name = name;
             this.Title = title;
+            this.AdditionalInfo = additionalInfo;
             this.Format = format;
         }
 
@@ -73,6 +74,11 @@ namespace OBeautifulCode.DataStructure
         /// Gets the title of the section.
         /// </summary>
         public string Title { get; private set; }
+
+        /// <summary>
+        /// Gets additional information related to the section.
+        /// </summary>
+        public AdditionalSectionInfo AdditionalInfo { get; private set; }
 
         /// <summary>
         /// Gets the format to apply to the section.
