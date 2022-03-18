@@ -379,6 +379,7 @@ namespace OBeautifulCode.DataStructure.Excel
             {
                 nameof(CellFormat.BackgroundColor),
                 nameof(CellFormat.FontFormat),
+                nameof(CellFormat.HorizontalAlignment),
             };
 
             format.ThrowOnNotImplementedProperty(implementedProperties);
@@ -386,6 +387,28 @@ namespace OBeautifulCode.DataStructure.Excel
             if (format.BackgroundColor != null)
             {
                 range.SetBackgroundColor(format.BackgroundColor);
+            }
+
+            if (format.HorizontalAlignment != null)
+            {
+                HorizontalAlignment horizontalAlignment;
+
+                switch ((DataStructure.HorizontalAlignment)format.HorizontalAlignment)
+                {
+                    case DataStructure.HorizontalAlignment.Center:
+                        horizontalAlignment = HorizontalAlignment.Center;
+                        break;
+                    case DataStructure.HorizontalAlignment.Left:
+                        horizontalAlignment = HorizontalAlignment.Left;
+                        break;
+                    case DataStructure.HorizontalAlignment.Right:
+                        horizontalAlignment = HorizontalAlignment.Right;
+                        break;
+                    default:
+                        throw new NotImplementedException(Invariant($"This {nameof(DataStructure.HorizontalAlignment)} is not yet implemented: {format.HorizontalAlignment}."));
+                }
+
+                range.SetHorizontalAlignment(horizontalAlignment);
             }
 
             range.ApplyFontFormat(format.FontFormat);
