@@ -73,7 +73,9 @@ namespace OBeautifulCode.DataStructure.Excel
             // Add sections
             foreach (var section in report.Sections)
             {
-                var worksheet = result.Worksheets.Add(section.Name);
+                var worksheetName = section.GetWorksheetName(context);
+
+                var worksheet = result.Worksheets.Add(worksheetName);
 
                 var cursors = new Cursors
                 {
@@ -526,6 +528,24 @@ namespace OBeautifulCode.DataStructure.Excel
 
             var result = options.RequiresAutoFilter() ||
                          section.TreeTable.TableColumns.Columns.Any(_ => (_.Format?.Options).RequiresAutoFilter());
+
+            return result;
+        }
+
+        private static string GetWorksheetName(
+            this Section section,
+            ReportToWorkbookProjectionContext context)
+        {
+            var worksheetName = section.Name;
+
+            if ((context.SectionIdToWorksheetNameOverrideMap != null) && context.SectionIdToWorksheetNameOverrideMap.ContainsKey(section.Id))
+            {
+                worksheetName = context.SectionIdToWorksheetNameOverrideMap[section.Id];
+            }
+
+            var result = worksheetName.Length > 31
+                ? worksheetName.Substring(0, 31)
+                : worksheetName;
 
             return result;
         }
