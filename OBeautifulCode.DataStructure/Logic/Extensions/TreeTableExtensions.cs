@@ -8,6 +8,7 @@ namespace OBeautifulCode.DataStructure
 {
     using System;
     using System.Collections.Generic;
+    using OBeautifulCode.String.Recipes;
 
     /// <summary>
     /// Extension methods on <see cref="TreeTable"/>.
@@ -54,6 +55,28 @@ namespace OBeautifulCode.DataStructure
             var result = treeTable.TableRows == null
                 ? new List<ICell>()
                 : treeTable.TableRows.GetAllCells();
+
+            return result;
+        }
+
+        /// <summary>
+        /// Converts a <see cref="TreeTable"/> to a single-<see cref="Section"/> <see cref="Report"/>.
+        /// </summary>
+        /// <param name="treeTable">The tree table.</param>
+        /// <returns>
+        /// A single-<see cref="Section"/> <see cref="Report"/> containing the specified <paramref name="treeTable"/>.
+        /// </returns>
+        public static Report ToReport(
+            this TreeTable treeTable)
+        {
+            if (treeTable == null)
+            {
+                throw new ArgumentNullException(nameof(treeTable));
+            }
+
+            var section = new Section(Guid.NewGuid().ToStringInvariantPreferred(), treeTable);
+
+            var result = new Report(Guid.NewGuid().ToStringInvariantPreferred(), new[] { section });
 
             return result;
         }
