@@ -10,6 +10,7 @@ namespace OBeautifulCode.DataStructure.Excel.Test
     using System.Text;
     using Aspose.Cells;
     using OBeautifulCode.DataStructure.Serialization.Json;
+    using OBeautifulCode.Excel.AsposeCells;
     using OBeautifulCode.Serialization.Json;
     using OBeautifulCode.Type;
     using Xunit;
@@ -28,10 +29,7 @@ namespace OBeautifulCode.DataStructure.Excel.Test
 
             var cultureKind = CultureKind.EnglishUnitedStates;
 
-            using (var licenseStream = new MemoryStream(Encoding.ASCII.GetBytes(asposeLicense)))
-            {
-                new License().SetLicense(licenseStream);
-            }
+            new AsposeCellsLicense(asposeLicense).Register();
 
             var serializer = new ObcJsonSerializer<DependencyOnlyJsonSerializationConfiguration<DataStructureJsonSerializationConfiguration>>();
 

@@ -6,7 +6,12 @@
 
 namespace OBeautifulCode.DataStructure.Database.Test
 {
+    using System.Collections.Generic;
+    using System.Drawing;
+    using System.Linq;
     using OBeautifulCode.Database.Recipes;
+    using OBeautifulCode.DataStructure.Excel;
+    using OBeautifulCode.Excel.AsposeCells;
     using Xunit;
 
     public static partial class DataReaderConverterTest
@@ -21,16 +26,61 @@ namespace OBeautifulCode.DataStructure.Database.Test
 
             var password = "PASSWORD_HERE";
 
-            var commandText = "COMMAND_TEXT_HERE";
+            var commandText = @"COMMAND_TEXT_HERE";
+
+            var excelWorkbookFilePath = "FILE_PATH_HERE";
+
+            var asposeLicense = @"PASTE_LICENSE_HERE";
+
+            var context = new DataReaderToTreeTableConversionContext
+            {
+                ConvertValuesToPreferredInvariantString = true,
+                ColumnsFormat = new ColumnFormat(autofitColumnWidth: true, options: ColumnFormatOptions.Filterable | ColumnFormatOptions.Sortable),
+                HeaderRowFormat = new RowFormat(cellsFormat: new CellFormat(fontFormat: new FontFormat(options: FontFormatOptions.Bold))),
+                ColumnNameToValueToCellFormatMap = new Dictionary<string, IReadOnlyDictionary<object, CellFormat>>
+                {
+                    {
+                        "Status",
+                        new Dictionary<object, CellFormat>
+                        {
+                            { "Running", new CellFormat(backgroundColor: Color.LightGreen) },
+                            { "Failed", new CellFormat(backgroundColor: Color.PaleVioletRed) },
+                        }
+                    },
+                },
+                ColumnNameToNullValueCellFormatMap = new Dictionary<string, CellFormat>
+                {
+                    {
+                        "Status",
+                        new CellFormat(backgroundColor: Color.LightYellow)
+                    },
+                },
+            };
+
+            new AsposeCellsLicense(asposeLicense).Register();
 
             var connectionString = ConnectionStringHelper.BuildConnectionString(serverName, userName: userName, clearTextPassword: password);
 
             var reader = connectionString.ExecuteReader(commandText);
 
             // Act
-            var actual = reader.ToTreeTable();
+            var actual = reader.ToTreeTable(context);
 
             // Assert
+            var report = actual.ToReport();
+
+            var reportToWorkbookProjectionContext = new ReportToWorkbookProjectionContext
+            {
+                SectionIdToWorksheetNameOverrideMap = new Dictionary<string, string>()
+                {
+                    { report.Sections.First().Id, "export" },
+                },
+            };
+
+            using (var workbook = report.ToExcelWorkbook(reportToWorkbookProjectionContext))
+            {
+                workbook.Save(excelWorkbookFilePath);
+            }
         }
     }
 }

@@ -36,6 +36,9 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Aspose.Cells, Version=9.0.0.0, Culture=neutral, PublicKeyToken=716fcc553a201e56, processorArchitecture=MSIL">
+      <HintPath>..\packages\Aspose.Cells.9.0.0\lib\net40\Aspose.Cells.dll</HintPath>
+    </Reference>
     <Reference Include="AutoFixture, Version=4.11.0.0, Culture=neutral, PublicKeyToken=b24654c590009d4f, processorArchitecture=MSIL">
       <HintPath>..\packages\AutoFixture.4.11.0\lib\net452\AutoFixture.dll</HintPath>
     </Reference>
@@ -50,6 +53,15 @@
     </Reference>
     <Reference Include="OBeautifulCode.AutoFakeItEasy, Version=1.0.138.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\OBeautifulCode.AutoFakeItEasy.1.0.138\lib\net462\OBeautifulCode.AutoFakeItEasy.dll</HintPath>
+    </Reference>
+    <Reference Include="OBeautifulCode.Excel, Version=1.0.77.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Excel.1.0.77\lib\net462\OBeautifulCode.Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="OBeautifulCode.Excel.AsposeCells, Version=1.0.77.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Excel.AsposeCells.1.0.77\lib\net462\OBeautifulCode.Excel.AsposeCells.dll</HintPath>
+    </Reference>
+    <Reference Include="OBeautifulCode.Type, Version=1.0.117.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Type.1.0.117\lib\net462\OBeautifulCode.Type.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
@@ -152,6 +164,10 @@
     <ProjectReference Include="..\OBeautifulCode.DataStructure.Database\OBeautifulCode.DataStructure.Database.csproj">
       <Project>{FC3CBB1E-4398-422E-8C9A-52171BB473E8}</Project>
       <Name>OBeautifulCode.DataStructure.Database</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OBeautifulCode.DataStructure.Excel\OBeautifulCode.DataStructure.Excel.csproj">
+      <Project>{987573d0-35cb-4157-9ace-079809724156}</Project>
+      <Name>OBeautifulCode.DataStructure.Excel</Name>
     </ProjectReference>
     <ProjectReference Include="..\OBeautifulCode.DataStructure\OBeautifulCode.DataStructure.csproj">
       <Project>{690b6894-4d9a-4bb3-aa5d-d9ac800eb7e9}</Project>
