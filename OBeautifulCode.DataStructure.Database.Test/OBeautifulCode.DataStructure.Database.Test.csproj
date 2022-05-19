@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\xunit.core.2.4.1\build\xunit.core.props" Condition="Exists('..\packages\xunit.core.2.4.1\build\xunit.core.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CD9AA27E-71DA-4656-B486-428720CDDAFB}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>OBeautifulCode.DataStructure.Database.Test</RootNamespace>
+    <AssemblyName>OBeautifulCode.DataStructure.Database.Test</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>OBeautifulCodeDataStructureSolution</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>OBeautifulCodeDataStructureSolution</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoFixture, Version=4.11.0.0, Culture=neutral, PublicKeyToken=b24654c590009d4f, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoFixture.4.11.0\lib\net452\AutoFixture.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Castle.Core.4.4.0\lib\net45\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="FakeItEasy, Version=6.0.0.0, Culture=neutral, PublicKeyToken=eff28e2146d5fd2c, processorArchitecture=MSIL">
+      <HintPath>..\packages\FakeItEasy.6.0.0\lib\net45\FakeItEasy.dll</HintPath>
+    </Reference>
+    <Reference Include="Fare, Version=2.1.0.0, Culture=neutral, PublicKeyToken=ea68d375bf33a7c8, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fare.2.1.2\lib\net35\Fare.dll</HintPath>
+    </Reference>
+    <Reference Include="OBeautifulCode.AutoFakeItEasy, Version=1.0.138.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.AutoFakeItEasy.1.0.138\lib\net462\OBeautifulCode.AutoFakeItEasy.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="xunit.abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>..\packages\xunit.abstractions.2.0.3\lib\net35\xunit.abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="xunit.assert, Version=2.4.1.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>..\packages\xunit.assert.2.4.1\lib\netstandard1.1\xunit.assert.dll</HintPath>
+    </Reference>
+    <Reference Include="xunit.core, Version=2.4.1.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>..\packages\xunit.extensibility.core.2.4.1\lib\net452\xunit.core.dll</HintPath>
+    </Reference>
+    <Reference Include="xunit.execution.desktop, Version=2.4.1.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>..\packages\xunit.extensibility.execution.2.4.1\lib\net452\xunit.execution.desktop.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include=".recipes\OBeautifulCode.Assertion\Actions.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Assertion\ApplyBecause.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Assertion\AssertionKind.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Assertion\AssertionTracker.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Assertion\AssertionTrackerShould.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Assertion\AssertionVerificationFailedException.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Assertion\Delegates.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Assertion\ImproperUseOfAssertionFrameworkException.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Assertion\Range.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Assertion\TestAssertionVerificationFailedException.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Assertion\TypeValidation.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Assertion\ValidatedNotNullAttribute.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Assertion\VerifiableItem.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Assertion\Verification.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Assertion\VerificationParameter.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Assertion\Verifications.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Assertion\Verifications.Helpers.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Assertion\Verifications.Internal.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Assertion\Verifications.Strings.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Assertion\Verifications.TypeValidation.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Assertion\Verifications.Workflow.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Assertion\WorkflowExtensions.cs" />
+    <Compile Include=".recipes\OBeautifulCode.AutoFakeItEasy\AutoFakeItEasyBootstrapper.cs" />
+    <Compile Include=".recipes\OBeautifulCode.CodeAnalysis\ObcSuppressBecause.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Collection\EnumerableExtensions.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Database\ConnectionStringHelper.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Database\DatabaseHelper.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Database\DatabaseHelper.ExecuteNonQuery.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Database\DatabaseHelper.ExecuteReader.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Database\DatabaseHelper.HasRow.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Database\DatabaseHelper.ReadColumn.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Database\DatabaseHelper.ReadRowsNamed.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Database\DatabaseHelper.ReadRowsOrdinal.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Database\DatabaseHelper.ReadValue.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Database\DatabaseHelper.WriteToCsv.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Database\SqlBatchStatementSplitter.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Database\SqlParameterExtensions.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Equality\ByteArrayEqualityComparer.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Equality\ColorEqualityComparer.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Equality\DateTimeEqualityComparer.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Equality\DictionaryEqualityComparer.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Equality\EnumerableEqualityComparer.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Equality\EnumerableEqualityComparerStrategy.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Equality\EqualityComparerHelper.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Equality\EqualityExtensions.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Equality\HashCodeHelper.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Equality\LambdaBackedEqualityComparer.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Equality\NativeMethods.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Equality\NullableColorEqualityComparer.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Equality\NullableDateTimeEqualityComparer.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Equality\ObjectEqualityComparer.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Equality\ReadOnlyDictionaryEqualityComparer.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Equality\ReferenceEqualityComparer{T}.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Math\ThreadSafeRandom.cs" />
+    <Compile Include=".recipes\OBeautifulCode.String\StringExtensions.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Type\ArrayKind.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Type\ToStringReadableOptions.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Type\ToStringXmlDocOptions.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\GlobalSuppressions.cs" />
+    <Compile Include="Properties\ProjectInfo.cs" />
+    <Compile Include="DataReaderConverterTest.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <AdditionalFiles Include=".analyzers\stylecop.json" />
+    <None Include=".analyzers\test.ruleset" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
+    <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
+    <Analyzer Include="..\packages\xunit.analyzers.0.10.0\analyzers\dotnet\cs\xunit.analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include=".analyzers\dictionary.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OBeautifulCode.DataStructure.Database\OBeautifulCode.DataStructure.Database.csproj">
+      <Project>{FC3CBB1E-4398-422E-8C9A-52171BB473E8}</Project>
+      <Name>OBeautifulCode.DataStructure.Database</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OBeautifulCode.DataStructure\OBeautifulCode.DataStructure.csproj">
+      <Project>{690b6894-4d9a-4bb3-aa5d-d9ac800eb7e9}</Project>
+      <Name>OBeautifulCode.DataStructure</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\OBeautifulCode.Build.Analyzers.1.1.139\build\OBeautifulCode.Build.Analyzers.targets" Condition="Exists('..\packages\OBeautifulCode.Build.Analyzers.1.1.139\build\OBeautifulCode.Build.Analyzers.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\OBeautifulCode.Build.Analyzers.1.1.139\build\OBeautifulCode.Build.Analyzers.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\OBeautifulCode.Build.Analyzers.1.1.139\build\OBeautifulCode.Build.Analyzers.targets'))" />
+    <Error Condition="!Exists('..\packages\xunit.core.2.4.1\build\xunit.core.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\xunit.core.2.4.1\build\xunit.core.props'))" />
+    <Error Condition="!Exists('..\packages\xunit.core.2.4.1\build\xunit.core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\xunit.core.2.4.1\build\xunit.core.targets'))" />
+  </Target>
+  <Import Project="..\packages\xunit.core.2.4.1\build\xunit.core.targets" Condition="Exists('..\packages\xunit.core.2.4.1\build\xunit.core.targets')" />
+</Project>

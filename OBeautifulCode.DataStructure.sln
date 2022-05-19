@@ -24,6 +24,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OBeautifulCode.DataStructur
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OBeautifulCode.DataStructure.Excel.Test", "OBeautifulCode.DataStructure.Excel.Test\OBeautifulCode.DataStructure.Excel.Test.csproj", "{6752DFC1-279D-4A70-B911-96ACA663DBDB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OBeautifulCode.DataStructure.Database", "OBeautifulCode.DataStructure.Database\OBeautifulCode.DataStructure.Database.csproj", "{FC3CBB1E-4398-422E-8C9A-52171BB473E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OBeautifulCode.DataStructure.Database.Test", "OBeautifulCode.DataStructure.Database.Test\OBeautifulCode.DataStructure.Database.Test.csproj", "{CD9AA27E-71DA-4656-B486-428720CDDAFB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -54,6 +58,14 @@ Global
 		{6752DFC1-279D-4A70-B911-96ACA663DBDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6752DFC1-279D-4A70-B911-96ACA663DBDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6752DFC1-279D-4A70-B911-96ACA663DBDB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC3CBB1E-4398-422E-8C9A-52171BB473E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC3CBB1E-4398-422E-8C9A-52171BB473E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC3CBB1E-4398-422E-8C9A-52171BB473E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC3CBB1E-4398-422E-8C9A-52171BB473E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD9AA27E-71DA-4656-B486-428720CDDAFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD9AA27E-71DA-4656-B486-428720CDDAFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD9AA27E-71DA-4656-B486-428720CDDAFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD9AA27E-71DA-4656-B486-428720CDDAFB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
