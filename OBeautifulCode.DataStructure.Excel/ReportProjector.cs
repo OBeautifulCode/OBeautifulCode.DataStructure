@@ -544,11 +544,60 @@ namespace OBeautifulCode.DataStructure.Excel
                         cursor.Cell.Value = stringConstCell.Value;
                     }
                 }
+                else if (cell is ConstCell<bool> boolConstCell)
+                {
+                    if (passKind == PassKind.Data)
+                    {
+                        cursor.Cell.Value = boolConstCell.Value;
+                    }
+                }
                 else if (cell is ConstCell<int> intConstCell)
                 {
                     if (passKind == PassKind.Data)
                     {
                         cursor.Cell.Value = intConstCell.Value;
+                    }
+                }
+                else if (cell is ConstCell<long> longConstCell)
+                {
+                    if (passKind == PassKind.Data)
+                    {
+                        cursor.Cell.Value = longConstCell.Value;
+                    }
+                }
+                else if (cell is ConstCell<DateTime> dateTimeConstCell)
+                {
+                    if (passKind == PassKind.Data)
+                    {
+                        cursor.Cell.Value = dateTimeConstCell.Value;
+                    }
+                }
+                else if (cell is ConstCell<byte> byteConstCell)
+                {
+                    if (passKind == PassKind.Data)
+                    {
+                        cursor.Cell.Value = byteConstCell.Value;
+                    }
+                }
+                else if (cell is ConstCell<float> floatConstCell)
+                {
+                    if (passKind == PassKind.Data)
+                    {
+                        cursor.Cell.Value = floatConstCell.Value;
+                    }
+                }
+                else if (cell is ConstCell<double> doubleConstCell)
+                {
+                    if (passKind == PassKind.Data)
+                    {
+                        cursor.Cell.Value = doubleConstCell.Value;
+                    }
+                }
+                else if (cell is ConstCell<decimal> decimalConstCell)
+                {
+                    if (passKind == PassKind.Data)
+                    {
+                        cursor.Cell.Value = decimalConstCell.Value;
                     }
                 }
                 else
