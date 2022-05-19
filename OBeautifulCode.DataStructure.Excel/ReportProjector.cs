@@ -508,6 +508,7 @@ namespace OBeautifulCode.DataStructure.Excel
         }
 
         [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "context", Justification = "Future-proof usage.")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = ObcSuppressBecause.CA1502_AvoidExcessiveComplexity_DisagreeWithAssessment)]
         private static void AddCell(
             this CellCursor cursor,
             ICell cell,
