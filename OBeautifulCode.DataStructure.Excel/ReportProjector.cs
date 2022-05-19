@@ -142,7 +142,7 @@ namespace OBeautifulCode.DataStructure.Excel
 
             treeTableCursor.Reset();
 
-            treeTableCursor.AddTreeTable(section.TreeTable, context, sectionContext, passKind);
+            treeTableCursor.AddTreeTable(section.TreeTable, hasTitle, context, sectionContext, passKind);
 
             // Add bottom chrome (e.g. copyright and terms of use)
             chromeCursor.MoveDown(treeTableCursor.MaxRowNumber - chromeCursor.RowNumber + 1);
@@ -189,6 +189,7 @@ namespace OBeautifulCode.DataStructure.Excel
         private static void AddTreeTable(
             this CellCursor cursor,
             TreeTable treeTable,
+            bool moveDownForFirstRow,
             ReportToWorkbookProjectionContext context,
             InternalSectionProjectionContext sectionContext,
             PassKind passKind)
@@ -235,12 +236,13 @@ namespace OBeautifulCode.DataStructure.Excel
             }
 
             // Add rows
-            cursor.AddTableRows(treeTable.TableRows, context, sectionContext, passKind);
+            cursor.AddTableRows(treeTable.TableRows, moveDownForFirstRow, context, sectionContext, passKind);
         }
 
         private static void AddTableRows(
             this CellCursor cursor,
             TableRows tableRows,
+            bool moveDownForFirstRow,
             ReportToWorkbookProjectionContext context,
             InternalSectionProjectionContext sectionContext,
             PassKind passKind)
@@ -250,22 +252,29 @@ namespace OBeautifulCode.DataStructure.Excel
                 return;
             }
 
-            cursor.AddHeaderRows(tableRows.HeaderRows, context, passKind);
+            if (cursor.AddHeaderRows(tableRows.HeaderRows, moveDownForFirstRow, context, passKind))
+            {
+                moveDownForFirstRow = true;
+            }
 
-            cursor.AddDataRows(tableRows.DataRows, context, sectionContext, passKind);
+            if (cursor.AddDataRows(tableRows.DataRows, moveDownForFirstRow, context, sectionContext, passKind))
+            {
+                moveDownForFirstRow = true;
+            }
 
-            cursor.AddFooterRows(tableRows.FooterRows, context, passKind);
+            cursor.AddFooterRows(tableRows.FooterRows, moveDownForFirstRow, context, passKind);
         }
 
-        private static void AddHeaderRows(
+        private static bool AddHeaderRows(
             this CellCursor cursor,
             HeaderRows headerRows,
+            bool moveDownForFirstRow,
             ReportToWorkbookProjectionContext context,
             PassKind passKind)
         {
             if (headerRows == null)
             {
-                return;
+                return false;
             }
 
             if (headerRows.Rows.Any())
@@ -274,7 +283,17 @@ namespace OBeautifulCode.DataStructure.Excel
                 {
                     cursor.ResetColumn();
 
-                    cursor.MoveDown();
+                    if (moveDownForFirstRow || (x != 0))
+                    {
+                        cursor.MoveDown();
+                    }
+                    else
+                    {
+                        if (cursor.StartRowNumber != cursor.RowNumber)
+                        {
+                            cursor.MoveDown();
+                        }
+                    }
 
                     if ((x == 0) && (passKind == PassKind.Data))
                     {
@@ -294,11 +313,14 @@ namespace OBeautifulCode.DataStructure.Excel
                     cursor.AddMarker(BottomRightHeaderCellMarker);
                 }
             }
+
+            return true;
         }
 
         private static void AddFooterRows(
             this CellCursor cursor,
             FooterRows footerRows,
+            bool moveDownForFirstRow,
             ReportToWorkbookProjectionContext context,
             PassKind passKind)
         {
@@ -309,32 +331,43 @@ namespace OBeautifulCode.DataStructure.Excel
 
             if (footerRows.Rows.Any())
             {
-                foreach (var flatRow in footerRows.Rows)
+                for (var x = 0; x < footerRows.Rows.Count; x++)
                 {
                     cursor.ResetColumn();
 
-                    cursor.MoveDown();
+                    if (moveDownForFirstRow || (x != 0))
+                    {
+                        cursor.MoveDown();
+                    }
+                    else
+                    {
+                        if (cursor.StartRowNumber != cursor.RowNumber)
+                        {
+                            cursor.MoveDown();
+                        }
+                    }
 
                     if (passKind == PassKind.Formatting)
                     {
                         cursor.CanvassedRowRange.ApplyFooterRowsFormat(footerRows.Format);
                     }
 
-                    cursor.AddFlatRow(flatRow, context, passKind);
+                    cursor.AddFlatRow(footerRows.Rows[x], context, passKind);
                 }
             }
         }
 
-        private static void AddDataRows(
+        private static bool AddDataRows(
             this CellCursor cursor,
             DataRows dataRows,
+            bool moveDownForFirstRow,
             ReportToWorkbookProjectionContext context,
             InternalSectionProjectionContext sectionContext,
             PassKind passKind)
         {
             if (dataRows == null)
             {
-                return;
+                return false;
             }
 
             if (dataRows.Rows.Any())
@@ -343,7 +376,17 @@ namespace OBeautifulCode.DataStructure.Excel
                 {
                     cursor.ResetColumn();
 
-                    cursor.MoveDown();
+                    if (moveDownForFirstRow || (x != 0))
+                    {
+                        cursor.MoveDown();
+                    }
+                    else
+                    {
+                        if (cursor.StartRowNumber != cursor.RowNumber)
+                        {
+                            cursor.MoveDown();
+                        }
+                    }
 
                     if (x == 0)
                     {
@@ -360,6 +403,8 @@ namespace OBeautifulCode.DataStructure.Excel
 
                 cursor.AddMarker(BottomRightDataCellMarker);
             }
+
+            return true;
         }
 
         private static void AddFlatRow(
