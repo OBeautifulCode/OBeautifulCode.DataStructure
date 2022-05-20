@@ -63,11 +63,13 @@ namespace OBeautifulCode.DataStructure
         /// Converts a <see cref="TreeTable"/> to a single-<see cref="Section"/> <see cref="Report"/>.
         /// </summary>
         /// <param name="treeTable">The tree table.</param>
+        /// <param name="title">OPTIONAL report title to use.  DEFAULT is no title.</param>
         /// <returns>
         /// A single-<see cref="Section"/> <see cref="Report"/> containing the specified <paramref name="treeTable"/>.
         /// </returns>
         public static Report ToReport(
-            this TreeTable treeTable)
+            this TreeTable treeTable,
+            string title = null)
         {
             if (treeTable == null)
             {
@@ -76,7 +78,7 @@ namespace OBeautifulCode.DataStructure
 
             var section = new Section(Guid.NewGuid().ToStringInvariantPreferred(), treeTable);
 
-            var result = new Report(Guid.NewGuid().ToStringInvariantPreferred(), new[] { section });
+            var result = new Report(Guid.NewGuid().ToStringInvariantPreferred(), new[] { section }, title);
 
             return result;
         }
