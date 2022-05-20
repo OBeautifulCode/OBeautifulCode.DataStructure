@@ -22,16 +22,10 @@ namespace OBeautifulCode.DataStructure.Database
         public bool ConvertValuesToPreferredInvariantString { get; set; }
 
         /// <summary>
-        /// Gets or sets a map of column name to a map of values to <see cref="CellFormat"/> to apply
-        /// to cells having those values (e.g. for column "Status", apply a background color of red when value = "fail").
+        /// Gets or sets a map of column name to <see cref="CellFormatForValue"/>,
+        /// (e.g. for column "Status", apply a background color of red when value == "fail").
         /// </summary>
-        public IReadOnlyDictionary<string, IReadOnlyDictionary<object, CellFormat>> ColumnNameToValueToCellFormatMap { get; set; }
-
-        /// <summary>
-        /// Gets or sets a map of column name to the <see cref="CellFormat"/> to apply for null values
-        /// (e.g. for column "Status", apply a background color of yellow when null).
-        /// </summary>
-        public IReadOnlyDictionary<string, CellFormat> ColumnNameToNullValueCellFormatMap { get; set; }
+        public IReadOnlyDictionary<string, IReadOnlyCollection<CellFormatForValue>> ColumnNameToCellFormatForValueMap { get; set; }
 
         /// <summary>
         /// Gets or sets the format to apply to the whole table.

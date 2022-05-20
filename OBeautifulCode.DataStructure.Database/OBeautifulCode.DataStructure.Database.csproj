@@ -95,6 +95,7 @@
     <Compile Include="DataReaderConverter.cs" />
     <Compile Include="Properties\ProjectInfo.cs" />
     <AdditionalFiles Include=".analyzers\stylecop.json" />
+    <Compile Include="CellFormatForValue.cs" />
     <None Include=".analyzers\release.ruleset" />
     <None Include="OBeautifulCode.DataStructure.Database.override-nuspec" />
     <None Include="packages.config" />

@@ -37,22 +37,16 @@ namespace OBeautifulCode.DataStructure.Database.Test
                 ConvertValuesToPreferredInvariantString = true,
                 ColumnsFormat = new ColumnFormat(autofitColumnWidth: true, options: ColumnFormatOptions.Filterable | ColumnFormatOptions.Sortable),
                 HeaderRowFormat = new RowFormat(cellsFormat: new CellFormat(fontFormat: new FontFormat(options: FontFormatOptions.Bold))),
-                ColumnNameToValueToCellFormatMap = new Dictionary<string, IReadOnlyDictionary<object, CellFormat>>
+                ColumnNameToCellFormatForValueMap = new Dictionary<string, IReadOnlyCollection<CellFormatForValue>>
                 {
                     {
                         "Status",
-                        new Dictionary<object, CellFormat>
+                        new List<CellFormatForValue>
                         {
-                            { "Running", new CellFormat(backgroundColor: Color.LightGreen) },
-                            { "Failed", new CellFormat(backgroundColor: Color.PaleVioletRed) },
+                            new CellFormatForValue(null, new CellFormat(backgroundColor: Color.LightYellow)),
+                            new CellFormatForValue("Running", new CellFormat(backgroundColor: Color.LightGreen)),
+                            new CellFormatForValue("Failed", new CellFormat(backgroundColor: Color.PaleVioletRed)),
                         }
-                    },
-                },
-                ColumnNameToNullValueCellFormatMap = new Dictionary<string, CellFormat>
-                {
-                    {
-                        "Status",
-                        new CellFormat(backgroundColor: Color.LightYellow)
                     },
                 },
             };
@@ -71,7 +65,7 @@ namespace OBeautifulCode.DataStructure.Database.Test
 
             var reportToWorkbookProjectionContext = new ReportToWorkbookProjectionContext
             {
-                SectionIdToWorksheetNameOverrideMap = new Dictionary<string, string>()
+                SectionIdToWorksheetNameOverrideMap = new Dictionary<string, string>
                 {
                     { report.Sections.First().Id, "export" },
                 },

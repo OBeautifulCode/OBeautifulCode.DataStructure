@@ -10,6 +10,7 @@ namespace OBeautifulCode.DataStructure.Database
     using System.Collections.Generic;
     using System.Data;
     using System.Linq;
+    using OBeautifulCode.Equality.Recipes;
     using OBeautifulCode.Reflection.Recipes;
     using OBeautifulCode.String.Recipes;
     using static System.FormattableString;
@@ -19,6 +20,8 @@ namespace OBeautifulCode.DataStructure.Database
     /// </summary>
     public static class DataReaderConverter
     {
+        private static readonly IEqualityComparer<object> ValueEqualityComparer = new ObjectEqualityComparer();
+
         /// <summary>
         /// Converts the specified <see cref="IDataReader"/> into a <see cref="TreeTable"/>.
         /// </summary>
@@ -96,9 +99,13 @@ namespace OBeautifulCode.DataStructure.Database
 
                     if (columnName != null)
                     {
-                        if (context.ColumnNameToNullValueCellFormatMap?.ContainsKey(columnName) ?? false)
+                        if (context.ColumnNameToCellFormatForValueMap?.ContainsKey(columnName) ?? false)
                         {
-                            cellFormat = context.ColumnNameToNullValueCellFormatMap[columnName];
+                            cellFormat = context
+                                .ColumnNameToCellFormatForValueMap[columnName]
+                                .Where(_ => ValueEqualityComparer.Equals(_.Value, null))
+                                .Select(_ => _.CellFormat)
+                                .FirstOrDefault();
                         }
                     }
 
@@ -117,11 +124,13 @@ namespace OBeautifulCode.DataStructure.Database
 
                     if (columnName != null)
                     {
-                        if (context.ColumnNameToValueToCellFormatMap?.ContainsKey(columnName) ?? false)
+                        if (context.ColumnNameToCellFormatForValueMap?.ContainsKey(columnName) ?? false)
                         {
-                            var valueToCellFormatMap = context.ColumnNameToValueToCellFormatMap[columnName];
-
-                            valueToCellFormatMap.TryGetValue(value, out cellFormat);
+                            cellFormat = context
+                                .ColumnNameToCellFormatForValueMap[columnName]
+                                .Where(_ => ValueEqualityComparer.Equals(_.Value, value))
+                                .Select(_ => _.CellFormat)
+                                .FirstOrDefault();
                         }
                     }
 
