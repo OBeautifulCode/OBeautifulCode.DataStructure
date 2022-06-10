@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0"?>
 <package>
   <metadata>
-    <description>DESCRIPTION_HERE</description>
-    <tags>TAG1_HERE TAG2_HERE DataStructure</tags>
+    <description>Projects data from a database into a TreeTable.</description>
+    <tags>Projector Converter Database IDbReader TreeTable DataStructure</tags>
     <iconUrl>https://raw.githubusercontent.com/OBeautifulCode/OBeautifulCode.DataStructure/main/OBeautifulCode.DataStructure.Database/nuget-icon.png</iconUrl>
   </metadata>
 </package>
