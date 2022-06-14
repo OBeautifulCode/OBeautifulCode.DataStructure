@@ -60,5 +60,15 @@ namespace OBeautifulCode.DataStructure
         /// A PDF file.
         /// </summary>
         Pdf,
+
+        /// <summary>
+        /// A text file.
+        /// </summary>
+        Text,
+
+        /// <summary>
+        /// A ZIP file.
+        /// </summary>
+        Zip,
     }
 }
