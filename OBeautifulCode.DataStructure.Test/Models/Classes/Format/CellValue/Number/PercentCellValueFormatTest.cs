@@ -34,6 +34,52 @@ namespace OBeautifulCode.DataStructure.Test
                 .AddScenario(() =>
                     new ConstructorArgumentValidationTestScenario<PercentCellValueFormat>
                     {
+                        Name = "constructor should throw ArgumentOutOfRangeException when parameter 'numberOfDecimalPlaces' is negative",
+                        ConstructionFunc = () =>
+                        {
+                            var referenceObject = A.Dummy<PercentCellValueFormat>();
+
+                            var result = new PercentCellValueFormat(
+                                A.Dummy<NumberFormatPercentDisplayKind>(),
+                                A.Dummy<NegativeInteger>(),
+                                referenceObject.MidpointRounding,
+                                referenceObject.DecimalSeparator,
+                                referenceObject.DigitGroupKind,
+                                referenceObject.DigitGroupSeparator,
+                                referenceObject.NegativeNumberDisplayKind,
+                                referenceObject.MissingValueText);
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentOutOfRangeException),
+                        ExpectedExceptionMessageContains = new[] { "numberOfDecimalPlaces", "is negative" },
+                    })
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<PercentCellValueFormat>
+                    {
+                        Name = "constructor should throw ArgumentException when parameter 'midpointRounding' is not null, but 'numberOfDecimalPlaces' is null.",
+                        ConstructionFunc = () =>
+                        {
+                            var referenceObject = A.Dummy<PercentCellValueFormat>();
+
+                            var result = new PercentCellValueFormat(
+                                A.Dummy<NumberFormatPercentDisplayKind>(),
+                                null,
+                                A.Dummy<MidpointRounding>(),
+                                referenceObject.DecimalSeparator,
+                                referenceObject.DigitGroupKind,
+                                referenceObject.DigitGroupSeparator,
+                                referenceObject.NegativeNumberDisplayKind,
+                                referenceObject.MissingValueText);
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentException),
+                        ExpectedExceptionMessageContains = new[] { "midpointRounding is not null, but numberOfDecimalPlaces is null." },
+                    })
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<PercentCellValueFormat>
+                    {
                         Name = "constructor should throw ArgumentOutOfRangeException when parameter 'percentDisplayKind' is NumberFormatPercentDisplayKind.Unknown",
                         ConstructionFunc = () =>
                         {
@@ -42,6 +88,7 @@ namespace OBeautifulCode.DataStructure.Test
                             var result = new PercentCellValueFormat(
                                 NumberFormatPercentDisplayKind.Unknown,
                                 referenceObject.NumberOfDecimalPlaces,
+                                referenceObject.MidpointRounding,
                                 referenceObject.DecimalSeparator,
                                 referenceObject.DigitGroupKind,
                                 referenceObject.DigitGroupSeparator,

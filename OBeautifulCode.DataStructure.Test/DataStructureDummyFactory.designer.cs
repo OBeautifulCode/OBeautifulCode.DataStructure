@@ -442,6 +442,7 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<string>(),
                                  A.Dummy<string>(),
                                  A.Dummy<int?>(),
+                                 A.Dummy<MidpointRounding?>(),
                                  A.Dummy<char?>(),
                                  A.Dummy<NumberFormatDigitGroupKind?>(),
                                  A.Dummy<char?>(),
@@ -791,6 +792,7 @@ namespace OBeautifulCode.DataStructure.Test
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new NullNumberCellFormat<Version>(
                                  A.Dummy<int?>(),
+                                 A.Dummy<MidpointRounding?>(),
                                  A.Dummy<char?>(),
                                  A.Dummy<NumberFormatDigitGroupKind?>(),
                                  A.Dummy<char?>(),
@@ -890,6 +892,7 @@ namespace OBeautifulCode.DataStructure.Test
                 () => new PercentCellValueFormat(
                                  A.Dummy<NumberFormatPercentDisplayKind?>(),
                                  A.Dummy<int?>(),
+                                 A.Dummy<MidpointRounding?>(),
                                  A.Dummy<char?>(),
                                  A.Dummy<NumberFormatDigitGroupKind?>(),
                                  A.Dummy<char?>(),

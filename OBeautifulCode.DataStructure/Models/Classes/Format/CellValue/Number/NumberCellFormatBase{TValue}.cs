@@ -23,6 +23,7 @@ namespace OBeautifulCode.DataStructure
         /// Initializes a new instance of the <see cref="NumberCellFormatBase{TValue}"/> class.
         /// </summary>
         /// <param name="numberOfDecimalPlaces">The number of digits after the decimal separator to display.</param>
+        /// <param name="midpointRounding">The strategy to use to round the number.</param>
         /// <param name="decimalSeparator">The character to use to separate whole numbers from fractional numbers.</param>
         /// <param name="digitGroupKind">The kind of digit grouping to employ.</param>
         /// <param name="digitGroupSeparator">The separator character to use between digit groups.</param>
@@ -30,6 +31,7 @@ namespace OBeautifulCode.DataStructure
         /// <param name="missingValueText">The text to use when the cell is missing a value.</param>
         protected NumberCellFormatBase(
             int? numberOfDecimalPlaces,
+            MidpointRounding? midpointRounding,
             char? decimalSeparator,
             NumberFormatDigitGroupKind? digitGroupKind,
             char? digitGroupSeparator,
@@ -37,6 +39,16 @@ namespace OBeautifulCode.DataStructure
             string missingValueText)
             : base(missingValueText)
         {
+            if ((numberOfDecimalPlaces != null) && (numberOfDecimalPlaces < 0))
+            {
+                throw new ArgumentOutOfRangeException(Invariant($"{nameof(numberOfDecimalPlaces)} is negative: {numberOfDecimalPlaces}."));
+            }
+
+            if ((midpointRounding != null) && (numberOfDecimalPlaces == null))
+            {
+                throw new ArgumentException(Invariant($"{nameof(midpointRounding)} is not null, but {nameof(numberOfDecimalPlaces)} is null."));
+            }
+
             if ((digitGroupKind != null) && (digitGroupKind == NumberFormatDigitGroupKind.Unknown))
             {
                 throw new ArgumentOutOfRangeException(Invariant($"{nameof(digitGroupKind)} is {nameof(NumberFormatDigitGroupKind)}.{nameof(NumberFormatDigitGroupKind.Unknown)}."));
@@ -48,6 +60,7 @@ namespace OBeautifulCode.DataStructure
             }
 
             this.NumberOfDecimalPlaces = numberOfDecimalPlaces;
+            this.MidpointRounding = midpointRounding;
             this.DecimalSeparator = decimalSeparator;
             this.DigitGroupKind = digitGroupKind;
             this.DigitGroupSeparator = digitGroupSeparator;
@@ -58,6 +71,11 @@ namespace OBeautifulCode.DataStructure
         /// Gets the number of digits after the decimal separator to display.
         /// </summary>
         public int? NumberOfDecimalPlaces { get; private set; }
+
+        /// <summary>
+        /// Gets the strategy to use to round the number.
+        /// </summary>
+        public MidpointRounding? MidpointRounding { get; private set; }
 
         /// <summary>
         /// Gets the character to use to separate whole numbers from fractional numbers.

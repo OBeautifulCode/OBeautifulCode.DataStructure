@@ -6,6 +6,7 @@
 
 namespace OBeautifulCode.DataStructure
 {
+    using System;
     using OBeautifulCode.Type;
 
     /// <summary>
@@ -19,6 +20,7 @@ namespace OBeautifulCode.DataStructure
         /// Initializes a new instance of the <see cref="NullNumberCellFormat{TValue}"/> class.
         /// </summary>
         /// <param name="numberOfDecimalPlaces">The number of digits after the decimal separator to display.</param>
+        /// <param name="midpointRounding">The strategy to use to round the number.</param>
         /// <param name="decimalSeparator">The character to use to separate whole numbers from fractional numbers.</param>
         /// <param name="digitGroupKind">The kind of digit grouping to employ.</param>
         /// <param name="digitGroupSeparator">The separator character to use between digit groups.</param>
@@ -26,12 +28,13 @@ namespace OBeautifulCode.DataStructure
         /// <param name="missingValueText">The text to use when the cell is missing a value.</param>
         public NullNumberCellFormat(
             int? numberOfDecimalPlaces,
+            MidpointRounding? midpointRounding,
             char? decimalSeparator,
             NumberFormatDigitGroupKind? digitGroupKind,
             char? digitGroupSeparator,
             NumberFormatNegativeDisplayKind? negativeNumberDisplayKind,
             string missingValueText)
-            : base(numberOfDecimalPlaces, decimalSeparator, digitGroupKind, digitGroupSeparator, negativeNumberDisplayKind, missingValueText)
+            : base(numberOfDecimalPlaces, midpointRounding, decimalSeparator, digitGroupKind, digitGroupSeparator, negativeNumberDisplayKind, missingValueText)
         {
         }
     }

@@ -22,6 +22,7 @@ namespace OBeautifulCode.DataStructure
         /// Initializes a new instance of the <see cref="PercentCellValueFormat"/> class.
         /// </summary>
         /// <param name="percentDisplayKind">OPTIONAL value that specifies how to display a percentage.  DEFAULT is to leave the methodology unspecified.</param>
+        /// <param name="midpointRounding">OPTIONAL strategy to use to round the number.  DEFAULT is to leave the strategy unspecified.</param>
         /// <param name="numberOfDecimalPlaces">OPTIONAL number of digits after the decimal separator to display.  DEFAULT is to display all digits.</param>
         /// <param name="decimalSeparator">OPTIONAL character to use to separate whole numbers from fractional numbers.  Default is to leave the separator unspecified.</param>
         /// <param name="digitGroupKind">OPTIONAL kind of digit grouping to employ.  DEFAULT is to leave the methodology unspecified.</param>
@@ -31,12 +32,13 @@ namespace OBeautifulCode.DataStructure
         public PercentCellValueFormat(
             NumberFormatPercentDisplayKind? percentDisplayKind = null,
             int? numberOfDecimalPlaces = null,
+            MidpointRounding? midpointRounding = null,
             char? decimalSeparator = null,
             NumberFormatDigitGroupKind? digitGroupKind = null,
             char? digitGroupSeparator = null,
             NumberFormatNegativeDisplayKind? negativeNumberDisplayKind = null,
             string missingValueText = null)
-            : base(numberOfDecimalPlaces, decimalSeparator, digitGroupKind, digitGroupSeparator, negativeNumberDisplayKind, missingValueText)
+            : base(numberOfDecimalPlaces, midpointRounding, decimalSeparator, digitGroupKind, digitGroupSeparator, negativeNumberDisplayKind, missingValueText)
         {
             if ((percentDisplayKind != null) && (percentDisplayKind == NumberFormatPercentDisplayKind.Unknown))
             {

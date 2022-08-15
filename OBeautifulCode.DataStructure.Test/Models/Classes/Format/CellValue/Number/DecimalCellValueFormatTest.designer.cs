@@ -47,7 +47,7 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new SystemUnderTestExpectedStringRepresentation<DecimalCellValueFormat>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.DecimalCellValueFormat: MissingValueText = {systemUnderTest.MissingValueText?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, NumberOfDecimalPlaces = {systemUnderTest.NumberOfDecimalPlaces?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, DecimalSeparator = {systemUnderTest.DecimalSeparator?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, DigitGroupKind = {systemUnderTest.DigitGroupKind?.ToString() ?? "<null>"}, DigitGroupSeparator = {systemUnderTest.DigitGroupSeparator?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, NegativeNumberDisplayKind = {systemUnderTest.NegativeNumberDisplayKind?.ToString() ?? "<null>"}, Prefix = {systemUnderTest.Prefix?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Suffix = {systemUnderTest.Suffix?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.DecimalCellValueFormat: MissingValueText = {systemUnderTest.MissingValueText?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, NumberOfDecimalPlaces = {systemUnderTest.NumberOfDecimalPlaces?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, MidpointRounding = {systemUnderTest.MidpointRounding?.ToString() ?? "<null>"}, DecimalSeparator = {systemUnderTest.DecimalSeparator?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, DigitGroupKind = {systemUnderTest.DigitGroupKind?.ToString() ?? "<null>"}, DigitGroupSeparator = {systemUnderTest.DigitGroupSeparator?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, NegativeNumberDisplayKind = {systemUnderTest.NegativeNumberDisplayKind?.ToString() ?? "<null>"}, Prefix = {systemUnderTest.Prefix?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Suffix = {systemUnderTest.Suffix?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}."),
                         };
 
                         return result;
@@ -67,6 +67,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              null,
                                              referenceObject.Suffix,
                                              referenceObject.NumberOfDecimalPlaces,
+                                             referenceObject.MidpointRounding,
                                              referenceObject.DecimalSeparator,
                                              referenceObject.DigitGroupKind,
                                              referenceObject.DigitGroupSeparator,
@@ -90,6 +91,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              Invariant($"  {Environment.NewLine}  "),
                                              referenceObject.Suffix,
                                              referenceObject.NumberOfDecimalPlaces,
+                                             referenceObject.MidpointRounding,
                                              referenceObject.DecimalSeparator,
                                              referenceObject.DigitGroupKind,
                                              referenceObject.DigitGroupSeparator,
@@ -113,6 +115,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Prefix,
                                              null,
                                              referenceObject.NumberOfDecimalPlaces,
+                                             referenceObject.MidpointRounding,
                                              referenceObject.DecimalSeparator,
                                              referenceObject.DigitGroupKind,
                                              referenceObject.DigitGroupSeparator,
@@ -136,6 +139,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Prefix,
                                              Invariant($"  {Environment.NewLine}  "),
                                              referenceObject.NumberOfDecimalPlaces,
+                                             referenceObject.MidpointRounding,
                                              referenceObject.DecimalSeparator,
                                              referenceObject.DigitGroupKind,
                                              referenceObject.DigitGroupSeparator,
@@ -159,6 +163,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Prefix,
                                              referenceObject.Suffix,
                                              referenceObject.NumberOfDecimalPlaces,
+                                             referenceObject.MidpointRounding,
                                              referenceObject.DecimalSeparator,
                                              referenceObject.DigitGroupKind,
                                              referenceObject.DigitGroupSeparator,
@@ -182,6 +187,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Prefix,
                                              referenceObject.Suffix,
                                              referenceObject.NumberOfDecimalPlaces,
+                                             referenceObject.MidpointRounding,
                                              referenceObject.DecimalSeparator,
                                              referenceObject.DigitGroupKind,
                                              referenceObject.DigitGroupSeparator,
@@ -209,6 +215,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Prefix,
                                                       referenceObject.Suffix,
                                                       referenceObject.NumberOfDecimalPlaces,
+                                                      referenceObject.MidpointRounding,
                                                       referenceObject.DecimalSeparator,
                                                       referenceObject.DigitGroupKind,
                                                       referenceObject.DigitGroupSeparator,
@@ -235,6 +242,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Prefix,
                                                       referenceObject.Suffix,
                                                       referenceObject.NumberOfDecimalPlaces,
+                                                      referenceObject.MidpointRounding,
                                                       referenceObject.DecimalSeparator,
                                                       referenceObject.DigitGroupKind,
                                                       referenceObject.DigitGroupSeparator,
@@ -261,6 +269,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Prefix,
                                                       referenceObject.Suffix,
                                                       referenceObject.NumberOfDecimalPlaces,
+                                                      referenceObject.MidpointRounding,
                                                       referenceObject.DecimalSeparator,
                                                       referenceObject.DigitGroupKind,
                                                       referenceObject.DigitGroupSeparator,
@@ -276,6 +285,33 @@ namespace OBeautifulCode.DataStructure.Test
             .AddScenario(() =>
                 new ConstructorPropertyAssignmentTestScenario<DecimalCellValueFormat>
                 {
+                    Name = "MidpointRounding should return same 'midpointRounding' parameter passed to constructor when getting",
+                    SystemUnderTestExpectedPropertyValueFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<DecimalCellValueFormat>();
+
+                        var result = new SystemUnderTestExpectedPropertyValue<DecimalCellValueFormat>
+                        {
+                            SystemUnderTest = new DecimalCellValueFormat(
+                                                      referenceObject.Prefix,
+                                                      referenceObject.Suffix,
+                                                      referenceObject.NumberOfDecimalPlaces,
+                                                      referenceObject.MidpointRounding,
+                                                      referenceObject.DecimalSeparator,
+                                                      referenceObject.DigitGroupKind,
+                                                      referenceObject.DigitGroupSeparator,
+                                                      referenceObject.NegativeNumberDisplayKind,
+                                                      referenceObject.MissingValueText),
+                            ExpectedPropertyValue = referenceObject.MidpointRounding,
+                        };
+
+                        return result;
+                    },
+                    PropertyName = "MidpointRounding",
+                })
+            .AddScenario(() =>
+                new ConstructorPropertyAssignmentTestScenario<DecimalCellValueFormat>
+                {
                     Name = "DecimalSeparator should return same 'decimalSeparator' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
@@ -287,6 +323,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Prefix,
                                                       referenceObject.Suffix,
                                                       referenceObject.NumberOfDecimalPlaces,
+                                                      referenceObject.MidpointRounding,
                                                       referenceObject.DecimalSeparator,
                                                       referenceObject.DigitGroupKind,
                                                       referenceObject.DigitGroupSeparator,
@@ -313,6 +350,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Prefix,
                                                       referenceObject.Suffix,
                                                       referenceObject.NumberOfDecimalPlaces,
+                                                      referenceObject.MidpointRounding,
                                                       referenceObject.DecimalSeparator,
                                                       referenceObject.DigitGroupKind,
                                                       referenceObject.DigitGroupSeparator,
@@ -339,6 +377,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Prefix,
                                                       referenceObject.Suffix,
                                                       referenceObject.NumberOfDecimalPlaces,
+                                                      referenceObject.MidpointRounding,
                                                       referenceObject.DecimalSeparator,
                                                       referenceObject.DigitGroupKind,
                                                       referenceObject.DigitGroupSeparator,
@@ -365,6 +404,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Prefix,
                                                       referenceObject.Suffix,
                                                       referenceObject.NumberOfDecimalPlaces,
+                                                      referenceObject.MidpointRounding,
                                                       referenceObject.DecimalSeparator,
                                                       referenceObject.DigitGroupKind,
                                                       referenceObject.DigitGroupSeparator,
@@ -391,6 +431,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Prefix,
                                                       referenceObject.Suffix,
                                                       referenceObject.NumberOfDecimalPlaces,
+                                                      referenceObject.MidpointRounding,
                                                       referenceObject.DecimalSeparator,
                                                       referenceObject.DigitGroupKind,
                                                       referenceObject.DigitGroupSeparator,
@@ -440,6 +481,26 @@ namespace OBeautifulCode.DataStructure.Test
                         {
                             SystemUnderTest = systemUnderTest,
                             DeepCloneWithValue = referenceObject.NumberOfDecimalPlaces,
+                        };
+
+                        return result;
+                    },
+                })
+            .AddScenario(() =>
+                new DeepCloneWithTestScenario<DecimalCellValueFormat>
+                {
+                    Name = "DeepCloneWithMidpointRounding should deep clone object and replace MidpointRounding with the provided midpointRounding",
+                    WithPropertyName = "MidpointRounding",
+                    SystemUnderTestDeepCloneWithValueFunc = () =>
+                    {
+                        var systemUnderTest = A.Dummy<DecimalCellValueFormat>();
+
+                        var referenceObject = A.Dummy<DecimalCellValueFormat>().ThatIs(_ => !systemUnderTest.MidpointRounding.IsEqualTo(_.MidpointRounding));
+
+                        var result = new SystemUnderTestDeepCloneWithValue<DecimalCellValueFormat>
+                        {
+                            SystemUnderTest = systemUnderTest,
+                            DeepCloneWithValue = referenceObject.MidpointRounding,
                         };
 
                         return result;
@@ -580,6 +641,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.Prefix,
                                 ReferenceObjectForEquatableTestScenarios.Suffix,
                                 ReferenceObjectForEquatableTestScenarios.NumberOfDecimalPlaces,
+                                ReferenceObjectForEquatableTestScenarios.MidpointRounding,
                                 ReferenceObjectForEquatableTestScenarios.DecimalSeparator,
                                 ReferenceObjectForEquatableTestScenarios.DigitGroupKind,
                                 ReferenceObjectForEquatableTestScenarios.DigitGroupSeparator,
@@ -592,6 +654,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.Prefix,
                                 ReferenceObjectForEquatableTestScenarios.Suffix,
                                 ReferenceObjectForEquatableTestScenarios.NumberOfDecimalPlaces,
+                                ReferenceObjectForEquatableTestScenarios.MidpointRounding,
                                 ReferenceObjectForEquatableTestScenarios.DecimalSeparator,
                                 ReferenceObjectForEquatableTestScenarios.DigitGroupKind,
                                 ReferenceObjectForEquatableTestScenarios.DigitGroupSeparator,
@@ -601,6 +664,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.Prefix,
                                 ReferenceObjectForEquatableTestScenarios.Suffix,
                                 A.Dummy<DecimalCellValueFormat>().Whose(_ => !_.NumberOfDecimalPlaces.IsEqualTo(ReferenceObjectForEquatableTestScenarios.NumberOfDecimalPlaces)).NumberOfDecimalPlaces,
+                                ReferenceObjectForEquatableTestScenarios.MidpointRounding,
                                 ReferenceObjectForEquatableTestScenarios.DecimalSeparator,
                                 ReferenceObjectForEquatableTestScenarios.DigitGroupKind,
                                 ReferenceObjectForEquatableTestScenarios.DigitGroupSeparator,
@@ -610,6 +674,17 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.Prefix,
                                 ReferenceObjectForEquatableTestScenarios.Suffix,
                                 ReferenceObjectForEquatableTestScenarios.NumberOfDecimalPlaces,
+                                A.Dummy<DecimalCellValueFormat>().Whose(_ => !_.MidpointRounding.IsEqualTo(ReferenceObjectForEquatableTestScenarios.MidpointRounding)).MidpointRounding,
+                                ReferenceObjectForEquatableTestScenarios.DecimalSeparator,
+                                ReferenceObjectForEquatableTestScenarios.DigitGroupKind,
+                                ReferenceObjectForEquatableTestScenarios.DigitGroupSeparator,
+                                ReferenceObjectForEquatableTestScenarios.NegativeNumberDisplayKind,
+                                ReferenceObjectForEquatableTestScenarios.MissingValueText),
+                        new DecimalCellValueFormat(
+                                ReferenceObjectForEquatableTestScenarios.Prefix,
+                                ReferenceObjectForEquatableTestScenarios.Suffix,
+                                ReferenceObjectForEquatableTestScenarios.NumberOfDecimalPlaces,
+                                ReferenceObjectForEquatableTestScenarios.MidpointRounding,
                                 A.Dummy<DecimalCellValueFormat>().Whose(_ => !_.DecimalSeparator.IsEqualTo(ReferenceObjectForEquatableTestScenarios.DecimalSeparator)).DecimalSeparator,
                                 ReferenceObjectForEquatableTestScenarios.DigitGroupKind,
                                 ReferenceObjectForEquatableTestScenarios.DigitGroupSeparator,
@@ -619,6 +694,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.Prefix,
                                 ReferenceObjectForEquatableTestScenarios.Suffix,
                                 ReferenceObjectForEquatableTestScenarios.NumberOfDecimalPlaces,
+                                ReferenceObjectForEquatableTestScenarios.MidpointRounding,
                                 ReferenceObjectForEquatableTestScenarios.DecimalSeparator,
                                 A.Dummy<DecimalCellValueFormat>().Whose(_ => !_.DigitGroupKind.IsEqualTo(ReferenceObjectForEquatableTestScenarios.DigitGroupKind)).DigitGroupKind,
                                 ReferenceObjectForEquatableTestScenarios.DigitGroupSeparator,
@@ -628,6 +704,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.Prefix,
                                 ReferenceObjectForEquatableTestScenarios.Suffix,
                                 ReferenceObjectForEquatableTestScenarios.NumberOfDecimalPlaces,
+                                ReferenceObjectForEquatableTestScenarios.MidpointRounding,
                                 ReferenceObjectForEquatableTestScenarios.DecimalSeparator,
                                 ReferenceObjectForEquatableTestScenarios.DigitGroupKind,
                                 A.Dummy<DecimalCellValueFormat>().Whose(_ => !_.DigitGroupSeparator.IsEqualTo(ReferenceObjectForEquatableTestScenarios.DigitGroupSeparator)).DigitGroupSeparator,
@@ -637,6 +714,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.Prefix,
                                 ReferenceObjectForEquatableTestScenarios.Suffix,
                                 ReferenceObjectForEquatableTestScenarios.NumberOfDecimalPlaces,
+                                ReferenceObjectForEquatableTestScenarios.MidpointRounding,
                                 ReferenceObjectForEquatableTestScenarios.DecimalSeparator,
                                 ReferenceObjectForEquatableTestScenarios.DigitGroupKind,
                                 ReferenceObjectForEquatableTestScenarios.DigitGroupSeparator,
@@ -646,6 +724,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 A.Dummy<DecimalCellValueFormat>().Whose(_ => !_.Prefix.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Prefix)).Prefix,
                                 ReferenceObjectForEquatableTestScenarios.Suffix,
                                 ReferenceObjectForEquatableTestScenarios.NumberOfDecimalPlaces,
+                                ReferenceObjectForEquatableTestScenarios.MidpointRounding,
                                 ReferenceObjectForEquatableTestScenarios.DecimalSeparator,
                                 ReferenceObjectForEquatableTestScenarios.DigitGroupKind,
                                 ReferenceObjectForEquatableTestScenarios.DigitGroupSeparator,
@@ -655,6 +734,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.Prefix,
                                 A.Dummy<DecimalCellValueFormat>().Whose(_ => !_.Suffix.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Suffix)).Suffix,
                                 ReferenceObjectForEquatableTestScenarios.NumberOfDecimalPlaces,
+                                ReferenceObjectForEquatableTestScenarios.MidpointRounding,
                                 ReferenceObjectForEquatableTestScenarios.DecimalSeparator,
                                 ReferenceObjectForEquatableTestScenarios.DigitGroupKind,
                                 ReferenceObjectForEquatableTestScenarios.DigitGroupSeparator,
@@ -964,7 +1044,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "MissingValueText", "NumberOfDecimalPlaces", "DecimalSeparator", "DigitGroupKind", "DigitGroupSeparator", "NegativeNumberDisplayKind", "Prefix", "Suffix" };
+                var propertyNames = new string[] { "MissingValueText", "NumberOfDecimalPlaces", "MidpointRounding", "DecimalSeparator", "DigitGroupKind", "DigitGroupSeparator", "NegativeNumberDisplayKind", "Prefix", "Suffix" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 

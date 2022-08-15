@@ -292,6 +292,49 @@ namespace OBeautifulCode.DataStructure.Test
                 return result;
             });
 
+            // CellValueFormat
+            AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
+            {
+                var result = new DecimalCellValueFormat(A.Dummy<string>(), A.Dummy<string>(), A.Dummy<ZeroOrPositiveInteger>(), A.Dummy<MidpointRounding>(), A.Dummy<char>(), A.Dummy<NumberFormatDigitGroupKind>(), A.Dummy<char>(), A.Dummy<NumberFormatNegativeDisplayKind>(), A.Dummy<string>());
+
+                return result;
+            });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
+            {
+                var result = new NullNumberCellFormat<decimal>(A.Dummy<ZeroOrPositiveInteger>(), A.Dummy<MidpointRounding>(), A.Dummy<char>(), A.Dummy<NumberFormatDigitGroupKind>(), A.Dummy<char>(), A.Dummy<NumberFormatNegativeDisplayKind>(), A.Dummy<string>());
+
+                return result;
+            });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
+            {
+                var result = new NullNumberCellFormat<double>(A.Dummy<ZeroOrPositiveInteger>(), A.Dummy<MidpointRounding>(), A.Dummy<char>(), A.Dummy<NumberFormatDigitGroupKind>(), A.Dummy<char>(), A.Dummy<NumberFormatNegativeDisplayKind>(), A.Dummy<string>());
+
+                return result;
+            });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
+            {
+                var result = new NullNumberCellFormat<int>(A.Dummy<ZeroOrPositiveInteger>(), A.Dummy<MidpointRounding>(), A.Dummy<char>(), A.Dummy<NumberFormatDigitGroupKind>(), A.Dummy<char>(), A.Dummy<NumberFormatNegativeDisplayKind>(), A.Dummy<string>());
+
+                return result;
+            });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
+            {
+                var result = new NullNumberCellFormat<Version>(A.Dummy<ZeroOrPositiveInteger>(), A.Dummy<MidpointRounding>(), A.Dummy<char>(), A.Dummy<NumberFormatDigitGroupKind>(), A.Dummy<char>(), A.Dummy<NumberFormatNegativeDisplayKind>(), A.Dummy<string>());
+
+                return result;
+            });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
+            {
+                var result = new PercentCellValueFormat(A.Dummy<NumberFormatPercentDisplayKind>(), A.Dummy<ZeroOrPositiveInteger>(), A.Dummy<MidpointRounding>(), A.Dummy<char>(), A.Dummy<NumberFormatDigitGroupKind>(), A.Dummy<char>(), A.Dummy<NumberFormatNegativeDisplayKind>(), A.Dummy<string>());
+
+                return result;
+            });
+
             // Events
             AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
             {

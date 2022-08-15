@@ -308,15 +308,24 @@
     <Compile Include="Models\Classes\Format\Border\OuterBorder.designer.cs">
       <DependentUpon>OuterBorder.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\Classes\Format\CellValue\Number\DecimalCellValueFormat.designer.cs">
+      <DependentUpon>DecimalCellValueFormat.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Format\CellValue\Number\NullNumberCellFormat{TValue}.designer.cs">
+      <DependentUpon>NullNumberCellFormat{TValue}.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Format\CellValue\Number\NumberCellFormatBase{TValue}.designer.cs">
+      <DependentUpon>NumberCellFormatBase{TValue}.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Format\CellValue\Number\PercentCellValueFormat.designer.cs">
+      <DependentUpon>PercentCellValueFormat.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Classes\Format\CellValue\Standard\DateTimeCellValueFormat.cs" />
     <Compile Include="Models\Classes\Format\CellValue\Standard\BooleanCellValueFormat.designer.cs">
       <DependentUpon>BooleanCellValueFormat.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Classes\Format\CellValue\Standard\CategoricalCellValueFormat{TValue}.designer.cs">
       <DependentUpon>CategoricalCellValueFormat{TValue}.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Format\CellValue\Number\DecimalCellValueFormat.designer.cs">
-      <DependentUpon>DecimalCellValueFormat.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Classes\Format\CellValue\Standard\DateTimeCellValueFormat.designer.cs">
       <DependentUpon>DateTimeCellValueFormat.cs</DependentUpon>
@@ -325,20 +334,11 @@
     <Compile Include="Models\Classes\Format\CellValue\Standard\HtmlCellValueFormat.designer.cs">
       <DependentUpon>HtmlCellValueFormat.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Classes\Format\CellValue\Number\NullNumberCellFormat{TValue}.designer.cs">
-      <DependentUpon>NullNumberCellFormat{TValue}.cs</DependentUpon>
-    </Compile>
     <Compile Include="Models\Classes\Format\CellValue\Number\PercentCellValueFormat.cs" />
     <Compile Include="Models\Classes\Format\CellValue\Number\DecimalCellValueFormat.cs" />
     <Compile Include="Models\Classes\Format\CellValue\Standard\CategoricalCellValueFormat{TValue}.cs" />
     <Compile Include="Models\Classes\Format\CellValue\Standard\BooleanCellValueFormat.cs" />
-    <Compile Include="Models\Classes\Format\CellValue\Number\PercentCellValueFormat.designer.cs">
-      <DependentUpon>PercentCellValueFormat.cs</DependentUpon>
-    </Compile>
     <Compile Include="Models\Classes\Format\CellValue\Number\NumberCellFormatBase{TValue}.cs" />
-    <Compile Include="Models\Classes\Format\CellValue\Number\NumberCellFormatBase{TValue}.designer.cs">
-      <DependentUpon>NumberCellFormatBase{TValue}.cs</DependentUpon>
-    </Compile>
     <Compile Include="Models\Classes\Format\CellValue\Number\NullNumberCellFormat{TValue}.cs" />
     <Compile Include="Models\Classes\Format\CellValue\StandardCellValueFormatBase{TValue}.cs" />
     <Compile Include="Models\Classes\Format\CellValue\CellValueFormatBase{TValue}.cs" />

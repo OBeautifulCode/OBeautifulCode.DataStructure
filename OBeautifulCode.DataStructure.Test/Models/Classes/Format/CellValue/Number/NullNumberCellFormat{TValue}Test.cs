@@ -34,6 +34,50 @@ namespace OBeautifulCode.DataStructure.Test
                 .AddScenario(() =>
                     new ConstructorArgumentValidationTestScenario<NullNumberCellFormat<Version>>
                     {
+                        Name = "constructor should throw ArgumentOutOfRangeException when parameter 'numberOfDecimalPlaces' is negative",
+                        ConstructionFunc = () =>
+                        {
+                            var referenceObject = A.Dummy<NullNumberCellFormat<Version>>();
+
+                            var result = new NullNumberCellFormat<Version>(
+                                A.Dummy<NegativeInteger>(),
+                                referenceObject.MidpointRounding,
+                                referenceObject.DecimalSeparator,
+                                referenceObject.DigitGroupKind,
+                                referenceObject.DigitGroupSeparator,
+                                referenceObject.NegativeNumberDisplayKind,
+                                referenceObject.MissingValueText);
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentOutOfRangeException),
+                        ExpectedExceptionMessageContains = new[] { "numberOfDecimalPlaces", "is negative" },
+                    })
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<NullNumberCellFormat<Version>>
+                    {
+                        Name = "constructor should throw ArgumentException when parameter 'midpointRounding' is not null, but 'numberOfDecimalPlaces' is null.",
+                        ConstructionFunc = () =>
+                        {
+                            var referenceObject = A.Dummy<NullNumberCellFormat<Version>>();
+
+                            var result = new NullNumberCellFormat<Version>(
+                                null,
+                                A.Dummy<MidpointRounding>(),
+                                referenceObject.DecimalSeparator,
+                                referenceObject.DigitGroupKind,
+                                referenceObject.DigitGroupSeparator,
+                                referenceObject.NegativeNumberDisplayKind,
+                                referenceObject.MissingValueText);
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentException),
+                        ExpectedExceptionMessageContains = new[] { "midpointRounding is not null, but numberOfDecimalPlaces is null." },
+                    })
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<NullNumberCellFormat<Version>>
+                    {
                         Name = "constructor should throw ArgumentOutOfRangeException when parameter 'digitGroupKind' is NumberFormatDigitGroupKind.Unknown",
                         ConstructionFunc = () =>
                         {
@@ -41,6 +85,7 @@ namespace OBeautifulCode.DataStructure.Test
 
                             var result = new NullNumberCellFormat<Version>(
                                                  referenceObject.NumberOfDecimalPlaces,
+                                                 referenceObject.MidpointRounding,
                                                  referenceObject.DecimalSeparator,
                                                  NumberFormatDigitGroupKind.Unknown,
                                                  referenceObject.DigitGroupSeparator,
@@ -62,6 +107,7 @@ namespace OBeautifulCode.DataStructure.Test
 
                             var result = new NullNumberCellFormat<Version>(
                                 referenceObject.NumberOfDecimalPlaces,
+                                referenceObject.MidpointRounding,
                                 referenceObject.DecimalSeparator,
                                 referenceObject.DigitGroupKind,
                                 referenceObject.DigitGroupSeparator,
