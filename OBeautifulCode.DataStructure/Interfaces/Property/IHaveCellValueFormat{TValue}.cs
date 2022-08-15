@@ -7,10 +7,10 @@
 namespace OBeautifulCode.DataStructure
 {
     /// <summary>
-    /// Specifies formatting for a cell.
+    /// Specifies formatting for a cell value of a specified type.
     /// </summary>
     /// <typeparam name="TValue">The type of value.</typeparam>
-    public interface IHaveCellValueFormat<TValue>
+    public interface IHaveCellValueFormat<TValue> : IHaveCellValueFormat
     {
         /// <summary>
         /// Gets the format to apply to the value of a cell.

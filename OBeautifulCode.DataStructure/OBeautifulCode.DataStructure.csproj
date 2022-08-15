@@ -172,6 +172,7 @@
     <Compile Include="Interfaces\Classification\Cell\Slotted\ISlottedCell.cs" />
     <Compile Include="Interfaces\Classification\Format\ICellValueFormat{TValue}.cs" />
     <Compile Include="Interfaces\Classification\Details\IDetails.cs" />
+    <Compile Include="Interfaces\Property\IHaveCellValueFormat.cs" />
     <Compile Include="Interfaces\Property\IHaveMessage.cs" />
     <Compile Include="Interfaces\Property\IHaveCellValueFormat{TValue}.cs" />
     <Compile Include="Interfaces\Property\IHaveStandardCellFeatures{TValue}.cs" />
