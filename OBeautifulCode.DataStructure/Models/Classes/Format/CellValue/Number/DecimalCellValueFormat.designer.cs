@@ -71,7 +71,7 @@ namespace OBeautifulCode.DataStructure
 
             var result = this.MissingValueText.IsEqualTo(other.MissingValueText, StringComparer.Ordinal)
                       && this.NumberOfDecimalPlaces.IsEqualTo(other.NumberOfDecimalPlaces)
-                      && this.MidpointRounding.IsEqualTo(other.MidpointRounding)
+                      && this.RoundingStrategy.IsEqualTo(other.RoundingStrategy)
                       && this.DecimalSeparator.IsEqualTo(other.DecimalSeparator)
                       && this.DigitGroupKind.IsEqualTo(other.DigitGroupKind)
                       && this.DigitGroupSeparator.IsEqualTo(other.DigitGroupSeparator)
@@ -89,7 +89,7 @@ namespace OBeautifulCode.DataStructure
         public override int GetHashCode() => HashCodeHelper.Initialize()
             .Hash(this.MissingValueText)
             .Hash(this.NumberOfDecimalPlaces)
-            .Hash(this.MidpointRounding)
+            .Hash(this.RoundingStrategy)
             .Hash(this.DecimalSeparator)
             .Hash(this.DigitGroupKind)
             .Hash(this.DigitGroupSeparator)
@@ -125,7 +125,7 @@ namespace OBeautifulCode.DataStructure
                                  this.Prefix?.DeepClone(),
                                  this.Suffix?.DeepClone(),
                                  this.NumberOfDecimalPlaces?.DeepClone(),
-                                 this.MidpointRounding?.DeepClone(),
+                                 this.RoundingStrategy?.DeepClone(),
                                  this.DecimalSeparator?.DeepClone(),
                                  this.DigitGroupKind?.DeepClone(),
                                  this.DigitGroupSeparator?.DeepClone(),
@@ -159,7 +159,7 @@ namespace OBeautifulCode.DataStructure
                                  this.Prefix?.DeepClone(),
                                  this.Suffix?.DeepClone(),
                                  numberOfDecimalPlaces,
-                                 this.MidpointRounding?.DeepClone(),
+                                 this.RoundingStrategy?.DeepClone(),
                                  this.DecimalSeparator?.DeepClone(),
                                  this.DigitGroupKind?.DeepClone(),
                                  this.DigitGroupSeparator?.DeepClone(),
@@ -187,13 +187,13 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public override NumberCellFormatBase<decimal> DeepCloneWithMidpointRounding(MidpointRounding? midpointRounding)
+        public override NumberCellFormatBase<decimal> DeepCloneWithRoundingStrategy(MidpointRounding? roundingStrategy)
         {
             var result = new DecimalCellValueFormat(
                                  this.Prefix?.DeepClone(),
                                  this.Suffix?.DeepClone(),
                                  this.NumberOfDecimalPlaces?.DeepClone(),
-                                 midpointRounding,
+                                 roundingStrategy,
                                  this.DecimalSeparator?.DeepClone(),
                                  this.DigitGroupKind?.DeepClone(),
                                  this.DigitGroupSeparator?.DeepClone(),
@@ -227,7 +227,7 @@ namespace OBeautifulCode.DataStructure
                                  this.Prefix?.DeepClone(),
                                  this.Suffix?.DeepClone(),
                                  this.NumberOfDecimalPlaces?.DeepClone(),
-                                 this.MidpointRounding?.DeepClone(),
+                                 this.RoundingStrategy?.DeepClone(),
                                  decimalSeparator,
                                  this.DigitGroupKind?.DeepClone(),
                                  this.DigitGroupSeparator?.DeepClone(),
@@ -261,7 +261,7 @@ namespace OBeautifulCode.DataStructure
                                  this.Prefix?.DeepClone(),
                                  this.Suffix?.DeepClone(),
                                  this.NumberOfDecimalPlaces?.DeepClone(),
-                                 this.MidpointRounding?.DeepClone(),
+                                 this.RoundingStrategy?.DeepClone(),
                                  this.DecimalSeparator?.DeepClone(),
                                  digitGroupKind,
                                  this.DigitGroupSeparator?.DeepClone(),
@@ -295,7 +295,7 @@ namespace OBeautifulCode.DataStructure
                                  this.Prefix?.DeepClone(),
                                  this.Suffix?.DeepClone(),
                                  this.NumberOfDecimalPlaces?.DeepClone(),
-                                 this.MidpointRounding?.DeepClone(),
+                                 this.RoundingStrategy?.DeepClone(),
                                  this.DecimalSeparator?.DeepClone(),
                                  this.DigitGroupKind?.DeepClone(),
                                  digitGroupSeparator,
@@ -329,7 +329,7 @@ namespace OBeautifulCode.DataStructure
                                  this.Prefix?.DeepClone(),
                                  this.Suffix?.DeepClone(),
                                  this.NumberOfDecimalPlaces?.DeepClone(),
-                                 this.MidpointRounding?.DeepClone(),
+                                 this.RoundingStrategy?.DeepClone(),
                                  this.DecimalSeparator?.DeepClone(),
                                  this.DigitGroupKind?.DeepClone(),
                                  this.DigitGroupSeparator?.DeepClone(),
@@ -367,7 +367,7 @@ namespace OBeautifulCode.DataStructure
                                  prefix,
                                  this.Suffix?.DeepClone(),
                                  this.NumberOfDecimalPlaces?.DeepClone(),
-                                 this.MidpointRounding?.DeepClone(),
+                                 this.RoundingStrategy?.DeepClone(),
                                  this.DecimalSeparator?.DeepClone(),
                                  this.DigitGroupKind?.DeepClone(),
                                  this.DigitGroupSeparator?.DeepClone(),
@@ -405,7 +405,7 @@ namespace OBeautifulCode.DataStructure
                                  this.Prefix?.DeepClone(),
                                  suffix,
                                  this.NumberOfDecimalPlaces?.DeepClone(),
-                                 this.MidpointRounding?.DeepClone(),
+                                 this.RoundingStrategy?.DeepClone(),
                                  this.DecimalSeparator?.DeepClone(),
                                  this.DigitGroupKind?.DeepClone(),
                                  this.DigitGroupSeparator?.DeepClone(),
@@ -423,7 +423,7 @@ namespace OBeautifulCode.DataStructure
                                  this.Prefix?.DeepClone(),
                                  this.Suffix?.DeepClone(),
                                  this.NumberOfDecimalPlaces?.DeepClone(),
-                                 this.MidpointRounding?.DeepClone(),
+                                 this.RoundingStrategy?.DeepClone(),
                                  this.DecimalSeparator?.DeepClone(),
                                  this.DigitGroupKind?.DeepClone(),
                                  this.DigitGroupSeparator?.DeepClone(),
@@ -437,7 +437,7 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"OBeautifulCode.DataStructure.DecimalCellValueFormat: MissingValueText = {this.MissingValueText?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, NumberOfDecimalPlaces = {this.NumberOfDecimalPlaces?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, MidpointRounding = {this.MidpointRounding?.ToString() ?? "<null>"}, DecimalSeparator = {this.DecimalSeparator?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, DigitGroupKind = {this.DigitGroupKind?.ToString() ?? "<null>"}, DigitGroupSeparator = {this.DigitGroupSeparator?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, NegativeNumberDisplayKind = {this.NegativeNumberDisplayKind?.ToString() ?? "<null>"}, Prefix = {this.Prefix?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Suffix = {this.Suffix?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}.");
+            var result = Invariant($"OBeautifulCode.DataStructure.DecimalCellValueFormat: MissingValueText = {this.MissingValueText?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, NumberOfDecimalPlaces = {this.NumberOfDecimalPlaces?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, RoundingStrategy = {this.RoundingStrategy?.ToString() ?? "<null>"}, DecimalSeparator = {this.DecimalSeparator?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, DigitGroupKind = {this.DigitGroupKind?.ToString() ?? "<null>"}, DigitGroupSeparator = {this.DigitGroupSeparator?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, NegativeNumberDisplayKind = {this.NegativeNumberDisplayKind?.ToString() ?? "<null>"}, Prefix = {this.Prefix?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Suffix = {this.Suffix?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}.");
 
             return result;
         }

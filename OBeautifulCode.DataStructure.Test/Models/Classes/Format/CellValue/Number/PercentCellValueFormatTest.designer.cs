@@ -47,7 +47,7 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new SystemUnderTestExpectedStringRepresentation<PercentCellValueFormat>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.PercentCellValueFormat: MissingValueText = {systemUnderTest.MissingValueText?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, NumberOfDecimalPlaces = {systemUnderTest.NumberOfDecimalPlaces?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, MidpointRounding = {systemUnderTest.MidpointRounding?.ToString() ?? "<null>"}, DecimalSeparator = {systemUnderTest.DecimalSeparator?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, DigitGroupKind = {systemUnderTest.DigitGroupKind?.ToString() ?? "<null>"}, DigitGroupSeparator = {systemUnderTest.DigitGroupSeparator?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, NegativeNumberDisplayKind = {systemUnderTest.NegativeNumberDisplayKind?.ToString() ?? "<null>"}, PercentDisplayKind = {systemUnderTest.PercentDisplayKind?.ToString() ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.PercentCellValueFormat: MissingValueText = {systemUnderTest.MissingValueText?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, NumberOfDecimalPlaces = {systemUnderTest.NumberOfDecimalPlaces?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, RoundingStrategy = {systemUnderTest.RoundingStrategy?.ToString() ?? "<null>"}, DecimalSeparator = {systemUnderTest.DecimalSeparator?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, DigitGroupKind = {systemUnderTest.DigitGroupKind?.ToString() ?? "<null>"}, DigitGroupSeparator = {systemUnderTest.DigitGroupSeparator?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, NegativeNumberDisplayKind = {systemUnderTest.NegativeNumberDisplayKind?.ToString() ?? "<null>"}, PercentDisplayKind = {systemUnderTest.PercentDisplayKind?.ToString() ?? "<null>"}."),
                         };
 
                         return result;
@@ -66,7 +66,7 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new PercentCellValueFormat(
                                              referenceObject.PercentDisplayKind,
                                              referenceObject.NumberOfDecimalPlaces,
-                                             referenceObject.MidpointRounding,
+                                             referenceObject.RoundingStrategy,
                                              referenceObject.DecimalSeparator,
                                              referenceObject.DigitGroupKind,
                                              referenceObject.DigitGroupSeparator,
@@ -89,7 +89,7 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new PercentCellValueFormat(
                                              referenceObject.PercentDisplayKind,
                                              referenceObject.NumberOfDecimalPlaces,
-                                             referenceObject.MidpointRounding,
+                                             referenceObject.RoundingStrategy,
                                              referenceObject.DecimalSeparator,
                                              referenceObject.DigitGroupKind,
                                              referenceObject.DigitGroupSeparator,
@@ -116,7 +116,7 @@ namespace OBeautifulCode.DataStructure.Test
                             SystemUnderTest = new PercentCellValueFormat(
                                                       referenceObject.PercentDisplayKind,
                                                       referenceObject.NumberOfDecimalPlaces,
-                                                      referenceObject.MidpointRounding,
+                                                      referenceObject.RoundingStrategy,
                                                       referenceObject.DecimalSeparator,
                                                       referenceObject.DigitGroupKind,
                                                       referenceObject.DigitGroupSeparator,
@@ -142,7 +142,7 @@ namespace OBeautifulCode.DataStructure.Test
                             SystemUnderTest = new PercentCellValueFormat(
                                                       referenceObject.PercentDisplayKind,
                                                       referenceObject.NumberOfDecimalPlaces,
-                                                      referenceObject.MidpointRounding,
+                                                      referenceObject.RoundingStrategy,
                                                       referenceObject.DecimalSeparator,
                                                       referenceObject.DigitGroupKind,
                                                       referenceObject.DigitGroupSeparator,
@@ -158,7 +158,7 @@ namespace OBeautifulCode.DataStructure.Test
             .AddScenario(() =>
                 new ConstructorPropertyAssignmentTestScenario<PercentCellValueFormat>
                 {
-                    Name = "MidpointRounding should return same 'midpointRounding' parameter passed to constructor when getting",
+                    Name = "RoundingStrategy should return same 'roundingStrategy' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
                         var referenceObject = A.Dummy<PercentCellValueFormat>();
@@ -168,18 +168,18 @@ namespace OBeautifulCode.DataStructure.Test
                             SystemUnderTest = new PercentCellValueFormat(
                                                       referenceObject.PercentDisplayKind,
                                                       referenceObject.NumberOfDecimalPlaces,
-                                                      referenceObject.MidpointRounding,
+                                                      referenceObject.RoundingStrategy,
                                                       referenceObject.DecimalSeparator,
                                                       referenceObject.DigitGroupKind,
                                                       referenceObject.DigitGroupSeparator,
                                                       referenceObject.NegativeNumberDisplayKind,
                                                       referenceObject.MissingValueText),
-                            ExpectedPropertyValue = referenceObject.MidpointRounding,
+                            ExpectedPropertyValue = referenceObject.RoundingStrategy,
                         };
 
                         return result;
                     },
-                    PropertyName = "MidpointRounding",
+                    PropertyName = "RoundingStrategy",
                 })
             .AddScenario(() =>
                 new ConstructorPropertyAssignmentTestScenario<PercentCellValueFormat>
@@ -194,7 +194,7 @@ namespace OBeautifulCode.DataStructure.Test
                             SystemUnderTest = new PercentCellValueFormat(
                                                       referenceObject.PercentDisplayKind,
                                                       referenceObject.NumberOfDecimalPlaces,
-                                                      referenceObject.MidpointRounding,
+                                                      referenceObject.RoundingStrategy,
                                                       referenceObject.DecimalSeparator,
                                                       referenceObject.DigitGroupKind,
                                                       referenceObject.DigitGroupSeparator,
@@ -220,7 +220,7 @@ namespace OBeautifulCode.DataStructure.Test
                             SystemUnderTest = new PercentCellValueFormat(
                                                       referenceObject.PercentDisplayKind,
                                                       referenceObject.NumberOfDecimalPlaces,
-                                                      referenceObject.MidpointRounding,
+                                                      referenceObject.RoundingStrategy,
                                                       referenceObject.DecimalSeparator,
                                                       referenceObject.DigitGroupKind,
                                                       referenceObject.DigitGroupSeparator,
@@ -246,7 +246,7 @@ namespace OBeautifulCode.DataStructure.Test
                             SystemUnderTest = new PercentCellValueFormat(
                                                       referenceObject.PercentDisplayKind,
                                                       referenceObject.NumberOfDecimalPlaces,
-                                                      referenceObject.MidpointRounding,
+                                                      referenceObject.RoundingStrategy,
                                                       referenceObject.DecimalSeparator,
                                                       referenceObject.DigitGroupKind,
                                                       referenceObject.DigitGroupSeparator,
@@ -272,7 +272,7 @@ namespace OBeautifulCode.DataStructure.Test
                             SystemUnderTest = new PercentCellValueFormat(
                                                       referenceObject.PercentDisplayKind,
                                                       referenceObject.NumberOfDecimalPlaces,
-                                                      referenceObject.MidpointRounding,
+                                                      referenceObject.RoundingStrategy,
                                                       referenceObject.DecimalSeparator,
                                                       referenceObject.DigitGroupKind,
                                                       referenceObject.DigitGroupSeparator,
@@ -298,7 +298,7 @@ namespace OBeautifulCode.DataStructure.Test
                             SystemUnderTest = new PercentCellValueFormat(
                                                       referenceObject.PercentDisplayKind,
                                                       referenceObject.NumberOfDecimalPlaces,
-                                                      referenceObject.MidpointRounding,
+                                                      referenceObject.RoundingStrategy,
                                                       referenceObject.DecimalSeparator,
                                                       referenceObject.DigitGroupKind,
                                                       referenceObject.DigitGroupSeparator,
@@ -356,18 +356,18 @@ namespace OBeautifulCode.DataStructure.Test
             .AddScenario(() =>
                 new DeepCloneWithTestScenario<PercentCellValueFormat>
                 {
-                    Name = "DeepCloneWithMidpointRounding should deep clone object and replace MidpointRounding with the provided midpointRounding",
-                    WithPropertyName = "MidpointRounding",
+                    Name = "DeepCloneWithRoundingStrategy should deep clone object and replace RoundingStrategy with the provided roundingStrategy",
+                    WithPropertyName = "RoundingStrategy",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
                         var systemUnderTest = A.Dummy<PercentCellValueFormat>();
 
-                        var referenceObject = A.Dummy<PercentCellValueFormat>().ThatIs(_ => !systemUnderTest.MidpointRounding.IsEqualTo(_.MidpointRounding));
+                        var referenceObject = A.Dummy<PercentCellValueFormat>().ThatIs(_ => !systemUnderTest.RoundingStrategy.IsEqualTo(_.RoundingStrategy));
 
                         var result = new SystemUnderTestDeepCloneWithValue<PercentCellValueFormat>
                         {
                             SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.MidpointRounding,
+                            DeepCloneWithValue = referenceObject.RoundingStrategy,
                         };
 
                         return result;
@@ -487,7 +487,7 @@ namespace OBeautifulCode.DataStructure.Test
                         new PercentCellValueFormat(
                                 ReferenceObjectForEquatableTestScenarios.PercentDisplayKind,
                                 ReferenceObjectForEquatableTestScenarios.NumberOfDecimalPlaces,
-                                ReferenceObjectForEquatableTestScenarios.MidpointRounding,
+                                ReferenceObjectForEquatableTestScenarios.RoundingStrategy,
                                 ReferenceObjectForEquatableTestScenarios.DecimalSeparator,
                                 ReferenceObjectForEquatableTestScenarios.DigitGroupKind,
                                 ReferenceObjectForEquatableTestScenarios.DigitGroupSeparator,
@@ -499,7 +499,7 @@ namespace OBeautifulCode.DataStructure.Test
                         new PercentCellValueFormat(
                                 ReferenceObjectForEquatableTestScenarios.PercentDisplayKind,
                                 ReferenceObjectForEquatableTestScenarios.NumberOfDecimalPlaces,
-                                ReferenceObjectForEquatableTestScenarios.MidpointRounding,
+                                ReferenceObjectForEquatableTestScenarios.RoundingStrategy,
                                 ReferenceObjectForEquatableTestScenarios.DecimalSeparator,
                                 ReferenceObjectForEquatableTestScenarios.DigitGroupKind,
                                 ReferenceObjectForEquatableTestScenarios.DigitGroupSeparator,
@@ -508,7 +508,7 @@ namespace OBeautifulCode.DataStructure.Test
                         new PercentCellValueFormat(
                                 ReferenceObjectForEquatableTestScenarios.PercentDisplayKind,
                                 A.Dummy<PercentCellValueFormat>().Whose(_ => !_.NumberOfDecimalPlaces.IsEqualTo(ReferenceObjectForEquatableTestScenarios.NumberOfDecimalPlaces)).NumberOfDecimalPlaces,
-                                ReferenceObjectForEquatableTestScenarios.MidpointRounding,
+                                ReferenceObjectForEquatableTestScenarios.RoundingStrategy,
                                 ReferenceObjectForEquatableTestScenarios.DecimalSeparator,
                                 ReferenceObjectForEquatableTestScenarios.DigitGroupKind,
                                 ReferenceObjectForEquatableTestScenarios.DigitGroupSeparator,
@@ -517,7 +517,7 @@ namespace OBeautifulCode.DataStructure.Test
                         new PercentCellValueFormat(
                                 ReferenceObjectForEquatableTestScenarios.PercentDisplayKind,
                                 ReferenceObjectForEquatableTestScenarios.NumberOfDecimalPlaces,
-                                A.Dummy<PercentCellValueFormat>().Whose(_ => !_.MidpointRounding.IsEqualTo(ReferenceObjectForEquatableTestScenarios.MidpointRounding)).MidpointRounding,
+                                A.Dummy<PercentCellValueFormat>().Whose(_ => !_.RoundingStrategy.IsEqualTo(ReferenceObjectForEquatableTestScenarios.RoundingStrategy)).RoundingStrategy,
                                 ReferenceObjectForEquatableTestScenarios.DecimalSeparator,
                                 ReferenceObjectForEquatableTestScenarios.DigitGroupKind,
                                 ReferenceObjectForEquatableTestScenarios.DigitGroupSeparator,
@@ -526,7 +526,7 @@ namespace OBeautifulCode.DataStructure.Test
                         new PercentCellValueFormat(
                                 ReferenceObjectForEquatableTestScenarios.PercentDisplayKind,
                                 ReferenceObjectForEquatableTestScenarios.NumberOfDecimalPlaces,
-                                ReferenceObjectForEquatableTestScenarios.MidpointRounding,
+                                ReferenceObjectForEquatableTestScenarios.RoundingStrategy,
                                 A.Dummy<PercentCellValueFormat>().Whose(_ => !_.DecimalSeparator.IsEqualTo(ReferenceObjectForEquatableTestScenarios.DecimalSeparator)).DecimalSeparator,
                                 ReferenceObjectForEquatableTestScenarios.DigitGroupKind,
                                 ReferenceObjectForEquatableTestScenarios.DigitGroupSeparator,
@@ -535,7 +535,7 @@ namespace OBeautifulCode.DataStructure.Test
                         new PercentCellValueFormat(
                                 ReferenceObjectForEquatableTestScenarios.PercentDisplayKind,
                                 ReferenceObjectForEquatableTestScenarios.NumberOfDecimalPlaces,
-                                ReferenceObjectForEquatableTestScenarios.MidpointRounding,
+                                ReferenceObjectForEquatableTestScenarios.RoundingStrategy,
                                 ReferenceObjectForEquatableTestScenarios.DecimalSeparator,
                                 A.Dummy<PercentCellValueFormat>().Whose(_ => !_.DigitGroupKind.IsEqualTo(ReferenceObjectForEquatableTestScenarios.DigitGroupKind)).DigitGroupKind,
                                 ReferenceObjectForEquatableTestScenarios.DigitGroupSeparator,
@@ -544,7 +544,7 @@ namespace OBeautifulCode.DataStructure.Test
                         new PercentCellValueFormat(
                                 ReferenceObjectForEquatableTestScenarios.PercentDisplayKind,
                                 ReferenceObjectForEquatableTestScenarios.NumberOfDecimalPlaces,
-                                ReferenceObjectForEquatableTestScenarios.MidpointRounding,
+                                ReferenceObjectForEquatableTestScenarios.RoundingStrategy,
                                 ReferenceObjectForEquatableTestScenarios.DecimalSeparator,
                                 ReferenceObjectForEquatableTestScenarios.DigitGroupKind,
                                 A.Dummy<PercentCellValueFormat>().Whose(_ => !_.DigitGroupSeparator.IsEqualTo(ReferenceObjectForEquatableTestScenarios.DigitGroupSeparator)).DigitGroupSeparator,
@@ -553,7 +553,7 @@ namespace OBeautifulCode.DataStructure.Test
                         new PercentCellValueFormat(
                                 ReferenceObjectForEquatableTestScenarios.PercentDisplayKind,
                                 ReferenceObjectForEquatableTestScenarios.NumberOfDecimalPlaces,
-                                ReferenceObjectForEquatableTestScenarios.MidpointRounding,
+                                ReferenceObjectForEquatableTestScenarios.RoundingStrategy,
                                 ReferenceObjectForEquatableTestScenarios.DecimalSeparator,
                                 ReferenceObjectForEquatableTestScenarios.DigitGroupKind,
                                 ReferenceObjectForEquatableTestScenarios.DigitGroupSeparator,
@@ -562,7 +562,7 @@ namespace OBeautifulCode.DataStructure.Test
                         new PercentCellValueFormat(
                                 A.Dummy<PercentCellValueFormat>().Whose(_ => !_.PercentDisplayKind.IsEqualTo(ReferenceObjectForEquatableTestScenarios.PercentDisplayKind)).PercentDisplayKind,
                                 ReferenceObjectForEquatableTestScenarios.NumberOfDecimalPlaces,
-                                ReferenceObjectForEquatableTestScenarios.MidpointRounding,
+                                ReferenceObjectForEquatableTestScenarios.RoundingStrategy,
                                 ReferenceObjectForEquatableTestScenarios.DecimalSeparator,
                                 ReferenceObjectForEquatableTestScenarios.DigitGroupKind,
                                 ReferenceObjectForEquatableTestScenarios.DigitGroupSeparator,
@@ -872,7 +872,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "MissingValueText", "NumberOfDecimalPlaces", "MidpointRounding", "DecimalSeparator", "DigitGroupKind", "DigitGroupSeparator", "NegativeNumberDisplayKind", "PercentDisplayKind" };
+                var propertyNames = new string[] { "MissingValueText", "NumberOfDecimalPlaces", "RoundingStrategy", "DecimalSeparator", "DigitGroupKind", "DigitGroupSeparator", "NegativeNumberDisplayKind", "PercentDisplayKind" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 

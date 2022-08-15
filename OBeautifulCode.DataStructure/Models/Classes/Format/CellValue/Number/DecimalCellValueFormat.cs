@@ -21,7 +21,7 @@ namespace OBeautifulCode.DataStructure
         /// <param name="prefix">OPTIONAL string to display before the cell's value is displayed.  DEFAULT is to no prefix.</param>
         /// <param name="suffix">OPTIONAL string to display after the cell's value is displayed.  DEFAULT is no suffix.</param>
         /// <param name="numberOfDecimalPlaces">OPTIONAL number of digits after the decimal separator to display.  DEFAULT is to display all digits.</param>
-        /// <param name="midpointRounding">OPTIONAL strategy to use to round the number.  DEFAULT is to leave the strategy unspecified.</param>
+        /// <param name="roundingStrategy">OPTIONAL strategy to use to round the number.  DEFAULT is to leave the strategy unspecified.</param>
         /// <param name="decimalSeparator">OPTIONAL character to use to separate whole numbers from fractional numbers.  Default is to leave the separator unspecified.</param>
         /// <param name="digitGroupKind">OPTIONAL kind of digit grouping to employ.  DEFAULT is to leave the methodology unspecified.</param>
         /// <param name="digitGroupSeparator">OPTIONAL separator character to use between digit groups.  DEFAULT is to leave the separator unspecified.</param>
@@ -31,13 +31,13 @@ namespace OBeautifulCode.DataStructure
             string prefix = null,
             string suffix = null,
             int? numberOfDecimalPlaces = null,
-            MidpointRounding? midpointRounding = null,
+            MidpointRounding? roundingStrategy = null,
             char? decimalSeparator = null,
             NumberFormatDigitGroupKind? digitGroupKind = null,
             char? digitGroupSeparator = null,
             NumberFormatNegativeDisplayKind? negativeNumberDisplayKind = null,
             string missingValueText = null)
-            : base(numberOfDecimalPlaces, midpointRounding, decimalSeparator, digitGroupKind, digitGroupSeparator, negativeNumberDisplayKind, missingValueText)
+            : base(numberOfDecimalPlaces, roundingStrategy, decimalSeparator, digitGroupKind, digitGroupSeparator, negativeNumberDisplayKind, missingValueText)
         {
             this.Prefix = prefix;
             this.Suffix = suffix;

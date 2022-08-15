@@ -43,7 +43,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 referenceObject.Prefix,
                                 referenceObject.Suffix,
                                 A.Dummy<NegativeInteger>(),
-                                referenceObject.MidpointRounding,
+                                referenceObject.RoundingStrategy,
                                 referenceObject.DecimalSeparator,
                                 referenceObject.DigitGroupKind,
                                 referenceObject.DigitGroupSeparator,
@@ -58,7 +58,7 @@ namespace OBeautifulCode.DataStructure.Test
                 .AddScenario(() =>
                     new ConstructorArgumentValidationTestScenario<DecimalCellValueFormat>
                     {
-                        Name = "constructor should throw ArgumentException when parameter 'midpointRounding' is not null, but 'numberOfDecimalPlaces' is null.",
+                        Name = "constructor should throw ArgumentException when parameter 'roundingStrategy' is not null, but 'numberOfDecimalPlaces' is null.",
                         ConstructionFunc = () =>
                         {
                             var referenceObject = A.Dummy<DecimalCellValueFormat>();
@@ -77,7 +77,7 @@ namespace OBeautifulCode.DataStructure.Test
                             return result;
                         },
                         ExpectedExceptionType = typeof(ArgumentException),
-                        ExpectedExceptionMessageContains = new[] { "midpointRounding is not null, but numberOfDecimalPlaces is null." },
+                        ExpectedExceptionMessageContains = new[] { "roundingStrategy is not null, but numberOfDecimalPlaces is null." },
                     })
                 .AddScenario(() =>
                     new ConstructorArgumentValidationTestScenario<DecimalCellValueFormat>
@@ -91,7 +91,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                  referenceObject.Prefix,
                                                  referenceObject.Suffix,
                                                  referenceObject.NumberOfDecimalPlaces,
-                                                 referenceObject.MidpointRounding,
+                                                 referenceObject.RoundingStrategy,
                                                  referenceObject.DecimalSeparator,
                                                  NumberFormatDigitGroupKind.Unknown,
                                                  referenceObject.DigitGroupSeparator,
@@ -115,7 +115,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 referenceObject.Prefix,
                                 referenceObject.Suffix,
                                 referenceObject.NumberOfDecimalPlaces,
-                                referenceObject.MidpointRounding,
+                                referenceObject.RoundingStrategy,
                                 referenceObject.DecimalSeparator,
                                 referenceObject.DigitGroupKind,
                                 referenceObject.DigitGroupSeparator,

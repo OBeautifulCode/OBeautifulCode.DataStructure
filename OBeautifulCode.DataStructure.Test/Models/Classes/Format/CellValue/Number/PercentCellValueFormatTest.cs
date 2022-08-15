@@ -42,7 +42,7 @@ namespace OBeautifulCode.DataStructure.Test
                             var result = new PercentCellValueFormat(
                                 A.Dummy<NumberFormatPercentDisplayKind>(),
                                 A.Dummy<NegativeInteger>(),
-                                referenceObject.MidpointRounding,
+                                referenceObject.RoundingStrategy,
                                 referenceObject.DecimalSeparator,
                                 referenceObject.DigitGroupKind,
                                 referenceObject.DigitGroupSeparator,
@@ -57,7 +57,7 @@ namespace OBeautifulCode.DataStructure.Test
                 .AddScenario(() =>
                     new ConstructorArgumentValidationTestScenario<PercentCellValueFormat>
                     {
-                        Name = "constructor should throw ArgumentException when parameter 'midpointRounding' is not null, but 'numberOfDecimalPlaces' is null.",
+                        Name = "constructor should throw ArgumentException when parameter 'roundingStrategy' is not null, but 'numberOfDecimalPlaces' is null.",
                         ConstructionFunc = () =>
                         {
                             var referenceObject = A.Dummy<PercentCellValueFormat>();
@@ -75,7 +75,7 @@ namespace OBeautifulCode.DataStructure.Test
                             return result;
                         },
                         ExpectedExceptionType = typeof(ArgumentException),
-                        ExpectedExceptionMessageContains = new[] { "midpointRounding is not null, but numberOfDecimalPlaces is null." },
+                        ExpectedExceptionMessageContains = new[] { "roundingStrategy is not null, but numberOfDecimalPlaces is null." },
                     })
                 .AddScenario(() =>
                     new ConstructorArgumentValidationTestScenario<PercentCellValueFormat>
@@ -88,7 +88,7 @@ namespace OBeautifulCode.DataStructure.Test
                             var result = new PercentCellValueFormat(
                                 NumberFormatPercentDisplayKind.Unknown,
                                 referenceObject.NumberOfDecimalPlaces,
-                                referenceObject.MidpointRounding,
+                                referenceObject.RoundingStrategy,
                                 referenceObject.DecimalSeparator,
                                 referenceObject.DigitGroupKind,
                                 referenceObject.DigitGroupSeparator,
