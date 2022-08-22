@@ -179,7 +179,7 @@ namespace OBeautifulCode.DataStructure.Test
                         {
                             var referenceObject = A.Dummy<Report>();
 
-                            var treeTable = A.Dummy<TreeTable>();
+                            var treeTable = A.Dummy<TreeTable>().Whose(_ => _.GetAllCells().Count > 0);
 
                             var result = new Report(
                                 referenceObject.Id,
