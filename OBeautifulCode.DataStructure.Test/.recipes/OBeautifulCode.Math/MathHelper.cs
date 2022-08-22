@@ -434,6 +434,44 @@ namespace OBeautifulCode.Math.Recipes
         }
 
         /// <summary>
+        /// Rounds a decimal to a given number of digits.
+        /// </summary>
+        /// <param name="value">The value to round.</param>
+        /// <param name="digits">The number of digits to round to.</param>
+        /// <param name="strategy">OPTIONAL strategy to use to round the number.  DEFAULT is to round to the nearest number, and when a number is halfway between two others, it's rounded toward the nearest number that's away from zero.</param>
+        /// <returns>
+        /// Returns the rounded decimal.
+        /// </returns>
+        public static decimal Round(
+            this decimal value,
+            int digits,
+            MidpointRounding strategy = MidpointRounding.AwayFromZero)
+        {
+            var result = Math.Round(value, digits, strategy);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Rounds a decimal to a given number of digits if not null.
+        /// </summary>
+        /// <param name="value">The value to round.</param>
+        /// <param name="digits">The number of digits to round to.</param>
+        /// <param name="strategy">OPTIONAL strategy to use to round the number.  DEFAULT is to round to the nearest number, and when a number is halfway between two others, it's rounded toward the nearest number that's away from zero.</param>
+        /// <returns>
+        /// Returns the rounded decimal if not null; otherwise null.
+        /// </returns>
+        public static decimal? Round(
+            this decimal? value,
+            int digits,
+            MidpointRounding strategy = MidpointRounding.AwayFromZero)
+        {
+            var result = value?.Round(digits, strategy);
+
+            return result;
+        }
+
+        /// <summary>
         /// Truncates everything after the decimal point of a decimal and returns the resulting integer number.
         /// </summary>
         /// <param name="value">The decimal to truncate into an integer.</param>
