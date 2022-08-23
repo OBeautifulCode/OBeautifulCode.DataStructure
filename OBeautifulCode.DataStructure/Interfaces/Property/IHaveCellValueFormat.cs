@@ -15,5 +15,12 @@ namespace OBeautifulCode.DataStructure
     [SuppressMessage("Microsoft.Design", "CA1040:AvoidEmptyInterfaces", Justification = ObcSuppressBecause.CA1040_AvoidEmptyInterfaces_NeedToIdentifyGroupOfTypesAndPreferInterfaceOverAttribute)]
     public interface IHaveCellValueFormat
     {
+        /// <summary>
+        /// Gets the cell value format.
+        /// </summary>
+        /// <returns>
+        /// The cell value format.
+        /// </returns>
+        ICellValueFormat GetCellValueFormat();
     }
 }

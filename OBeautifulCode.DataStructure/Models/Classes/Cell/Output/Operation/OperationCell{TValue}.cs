@@ -68,5 +68,13 @@ namespace OBeautifulCode.DataStructure
 
         /// <inheritdoc />
         public ILink Link { get; private set; }
+
+        /// <inheritdoc />
+        public ICellValueFormat GetCellValueFormat()
+        {
+            var result = this.ValueFormat;
+
+            return result;
+        }
     }
 }

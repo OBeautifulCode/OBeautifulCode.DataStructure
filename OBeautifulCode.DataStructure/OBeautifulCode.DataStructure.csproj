@@ -170,6 +170,7 @@
     <Compile Include="Interfaces\Classification\Cell\Output\IConstOutputCell{TValue}.cs" />
     <Compile Include="Interfaces\Classification\Cell\Null\INullCell.cs" />
     <Compile Include="Interfaces\Classification\Cell\Slotted\ISlottedCell.cs" />
+    <Compile Include="Interfaces\Classification\Format\ICellValueFormat.cs" />
     <Compile Include="Interfaces\Classification\Format\ICellValueFormat{TValue}.cs" />
     <Compile Include="Interfaces\Classification\Details\IDetails.cs" />
     <Compile Include="Interfaces\Property\IHaveCellValueFormat.cs" />

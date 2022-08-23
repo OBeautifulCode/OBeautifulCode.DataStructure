@@ -60,5 +60,13 @@ namespace OBeautifulCode.DataStructure
 
         /// <inheritdoc />
         public IHoverOver HoverOver { get; private set; }
+
+        /// <inheritdoc />
+        public ICellValueFormat GetCellValueFormat()
+        {
+            var result = this.ValueFormat;
+
+            return result;
+        }
     }
 }

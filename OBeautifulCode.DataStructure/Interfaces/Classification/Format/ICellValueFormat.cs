@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ICellValueFormat{TValue}.cs" company="OBeautifulCode">
+// <copyright file="ICellValueFormat.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -11,11 +11,10 @@ namespace OBeautifulCode.DataStructure
     using OBeautifulCode.CodeAnalysis.Recipes;
 
     /// <summary>
-    /// Formatting that is applied to the value of a cell of a specified value type.
+    /// Formatting that is applied to the value of a cell.
     /// </summary>
-    /// <typeparam name="TValue">The type of value.</typeparam>
     [SuppressMessage("Microsoft.Design", "CA1040:AvoidEmptyInterfaces", Justification = ObcSuppressBecause.CA1040_AvoidEmptyInterfaces_NeedToIdentifyGroupOfTypesAndPreferInterfaceOverAttribute)]
-    public interface ICellValueFormat<TValue> : ICellValueFormat
+    public interface ICellValueFormat
     {
     }
 }
