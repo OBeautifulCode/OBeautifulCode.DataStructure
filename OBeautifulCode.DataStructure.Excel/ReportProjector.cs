@@ -638,6 +638,11 @@ namespace OBeautifulCode.DataStructure.Excel
                 worksheetName = context.SectionIdToWorksheetNameOverrideMap[section.Id];
             }
 
+            if (string.IsNullOrWhiteSpace(worksheetName))
+            {
+                worksheetName = section.Id;
+            }
+
             var result = worksheetName.Length > 31
                 ? worksheetName.Substring(0, 31)
                 : worksheetName;
