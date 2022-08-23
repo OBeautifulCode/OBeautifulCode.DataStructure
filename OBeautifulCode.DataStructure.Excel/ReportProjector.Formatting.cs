@@ -414,6 +414,53 @@ namespace OBeautifulCode.DataStructure.Excel
             range.ApplyFontFormat(format.FontFormat);
         }
 
+        private static void ApplyCellValueFormat(
+            this Range range,
+            ICellValueFormat valueFormat)
+        {
+            if (valueFormat == null)
+            {
+                return;
+            }
+
+            if (valueFormat is PercentCellValueFormat percentCellValueFormat)
+            {
+                var implementedProperties = new[]
+                {
+                    nameof(PercentCellValueFormat.NumberOfDecimalPlaces),
+                    nameof(PercentCellValueFormat.RoundingStrategy),
+                };
+
+                percentCellValueFormat.ThrowOnNotImplementedProperty(implementedProperties);
+
+                if ((percentCellValueFormat.RoundingStrategy != null) && (percentCellValueFormat.RoundingStrategy != MidpointRounding.AwayFromZero))
+                {
+                    throw new NotImplementedException(Invariant($"This {nameof(PercentCellValueFormat.RoundingStrategy)} is not yet implemented: {percentCellValueFormat.RoundingStrategy}."));
+                }
+
+                if (percentCellValueFormat.NumberOfDecimalPlaces == null)
+                {
+                    range.SetFormat(OBeautifulCode.Excel.Format.Percentage2);
+                }
+                else if (percentCellValueFormat.NumberOfDecimalPlaces == 0)
+                {
+                    range.SetFormat(OBeautifulCode.Excel.Format.Percentage1);
+                }
+                else if (percentCellValueFormat.NumberOfDecimalPlaces == 2)
+                {
+                    range.SetFormat(OBeautifulCode.Excel.Format.Percentage2);
+                }
+                else
+                {
+                    range.SetCustomFormat(Invariant($"0.{new string('0', (int)percentCellValueFormat.NumberOfDecimalPlaces)}%"));
+                }
+            }
+            else
+            {
+                throw new NotImplementedException(Invariant($"This {nameof(ICellValueFormat)} is not yet implemented: {valueFormat.GetType().ToStringReadable()}."));
+            }
+        }
+
         private static void ApplyFontFormat(
             this Range range,
             FontFormat format)

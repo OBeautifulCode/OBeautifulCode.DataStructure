@@ -531,6 +531,13 @@ namespace OBeautifulCode.DataStructure.Excel
                 cursor.CellRange.ApplyCellFormat(haveCellFormat.Format);
             }
 
+            if ((passKind == PassKind.Formatting) && (cell is IHaveCellValueFormat haveCellValueFormat))
+            {
+                var valueFormat = haveCellValueFormat.GetCellValueFormat();
+
+                cursor.CellRange.ApplyCellValueFormat(valueFormat);
+            }
+
             var notSupportedException = new NotSupportedException(Invariant($"This type of cell is not supported: {cell.GetType().ToStringReadable()}."));
 
             if (cell is INotSlottedCell)
