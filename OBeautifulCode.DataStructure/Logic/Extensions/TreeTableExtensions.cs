@@ -76,9 +76,27 @@ namespace OBeautifulCode.DataStructure
                 throw new ArgumentNullException(nameof(treeTable));
             }
 
-            var section = new Section(Guid.NewGuid().ToStringInvariantPreferred(), treeTable);
+            var result = new Report(Guid.NewGuid().ToStringInvariantPreferred(), new[] { treeTable.ToSection() }, title);
 
-            var result = new Report(Guid.NewGuid().ToStringInvariantPreferred(), new[] { section }, title);
+            return result;
+        }
+
+        /// <summary>
+        /// Converts a <see cref="TreeTable"/> to a <see cref="Section"/>.
+        /// </summary>
+        /// <param name="treeTable">The tree table.</param>
+        /// <returns>
+        /// A <see cref="Section"/> containing the specified <paramref name="treeTable"/>.
+        /// </returns>
+        public static Section ToSection(
+            this TreeTable treeTable)
+        {
+            if (treeTable == null)
+            {
+                throw new ArgumentNullException(nameof(treeTable));
+            }
+
+            var result = new Section(Guid.NewGuid().ToStringInvariantPreferred(), treeTable);
 
             return result;
         }

@@ -210,6 +210,30 @@ namespace OBeautifulCode.DataStructure.Test
             actual.Sections.First().TreeTable.AsTest().Must().BeSameReferenceAs(treeTable);
         }
 
+        [Fact]
+        public static void ToSection___Should_throw_ArgumentNullException___When_parameter_treeTable_is_null()
+        {
+            // Arrange
+            var actual = Record.Exception(() => TreeTableExtensions.ToSection(null));
+
+            // Act, Assert
+            actual.AsTest().Must().BeOfType<ArgumentNullException>();
+            actual.Message.AsTest().Must().ContainString("treeTable");
+        }
+
+        [Fact]
+        public static void ToSection___Should_return_section_containing_tree_table___When_called()
+        {
+            // Arrange
+            var treeTable = A.Dummy<TreeTable>();
+
+            // Act
+            var actual = treeTable.ToSection();
+
+            // Assert
+            actual.TreeTable.AsTest().Must().BeSameReferenceAs(treeTable);
+        }
+
         public static Tuple<TableRows, IReadOnlyCollection<ICell>> GetTableRowsForTesting()
         {
             var headerRowsResult = GetHeaderRowsForTesting();
