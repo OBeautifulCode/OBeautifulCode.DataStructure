@@ -12,6 +12,7 @@ namespace OBeautifulCode.Math.Recipes
     using global::System;
     using global::System.Collections.Generic;
     using global::System.Linq;
+    using static global::System.FormattableString;
 
     /// <summary>
     /// Supports various mathematical and numerical methods.
@@ -374,6 +375,62 @@ namespace OBeautifulCode.Math.Recipes
             }
 
             yield return toFactor;
+        }
+
+        /// <summary>
+        /// Generates a truth table of booleans.
+        /// </summary>
+        /// <param name="numberOfInputs">The number of inputs.</param>
+        /// <param name="resultInBigEndian">
+        /// A value that determines whether the result is ordered with most significant bit first, in a numeric progression represented in binary using booleans.
+        /// DEFAULT is true; the most significant bit will be first.
+        /// If true (most significant bit first), then results will be as follows: {false, false}, {false, true}, {true, false}, {true, true}.
+        /// If false (least significant bit first), then results will be as follows: {false, false}, {true, false}, {false, true}, {true, true}.
+        /// </param>
+        /// <returns>
+        /// The truth table represented as a list of entries, where each entry is a list of <see cref="bool"/>s
+        /// in a binary representation of the number within the numeric progression.
+        /// </returns>
+        /// <exception cref="ArgumentException"><paramref name="numberOfInputs"/> is less than 0.</exception>
+        public static IReadOnlyList<IReadOnlyList<bool>> GenerateTruthTable(
+            int numberOfInputs,
+            bool resultInBigEndian = true)
+        {
+            if (numberOfInputs < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(numberOfInputs), Invariant($"{nameof(numberOfInputs)} must be >= 0."));
+            }
+
+            var result = new List<IReadOnlyList<bool>>();
+
+            if (numberOfInputs == 0)
+            {
+                return result;
+            }
+
+            var maxOptions = Math.Pow(2, numberOfInputs);
+
+            for (var option = 0; option < maxOptions; option++)
+            {
+                var row = new bool[numberOfInputs];
+
+                for (var position = 0; position < numberOfInputs; position++)
+                {
+                    row[position] = (option & (1 << position)) != 0;
+                }
+
+                if (resultInBigEndian)
+                {
+                    // could also right shift and tweak check above; six of one half-dozen of the other...
+                    result.Add(row.Reverse().ToList());
+                }
+                else
+                {
+                    result.Add(row);
+                }
+            }
+
+            return result;
         }
 
         /// <summary>
