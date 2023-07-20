@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="DecimalCellValueFormatTest.cs" company="OBeautifulCode">
+// <copyright file="NumberCellValueFormat{TValue}Test.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -23,23 +23,23 @@ namespace OBeautifulCode.DataStructure.Test
     using static System.FormattableString;
 
     [SuppressMessage("Microsoft.Maintainability", "CA1505:AvoidUnmaintainableCode", Justification = ObcSuppressBecause.CA1505_AvoidUnmaintainableCode_DisagreeWithAssessment)]
-    public static partial class DecimalCellValueFormatTest
+    public static partial class NumberCellValueFormatTValueTest
     {
         [SuppressMessage("Microsoft.Maintainability", "CA1505:AvoidUnmaintainableCode", Justification = ObcSuppressBecause.CA1505_AvoidUnmaintainableCode_DisagreeWithAssessment)]
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = ObcSuppressBecause.CA1810_InitializeReferenceTypeStaticFieldsInline_FieldsDeclaredInCodeGeneratedPartialTestClass)]
-        static DecimalCellValueFormatTest()
+        static NumberCellValueFormatTValueTest()
         {
             ConstructorArgumentValidationTestScenarios
                 .RemoveAllScenarios()
                 .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<DecimalCellValueFormat>
+                    new ConstructorArgumentValidationTestScenario<NumberCellValueFormat<Version>>
                     {
                         Name = "constructor should throw ArgumentOutOfRangeException when parameter 'numberOfDecimalPlaces' is negative",
                         ConstructionFunc = () =>
                         {
-                            var referenceObject = A.Dummy<DecimalCellValueFormat>();
+                            var referenceObject = A.Dummy<NumberCellValueFormat<Version>>();
 
-                            var result = new DecimalCellValueFormat(
+                            var result = new NumberCellValueFormat<Version>(
                                 referenceObject.Prefix,
                                 referenceObject.Suffix,
                                 A.Dummy<NegativeInteger>(),
@@ -56,14 +56,14 @@ namespace OBeautifulCode.DataStructure.Test
                         ExpectedExceptionMessageContains = new[] { "numberOfDecimalPlaces", "is negative" },
                     })
                 .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<DecimalCellValueFormat>
+                    new ConstructorArgumentValidationTestScenario<NumberCellValueFormat<Version>>
                     {
                         Name = "constructor should throw ArgumentException when parameter 'roundingStrategy' is not null, but 'numberOfDecimalPlaces' is null.",
                         ConstructionFunc = () =>
                         {
-                            var referenceObject = A.Dummy<DecimalCellValueFormat>();
+                            var referenceObject = A.Dummy<NumberCellValueFormat<Version>>();
 
-                            var result = new DecimalCellValueFormat(
+                            var result = new NumberCellValueFormat<Version>(
                                 referenceObject.Prefix,
                                 referenceObject.Suffix,
                                 null,
@@ -80,14 +80,14 @@ namespace OBeautifulCode.DataStructure.Test
                         ExpectedExceptionMessageContains = new[] { "roundingStrategy is not null, but numberOfDecimalPlaces is null." },
                     })
                 .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<DecimalCellValueFormat>
+                    new ConstructorArgumentValidationTestScenario<NumberCellValueFormat<Version>>
                     {
                         Name = "constructor should throw ArgumentOutOfRangeException when parameter 'digitGroupKind' is NumberFormatDigitGroupKind.Unknown",
                         ConstructionFunc = () =>
                         {
-                            var referenceObject = A.Dummy<DecimalCellValueFormat>();
+                            var referenceObject = A.Dummy<NumberCellValueFormat<Version>>();
 
-                            var result = new DecimalCellValueFormat(
+                            var result = new NumberCellValueFormat<Version>(
                                                  referenceObject.Prefix,
                                                  referenceObject.Suffix,
                                                  referenceObject.NumberOfDecimalPlaces,
@@ -104,14 +104,14 @@ namespace OBeautifulCode.DataStructure.Test
                         ExpectedExceptionMessageContains = new[] { "digitGroupKind", "Unknown" },
                     })
                 .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<DecimalCellValueFormat>
+                    new ConstructorArgumentValidationTestScenario<NumberCellValueFormat<Version>>
                     {
                         Name = "constructor should throw ArgumentOutOfRangeException when parameter 'negativeNumberDisplayKind' is NumberFormatNegativeDisplayKind.Unknown",
                         ConstructionFunc = () =>
                         {
-                            var referenceObject = A.Dummy<DecimalCellValueFormat>();
+                            var referenceObject = A.Dummy<NumberCellValueFormat<Version>>();
 
-                            var result = new DecimalCellValueFormat(
+                            var result = new NumberCellValueFormat<Version>(
                                 referenceObject.Prefix,
                                 referenceObject.Suffix,
                                 referenceObject.NumberOfDecimalPlaces,

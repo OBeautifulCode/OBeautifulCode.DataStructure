@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="DecimalCellValueFormat.cs" company="OBeautifulCode">
+// <copyright file="NumberCellValueFormat{TValue}.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -10,13 +10,14 @@ namespace OBeautifulCode.DataStructure
     using OBeautifulCode.Type;
 
     /// <summary>
-    /// A cell value format for a decimal value.
+    /// A cell value format for a number value.
     /// </summary>
+    /// <typeparam name="TValue">The type of value.</typeparam>
     // ReSharper disable once RedundantExtendsListEntry
-    public partial class DecimalCellValueFormat : NumberCellFormatBase<decimal>, IModelViaCodeGen
+    public partial class NumberCellValueFormat<TValue> : NumberCellFormatBase<TValue>, IModelViaCodeGen
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="DecimalCellValueFormat"/> class.
+        /// Initializes a new instance of the <see cref="NumberCellValueFormat{TValue}"/> class.
         /// </summary>
         /// <param name="prefix">OPTIONAL string to display before the cell's value is displayed.  DEFAULT is to no prefix.</param>
         /// <param name="suffix">OPTIONAL string to display after the cell's value is displayed.  DEFAULT is no suffix.</param>
@@ -27,7 +28,7 @@ namespace OBeautifulCode.DataStructure
         /// <param name="digitGroupSeparator">OPTIONAL separator character to use between digit groups.  DEFAULT is to leave the separator unspecified.</param>
         /// <param name="negativeNumberDisplayKind">OPTIONAL value that specifies how to display negative numbers.  DEFAULT is to leave the methodology unspecified.</param>
         /// <param name="missingValueText">OPTIONAL text to use when the cell is missing a value.  DEFAULT is to leave this text unspecified.</param>
-        public DecimalCellValueFormat(
+        public NumberCellValueFormat(
             string prefix = null,
             string suffix = null,
             int? numberOfDecimalPlaces = null,

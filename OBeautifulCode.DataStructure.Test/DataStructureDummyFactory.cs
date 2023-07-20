@@ -295,7 +295,14 @@ namespace OBeautifulCode.DataStructure.Test
             // CellValueFormat
             AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
             {
-                var result = new DecimalCellValueFormat(A.Dummy<string>(), A.Dummy<string>(), A.Dummy<ZeroOrPositiveInteger>(), A.Dummy<MidpointRounding>(), A.Dummy<char>(), A.Dummy<NumberFormatDigitGroupKind>(), A.Dummy<char>(), A.Dummy<NumberFormatNegativeDisplayKind>(), A.Dummy<string>());
+                var result = new CurrencyCellValueFormat<Version>(A.Dummy<CurrencyCode>(), A.Dummy<ZeroOrPositiveInteger>(), A.Dummy<MidpointRounding>(), A.Dummy<char>(), A.Dummy<NumberFormatDigitGroupKind>(), A.Dummy<char>(), A.Dummy<NumberFormatNegativeDisplayKind>(), A.Dummy<string>());
+
+                return result;
+            });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
+            {
+                var result = new NumberCellValueFormat<Version>(A.Dummy<string>(), A.Dummy<string>(), A.Dummy<ZeroOrPositiveInteger>(), A.Dummy<MidpointRounding>(), A.Dummy<char>(), A.Dummy<NumberFormatDigitGroupKind>(), A.Dummy<char>(), A.Dummy<NumberFormatNegativeDisplayKind>(), A.Dummy<string>());
 
                 return result;
             });
@@ -330,7 +337,7 @@ namespace OBeautifulCode.DataStructure.Test
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
             {
-                var result = new PercentCellValueFormat(A.Dummy<NumberFormatPercentDisplayKind>(), A.Dummy<ZeroOrPositiveInteger>(), A.Dummy<MidpointRounding>(), A.Dummy<char>(), A.Dummy<NumberFormatDigitGroupKind>(), A.Dummy<char>(), A.Dummy<NumberFormatNegativeDisplayKind>(), A.Dummy<string>());
+                var result = new PercentCellValueFormat<Version>(A.Dummy<NumberFormatPercentDisplayKind>(), A.Dummy<ZeroOrPositiveInteger>(), A.Dummy<MidpointRounding>(), A.Dummy<char>(), A.Dummy<NumberFormatDigitGroupKind>(), A.Dummy<char>(), A.Dummy<NumberFormatNegativeDisplayKind>(), A.Dummy<string>());
 
                 return result;
             });

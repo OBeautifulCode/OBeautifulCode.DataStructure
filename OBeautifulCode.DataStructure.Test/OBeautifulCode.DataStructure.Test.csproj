@@ -77,8 +77,8 @@
     <Reference Include="OBeautifulCode.Serialization.PropertyBag, Version=1.0.140.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\OBeautifulCode.Serialization.PropertyBag.1.0.140\lib\net462\OBeautifulCode.Serialization.PropertyBag.dll</HintPath>
     </Reference>
-    <Reference Include="OBeautifulCode.Type, Version=1.0.119.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OBeautifulCode.Type.1.0.119\lib\net462\OBeautifulCode.Type.dll</HintPath>
+    <Reference Include="OBeautifulCode.Type, Version=1.0.120.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Type.1.0.120\lib\net462\OBeautifulCode.Type.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
@@ -206,6 +206,10 @@
     <Compile Include=".recipes\OBeautifulCode.Type\TypeDummyFactory.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeDummyFactory.designer.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
+    <Compile Include="Models\Classes\Format\CellValue\Number\CurrencyCellValueFormat{TValue}Test.cs" />
+    <Compile Include="Models\Classes\Format\CellValue\Number\CurrencyCellValueFormat{TValue}Test.designer.cs">
+      <DependentUpon>CurrencyCellValueFormat{TValue}Test.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Classes\Details\GenericDetailsTest.cs" />
     <Compile Include="Models\Classes\Details\GenericDetailsTest.designer.cs">
       <DependentUpon>GenericDetailsTest.cs</DependentUpon>
@@ -226,17 +230,9 @@
     <Compile Include="Models\Classes\Format\CellValue\Standard\DateTimeCellValueFormatTest.designer.cs">
       <DependentUpon>DateTimeCellValueFormatTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Classes\Format\CellValue\Number\DecimalCellValueFormatTest.cs" />
-    <Compile Include="Models\Classes\Format\CellValue\Number\DecimalCellValueFormatTest.designer.cs">
-      <DependentUpon>DecimalCellValueFormatTest.cs</DependentUpon>
-    </Compile>
     <Compile Include="Models\Classes\Format\CellValue\Number\NullNumberCellFormat{TValue}Test.cs" />
     <Compile Include="Models\Classes\Format\CellValue\Number\NullNumberCellFormat{TValue}Test.designer.cs">
       <DependentUpon>NullNumberCellFormat{TValue}Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\Format\CellValue\Number\PercentCellValueFormatTest.cs" />
-    <Compile Include="Models\Classes\Format\CellValue\Number\PercentCellValueFormatTest.designer.cs">
-      <DependentUpon>PercentCellValueFormatTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Classes\Format\DateTimeFormatTest.cs" />
     <Compile Include="Models\Classes\Format\DateTimeFormatTest.designer.cs">
@@ -258,6 +254,10 @@
     <Compile Include="Models\Classes\Details\NullDetailsTest.cs" />
     <Compile Include="Models\Classes\Details\NullDetailsTest.designer.cs">
       <DependentUpon>NullDetailsTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Format\CellValue\Number\NumberCellValueFormat{TValue}Test.cs" />
+    <Compile Include="Models\Classes\Format\CellValue\Number\NumberCellValueFormat{TValue}Test.designer.cs">
+      <DependentUpon>NumberCellValueFormat{TValue}Test.cs</DependentUpon>
     </Compile>
     <Compile Include="Operations\AvailabilityCheckResult\CheckAvailabilityOpTest.cs" />
     <Compile Include="Operations\AvailabilityCheckResult\CheckAvailabilityOpTest.designer.cs">
@@ -720,6 +720,10 @@
     </Compile>
     <Compile Include="Operations\SingleStatementOpBase{TStatement,TResult}Test.designer.cs">
       <DependentUpon>SingleStatementOpBase{TStatement,TResult}Test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Format\CellValue\Number\PercentCellValueFormat{TValue}Test.cs" />
+    <Compile Include="Models\Classes\Format\CellValue\Number\PercentCellValueFormat{TValue}Test.designer.cs">
+      <DependentUpon>PercentCellValueFormat{TValue}Test.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\GlobalSuppressions.cs" />

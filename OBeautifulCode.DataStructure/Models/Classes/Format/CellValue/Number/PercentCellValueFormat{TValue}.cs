@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="PercentCellValueFormat.cs" company="OBeautifulCode">
+// <copyright file="PercentCellValueFormat{TValue}.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -15,11 +15,12 @@ namespace OBeautifulCode.DataStructure
     /// <summary>
     /// A cell value format for a percentage value.
     /// </summary>
+    /// <typeparam name="TValue">The type of value.</typeparam>
     // ReSharper disable once RedundantExtendsListEntry
-    public partial class PercentCellValueFormat : NumberCellFormatBase<decimal>, IModelViaCodeGen
+    public partial class PercentCellValueFormat<TValue> : NumberCellFormatBase<TValue>, IModelViaCodeGen
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="PercentCellValueFormat"/> class.
+        /// Initializes a new instance of the <see cref="PercentCellValueFormat{TValue}"/> class.
         /// </summary>
         /// <param name="percentDisplayKind">OPTIONAL value that specifies how to display a percentage.  DEFAULT is to leave the methodology unspecified.</param>
         /// <param name="roundingStrategy">OPTIONAL strategy to use to round the number.  DEFAULT is to leave the strategy unspecified.</param>
