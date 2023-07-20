@@ -423,19 +423,19 @@ namespace OBeautifulCode.DataStructure.Excel
                 return;
             }
 
-            if (valueFormat is PercentCellValueFormat<Version> percentCellValueFormat)
+            if (valueFormat is PercentCellValueFormat<decimal> percentCellValueFormat)
             {
                 var implementedProperties = new[]
                 {
-                    nameof(PercentCellValueFormat<Version>.NumberOfDecimalPlaces),
-                    nameof(PercentCellValueFormat<Version>.RoundingStrategy),
+                    nameof(PercentCellValueFormat<decimal>.NumberOfDecimalPlaces),
+                    nameof(PercentCellValueFormat<decimal>.RoundingStrategy),
                 };
 
                 percentCellValueFormat.ThrowOnNotImplementedProperty(implementedProperties);
 
                 if ((percentCellValueFormat.RoundingStrategy != null) && (percentCellValueFormat.RoundingStrategy != MidpointRounding.AwayFromZero))
                 {
-                    throw new NotImplementedException(Invariant($"This {nameof(PercentCellValueFormat<Version>.RoundingStrategy)} is not yet implemented: {percentCellValueFormat.RoundingStrategy}."));
+                    throw new NotImplementedException(Invariant($"This {nameof(PercentCellValueFormat<decimal>.RoundingStrategy)} is not yet implemented: {percentCellValueFormat.RoundingStrategy}."));
                 }
 
                 if (percentCellValueFormat.NumberOfDecimalPlaces == null)
