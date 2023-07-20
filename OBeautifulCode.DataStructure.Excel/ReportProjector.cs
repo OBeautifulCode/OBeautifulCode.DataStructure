@@ -608,6 +608,13 @@ namespace OBeautifulCode.DataStructure.Excel
                         cursor.Cell.Value = decimalConstCell.Value;
                     }
                 }
+                else if (cell is ConstCell<decimal?> nullableDecimalConstCell)
+                {
+                    if ((passKind == PassKind.Data) && (nullableDecimalConstCell.Value != null))
+                    {
+                        cursor.Cell.Value = nullableDecimalConstCell.Value;
+                    }
+                }
                 else
                 {
                     throw notSupportedException;
