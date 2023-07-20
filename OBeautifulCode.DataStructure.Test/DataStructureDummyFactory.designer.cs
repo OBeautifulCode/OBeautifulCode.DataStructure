@@ -418,7 +418,7 @@ namespace OBeautifulCode.DataStructure.Test
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new CurrencyCellValueFormat<Version>(
-                                 A.Dummy<CurrencyCode>(),
+                                 A.Dummy<CurrencyCode?>(),
                                  A.Dummy<int?>(),
                                  A.Dummy<MidpointRounding?>(),
                                  A.Dummy<char?>(),

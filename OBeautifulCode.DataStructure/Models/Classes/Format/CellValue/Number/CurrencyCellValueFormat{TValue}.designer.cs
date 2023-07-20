@@ -120,7 +120,7 @@ namespace OBeautifulCode.DataStructure
         public override StandardCellValueFormatBase<TValue> DeepCloneWithMissingValueText(string missingValueText)
         {
             var result = new CurrencyCellValueFormat<TValue>(
-                                 this.CurrencyCode.DeepClone(),
+                                 this.CurrencyCode?.DeepClone(),
                                  this.NumberOfDecimalPlaces?.DeepClone(),
                                  this.RoundingStrategy?.DeepClone(),
                                  this.DecimalSeparator?.DeepClone(),
@@ -153,7 +153,7 @@ namespace OBeautifulCode.DataStructure
         public override NumberCellFormatBase<TValue> DeepCloneWithNumberOfDecimalPlaces(int? numberOfDecimalPlaces)
         {
             var result = new CurrencyCellValueFormat<TValue>(
-                                 this.CurrencyCode.DeepClone(),
+                                 this.CurrencyCode?.DeepClone(),
                                  numberOfDecimalPlaces,
                                  this.RoundingStrategy?.DeepClone(),
                                  this.DecimalSeparator?.DeepClone(),
@@ -186,7 +186,7 @@ namespace OBeautifulCode.DataStructure
         public override NumberCellFormatBase<TValue> DeepCloneWithRoundingStrategy(MidpointRounding? roundingStrategy)
         {
             var result = new CurrencyCellValueFormat<TValue>(
-                                 this.CurrencyCode.DeepClone(),
+                                 this.CurrencyCode?.DeepClone(),
                                  this.NumberOfDecimalPlaces?.DeepClone(),
                                  roundingStrategy,
                                  this.DecimalSeparator?.DeepClone(),
@@ -219,7 +219,7 @@ namespace OBeautifulCode.DataStructure
         public override NumberCellFormatBase<TValue> DeepCloneWithDecimalSeparator(char? decimalSeparator)
         {
             var result = new CurrencyCellValueFormat<TValue>(
-                                 this.CurrencyCode.DeepClone(),
+                                 this.CurrencyCode?.DeepClone(),
                                  this.NumberOfDecimalPlaces?.DeepClone(),
                                  this.RoundingStrategy?.DeepClone(),
                                  decimalSeparator,
@@ -252,7 +252,7 @@ namespace OBeautifulCode.DataStructure
         public override NumberCellFormatBase<TValue> DeepCloneWithDigitGroupKind(NumberFormatDigitGroupKind? digitGroupKind)
         {
             var result = new CurrencyCellValueFormat<TValue>(
-                                 this.CurrencyCode.DeepClone(),
+                                 this.CurrencyCode?.DeepClone(),
                                  this.NumberOfDecimalPlaces?.DeepClone(),
                                  this.RoundingStrategy?.DeepClone(),
                                  this.DecimalSeparator?.DeepClone(),
@@ -285,7 +285,7 @@ namespace OBeautifulCode.DataStructure
         public override NumberCellFormatBase<TValue> DeepCloneWithDigitGroupSeparator(char? digitGroupSeparator)
         {
             var result = new CurrencyCellValueFormat<TValue>(
-                                 this.CurrencyCode.DeepClone(),
+                                 this.CurrencyCode?.DeepClone(),
                                  this.NumberOfDecimalPlaces?.DeepClone(),
                                  this.RoundingStrategy?.DeepClone(),
                                  this.DecimalSeparator?.DeepClone(),
@@ -318,7 +318,7 @@ namespace OBeautifulCode.DataStructure
         public override NumberCellFormatBase<TValue> DeepCloneWithNegativeNumberDisplayKind(NumberFormatNegativeDisplayKind? negativeNumberDisplayKind)
         {
             var result = new CurrencyCellValueFormat<TValue>(
-                                 this.CurrencyCode.DeepClone(),
+                                 this.CurrencyCode?.DeepClone(),
                                  this.NumberOfDecimalPlaces?.DeepClone(),
                                  this.RoundingStrategy?.DeepClone(),
                                  this.DecimalSeparator?.DeepClone(),
@@ -352,7 +352,7 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public CurrencyCellValueFormat<TValue> DeepCloneWithCurrencyCode(CurrencyCode currencyCode)
+        public CurrencyCellValueFormat<TValue> DeepCloneWithCurrencyCode(CurrencyCode? currencyCode)
         {
             var result = new CurrencyCellValueFormat<TValue>(
                                  currencyCode,
@@ -372,7 +372,7 @@ namespace OBeautifulCode.DataStructure
         protected override CellValueFormatBase<TValue> DeepCloneInternal()
         {
             var result = new CurrencyCellValueFormat<TValue>(
-                                 this.CurrencyCode.DeepClone(),
+                                 this.CurrencyCode?.DeepClone(),
                                  this.NumberOfDecimalPlaces?.DeepClone(),
                                  this.RoundingStrategy?.DeepClone(),
                                  this.DecimalSeparator?.DeepClone(),
@@ -388,7 +388,7 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"OBeautifulCode.DataStructure.{this.GetType().ToStringReadable()}: MissingValueText = {this.MissingValueText?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, NumberOfDecimalPlaces = {this.NumberOfDecimalPlaces?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, RoundingStrategy = {this.RoundingStrategy?.ToString() ?? "<null>"}, DecimalSeparator = {this.DecimalSeparator?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, DigitGroupKind = {this.DigitGroupKind?.ToString() ?? "<null>"}, DigitGroupSeparator = {this.DigitGroupSeparator?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, NegativeNumberDisplayKind = {this.NegativeNumberDisplayKind?.ToString() ?? "<null>"}, CurrencyCode = {this.CurrencyCode.ToString() ?? "<null>"}.");
+            var result = Invariant($"OBeautifulCode.DataStructure.{this.GetType().ToStringReadable()}: MissingValueText = {this.MissingValueText?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, NumberOfDecimalPlaces = {this.NumberOfDecimalPlaces?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, RoundingStrategy = {this.RoundingStrategy?.ToString() ?? "<null>"}, DecimalSeparator = {this.DecimalSeparator?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, DigitGroupKind = {this.DigitGroupKind?.ToString() ?? "<null>"}, DigitGroupSeparator = {this.DigitGroupSeparator?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, NegativeNumberDisplayKind = {this.NegativeNumberDisplayKind?.ToString() ?? "<null>"}, CurrencyCode = {this.CurrencyCode?.ToString() ?? "<null>"}.");
 
             return result;
         }

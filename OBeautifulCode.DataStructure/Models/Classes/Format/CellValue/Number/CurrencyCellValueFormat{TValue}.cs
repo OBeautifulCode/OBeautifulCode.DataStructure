@@ -19,7 +19,7 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Initializes a new instance of the <see cref="CurrencyCellValueFormat{TValue}"/> class.
         /// </summary>
-        /// <param name="currencyCode">The currency code.</param>
+        /// <param name="currencyCode">OPTIONAL currency code.  DEFAULT is to leave the currency unspecified.</param>
         /// <param name="numberOfDecimalPlaces">OPTIONAL number of digits after the decimal separator to display.  DEFAULT is to display all digits.</param>
         /// <param name="roundingStrategy">OPTIONAL strategy to use to round the number.  DEFAULT is to leave the strategy unspecified.</param>
         /// <param name="decimalSeparator">OPTIONAL character to use to separate whole numbers from fractional numbers.  Default is to leave the separator unspecified.</param>
@@ -28,7 +28,7 @@ namespace OBeautifulCode.DataStructure
         /// <param name="negativeNumberDisplayKind">OPTIONAL value that specifies how to display negative numbers.  DEFAULT is to leave the methodology unspecified.</param>
         /// <param name="missingValueText">OPTIONAL text to use when the cell is missing a value.  DEFAULT is to leave this text unspecified.</param>
         public CurrencyCellValueFormat(
-            CurrencyCode currencyCode,
+            CurrencyCode? currencyCode = null,
             int? numberOfDecimalPlaces = null,
             MidpointRounding? roundingStrategy = null,
             char? decimalSeparator = null,
@@ -44,6 +44,6 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Gets the currency code.
         /// </summary>
-        public CurrencyCode CurrencyCode { get; private set; }
+        public CurrencyCode? CurrencyCode { get; private set; }
     }
 }
