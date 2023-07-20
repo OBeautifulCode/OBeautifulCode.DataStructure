@@ -7,9 +7,11 @@
 namespace OBeautifulCode.DataStructure.Excel
 {
     using System;
+    using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
+    using System.Reflection;
     using Aspose.Cells;
     using OBeautifulCode.Enum.Recipes;
     using OBeautifulCode.Excel;
@@ -21,6 +23,12 @@ namespace OBeautifulCode.DataStructure.Excel
 
     public static partial class ReportProjector
     {
+        private static readonly ConcurrentDictionary<Type, IReadOnlyCollection<PropertyInfo>> CachedTypeToNotImplementedPropertiesMap =
+            new ConcurrentDictionary<Type, IReadOnlyCollection<PropertyInfo>>();
+
+        private static readonly ConcurrentDictionary<Type, IReadOnlyDictionary<string, PropertyInfo>> CachedTypeToPropertyNameToPropertyMap =
+            new ConcurrentDictionary<Type, IReadOnlyDictionary<string, PropertyInfo>>();
+
         private static void ApplyReportFormat(
             this Range range,
             ReportFormat reportFormat)
@@ -423,36 +431,123 @@ namespace OBeautifulCode.DataStructure.Excel
                 return;
             }
 
-            if (valueFormat is PercentCellValueFormat<decimal> percentCellValueFormat)
+            var valueFormatType = valueFormat.GetType();
+
+            if (valueFormatType.GetGenericTypeDefinitionOrSpecifiedType() == typeof(CurrencyCellValueFormat<>))
             {
+                var numberOfDecimalPlacesName = nameof(CurrencyCellValueFormat<object>.NumberOfDecimalPlaces);
+                var roundingStrategyName = nameof(CurrencyCellValueFormat<object>.RoundingStrategy);
+
                 var implementedProperties = new[]
                 {
-                    nameof(PercentCellValueFormat<decimal>.NumberOfDecimalPlaces),
-                    nameof(PercentCellValueFormat<decimal>.RoundingStrategy),
+                    numberOfDecimalPlacesName,
+                    roundingStrategyName,
                 };
 
-                percentCellValueFormat.ThrowOnNotImplementedProperty(implementedProperties);
+                valueFormat.ThrowOnNotImplementedProperty(valueFormatType, implementedProperties);
 
-                if ((percentCellValueFormat.RoundingStrategy != null) && (percentCellValueFormat.RoundingStrategy != MidpointRounding.AwayFromZero))
+                var propertyNameToPropertyMap = CachedTypeToPropertyNameToPropertyMap[valueFormatType];
+
+                var roundingStrategy = (MidpointRounding?)propertyNameToPropertyMap[roundingStrategyName].GetValue(valueFormat);
+
+                if ((roundingStrategy != null) && (roundingStrategy != MidpointRounding.AwayFromZero))
                 {
-                    throw new NotImplementedException(Invariant($"This {nameof(PercentCellValueFormat<decimal>.RoundingStrategy)} is not yet implemented: {percentCellValueFormat.RoundingStrategy}."));
+                    throw new NotImplementedException(Invariant($"This {roundingStrategyName} is not yet implemented: {roundingStrategy}."));
                 }
 
-                if (percentCellValueFormat.NumberOfDecimalPlaces == null)
+                var numberOfDecimalPlaces = (int?)propertyNameToPropertyMap[numberOfDecimalPlacesName].GetValue(valueFormat);
+
+                if ((numberOfDecimalPlaces == null) || (numberOfDecimalPlaces == 0))
+                {
+                    range.SetCustomFormat(Invariant($"$#,##0;-$#,##0"));
+                }
+                else
+                {
+                    range.SetCustomFormat(Invariant($"$#,##0.{new string('0', (int)numberOfDecimalPlaces)};-$#,##0.{new string('0', (int)numberOfDecimalPlaces)}"));
+                }
+
+                valueFormat.ThrowOnNotImplementedProperty(valueFormatType, implementedProperties);
+            }
+            else if (valueFormatType.GetGenericTypeDefinitionOrSpecifiedType() == typeof(NumberCellValueFormat<>))
+            {
+                var numberOfDecimalPlacesName = nameof(NumberCellValueFormat<object>.NumberOfDecimalPlaces);
+                var roundingStrategyName = nameof(NumberCellValueFormat<object>.RoundingStrategy);
+
+                var implementedProperties = new[]
+                {
+                    numberOfDecimalPlacesName,
+                    roundingStrategyName,
+                };
+
+                valueFormat.ThrowOnNotImplementedProperty(valueFormatType, implementedProperties);
+
+                var propertyNameToPropertyMap = CachedTypeToPropertyNameToPropertyMap[valueFormatType];
+
+                var roundingStrategy = (MidpointRounding?)propertyNameToPropertyMap[roundingStrategyName].GetValue(valueFormat);
+
+                if ((roundingStrategy != null) && (roundingStrategy != MidpointRounding.AwayFromZero))
+                {
+                    throw new NotImplementedException(Invariant($"This {roundingStrategyName} is not yet implemented: {roundingStrategy}."));
+                }
+
+                var numberOfDecimalPlaces = (int?)propertyNameToPropertyMap[numberOfDecimalPlacesName].GetValue(valueFormat);
+
+                if (numberOfDecimalPlaces == null)
+                {
+                    range.SetFormat(OBeautifulCode.Excel.Format.Decimal4);
+                }
+                else if (numberOfDecimalPlaces == 0)
+                {
+                    range.SetFormat(OBeautifulCode.Excel.Format.Decimal3);
+                }
+                else if (numberOfDecimalPlaces == 2)
+                {
+                    range.SetFormat(OBeautifulCode.Excel.Format.Decimal4);
+                }
+                else
+                {
+                    range.SetCustomFormat(Invariant($"#,##0.{new string('0', (int)numberOfDecimalPlaces)}"));
+                }
+            }
+            else if (valueFormatType.GetGenericTypeDefinitionOrSpecifiedType() == typeof(PercentCellValueFormat<>))
+            {
+                var numberOfDecimalPlacesName = nameof(PercentCellValueFormat<object>.NumberOfDecimalPlaces);
+                var roundingStrategyName = nameof(PercentCellValueFormat<object>.RoundingStrategy);
+
+                var implementedProperties = new[]
+                {
+                    numberOfDecimalPlacesName,
+                    roundingStrategyName,
+                };
+
+                valueFormat.ThrowOnNotImplementedProperty(valueFormatType, implementedProperties);
+
+                var propertyNameToPropertyMap = CachedTypeToPropertyNameToPropertyMap[valueFormatType];
+
+                var roundingStrategy = (MidpointRounding?)propertyNameToPropertyMap[roundingStrategyName].GetValue(valueFormat);
+
+                if ((roundingStrategy != null) && (roundingStrategy != MidpointRounding.AwayFromZero))
+                {
+                    throw new NotImplementedException(Invariant($"This {roundingStrategyName} is not yet implemented: {roundingStrategy}."));
+                }
+
+                var numberOfDecimalPlaces = (int?)propertyNameToPropertyMap[numberOfDecimalPlacesName].GetValue(valueFormat);
+
+                if (numberOfDecimalPlaces == null)
                 {
                     range.SetFormat(OBeautifulCode.Excel.Format.Percentage2);
                 }
-                else if (percentCellValueFormat.NumberOfDecimalPlaces == 0)
+                else if (numberOfDecimalPlaces == 0)
                 {
                     range.SetFormat(OBeautifulCode.Excel.Format.Percentage1);
                 }
-                else if (percentCellValueFormat.NumberOfDecimalPlaces == 2)
+                else if (numberOfDecimalPlaces == 2)
                 {
                     range.SetFormat(OBeautifulCode.Excel.Format.Percentage2);
                 }
                 else
                 {
-                    range.SetCustomFormat(Invariant($"0.{new string('0', (int)percentCellValueFormat.NumberOfDecimalPlaces)}%"));
+                    range.SetCustomFormat(Invariant($"0.{new string('0', (int)numberOfDecimalPlaces)}%"));
                 }
             }
             else
@@ -558,21 +653,36 @@ namespace OBeautifulCode.DataStructure.Excel
             this TObject item,
             IReadOnlyCollection<string> implementedPropertyNames)
         {
-            if (!CachedTypeToNotImplementedPropertiesMap.TryGetValue(typeof(TObject), out var notImplementedProperties))
+            item.ThrowOnNotImplementedProperty(typeof(TObject), implementedPropertyNames);
+        }
+
+        private static void ThrowOnNotImplementedProperty(
+            this object item,
+            Type itemType,
+            IReadOnlyCollection<string> implementedPropertyNames)
+        {
+            if (!CachedTypeToNotImplementedPropertiesMap.TryGetValue(itemType, out var notImplementedProperties))
             {
-                notImplementedProperties = typeof(TObject)
-                    .GetPropertiesFiltered(MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.PublicGet)
+                var properties = itemType.GetPropertiesFiltered(MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.PublicGet);
+
+                var implementedPropertyNameToPropertyInfoMap = properties
+                    .Where(_ => implementedPropertyNames.Contains(_.Name))
+                    .ToDictionary(_ => _.Name, _ => _);
+
+                notImplementedProperties = properties
                     .Where(_ => !implementedPropertyNames.Contains(_.Name))
                     .ToList();
 
-                CachedTypeToNotImplementedPropertiesMap.TryAdd(typeof(TObject), notImplementedProperties);
+                CachedTypeToPropertyNameToPropertyMap.TryAdd(itemType, implementedPropertyNameToPropertyInfoMap);
+
+                CachedTypeToNotImplementedPropertiesMap.TryAdd(itemType, notImplementedProperties);
             }
 
             foreach (var notImplementedProperty in notImplementedProperties)
             {
                 if (notImplementedProperty.GetValue(item) != null)
                 {
-                    throw new NotImplementedException(Invariant($"{typeof(TObject).ToStringReadable()}.{notImplementedProperty.Name}"));
+                    throw new NotImplementedException(Invariant($"{itemType.ToStringReadable()}.{notImplementedProperty.Name}"));
                 }
             }
         }

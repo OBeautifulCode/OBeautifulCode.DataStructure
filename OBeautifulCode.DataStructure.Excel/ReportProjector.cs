@@ -7,11 +7,8 @@
 namespace OBeautifulCode.DataStructure.Excel
 {
     using System;
-    using System.Collections.Concurrent;
-    using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
-    using System.Reflection;
     using Aspose.Cells;
     using OBeautifulCode.CodeAnalysis.Recipes;
     using OBeautifulCode.Excel;
@@ -34,9 +31,6 @@ namespace OBeautifulCode.DataStructure.Excel
         private const string BottomRightDataCellMarker = "bottom-right-data-cell-marker";
 
         private const string BottomRightNonSummaryDataCellMarker = "bottom-right-non-summary-data-cell-marker";
-
-        private static readonly ConcurrentDictionary<Type, IReadOnlyCollection<PropertyInfo>> CachedTypeToNotImplementedPropertiesMap =
-            new ConcurrentDictionary<Type, IReadOnlyCollection<PropertyInfo>>();
 
         /// <summary>
         /// Projects a <see cref="Report"/> into a <see cref="Workbook"/>.
