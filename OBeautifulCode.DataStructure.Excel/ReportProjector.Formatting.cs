@@ -437,11 +437,13 @@ namespace OBeautifulCode.DataStructure.Excel
             {
                 var numberOfDecimalPlacesName = nameof(CurrencyCellValueFormat<object>.NumberOfDecimalPlaces);
                 var roundingStrategyName = nameof(CurrencyCellValueFormat<object>.RoundingStrategy);
+                var currencyCodeName = nameof(CurrencyCellValueFormat<object>.CurrencyCode);
 
                 var implementedProperties = new[]
                 {
                     numberOfDecimalPlacesName,
                     roundingStrategyName,
+                    currencyCodeName,
                 };
 
                 valueFormat.ThrowOnNotImplementedProperty(valueFormatType, implementedProperties);
@@ -453,6 +455,13 @@ namespace OBeautifulCode.DataStructure.Excel
                 if ((roundingStrategy != null) && (roundingStrategy != MidpointRounding.AwayFromZero))
                 {
                     throw new NotImplementedException(Invariant($"This {roundingStrategyName} is not yet implemented: {roundingStrategy}."));
+                }
+
+                var currencyCode = (CurrencyCode?)propertyNameToPropertyMap[currencyCodeName].GetValue(valueFormat);
+
+                if ((currencyCode != null) && (currencyCode != CurrencyCode.Usd))
+                {
+                    throw new NotImplementedException(Invariant($"This {currencyCodeName} is not yet implemented: {currencyCode}."));
                 }
 
                 var numberOfDecimalPlaces = (int?)propertyNameToPropertyMap[numberOfDecimalPlacesName].GetValue(valueFormat);
