@@ -335,7 +335,7 @@ namespace OBeautifulCode.DataStructure.Test
                     "second"),
             };
 
-            var allDataRows = new[]
+            var allDataRows = new RowBase[]
             {
                 new Row(
                     row1Cells,
@@ -348,10 +348,10 @@ namespace OBeautifulCode.DataStructure.Test
                         new Row(
                             row1Child2Cells,
                             "6",
-                            childRows: new[]
+                            childRows: new RowBase[]
                             {
                                 new Row(row11Child2Grandchild1Cells, "7"),
-                                new Row(row11Child2Grandchild2Cells, "8"),
+                                new FlatRow(row11Child2Grandchild2Cells, "8"),
                             }),
                     }),
                 new Row(
@@ -362,14 +362,14 @@ namespace OBeautifulCode.DataStructure.Test
                         new Row(
                             row2Child1Cells,
                             "10",
-                            childRows: new[]
+                            childRows: new RowBase[]
                             {
-                                new Row(row2Child1Grandchild1Cells, "11"),
+                                new FlatRow(row2Child1Grandchild1Cells, "11"),
                                 new Row(row2Child1Grandchild2Cells, "12"),
                             }),
                         new Row(row2Child2Cells, "13"),
                     }),
-                new Row(row3Cells, "14"),
+                new FlatRow(row3Cells, "14"),
             };
 
             var allCells = new ICell[0]
