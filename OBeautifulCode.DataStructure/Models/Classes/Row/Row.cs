@@ -33,7 +33,7 @@ namespace OBeautifulCode.DataStructure
             IReadOnlyList<ICell> cells,
             string id = null,
             RowFormat format = null,
-            IReadOnlyList<Row> childRows = null,
+            IReadOnlyList<RowBase> childRows = null,
             IReadOnlyList<FlatRow> expandedSummaryRows = null,
             IReadOnlyList<FlatRow> collapsedSummaryRows = null)
             : base(cells, id, format)
@@ -77,7 +77,7 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Gets the child rows.
         /// </summary>
-        public IReadOnlyList<Row> ChildRows { get; private set; }
+        public IReadOnlyList<RowBase> ChildRows { get; private set; }
 
         /// <summary>
         /// Gets rows that summarizes the children (e.g. a Total row) when this row is expanded.

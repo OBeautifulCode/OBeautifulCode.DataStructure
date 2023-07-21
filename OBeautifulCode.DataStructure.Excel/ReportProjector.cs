@@ -412,13 +412,13 @@ namespace OBeautifulCode.DataStructure.Excel
 
         private static void AddRow(
             this CellCursor cursor,
-            DataStructure.Row row,
+            RowBase rowBase,
             ReportToWorkbookProjectionContext context,
             InternalSectionProjectionContext sectionContext,
             PassKind passKind,
             DataRowsFormat dataRowsFormat)
         {
-            cursor.AddRowBase(row, context, passKind);
+            cursor.AddRowBase(rowBase, context, passKind);
 
             if (cursor.HasMarker(BottomRightNonSummaryDataCellMarker))
             {
@@ -427,50 +427,61 @@ namespace OBeautifulCode.DataStructure.Excel
 
             cursor.AddMarker(BottomRightNonSummaryDataCellMarker);
 
-            if ((row.ChildRows != null) && row.ChildRows.Any())
+            if (rowBase is FlatRow)
             {
-                foreach (var childRow in row.ChildRows)
+                // no-op
+            }
+            else if (rowBase is DataStructure.Row row)
+            {
+                if ((row.ChildRows != null) && row.ChildRows.Any())
                 {
-                    cursor.ResetColumn();
-
-                    cursor.MoveDown();
-
-                    if (passKind == PassKind.Formatting)
+                    foreach (var childRow in row.ChildRows)
                     {
-                        cursor.CanvassedRowRange.ApplyDataRowsFormat(dataRowsFormat);
+                        cursor.ResetColumn();
+
+                        cursor.MoveDown();
+
+                        if (passKind == PassKind.Formatting)
+                        {
+                            cursor.CanvassedRowRange.ApplyDataRowsFormat(dataRowsFormat);
+                        }
+
+                        cursor.AddRow(childRow, context, sectionContext, passKind, dataRowsFormat);
+                    }
+                }
+
+                if (row.CollapsedSummaryRows != null && row.CollapsedSummaryRows.Any())
+                {
+                    throw new NotSupportedException("collapsed summary rows are not supported");
+                }
+
+                if (row.ExpandedSummaryRows != null)
+                {
+                    // Auto-filters will include summary rows (e.g. a total row will get sorted along with data rows)
+                    // unless there's a blank row separating the last data row and first summary row.
+                    if (row.ExpandedSummaryRows.Any() && sectionContext.UsesAutoFilter)
+                    {
+                        cursor.MoveDown();
                     }
 
-                    cursor.AddRow(childRow, context, sectionContext, passKind, dataRowsFormat);
-                }
-            }
-
-            if (row.CollapsedSummaryRows != null && row.CollapsedSummaryRows.Any())
-            {
-                throw new NotSupportedException("collapsed summary rows are not supported");
-            }
-
-            if (row.ExpandedSummaryRows != null)
-            {
-                // Auto-filters will include summary rows (e.g. a total row will get sorted along with data rows)
-                // unless there's a blank row separating the last data row and first summary row.
-                if (row.ExpandedSummaryRows.Any() && sectionContext.UsesAutoFilter)
-                {
-                    cursor.MoveDown();
-                }
-
-                foreach (var expandedSummaryRow in row.ExpandedSummaryRows)
-                {
-                    cursor.ResetColumn();
-
-                    cursor.MoveDown();
-
-                    if (passKind == PassKind.Formatting)
+                    foreach (var expandedSummaryRow in row.ExpandedSummaryRows)
                     {
-                        cursor.CanvassedRowRange.ApplyDataRowsFormat(dataRowsFormat);
-                    }
+                        cursor.ResetColumn();
 
-                    cursor.AddFlatRow(expandedSummaryRow, context, passKind);
+                        cursor.MoveDown();
+
+                        if (passKind == PassKind.Formatting)
+                        {
+                            cursor.CanvassedRowRange.ApplyDataRowsFormat(dataRowsFormat);
+                        }
+
+                        cursor.AddFlatRow(expandedSummaryRow, context, passKind);
+                    }
                 }
+            }
+            else
+            {
+                throw new NotSupportedException(Invariant($"This type of {nameof(RowBase)} is not supported: {rowBase.GetType().ToStringReadable()}"));
             }
         }
 

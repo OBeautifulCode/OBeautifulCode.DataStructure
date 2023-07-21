@@ -81,7 +81,7 @@ namespace OBeautifulCode.DataStructure.Test
                         var referenceObject = A.Dummy<DataRows>();
 
                         var result = new DataRows(
-                                             new List<Row>(),
+                                             new List<RowBase>(),
                                              referenceObject.Format);
 
                         return result;
@@ -98,7 +98,7 @@ namespace OBeautifulCode.DataStructure.Test
                         var referenceObject = A.Dummy<DataRows>();
 
                         var result = new DataRows(
-                                             new Row[0].Concat(referenceObject.Rows).Concat(new Row[] { null }).Concat(referenceObject.Rows).ToList(),
+                                             new RowBase[0].Concat(referenceObject.Rows).Concat(new RowBase[] { null }).Concat(referenceObject.Rows).ToList(),
                                              referenceObject.Format);
 
                         return result;

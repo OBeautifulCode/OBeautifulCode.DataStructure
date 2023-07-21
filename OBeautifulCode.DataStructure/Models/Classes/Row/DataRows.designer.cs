@@ -119,7 +119,7 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public DataRows DeepCloneWithRows(IReadOnlyList<Row> rows)
+        public DataRows DeepCloneWithRows(IReadOnlyList<RowBase> rows)
         {
             var result = new DataRows(
                                  rows,

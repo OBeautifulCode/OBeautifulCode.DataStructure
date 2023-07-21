@@ -210,7 +210,7 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public Row DeepCloneWithChildRows(IReadOnlyList<Row> childRows)
+        public Row DeepCloneWithChildRows(IReadOnlyList<RowBase> childRows)
         {
             var result = new Row(
                                  this.Cells?.DeepClone(),

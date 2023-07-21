@@ -134,7 +134,7 @@ namespace OBeautifulCode.DataStructure.Test
             // DataRows
             AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
             {
-                var allDataRows = BuildDataRows(GetRandomNumberOfColumns());
+                var allDataRows = BuildRowBases(GetRandomNumberOfColumns());
 
                 var result = new DataRows(allDataRows, A.Dummy<DataRowsFormat>());
 
@@ -154,7 +154,7 @@ namespace OBeautifulCode.DataStructure.Test
             // Row
             AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
             {
-                var result = BuildDataRow(GetRandomNumberOfColumns());
+                var result = BuildRow(GetRandomNumberOfColumns());
 
                 return result;
             });
@@ -474,7 +474,7 @@ namespace OBeautifulCode.DataStructure.Test
 
             var footerRows = new FooterRows(allFooterRows, A.Dummy<FooterRowsFormat>());
 
-            var allDataRows = BuildDataRows(numberOfColumns);
+            var allDataRows = BuildRowBases(numberOfColumns);
 
             var dataRows = new DataRows(allDataRows, A.Dummy<DataRowsFormat>());
 
@@ -514,17 +514,17 @@ namespace OBeautifulCode.DataStructure.Test
 
         }
 
-        private static IReadOnlyList<Row> BuildDataRows(
+        private static IReadOnlyList<RowBase> BuildRowBases(
             int numberOfColumns,
             int depth = 0)
         {
             var numberOfRows = GetRandomNumberOfRows();
 
-            var result = new List<Row>();
+            var result = new List<RowBase>();
 
             for (var x = 0; x < numberOfRows; x++)
             {
-                var dataRow = BuildDataRow(numberOfColumns, depth);
+                var dataRow = BuildRowBase(numberOfColumns, depth);
 
                 result.Add(dataRow);
             }
@@ -532,15 +532,35 @@ namespace OBeautifulCode.DataStructure.Test
             return result;
         }
 
-        private static Row BuildDataRow(
+        private static RowBase BuildRowBase(
+            int numberOfColumns,
+            int depth = 0)
+        {
+            var hasChildren = A.Dummy<bool>();
+
+            RowBase result;
+            
+            if (hasChildren)
+            {
+                result = BuildRow(numberOfColumns, depth);
+            }
+            else
+            {
+                result = BuildFlatRow(numberOfColumns, allowSpanningCells: true);
+            }
+
+            return result;
+        }
+
+        private static Row BuildRow(
             int numberOfColumns,
             int depth = 0)
         {
             var cells = BuildRowCells(numberOfColumns, allowSpanningCells: true);
 
             var childRows = depth == 2
-                ? new Row[0]
-                : BuildDataRows(numberOfColumns, depth + 1);
+                ? new RowBase[0]
+                : BuildRowBases(numberOfColumns, depth + 1);
 
             var expandedSummaryRow = childRows.Any()
                 ? new[] { BuildFlatRow(numberOfColumns, allowSpanningCells: true) }

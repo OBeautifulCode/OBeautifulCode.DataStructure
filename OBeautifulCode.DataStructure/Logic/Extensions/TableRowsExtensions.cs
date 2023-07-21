@@ -9,6 +9,8 @@ namespace OBeautifulCode.DataStructure
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using OBeautifulCode.Type.Recipes;
+    using static System.FormattableString;
 
     /// <summary>
     /// Extension methods on <see cref="TableRows"/>.
@@ -77,24 +79,35 @@ namespace OBeautifulCode.DataStructure
         }
 
         private static IReadOnlyList<RowBase> GetAllDataRowsInOrder(
-            IReadOnlyList<Row> rows)
+            IReadOnlyList<RowBase> rowBases)
         {
             var result = new List<RowBase>();
 
-            foreach (var row in rows)
+            foreach (var rowBase in rowBases)
             {
-                result.Add(row);
+                result.Add(rowBase);
 
-                if (row.CollapsedSummaryRows != null)
+                if (rowBase is FlatRow)
                 {
-                    result.AddRange(row.CollapsedSummaryRows);
+                    // no-op
                 }
-
-                result.AddRange(GetAllDataRowsInOrder(row.ChildRows ?? new Row[0]));
-
-                if (row.ExpandedSummaryRows != null)
+                else if (rowBase is Row row)
                 {
-                    result.AddRange(row.ExpandedSummaryRows);
+                    if (row.CollapsedSummaryRows != null)
+                    {
+                        result.AddRange(row.CollapsedSummaryRows);
+                    }
+
+                    result.AddRange(GetAllDataRowsInOrder(row.ChildRows ?? new Row[0]));
+
+                    if (row.ExpandedSummaryRows != null)
+                    {
+                        result.AddRange(row.ExpandedSummaryRows);
+                    }
+                }
+                else
+                {
+                    throw new NotSupportedException(Invariant($"This type of {nameof(RowBase)} is not supported: {rowBase.GetType().ToStringReadable()}"));
                 }
             }
 

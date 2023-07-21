@@ -429,7 +429,7 @@ namespace OBeautifulCode.DataStructure.Test
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new DataRows(
-                                 A.Dummy<IReadOnlyList<Row>>(),
+                                 A.Dummy<IReadOnlyList<RowBase>>(),
                                  A.Dummy<DataRowsFormat>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
@@ -967,7 +967,7 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<IReadOnlyList<ICell>>(),
                                  A.Dummy<string>(),
                                  A.Dummy<RowFormat>(),
-                                 A.Dummy<IReadOnlyList<Row>>(),
+                                 A.Dummy<IReadOnlyList<RowBase>>(),
                                  A.Dummy<IReadOnlyList<FlatRow>>(),
                                  A.Dummy<IReadOnlyList<FlatRow>>()));
 

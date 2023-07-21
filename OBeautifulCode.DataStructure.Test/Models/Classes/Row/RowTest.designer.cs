@@ -214,7 +214,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Cells,
                                              referenceObject.Id,
                                              referenceObject.Format,
-                                             new List<Row>(),
+                                             new List<RowBase>(),
                                              referenceObject.ExpandedSummaryRows,
                                              referenceObject.CollapsedSummaryRows);
 
@@ -235,7 +235,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Cells,
                                              referenceObject.Id,
                                              referenceObject.Format,
-                                             new Row[0].Concat(referenceObject.ChildRows).Concat(new Row[] { null }).Concat(referenceObject.ChildRows).ToList(),
+                                             new RowBase[0].Concat(referenceObject.ChildRows).Concat(new RowBase[] { null }).Concat(referenceObject.ChildRows).ToList(),
                                              referenceObject.ExpandedSummaryRows,
                                              referenceObject.CollapsedSummaryRows);
 
