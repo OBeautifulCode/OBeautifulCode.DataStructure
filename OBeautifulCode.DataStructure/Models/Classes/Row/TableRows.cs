@@ -9,7 +9,7 @@ namespace OBeautifulCode.DataStructure
     using OBeautifulCode.Type;
 
     /// <summary>
-    /// The data rows (the rows below the header row) in a tree table.
+    /// All of the rows in the table, including header, data, and footer rows.
     /// </summary>
     public partial class TableRows : IModelViaCodeGen
     {

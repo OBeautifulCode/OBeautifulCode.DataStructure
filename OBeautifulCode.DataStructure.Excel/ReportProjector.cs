@@ -299,7 +299,7 @@ namespace OBeautifulCode.DataStructure.Excel
                         cursor.CanvassedRowRange.ApplyHeaderRowsFormat(headerRows.Format);
                     }
 
-                    cursor.AddFlatRow(headerRows.Rows[x], context, passKind);
+                    cursor.AddRowCells(headerRows.Rows[x], context, passKind);
                 }
 
                 if (passKind == PassKind.Data)
@@ -346,7 +346,7 @@ namespace OBeautifulCode.DataStructure.Excel
                         cursor.CanvassedRowRange.ApplyFooterRowsFormat(footerRows.Format);
                     }
 
-                    cursor.AddFlatRow(footerRows.Rows[x], context, passKind);
+                    cursor.AddRowCells(footerRows.Rows[x], context, passKind);
                 }
             }
         }
@@ -392,7 +392,7 @@ namespace OBeautifulCode.DataStructure.Excel
                         cursor.CanvassedRowRange.ApplyDataRowsFormat(dataRows.Format);
                     }
 
-                    cursor.AddRow(dataRows.Rows[x], context, sectionContext, passKind, dataRows.Format);
+                    cursor.AddRowBase(dataRows.Rows[x], context, sectionContext, passKind, dataRows.Format);
                 }
 
                 cursor.AddMarker(BottomRightDataCellMarker);
@@ -401,16 +401,7 @@ namespace OBeautifulCode.DataStructure.Excel
             return true;
         }
 
-        private static void AddFlatRow(
-            this CellCursor cursor,
-            FlatRow flatRow,
-            ReportToWorkbookProjectionContext context,
-            PassKind passKind)
-        {
-            cursor.AddRowBase(flatRow, context, passKind);
-        }
-
-        private static void AddRow(
+        private static void AddRowBase(
             this CellCursor cursor,
             RowBase rowBase,
             ReportToWorkbookProjectionContext context,
@@ -418,7 +409,7 @@ namespace OBeautifulCode.DataStructure.Excel
             PassKind passKind,
             DataRowsFormat dataRowsFormat)
         {
-            cursor.AddRowBase(rowBase, context, passKind);
+            cursor.AddRowCells(rowBase, context, passKind);
 
             if (cursor.HasMarker(BottomRightNonSummaryDataCellMarker))
             {
@@ -446,7 +437,7 @@ namespace OBeautifulCode.DataStructure.Excel
                             cursor.CanvassedRowRange.ApplyDataRowsFormat(dataRowsFormat);
                         }
 
-                        cursor.AddRow(childRow, context, sectionContext, passKind, dataRowsFormat);
+                        cursor.AddRowBase(childRow, context, sectionContext, passKind, dataRowsFormat);
                     }
                 }
 
@@ -475,7 +466,7 @@ namespace OBeautifulCode.DataStructure.Excel
                             cursor.CanvassedRowRange.ApplyDataRowsFormat(dataRowsFormat);
                         }
 
-                        cursor.AddFlatRow(expandedSummaryRow, context, passKind);
+                        cursor.AddRowCells(expandedSummaryRow, context, passKind);
                     }
                 }
             }
@@ -485,7 +476,7 @@ namespace OBeautifulCode.DataStructure.Excel
             }
         }
 
-        private static void AddRowBase(
+        private static void AddRowCells(
             this CellCursor cursor,
             RowBase rowBase,
             ReportToWorkbookProjectionContext context,
