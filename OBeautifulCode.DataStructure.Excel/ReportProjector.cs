@@ -503,11 +503,6 @@ namespace OBeautifulCode.DataStructure.Excel
                     cursor.MoveRight(rowBase.Cells[x - 1].ColumnsSpanned ?? 1);
                 }
 
-                if (passKind == PassKind.Formatting)
-                {
-                    cursor.CanvassedRowRange.ApplyRowFormat(rowBase.Format);
-                }
-
                 cursor.AddCell(rowBase.Cells[x], context, passKind);
             }
         }
