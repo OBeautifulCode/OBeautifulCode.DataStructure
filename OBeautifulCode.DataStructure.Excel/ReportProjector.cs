@@ -32,6 +32,8 @@ namespace OBeautifulCode.DataStructure.Excel
 
         private const string BottomRightNonSummaryDataCellMarker = "bottom-right-non-summary-data-cell-marker";
 
+        private const string TableTopLeftBottomRightCornersCellMarker = "table-top-left-bottom-right-corners-cell-marker";
+
         /// <summary>
         /// Projects a <see cref="Report"/> into a <see cref="Workbook"/>.
         /// </summary>
@@ -246,6 +248,15 @@ namespace OBeautifulCode.DataStructure.Excel
                 return;
             }
 
+            if (passKind == PassKind.Formatting)
+            {
+                var tableRange = cursor.GetMarkedRange(TableTopLeftBottomRightCornersCellMarker);
+
+                tableRange.ApplyRowFormat(tableRows.RowsFormat);
+            }
+
+            cursor.AddMarker(TableTopLeftBottomRightCornersCellMarker);
+
             if (cursor.AddHeaderRows(tableRows.HeaderRows, moveDownForFirstRow, context, passKind))
             {
                 moveDownForFirstRow = true;
@@ -257,6 +268,8 @@ namespace OBeautifulCode.DataStructure.Excel
             }
 
             cursor.AddFooterRows(tableRows.FooterRows, moveDownForFirstRow, context, passKind);
+
+            cursor.AddMarker(TableTopLeftBottomRightCornersCellMarker);
         }
 
         private static bool AddHeaderRows(
