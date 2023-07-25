@@ -253,10 +253,11 @@ namespace OBeautifulCode.DataStructure.Excel
                 var tableRange = cursor.GetMarkedRange(TableTopLeftBottomRightCornersCellMarker);
 
                 tableRange.ApplyTableRowsFormat(tableRows.RowsFormat, context);
-            }
 
-            context.CurrentTreeLevel = new Stack<int>();
-            context.AlignChildRowsWithParent = new Stack<bool>();
+                context.CurrentTreeLevel = new Stack<int>();
+
+                context.AlignChildRowsWithParent = new Stack<bool>();
+            }
 
             cursor.AddMarker(TableTopLeftBottomRightCornersCellMarker);
 
@@ -423,7 +424,10 @@ namespace OBeautifulCode.DataStructure.Excel
             InternalProjectionContext context,
             PassKind passKind)
         {
-            AddTreeLevel(rowBase, context);
+            if (passKind == PassKind.Formatting)
+            {
+                AddTreeLevel(rowBase, context);
+            }
 
             cursor.AddRowCells(rowBase, context, passKind);
 
@@ -481,7 +485,10 @@ namespace OBeautifulCode.DataStructure.Excel
                 throw new NotSupportedException(Invariant($"This type of {nameof(RowBase)} is not supported: {rowBase.GetType().ToStringReadable()}"));
             }
 
-            RemoveTreeLevel(context);
+            if (passKind == PassKind.Formatting)
+            {
+                RemoveTreeLevel(context);
+            }
         }
 
         private static void AddRowCells(
