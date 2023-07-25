@@ -7,6 +7,7 @@
 namespace OBeautifulCode.DataStructure.Excel
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using Aspose.Cells;
@@ -28,7 +29,7 @@ namespace OBeautifulCode.DataStructure.Excel
 
         private const string TopLeftDataCellMarker = "top-left-data-cell-marker";
 
-        private const string BottomRightDataCellMarker = "bottom-right-data-cell-marker";
+        private const string TopLeftAndBottomRightDataCellMarker = "top-left-and-bottom-right-data-cell-marker";
 
         private const string BottomRightNonSummaryDataCellMarker = "bottom-right-non-summary-data-cell-marker";
 
@@ -91,12 +92,13 @@ namespace OBeautifulCode.DataStructure.Excel
         private static void AddSection(
             this Cursors cursors,
             Section section,
-            ReportToWorkbookProjectionContext context,
+            ReportToWorkbookProjectionContext reportToWorkbookProjectionContext,
             PassKind passKind,
             Report report)
         {
-            var sectionContext = new InternalSectionProjectionContext
+            var context = new InternalProjectionContext
             {
+                ExternalContext = reportToWorkbookProjectionContext,
                 UsesAutoFilter = section.RequiresAutoFilter(),
             };
 
@@ -138,7 +140,7 @@ namespace OBeautifulCode.DataStructure.Excel
 
             treeTableCursor.Reset();
 
-            treeTableCursor.AddTreeTable(section.TreeTable, hasTitle, context, sectionContext, passKind);
+            treeTableCursor.AddTreeTable(section.TreeTable, hasTitle, context, passKind);
 
             // Add bottom chrome (e.g. copyright and terms of use)
             chromeCursor.MoveDown(treeTableCursor.MaxRowNumber - chromeCursor.RowNumber + 1);
@@ -186,8 +188,7 @@ namespace OBeautifulCode.DataStructure.Excel
             this CellCursor cursor,
             TreeTable treeTable,
             bool moveDownForFirstRow,
-            ReportToWorkbookProjectionContext context,
-            InternalSectionProjectionContext sectionContext,
+            InternalProjectionContext context,
             PassKind passKind)
         {
             if (passKind == PassKind.Formatting)
@@ -232,15 +233,14 @@ namespace OBeautifulCode.DataStructure.Excel
             }
 
             // Add rows
-            cursor.AddTableRows(treeTable.TableRows, moveDownForFirstRow, context, sectionContext, passKind);
+            cursor.AddTableRows(treeTable.TableRows, moveDownForFirstRow, context, passKind);
         }
 
         private static void AddTableRows(
             this CellCursor cursor,
             TableRows tableRows,
             bool moveDownForFirstRow,
-            ReportToWorkbookProjectionContext context,
-            InternalSectionProjectionContext sectionContext,
+            InternalProjectionContext context,
             PassKind passKind)
         {
             if (tableRows == null)
@@ -252,8 +252,11 @@ namespace OBeautifulCode.DataStructure.Excel
             {
                 var tableRange = cursor.GetMarkedRange(TableTopLeftBottomRightCornersCellMarker);
 
-                tableRange.ApplyRowFormat(tableRows.RowsFormat);
+                tableRange.ApplyTableRowsFormat(tableRows.RowsFormat, context);
             }
+
+            context.CurrentTreeLevel = new Stack<int>();
+            context.AlignChildRowsWithParent = new Stack<bool>();
 
             cursor.AddMarker(TableTopLeftBottomRightCornersCellMarker);
 
@@ -262,7 +265,7 @@ namespace OBeautifulCode.DataStructure.Excel
                 moveDownForFirstRow = true;
             }
 
-            if (cursor.AddDataRows(tableRows.DataRows, moveDownForFirstRow, context, sectionContext, passKind))
+            if (cursor.AddDataRows(tableRows.DataRows, moveDownForFirstRow, context, passKind))
             {
                 moveDownForFirstRow = true;
             }
@@ -276,7 +279,7 @@ namespace OBeautifulCode.DataStructure.Excel
             this CellCursor cursor,
             HeaderRows headerRows,
             bool moveDownForFirstRow,
-            ReportToWorkbookProjectionContext context,
+            InternalProjectionContext context,
             PassKind passKind)
         {
             if (headerRows == null)
@@ -328,7 +331,7 @@ namespace OBeautifulCode.DataStructure.Excel
             this CellCursor cursor,
             FooterRows footerRows,
             bool moveDownForFirstRow,
-            ReportToWorkbookProjectionContext context,
+            InternalProjectionContext context,
             PassKind passKind)
         {
             if (footerRows == null)
@@ -368,8 +371,7 @@ namespace OBeautifulCode.DataStructure.Excel
             this CellCursor cursor,
             DataRows dataRows,
             bool moveDownForFirstRow,
-            ReportToWorkbookProjectionContext context,
-            InternalSectionProjectionContext sectionContext,
+            InternalProjectionContext context,
             PassKind passKind)
         {
             if (dataRows == null)
@@ -398,17 +400,18 @@ namespace OBeautifulCode.DataStructure.Excel
                     if (x == 0)
                     {
                         cursor.AddMarker(TopLeftDataCellMarker);
+                        cursor.AddMarker(TopLeftAndBottomRightDataCellMarker);
                     }
 
-                    if (passKind == PassKind.Formatting)
-                    {
-                        cursor.CanvassedRowRange.ApplyDataRowsFormat(dataRows.Format);
-                    }
-
-                    cursor.AddRowBase(dataRows.Rows[x], context, sectionContext, passKind, dataRows.Format);
+                    cursor.AddRowBase(dataRows.Rows[x], context, passKind);
                 }
 
-                cursor.AddMarker(BottomRightDataCellMarker);
+                cursor.AddMarker(TopLeftAndBottomRightDataCellMarker);
+
+                if (passKind == PassKind.Formatting)
+                {
+                    cursor.GetMarkedRange(TopLeftAndBottomRightDataCellMarker).ApplyDataRowsFormat(dataRows.Format, context);
+                }
             }
 
             return true;
@@ -417,11 +420,11 @@ namespace OBeautifulCode.DataStructure.Excel
         private static void AddRowBase(
             this CellCursor cursor,
             RowBase rowBase,
-            ReportToWorkbookProjectionContext context,
-            InternalSectionProjectionContext sectionContext,
-            PassKind passKind,
-            DataRowsFormat dataRowsFormat)
+            InternalProjectionContext context,
+            PassKind passKind)
         {
+            AddTreeLevel(rowBase, context);
+
             cursor.AddRowCells(rowBase, context, passKind);
 
             if (cursor.HasMarker(BottomRightNonSummaryDataCellMarker))
@@ -445,12 +448,7 @@ namespace OBeautifulCode.DataStructure.Excel
 
                         cursor.MoveDown();
 
-                        if (passKind == PassKind.Formatting)
-                        {
-                            cursor.CanvassedRowRange.ApplyDataRowsFormat(dataRowsFormat);
-                        }
-
-                        cursor.AddRowBase(childRow, context, sectionContext, passKind, dataRowsFormat);
+                        cursor.AddRowBase(childRow, context, passKind);
                     }
                 }
 
@@ -463,7 +461,7 @@ namespace OBeautifulCode.DataStructure.Excel
                 {
                     // Auto-filters will include summary rows (e.g. a total row will get sorted along with data rows)
                     // unless there's a blank row separating the last data row and first summary row.
-                    if (row.ExpandedSummaryRows.Any() && sectionContext.UsesAutoFilter)
+                    if (row.ExpandedSummaryRows.Any() && context.UsesAutoFilter)
                     {
                         cursor.MoveDown();
                     }
@@ -474,11 +472,6 @@ namespace OBeautifulCode.DataStructure.Excel
 
                         cursor.MoveDown();
 
-                        if (passKind == PassKind.Formatting)
-                        {
-                            cursor.CanvassedRowRange.ApplyDataRowsFormat(dataRowsFormat);
-                        }
-
                         cursor.AddRowCells(expandedSummaryRow, context, passKind);
                     }
                 }
@@ -487,12 +480,14 @@ namespace OBeautifulCode.DataStructure.Excel
             {
                 throw new NotSupportedException(Invariant($"This type of {nameof(RowBase)} is not supported: {rowBase.GetType().ToStringReadable()}"));
             }
+
+            RemoveTreeLevel(context);
         }
 
         private static void AddRowCells(
             this CellCursor cursor,
             RowBase rowBase,
-            ReportToWorkbookProjectionContext context,
+            InternalProjectionContext context,
             PassKind passKind)
         {
             if (passKind == PassKind.Formatting)
@@ -511,12 +506,11 @@ namespace OBeautifulCode.DataStructure.Excel
             }
         }
 
-        [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "context", Justification = "Future-proof usage.")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = ObcSuppressBecause.CA1502_AvoidExcessiveComplexity_DisagreeWithAssessment)]
         private static void AddCell(
             this CellCursor cursor,
             ICell cell,
-            ReportToWorkbookProjectionContext context,
+            InternalProjectionContext context,
             PassKind passKind)
         {
             if (passKind == PassKind.Data)
@@ -632,6 +626,11 @@ namespace OBeautifulCode.DataStructure.Excel
             {
                 throw notSupportedException;
             }
+
+            if ((passKind == PassKind.Formatting) && (cursor.ColumnNumber == cursor.StartColumnNumber))
+            {
+                cursor.CellRange.ApplyTreeLevelFormat(context);
+            }
         }
 
         private static bool RequiresAutoFilter(
@@ -666,6 +665,31 @@ namespace OBeautifulCode.DataStructure.Excel
                 : worksheetName;
 
             return result;
+        }
+
+        private static void AddTreeLevel(
+            RowBase row,
+            InternalProjectionContext context)
+        {
+            if (context.CurrentTreeLevel.Any())
+            {
+                context.CurrentTreeLevel.Push(context.CurrentTreeLevel.Peek() + 1);
+            }
+            else
+            {
+                context.CurrentTreeLevel.Push(0);
+            }
+
+            var alignChildrenWithParent = (row.Format?.Options != null) && ((RowFormatOptions)row.Format?.Options).HasFlag(RowFormatOptions.AlignChildRowsWithParent);
+
+            context.AlignChildRowsWithParent.Push(alignChildrenWithParent);
+        }
+
+        private static void RemoveTreeLevel(
+            InternalProjectionContext context)
+        {
+            context.AlignChildRowsWithParent.Pop();
+            context.CurrentTreeLevel.Pop();
         }
 
 #pragma warning disable SA1201 // Elements should appear in the correct order

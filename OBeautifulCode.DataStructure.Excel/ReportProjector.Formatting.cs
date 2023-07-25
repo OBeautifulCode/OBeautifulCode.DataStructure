@@ -243,6 +243,24 @@ namespace OBeautifulCode.DataStructure.Excel
             }
         }
 
+        private static void ApplyTableRowsFormat(
+            this Range range,
+            RowFormat rowFormat,
+            InternalProjectionContext context)
+        {
+            if (rowFormat == null)
+            {
+                return;
+            }
+
+            if ((rowFormat.Options != null) && ((RowFormatOptions)rowFormat.Options).HasFlag(RowFormatOptions.AlignChildRowsWithParent))
+            {
+                context.DisableIndentationByTreeLevel = true;
+            }
+
+            range.ApplyRowFormat(rowFormat);
+        }
+
         private static void ApplyHeaderRowsFormat(
             this Range range,
             HeaderRowsFormat format)
@@ -283,7 +301,8 @@ namespace OBeautifulCode.DataStructure.Excel
 
         private static void ApplyDataRowsFormat(
             this Range range,
-            DataRowsFormat format)
+            DataRowsFormat format,
+            InternalProjectionContext context)
         {
             if (format == null)
             {
@@ -296,6 +315,11 @@ namespace OBeautifulCode.DataStructure.Excel
             };
 
             format.ThrowOnNotImplementedProperty(implementedProperties);
+
+            if ((format.RowsFormat?.Options != null) && ((RowFormatOptions)format.RowsFormat.Options).HasFlag(RowFormatOptions.AlignChildRowsWithParent))
+            {
+                context.DisableIndentationByTreeLevel = true;
+            }
 
             range.ApplyRowFormat(format.RowsFormat);
         }
@@ -370,7 +394,7 @@ namespace OBeautifulCode.DataStructure.Excel
 
             if (rowFormatOptions.HasFlag(RowFormatOptions.AlignChildRowsWithParent))
             {
-                // todo: honor this option
+                // The indentation is applied to the first cell in the row only, so it's not handled in row formatting.
             }
         }
 
@@ -630,18 +654,47 @@ namespace OBeautifulCode.DataStructure.Excel
             }
         }
 
+        private static void ApplyTreeLevelFormat(
+            this Range range,
+            InternalProjectionContext context)
+        {
+            if (context.CurrentTreeLevel.Any())
+            {
+                if (!context.DisableIndentationByTreeLevel)
+                {
+                    var treeLevels = context.CurrentTreeLevel.ToList();
+                    var alignments = context.AlignChildRowsWithParent.Skip(1).ToList();
+                    alignments.Add(true);
+
+                    var indentLevel = 0;
+
+                    for (var x = 0; x < treeLevels.Count; x++)
+                    {
+                        indentLevel = treeLevels[x];
+
+                        if (!alignments[x])
+                        {
+                            break;
+                        }
+                    }
+
+                    range.SetIndentLevel(indentLevel);
+                }
+            }
+        }
+
         private static string Format(
             this DateTime value,
             DateTimeFormat dateTimeFormat,
-            ReportToWorkbookProjectionContext context)
+            InternalProjectionContext context)
         {
-            var cultureKind = dateTimeFormat?.CultureKind ?? context.CultureKind ?? CultureKind.Invariant;
+            var cultureKind = dateTimeFormat?.CultureKind ?? context.ExternalContext.CultureKind ?? CultureKind.Invariant;
 
             var dateTimeFormatKind = dateTimeFormat?.FormatKind ?? DateTimeFormatKind.FullDateTimePatternShortTime;
 
             var localizeTimeZone = dateTimeFormat?.LocalizeTimeZone ?? false;
 
-            var localTimeZone = dateTimeFormat?.LocalTimeZone ?? context.LocalTimeZone ?? StandardTimeZone.Unknown;
+            var localTimeZone = dateTimeFormat?.LocalTimeZone ?? context.ExternalContext.LocalTimeZone ?? StandardTimeZone.Unknown;
 
             if (localizeTimeZone && (localTimeZone == StandardTimeZone.Unknown))
             {

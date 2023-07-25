@@ -104,7 +104,7 @@
     <Compile Include="Properties\ProjectInfo.cs" />
     <Compile Include="ReportProjector.Formatting.cs" />
     <Compile Include="ReportProjector.cs" />
-    <Compile Include="Context\InternalSectionProjectionContext.cs" />
+    <Compile Include="Context\InternalProjectionContext.cs" />
     <Compile Include="Context\ReportToWorkbookProjectionContext.cs" />
     <AdditionalFiles Include=".analyzers\stylecop.json" />
     <None Include=".analyzers\release.ruleset" />
