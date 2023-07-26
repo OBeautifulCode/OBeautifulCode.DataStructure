@@ -7,6 +7,7 @@
 namespace OBeautifulCode.DataStructure.Excel
 {
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
 
     /// <summary>
     /// An internal context object for use when projecting.
@@ -26,6 +27,7 @@ namespace OBeautifulCode.DataStructure.Excel
         /// <summary>
         /// Gets or sets the stack of tree levels with the root rows being level 0.
         /// </summary>
+        [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly", Justification = "Fine for stateful context object.")]
         public Stack<int> TreeLevelStack { get; set; }
 
         /// <summary>
@@ -43,6 +45,7 @@ namespace OBeautifulCode.DataStructure.Excel
         /// <summary>
         /// Gets or sets a stack of values indicating whether to align child rows with their parent.
         /// </summary>
+        [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly", Justification = "Fine for stateful context object.")]
         public Stack<bool> AlignChildRowsWithParentStack { get; set; }
     }
 }
