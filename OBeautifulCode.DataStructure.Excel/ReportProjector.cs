@@ -12,6 +12,7 @@ namespace OBeautifulCode.DataStructure.Excel
     using System.Linq;
     using Aspose.Cells;
     using OBeautifulCode.CodeAnalysis.Recipes;
+    using OBeautifulCode.Equality.Recipes;
     using OBeautifulCode.Excel;
     using OBeautifulCode.Excel.AsposeCells;
     using OBeautifulCode.Type.Recipes;
@@ -254,9 +255,9 @@ namespace OBeautifulCode.DataStructure.Excel
 
                 tableRange.ApplyTableRowsFormat(tableRows.RowsFormat, context);
 
-                context.CurrentTreeLevel = new Stack<int>();
+                context.TreeLevelStack = new Stack<int>();
 
-                context.AlignChildRowsWithParent = new Stack<bool>();
+                context.AlignChildRowsWithParentStack = new Stack<bool>();
             }
 
             cursor.AddMarker(TableTopLeftBottomRightCornersCellMarker);
@@ -431,10 +432,7 @@ namespace OBeautifulCode.DataStructure.Excel
 
             cursor.AddRowCells(rowBase, context, passKind);
 
-            if (cursor.HasMarker(BottomRightNonSummaryDataCellMarker))
-            {
-                cursor.RemoveMarker(BottomRightNonSummaryDataCellMarker);
-            }
+            cursor.RemoveMarker(BottomRightNonSummaryDataCellMarker);
 
             cursor.AddMarker(BottomRightNonSummaryDataCellMarker);
 
@@ -444,28 +442,40 @@ namespace OBeautifulCode.DataStructure.Excel
             }
             else if (rowBase is DataStructure.Row row)
             {
+                var parentMarkerName = "grouping-marker-parent-" + Guid.NewGuid();
+                cursor.AddMarker(parentMarkerName);
+
+                var groupingMarkerName = "grouping-marker-" + Guid.NewGuid();
+
                 if ((row.ChildRows != null) && row.ChildRows.Any())
                 {
-                    foreach (var childRow in row.ChildRows)
+                    for (var x = 0; x < row.ChildRows.Count; x++)
                     {
                         cursor.ResetColumn();
 
                         cursor.MoveDown();
 
-                        cursor.AddRowBase(childRow, context, passKind);
+                        if (x == 0)
+                        {
+                            cursor.AddMarker(groupingMarkerName);
+                        }
+
+                        cursor.AddRowBase(row.ChildRows[x], context, passKind);
                     }
+
+                    cursor.AddMarker(groupingMarkerName);
                 }
 
-                if (row.CollapsedSummaryRows != null && row.CollapsedSummaryRows.Any())
+                if (((row.CollapsedSummaryRows != null) && row.CollapsedSummaryRows.Any()) && (!row.CollapsedSummaryRows.IsEqualTo(row.ExpandedSummaryRows)))
                 {
-                    throw new NotSupportedException("collapsed summary rows are not supported");
+                    throw new NotSupportedException("Collapsed summary rows are not supported when collapsed and expanded rows are not equal.");
                 }
 
-                if (row.ExpandedSummaryRows != null)
+                if ((row.ExpandedSummaryRows != null) && row.ExpandedSummaryRows.Any())
                 {
                     // Auto-filters will include summary rows (e.g. a total row will get sorted along with data rows)
                     // unless there's a blank row separating the last data row and first summary row.
-                    if (row.ExpandedSummaryRows.Any() && context.UsesAutoFilter)
+                    if (context.UsesAutoFilter)
                     {
                         cursor.MoveDown();
                     }
@@ -478,7 +488,18 @@ namespace OBeautifulCode.DataStructure.Excel
 
                         cursor.AddRowCells(expandedSummaryRow, context, passKind);
                     }
+
+                    cursor.MergeMarkers(parentMarkerName, groupingMarkerName);
                 }
+
+                if ((passKind == PassKind.Formatting) && cursor.HasMarker(groupingMarkerName))
+                {
+                    cursor.GetMarkedRange(groupingMarkerName).ApplyGroupingFormat(rowBase.Format, context);
+
+                    cursor.RemoveMarker(groupingMarkerName);
+                }
+
+                cursor.RemoveMarker(parentMarkerName);
             }
             else
             {
@@ -678,25 +699,25 @@ namespace OBeautifulCode.DataStructure.Excel
             RowBase row,
             InternalProjectionContext context)
         {
-            if (context.CurrentTreeLevel.Any())
+            if (context.TreeLevelStack.Any())
             {
-                context.CurrentTreeLevel.Push(context.CurrentTreeLevel.Peek() + 1);
+                context.TreeLevelStack.Push(context.TreeLevelStack.Peek() + 1);
             }
             else
             {
-                context.CurrentTreeLevel.Push(0);
+                context.TreeLevelStack.Push(0);
             }
 
             var alignChildrenWithParent = (row.Format?.Options != null) && ((RowFormatOptions)row.Format?.Options).HasFlag(RowFormatOptions.AlignChildRowsWithParent);
 
-            context.AlignChildRowsWithParent.Push(alignChildrenWithParent);
+            context.AlignChildRowsWithParentStack.Push(alignChildrenWithParent);
         }
 
         private static void RemoveTreeLevel(
             InternalProjectionContext context)
         {
-            context.AlignChildRowsWithParent.Pop();
-            context.CurrentTreeLevel.Pop();
+            context.AlignChildRowsWithParentStack.Pop();
+            context.TreeLevelStack.Pop();
         }
 
 #pragma warning disable SA1201 // Elements should appear in the correct order

@@ -253,9 +253,19 @@ namespace OBeautifulCode.DataStructure.Excel
                 return;
             }
 
-            if ((rowFormat.Options != null) && ((RowFormatOptions)rowFormat.Options).HasFlag(RowFormatOptions.AlignChildRowsWithParent))
+            if (rowFormat.Options != null)
             {
-                context.DisableIndentationByTreeLevel = true;
+                var rowFormatOptions = (RowFormatOptions)rowFormat.Options;
+
+                if (rowFormatOptions.HasFlag(RowFormatOptions.AlignChildRowsWithParent))
+                {
+                    context.DisableIndentationByTreeLevel = true;
+                }
+
+                if (rowFormatOptions.HasFlag(RowFormatOptions.DisableCollapsing))
+                {
+                    context.DisableCollapsingOfChildRows = true;
+                }
             }
 
             range.ApplyRowFormat(rowFormat);
@@ -316,9 +326,19 @@ namespace OBeautifulCode.DataStructure.Excel
 
             format.ThrowOnNotImplementedProperty(implementedProperties);
 
-            if ((format.RowsFormat?.Options != null) && ((RowFormatOptions)format.RowsFormat.Options).HasFlag(RowFormatOptions.AlignChildRowsWithParent))
+            if (format.RowsFormat?.Options != null)
             {
-                context.DisableIndentationByTreeLevel = true;
+                var rowFormatOptions = (RowFormatOptions)format.RowsFormat.Options;
+
+                if (rowFormatOptions.HasFlag(RowFormatOptions.AlignChildRowsWithParent))
+                {
+                    context.DisableIndentationByTreeLevel = true;
+                }
+
+                if (rowFormatOptions.HasFlag(RowFormatOptions.DisableCollapsing))
+                {
+                    context.DisableCollapsingOfChildRows = true;
+                }
             }
 
             range.ApplyRowFormat(format.RowsFormat);
@@ -654,16 +674,36 @@ namespace OBeautifulCode.DataStructure.Excel
             }
         }
 
+        private static void ApplyGroupingFormat(
+            this Range range,
+            RowFormat format,
+            InternalProjectionContext context)
+        {
+            var disableCollapsing = context.DisableCollapsingOfChildRows ||
+                                    ((format?.Options != null) && ((RowFormatOptions)format.Options).HasFlag(RowFormatOptions.DisableCollapsing));
+
+            if (!disableCollapsing)
+            {
+                if (context.TreeLevelStack.Peek() <= 6)
+                {
+                    range.SetGroupRows();
+                }
+            }
+        }
+
         private static void ApplyTreeLevelFormat(
             this Range range,
             InternalProjectionContext context)
         {
-            if (context.CurrentTreeLevel.Any())
+            if (context.TreeLevelStack.Any())
             {
                 if (!context.DisableIndentationByTreeLevel)
                 {
-                    var treeLevels = context.CurrentTreeLevel.ToList();
-                    var alignments = context.AlignChildRowsWithParent.Skip(1).ToList();
+                    // This heuristic ensures that if a row should be aligned with it's parent,
+                    // and that parent should be aligned with it's parent, and so on... that we do
+                    // the right thing.
+                    var treeLevels = context.TreeLevelStack.ToList();
+                    var alignments = context.AlignChildRowsWithParentStack.Skip(1).ToList();
                     alignments.Add(true);
 
                     var indentLevel = 0;

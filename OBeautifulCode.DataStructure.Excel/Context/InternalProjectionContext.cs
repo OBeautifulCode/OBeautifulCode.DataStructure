@@ -24,19 +24,25 @@ namespace OBeautifulCode.DataStructure.Excel
         public bool UsesAutoFilter { get; set; }
 
         /// <summary>
-        /// Gets or sets the current level in the tree with the root rows being level 0.
+        /// Gets or sets the stack of tree levels with the root rows being level 0.
         /// </summary>
-        public Stack<int> CurrentTreeLevel { get; set; }
+        public Stack<int> TreeLevelStack { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether to disable the indention that
-        /// occurs by default and determined by the level in the three.
+        /// occurs by default and determined by the level in the tree.
         /// </summary>
         public bool DisableIndentationByTreeLevel { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether to align child rows with their parent.
+        /// Gets or sets a value indicating whether to disable the ability
+        /// to collapse child rows.
         /// </summary>
-        public Stack<bool> AlignChildRowsWithParent { get; set; }
+        public bool DisableCollapsingOfChildRows { get; set; }
+
+        /// <summary>
+        /// Gets or sets a stack of values indicating whether to align child rows with their parent.
+        /// </summary>
+        public Stack<bool> AlignChildRowsWithParentStack { get; set; }
     }
 }
