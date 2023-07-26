@@ -655,9 +655,47 @@ namespace OBeautifulCode.DataStructure.Excel
                 throw notSupportedException;
             }
 
+            if (passKind == PassKind.Data)
+            {
+                cursor.AddHoverOver(cell);
+            }
+
             if ((passKind == PassKind.Formatting) && (cursor.ColumnNumber == cursor.StartColumnNumber))
             {
                 cursor.CellRange.ApplyTreeLevelFormat(context);
+            }
+        }
+
+        private static void AddHoverOver(
+            this CellCursor cursor,
+            ICell cell)
+        {
+            if ((cell is IHaveHoverOver hasHoveOver) && (hasHoveOver.HoverOver != null))
+            {
+                OBeautifulCode.Excel.Comment comment;
+
+                if (hasHoveOver.HoverOver is StringHoverOver stringHoverOver)
+                {
+                    comment = new OBeautifulCode.Excel.Comment
+                    {
+                        Body = stringHoverOver.Value,
+                    };
+                }
+                else if (hasHoveOver.HoverOver is HtmlHoverOver htmlHoverOver)
+                {
+                    comment = new OBeautifulCode.Excel.Comment
+                    {
+                        HtmlBody = htmlHoverOver.Html,
+                    };
+                }
+                else
+                {
+                    throw new NotSupportedException(Invariant($"This type of {nameof(IHaveHoverOver)} is not supported: {hasHoveOver.HoverOver.GetType().ToStringReadable()}."));
+                }
+
+                comment.AutoSize = true;
+
+                cursor.Cell.SetComment(comment);
             }
         }
 
