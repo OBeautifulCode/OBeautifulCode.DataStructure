@@ -156,7 +156,7 @@ namespace OBeautifulCode.DataStructure.Excel
                     chromeCursor.Cell.Value = ((DateTime)report.TimestampUtc).Format(report.Format?.TimestampFormat, context);
                 }
 
-                var additionalInfo = report.AdditionalInfo;
+                var additionalInfo = context.ExternalContext.AdditionalReportInfoOverride ?? report.AdditionalInfo;
 
                 if (additionalInfo != null)
                 {

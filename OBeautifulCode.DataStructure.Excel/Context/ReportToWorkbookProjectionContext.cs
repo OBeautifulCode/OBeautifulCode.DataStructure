@@ -16,6 +16,11 @@ namespace OBeautifulCode.DataStructure.Excel
     public class ReportToWorkbookProjectionContext
     {
         /// <summary>
+        /// Gets or sets the <see cref="AdditionalReportInfo"/> to use, overriding the one specified in the report.
+        /// </summary>
+        public AdditionalReportInfo AdditionalReportInfoOverride { get; set; }
+
+        /// <summary>
         /// Gets or sets the delegate to use to build the Excel document properties.
         /// </summary>
         public BuildDocumentPropertiesDelegate BuildDocumentPropertiesDelegate { get; set; }
