@@ -709,8 +709,6 @@ namespace OBeautifulCode.DataStructure.Excel
                     throw new NotSupportedException(Invariant($"This type of {nameof(IHaveHoverOver)} is not supported: {hasHoveOver.HoverOver.GetType().ToStringReadable()}."));
                 }
 
-                comment.WidthInInches = 3;
-
                 cursor.Cell.SetComment(comment);
             }
         }
