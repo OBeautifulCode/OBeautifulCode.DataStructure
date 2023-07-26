@@ -641,6 +641,22 @@ namespace OBeautifulCode.DataStructure.Excel
                         cursor.Cell.Value = nullableDecimalConstCell.Value;
                     }
                 }
+                else if (cell is ConstCell<MediaReference> mediaReferenceCell)
+                {
+                    if ((passKind == PassKind.Data) && (mediaReferenceCell.Value != null))
+                    {
+                        var mediaReference = mediaReferenceCell.Value;
+
+                        if (mediaReference.MediaReferenceKind == MediaReferenceKind.Image)
+                        {
+                            cursor.Cell.InsertImages(new[] { mediaReference.Url }, cellSizeChanges: ImagesCellSizeChanges.ExpandRowAndColumnToFitImages);
+                        }
+                        else
+                        {
+                            throw new NotSupportedException(Invariant($"This {nameof(MediaReferenceKind)} is not supported: {mediaReference.MediaReferenceKind}."));
+                        }
+                    }
+                }
                 else
                 {
                     throw notSupportedException;
