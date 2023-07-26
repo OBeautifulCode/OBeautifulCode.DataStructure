@@ -694,6 +694,7 @@ namespace OBeautifulCode.DataStructure.Excel
                 }
 
                 comment.AutoSize = true;
+                comment.WidthInInches = 3;
 
                 cursor.Cell.SetComment(comment);
             }
