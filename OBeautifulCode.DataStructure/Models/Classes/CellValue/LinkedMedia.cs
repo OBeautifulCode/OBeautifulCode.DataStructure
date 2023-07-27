@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="MediaReference.cs" company="OBeautifulCode">
+// <copyright file="LinkedMedia.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -15,22 +15,23 @@ namespace OBeautifulCode.DataStructure
     using static System.FormattableString;
 
     /// <summary>
-    /// A reference to that media (i.e. must be fetched from a server).
+    /// A link to media (i.e. must be fetched from a server).
     /// </summary>
     // ReSharper disable once RedundantExtendsListEntry
-    public partial class MediaReference : IModelViaCodeGen
+    public partial class LinkedMedia : MediaBase, IModelViaCodeGen
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="MediaReference"/> class.
+        /// Initializes a new instance of the <see cref="LinkedMedia"/> class.
         /// </summary>
-        /// <param name="url">The url of the media reference.</param>
-        /// <param name="mediaReferenceKind">The kind of media reference.</param>
+        /// <param name="url">The url of the media.</param>
+        /// <param name="mediaKind">The kind of media.</param>
         /// <param name="name">OPTIONAL name of the media.  DEFAULT is to use name-less media.</param>
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings", MessageId = "0#", Justification = ObcSuppressBecause.CA1054_UriParametersShouldNotBeStrings_PreferToRepresentUrlAsString)]
-        public MediaReference(
+        public LinkedMedia(
             string url,
-            MediaReferenceKind mediaReferenceKind,
+            MediaKind mediaKind,
             string name = null)
+            : base(mediaKind, name)
         {
             if (url == null)
             {
@@ -42,30 +43,13 @@ namespace OBeautifulCode.DataStructure
                 throw new ArgumentException(Invariant($"{nameof(url)} is white space."));
             }
 
-            if (mediaReferenceKind == MediaReferenceKind.Unknown)
-            {
-                throw new ArgumentOutOfRangeException(Invariant($"{nameof(mediaReferenceKind)} is {nameof(MediaReferenceKind.Unknown)}."));
-            }
-
             this.Url = url;
-            this.MediaReferenceKind = mediaReferenceKind;
-            this.Name = name;
         }
 
         /// <summary>
-        /// Gets the url of the media reference.
+        /// Gets the url of the media.
         /// </summary>
         [SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings", Justification = ObcSuppressBecause.CA1056_UriPropertiesShouldNotBeStrings_PreferToRepresentUrlAsString)]
         public string Url { get; private set; }
-
-        /// <summary>
-        /// Gets the kind of media reference.
-        /// </summary>
-        public MediaReferenceKind MediaReferenceKind { get; private set; }
-
-        /// <summary>
-        /// Gets the name of the media.
-        /// </summary>
-        public string Name { get; private set; }
     }
 }

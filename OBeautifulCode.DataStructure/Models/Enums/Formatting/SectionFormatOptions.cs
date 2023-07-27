@@ -20,9 +20,8 @@ namespace OBeautifulCode.DataStructure
         None = 0,
 
         /// <summary>
-        /// This is to make code generated tests happy.
-        /// Remove as soon as we add our first real option.
+        /// Hide the section.
         /// </summary>
-        ForTestingRemoveWhenThereIsRealOption,
+        Hide = 1,
     }
 }

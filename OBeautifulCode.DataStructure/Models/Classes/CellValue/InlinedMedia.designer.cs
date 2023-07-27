@@ -23,15 +23,15 @@ namespace OBeautifulCode.DataStructure
     using static global::System.FormattableString;
 
     [Serializable]
-    public partial class MediaReference : IModel<MediaReference>
+    public partial class InlinedMedia : IModel<InlinedMedia>
     {
         /// <summary>
-        /// Determines whether two objects of type <see cref="MediaReference"/> are equal.
+        /// Determines whether two objects of type <see cref="InlinedMedia"/> are equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are equal; otherwise false.</returns>
-        public static bool operator ==(MediaReference left, MediaReference right)
+        public static bool operator ==(InlinedMedia left, InlinedMedia right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -49,15 +49,15 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <summary>
-        /// Determines whether two objects of type <see cref="MediaReference"/> are not equal.
+        /// Determines whether two objects of type <see cref="InlinedMedia"/> are not equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are not equal; otherwise false.</returns>
-        public static bool operator !=(MediaReference left, MediaReference right) => !(left == right);
+        public static bool operator !=(InlinedMedia left, InlinedMedia right) => !(left == right);
 
         /// <inheritdoc />
-        public bool Equals(MediaReference other)
+        public bool Equals(InlinedMedia other)
         {
             if (ReferenceEquals(this, other))
             {
@@ -69,42 +69,27 @@ namespace OBeautifulCode.DataStructure
                 return false;
             }
 
-            var result = this.Url.IsEqualTo(other.Url, StringComparer.Ordinal)
-                      && this.MediaReferenceKind.IsEqualTo(other.MediaReferenceKind)
-                      && this.Name.IsEqualTo(other.Name, StringComparer.Ordinal);
+            var result = this.MediaKind.IsEqualTo(other.MediaKind)
+                      && this.Name.IsEqualTo(other.Name, StringComparer.Ordinal)
+                      && this.Bytes.IsEqualTo(other.Bytes);
 
             return result;
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => this == (obj as MediaReference);
+        public override bool Equals(object obj) => this == (obj as InlinedMedia);
 
         /// <inheritdoc />
         public override int GetHashCode() => HashCodeHelper.Initialize()
-            .Hash(this.Url)
-            .Hash(this.MediaReferenceKind)
+            .Hash(this.MediaKind)
             .Hash(this.Name)
+            .Hash(this.Bytes)
             .Value;
 
         /// <inheritdoc />
-        public object Clone() => this.DeepClone();
+        public new InlinedMedia DeepClone() => (InlinedMedia)this.DeepCloneInternal();
 
         /// <inheritdoc />
-        public MediaReference DeepClone()
-        {
-            var result = new MediaReference(
-                                 this.Url?.DeepClone(),
-                                 this.MediaReferenceKind.DeepClone(),
-                                 this.Name?.DeepClone());
-
-            return result;
-        }
-
-        /// <summary>
-        /// Deep clones this object with a new <see cref="Url" />.
-        /// </summary>
-        /// <param name="url">The new <see cref="Url" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="MediaReference" /> using the specified <paramref name="url" /> for <see cref="Url" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -122,21 +107,17 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public MediaReference DeepCloneWithUrl(string url)
+        public override MediaBase DeepCloneWithMediaKind(MediaKind mediaKind)
         {
-            var result = new MediaReference(
-                                 url,
-                                 this.MediaReferenceKind.DeepClone(),
+            var result = new InlinedMedia(
+                                 this.Bytes?.DeepClone(),
+                                 mediaKind,
                                  this.Name?.DeepClone());
 
             return result;
         }
 
-        /// <summary>
-        /// Deep clones this object with a new <see cref="MediaReferenceKind" />.
-        /// </summary>
-        /// <param name="mediaReferenceKind">The new <see cref="MediaReferenceKind" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="MediaReference" /> using the specified <paramref name="mediaReferenceKind" /> for <see cref="MediaReferenceKind" /> and a deep clone of every other property.</returns>
+        /// <inheritdoc />
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -154,44 +135,56 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public MediaReference DeepCloneWithMediaReferenceKind(MediaReferenceKind mediaReferenceKind)
+        public override MediaBase DeepCloneWithName(string name)
         {
-            var result = new MediaReference(
-                                 this.Url?.DeepClone(),
-                                 mediaReferenceKind,
-                                 this.Name?.DeepClone());
-
-            return result;
-        }
-
-        /// <summary>
-        /// Deep clones this object with a new <see cref="Name" />.
-        /// </summary>
-        /// <param name="name">The new <see cref="Name" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="MediaReference" /> using the specified <paramref name="name" /> for <see cref="Name" /> and a deep clone of every other property.</returns>
-        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
-        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
-        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
-        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public MediaReference DeepCloneWithName(string name)
-        {
-            var result = new MediaReference(
-                                 this.Url?.DeepClone(),
-                                 this.MediaReferenceKind.DeepClone(),
+            var result = new InlinedMedia(
+                                 this.Bytes?.DeepClone(),
+                                 this.MediaKind.DeepClone(),
                                  name);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Deep clones this object with a new <see cref="Bytes" />.
+        /// </summary>
+        /// <param name="bytes">The new <see cref="Bytes" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="InlinedMedia" /> using the specified <paramref name="bytes" /> for <see cref="Bytes" /> and a deep clone of every other property.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
+        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
+        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
+        public InlinedMedia DeepCloneWithBytes(byte[] bytes)
+        {
+            var result = new InlinedMedia(
+                                 bytes,
+                                 this.MediaKind.DeepClone(),
+                                 this.Name?.DeepClone());
+
+            return result;
+        }
+
+        /// <inheritdoc />
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
+        protected override MediaBase DeepCloneInternal()
+        {
+            var result = new InlinedMedia(
+                                 this.Bytes?.DeepClone(),
+                                 this.MediaKind.DeepClone(),
+                                 this.Name?.DeepClone());
 
             return result;
         }
@@ -200,7 +193,7 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"OBeautifulCode.DataStructure.MediaReference: Url = {this.Url?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, MediaReferenceKind = {this.MediaReferenceKind.ToString() ?? "<null>"}, Name = {this.Name?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}.");
+            var result = Invariant($"OBeautifulCode.DataStructure.InlinedMedia: MediaKind = {this.MediaKind.ToString() ?? "<null>"}, Name = {this.Name?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Bytes = {this.Bytes?.ToString() ?? "<null>"}.");
 
             return result;
         }

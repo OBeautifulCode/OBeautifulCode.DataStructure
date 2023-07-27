@@ -457,6 +457,7 @@ namespace OBeautifulCode.DataStructure.Test
                     var availableTypes = new[]
                     {
                         typeof(GenericDetails),
+                        typeof(LogoDetails),
                         typeof(NullDetails)
                     };
 
@@ -584,6 +585,12 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<IReturningOperation<Version>>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new InlinedMedia(
+                                 A.Dummy<byte[]>(),
+                                 A.Dummy<MediaKind>(),
+                                 A.Dummy<string>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new InnerBorder(
                                  A.Dummy<BorderWeight>(),
                                  A.Dummy<BorderStyle>(),
@@ -645,6 +652,12 @@ namespace OBeautifulCode.DataStructure.Test
                 });
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new LinkedMedia(
+                                 A.Dummy<string>(),
+                                 A.Dummy<MediaKind>(),
+                                 A.Dummy<string>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () =>
                 {
                     var availableTypes = new[]
@@ -682,10 +695,26 @@ namespace OBeautifulCode.DataStructure.Test
                 });
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new MediaReference(
-                                 A.Dummy<string>(),
-                                 A.Dummy<MediaReferenceKind>(),
-                                 A.Dummy<string>()));
+                () => new LogoDetails(
+                                 A.Dummy<MediaBase>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var availableTypes = new[]
+                    {
+                        typeof(InlinedMedia),
+                        typeof(LinkedMedia)
+                    };
+
+                    var randomIndex = ThreadSafeRandom.Next(0, availableTypes.Length);
+
+                    var randomType = availableTypes[randomIndex];
+
+                    var result = (MediaBase)AD.ummy(randomType);
+
+                    return result;
+                });
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () =>

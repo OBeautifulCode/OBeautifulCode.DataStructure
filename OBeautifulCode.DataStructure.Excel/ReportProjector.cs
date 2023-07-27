@@ -650,19 +650,19 @@ namespace OBeautifulCode.DataStructure.Excel
                         cursor.Cell.Value = nullableDecimalConstCell.Value;
                     }
                 }
-                else if (cell is ConstCell<MediaReference> mediaReferenceCell)
+                else if (cell is ConstCell<LinkedMedia> linkedMedia)
                 {
-                    if ((passKind == PassKind.Data) && (mediaReferenceCell.Value != null))
+                    if ((passKind == PassKind.Data) && (linkedMedia.Value != null))
                     {
-                        var mediaReference = mediaReferenceCell.Value;
+                        var media = linkedMedia.Value;
 
-                        if (mediaReference.MediaReferenceKind == MediaReferenceKind.Image)
+                        if (media.MediaKind == MediaKind.Image)
                         {
-                            cursor.Cell.InsertImages(new[] { mediaReference.Url }, cellSizeChanges: ImagesCellSizeChanges.ExpandRowAndColumnToFitImages);
+                            cursor.Cell.InsertImages(new[] { media.Url }, cellSizeChanges: ImagesCellSizeChanges.ExpandRowAndColumnToFitImages);
                         }
                         else
                         {
-                            throw new NotSupportedException(Invariant($"This {nameof(MediaReferenceKind)} is not supported: {mediaReference.MediaReferenceKind}."));
+                            throw new NotSupportedException(Invariant($"This {nameof(MediaKind)} is not supported: {media.MediaKind}."));
                         }
                     }
                 }

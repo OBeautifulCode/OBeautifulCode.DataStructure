@@ -226,9 +226,17 @@
     <Compile Include="Models\Classes\CellLocator\ThisCellLocator.designer.cs">
       <DependentUpon>ThisCellLocator.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Classes\CellValue\MediaReference.cs" />
-    <Compile Include="Models\Classes\CellValue\MediaReference.designer.cs">
-      <DependentUpon>MediaReference.cs</DependentUpon>
+    <Compile Include="Models\Classes\CellValue\InlinedMedia.designer.cs">
+      <DependentUpon>InlinedMedia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\CellValue\LinkedMedia.designer.cs">
+      <DependentUpon>LinkedMedia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\CellValue\MediaBase.cs" />
+    <Compile Include="Models\Classes\CellValue\InlinedMedia.cs" />
+    <Compile Include="Models\Classes\CellValue\LinkedMedia.cs" />
+    <Compile Include="Models\Classes\CellValue\MediaBase.designer.cs">
+      <DependentUpon>MediaBase.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Classes\Cell\Input\InputCellBase{TValue}.designer.cs">
       <DependentUpon>InputCellBase{TValue}.cs</DependentUpon>
@@ -288,9 +296,13 @@
     <Compile Include="Models\Classes\Details\DetailsBase.designer.cs">
       <DependentUpon>DetailsBase.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\Classes\Details\LogoDetails.cs" />
     <Compile Include="Models\Classes\Details\GenericDetails.cs" />
     <Compile Include="Models\Classes\Details\GenericDetails.designer.cs">
       <DependentUpon>GenericDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Details\LogoDetails.designer.cs">
+      <DependentUpon>LogoDetails.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Classes\Details\NullDetails.cs" />
     <Compile Include="Models\Classes\Details\DetailsBase.cs" />
@@ -507,7 +519,7 @@
       <DependentUpon>ValidationStep.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Enums\AvailabilityCheck\AvailabilityCheckStepAction.cs" />
-    <Compile Include="Models\Enums\CellValue\MediaReferenceKind.cs" />
+    <Compile Include="Models\Enums\CellValue\MediaKind.cs" />
     <Compile Include="Models\Enums\Formatting\SectionFormatOptions.cs" />
     <Compile Include="Models\Enums\Formatting\ReportFormatOptions.cs" />
     <Compile Include="Models\Enums\Formatting\MessageFormatKind.cs" />

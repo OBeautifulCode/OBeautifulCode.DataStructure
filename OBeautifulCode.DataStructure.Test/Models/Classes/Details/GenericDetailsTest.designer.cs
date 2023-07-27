@@ -152,6 +152,7 @@ namespace OBeautifulCode.DataStructure.Test
                         A.Dummy<int>(),
                         A.Dummy<int?>(),
                         A.Dummy<Guid>(),
+                        A.Dummy<LogoDetails>(),
                         A.Dummy<NullDetails>(),
                     },
                 });

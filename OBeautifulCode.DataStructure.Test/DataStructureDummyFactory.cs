@@ -48,7 +48,7 @@ namespace OBeautifulCode.DataStructure.Test
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(HorizontalAlignment.Unknown);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(InnerBorderEdges.None);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(LinkTarget.Unknown);
-            AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(MediaReferenceKind.Unknown);
+            AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(MediaKind.Unknown);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(MessageFormatKind.Unknown);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(NumberFormatDigitGroupKind.Unknown);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(NumberFormatNegativeDisplayKind.Unknown);
@@ -458,6 +458,14 @@ namespace OBeautifulCode.DataStructure.Test
             AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
             {
                 var result = new CellValidationFailedEvent(A.Dummy<UtcDateTime>(), A.Dummy<string>());
+
+                return result;
+            });
+
+            // Details
+            AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
+            {
+                var result = new LogoDetails(A.Dummy<MediaBase>().Whose(_ => _.MediaKind == MediaKind.Image));
 
                 return result;
             });
