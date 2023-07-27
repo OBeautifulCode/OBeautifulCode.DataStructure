@@ -40,5 +40,10 @@ namespace OBeautifulCode.DataStructure.Excel
         /// overriding the default behavior of using <see cref="Section.Name"/> as the worksheet name.
         /// </summary>
         public IReadOnlyDictionary<string, string> SectionIdToWorksheetNameOverrideMap { get; set; }
+
+        /// <summary>
+        /// Gets or sets new sections to include with the report at projection time.
+        /// </summary>
+        public IReadOnlyList<Section> SectionsToAppend { get; set; }
     }
 }

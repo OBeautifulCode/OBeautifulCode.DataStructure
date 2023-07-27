@@ -56,6 +56,13 @@ namespace OBeautifulCode.DataStructure.Excel
 
             context = context ?? new ReportToWorkbookProjectionContext();
 
+            // check context
+            var sectionsToAppend = context.SectionsToAppend ?? new Section[0];
+            if (sectionsToAppend.Any(_ => _ == null))
+            {
+                throw new ArgumentException(Invariant($"{nameof(context)}.{nameof(context.SectionsToAppend)} contains a null element"));
+            }
+
             // Setup the workbook
             var result = General.CreateStandardWorkbook().RemoveDefaultWorksheet();
 
@@ -69,7 +76,9 @@ namespace OBeautifulCode.DataStructure.Excel
             result.SetDocumentProperties(documentProperties);
 
             // Add sections
-            foreach (var section in report.Sections)
+            var sections = report.Sections.Concat(sectionsToAppend).ToList();
+
+            foreach (var section in sections)
             {
                 var worksheetName = section.GetWorksheetName(context);
 
