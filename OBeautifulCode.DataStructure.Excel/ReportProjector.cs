@@ -188,7 +188,7 @@ namespace OBeautifulCode.DataStructure.Excel
             // Overall formatting
             if (passKind == PassKind.Formatting)
             {
-                chromeCursor.CanvassedRange.ApplySectionFormat(section.Format);
+                chromeCursor.CanvassedRange.ApplySectionFormat(section.Format, section.Id, context);
 
                 chromeCursor.CanvassedRange.ApplyReportFormat(report.Format);
             }

@@ -72,7 +72,9 @@ namespace OBeautifulCode.DataStructure.Excel
 
         private static void ApplySectionFormat(
             this Range range,
-            SectionFormat sectionFormat)
+            SectionFormat sectionFormat,
+            string sectionId,
+            InternalProjectionContext context)
         {
             if (sectionFormat == null)
             {
@@ -86,26 +88,37 @@ namespace OBeautifulCode.DataStructure.Excel
 
             sectionFormat.ThrowOnNotImplementedProperty(implementedProperties);
 
-            range.ApplySectionFormatOptions(sectionFormat.Options);
+            range.ApplySectionFormatOptions(sectionFormat.Options, sectionId, context);
         }
 
-        [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "range", Justification = "Future-proofing.")]
         private static void ApplySectionFormatOptions(
             this Range range,
-            SectionFormatOptions? options)
+            SectionFormatOptions? options,
+            string sectionId,
+            InternalProjectionContext context)
         {
             if (options == null)
             {
                 return;
             }
 
-            var implementedOptions = new SectionFormatOptions[]
+            var implementedOptions = new[]
             {
+                SectionFormatOptions.Hide,
             };
 
             var sectionFormatOptions = (SectionFormatOptions)options;
 
             sectionFormatOptions.ThrowOnNotImplementedEnumFlag(implementedOptions);
+
+            if (sectionFormatOptions.HasFlag(ColumnFormatOptions.Hide))
+            {
+                var sectionIdsToPermanentlyHide = context.ExternalContext.SectionIdsToTreatHiddenAsPermanentlyHidden ?? new string[0];
+
+                range.Worksheet.VisibilityType = sectionIdsToPermanentlyHide.Contains(sectionId)
+                    ? VisibilityType.VeryHidden
+                    : VisibilityType.Hidden;
+            }
         }
 
         private static void ApplyTableFormat(

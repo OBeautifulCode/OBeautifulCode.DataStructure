@@ -42,6 +42,12 @@ namespace OBeautifulCode.DataStructure.Excel
         public IReadOnlyDictionary<string, string> SectionIdToWorksheetNameOverrideMap { get; set; }
 
         /// <summary>
+        /// Gets or sets the section ids of sections that, when hidden, are permanently hidden
+        /// (instead of user having the ability to un-hide in the Excel UI).
+        /// </summary>
+        public IReadOnlyCollection<string> SectionIdsToTreatHiddenAsPermanentlyHidden { get; set; }
+
+        /// <summary>
         /// Gets or sets new sections to include with the report at projection time.
         /// </summary>
         public IReadOnlyList<Section> SectionsToAppend { get; set; }
