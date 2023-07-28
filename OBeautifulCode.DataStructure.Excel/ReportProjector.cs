@@ -258,6 +258,8 @@ namespace OBeautifulCode.DataStructure.Excel
                 return;
             }
 
+            tableRows.RowsFormat.ProcessIntoContext(context);
+
             if (passKind == PassKind.Formatting)
             {
                 var tableRange = cursor.GetMarkedRange(TableTopLeftBottomRightCornersCellMarker);
@@ -390,6 +392,8 @@ namespace OBeautifulCode.DataStructure.Excel
                 return false;
             }
 
+            dataRows.Format.ProcessIntoContext(context);
+
             if (dataRows.Rows.Any())
             {
                 for (var x = 0; x < dataRows.Rows.Count; x++)
@@ -460,9 +464,7 @@ namespace OBeautifulCode.DataStructure.Excel
                 {
                     for (var x = 0; x < row.ChildRows.Count; x++)
                     {
-                        cursor.ResetColumn();
-
-                        cursor.MoveDown();
+                        cursor.ResetColumn().MoveDown();
 
                         if (x == 0)
                         {
@@ -491,14 +493,28 @@ namespace OBeautifulCode.DataStructure.Excel
 
                     foreach (var expandedSummaryRow in row.ExpandedSummaryRows)
                     {
-                        cursor.ResetColumn();
-
-                        cursor.MoveDown();
+                        cursor.ResetColumn().MoveDown();
 
                         cursor.AddRowCells(expandedSummaryRow, context, passKind);
                     }
 
+                    // Note that you can't have summary rows without child rows so we're guaranteed to have the grouping marker at this point.
                     cursor.MergeMarkers(parentMarkerName, groupingMarkerName);
+                }
+                else
+                {
+                    if (cursor.HasMarker(groupingMarkerName))
+                    {
+                        if (!DisableCollapsing(rowBase.Format, context))
+                        {
+                            // For rows with children but without a summary row, the additional blank row
+                            // makes it so that Excel's expand/collapse toggle control doesn't appear on
+                            // the next row.  It will appear on the blank row and thus feel like it is on
+                            // a child row and thus within the scope of the row itself, not outside of it's scope.
+                            // Otherwise, it's causes a pretty big usability problem.
+                            cursor.ResetColumn().MoveDown();
+                        }
+                    }
                 }
 
                 if ((passKind == PassKind.Formatting) && cursor.HasMarker(groupingMarkerName))
@@ -781,6 +797,56 @@ namespace OBeautifulCode.DataStructure.Excel
         {
             context.AlignChildRowsWithParentStack.Pop();
             context.TreeLevelStack.Pop();
+        }
+
+        private static void ProcessIntoContext(
+            this RowFormat rowFormat,
+            InternalProjectionContext context)
+        {
+            if (rowFormat == null)
+            {
+                return;
+            }
+
+            if (rowFormat.Options != null)
+            {
+                var rowFormatOptions = (RowFormatOptions)rowFormat.Options;
+
+                if (rowFormatOptions.HasFlag(RowFormatOptions.DisableCollapsing))
+                {
+                    context.DisableCollapsingOfChildRows = true;
+                }
+            }
+        }
+
+        private static void ProcessIntoContext(
+            this DataRowsFormat format,
+            InternalProjectionContext context)
+        {
+            if (format == null)
+            {
+                return;
+            }
+
+            if (format.RowsFormat?.Options != null)
+            {
+                var rowFormatOptions = (RowFormatOptions)format.RowsFormat.Options;
+
+                if (rowFormatOptions.HasFlag(RowFormatOptions.DisableCollapsing))
+                {
+                    context.DisableCollapsingOfChildRows = true;
+                }
+            }
+        }
+
+        private static bool DisableCollapsing(
+            this RowFormat format,
+            InternalProjectionContext context)
+        {
+            var result = context.DisableCollapsingOfChildRows ||
+                         ((format?.Options != null) && ((RowFormatOptions)format.Options).HasFlag(RowFormatOptions.DisableCollapsing));
+
+            return result;
         }
 
 #pragma warning disable SA1201 // Elements should appear in the correct order

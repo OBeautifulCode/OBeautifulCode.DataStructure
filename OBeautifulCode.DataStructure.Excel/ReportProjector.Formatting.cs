@@ -274,11 +274,6 @@ namespace OBeautifulCode.DataStructure.Excel
                 {
                     context.DisableIndentationByTreeLevel = true;
                 }
-
-                if (rowFormatOptions.HasFlag(RowFormatOptions.DisableCollapsing))
-                {
-                    context.DisableCollapsingOfChildRows = true;
-                }
             }
 
             range.ApplyRowFormat(rowFormat);
@@ -346,11 +341,6 @@ namespace OBeautifulCode.DataStructure.Excel
                 if (rowFormatOptions.HasFlag(RowFormatOptions.AlignChildRowsWithParent))
                 {
                     context.DisableIndentationByTreeLevel = true;
-                }
-
-                if (rowFormatOptions.HasFlag(RowFormatOptions.DisableCollapsing))
-                {
-                    context.DisableCollapsingOfChildRows = true;
                 }
             }
 
@@ -692,14 +682,13 @@ namespace OBeautifulCode.DataStructure.Excel
             RowFormat format,
             InternalProjectionContext context)
         {
-            var disableCollapsing = context.DisableCollapsingOfChildRows ||
-                                    ((format?.Options != null) && ((RowFormatOptions)format.Options).HasFlag(RowFormatOptions.DisableCollapsing));
+            var disableCollapsing = format.DisableCollapsing(context);
 
             if (!disableCollapsing)
             {
                 if (context.TreeLevelStack.Peek() <= 6)
                 {
-                    range.SetGroupRows();
+                    range.SetGroupRows(collapseGroup: true);
                 }
             }
         }
