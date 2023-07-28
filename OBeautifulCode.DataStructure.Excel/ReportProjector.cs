@@ -112,16 +112,40 @@ namespace OBeautifulCode.DataStructure.Excel
                 UsesAutoFilter = section.RequiresAutoFilter(),
             };
 
-            // Add upper chrome (e.g. section title)
-            var chromeCursor = cursors.ChromeCursor;
+            var chromeCursor = cursors.ChromeCursor.Reset();
 
-            chromeCursor.Reset();
+            if (passKind == PassKind.Formatting)
+            {
+                chromeCursor.CanvassedRange.ApplyReportFormat(report.Format);
 
+                chromeCursor.CanvassedRange.ApplySectionFormat(section.Format, section.Id, context);
+            }
+
+            section.AddSectionHeader(passKind, report, chromeCursor);
+
+            cursors.TreeTableCursor = cursors.TreeTableCursor ?? new CellCursor(chromeCursor.Worksheet, chromeCursor.RowNumber, chromeCursor.StartColumnNumber);
+            var treeTableCursor = cursors.TreeTableCursor.Reset();
+
+            treeTableCursor.AddTreeTable(section.TreeTable, context, passKind);
+
+            chromeCursor.MoveDown(treeTableCursor.MaxRowNumber - chromeCursor.RowNumber + 1);
+
+            AddSectionFooter(passKind, report, chromeCursor, context);
+        }
+
+        private static void AddSectionHeader(
+            this Section section,
+            PassKind passKind,
+            Report report,
+            CellCursor chromeCursor)
+        {
+            // note: Unlike the tree table, for the section header, whenever we add a row we will move down a row.
+            // This is so that the tree table always starts on a row that can be written to, which is what it expects.
             var hasTitle = (!string.IsNullOrWhiteSpace(report.Title)) || (!string.IsNullOrWhiteSpace(section.Title));
 
-            if (passKind == PassKind.Data)
+            if (hasTitle)
             {
-                if (hasTitle)
+                if (passKind == PassKind.Data)
                 {
                     var title = string.IsNullOrWhiteSpace(report.Title) ? string.Empty : report.Title;
 
@@ -132,29 +156,24 @@ namespace OBeautifulCode.DataStructure.Excel
 
                     chromeCursor.Cell.Value = title;
                 }
-            }
 
-            if (passKind == PassKind.Formatting)
-            {
-                if (hasTitle)
+                if (passKind == PassKind.Formatting)
                 {
                     // Section model doesn't have any formatting for title.
-                    chromeCursor.Cell.GetRange().ApplyCellFormat(new CellFormat(fontFormat: new FontFormat(fontSizeInPoints: 18)));
+                    chromeCursor.Cell.GetRange()
+                        .ApplyCellFormat(new CellFormat(fontFormat: new FontFormat(fontSizeInPoints: 18)));
                 }
+
+                chromeCursor.MoveDown();
             }
+        }
 
-            // Add tree table
-            cursors.TreeTableCursor = cursors.TreeTableCursor ?? new CellCursor(chromeCursor.Worksheet, chromeCursor.RowNumber, chromeCursor.StartColumnNumber);
-
-            var treeTableCursor = cursors.TreeTableCursor;
-
-            treeTableCursor.Reset();
-
-            treeTableCursor.AddTreeTable(section.TreeTable, hasTitle, context, passKind);
-
-            // Add bottom chrome (e.g. copyright and terms of use)
-            chromeCursor.MoveDown(treeTableCursor.MaxRowNumber - chromeCursor.RowNumber + 1);
-
+        private static void AddSectionFooter(
+            PassKind passKind,
+            Report report,
+            CellCursor chromeCursor,
+            InternalProjectionContext context)
+        {
             if (passKind == PassKind.Data)
             {
                 // By default, display the timestamp if available.
@@ -184,20 +203,11 @@ namespace OBeautifulCode.DataStructure.Excel
                     }
                 }
             }
-
-            // Overall formatting
-            if (passKind == PassKind.Formatting)
-            {
-                chromeCursor.CanvassedRange.ApplySectionFormat(section.Format, section.Id, context);
-
-                chromeCursor.CanvassedRange.ApplyReportFormat(report.Format);
-            }
         }
 
         private static void AddTreeTable(
             this CellCursor cursor,
             TreeTable treeTable,
-            bool moveDownForFirstRow,
             InternalProjectionContext context,
             PassKind passKind)
         {
@@ -243,13 +253,12 @@ namespace OBeautifulCode.DataStructure.Excel
             }
 
             // Add rows
-            cursor.AddTableRows(treeTable.TableRows, moveDownForFirstRow, context, passKind);
+            cursor.AddTableRows(treeTable.TableRows, context, passKind);
         }
 
         private static void AddTableRows(
             this CellCursor cursor,
             TableRows tableRows,
-            bool moveDownForFirstRow,
             InternalProjectionContext context,
             PassKind passKind)
         {
@@ -273,17 +282,11 @@ namespace OBeautifulCode.DataStructure.Excel
 
             cursor.AddMarker(TableTopLeftBottomRightCornersCellMarker);
 
-            if (cursor.AddHeaderRows(tableRows.HeaderRows, moveDownForFirstRow, context, passKind))
-            {
-                moveDownForFirstRow = true;
-            }
+            var moveDownForFirstRow = cursor.AddHeaderRows(tableRows.HeaderRows, false, context, passKind);
 
-            if (cursor.AddDataRows(tableRows.DataRows, moveDownForFirstRow, context, passKind))
-            {
-                moveDownForFirstRow = true;
-            }
+            moveDownForFirstRow = cursor.AddDataRows(tableRows.DataRows, moveDownForFirstRow, context, passKind) || moveDownForFirstRow;
 
-            cursor.AddFooterRows(tableRows.FooterRows, moveDownForFirstRow, context, passKind);
+            moveDownForFirstRow = cursor.AddFooterRows(tableRows.FooterRows, moveDownForFirstRow, context, passKind) || moveDownForFirstRow;
 
             cursor.AddMarker(TableTopLeftBottomRightCornersCellMarker);
         }
@@ -295,12 +298,9 @@ namespace OBeautifulCode.DataStructure.Excel
             InternalProjectionContext context,
             PassKind passKind)
         {
-            if (headerRows == null)
-            {
-                return false;
-            }
+            var result = false;
 
-            if (headerRows.Rows.Any())
+            if ((headerRows != null) && headerRows.Rows.Any())
             {
                 for (var x = 0; x < headerRows.Rows.Count; x++)
                 {
@@ -309,13 +309,6 @@ namespace OBeautifulCode.DataStructure.Excel
                     if (moveDownForFirstRow || (x != 0))
                     {
                         cursor.MoveDown();
-                    }
-                    else
-                    {
-                        if (cursor.StartRowNumber != cursor.RowNumber)
-                        {
-                            cursor.MoveDown();
-                        }
                     }
 
                     if ((x == 0) && (passKind == PassKind.Data))
@@ -335,24 +328,23 @@ namespace OBeautifulCode.DataStructure.Excel
                 {
                     cursor.AddMarker(BottomRightHeaderCellMarker);
                 }
+
+                result = true;
             }
 
-            return true;
+            return result;
         }
 
-        private static void AddFooterRows(
+        private static bool AddFooterRows(
             this CellCursor cursor,
             FooterRows footerRows,
             bool moveDownForFirstRow,
             InternalProjectionContext context,
             PassKind passKind)
         {
-            if (footerRows == null)
-            {
-                return;
-            }
+            var result = false;
 
-            if (footerRows.Rows.Any())
+            if ((footerRows != null) && footerRows.Rows.Any())
             {
                 for (var x = 0; x < footerRows.Rows.Count; x++)
                 {
@@ -362,13 +354,6 @@ namespace OBeautifulCode.DataStructure.Excel
                     {
                         cursor.MoveDown();
                     }
-                    else
-                    {
-                        if (cursor.StartRowNumber != cursor.RowNumber)
-                        {
-                            cursor.MoveDown();
-                        }
-                    }
 
                     if (passKind == PassKind.Formatting)
                     {
@@ -377,7 +362,11 @@ namespace OBeautifulCode.DataStructure.Excel
 
                     cursor.AddRowCells(footerRows.Rows[x], context, passKind);
                 }
+
+                result = true;
             }
+
+            return result;
         }
 
         private static bool AddDataRows(
@@ -387,14 +376,11 @@ namespace OBeautifulCode.DataStructure.Excel
             InternalProjectionContext context,
             PassKind passKind)
         {
-            if (dataRows == null)
-            {
-                return false;
-            }
+            dataRows?.Format.ProcessIntoContext(context);
 
-            dataRows.Format.ProcessIntoContext(context);
+            var result = false;
 
-            if (dataRows.Rows.Any())
+            if ((dataRows != null) && dataRows.Rows.Any())
             {
                 for (var x = 0; x < dataRows.Rows.Count; x++)
                 {
@@ -403,13 +389,6 @@ namespace OBeautifulCode.DataStructure.Excel
                     if (moveDownForFirstRow || (x != 0))
                     {
                         cursor.MoveDown();
-                    }
-                    else
-                    {
-                        if (cursor.StartRowNumber != cursor.RowNumber)
-                        {
-                            cursor.MoveDown();
-                        }
                     }
 
                     if (x == 0)
@@ -427,9 +406,11 @@ namespace OBeautifulCode.DataStructure.Excel
                 {
                     cursor.GetMarkedRange(TopLeftAndBottomRightDataCellMarker).ApplyDataRowsFormat(dataRows.Format, context);
                 }
+
+                result = true;
             }
 
-            return true;
+            return result;
         }
 
         private static void AddRowBase(
