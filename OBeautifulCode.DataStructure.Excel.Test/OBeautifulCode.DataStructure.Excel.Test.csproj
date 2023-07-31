@@ -61,11 +61,11 @@
     <Reference Include="OBeautifulCode.Compression, Version=1.0.26.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\OBeautifulCode.Compression.1.0.26\lib\net462\OBeautifulCode.Compression.dll</HintPath>
     </Reference>
-    <Reference Include="OBeautifulCode.Excel, Version=1.0.81.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OBeautifulCode.Excel.1.0.81\lib\net462\OBeautifulCode.Excel.dll</HintPath>
+    <Reference Include="OBeautifulCode.Excel, Version=1.0.82.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Excel.1.0.82\lib\net462\OBeautifulCode.Excel.dll</HintPath>
     </Reference>
-    <Reference Include="OBeautifulCode.Excel.AsposeCells, Version=1.0.81.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OBeautifulCode.Excel.AsposeCells.1.0.81\lib\net462\OBeautifulCode.Excel.AsposeCells.dll</HintPath>
+    <Reference Include="OBeautifulCode.Excel.AsposeCells, Version=1.0.82.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Excel.AsposeCells.1.0.82\lib\net462\OBeautifulCode.Excel.AsposeCells.dll</HintPath>
     </Reference>
     <Reference Include="OBeautifulCode.Representation.System, Version=1.0.63.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\OBeautifulCode.Representation.System.1.0.63\lib\net462\OBeautifulCode.Representation.System.dll</HintPath>

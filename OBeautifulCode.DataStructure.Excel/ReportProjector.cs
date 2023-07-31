@@ -121,7 +121,7 @@ namespace OBeautifulCode.DataStructure.Excel
                 chromeCursor.CanvassedRange.ApplySectionFormat(section.Format, section.Id, context);
             }
 
-            section.AddSectionHeader(passKind, report, chromeCursor);
+            chromeCursor.AddSectionHeader(report, section, passKind, context);
 
             cursors.TreeTableCursor = cursors.TreeTableCursor ?? new CellCursor(chromeCursor.Worksheet, chromeCursor.RowNumber, chromeCursor.StartColumnNumber);
             var treeTableCursor = cursors.TreeTableCursor.Reset();
@@ -130,20 +130,80 @@ namespace OBeautifulCode.DataStructure.Excel
 
             chromeCursor.MoveDown(treeTableCursor.MaxRowNumber - chromeCursor.RowNumber + 1);
 
-            AddSectionFooter(passKind, report, chromeCursor, context);
+            chromeCursor.AddSectionFooter(report, passKind, context);
         }
 
         private static void AddSectionHeader(
-            this Section section,
-            PassKind passKind,
+            this CellCursor cursor,
             Report report,
-            CellCursor chromeCursor)
+            Section section,
+            PassKind passKind,
+            InternalProjectionContext context)
+        {
+            cursor.AddSectionHeaderAdditionalInfoDetails(report, section, passKind, context);
+
+            cursor.AddSectionHeaderTitle(report, section, passKind);
+        }
+
+        private static void AddSectionHeaderAdditionalInfoDetails(
+            this CellCursor cursor,
+            Report report,
+            Section section,
+            PassKind passKind,
+            InternalProjectionContext context)
+        {
+            var reportAdditionalInfo = context.ExternalContext.AdditionalReportInfoOverride ?? report.AdditionalInfo;
+
+            var details = (reportAdditionalInfo?.Details ?? new List<IDetails>())
+                .Concat(section.AdditionalInfo?.Details ?? new List<IDetails>())
+                .Where(_ => _ != null)
+                .ToList();
+
+            var logoDetails = details.OfType<LogoDetails>().ToList();
+
+            if (logoDetails.Any())
+            {
+                var medias = logoDetails.Select(_ => _.Media).ToList();
+
+                if (medias.Any(_ => !(_ is LinkedMedia)))
+                {
+                    throw new NotSupportedException(Invariant($"This type of {nameof(MediaBase)} is not supported: {medias.First(_ => !(_ is LinkedMedia)).GetType().ToStringReadable()}"));
+                }
+
+                var urls = medias.Cast<LinkedMedia>().Select(_ => _.Url).ToList();
+
+                var insertImagesResult = cursor.Cell.InsertImages(urls, cellSizeChanges: ImagesCellSizeChanges.None);
+
+                if (passKind == PassKind.Data)
+                {
+                    var pictureIndicesInReverseOrder = insertImagesResult.PictureIndexes.OrderByDescending(_ => _).ToList();
+
+                    foreach (var pictureIndex in pictureIndicesInReverseOrder)
+                    {
+                        cursor.Worksheet.Pictures.RemoveAt(pictureIndex);
+                    }
+                }
+
+                cursor.MoveDown(insertImagesResult.ContainedWithinRange.RowCount);
+            }
+
+            details = details.Where(_ => !logoDetails.Contains(_)).ToList();
+
+            foreach (var detail in details)
+            {
+                throw new NotSupportedException(Invariant($"This type of {nameof(IDetails)} is not supported: {detail.GetType().ToStringReadable()}"));
+            }
+        }
+
+        private static void AddSectionHeaderTitle(
+            this CellCursor cursor,
+            Report report,
+            Section section,
+            PassKind passKind)
         {
             // note: Unlike the tree table, for the section header, whenever we add a row we will move down a row.
             // This is so that the tree table always starts on a row that can be written to, which is what it expects.
-            var hasTitle = (!string.IsNullOrWhiteSpace(report.Title)) || (!string.IsNullOrWhiteSpace(section.Title));
-
-            if (hasTitle)
+            if ((!string.IsNullOrWhiteSpace(report.Title)) || (!string.IsNullOrWhiteSpace(section.Title)))
             {
                 if (passKind == PassKind.Data)
                 {
@@ -154,24 +214,26 @@ namespace OBeautifulCode.DataStructure.Excel
                         title = title + ": " + section.Title;
                     }
 
-                    chromeCursor.Cell.Value = title;
+                    cursor.Cell.Value = title;
                 }
 
                 if (passKind == PassKind.Formatting)
                 {
                     // Section model doesn't have any formatting for title.
-                    chromeCursor.Cell.GetRange()
+                    cursor
+                        .Cell
+                        .GetRange()
                         .ApplyCellFormat(new CellFormat(fontFormat: new FontFormat(fontSizeInPoints: 18)));
                 }
 
-                chromeCursor.MoveDown();
+                cursor.MoveDown();
             }
         }
 
         private static void AddSectionFooter(
-            PassKind passKind,
+            this CellCursor chromeCursor,
             Report report,
-            CellCursor chromeCursor,
+            PassKind passKind,
             InternalProjectionContext context)
         {
             if (passKind == PassKind.Data)
@@ -286,6 +348,7 @@ namespace OBeautifulCode.DataStructure.Excel
 
             moveDownForFirstRow = cursor.AddDataRows(tableRows.DataRows, moveDownForFirstRow, context, passKind) || moveDownForFirstRow;
 
+            // ReSharper disable once RedundantAssignment
             moveDownForFirstRow = cursor.AddFooterRows(tableRows.FooterRows, moveDownForFirstRow, context, passKind) || moveDownForFirstRow;
 
             cursor.AddMarker(TableTopLeftBottomRightCornersCellMarker);
