@@ -33,169 +33,203 @@ namespace OBeautifulCode.DataStructure.Test
 
     using static global::System.FormattableString;
 
-    public static partial class UrlLinkedResourceTest
+    public static partial class IdentifiedLinkedResourceTest
     {
-        private static readonly StringRepresentationTestScenarios<UrlLinkedResource> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<UrlLinkedResource>()
+        private static readonly StringRepresentationTestScenarios<IdentifiedLinkedResource> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<IdentifiedLinkedResource>()
             .AddScenario(() =>
-                new StringRepresentationTestScenario<UrlLinkedResource>
+                new StringRepresentationTestScenario<IdentifiedLinkedResource>
                 {
                     Name = "Default Code Generated Scenario",
                     SystemUnderTestExpectedStringRepresentationFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<UrlLinkedResource>();
+                        var systemUnderTest = A.Dummy<IdentifiedLinkedResource>();
 
-                        var result = new SystemUnderTestExpectedStringRepresentation<UrlLinkedResource>
+                        var result = new SystemUnderTestExpectedStringRepresentation<IdentifiedLinkedResource>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.UrlLinkedResource: Url = {systemUnderTest.Url?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, ResourceKind = {systemUnderTest.ResourceKind.ToString() ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.IdentifiedLinkedResource: Id = {systemUnderTest.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Kind = {systemUnderTest.Kind?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}."),
                         };
 
                         return result;
                     },
                 });
 
-        private static readonly ConstructorArgumentValidationTestScenarios<UrlLinkedResource> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<UrlLinkedResource>()
+        private static readonly ConstructorArgumentValidationTestScenarios<IdentifiedLinkedResource> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<IdentifiedLinkedResource>()
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<UrlLinkedResource>
+                new ConstructorArgumentValidationTestScenario<IdentifiedLinkedResource>
                 {
-                    Name = "constructor should throw ArgumentNullException when parameter 'url' is null scenario",
+                    Name = "constructor should throw ArgumentNullException when parameter 'id' is null scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<UrlLinkedResource>();
+                        var referenceObject = A.Dummy<IdentifiedLinkedResource>();
 
-                        var result = new UrlLinkedResource(
+                        var result = new IdentifiedLinkedResource(
                                              null,
-                                             referenceObject.ResourceKind);
+                                             referenceObject.Kind);
 
                         return result;
                     },
                     ExpectedExceptionType = typeof(ArgumentNullException),
-                    ExpectedExceptionMessageContains = new[] { "url", },
+                    ExpectedExceptionMessageContains = new[] { "id", },
                 })
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<UrlLinkedResource>
+                new ConstructorArgumentValidationTestScenario<IdentifiedLinkedResource>
                 {
-                    Name = "constructor should throw ArgumentException when parameter 'url' is white space scenario",
+                    Name = "constructor should throw ArgumentException when parameter 'id' is white space scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<UrlLinkedResource>();
+                        var referenceObject = A.Dummy<IdentifiedLinkedResource>();
 
-                        var result = new UrlLinkedResource(
+                        var result = new IdentifiedLinkedResource(
                                              Invariant($"  {Environment.NewLine}  "),
-                                             referenceObject.ResourceKind);
+                                             referenceObject.Kind);
 
                         return result;
                     },
                     ExpectedExceptionType = typeof(ArgumentException),
-                    ExpectedExceptionMessageContains = new[] { "url", "white space", },
-                });
-
-        private static readonly ConstructorPropertyAssignmentTestScenarios<UrlLinkedResource> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<UrlLinkedResource>()
-            .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<UrlLinkedResource>
-                {
-                    Name = "Url should return same 'url' parameter passed to constructor when getting",
-                    SystemUnderTestExpectedPropertyValueFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<UrlLinkedResource>();
-
-                        var result = new SystemUnderTestExpectedPropertyValue<UrlLinkedResource>
-                        {
-                            SystemUnderTest = new UrlLinkedResource(
-                                                      referenceObject.Url,
-                                                      referenceObject.ResourceKind),
-                            ExpectedPropertyValue = referenceObject.Url,
-                        };
-
-                        return result;
-                    },
-                    PropertyName = "Url",
+                    ExpectedExceptionMessageContains = new[] { "id", "white space", },
                 })
             .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<UrlLinkedResource>
+                new ConstructorArgumentValidationTestScenario<IdentifiedLinkedResource>
                 {
-                    Name = "ResourceKind should return same 'resourceKind' parameter passed to constructor when getting",
+                    Name = "constructor should throw ArgumentNullException when parameter 'kind' is null scenario",
+                    ConstructionFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<IdentifiedLinkedResource>();
+
+                        var result = new IdentifiedLinkedResource(
+                                             referenceObject.Id,
+                                             null);
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentNullException),
+                    ExpectedExceptionMessageContains = new[] { "kind", },
+                })
+            .AddScenario(() =>
+                new ConstructorArgumentValidationTestScenario<IdentifiedLinkedResource>
+                {
+                    Name = "constructor should throw ArgumentException when parameter 'kind' is white space scenario",
+                    ConstructionFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<IdentifiedLinkedResource>();
+
+                        var result = new IdentifiedLinkedResource(
+                                             referenceObject.Id,
+                                             Invariant($"  {Environment.NewLine}  "));
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentException),
+                    ExpectedExceptionMessageContains = new[] { "kind", "white space", },
+                });
+
+        private static readonly ConstructorPropertyAssignmentTestScenarios<IdentifiedLinkedResource> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<IdentifiedLinkedResource>()
+            .AddScenario(() =>
+                new ConstructorPropertyAssignmentTestScenario<IdentifiedLinkedResource>
+                {
+                    Name = "Id should return same 'id' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
-                        var referenceObject = A.Dummy<UrlLinkedResource>();
+                        var referenceObject = A.Dummy<IdentifiedLinkedResource>();
 
-                        var result = new SystemUnderTestExpectedPropertyValue<UrlLinkedResource>
+                        var result = new SystemUnderTestExpectedPropertyValue<IdentifiedLinkedResource>
                         {
-                            SystemUnderTest = new UrlLinkedResource(
-                                                      referenceObject.Url,
-                                                      referenceObject.ResourceKind),
-                            ExpectedPropertyValue = referenceObject.ResourceKind,
+                            SystemUnderTest = new IdentifiedLinkedResource(
+                                                      referenceObject.Id,
+                                                      referenceObject.Kind),
+                            ExpectedPropertyValue = referenceObject.Id,
                         };
 
                         return result;
                     },
-                    PropertyName = "ResourceKind",
+                    PropertyName = "Id",
+                })
+            .AddScenario(() =>
+                new ConstructorPropertyAssignmentTestScenario<IdentifiedLinkedResource>
+                {
+                    Name = "Kind should return same 'kind' parameter passed to constructor when getting",
+                    SystemUnderTestExpectedPropertyValueFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<IdentifiedLinkedResource>();
+
+                        var result = new SystemUnderTestExpectedPropertyValue<IdentifiedLinkedResource>
+                        {
+                            SystemUnderTest = new IdentifiedLinkedResource(
+                                                      referenceObject.Id,
+                                                      referenceObject.Kind),
+                            ExpectedPropertyValue = referenceObject.Kind,
+                        };
+
+                        return result;
+                    },
+                    PropertyName = "Kind",
                 });
 
-        private static readonly DeepCloneWithTestScenarios<UrlLinkedResource> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<UrlLinkedResource>()
+        private static readonly DeepCloneWithTestScenarios<IdentifiedLinkedResource> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<IdentifiedLinkedResource>()
             .AddScenario(() =>
-                new DeepCloneWithTestScenario<UrlLinkedResource>
+                new DeepCloneWithTestScenario<IdentifiedLinkedResource>
                 {
-                    Name = "DeepCloneWithUrl should deep clone object and replace Url with the provided url",
-                    WithPropertyName = "Url",
+                    Name = "DeepCloneWithId should deep clone object and replace Id with the provided id",
+                    WithPropertyName = "Id",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<UrlLinkedResource>();
+                        var systemUnderTest = A.Dummy<IdentifiedLinkedResource>();
 
-                        var referenceObject = A.Dummy<UrlLinkedResource>().ThatIs(_ => !systemUnderTest.Url.IsEqualTo(_.Url));
+                        var referenceObject = A.Dummy<IdentifiedLinkedResource>().ThatIs(_ => !systemUnderTest.Id.IsEqualTo(_.Id));
 
-                        var result = new SystemUnderTestDeepCloneWithValue<UrlLinkedResource>
+                        var result = new SystemUnderTestDeepCloneWithValue<IdentifiedLinkedResource>
                         {
                             SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.Url,
+                            DeepCloneWithValue = referenceObject.Id,
                         };
 
                         return result;
                     },
                 })
             .AddScenario(() =>
-                new DeepCloneWithTestScenario<UrlLinkedResource>
+                new DeepCloneWithTestScenario<IdentifiedLinkedResource>
                 {
-                    Name = "DeepCloneWithResourceKind should deep clone object and replace ResourceKind with the provided resourceKind",
-                    WithPropertyName = "ResourceKind",
+                    Name = "DeepCloneWithKind should deep clone object and replace Kind with the provided kind",
+                    WithPropertyName = "Kind",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<UrlLinkedResource>();
+                        var systemUnderTest = A.Dummy<IdentifiedLinkedResource>();
 
-                        var referenceObject = A.Dummy<UrlLinkedResource>().ThatIs(_ => !systemUnderTest.ResourceKind.IsEqualTo(_.ResourceKind));
+                        var referenceObject = A.Dummy<IdentifiedLinkedResource>().ThatIs(_ => !systemUnderTest.Kind.IsEqualTo(_.Kind));
 
-                        var result = new SystemUnderTestDeepCloneWithValue<UrlLinkedResource>
+                        var result = new SystemUnderTestDeepCloneWithValue<IdentifiedLinkedResource>
                         {
                             SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.ResourceKind,
+                            DeepCloneWithValue = referenceObject.Kind,
                         };
 
                         return result;
                     },
                 });
 
-        private static readonly UrlLinkedResource ReferenceObjectForEquatableTestScenarios = A.Dummy<UrlLinkedResource>();
+        private static readonly IdentifiedLinkedResource ReferenceObjectForEquatableTestScenarios = A.Dummy<IdentifiedLinkedResource>();
 
-        private static readonly EquatableTestScenarios<UrlLinkedResource> EquatableTestScenarios = new EquatableTestScenarios<UrlLinkedResource>()
+        private static readonly EquatableTestScenarios<IdentifiedLinkedResource> EquatableTestScenarios = new EquatableTestScenarios<IdentifiedLinkedResource>()
             .AddScenario(() =>
-                new EquatableTestScenario<UrlLinkedResource>
+                new EquatableTestScenario<IdentifiedLinkedResource>
                 {
                     Name = "Default Code Generated Scenario",
                     ReferenceObject = ReferenceObjectForEquatableTestScenarios,
-                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new UrlLinkedResource[]
+                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new IdentifiedLinkedResource[]
                     {
-                        new UrlLinkedResource(
-                                ReferenceObjectForEquatableTestScenarios.Url,
-                                ReferenceObjectForEquatableTestScenarios.ResourceKind),
+                        new IdentifiedLinkedResource(
+                                ReferenceObjectForEquatableTestScenarios.Id,
+                                ReferenceObjectForEquatableTestScenarios.Kind),
                     },
-                    ObjectsThatAreNotEqualToReferenceObject = new UrlLinkedResource[]
+                    ObjectsThatAreNotEqualToReferenceObject = new IdentifiedLinkedResource[]
                     {
-                        new UrlLinkedResource(
-                                A.Dummy<UrlLinkedResource>().Whose(_ => !_.Url.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Url)).Url,
-                                ReferenceObjectForEquatableTestScenarios.ResourceKind),
-                        new UrlLinkedResource(
-                                ReferenceObjectForEquatableTestScenarios.Url,
-                                A.Dummy<UrlLinkedResource>().Whose(_ => !_.ResourceKind.IsEqualTo(ReferenceObjectForEquatableTestScenarios.ResourceKind)).ResourceKind),
+                        new IdentifiedLinkedResource(
+                                A.Dummy<IdentifiedLinkedResource>().Whose(_ => !_.Id.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Id)).Id,
+                                ReferenceObjectForEquatableTestScenarios.Kind),
+                        new IdentifiedLinkedResource(
+                                ReferenceObjectForEquatableTestScenarios.Id,
+                                A.Dummy<IdentifiedLinkedResource>().Whose(_ => !_.Kind.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Kind)).Kind),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
                     {
@@ -205,9 +239,9 @@ namespace OBeautifulCode.DataStructure.Test
                         A.Dummy<int?>(),
                         A.Dummy<Guid>(),
                         A.Dummy<BytesPayloadLinkedResource>(),
-                        A.Dummy<IdentifiedLinkedResource>(),
                         A.Dummy<NullLinkedResource>(),
                         A.Dummy<StringPayloadLinkedResource>(),
+                        A.Dummy<UrlLinkedResource>(),
                     },
                 });
 
@@ -229,12 +263,12 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void UrlLinkedResource___Should_implement_IModel_of_UrlLinkedResource___When_reflecting()
+            public static void IdentifiedLinkedResource___Should_implement_IModel_of_IdentifiedLinkedResource___When_reflecting()
             {
                 // Arrange
-                var type = typeof(UrlLinkedResource);
+                var type = typeof(IdentifiedLinkedResource);
 
-                var expectedModelMethods = typeof(IModel<UrlLinkedResource>).GetInterfaceDeclaredAndImplementedMethods();
+                var expectedModelMethods = typeof(IModel<IdentifiedLinkedResource>).GetInterfaceDeclaredAndImplementedMethods();
 
                 var expectedModelMethodHashes = expectedModelMethods.Select(_ => _.GetSignatureHash());
 
@@ -244,7 +278,7 @@ namespace OBeautifulCode.DataStructure.Test
                 var actualModelMethodHashes = actualModelMethods.Select(_ => _.GetSignatureHash());
 
                 // Assert
-                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<UrlLinkedResource>));
+                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<IdentifiedLinkedResource>));
                 expectedModelMethodHashes.Except(actualModelMethodHashes).AsTest().Must().BeEmptyEnumerable();
             }
 
@@ -262,10 +296,10 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void UrlLinkedResource___Should_be_attributed_with_Serializable____When_reflecting()
+            public static void IdentifiedLinkedResource___Should_be_attributed_with_Serializable____When_reflecting()
             {
                 // Arrange
-                var type = typeof(UrlLinkedResource);
+                var type = typeof(IdentifiedLinkedResource);
 
                 // Act
                 var actualAttributes = type.GetCustomAttributes(typeof(SerializableAttribute), false);
@@ -445,10 +479,10 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Clone___Should_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<UrlLinkedResource>();
+                var systemUnderTest = A.Dummy<IdentifiedLinkedResource>();
 
                 // Act
-                var actual = (UrlLinkedResource)systemUnderTest.Clone();
+                var actual = (IdentifiedLinkedResource)systemUnderTest.Clone();
 
                 // Assert
                 actual.AsTest().Must().BeEqualTo(systemUnderTest);
@@ -472,7 +506,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void DeepClone___Should_deep_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<UrlLinkedResource>();
+                var systemUnderTest = A.Dummy<IdentifiedLinkedResource>();
 
                 // Act
                 var actual = systemUnderTest.DeepClone();
@@ -498,7 +532,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "Url", "ResourceKind" };
+                var propertyNames = new string[] { "Id", "Kind" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 
@@ -511,12 +545,12 @@ namespace OBeautifulCode.DataStructure.Test
                     }
 
                     // Act
-                    var actual = (UrlLinkedResource)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
+                    var actual = (IdentifiedLinkedResource)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
 
                     // Assert
                     foreach(var propertyName in propertyNames)
                     {
-                        var propertyInfo = typeof(UrlLinkedResource).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
+                        var propertyInfo = typeof(IdentifiedLinkedResource).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
 
                         var actualPropertyValue = propertyInfo.GetValue(actual);
 
@@ -578,7 +612,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<UrlLinkedResource>();
+                var expected = A.Dummy<IdentifiedLinkedResource>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -607,7 +641,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<UrlLinkedResource>();
+                var expected = A.Dummy<IdentifiedLinkedResource>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -636,7 +670,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<UrlLinkedResource>();
+                var expected = A.Dummy<IdentifiedLinkedResource>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -665,7 +699,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<UrlLinkedResource>();
+                var expected = A.Dummy<IdentifiedLinkedResource>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -699,8 +733,8 @@ namespace OBeautifulCode.DataStructure.Test
             public static void EqualsOperator___Should_return_true___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                UrlLinkedResource systemUnderTest1 = null;
-                UrlLinkedResource systemUnderTest2 = null;
+                IdentifiedLinkedResource systemUnderTest1 = null;
+                IdentifiedLinkedResource systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 == systemUnderTest2;
@@ -730,7 +764,7 @@ namespace OBeautifulCode.DataStructure.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    UrlLinkedResource systemUnderTest = null;
+                    IdentifiedLinkedResource systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest == scenario.ReferenceObject;
@@ -879,8 +913,8 @@ namespace OBeautifulCode.DataStructure.Test
             public static void NotEqualsOperator___Should_return_false___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                UrlLinkedResource systemUnderTest1 = null;
-                UrlLinkedResource systemUnderTest2 = null;
+                IdentifiedLinkedResource systemUnderTest1 = null;
+                IdentifiedLinkedResource systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 != systemUnderTest2;
@@ -910,7 +944,7 @@ namespace OBeautifulCode.DataStructure.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    UrlLinkedResource systemUnderTest = null;
+                    IdentifiedLinkedResource systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest != scenario.ReferenceObject;
@@ -1199,14 +1233,14 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_UrlLinkedResource___Should_return_false___When_parameter_other_is_null()
+            public static void Equals_with_IdentifiedLinkedResource___Should_return_false___When_parameter_other_is_null()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    UrlLinkedResource systemUnderTest = null;
+                    IdentifiedLinkedResource systemUnderTest = null;
 
                     // Act
                     var actual = scenario.ReferenceObject.Equals(systemUnderTest);
@@ -1230,7 +1264,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_UrlLinkedResource___Should_return_true___When_parameter_other_is_same_object()
+            public static void Equals_with_IdentifiedLinkedResource___Should_return_true___When_parameter_other_is_same_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1258,7 +1292,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_UrlLinkedResource___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
+            public static void Equals_with_IdentifiedLinkedResource___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1286,7 +1320,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_UrlLinkedResource___Should_return_false___When_objects_being_compared_have_different_property_values()
+            public static void Equals_with_IdentifiedLinkedResource___Should_return_false___When_objects_being_compared_have_different_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1314,7 +1348,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_UrlLinkedResource___Should_return_true___When_objects_being_compared_have_same_property_values()
+            public static void Equals_with_IdentifiedLinkedResource___Should_return_true___When_objects_being_compared_have_same_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 

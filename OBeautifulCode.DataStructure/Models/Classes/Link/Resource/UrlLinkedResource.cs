@@ -14,7 +14,7 @@ namespace OBeautifulCode.DataStructure
     using static System.FormattableString;
 
     /// <summary>
-    /// A resource that fetched from a server via a URL.
+    /// A resource that is fetched from a server via a URL.
     /// </summary>
     // ReSharper disable once RedundantExtendsListEntry
     public partial class UrlLinkedResource : LinkedResourceBase, IModelViaCodeGen

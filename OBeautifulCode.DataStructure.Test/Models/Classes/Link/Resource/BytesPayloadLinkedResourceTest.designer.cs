@@ -204,6 +204,7 @@ namespace OBeautifulCode.DataStructure.Test
                         A.Dummy<int>(),
                         A.Dummy<int?>(),
                         A.Dummy<Guid>(),
+                        A.Dummy<IdentifiedLinkedResource>(),
                         A.Dummy<NullLinkedResource>(),
                         A.Dummy<StringPayloadLinkedResource>(),
                         A.Dummy<UrlLinkedResource>(),

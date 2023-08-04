@@ -579,6 +579,11 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<string>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new IdentifiedLinkedResource(
+                                 A.Dummy<string>(),
+                                 A.Dummy<string>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new IdentifiedMedia(
                                  A.Dummy<string>(),
                                  A.Dummy<MediaKind>(),
@@ -670,6 +675,7 @@ namespace OBeautifulCode.DataStructure.Test
                     var availableTypes = new[]
                     {
                         typeof(BytesPayloadLinkedResource),
+                        typeof(IdentifiedLinkedResource),
                         typeof(NullLinkedResource),
                         typeof(StringPayloadLinkedResource),
                         typeof(UrlLinkedResource)

@@ -441,6 +441,9 @@
     <Compile Include="Models\Classes\Link\MediaLink.designer.cs">
       <DependentUpon>MediaLink.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\Classes\Link\Resource\IdentifiedLinkedResource.designer.cs">
+      <DependentUpon>IdentifiedLinkedResource.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Classes\Link\Resource\LinkedResourceBase.cs" />
     <Compile Include="Models\Classes\Link\LinkBase.cs" />
     <Compile Include="Models\Classes\Link\Resource\LinkedResourceBase.designer.cs">
@@ -458,6 +461,7 @@
     <Compile Include="Models\Classes\Link\Resource\StringPayloadLinkedResource.designer.cs">
       <DependentUpon>StringPayloadLinkedResource.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\Classes\Link\Resource\IdentifiedLinkedResource.cs" />
     <Compile Include="Models\Classes\Link\Resource\UrlLinkedResource.cs" />
     <Compile Include="Models\Classes\Link\Resource\UrlLinkedResource.designer.cs">
       <DependentUpon>UrlLinkedResource.cs</DependentUpon>

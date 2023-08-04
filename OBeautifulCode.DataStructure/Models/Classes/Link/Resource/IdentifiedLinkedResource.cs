@@ -1,37 +1,28 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IdentifiedMedia.cs" company="OBeautifulCode">
+// <copyright file="IdentifiedLinkedResource.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
-
 namespace OBeautifulCode.DataStructure
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
-
-    using OBeautifulCode.CodeAnalysis.Recipes;
     using OBeautifulCode.Type;
-
     using static System.FormattableString;
 
     /// <summary>
-    /// Media that is referenced by an identifier.
+    /// A resource that is referenced by an identifier.
     /// </summary>
     // ReSharper disable once RedundantExtendsListEntry
-    public partial class IdentifiedMedia : MediaBase, IHaveStringId, IModelViaCodeGen
+    public partial class IdentifiedLinkedResource : LinkedResourceBase, IHaveStringId, IModelViaCodeGen
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="IdentifiedMedia"/> class.
+        /// Initializes a new instance of the <see cref="IdentifiedLinkedResource"/> class.
         /// </summary>
-        /// <param name="id">The identifier of the media.</param>
-        /// <param name="mediaKind">The kind of media.</param>
-        /// <param name="name">OPTIONAL name of the media.  DEFAULT is to use name-less media.</param>
-        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings", MessageId = "0#", Justification = ObcSuppressBecause.CA1054_UriParametersShouldNotBeStrings_PreferToRepresentUrlAsString)]
-        public IdentifiedMedia(
+        /// <param name="id">The identifier.</param>
+        /// <param name="kind">OPTIONAL kind of resource.  Can be used to group resources or qualify the identifier.  DEFAULT is no specified type.</param>
+        public IdentifiedLinkedResource(
             string id,
-            MediaKind mediaKind,
-            string name = null)
-            : base(mediaKind, name)
+            string kind = null)
         {
             if (id == null)
             {
@@ -44,9 +35,15 @@ namespace OBeautifulCode.DataStructure
             }
 
             this.Id = id;
+            this.Kind = kind;
         }
 
         /// <inheritdoc />
         public string Id { get; private set; }
+
+        /// <summary>
+        /// Gets the kind of resource.  Can be used to group resources or qualify the identifier.
+        /// </summary>
+        public string Kind { get; private set; }
     }
 }
