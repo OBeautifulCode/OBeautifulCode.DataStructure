@@ -226,9 +226,13 @@
     <Compile Include="Models\Classes\CellLocator\ThisCellLocator.designer.cs">
       <DependentUpon>ThisCellLocator.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\Classes\CellValue\IdentifiedMedia.designer.cs">
+      <DependentUpon>IdentifiedMedia.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Classes\CellValue\InlinedMedia.designer.cs">
       <DependentUpon>InlinedMedia.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\Classes\CellValue\IdentifiedMedia.cs" />
     <Compile Include="Models\Classes\CellValue\LinkedMedia.designer.cs">
       <DependentUpon>LinkedMedia.cs</DependentUpon>
     </Compile>

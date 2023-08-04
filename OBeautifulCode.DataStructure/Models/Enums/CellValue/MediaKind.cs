@@ -30,5 +30,10 @@ namespace OBeautifulCode.DataStructure
         /// Video media.
         /// </summary>
         Video,
+
+        /// <summary>
+        /// Icon media.
+        /// </summary>
+        Icon,
     }
 }

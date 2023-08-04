@@ -206,6 +206,10 @@
     <Compile Include=".recipes\OBeautifulCode.Type\TypeDummyFactory.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeDummyFactory.designer.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
+    <Compile Include="Models\Classes\CellValue\IdentifiedMediaTest.cs" />
+    <Compile Include="Models\Classes\CellValue\IdentifiedMediaTest.designer.cs">
+      <DependentUpon>IdentifiedMediaTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Classes\CellValue\InlinedMediaTest.cs" />
     <Compile Include="Models\Classes\CellValue\InlinedMediaTest.designer.cs">
       <DependentUpon>InlinedMediaTest.cs</DependentUpon>

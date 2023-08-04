@@ -579,6 +579,12 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<string>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new IdentifiedMedia(
+                                 A.Dummy<string>(),
+                                 A.Dummy<MediaKind>(),
+                                 A.Dummy<string>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new IfThenElseOp<Version>(
                                  A.Dummy<IReturningOperation<bool>>(),
                                  A.Dummy<IReturningOperation<Version>>(),
@@ -703,6 +709,7 @@ namespace OBeautifulCode.DataStructure.Test
                 {
                     var availableTypes = new[]
                     {
+                        typeof(IdentifiedMedia),
                         typeof(InlinedMedia),
                         typeof(LinkedMedia)
                     };
