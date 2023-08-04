@@ -53,6 +53,12 @@ namespace OBeautifulCode.DataStructure.Test
                         // when the derivative's constructor in-use (by code gen) does not have a parameter that
                         // corresponds with the property who's value is provided in the DeepCloneWith___() method.
                         // We do not know in advance if this will happen.  As such, the following objects are commented out.
+                        // ReferenceObjectForEquatableTestScenarios.DeepCloneWithResource(A.Dummy<LinkBase>().Whose(_ => !_.Resource.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Resource)).Resource),
+                        // ReferenceObjectForEquatableTestScenarios.DeepCloneWithFormatsToApplyWhenActivated(A.Dummy<LinkBase>().Whose(_ => !_.FormatsToApplyWhenActivated.IsEqualTo(ReferenceObjectForEquatableTestScenarios.FormatsToApplyWhenActivated)).FormatsToApplyWhenActivated),
+                    },
+                    ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject = new LinkBase[]
+                    {
+                        A.Dummy<LinkBase>().Whose(_ => _.GetType() != ReferenceObjectForEquatableTestScenarios.GetType()),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
                     {
@@ -184,6 +190,30 @@ namespace OBeautifulCode.DataStructure.Test
                 // Assert
                 actual.AsTest().Must().BeEqualTo(systemUnderTest);
                 actual.AsTest().Must().NotBeSameReferenceAs(systemUnderTest);
+
+                if (systemUnderTest.Resource == null)
+                {
+                    actual.Resource.AsTest().Must().BeNull();
+                }
+                else if (!actual.Resource.GetType().IsValueType)
+                {
+                    // When the declared type is a reference type, we still have to check the runtime type.
+                    // The object could be a boxed value type, which will fail this asseration because
+                    // a deep clone of a value type object is the same object.
+                    actual.Resource.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.Resource);
+                }
+
+                if (systemUnderTest.FormatsToApplyWhenActivated == null)
+                {
+                    actual.FormatsToApplyWhenActivated.AsTest().Must().BeNull();
+                }
+                else if (!actual.FormatsToApplyWhenActivated.GetType().IsValueType)
+                {
+                    // When the declared type is a reference type, we still have to check the runtime type.
+                    // The object could be a boxed value type, which will fail this asseration because
+                    // a deep clone of a value type object is the same object.
+                    actual.FormatsToApplyWhenActivated.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.FormatsToApplyWhenActivated);
+                }
             }
         }
 

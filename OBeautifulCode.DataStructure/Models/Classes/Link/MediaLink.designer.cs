@@ -23,15 +23,15 @@ namespace OBeautifulCode.DataStructure
     using static global::System.FormattableString;
 
     [Serializable]
-    public partial class SimpleLink : IModel<SimpleLink>
+    public partial class MediaLink : IModel<MediaLink>
     {
         /// <summary>
-        /// Determines whether two objects of type <see cref="SimpleLink"/> are equal.
+        /// Determines whether two objects of type <see cref="MediaLink"/> are equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are equal; otherwise false.</returns>
-        public static bool operator ==(SimpleLink left, SimpleLink right)
+        public static bool operator ==(MediaLink left, MediaLink right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -49,15 +49,15 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <summary>
-        /// Determines whether two objects of type <see cref="SimpleLink"/> are not equal.
+        /// Determines whether two objects of type <see cref="MediaLink"/> are not equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are not equal; otherwise false.</returns>
-        public static bool operator !=(SimpleLink left, SimpleLink right) => !(left == right);
+        public static bool operator !=(MediaLink left, MediaLink right) => !(left == right);
 
         /// <inheritdoc />
-        public bool Equals(SimpleLink other)
+        public bool Equals(MediaLink other)
         {
             if (ReferenceEquals(this, other))
             {
@@ -71,23 +71,25 @@ namespace OBeautifulCode.DataStructure
 
             var result = this.Resource.IsEqualTo(other.Resource)
                       && this.FormatsToApplyWhenActivated.IsEqualTo(other.FormatsToApplyWhenActivated)
-                      && this.Target.IsEqualTo(other.Target);
+                      && this.Target.IsEqualTo(other.Target)
+                      && this.Media.IsEqualTo(other.Media);
 
             return result;
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => this == (obj as SimpleLink);
+        public override bool Equals(object obj) => this == (obj as MediaLink);
 
         /// <inheritdoc />
         public override int GetHashCode() => HashCodeHelper.Initialize()
             .Hash(this.Resource)
             .Hash(this.FormatsToApplyWhenActivated)
             .Hash(this.Target)
+            .Hash(this.Media)
             .Value;
 
         /// <inheritdoc />
-        public new SimpleLink DeepClone() => (SimpleLink)this.DeepCloneInternal();
+        public new MediaLink DeepClone() => (MediaLink)this.DeepCloneInternal();
 
         /// <inheritdoc />
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
@@ -109,7 +111,8 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         public override LinkBase DeepCloneWithResource(ILinkedResource resource)
         {
-            var result = new SimpleLink(
+            var result = new MediaLink(
+                                 this.Media?.DeepClone(),
                                  this.Target.DeepClone(),
                                  resource,
                                  this.FormatsToApplyWhenActivated?.DeepClone());
@@ -137,7 +140,8 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         public override LinkBase DeepCloneWithFormatsToApplyWhenActivated(IReadOnlyList<RegionFormatBase> formatsToApplyWhenActivated)
         {
-            var result = new SimpleLink(
+            var result = new MediaLink(
+                                 this.Media?.DeepClone(),
                                  this.Target.DeepClone(),
                                  this.Resource?.DeepClone(),
                                  formatsToApplyWhenActivated);
@@ -165,8 +169,42 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         public override TargetedLinkBase DeepCloneWithTarget(LinkTarget target)
         {
-            var result = new SimpleLink(
+            var result = new MediaLink(
+                                 this.Media?.DeepClone(),
                                  target,
+                                 this.Resource?.DeepClone(),
+                                 this.FormatsToApplyWhenActivated?.DeepClone());
+
+            return result;
+        }
+
+        /// <summary>
+        /// Deep clones this object with a new <see cref="Media" />.
+        /// </summary>
+        /// <param name="media">The new <see cref="Media" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="MediaLink" /> using the specified <paramref name="media" /> for <see cref="Media" /> and a deep clone of every other property.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
+        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
+        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
+        public MediaLink DeepCloneWithMedia(MediaBase media)
+        {
+            var result = new MediaLink(
+                                 media,
+                                 this.Target.DeepClone(),
                                  this.Resource?.DeepClone(),
                                  this.FormatsToApplyWhenActivated?.DeepClone());
 
@@ -177,7 +215,8 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         protected override LinkBase DeepCloneInternal()
         {
-            var result = new SimpleLink(
+            var result = new MediaLink(
+                                 this.Media?.DeepClone(),
                                  this.Target.DeepClone(),
                                  this.Resource?.DeepClone(),
                                  this.FormatsToApplyWhenActivated?.DeepClone());
@@ -189,7 +228,7 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"OBeautifulCode.DataStructure.SimpleLink: Resource = {this.Resource?.ToString() ?? "<null>"}, FormatsToApplyWhenActivated = {this.FormatsToApplyWhenActivated?.ToString() ?? "<null>"}, Target = {this.Target.ToString() ?? "<null>"}.");
+            var result = Invariant($"OBeautifulCode.DataStructure.MediaLink: Resource = {this.Resource?.ToString() ?? "<null>"}, FormatsToApplyWhenActivated = {this.FormatsToApplyWhenActivated?.ToString() ?? "<null>"}, Target = {this.Target.ToString() ?? "<null>"}, Media = {this.Media?.ToString() ?? "<null>"}.");
 
             return result;
         }

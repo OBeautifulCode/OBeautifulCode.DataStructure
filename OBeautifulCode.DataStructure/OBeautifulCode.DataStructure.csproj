@@ -438,9 +438,12 @@
     <Compile Include="Models\Classes\Link\LinkBase.designer.cs">
       <DependentUpon>LinkBase.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Classes\Link\LinkedResourceBase.cs" />
+    <Compile Include="Models\Classes\Link\MediaLink.designer.cs">
+      <DependentUpon>MediaLink.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Link\Resource\LinkedResourceBase.cs" />
     <Compile Include="Models\Classes\Link\LinkBase.cs" />
-    <Compile Include="Models\Classes\Link\LinkedResourceBase.designer.cs">
+    <Compile Include="Models\Classes\Link\Resource\LinkedResourceBase.designer.cs">
       <DependentUpon>LinkedResourceBase.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Classes\Link\Resource\NullLinkedResource.cs" />
@@ -459,11 +462,16 @@
     <Compile Include="Models\Classes\Link\Resource\UrlLinkedResource.designer.cs">
       <DependentUpon>UrlLinkedResource.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Classes\Link\SimpleLink.cs" />
+    <Compile Include="Models\Classes\Link\MediaLink.cs" />
     <Compile Include="Models\Classes\Link\SimpleLink.designer.cs">
       <DependentUpon>SimpleLink.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\Classes\Link\TargetedLinkBase.cs" />
+    <Compile Include="Models\Classes\Link\SimpleLink.cs" />
     <Compile Include="Models\Classes\CellLocator\ReportCellLocator.cs" />
+    <Compile Include="Models\Classes\Link\TargetedLinkBase.designer.cs">
+      <DependentUpon>TargetedLinkBase.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Classes\Report\AdditionalSectionInfo.cs" />
     <Compile Include="Models\Classes\Report\AdditionalReportInfo.designer.cs">
       <DependentUpon>AdditionalReportInfo.cs</DependentUpon>

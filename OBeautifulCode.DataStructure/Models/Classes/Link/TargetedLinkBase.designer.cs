@@ -23,15 +23,15 @@ namespace OBeautifulCode.DataStructure
     using static global::System.FormattableString;
 
     [Serializable]
-    public partial class LinkBase : IModel<LinkBase>
+    public partial class TargetedLinkBase : IModel<TargetedLinkBase>
     {
         /// <summary>
-        /// Determines whether two objects of type <see cref="LinkBase"/> are equal.
+        /// Determines whether two objects of type <see cref="TargetedLinkBase"/> are equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are equal; otherwise false.</returns>
-        public static bool operator ==(LinkBase left, LinkBase right)
+        public static bool operator ==(TargetedLinkBase left, TargetedLinkBase right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -49,15 +49,15 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <summary>
-        /// Determines whether two objects of type <see cref="LinkBase"/> are not equal.
+        /// Determines whether two objects of type <see cref="TargetedLinkBase"/> are not equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are not equal; otherwise false.</returns>
-        public static bool operator !=(LinkBase left, LinkBase right) => !(left == right);
+        public static bool operator !=(TargetedLinkBase left, TargetedLinkBase right) => !(left == right);
 
         /// <inheritdoc />
-        public bool Equals(LinkBase other) => this == other;
+        public bool Equals(TargetedLinkBase other) => this == other;
 
         /// <inheritdoc />
         [SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]
@@ -74,16 +74,13 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <inheritdoc />
-        public object Clone() => this.DeepClone();
-
-        /// <inheritdoc />
-        public LinkBase DeepClone() => this.DeepCloneInternal();
+        public new TargetedLinkBase DeepClone() => (TargetedLinkBase)this.DeepCloneInternal();
 
         /// <summary>
-        /// Deep clones this object with a new <see cref="Resource" />.
+        /// Deep clones this object with a new <see cref="Target" />.
         /// </summary>
-        /// <param name="resource">The new <see cref="Resource" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="LinkBase" /> using the specified <paramref name="resource" /> for <see cref="Resource" /> and a deep clone of every other property.</returns>
+        /// <param name="target">The new <see cref="Target" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="TargetedLinkBase" /> using the specified <paramref name="target" /> for <see cref="Target" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -101,45 +98,7 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public virtual LinkBase DeepCloneWithResource(ILinkedResource resource)
-        {
-            throw new NotImplementedException("This method should be abstract.  It was generated as virtual so that you aren't forced to override it when you create a new model that derives from this model.  It will be overridden in the generated designer file.");
-        }
-
-        /// <summary>
-        /// Deep clones this object with a new <see cref="FormatsToApplyWhenActivated" />.
-        /// </summary>
-        /// <param name="formatsToApplyWhenActivated">The new <see cref="FormatsToApplyWhenActivated" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="LinkBase" /> using the specified <paramref name="formatsToApplyWhenActivated" /> for <see cref="FormatsToApplyWhenActivated" /> and a deep clone of every other property.</returns>
-        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
-        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
-        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
-        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public virtual LinkBase DeepCloneWithFormatsToApplyWhenActivated(IReadOnlyList<RegionFormatBase> formatsToApplyWhenActivated)
-        {
-            throw new NotImplementedException("This method should be abstract.  It was generated as virtual so that you aren't forced to override it when you create a new model that derives from this model.  It will be overridden in the generated designer file.");
-        }
-
-        /// <summary>
-        /// Creates a new object that is a deep clone of this instance.
-        /// </summary>
-        /// <returns>
-        /// A new object that is a deep clone of this instance.
-        /// </returns>
-        protected virtual LinkBase DeepCloneInternal()
+        public virtual TargetedLinkBase DeepCloneWithTarget(LinkTarget target)
         {
             throw new NotImplementedException("This method should be abstract.  It was generated as virtual so that you aren't forced to override it when you create a new model that derives from this model.  It will be overridden in the generated designer file.");
         }

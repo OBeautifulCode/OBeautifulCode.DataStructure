@@ -206,6 +206,10 @@
     <Compile Include=".recipes\OBeautifulCode.Type\TypeDummyFactory.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeDummyFactory.designer.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
+    <Compile Include="Models\Classes\Link\MediaLinkTest.cs" />
+    <Compile Include="Models\Classes\Link\MediaLinkTest.designer.cs">
+      <DependentUpon>MediaLinkTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Classes\CellValue\IdentifiedMediaTest.cs" />
     <Compile Include="Models\Classes\CellValue\IdentifiedMediaTest.designer.cs">
       <DependentUpon>IdentifiedMediaTest.cs</DependentUpon>
@@ -557,7 +561,7 @@
     <Compile Include="Models\Classes\Link\LinkBaseTest.designer.cs">
       <DependentUpon>LinkBaseTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Classes\Link\LinkedResourceBaseTest.designer.cs">
+    <Compile Include="Models\Classes\Link\Resource\LinkedResourceBaseTest.designer.cs">
       <DependentUpon>LinkedResourceBaseTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Classes\Link\Resource\BytesPayloadLinkedResourceTest.designer.cs">
@@ -706,7 +710,7 @@
     <Compile Include="Models\Classes\HoverOver\HtmlHoverOverTest.cs" />
     <Compile Include="Models\Classes\HoverOver\StringHoverOverTest.cs" />
     <Compile Include="Models\Classes\Link\LinkBaseTest.cs" />
-    <Compile Include="Models\Classes\Link\LinkedResourceBaseTest.cs" />
+    <Compile Include="Models\Classes\Link\Resource\LinkedResourceBaseTest.cs" />
     <Compile Include="Models\Classes\Link\Resource\BytesPayloadLinkedResourceTest.cs" />
     <Compile Include="Models\Classes\Link\Resource\StringPayloadLinkedResourceTest.cs" />
     <Compile Include="Models\Classes\Link\Resource\UrlLinkedResourceTest.cs" />
@@ -749,6 +753,10 @@
     <Compile Include="Models\Classes\Cell\Slotted\SlottedCellTest.cs" />
     <Compile Include="Operations\Decimal\SumOpTest.cs" />
     <AdditionalFiles Include=".analyzers\stylecop.json" />
+    <Compile Include="Models\Classes\Link\TargetedLinkBaseTest.cs" />
+    <Compile Include="Models\Classes\Link\TargetedLinkBaseTest.designer.cs">
+      <DependentUpon>TargetedLinkBaseTest.cs</DependentUpon>
+    </Compile>
     <None Include=".analyzers\test.ruleset" />
     <None Include="DummyFactory.recipe-nuspec" />
     <Compile Include="Models\Classes\CellLocator\ReportCellLocatorTest.cs" />
