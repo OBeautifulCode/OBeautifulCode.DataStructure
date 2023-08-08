@@ -175,6 +175,7 @@
     <Compile Include="Interfaces\Classification\Details\IDetails.cs" />
     <Compile Include="Interfaces\Classification\Resource\ILink.cs" />
     <Compile Include="Interfaces\Property\IHaveCellValueFormat.cs" />
+    <Compile Include="Interfaces\Property\IHaveLinkedResource.cs" />
     <Compile Include="Interfaces\Property\IHaveMessage.cs" />
     <Compile Include="Interfaces\Property\IHaveCellValueFormat{TValue}.cs" />
     <Compile Include="Interfaces\Property\IHaveStandardCellFeatures{TValue}.cs" />
