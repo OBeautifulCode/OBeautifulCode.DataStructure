@@ -21,16 +21,11 @@ namespace OBeautifulCode.DataStructure
         /// </summary>
         /// <param name="media">The media of the logo.</param>
         public LogoDetails(
-            MediaBase media)
+            IMedia media)
         {
             if (media == null)
             {
                 throw new ArgumentNullException(nameof(media));
-            }
-
-            if (media.MediaKind != MediaKind.Image)
-            {
-                throw new ArgumentException(Invariant($"{nameof(media)} must be {nameof(MediaKind.Image)}.  Specified value is: {media.MediaKind}"));
             }
 
             this.Media = media;
@@ -39,6 +34,6 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Gets the media of the logo.
         /// </summary>
-        public MediaBase Media { get; private set; }
+        public IMedia Media { get; private set; }
     }
 }

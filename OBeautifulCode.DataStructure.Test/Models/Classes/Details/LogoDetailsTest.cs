@@ -29,21 +29,6 @@ namespace OBeautifulCode.DataStructure.Test
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = ObcSuppressBecause.CA1810_InitializeReferenceTypeStaticFieldsInline_FieldsDeclaredInCodeGeneratedPartialTestClass)]
         static LogoDetailsTest()
         {
-            ConstructorArgumentValidationTestScenarios
-                .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<LogoDetails>
-                    {
-                        Name = "constructor should throw ArgumentException when parameter 'media' MediaKind is not MediaKind.Image",
-                        ConstructionFunc = () =>
-                        {
-                            var result = new LogoDetails(
-                                A.Dummy<MediaBase>().Whose(_ => _.MediaKind != MediaKind.Image));
-
-                            return result;
-                        },
-                        ExpectedExceptionType = typeof(ArgumentException),
-                        ExpectedExceptionMessageContains = new[] { "media", "must be Image" },
-                    });
         }
     }
 }

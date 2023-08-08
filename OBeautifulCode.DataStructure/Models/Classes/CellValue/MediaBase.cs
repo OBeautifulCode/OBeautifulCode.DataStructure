@@ -11,10 +11,10 @@ namespace OBeautifulCode.DataStructure
     using static System.FormattableString;
 
     /// <summary>
-    /// Represents media.
+    /// Base class implementation of <see cref="IMedia"/>.
     /// </summary>
     // ReSharper disable once RedundantExtendsListEntry
-    public abstract partial class MediaBase : IModelViaCodeGen
+    public abstract partial class MediaBase : IMedia, IModelViaCodeGen
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="MediaBase"/> class.

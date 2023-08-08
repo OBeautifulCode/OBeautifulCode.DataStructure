@@ -173,6 +173,7 @@
     <Compile Include="Interfaces\Classification\Format\ICellValueFormat.cs" />
     <Compile Include="Interfaces\Classification\Format\ICellValueFormat{TValue}.cs" />
     <Compile Include="Interfaces\Classification\Details\IDetails.cs" />
+    <Compile Include="Interfaces\Classification\Resource\ILink.cs" />
     <Compile Include="Interfaces\Property\IHaveCellValueFormat.cs" />
     <Compile Include="Interfaces\Property\IHaveMessage.cs" />
     <Compile Include="Interfaces\Property\IHaveCellValueFormat{TValue}.cs" />
@@ -183,7 +184,7 @@
     <Compile Include="Interfaces\Classification\Cell\Output\IOutputCell{TValue}.cs" />
     <Compile Include="Interfaces\Classification\Cell\Input\IInputCell{TValue}.cs" />
     <Compile Include="Interfaces\Classification\Resource\ILinkedResource.cs" />
-    <Compile Include="Interfaces\Classification\Resource\ILink.cs" />
+    <Compile Include="Interfaces\Classification\CellValue\IMedia.cs" />
     <Compile Include="Logic\Builders\Op.cs" />
     <Compile Include="Logic\Builders\Cell.cs" />
     <Compile Include="Logic\Builders\ReportCache.cs" />

@@ -709,7 +709,7 @@ namespace OBeautifulCode.DataStructure.Test
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new LogoDetails(
-                                 A.Dummy<MediaBase>()));
+                                 A.Dummy<IMedia>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () =>
@@ -732,7 +732,7 @@ namespace OBeautifulCode.DataStructure.Test
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new MediaLink(
-                                 A.Dummy<MediaBase>(),
+                                 A.Dummy<IMedia>(),
                                  A.Dummy<LinkTarget>(),
                                  A.Dummy<ILinkedResource>(),
                                  A.Dummy<IReadOnlyList<RegionFormatBase>>()));

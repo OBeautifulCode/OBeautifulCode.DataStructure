@@ -22,7 +22,7 @@ namespace OBeautifulCode.DataStructure
         /// <param name="resource">The resource.</param>
         /// <param name="formatsToApplyWhenActivated">OPTIONAL formatting to apply, in order, when the link is activated (e.g. clicked).  DEFAULT is to leave the formatting unchanged.</param>
         public MediaLink(
-            MediaBase media,
+            IMedia media,
             LinkTarget target,
             ILinkedResource resource,
             IReadOnlyList<RegionFormatBase> formatsToApplyWhenActivated = null)
@@ -39,6 +39,6 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Gets the media that represents the link.
         /// </summary>
-        public MediaBase Media { get; private set; }
+        public IMedia Media { get; private set; }
     }
 }
