@@ -54,11 +54,11 @@
     <Reference Include="OBeautifulCode.AutoFakeItEasy, Version=1.0.140.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\OBeautifulCode.AutoFakeItEasy.1.0.140\lib\net462\OBeautifulCode.AutoFakeItEasy.dll</HintPath>
     </Reference>
-    <Reference Include="OBeautifulCode.Excel, Version=1.0.82.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OBeautifulCode.Excel.1.0.82\lib\net462\OBeautifulCode.Excel.dll</HintPath>
+    <Reference Include="OBeautifulCode.Excel, Version=1.0.83.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Excel.1.0.83\lib\net462\OBeautifulCode.Excel.dll</HintPath>
     </Reference>
-    <Reference Include="OBeautifulCode.Excel.AsposeCells, Version=1.0.82.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OBeautifulCode.Excel.AsposeCells.1.0.82\lib\net462\OBeautifulCode.Excel.AsposeCells.dll</HintPath>
+    <Reference Include="OBeautifulCode.Excel.AsposeCells, Version=1.0.83.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Excel.AsposeCells.1.0.83\lib\net462\OBeautifulCode.Excel.AsposeCells.dll</HintPath>
     </Reference>
     <Reference Include="OBeautifulCode.Type, Version=1.0.121.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\OBeautifulCode.Type.1.0.121\lib\net462\OBeautifulCode.Type.dll</HintPath>
