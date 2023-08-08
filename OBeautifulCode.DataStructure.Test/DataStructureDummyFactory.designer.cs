@@ -650,8 +650,7 @@ namespace OBeautifulCode.DataStructure.Test
                 {
                     var availableTypes = new[]
                     {
-                        typeof(MediaLink),
-                        typeof(SimpleLink)
+                        typeof(StandardLink)
                     };
 
                     var randomIndex = ThreadSafeRandom.Next(0, availableTypes.Length);
@@ -723,13 +722,6 @@ namespace OBeautifulCode.DataStructure.Test
 
                     return result;
                 });
-
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new MediaLink(
-                                 A.Dummy<IMedia>(),
-                                 A.Dummy<LinkTarget>(),
-                                 A.Dummy<ILinkedResource>(),
-                                 A.Dummy<IReadOnlyList<RegionFormatBase>>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () =>
@@ -1061,12 +1053,6 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<SectionFormatOptions?>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new SimpleLink(
-                                 A.Dummy<LinkTarget>(),
-                                 A.Dummy<ILinkedResource>(),
-                                 A.Dummy<IReadOnlyList<RegionFormatBase>>()));
-
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () =>
                 {
                     var availableTypes = new[]
@@ -1119,6 +1105,13 @@ namespace OBeautifulCode.DataStructure.Test
                 });
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new StandardLink(
+                                 A.Dummy<ILinkedResource>(),
+                                 A.Dummy<IMedia>(),
+                                 A.Dummy<LinkTarget?>(),
+                                 A.Dummy<IReadOnlyList<RegionFormatBase>>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new StringHoverOver(
                                  A.Dummy<string>()));
 
@@ -1148,24 +1141,6 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<DataRows>(),
                                  A.Dummy<FooterRows>(),
                                  A.Dummy<RowFormat>()));
-
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () =>
-                {
-                    var availableTypes = new[]
-                    {
-                        typeof(MediaLink),
-                        typeof(SimpleLink)
-                    };
-
-                    var randomIndex = ThreadSafeRandom.Next(0, availableTypes.Length);
-
-                    var randomType = availableTypes[randomIndex];
-
-                    var result = (TargetedLinkBase)AD.ummy(randomType);
-
-                    return result;
-                });
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new ThisCellLocator());

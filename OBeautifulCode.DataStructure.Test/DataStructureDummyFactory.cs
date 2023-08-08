@@ -69,7 +69,7 @@ namespace OBeautifulCode.DataStructure.Test
             AutoFixtureBackedDummyFactory.AddDummyCreator<IValidationCell>(A.Dummy<NotSlottedCellBase>);
             AutoFixtureBackedDummyFactory.AddDummyCreator<ICellValueFormat<Version>>(A.Dummy<CellValueFormatBase<Version>>);
             AutoFixtureBackedDummyFactory.AddDummyCreator<IHoverOver>(A.Dummy<HoverOverBase>);
-            AutoFixtureBackedDummyFactory.AddDummyCreator<ILink>(A.Dummy<SimpleLink>);
+            AutoFixtureBackedDummyFactory.AddDummyCreator<ILink>(A.Dummy<StandardLink>);
             AutoFixtureBackedDummyFactory.AddDummyCreator<ILinkedResource>(A.Dummy<LinkedResourceBase>);
             AutoFixtureBackedDummyFactory.AddDummyCreator<IMedia>(A.Dummy<MediaBase>);
             AutoFixtureBackedDummyFactory.AddDummyCreator<IOperationOutputCell<Version>>(A.Dummy<OperationCell<Version>>);
@@ -93,7 +93,7 @@ namespace OBeautifulCode.DataStructure.Test
             {
                 var numberOfSections = ThreadSafeRandom.Next(1, 4);
 
-                var result = new Report(A.Dummy<string>(), Some.ReadOnlyDummies<Section>(numberOfSections).ToList(), A.Dummy<string>(), A.Dummy<UtcDateTime>(), Some.ReadOnlyDummies<SimpleLink>().ToList(), A.Dummy<AdditionalReportInfo>(), A.Dummy<ReportFormat>());
+                var result = new Report(A.Dummy<string>(), Some.ReadOnlyDummies<Section>(numberOfSections).ToList(), A.Dummy<string>(), A.Dummy<UtcDateTime>(), Some.ReadOnlyDummies<StandardLink>().ToList(), A.Dummy<AdditionalReportInfo>(), A.Dummy<ReportFormat>());
 
                 return result;
             });

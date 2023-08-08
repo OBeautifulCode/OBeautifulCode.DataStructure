@@ -33,39 +33,40 @@ namespace OBeautifulCode.DataStructure.Test
 
     using static global::System.FormattableString;
 
-    public static partial class SimpleLinkTest
+    public static partial class StandardLinkTest
     {
-        private static readonly StringRepresentationTestScenarios<SimpleLink> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<SimpleLink>()
+        private static readonly StringRepresentationTestScenarios<StandardLink> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<StandardLink>()
             .AddScenario(() =>
-                new StringRepresentationTestScenario<SimpleLink>
+                new StringRepresentationTestScenario<StandardLink>
                 {
                     Name = "Default Code Generated Scenario",
                     SystemUnderTestExpectedStringRepresentationFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<SimpleLink>();
+                        var systemUnderTest = A.Dummy<StandardLink>();
 
-                        var result = new SystemUnderTestExpectedStringRepresentation<SimpleLink>
+                        var result = new SystemUnderTestExpectedStringRepresentation<StandardLink>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.SimpleLink: Resource = {systemUnderTest.Resource?.ToString() ?? "<null>"}, FormatsToApplyWhenActivated = {systemUnderTest.FormatsToApplyWhenActivated?.ToString() ?? "<null>"}, Target = {systemUnderTest.Target.ToString() ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.StandardLink: Resource = {systemUnderTest.Resource?.ToString() ?? "<null>"}, Media = {systemUnderTest.Media?.ToString() ?? "<null>"}, Target = {systemUnderTest.Target?.ToString() ?? "<null>"}, FormatsToApplyWhenActivated = {systemUnderTest.FormatsToApplyWhenActivated?.ToString() ?? "<null>"}."),
                         };
 
                         return result;
                     },
                 });
 
-        private static readonly ConstructorArgumentValidationTestScenarios<SimpleLink> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<SimpleLink>()
+        private static readonly ConstructorArgumentValidationTestScenarios<StandardLink> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<StandardLink>()
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<SimpleLink>
+                new ConstructorArgumentValidationTestScenario<StandardLink>
                 {
                     Name = "constructor should throw ArgumentNullException when parameter 'resource' is null scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<SimpleLink>();
+                        var referenceObject = A.Dummy<StandardLink>();
 
-                        var result = new SimpleLink(
-                                             referenceObject.Target,
+                        var result = new StandardLink(
                                              null,
+                                             referenceObject.Media,
+                                             referenceObject.Target,
                                              referenceObject.FormatsToApplyWhenActivated);
 
                         return result;
@@ -74,16 +75,36 @@ namespace OBeautifulCode.DataStructure.Test
                     ExpectedExceptionMessageContains = new[] { "resource", },
                 })
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<SimpleLink>
+                new ConstructorArgumentValidationTestScenario<StandardLink>
+                {
+                    Name = "constructor should throw ArgumentNullException when parameter 'media' is null scenario",
+                    ConstructionFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<StandardLink>();
+
+                        var result = new StandardLink(
+                                             referenceObject.Resource,
+                                             null,
+                                             referenceObject.Target,
+                                             referenceObject.FormatsToApplyWhenActivated);
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentNullException),
+                    ExpectedExceptionMessageContains = new[] { "media", },
+                })
+            .AddScenario(() =>
+                new ConstructorArgumentValidationTestScenario<StandardLink>
                 {
                     Name = "constructor should throw ArgumentNullException when parameter 'formatsToApplyWhenActivated' is null scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<SimpleLink>();
+                        var referenceObject = A.Dummy<StandardLink>();
 
-                        var result = new SimpleLink(
-                                             referenceObject.Target,
+                        var result = new StandardLink(
                                              referenceObject.Resource,
+                                             referenceObject.Media,
+                                             referenceObject.Target,
                                              null);
 
                         return result;
@@ -92,16 +113,17 @@ namespace OBeautifulCode.DataStructure.Test
                     ExpectedExceptionMessageContains = new[] { "formatsToApplyWhenActivated", },
                 })
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<SimpleLink>
+                new ConstructorArgumentValidationTestScenario<StandardLink>
                 {
                     Name = "constructor should throw ArgumentException when parameter 'formatsToApplyWhenActivated' is an empty enumerable scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<SimpleLink>();
+                        var referenceObject = A.Dummy<StandardLink>();
 
-                        var result = new SimpleLink(
-                                             referenceObject.Target,
+                        var result = new StandardLink(
                                              referenceObject.Resource,
+                                             referenceObject.Media,
+                                             referenceObject.Target,
                                              new List<RegionFormatBase>());
 
                         return result;
@@ -110,16 +132,17 @@ namespace OBeautifulCode.DataStructure.Test
                     ExpectedExceptionMessageContains = new[] { "formatsToApplyWhenActivated", "is an empty enumerable", },
                 })
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<SimpleLink>
+                new ConstructorArgumentValidationTestScenario<StandardLink>
                 {
                     Name = "constructor should throw ArgumentException when parameter 'formatsToApplyWhenActivated' contains a null element scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<SimpleLink>();
+                        var referenceObject = A.Dummy<StandardLink>();
 
-                        var result = new SimpleLink(
-                                             referenceObject.Target,
+                        var result = new StandardLink(
                                              referenceObject.Resource,
+                                             referenceObject.Media,
+                                             referenceObject.Target,
                                              new RegionFormatBase[0].Concat(referenceObject.FormatsToApplyWhenActivated).Concat(new RegionFormatBase[] { null }).Concat(referenceObject.FormatsToApplyWhenActivated).ToList());
 
                         return result;
@@ -128,41 +151,21 @@ namespace OBeautifulCode.DataStructure.Test
                     ExpectedExceptionMessageContains = new[] { "formatsToApplyWhenActivated", "contains at least one null element", },
                 });
 
-        private static readonly ConstructorPropertyAssignmentTestScenarios<SimpleLink> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<SimpleLink>()
+        private static readonly ConstructorPropertyAssignmentTestScenarios<StandardLink> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<StandardLink>()
             .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<SimpleLink>
-                {
-                    Name = "Target should return same 'target' parameter passed to constructor when getting",
-                    SystemUnderTestExpectedPropertyValueFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<SimpleLink>();
-
-                        var result = new SystemUnderTestExpectedPropertyValue<SimpleLink>
-                        {
-                            SystemUnderTest = new SimpleLink(
-                                                      referenceObject.Target,
-                                                      referenceObject.Resource,
-                                                      referenceObject.FormatsToApplyWhenActivated),
-                            ExpectedPropertyValue = referenceObject.Target,
-                        };
-
-                        return result;
-                    },
-                    PropertyName = "Target",
-                })
-            .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<SimpleLink>
+                new ConstructorPropertyAssignmentTestScenario<StandardLink>
                 {
                     Name = "Resource should return same 'resource' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
-                        var referenceObject = A.Dummy<SimpleLink>();
+                        var referenceObject = A.Dummy<StandardLink>();
 
-                        var result = new SystemUnderTestExpectedPropertyValue<SimpleLink>
+                        var result = new SystemUnderTestExpectedPropertyValue<StandardLink>
                         {
-                            SystemUnderTest = new SimpleLink(
-                                                      referenceObject.Target,
+                            SystemUnderTest = new StandardLink(
                                                       referenceObject.Resource,
+                                                      referenceObject.Media,
+                                                      referenceObject.Target,
                                                       referenceObject.FormatsToApplyWhenActivated),
                             ExpectedPropertyValue = referenceObject.Resource,
                         };
@@ -172,18 +175,63 @@ namespace OBeautifulCode.DataStructure.Test
                     PropertyName = "Resource",
                 })
             .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<SimpleLink>
+                new ConstructorPropertyAssignmentTestScenario<StandardLink>
+                {
+                    Name = "Media should return same 'media' parameter passed to constructor when getting",
+                    SystemUnderTestExpectedPropertyValueFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<StandardLink>();
+
+                        var result = new SystemUnderTestExpectedPropertyValue<StandardLink>
+                        {
+                            SystemUnderTest = new StandardLink(
+                                                      referenceObject.Resource,
+                                                      referenceObject.Media,
+                                                      referenceObject.Target,
+                                                      referenceObject.FormatsToApplyWhenActivated),
+                            ExpectedPropertyValue = referenceObject.Media,
+                        };
+
+                        return result;
+                    },
+                    PropertyName = "Media",
+                })
+            .AddScenario(() =>
+                new ConstructorPropertyAssignmentTestScenario<StandardLink>
+                {
+                    Name = "Target should return same 'target' parameter passed to constructor when getting",
+                    SystemUnderTestExpectedPropertyValueFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<StandardLink>();
+
+                        var result = new SystemUnderTestExpectedPropertyValue<StandardLink>
+                        {
+                            SystemUnderTest = new StandardLink(
+                                                      referenceObject.Resource,
+                                                      referenceObject.Media,
+                                                      referenceObject.Target,
+                                                      referenceObject.FormatsToApplyWhenActivated),
+                            ExpectedPropertyValue = referenceObject.Target,
+                        };
+
+                        return result;
+                    },
+                    PropertyName = "Target",
+                })
+            .AddScenario(() =>
+                new ConstructorPropertyAssignmentTestScenario<StandardLink>
                 {
                     Name = "FormatsToApplyWhenActivated should return same 'formatsToApplyWhenActivated' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
-                        var referenceObject = A.Dummy<SimpleLink>();
+                        var referenceObject = A.Dummy<StandardLink>();
 
-                        var result = new SystemUnderTestExpectedPropertyValue<SimpleLink>
+                        var result = new SystemUnderTestExpectedPropertyValue<StandardLink>
                         {
-                            SystemUnderTest = new SimpleLink(
-                                                      referenceObject.Target,
+                            SystemUnderTest = new StandardLink(
                                                       referenceObject.Resource,
+                                                      referenceObject.Media,
+                                                      referenceObject.Target,
                                                       referenceObject.FormatsToApplyWhenActivated),
                             ExpectedPropertyValue = referenceObject.FormatsToApplyWhenActivated,
                         };
@@ -193,19 +241,19 @@ namespace OBeautifulCode.DataStructure.Test
                     PropertyName = "FormatsToApplyWhenActivated",
                 });
 
-        private static readonly DeepCloneWithTestScenarios<SimpleLink> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<SimpleLink>()
+        private static readonly DeepCloneWithTestScenarios<StandardLink> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<StandardLink>()
             .AddScenario(() =>
-                new DeepCloneWithTestScenario<SimpleLink>
+                new DeepCloneWithTestScenario<StandardLink>
                 {
                     Name = "DeepCloneWithResource should deep clone object and replace Resource with the provided resource",
                     WithPropertyName = "Resource",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<SimpleLink>();
+                        var systemUnderTest = A.Dummy<StandardLink>();
 
-                        var referenceObject = A.Dummy<SimpleLink>().ThatIs(_ => !systemUnderTest.Resource.IsEqualTo(_.Resource));
+                        var referenceObject = A.Dummy<StandardLink>().ThatIs(_ => !systemUnderTest.Resource.IsEqualTo(_.Resource));
 
-                        var result = new SystemUnderTestDeepCloneWithValue<SimpleLink>
+                        var result = new SystemUnderTestDeepCloneWithValue<StandardLink>
                         {
                             SystemUnderTest = systemUnderTest,
                             DeepCloneWithValue = referenceObject.Resource,
@@ -215,37 +263,37 @@ namespace OBeautifulCode.DataStructure.Test
                     },
                 })
             .AddScenario(() =>
-                new DeepCloneWithTestScenario<SimpleLink>
+                new DeepCloneWithTestScenario<StandardLink>
                 {
-                    Name = "DeepCloneWithFormatsToApplyWhenActivated should deep clone object and replace FormatsToApplyWhenActivated with the provided formatsToApplyWhenActivated",
-                    WithPropertyName = "FormatsToApplyWhenActivated",
+                    Name = "DeepCloneWithMedia should deep clone object and replace Media with the provided media",
+                    WithPropertyName = "Media",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<SimpleLink>();
+                        var systemUnderTest = A.Dummy<StandardLink>();
 
-                        var referenceObject = A.Dummy<SimpleLink>().ThatIs(_ => !systemUnderTest.FormatsToApplyWhenActivated.IsEqualTo(_.FormatsToApplyWhenActivated));
+                        var referenceObject = A.Dummy<StandardLink>().ThatIs(_ => !systemUnderTest.Media.IsEqualTo(_.Media));
 
-                        var result = new SystemUnderTestDeepCloneWithValue<SimpleLink>
+                        var result = new SystemUnderTestDeepCloneWithValue<StandardLink>
                         {
                             SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.FormatsToApplyWhenActivated,
+                            DeepCloneWithValue = referenceObject.Media,
                         };
 
                         return result;
                     },
                 })
             .AddScenario(() =>
-                new DeepCloneWithTestScenario<SimpleLink>
+                new DeepCloneWithTestScenario<StandardLink>
                 {
                     Name = "DeepCloneWithTarget should deep clone object and replace Target with the provided target",
                     WithPropertyName = "Target",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<SimpleLink>();
+                        var systemUnderTest = A.Dummy<StandardLink>();
 
-                        var referenceObject = A.Dummy<SimpleLink>().ThatIs(_ => !systemUnderTest.Target.IsEqualTo(_.Target));
+                        var referenceObject = A.Dummy<StandardLink>().ThatIs(_ => !systemUnderTest.Target.IsEqualTo(_.Target));
 
-                        var result = new SystemUnderTestDeepCloneWithValue<SimpleLink>
+                        var result = new SystemUnderTestDeepCloneWithValue<StandardLink>
                         {
                             SystemUnderTest = systemUnderTest,
                             DeepCloneWithValue = referenceObject.Target,
@@ -253,37 +301,66 @@ namespace OBeautifulCode.DataStructure.Test
 
                         return result;
                     },
+                })
+            .AddScenario(() =>
+                new DeepCloneWithTestScenario<StandardLink>
+                {
+                    Name = "DeepCloneWithFormatsToApplyWhenActivated should deep clone object and replace FormatsToApplyWhenActivated with the provided formatsToApplyWhenActivated",
+                    WithPropertyName = "FormatsToApplyWhenActivated",
+                    SystemUnderTestDeepCloneWithValueFunc = () =>
+                    {
+                        var systemUnderTest = A.Dummy<StandardLink>();
+
+                        var referenceObject = A.Dummy<StandardLink>().ThatIs(_ => !systemUnderTest.FormatsToApplyWhenActivated.IsEqualTo(_.FormatsToApplyWhenActivated));
+
+                        var result = new SystemUnderTestDeepCloneWithValue<StandardLink>
+                        {
+                            SystemUnderTest = systemUnderTest,
+                            DeepCloneWithValue = referenceObject.FormatsToApplyWhenActivated,
+                        };
+
+                        return result;
+                    },
                 });
 
-        private static readonly SimpleLink ReferenceObjectForEquatableTestScenarios = A.Dummy<SimpleLink>();
+        private static readonly StandardLink ReferenceObjectForEquatableTestScenarios = A.Dummy<StandardLink>();
 
-        private static readonly EquatableTestScenarios<SimpleLink> EquatableTestScenarios = new EquatableTestScenarios<SimpleLink>()
+        private static readonly EquatableTestScenarios<StandardLink> EquatableTestScenarios = new EquatableTestScenarios<StandardLink>()
             .AddScenario(() =>
-                new EquatableTestScenario<SimpleLink>
+                new EquatableTestScenario<StandardLink>
                 {
                     Name = "Default Code Generated Scenario",
                     ReferenceObject = ReferenceObjectForEquatableTestScenarios,
-                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new SimpleLink[]
+                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new StandardLink[]
                     {
-                        new SimpleLink(
-                                ReferenceObjectForEquatableTestScenarios.Target,
+                        new StandardLink(
                                 ReferenceObjectForEquatableTestScenarios.Resource,
+                                ReferenceObjectForEquatableTestScenarios.Media,
+                                ReferenceObjectForEquatableTestScenarios.Target,
                                 ReferenceObjectForEquatableTestScenarios.FormatsToApplyWhenActivated),
                     },
-                    ObjectsThatAreNotEqualToReferenceObject = new SimpleLink[]
+                    ObjectsThatAreNotEqualToReferenceObject = new StandardLink[]
                     {
-                        new SimpleLink(
+                        new StandardLink(
+                                A.Dummy<StandardLink>().Whose(_ => !_.Resource.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Resource)).Resource,
+                                ReferenceObjectForEquatableTestScenarios.Media,
                                 ReferenceObjectForEquatableTestScenarios.Target,
-                                A.Dummy<SimpleLink>().Whose(_ => !_.Resource.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Resource)).Resource,
                                 ReferenceObjectForEquatableTestScenarios.FormatsToApplyWhenActivated),
-                        new SimpleLink(
+                        new StandardLink(
+                                ReferenceObjectForEquatableTestScenarios.Resource,
+                                A.Dummy<StandardLink>().Whose(_ => !_.Media.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Media)).Media,
                                 ReferenceObjectForEquatableTestScenarios.Target,
-                                ReferenceObjectForEquatableTestScenarios.Resource,
-                                A.Dummy<SimpleLink>().Whose(_ => !_.FormatsToApplyWhenActivated.IsEqualTo(ReferenceObjectForEquatableTestScenarios.FormatsToApplyWhenActivated)).FormatsToApplyWhenActivated),
-                        new SimpleLink(
-                                A.Dummy<SimpleLink>().Whose(_ => !_.Target.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Target)).Target,
-                                ReferenceObjectForEquatableTestScenarios.Resource,
                                 ReferenceObjectForEquatableTestScenarios.FormatsToApplyWhenActivated),
+                        new StandardLink(
+                                ReferenceObjectForEquatableTestScenarios.Resource,
+                                ReferenceObjectForEquatableTestScenarios.Media,
+                                A.Dummy<StandardLink>().Whose(_ => !_.Target.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Target)).Target,
+                                ReferenceObjectForEquatableTestScenarios.FormatsToApplyWhenActivated),
+                        new StandardLink(
+                                ReferenceObjectForEquatableTestScenarios.Resource,
+                                ReferenceObjectForEquatableTestScenarios.Media,
+                                ReferenceObjectForEquatableTestScenarios.Target,
+                                A.Dummy<StandardLink>().Whose(_ => !_.FormatsToApplyWhenActivated.IsEqualTo(ReferenceObjectForEquatableTestScenarios.FormatsToApplyWhenActivated)).FormatsToApplyWhenActivated),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
                     {
@@ -292,7 +369,6 @@ namespace OBeautifulCode.DataStructure.Test
                         A.Dummy<int>(),
                         A.Dummy<int?>(),
                         A.Dummy<Guid>(),
-                        A.Dummy<MediaLink>(),
                     },
                 });
 
@@ -314,12 +390,12 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void SimpleLink___Should_implement_IModel_of_SimpleLink___When_reflecting()
+            public static void StandardLink___Should_implement_IModel_of_StandardLink___When_reflecting()
             {
                 // Arrange
-                var type = typeof(SimpleLink);
+                var type = typeof(StandardLink);
 
-                var expectedModelMethods = typeof(IModel<SimpleLink>).GetInterfaceDeclaredAndImplementedMethods();
+                var expectedModelMethods = typeof(IModel<StandardLink>).GetInterfaceDeclaredAndImplementedMethods();
 
                 var expectedModelMethodHashes = expectedModelMethods.Select(_ => _.GetSignatureHash());
 
@@ -329,7 +405,7 @@ namespace OBeautifulCode.DataStructure.Test
                 var actualModelMethodHashes = actualModelMethods.Select(_ => _.GetSignatureHash());
 
                 // Assert
-                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<SimpleLink>));
+                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<StandardLink>));
                 expectedModelMethodHashes.Except(actualModelMethodHashes).AsTest().Must().BeEmptyEnumerable();
             }
 
@@ -347,10 +423,10 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void SimpleLink___Should_be_attributed_with_Serializable____When_reflecting()
+            public static void StandardLink___Should_be_attributed_with_Serializable____When_reflecting()
             {
                 // Arrange
-                var type = typeof(SimpleLink);
+                var type = typeof(StandardLink);
 
                 // Act
                 var actualAttributes = type.GetCustomAttributes(typeof(SerializableAttribute), false);
@@ -530,10 +606,10 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Clone___Should_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<SimpleLink>();
+                var systemUnderTest = A.Dummy<StandardLink>();
 
                 // Act
-                var actual = (SimpleLink)systemUnderTest.Clone();
+                var actual = (StandardLink)systemUnderTest.Clone();
 
                 // Assert
                 actual.AsTest().Must().BeEqualTo(systemUnderTest);
@@ -557,7 +633,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void DeepClone___Should_deep_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<SimpleLink>();
+                var systemUnderTest = A.Dummy<StandardLink>();
 
                 // Act
                 var actual = systemUnderTest.DeepClone();
@@ -576,6 +652,18 @@ namespace OBeautifulCode.DataStructure.Test
                     // The object could be a boxed value type, which will fail this asseration because
                     // a deep clone of a value type object is the same object.
                     actual.Resource.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.Resource);
+                }
+
+                if (systemUnderTest.Media == null)
+                {
+                    actual.Media.AsTest().Must().BeNull();
+                }
+                else if (!actual.Media.GetType().IsValueType)
+                {
+                    // When the declared type is a reference type, we still have to check the runtime type.
+                    // The object could be a boxed value type, which will fail this asseration because
+                    // a deep clone of a value type object is the same object.
+                    actual.Media.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.Media);
                 }
 
                 if (systemUnderTest.FormatsToApplyWhenActivated == null)
@@ -607,7 +695,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "Resource", "FormatsToApplyWhenActivated", "Target" };
+                var propertyNames = new string[] { "Resource", "Media", "Target", "FormatsToApplyWhenActivated" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 
@@ -620,12 +708,12 @@ namespace OBeautifulCode.DataStructure.Test
                     }
 
                     // Act
-                    var actual = (SimpleLink)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
+                    var actual = (StandardLink)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
 
                     // Assert
                     foreach(var propertyName in propertyNames)
                     {
-                        var propertyInfo = typeof(SimpleLink).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
+                        var propertyInfo = typeof(StandardLink).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
 
                         var actualPropertyValue = propertyInfo.GetValue(actual);
 
@@ -687,7 +775,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<SimpleLink>();
+                var expected = A.Dummy<StandardLink>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -716,7 +804,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<SimpleLink>();
+                var expected = A.Dummy<StandardLink>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -745,7 +833,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<SimpleLink>();
+                var expected = A.Dummy<StandardLink>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -774,7 +862,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<SimpleLink>();
+                var expected = A.Dummy<StandardLink>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -808,8 +896,8 @@ namespace OBeautifulCode.DataStructure.Test
             public static void EqualsOperator___Should_return_true___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                SimpleLink systemUnderTest1 = null;
-                SimpleLink systemUnderTest2 = null;
+                StandardLink systemUnderTest1 = null;
+                StandardLink systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 == systemUnderTest2;
@@ -839,7 +927,7 @@ namespace OBeautifulCode.DataStructure.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    SimpleLink systemUnderTest = null;
+                    StandardLink systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest == scenario.ReferenceObject;
@@ -988,8 +1076,8 @@ namespace OBeautifulCode.DataStructure.Test
             public static void NotEqualsOperator___Should_return_false___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                SimpleLink systemUnderTest1 = null;
-                SimpleLink systemUnderTest2 = null;
+                StandardLink systemUnderTest1 = null;
+                StandardLink systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 != systemUnderTest2;
@@ -1019,7 +1107,7 @@ namespace OBeautifulCode.DataStructure.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    SimpleLink systemUnderTest = null;
+                    StandardLink systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest != scenario.ReferenceObject;
@@ -1308,157 +1396,14 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_TargetedLinkBase___Should_return_false___When_parameter_other_is_null()
+            public static void Equals_with_StandardLink___Should_return_false___When_parameter_other_is_null()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    TargetedLinkBase systemUnderTest = null;
-
-                    // Act
-                    var actual = scenario.ReferenceObject.Equals((TargetedLinkBase)systemUnderTest);
-
-                    // Assert
-                    actual.AsTest().Must().BeFalse(because: scenario.Id);
-                }
-            }
-
-            [Fact]
-            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_TargetedLinkBase___Should_return_true___When_parameter_other_is_same_object()
-            {
-                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
-
-                foreach (var scenario in scenarios)
-                {
-                    // Arrange, Act
-                    var actual = scenario.ReferenceObject.Equals((TargetedLinkBase)scenario.ReferenceObject);
-
-                    // Assert
-                    actual.AsTest().Must().BeTrue(because: scenario.Id);
-                }
-            }
-
-            [Fact]
-            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_TargetedLinkBase___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
-            {
-                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
-
-                foreach (var scenario in scenarios)
-                {
-                    // Arrange, Act
-                    var actuals = scenario.ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((TargetedLinkBase)_)).ToList();
-
-                    // Assert
-                    actuals.AsTest().Must().Each().BeFalse(because: scenario.Id);
-                }
-            }
-
-            [Fact]
-            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_TargetedLinkBase___Should_return_false___When_objects_being_compared_have_different_property_values()
-            {
-                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
-
-                foreach (var scenario in scenarios)
-                {
-                    // Arrange, Act
-                    var actuals = scenario.ObjectsThatAreNotEqualToReferenceObject.Select(_ => scenario.ReferenceObject.Equals((TargetedLinkBase)_)).ToList();
-
-                    // Assert
-                    actuals.AsTest().Must().Each().BeFalse(because: scenario.Id);
-                }
-            }
-
-            [Fact]
-            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_TargetedLinkBase___Should_return_true___When_objects_being_compared_have_same_property_values()
-            {
-                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
-
-                foreach (var scenario in scenarios)
-                {
-                    // Arrange, Act
-                    var actuals = scenario.ObjectsThatAreEqualToButNotTheSameAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((TargetedLinkBase)_)).ToList();
-
-                    // Assert
-                    actuals.AsTest().Must().Each().BeTrue(because: scenario.Id);
-                }
-            }
-
-            [Fact]
-            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_SimpleLink___Should_return_false___When_parameter_other_is_null()
-            {
-                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
-
-                foreach (var scenario in scenarios)
-                {
-                    // Arrange
-                    SimpleLink systemUnderTest = null;
+                    StandardLink systemUnderTest = null;
 
                     // Act
                     var actual = scenario.ReferenceObject.Equals(systemUnderTest);
@@ -1482,7 +1427,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_SimpleLink___Should_return_true___When_parameter_other_is_same_object()
+            public static void Equals_with_StandardLink___Should_return_true___When_parameter_other_is_same_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1510,7 +1455,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_SimpleLink___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
+            public static void Equals_with_StandardLink___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1538,7 +1483,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_SimpleLink___Should_return_false___When_objects_being_compared_have_different_property_values()
+            public static void Equals_with_StandardLink___Should_return_false___When_objects_being_compared_have_different_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1566,7 +1511,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_SimpleLink___Should_return_true___When_objects_being_compared_have_same_property_values()
+            public static void Equals_with_StandardLink___Should_return_true___When_objects_being_compared_have_same_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 

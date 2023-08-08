@@ -235,7 +235,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 referenceObject.Sections,
                                 referenceObject.Title,
                                 referenceObject.TimestampUtc,
-                                new[] { A.Dummy<SimpleLink>(), null, A.Dummy<SimpleLink>() },
+                                new[] { A.Dummy<StandardLink>(), null, A.Dummy<StandardLink>() },
                                 referenceObject.AdditionalInfo,
                                 referenceObject.Format);
 
