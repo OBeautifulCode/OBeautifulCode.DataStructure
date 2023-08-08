@@ -23,15 +23,15 @@ namespace OBeautifulCode.DataStructure
     using static global::System.FormattableString;
 
     [Serializable]
-    public partial class LinkedMedia : IModel<LinkedMedia>
+    public partial class SourcedMedia : IModel<SourcedMedia>
     {
         /// <summary>
-        /// Determines whether two objects of type <see cref="LinkedMedia"/> are equal.
+        /// Determines whether two objects of type <see cref="SourcedMedia"/> are equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are equal; otherwise false.</returns>
-        public static bool operator ==(LinkedMedia left, LinkedMedia right)
+        public static bool operator ==(SourcedMedia left, SourcedMedia right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -49,15 +49,15 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <summary>
-        /// Determines whether two objects of type <see cref="LinkedMedia"/> are not equal.
+        /// Determines whether two objects of type <see cref="SourcedMedia"/> are not equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are not equal; otherwise false.</returns>
-        public static bool operator !=(LinkedMedia left, LinkedMedia right) => !(left == right);
+        public static bool operator !=(SourcedMedia left, SourcedMedia right) => !(left == right);
 
         /// <inheritdoc />
-        public bool Equals(LinkedMedia other)
+        public bool Equals(SourcedMedia other)
         {
             if (ReferenceEquals(this, other))
             {
@@ -77,7 +77,7 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => this == (obj as LinkedMedia);
+        public override bool Equals(object obj) => this == (obj as SourcedMedia);
 
         /// <inheritdoc />
         public override int GetHashCode() => HashCodeHelper.Initialize()
@@ -87,7 +87,7 @@ namespace OBeautifulCode.DataStructure
             .Value;
 
         /// <inheritdoc />
-        public new LinkedMedia DeepClone() => (LinkedMedia)this.DeepCloneInternal();
+        public new SourcedMedia DeepClone() => (SourcedMedia)this.DeepCloneInternal();
 
         /// <inheritdoc />
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
@@ -109,7 +109,7 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         public override MediaBase DeepCloneWithMediaKind(MediaKind mediaKind)
         {
-            var result = new LinkedMedia(
+            var result = new SourcedMedia(
                                  this.Url?.DeepClone(),
                                  mediaKind,
                                  this.Name?.DeepClone());
@@ -137,7 +137,7 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         public override MediaBase DeepCloneWithName(string name)
         {
-            var result = new LinkedMedia(
+            var result = new SourcedMedia(
                                  this.Url?.DeepClone(),
                                  this.MediaKind.DeepClone(),
                                  name);
@@ -149,7 +149,7 @@ namespace OBeautifulCode.DataStructure
         /// Deep clones this object with a new <see cref="Url" />.
         /// </summary>
         /// <param name="url">The new <see cref="Url" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="LinkedMedia" /> using the specified <paramref name="url" /> for <see cref="Url" /> and a deep clone of every other property.</returns>
+        /// <returns>New <see cref="SourcedMedia" /> using the specified <paramref name="url" /> for <see cref="Url" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -167,9 +167,9 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public LinkedMedia DeepCloneWithUrl(string url)
+        public SourcedMedia DeepCloneWithUrl(string url)
         {
-            var result = new LinkedMedia(
+            var result = new SourcedMedia(
                                  url,
                                  this.MediaKind.DeepClone(),
                                  this.Name?.DeepClone());
@@ -181,7 +181,7 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         protected override MediaBase DeepCloneInternal()
         {
-            var result = new LinkedMedia(
+            var result = new SourcedMedia(
                                  this.Url?.DeepClone(),
                                  this.MediaKind.DeepClone(),
                                  this.Name?.DeepClone());
@@ -193,7 +193,7 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"OBeautifulCode.DataStructure.LinkedMedia: MediaKind = {this.MediaKind.ToString() ?? "<null>"}, Name = {this.Name?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Url = {this.Url?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}.");
+            var result = Invariant($"OBeautifulCode.DataStructure.SourcedMedia: MediaKind = {this.MediaKind.ToString() ?? "<null>"}, Name = {this.Name?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Url = {this.Url?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}.");
 
             return result;
         }

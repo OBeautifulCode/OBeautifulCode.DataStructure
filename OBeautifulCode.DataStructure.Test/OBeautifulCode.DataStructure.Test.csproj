@@ -222,9 +222,9 @@
     <Compile Include="Models\Classes\CellValue\InlinedMediaTest.designer.cs">
       <DependentUpon>InlinedMediaTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Classes\CellValue\LinkedMediaTest.cs" />
-    <Compile Include="Models\Classes\CellValue\LinkedMediaTest.designer.cs">
-      <DependentUpon>LinkedMediaTest.cs</DependentUpon>
+    <Compile Include="Models\Classes\CellValue\SourcedMediaTest.cs" />
+    <Compile Include="Models\Classes\CellValue\SourcedMediaTest.designer.cs">
+      <DependentUpon>SourcedMediaTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Classes\Details\LogoDetailsTest.cs" />
     <Compile Include="Models\Classes\Details\LogoDetailsTest.designer.cs">

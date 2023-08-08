@@ -165,12 +165,12 @@ namespace OBeautifulCode.DataStructure.Excel
             {
                 var medias = logoDetails.Select(_ => _.Media).ToList();
 
-                if (medias.Any(_ => !(_ is LinkedMedia)))
+                if (medias.Any(_ => !(_ is SourcedMedia)))
                 {
-                    throw new NotSupportedException(Invariant($"This type of {nameof(MediaBase)} is not supported: {medias.First(_ => !(_ is LinkedMedia)).GetType().ToStringReadable()}"));
+                    throw new NotSupportedException(Invariant($"This type of {nameof(MediaBase)} is not supported: {medias.First(_ => !(_ is SourcedMedia)).GetType().ToStringReadable()}"));
                 }
 
-                var urls = medias.Cast<LinkedMedia>().Select(_ => _.Url).ToList();
+                var urls = medias.Cast<SourcedMedia>().Select(_ => _.Url).ToList();
 
                 var insertImagesResult = cursor.Cell.InsertImages(urls, cellSizeChanges: ImagesCellSizeChanges.None);
 
@@ -710,11 +710,11 @@ namespace OBeautifulCode.DataStructure.Excel
                         cursor.Cell.Value = nullableDecimalConstCell.Value;
                     }
                 }
-                else if (cell is ConstCell<LinkedMedia> linkedMedia)
+                else if (cell is ConstCell<SourcedMedia> sourcedMedia)
                 {
-                    if ((passKind == PassKind.Data) && (linkedMedia.Value != null))
+                    if ((passKind == PassKind.Data) && (sourcedMedia.Value != null))
                     {
-                        var media = linkedMedia.Value;
+                        var media = sourcedMedia.Value;
 
                         if (media.MediaKind == MediaKind.Image)
                         {

@@ -664,12 +664,6 @@ namespace OBeautifulCode.DataStructure.Test
                 });
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new LinkedMedia(
-                                 A.Dummy<string>(),
-                                 A.Dummy<MediaKind>(),
-                                 A.Dummy<string>()));
-
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () =>
                 {
                     var availableTypes = new[]
@@ -718,7 +712,7 @@ namespace OBeautifulCode.DataStructure.Test
                     {
                         typeof(IdentifiedMedia),
                         typeof(InlinedMedia),
-                        typeof(LinkedMedia)
+                        typeof(SourcedMedia)
                     };
 
                     var randomIndex = ThreadSafeRandom.Next(0, availableTypes.Length);
@@ -1095,6 +1089,12 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<string>(),
                                  A.Dummy<string>(),
                                  A.Dummy<int?>(),
+                                 A.Dummy<string>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new SourcedMedia(
+                                 A.Dummy<string>(),
+                                 A.Dummy<MediaKind>(),
                                  A.Dummy<string>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(

@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="LinkedMediaTest.cs" company="OBeautifulCode">
+// <copyright file="SourcedMediaTest.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -23,23 +23,23 @@ namespace OBeautifulCode.DataStructure.Test
     using static System.FormattableString;
 
     [SuppressMessage("Microsoft.Maintainability", "CA1505:AvoidUnmaintainableCode", Justification = ObcSuppressBecause.CA1505_AvoidUnmaintainableCode_DisagreeWithAssessment)]
-    public static partial class LinkedMediaTest
+    public static partial class SourcedMediaTest
     {
         [SuppressMessage("Microsoft.Maintainability", "CA1505:AvoidUnmaintainableCode", Justification = ObcSuppressBecause.CA1505_AvoidUnmaintainableCode_DisagreeWithAssessment)]
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = ObcSuppressBecause.CA1810_InitializeReferenceTypeStaticFieldsInline_FieldsDeclaredInCodeGeneratedPartialTestClass)]
-        static LinkedMediaTest()
+        static SourcedMediaTest()
         {
             ConstructorArgumentValidationTestScenarios
                 .RemoveAllScenarios()
                 .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<LinkedMedia>
+                    new ConstructorArgumentValidationTestScenario<SourcedMedia>
                     {
                         Name = "constructor should throw ArgumentNullException when parameter 'url' is null scenario",
                         ConstructionFunc = () =>
                         {
-                            var referenceObject = A.Dummy<LinkedMedia>();
+                            var referenceObject = A.Dummy<SourcedMedia>();
 
-                            var result = new LinkedMedia(
+                            var result = new SourcedMedia(
                                                  null,
                                                  referenceObject.MediaKind,
                                                  referenceObject.Name);
@@ -50,14 +50,14 @@ namespace OBeautifulCode.DataStructure.Test
                         ExpectedExceptionMessageContains = new[] { "url", },
                     })
                 .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<LinkedMedia>
+                    new ConstructorArgumentValidationTestScenario<SourcedMedia>
                     {
                         Name = "constructor should throw ArgumentException when parameter 'url' is white space scenario",
                         ConstructionFunc = () =>
                         {
-                            var referenceObject = A.Dummy<LinkedMedia>();
+                            var referenceObject = A.Dummy<SourcedMedia>();
 
-                            var result = new LinkedMedia(
+                            var result = new SourcedMedia(
                                                  Invariant($"  {Environment.NewLine}  "),
                                                  referenceObject.MediaKind,
                                                  referenceObject.Name);
@@ -68,14 +68,14 @@ namespace OBeautifulCode.DataStructure.Test
                         ExpectedExceptionMessageContains = new[] { "url", "white space", },
                     })
                 .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<LinkedMedia>
+                    new ConstructorArgumentValidationTestScenario<SourcedMedia>
                     {
                         Name = "constructor should throw ArgumentOutOfRangeException when parameter 'mediaKind' is Unknown",
                         ConstructionFunc = () =>
                         {
-                            var referenceObject = A.Dummy<LinkedMedia>();
+                            var referenceObject = A.Dummy<SourcedMedia>();
 
-                            var result = new LinkedMedia(
+                            var result = new SourcedMedia(
                                 referenceObject.Url,
                                 MediaKind.Unknown,
                                 referenceObject.Name);

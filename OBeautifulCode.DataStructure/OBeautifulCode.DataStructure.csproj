@@ -234,12 +234,12 @@
       <DependentUpon>InlinedMedia.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Classes\CellValue\IdentifiedMedia.cs" />
-    <Compile Include="Models\Classes\CellValue\LinkedMedia.designer.cs">
-      <DependentUpon>LinkedMedia.cs</DependentUpon>
+    <Compile Include="Models\Classes\CellValue\SourcedMedia.designer.cs">
+      <DependentUpon>SourcedMedia.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Classes\CellValue\MediaBase.cs" />
     <Compile Include="Models\Classes\CellValue\InlinedMedia.cs" />
-    <Compile Include="Models\Classes\CellValue\LinkedMedia.cs" />
+    <Compile Include="Models\Classes\CellValue\SourcedMedia.cs" />
     <Compile Include="Models\Classes\CellValue\MediaBase.designer.cs">
       <DependentUpon>MediaBase.cs</DependentUpon>
     </Compile>

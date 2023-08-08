@@ -33,37 +33,37 @@ namespace OBeautifulCode.DataStructure.Test
 
     using static global::System.FormattableString;
 
-    public static partial class LinkedMediaTest
+    public static partial class SourcedMediaTest
     {
-        private static readonly StringRepresentationTestScenarios<LinkedMedia> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<LinkedMedia>()
+        private static readonly StringRepresentationTestScenarios<SourcedMedia> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<SourcedMedia>()
             .AddScenario(() =>
-                new StringRepresentationTestScenario<LinkedMedia>
+                new StringRepresentationTestScenario<SourcedMedia>
                 {
                     Name = "Default Code Generated Scenario",
                     SystemUnderTestExpectedStringRepresentationFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<LinkedMedia>();
+                        var systemUnderTest = A.Dummy<SourcedMedia>();
 
-                        var result = new SystemUnderTestExpectedStringRepresentation<LinkedMedia>
+                        var result = new SystemUnderTestExpectedStringRepresentation<SourcedMedia>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.LinkedMedia: MediaKind = {systemUnderTest.MediaKind.ToString() ?? "<null>"}, Name = {systemUnderTest.Name?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Url = {systemUnderTest.Url?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.SourcedMedia: MediaKind = {systemUnderTest.MediaKind.ToString() ?? "<null>"}, Name = {systemUnderTest.Name?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Url = {systemUnderTest.Url?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}."),
                         };
 
                         return result;
                     },
                 });
 
-        private static readonly ConstructorArgumentValidationTestScenarios<LinkedMedia> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<LinkedMedia>()
+        private static readonly ConstructorArgumentValidationTestScenarios<SourcedMedia> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<SourcedMedia>()
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<LinkedMedia>
+                new ConstructorArgumentValidationTestScenario<SourcedMedia>
                 {
                     Name = "constructor should throw ArgumentNullException when parameter 'url' is null scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<LinkedMedia>();
+                        var referenceObject = A.Dummy<SourcedMedia>();
 
-                        var result = new LinkedMedia(
+                        var result = new SourcedMedia(
                                              null,
                                              referenceObject.MediaKind,
                                              referenceObject.Name);
@@ -74,14 +74,14 @@ namespace OBeautifulCode.DataStructure.Test
                     ExpectedExceptionMessageContains = new[] { "url", },
                 })
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<LinkedMedia>
+                new ConstructorArgumentValidationTestScenario<SourcedMedia>
                 {
                     Name = "constructor should throw ArgumentException when parameter 'url' is white space scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<LinkedMedia>();
+                        var referenceObject = A.Dummy<SourcedMedia>();
 
-                        var result = new LinkedMedia(
+                        var result = new SourcedMedia(
                                              Invariant($"  {Environment.NewLine}  "),
                                              referenceObject.MediaKind,
                                              referenceObject.Name);
@@ -92,14 +92,14 @@ namespace OBeautifulCode.DataStructure.Test
                     ExpectedExceptionMessageContains = new[] { "url", "white space", },
                 })
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<LinkedMedia>
+                new ConstructorArgumentValidationTestScenario<SourcedMedia>
                 {
                     Name = "constructor should throw ArgumentNullException when parameter 'name' is null scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<LinkedMedia>();
+                        var referenceObject = A.Dummy<SourcedMedia>();
 
-                        var result = new LinkedMedia(
+                        var result = new SourcedMedia(
                                              referenceObject.Url,
                                              referenceObject.MediaKind,
                                              null);
@@ -110,14 +110,14 @@ namespace OBeautifulCode.DataStructure.Test
                     ExpectedExceptionMessageContains = new[] { "name", },
                 })
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<LinkedMedia>
+                new ConstructorArgumentValidationTestScenario<SourcedMedia>
                 {
                     Name = "constructor should throw ArgumentException when parameter 'name' is white space scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<LinkedMedia>();
+                        var referenceObject = A.Dummy<SourcedMedia>();
 
-                        var result = new LinkedMedia(
+                        var result = new SourcedMedia(
                                              referenceObject.Url,
                                              referenceObject.MediaKind,
                                              Invariant($"  {Environment.NewLine}  "));
@@ -128,18 +128,18 @@ namespace OBeautifulCode.DataStructure.Test
                     ExpectedExceptionMessageContains = new[] { "name", "white space", },
                 });
 
-        private static readonly ConstructorPropertyAssignmentTestScenarios<LinkedMedia> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<LinkedMedia>()
+        private static readonly ConstructorPropertyAssignmentTestScenarios<SourcedMedia> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<SourcedMedia>()
             .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<LinkedMedia>
+                new ConstructorPropertyAssignmentTestScenario<SourcedMedia>
                 {
                     Name = "Url should return same 'url' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
-                        var referenceObject = A.Dummy<LinkedMedia>();
+                        var referenceObject = A.Dummy<SourcedMedia>();
 
-                        var result = new SystemUnderTestExpectedPropertyValue<LinkedMedia>
+                        var result = new SystemUnderTestExpectedPropertyValue<SourcedMedia>
                         {
-                            SystemUnderTest = new LinkedMedia(
+                            SystemUnderTest = new SourcedMedia(
                                                       referenceObject.Url,
                                                       referenceObject.MediaKind,
                                                       referenceObject.Name),
@@ -151,16 +151,16 @@ namespace OBeautifulCode.DataStructure.Test
                     PropertyName = "Url",
                 })
             .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<LinkedMedia>
+                new ConstructorPropertyAssignmentTestScenario<SourcedMedia>
                 {
                     Name = "MediaKind should return same 'mediaKind' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
-                        var referenceObject = A.Dummy<LinkedMedia>();
+                        var referenceObject = A.Dummy<SourcedMedia>();
 
-                        var result = new SystemUnderTestExpectedPropertyValue<LinkedMedia>
+                        var result = new SystemUnderTestExpectedPropertyValue<SourcedMedia>
                         {
-                            SystemUnderTest = new LinkedMedia(
+                            SystemUnderTest = new SourcedMedia(
                                                       referenceObject.Url,
                                                       referenceObject.MediaKind,
                                                       referenceObject.Name),
@@ -172,16 +172,16 @@ namespace OBeautifulCode.DataStructure.Test
                     PropertyName = "MediaKind",
                 })
             .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<LinkedMedia>
+                new ConstructorPropertyAssignmentTestScenario<SourcedMedia>
                 {
                     Name = "Name should return same 'name' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
-                        var referenceObject = A.Dummy<LinkedMedia>();
+                        var referenceObject = A.Dummy<SourcedMedia>();
 
-                        var result = new SystemUnderTestExpectedPropertyValue<LinkedMedia>
+                        var result = new SystemUnderTestExpectedPropertyValue<SourcedMedia>
                         {
-                            SystemUnderTest = new LinkedMedia(
+                            SystemUnderTest = new SourcedMedia(
                                                       referenceObject.Url,
                                                       referenceObject.MediaKind,
                                                       referenceObject.Name),
@@ -193,19 +193,19 @@ namespace OBeautifulCode.DataStructure.Test
                     PropertyName = "Name",
                 });
 
-        private static readonly DeepCloneWithTestScenarios<LinkedMedia> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<LinkedMedia>()
+        private static readonly DeepCloneWithTestScenarios<SourcedMedia> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<SourcedMedia>()
             .AddScenario(() =>
-                new DeepCloneWithTestScenario<LinkedMedia>
+                new DeepCloneWithTestScenario<SourcedMedia>
                 {
                     Name = "DeepCloneWithMediaKind should deep clone object and replace MediaKind with the provided mediaKind",
                     WithPropertyName = "MediaKind",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<LinkedMedia>();
+                        var systemUnderTest = A.Dummy<SourcedMedia>();
 
-                        var referenceObject = A.Dummy<LinkedMedia>().ThatIs(_ => !systemUnderTest.MediaKind.IsEqualTo(_.MediaKind));
+                        var referenceObject = A.Dummy<SourcedMedia>().ThatIs(_ => !systemUnderTest.MediaKind.IsEqualTo(_.MediaKind));
 
-                        var result = new SystemUnderTestDeepCloneWithValue<LinkedMedia>
+                        var result = new SystemUnderTestDeepCloneWithValue<SourcedMedia>
                         {
                             SystemUnderTest = systemUnderTest,
                             DeepCloneWithValue = referenceObject.MediaKind,
@@ -215,17 +215,17 @@ namespace OBeautifulCode.DataStructure.Test
                     },
                 })
             .AddScenario(() =>
-                new DeepCloneWithTestScenario<LinkedMedia>
+                new DeepCloneWithTestScenario<SourcedMedia>
                 {
                     Name = "DeepCloneWithName should deep clone object and replace Name with the provided name",
                     WithPropertyName = "Name",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<LinkedMedia>();
+                        var systemUnderTest = A.Dummy<SourcedMedia>();
 
-                        var referenceObject = A.Dummy<LinkedMedia>().ThatIs(_ => !systemUnderTest.Name.IsEqualTo(_.Name));
+                        var referenceObject = A.Dummy<SourcedMedia>().ThatIs(_ => !systemUnderTest.Name.IsEqualTo(_.Name));
 
-                        var result = new SystemUnderTestDeepCloneWithValue<LinkedMedia>
+                        var result = new SystemUnderTestDeepCloneWithValue<SourcedMedia>
                         {
                             SystemUnderTest = systemUnderTest,
                             DeepCloneWithValue = referenceObject.Name,
@@ -235,17 +235,17 @@ namespace OBeautifulCode.DataStructure.Test
                     },
                 })
             .AddScenario(() =>
-                new DeepCloneWithTestScenario<LinkedMedia>
+                new DeepCloneWithTestScenario<SourcedMedia>
                 {
                     Name = "DeepCloneWithUrl should deep clone object and replace Url with the provided url",
                     WithPropertyName = "Url",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<LinkedMedia>();
+                        var systemUnderTest = A.Dummy<SourcedMedia>();
 
-                        var referenceObject = A.Dummy<LinkedMedia>().ThatIs(_ => !systemUnderTest.Url.IsEqualTo(_.Url));
+                        var referenceObject = A.Dummy<SourcedMedia>().ThatIs(_ => !systemUnderTest.Url.IsEqualTo(_.Url));
 
-                        var result = new SystemUnderTestDeepCloneWithValue<LinkedMedia>
+                        var result = new SystemUnderTestDeepCloneWithValue<SourcedMedia>
                         {
                             SystemUnderTest = systemUnderTest,
                             DeepCloneWithValue = referenceObject.Url,
@@ -255,33 +255,33 @@ namespace OBeautifulCode.DataStructure.Test
                     },
                 });
 
-        private static readonly LinkedMedia ReferenceObjectForEquatableTestScenarios = A.Dummy<LinkedMedia>();
+        private static readonly SourcedMedia ReferenceObjectForEquatableTestScenarios = A.Dummy<SourcedMedia>();
 
-        private static readonly EquatableTestScenarios<LinkedMedia> EquatableTestScenarios = new EquatableTestScenarios<LinkedMedia>()
+        private static readonly EquatableTestScenarios<SourcedMedia> EquatableTestScenarios = new EquatableTestScenarios<SourcedMedia>()
             .AddScenario(() =>
-                new EquatableTestScenario<LinkedMedia>
+                new EquatableTestScenario<SourcedMedia>
                 {
                     Name = "Default Code Generated Scenario",
                     ReferenceObject = ReferenceObjectForEquatableTestScenarios,
-                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new LinkedMedia[]
+                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new SourcedMedia[]
                     {
-                        new LinkedMedia(
+                        new SourcedMedia(
                                 ReferenceObjectForEquatableTestScenarios.Url,
                                 ReferenceObjectForEquatableTestScenarios.MediaKind,
                                 ReferenceObjectForEquatableTestScenarios.Name),
                     },
-                    ObjectsThatAreNotEqualToReferenceObject = new LinkedMedia[]
+                    ObjectsThatAreNotEqualToReferenceObject = new SourcedMedia[]
                     {
-                        new LinkedMedia(
+                        new SourcedMedia(
                                 ReferenceObjectForEquatableTestScenarios.Url,
-                                A.Dummy<LinkedMedia>().Whose(_ => !_.MediaKind.IsEqualTo(ReferenceObjectForEquatableTestScenarios.MediaKind)).MediaKind,
+                                A.Dummy<SourcedMedia>().Whose(_ => !_.MediaKind.IsEqualTo(ReferenceObjectForEquatableTestScenarios.MediaKind)).MediaKind,
                                 ReferenceObjectForEquatableTestScenarios.Name),
-                        new LinkedMedia(
+                        new SourcedMedia(
                                 ReferenceObjectForEquatableTestScenarios.Url,
                                 ReferenceObjectForEquatableTestScenarios.MediaKind,
-                                A.Dummy<LinkedMedia>().Whose(_ => !_.Name.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Name)).Name),
-                        new LinkedMedia(
-                                A.Dummy<LinkedMedia>().Whose(_ => !_.Url.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Url)).Url,
+                                A.Dummy<SourcedMedia>().Whose(_ => !_.Name.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Name)).Name),
+                        new SourcedMedia(
+                                A.Dummy<SourcedMedia>().Whose(_ => !_.Url.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Url)).Url,
                                 ReferenceObjectForEquatableTestScenarios.MediaKind,
                                 ReferenceObjectForEquatableTestScenarios.Name),
                     },
@@ -315,12 +315,12 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void LinkedMedia___Should_implement_IModel_of_LinkedMedia___When_reflecting()
+            public static void SourcedMedia___Should_implement_IModel_of_SourcedMedia___When_reflecting()
             {
                 // Arrange
-                var type = typeof(LinkedMedia);
+                var type = typeof(SourcedMedia);
 
-                var expectedModelMethods = typeof(IModel<LinkedMedia>).GetInterfaceDeclaredAndImplementedMethods();
+                var expectedModelMethods = typeof(IModel<SourcedMedia>).GetInterfaceDeclaredAndImplementedMethods();
 
                 var expectedModelMethodHashes = expectedModelMethods.Select(_ => _.GetSignatureHash());
 
@@ -330,7 +330,7 @@ namespace OBeautifulCode.DataStructure.Test
                 var actualModelMethodHashes = actualModelMethods.Select(_ => _.GetSignatureHash());
 
                 // Assert
-                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<LinkedMedia>));
+                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<SourcedMedia>));
                 expectedModelMethodHashes.Except(actualModelMethodHashes).AsTest().Must().BeEmptyEnumerable();
             }
 
@@ -348,10 +348,10 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void LinkedMedia___Should_be_attributed_with_Serializable____When_reflecting()
+            public static void SourcedMedia___Should_be_attributed_with_Serializable____When_reflecting()
             {
                 // Arrange
-                var type = typeof(LinkedMedia);
+                var type = typeof(SourcedMedia);
 
                 // Act
                 var actualAttributes = type.GetCustomAttributes(typeof(SerializableAttribute), false);
@@ -531,10 +531,10 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Clone___Should_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<LinkedMedia>();
+                var systemUnderTest = A.Dummy<SourcedMedia>();
 
                 // Act
-                var actual = (LinkedMedia)systemUnderTest.Clone();
+                var actual = (SourcedMedia)systemUnderTest.Clone();
 
                 // Assert
                 actual.AsTest().Must().BeEqualTo(systemUnderTest);
@@ -558,7 +558,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void DeepClone___Should_deep_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<LinkedMedia>();
+                var systemUnderTest = A.Dummy<SourcedMedia>();
 
                 // Act
                 var actual = systemUnderTest.DeepClone();
@@ -597,12 +597,12 @@ namespace OBeautifulCode.DataStructure.Test
                     }
 
                     // Act
-                    var actual = (LinkedMedia)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
+                    var actual = (SourcedMedia)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
 
                     // Assert
                     foreach(var propertyName in propertyNames)
                     {
-                        var propertyInfo = typeof(LinkedMedia).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
+                        var propertyInfo = typeof(SourcedMedia).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
 
                         var actualPropertyValue = propertyInfo.GetValue(actual);
 
@@ -664,7 +664,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<LinkedMedia>();
+                var expected = A.Dummy<SourcedMedia>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -693,7 +693,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<LinkedMedia>();
+                var expected = A.Dummy<SourcedMedia>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -722,7 +722,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<LinkedMedia>();
+                var expected = A.Dummy<SourcedMedia>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -751,7 +751,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<LinkedMedia>();
+                var expected = A.Dummy<SourcedMedia>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -785,8 +785,8 @@ namespace OBeautifulCode.DataStructure.Test
             public static void EqualsOperator___Should_return_true___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                LinkedMedia systemUnderTest1 = null;
-                LinkedMedia systemUnderTest2 = null;
+                SourcedMedia systemUnderTest1 = null;
+                SourcedMedia systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 == systemUnderTest2;
@@ -816,7 +816,7 @@ namespace OBeautifulCode.DataStructure.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    LinkedMedia systemUnderTest = null;
+                    SourcedMedia systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest == scenario.ReferenceObject;
@@ -965,8 +965,8 @@ namespace OBeautifulCode.DataStructure.Test
             public static void NotEqualsOperator___Should_return_false___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                LinkedMedia systemUnderTest1 = null;
-                LinkedMedia systemUnderTest2 = null;
+                SourcedMedia systemUnderTest1 = null;
+                SourcedMedia systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 != systemUnderTest2;
@@ -996,7 +996,7 @@ namespace OBeautifulCode.DataStructure.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    LinkedMedia systemUnderTest = null;
+                    SourcedMedia systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest != scenario.ReferenceObject;
@@ -1285,14 +1285,14 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_LinkedMedia___Should_return_false___When_parameter_other_is_null()
+            public static void Equals_with_SourcedMedia___Should_return_false___When_parameter_other_is_null()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    LinkedMedia systemUnderTest = null;
+                    SourcedMedia systemUnderTest = null;
 
                     // Act
                     var actual = scenario.ReferenceObject.Equals(systemUnderTest);
@@ -1316,7 +1316,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_LinkedMedia___Should_return_true___When_parameter_other_is_same_object()
+            public static void Equals_with_SourcedMedia___Should_return_true___When_parameter_other_is_same_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1344,7 +1344,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_LinkedMedia___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
+            public static void Equals_with_SourcedMedia___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1372,7 +1372,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_LinkedMedia___Should_return_false___When_objects_being_compared_have_different_property_values()
+            public static void Equals_with_SourcedMedia___Should_return_false___When_objects_being_compared_have_different_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1400,7 +1400,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_LinkedMedia___Should_return_true___When_objects_being_compared_have_same_property_values()
+            public static void Equals_with_SourcedMedia___Should_return_true___When_objects_being_compared_have_same_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 

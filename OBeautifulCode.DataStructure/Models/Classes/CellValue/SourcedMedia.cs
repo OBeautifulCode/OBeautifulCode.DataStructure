@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="LinkedMedia.cs" company="OBeautifulCode">
+// <copyright file="SourcedMedia.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -15,19 +15,19 @@ namespace OBeautifulCode.DataStructure
     using static System.FormattableString;
 
     /// <summary>
-    /// A link to media (i.e. must be fetched from a server).
+    /// Media with a source url (i.e. fetched from a server).
     /// </summary>
     // ReSharper disable once RedundantExtendsListEntry
-    public partial class LinkedMedia : MediaBase, IModelViaCodeGen
+    public partial class SourcedMedia : MediaBase, IModelViaCodeGen
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="LinkedMedia"/> class.
+        /// Initializes a new instance of the <see cref="SourcedMedia"/> class.
         /// </summary>
-        /// <param name="url">The url of the media.</param>
+        /// <param name="url">The source url of the media.</param>
         /// <param name="mediaKind">The kind of media.</param>
         /// <param name="name">OPTIONAL name of the media.  DEFAULT is to use name-less media.</param>
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings", MessageId = "0#", Justification = ObcSuppressBecause.CA1054_UriParametersShouldNotBeStrings_PreferToRepresentUrlAsString)]
-        public LinkedMedia(
+        public SourcedMedia(
             string url,
             MediaKind mediaKind,
             string name = null)
@@ -47,7 +47,7 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <summary>
-        /// Gets the url of the media.
+        /// Gets the source url of the media.
         /// </summary>
         [SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings", Justification = ObcSuppressBecause.CA1056_UriPropertiesShouldNotBeStrings_PreferToRepresentUrlAsString)]
         public string Url { get; private set; }
