@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ReportExtensionsTest.cs" company="OBeautifulCode">
+// <copyright file="ReportAgentTest.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -10,41 +10,557 @@ namespace OBeautifulCode.DataStructure.Test
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-
     using FakeItEasy;
-
     using MathNet.Numerics.Statistics;
-
     using OBeautifulCode.Assertion.Recipes;
+    using OBeautifulCode.AutoFakeItEasy;
     using OBeautifulCode.Math.Recipes;
     using OBeautifulCode.Type;
-
     using Xunit;
-
+    using static System.FormattableString;
     using NamedDecimalSet = System.Collections.Generic.IReadOnlyList<OBeautifulCode.Type.NamedValue<decimal>>;
 
-    public static class ReportExtensionsTest
+    public static class ReportAgentTest
     {
         [Fact]
-        public static void Recalc___Should_throw_ArgumentNullException___When_parameter_report_is_null()
+        public static void Constructor___Should_throw_ArgumentNullException___When_parameter_report_is_null()
         {
             // Arrange, Act
-            var actual = Record.Exception(() => ReportExtensions.Recalc(null, DateTime.UtcNow));
+            var actual = Record.Exception(() => new ReportAgent(null));
 
             // Assert
             actual.AsTest().Must().BeOfType<ArgumentNullException>();
-            actual.Message.Must().ContainString("report");
+            actual.Message.AsTest().Must().ContainString("report");
         }
 
         [Fact]
-        public static async Task RecalcAsync___Should_throw_ArgumentNullException___When_parameter_report_is_null()
+        public static void Constructor__Should_throw_ArgumentException___When_same_cell_object_is_used_multiple_times()
         {
-            // Arrange, Act
-            var actual = await Record.ExceptionAsync(() => ReportExtensions.RecalcAsync(null, DateTime.UtcNow));
+            // Arrange
+            var referenceObject = A.Dummy<Report>();
+
+            var treeTable = A.Dummy<TreeTable>().Whose(_ => _.GetAllCells().Count > 0);
+
+            var report = new Report(
+                referenceObject.Id,
+                new[]
+                {
+                    new Section("id1", treeTable),
+                    new Section("id2", A.Dummy<TreeTable>()),
+                    new Section("id3", treeTable),
+                },
+                referenceObject.Title,
+                referenceObject.TimestampUtc,
+                referenceObject.DownloadLinks,
+                referenceObject.AdditionalInfo,
+                referenceObject.Format);
+
+            // Act
+            var actual = Record.Exception(() => new ReportAgent(report));
+
+            // Assert
+            actual.AsTest().Must().BeOfType<ArgumentException>();
+            actual.Message.AsTest().Must().ContainString("One or more ICell objects are used multiple times in the report");
+        }
+
+        [Fact]
+        public static void OperationCells___Should_return_all_operation_cells___When_getting()
+        {
+            // Arrange
+            var report = A.Dummy<Report>();
+
+            var systemUnderTest = new ReportAgent(report);
+
+            IReadOnlyCollection<IOperationOutputCell> expected = report.Sections.SelectMany(_ => _.TreeTable.GetAllCells()).OfType<IOperationOutputCell>().ToList();
+
+            // Act
+            var actual = systemUnderTest.OperationCells;
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+        }
+
+        [Fact]
+        public static void InputCells___Should_return_all_input_cells___When_getting()
+        {
+            // Arrange
+            var report = A.Dummy<Report>();
+
+            var systemUnderTest = new ReportAgent(report);
+
+            IReadOnlyCollection<IInputCell> expected = report.Sections.SelectMany(_ => _.TreeTable.GetAllCells()).OfType<IInputCell>().ToList();
+
+            // Act
+            var actual = systemUnderTest.InputCells;
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+        }
+
+        [Fact]
+        public static void ValidationCells___Should_return_all_validation_cells___When_getting()
+        {
+            // Arrange
+            var report = A.Dummy<Report>();
+
+            var systemUnderTest = new ReportAgent(report);
+
+            IReadOnlyCollection<IValidationCell> expected = report.Sections.SelectMany(_ => _.TreeTable.GetAllCells()).OfType<IValidationCell>().ToList();
+
+            // Act
+            var actual = systemUnderTest.ValidationCells;
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+        }
+
+        [Fact]
+        public static void AvailabilityCheckCells___Should_return_all_availability_check_cells___When_getting()
+        {
+            // Arrange
+            var report = A.Dummy<Report>();
+
+            var systemUnderTest = new ReportAgent(report);
+
+            IReadOnlyCollection<IAvailabilityCheckCell> expected = report.Sections.SelectMany(_ => _.TreeTable.GetAllCells()).OfType<IAvailabilityCheckCell>().ToList();
+
+            // Act
+            var actual = systemUnderTest.AvailabilityCheckCells;
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+        }
+
+        [Fact]
+        public static void GetCell_reportCellLocator___Should_throw_ArgumentNullException___When_parameter_reportCellLocator_is_null()
+        {
+            // Arrange
+            var systemUnderTest = new ReportAgent(A.Dummy<Report>());
+
+            // Act
+            var actual = Record.Exception(() => systemUnderTest.GetCell(null));
 
             // Assert
             actual.AsTest().Must().BeOfType<ArgumentNullException>();
-            actual.Message.Must().ContainString("report");
+            actual.Message.AsTest().Must().ContainString("reportCellLocator");
+        }
+
+        [Fact]
+        public static void GetCell_reportCellLocator___Should_throw_CellNotFoundException___When_section_is_not_found()
+        {
+            // Arrange
+            var report = A.Dummy<Report>();
+
+            var reportCellLocator = new ReportCellLocator(A.Dummy<string>(), report.Sections.First().TreeTable.GetAllCells().First().Id);
+
+            var systemUnderTest = new ReportAgent(report);
+
+            // Act
+            var actual = Record.Exception(() => systemUnderTest.GetCell(reportCellLocator));
+
+            // Assert
+            actual.AsTest().Must().BeOfType<CellNotFoundException>();
+            actual.Message.AsTest().Must().ContainString(Invariant($"There is no section with id '{reportCellLocator.SectionId}'."));
+            ((CellNotFoundException)actual).CellLocator.AsTest().Must().BeEqualTo((CellLocatorBase)reportCellLocator);
+        }
+
+        [Fact]
+        public static void GetCell_reportCellLocator___Should_throw_CellNotFoundException___When_cell_with_specified_id_is_not_found()
+        {
+            // Arrange
+            var report = A.Dummy<Report>();
+
+            var section = report.Sections.First();
+
+            var reportCellLocator = new ReportCellLocator(section.Id, A.Dummy<string>());
+
+            var systemUnderTest = new ReportAgent(report);
+
+            // Act
+            var actual = Record.Exception(() => systemUnderTest.GetCell(reportCellLocator));
+
+            // Assert
+            actual.AsTest().Must().BeOfType<CellNotFoundException>();
+            actual.Message.AsTest().Must().ContainString(Invariant($"There is no cell with id '{reportCellLocator.CellId}' in section '{section.Id}'."));
+            ((CellNotFoundException)actual).CellLocator.AsTest().Must().BeEqualTo((CellLocatorBase)reportCellLocator);
+        }
+
+        [Fact]
+        public static void GetCell_reportCellLocator___Should_throw_CellNotFoundException___When_slotId_specified_for_cell_that_is_not_slotted()
+        {
+            // Arrange
+            var report = A.Dummy<Report>();
+
+            var section = report.Sections.First();
+
+            var cell = section.TreeTable.GetAllCells().First(_ => _ is INotSlottedCell);
+
+            var reportCellLocator = new ReportCellLocator(section.Id, cell.Id, A.Dummy<string>());
+
+            var systemUnderTest = new ReportAgent(report);
+
+            // Act
+            var actual = Record.Exception(() => systemUnderTest.GetCell(reportCellLocator));
+
+            // Assert
+            actual.AsTest().Must().BeOfType<CellNotFoundException>();
+            actual.Message.AsTest().Must().ContainString(Invariant($"Slot id '{reportCellLocator.SlotId}' was specified, but the addressed cell '{cell.Id}' in section '{section.Id}' is not a slotted cell"));
+            ((CellNotFoundException)actual).CellLocator.AsTest().Must().BeEqualTo((CellLocatorBase)reportCellLocator);
+        }
+
+        [Fact]
+        public static void GetCell_reportCellLocator___Should_throw_CellNotFoundException___When_addressing_slotted_cell_but_there_is_no_slot_having_slotId()
+        {
+            // Arrange
+            var report = A.Dummy<Report>().Whose(_ => _.Sections.Any(s => s.TreeTable.GetAllCells().Any(c => c is ISlottedCell)));
+
+            var section = report.Sections.First(_ => _.TreeTable.GetAllCells().Any(c => c is ISlottedCell));
+
+            var cell = section.TreeTable.GetAllCells().First(_ => _ is ISlottedCell);
+
+            var reportCellLocator = new ReportCellLocator(section.Id, cell.Id, A.Dummy<string>());
+
+            var systemUnderTest = new ReportAgent(report);
+
+            // Act
+            var actual = Record.Exception(() => systemUnderTest.GetCell(reportCellLocator));
+
+            // Assert
+            actual.AsTest().Must().BeOfType<CellNotFoundException>();
+            actual.Message.AsTest().Must().ContainString(Invariant($"Slot id '{reportCellLocator.SlotId}' was specified, but the addressed cell '{cell.Id}' in section '{section.Id}' does not contain a slot having that id."));
+            ((CellNotFoundException)actual).CellLocator.AsTest().Must().BeEqualTo((CellLocatorBase)reportCellLocator);
+        }
+
+        [Fact]
+        public static void GetCell_reportCellLocator___Should_throw_CellNotFoundException___When_addressing_slotted_cell_and_SlotId_not_specified_and_SlotSelectionStrategy_is_ThrowIfSlotIdNotSpecified()
+        {
+            // Arrange
+            var report = A.Dummy<Report>().Whose(_ => _.Sections.Any(s => s.TreeTable.GetAllCells().Any(c => c is ISlottedCell)));
+
+            var section = report.Sections.First(_ => _.TreeTable.GetAllCells().Any(c => c is ISlottedCell));
+
+            var cell = section.TreeTable.GetAllCells().First(_ => _ is ISlottedCell);
+
+            var reportCellLocator = new ReportCellLocator(section.Id, cell.Id, null, SlotSelectionStrategy.ThrowIfSlotIdNotSpecified);
+
+            var systemUnderTest = new ReportAgent(report);
+
+            // Act
+            var actual = Record.Exception(() => systemUnderTest.GetCell(reportCellLocator));
+
+            // Assert
+            actual.AsTest().Must().BeOfType<CellNotFoundException>();
+            actual.Message.AsTest().Must().ContainString(Invariant($"The operation addresses an {nameof(ISlottedCell)} (and not a slot within that cell) and {nameof(SlotSelectionStrategy)} is {nameof(SlotSelectionStrategy.ThrowIfSlotIdNotSpecified)}."));
+            ((CellNotFoundException)actual).CellLocator.AsTest().Must().BeEqualTo((CellLocatorBase)reportCellLocator);
+        }
+
+        [Fact]
+        public static void GetCell_reportCellLocator___Should_return_cell___When_cell_is_not_slotted()
+        {
+            // Arrange
+            var report = A.Dummy<Report>();
+
+            var section = report.Sections.First();
+
+            var expected = section.TreeTable.GetAllCells().First(_ => _ is INotSlottedCell);
+
+            var reportCellLocator = new ReportCellLocator(section.Id, expected.Id);
+
+            var systemUnderTest = new ReportAgent(report);
+
+            // Act
+            var actual = systemUnderTest.GetCell(reportCellLocator);
+
+            // Assert
+            actual.AsTest().Must().BeSameReferenceAs(expected);
+        }
+
+        [Fact]
+        public static void GetCell_reportCellLocator___Should_return_cell_in_default_slot___When_addressing_slotted_cell_and_SlotSelectionStrategy_is_DefaultSlot()
+        {
+            // Arrange
+            var report = A.Dummy<Report>().Whose(_ => _.Sections.Any(s => s.TreeTable.GetAllCells().Any(c => c is ISlottedCell)));
+
+            var section = report.Sections.First(_ => _.TreeTable.GetAllCells().Any(c => c is ISlottedCell));
+
+            var cell = section.TreeTable.GetAllCells().OfType<ISlottedCell>().First();
+
+            var expected = (ICell)cell.SlotIdToCellMap[cell.DefaultSlotId];
+
+            var reportCellLocator = new ReportCellLocator(section.Id, cell.Id, null, SlotSelectionStrategy.DefaultSlot);
+
+            var systemUnderTest = new ReportAgent(report);
+
+            // Act
+            var actual = systemUnderTest.GetCell(reportCellLocator);
+
+            // Assert
+            actual.AsTest().Must().BeSameReferenceAs(expected);
+        }
+
+        [Fact]
+        public static void GetCell_reportCellLocator___Should_return_cell_in_specified_slot___When_addressing_slot_within_slotted_cell()
+        {
+            // Arrange
+            var report = A.Dummy<Report>().Whose(_ => _.Sections.Any(s => s.TreeTable.GetAllCells().OfType<ISlottedCell>().Any(c => c.SlotIdToCellMap.Count > 1)));
+
+            var section = report.Sections.First(_ => _.TreeTable.GetAllCells().Any(c => c is ISlottedCell));
+
+            var cell = section.TreeTable.GetAllCells().OfType<ISlottedCell>().First(_ => _.SlotIdToCellMap.Count > 1);
+
+            var slotId = cell.SlotIdToCellMap.First(_ => _.Key != cell.DefaultSlotId).Key;
+
+            var expected = (ICell)cell.SlotIdToCellMap[slotId];
+
+            var reportCellLocator = new ReportCellLocator(section.Id, cell.Id, slotId, SlotSelectionStrategy.ThrowIfSlotIdNotSpecified);
+
+            var systemUnderTest = new ReportAgent(report);
+
+            // Act
+            var actual = systemUnderTest.GetCell(reportCellLocator);
+
+            // Assert
+            actual.AsTest().Must().BeSameReferenceAs(expected);
+        }
+
+        [Fact]
+        public static void GetCell_sectionCellLocator___Should_throw_ArgumentNullException___When_parameter_sectionCellLocator_is_null()
+        {
+            // Arrange
+            var systemUnderTest = new ReportAgent(A.Dummy<Report>());
+
+            // Act
+            var actual = Record.Exception(() => systemUnderTest.GetCell(null, A.Dummy<ICell>()));
+
+            // Assert
+            actual.AsTest().Must().BeOfType<ArgumentNullException>();
+            actual.Message.AsTest().Must().ContainString("sectionCellLocator");
+        }
+
+        [Fact]
+        public static void GetCell_sectionCellLocator___Should_throw_ArgumentNullException___When_parameter_currentCell_is_null()
+        {
+            // Arrange
+            var systemUnderTest = new ReportAgent(A.Dummy<Report>());
+
+            // Act
+            var actual = Record.Exception(() => systemUnderTest.GetCell(A.Dummy<SectionCellLocator>(), null));
+
+            // Assert
+            actual.AsTest().Must().BeOfType<ArgumentNullException>();
+            actual.Message.AsTest().Must().ContainString("currentCell");
+        }
+
+        [Fact]
+        public static void GetCell_sectionCellLocator___Should_throw_ArgumentNullException___When_currentCell_is_not_a_cell_in_the_report()
+        {
+            // Arrange
+            var report = A.Dummy<Report>();
+
+            var systemUnderTest = new ReportAgent(report);
+
+            var sectionCellLocator = new SectionCellLocator(report.Sections.First().TreeTable.GetAllCells().First().Id);
+
+            // Act
+            var actual = Record.Exception(() => systemUnderTest.GetCell(sectionCellLocator, A.Dummy<ICell>()));
+
+            // Assert
+            actual.AsTest().Must().BeOfType<CellNotFoundException>();
+            actual.Message.AsTest().Must().ContainString("currentCell is not a cell in the report.");
+            ((CellNotFoundException)actual).CellLocator.AsTest().Must().BeEqualTo((CellLocatorBase)sectionCellLocator);
+        }
+
+        [Fact]
+        public static void GetCell_sectionCellLocator___Should_throw_CellNotFoundException___When_cell_with_specified_id_is_not_found()
+        {
+            // Arrange
+            var report = A.Dummy<Report>();
+
+            var section = report.Sections.First();
+
+            var currentCell = section.TreeTable.GetAllCells().First();
+
+            var sectionCellLocator = new SectionCellLocator(A.Dummy<string>());
+
+            var systemUnderTest = new ReportAgent(report);
+
+            var expectedReportCellLocator = new ReportCellLocator(section.Id, sectionCellLocator.CellId);
+
+            // Act
+            var actual = Record.Exception(() => systemUnderTest.GetCell(sectionCellLocator, currentCell));
+
+            // Assert
+            actual.AsTest().Must().BeOfType<CellNotFoundException>();
+            actual.Message.AsTest().Must().ContainString(Invariant($"There is no cell with id '{sectionCellLocator.CellId}' in section '{section.Id}'."));
+            ((CellNotFoundException)actual).CellLocator.AsTest().Must().BeEqualTo((CellLocatorBase)expectedReportCellLocator);
+        }
+
+        [Fact]
+        public static void GetCell_sectionCellLocator___Should_throw_CellNotFoundException___When_slotId_specified_for_cell_that_is_not_slotted()
+        {
+            // Arrange
+            var report = A.Dummy<Report>();
+
+            var section = report.Sections.First();
+
+            var allCells = section.TreeTable.GetAllCells();
+
+            var cell = allCells.First(_ => _ is INotSlottedCell);
+
+            var currentCell = allCells.First(_ => !_.Equals(cell));
+
+            var sectionCellLocator = new SectionCellLocator(cell.Id, A.Dummy<string>());
+
+            var expectedReportCellLocator = new ReportCellLocator(section.Id, sectionCellLocator.CellId, sectionCellLocator.SlotId);
+
+            var systemUnderTest = new ReportAgent(report);
+
+            // Act
+            var actual = Record.Exception(() => systemUnderTest.GetCell(sectionCellLocator, currentCell));
+
+            // Assert
+            actual.AsTest().Must().BeOfType<CellNotFoundException>();
+            actual.Message.AsTest().Must().ContainString(Invariant($"Slot id '{sectionCellLocator.SlotId}' was specified, but the addressed cell '{cell.Id}' in section '{section.Id}' is not a slotted cell"));
+            ((CellNotFoundException)actual).CellLocator.AsTest().Must().BeEqualTo((CellLocatorBase)expectedReportCellLocator);
+        }
+
+        [Fact]
+        public static void GetCell_sectionCellLocator___Should_throw_CellNotFoundException___When_addressing_slotted_cell_but_there_is_no_slot_having_slotId()
+        {
+            // Arrange
+            var report = A.Dummy<Report>().Whose(_ => _.Sections.Any(s => s.TreeTable.GetAllCells().Any(c => c is ISlottedCell)));
+
+            var section = report.Sections.First(_ => _.TreeTable.GetAllCells().Any(c => c is ISlottedCell));
+
+            var allCells = section.TreeTable.GetAllCells();
+
+            var cell = allCells.First(_ => _ is ISlottedCell);
+
+            var currentCell = allCells.First(_ => !_.Equals(cell));
+
+            var sectionCellLocator = new SectionCellLocator(cell.Id, A.Dummy<string>());
+
+            var expectedReportCellLocator = new ReportCellLocator(section.Id, sectionCellLocator.CellId, sectionCellLocator.SlotId);
+
+            var systemUnderTest = new ReportAgent(report);
+
+            // Act
+            var actual = Record.Exception(() => systemUnderTest.GetCell(sectionCellLocator, currentCell));
+
+            // Assert
+            actual.AsTest().Must().BeOfType<CellNotFoundException>();
+            actual.Message.AsTest().Must().ContainString(Invariant($"Slot id '{sectionCellLocator.SlotId}' was specified, but the addressed cell '{cell.Id}' in section '{section.Id}' does not contain a slot having that id."));
+            ((CellNotFoundException)actual).CellLocator.AsTest().Must().BeEqualTo((CellLocatorBase)expectedReportCellLocator);
+        }
+
+        [Fact]
+        public static void GetCell_sectionCellLocator___Should_throw_CellNotFoundException___When_addressing_slotted_cell_and_SlotId_not_specified_and_SlotSelectionStrategy_is_ThrowIfSlotIdNotSpecified()
+        {
+            // Arrange
+            var report = A.Dummy<Report>().Whose(_ => _.Sections.Any(s => s.TreeTable.GetAllCells().Any(c => c is ISlottedCell)));
+
+            var section = report.Sections.First(_ => _.TreeTable.GetAllCells().Any(c => c is ISlottedCell));
+
+            var allCells = section.TreeTable.GetAllCells();
+
+            var cell = allCells.First(_ => _ is ISlottedCell);
+
+            var currentCell = allCells.First(_ => !_.Equals(cell));
+
+            var sectionCellLocator = new SectionCellLocator(cell.Id, null, SlotSelectionStrategy.ThrowIfSlotIdNotSpecified);
+
+            var expectedReportCellLocator = new ReportCellLocator(section.Id, sectionCellLocator.CellId, sectionCellLocator.SlotId);
+
+            var systemUnderTest = new ReportAgent(report);
+
+            // Act
+            var actual = Record.Exception(() => systemUnderTest.GetCell(sectionCellLocator, currentCell));
+
+            // Assert
+            actual.AsTest().Must().BeOfType<CellNotFoundException>();
+            actual.Message.AsTest().Must().ContainString(Invariant($"The operation addresses an {nameof(ISlottedCell)} (and not a slot within that cell) and {nameof(SlotSelectionStrategy)} is {nameof(SlotSelectionStrategy.ThrowIfSlotIdNotSpecified)}."));
+            ((CellNotFoundException)actual).CellLocator.AsTest().Must().BeEqualTo((CellLocatorBase)expectedReportCellLocator);
+        }
+
+        [Fact]
+        public static void GetCell_sectionCellLocator___Should_return_cell___When_cell_is_not_slotted()
+        {
+            // Arrange
+            var report = A.Dummy<Report>().Whose(_ => _.Sections.First().TreeTable.GetAllCells().Any(c => c is INotSlottedCell));
+
+            var section = report.Sections.First();
+
+            var allCells = section.TreeTable.GetAllCells();
+
+            var expected = section.TreeTable.GetAllCells().First(_ => _ is INotSlottedCell);
+
+            var currentCell = allCells.First(_ => !_.Equals(expected));
+
+            var sectionCellLocator = new SectionCellLocator(expected.Id);
+
+            var systemUnderTest = new ReportAgent(report);
+
+            // Act
+            var actual = systemUnderTest.GetCell(sectionCellLocator, currentCell);
+
+            // Assert
+            actual.AsTest().Must().BeSameReferenceAs(expected);
+        }
+
+        [Fact]
+        public static void GetCell_sectionCellLocator___Should_return_cell_in_default_slot___When_addressing_slotted_cell_and_SlotSelectionStrategy_is_DefaultSlot()
+        {
+            // Arrange
+            var report = A.Dummy<Report>().Whose(_ => _.Sections.Any(s => s.TreeTable.GetAllCells().Any(c => c is ISlottedCell)));
+
+            var section = report.Sections.First(_ => _.TreeTable.GetAllCells().Any(c => c is ISlottedCell));
+
+            var allCells = section.TreeTable.GetAllCells();
+
+            var cell = allCells.OfType<ISlottedCell>().First();
+
+            var currentCell = allCells.First(_ => !_.Equals(cell));
+
+            var expected = (ICell)cell.SlotIdToCellMap[cell.DefaultSlotId];
+
+            var sectionCellLocator = new SectionCellLocator(cell.Id, null, SlotSelectionStrategy.DefaultSlot);
+
+            var systemUnderTest = new ReportAgent(report);
+
+            // Act
+            var actual = systemUnderTest.GetCell(sectionCellLocator, currentCell);
+
+            // Assert
+            actual.AsTest().Must().BeSameReferenceAs(expected);
+        }
+
+        [Fact]
+        public static void GetCell_sectionCellLocator___Should_return_cell_in_specified_slot___When_addressing_slot_within_slotted_cell()
+        {
+            // Arrange
+            var report = A.Dummy<Report>().Whose(_ => _.Sections.Any(s => s.TreeTable.GetAllCells().OfType<ISlottedCell>().Any(c => c.SlotIdToCellMap.Count > 1)));
+
+            var section = report.Sections.First(_ => _.TreeTable.GetAllCells().Any(c => c is ISlottedCell));
+
+            var allCells = section.TreeTable.GetAllCells();
+
+            var cell = allCells.OfType<ISlottedCell>().First(_ => _.SlotIdToCellMap.Count > 1);
+
+            var currentCell = allCells.First(_ => !_.Equals(cell));
+
+            var slotId = cell.SlotIdToCellMap.First(_ => _.Key != cell.DefaultSlotId).Key;
+
+            var expected = (ICell)cell.SlotIdToCellMap[slotId];
+
+            var sectionCellLocator = new SectionCellLocator(cell.Id, slotId, SlotSelectionStrategy.ThrowIfSlotIdNotSpecified);
+
+            var systemUnderTest = new ReportAgent(report);
+
+            // Act
+            var actual = systemUnderTest.GetCell(sectionCellLocator, currentCell);
+
+            // Assert
+            actual.AsTest().Must().BeSameReferenceAs(expected);
         }
 
         [Fact]
@@ -53,8 +569,10 @@ namespace OBeautifulCode.DataStructure.Test
             // Arrange
             var report = A.Dummy<Report>();
 
+            var systemUnderTest = new ReportAgent(report);
+
             // Act
-            var actual = Record.Exception(() => report.Recalc(DateTime.Now));
+            var actual = Record.Exception(() => systemUnderTest.Recalc(DateTime.Now));
 
             // Assert
             actual.AsTest().Must().BeOfType<ArgumentException>();
@@ -67,8 +585,10 @@ namespace OBeautifulCode.DataStructure.Test
             // Arrange
             var report = A.Dummy<Report>();
 
+            var systemUnderTest = new ReportAgent(report);
+
             // Act
-            var actual = await Record.ExceptionAsync(() => report.RecalcAsync(DateTime.Now));
+            var actual = await Record.ExceptionAsync(() => systemUnderTest.RecalcAsync(DateTime.Now));
 
             // Assert
             actual.AsTest().Must().BeOfType<ArgumentException>();
@@ -81,7 +601,7 @@ namespace OBeautifulCode.DataStructure.Test
             // Arrange
             var report = BuildReport();
 
-            var reportCache = new ReportCache(report);
+            var reportAgent = new ReportAgent(report);
 
             var protocolFactoryFuncs = new Func<IProtocolFactory, IProtocolFactory>[]
             {
@@ -89,24 +609,24 @@ namespace OBeautifulCode.DataStructure.Test
             };
 
             // Act
-            report.Recalc(DateTime.UtcNow, protocolFactoryFuncs);
+            reportAgent.Recalc(DateTime.UtcNow, protocolFactoryFuncs);
 
             // Assert
-            var isForProfitCell = reportCache.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.IsForProfit));
+            var isForProfitCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.IsForProfit));
             isForProfitCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Valid);
             isForProfitCell.GetValidationMessageOrNull().AsTest().Must().BeNull();
             isForProfitCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Enabled);
             isForProfitCell.GetAvailabilityCheckMessageOrNull().AsTest().Must().BeNull();
             Record.Exception(() => isForProfitCell.GetCellObjectValue()).AsArg().Must().BeOfType<InvalidOperationException>();
 
-            var restrictedCashCell = reportCache.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.RestrictedCash));
+            var restrictedCashCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.RestrictedCash));
             restrictedCashCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Valid);
             restrictedCashCell.GetValidationMessageOrNull().AsTest().Must().BeNull();
             restrictedCashCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Disabled);
             restrictedCashCell.GetAvailabilityCheckMessageOrNull().AsTest().Must().BeEqualTo("got-disabled-1");
             Record.Exception(() => restrictedCashCell.GetCellObjectValue()).AsArg().Must().BeOfType<InvalidOperationException>();
 
-            var partiallyRestrictedCashCell = reportCache.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.PartiallyRestrictedCash));
+            var partiallyRestrictedCashCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.PartiallyRestrictedCash));
             partiallyRestrictedCashCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Valid);
             partiallyRestrictedCashCell.GetValidationMessageOrNull().AsTest().Must().BeNull();
             partiallyRestrictedCashCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Disabled);
@@ -120,7 +640,7 @@ namespace OBeautifulCode.DataStructure.Test
             // Arrange
             var report = BuildReport();
 
-            var reportCache = new ReportCache(report);
+            var reportAgent = new ReportAgent(report);
 
             var protocolFactoryFuncs = new Func<IProtocolFactory, IProtocolFactory>[]
             {
@@ -128,24 +648,24 @@ namespace OBeautifulCode.DataStructure.Test
             };
 
             // Act
-            await report.RecalcAsync(DateTime.UtcNow, protocolFactoryFuncs);
+            await reportAgent.RecalcAsync(DateTime.UtcNow, protocolFactoryFuncs);
 
             // Assert
-            var isForProfitCell = reportCache.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.IsForProfit));
+            var isForProfitCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.IsForProfit));
             isForProfitCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Valid);
             isForProfitCell.GetValidationMessageOrNull().AsTest().Must().BeNull();
             isForProfitCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Enabled);
             isForProfitCell.GetAvailabilityCheckMessageOrNull().AsTest().Must().BeNull();
             Record.Exception(() => isForProfitCell.GetCellObjectValue()).AsArg().Must().BeOfType<InvalidOperationException>();
 
-            var restrictedCashCell = reportCache.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.RestrictedCash));
+            var restrictedCashCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.RestrictedCash));
             restrictedCashCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Valid);
             restrictedCashCell.GetValidationMessageOrNull().AsTest().Must().BeNull();
             restrictedCashCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Disabled);
             restrictedCashCell.GetAvailabilityCheckMessageOrNull().AsTest().Must().BeEqualTo("got-disabled-1");
             Record.Exception(() => restrictedCashCell.GetCellObjectValue()).AsArg().Must().BeOfType<InvalidOperationException>();
 
-            var partiallyRestrictedCashCell = reportCache.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.PartiallyRestrictedCash));
+            var partiallyRestrictedCashCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.PartiallyRestrictedCash));
             partiallyRestrictedCashCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Valid);
             partiallyRestrictedCashCell.GetValidationMessageOrNull().AsTest().Must().BeNull();
             partiallyRestrictedCashCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Disabled);
@@ -159,19 +679,19 @@ namespace OBeautifulCode.DataStructure.Test
             // Arrange
             var report = BuildReport();
 
-            var reportCache = new ReportCache(report);
+            var reportAgent = new ReportAgent(report);
 
             var protocolFactoryFuncs = new Func<IProtocolFactory, IProtocolFactory>[]
             {
                 frameworkFactory => new ProprietaryProtocols(frameworkFactory).ToProtocolFactory(),
             };
 
-            var isForProfitCell = reportCache.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.IsForProfit));
+            var isForProfitCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.IsForProfit));
 
             isForProfitCell.SetCellValue(true, DateTime.UtcNow);
 
             // Act
-            report.Recalc(DateTime.UtcNow, protocolFactoryFuncs);
+            reportAgent.Recalc(DateTime.UtcNow, protocolFactoryFuncs);
 
             // Assert
             isForProfitCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Valid);
@@ -180,14 +700,14 @@ namespace OBeautifulCode.DataStructure.Test
             isForProfitCell.GetAvailabilityCheckMessageOrNull().AsTest().Must().BeNull();
             isForProfitCell.GetCellObjectValue().Must().BeEqualTo((object)true);
 
-            var restrictedCashCell = reportCache.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.RestrictedCash));
+            var restrictedCashCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.RestrictedCash));
             restrictedCashCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Valid);
             restrictedCashCell.GetValidationMessageOrNull().AsTest().Must().BeNull();
             restrictedCashCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Disabled);
             restrictedCashCell.GetAvailabilityCheckMessageOrNull().AsTest().Must().BeEqualTo("got-disabled-2");
             Record.Exception(() => restrictedCashCell.GetCellObjectValue()).AsArg().Must().BeOfType<InvalidOperationException>();
 
-            var partiallyRestrictedCashCell = reportCache.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.PartiallyRestrictedCash));
+            var partiallyRestrictedCashCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.PartiallyRestrictedCash));
             partiallyRestrictedCashCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Valid);
             partiallyRestrictedCashCell.GetValidationMessageOrNull().AsTest().Must().BeNull();
             partiallyRestrictedCashCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Disabled);
@@ -201,19 +721,19 @@ namespace OBeautifulCode.DataStructure.Test
             // Arrange
             var report = BuildReport();
 
-            var reportCache = new ReportCache(report);
+            var reportAgent = new ReportAgent(report);
 
             var protocolFactoryFuncs = new Func<IProtocolFactory, IProtocolFactory>[]
             {
                 frameworkFactory => new ProprietaryProtocols(frameworkFactory).ToProtocolFactory(),
             };
 
-            var isForProfitCell = reportCache.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.IsForProfit));
+            var isForProfitCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.IsForProfit));
 
             isForProfitCell.SetCellValue(true, DateTime.UtcNow);
 
             // Act
-            await report.RecalcAsync(DateTime.UtcNow, protocolFactoryFuncs);
+            await reportAgent.RecalcAsync(DateTime.UtcNow, protocolFactoryFuncs);
 
             // Assert
             isForProfitCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Valid);
@@ -222,14 +742,14 @@ namespace OBeautifulCode.DataStructure.Test
             isForProfitCell.GetAvailabilityCheckMessageOrNull().AsTest().Must().BeNull();
             isForProfitCell.GetCellObjectValue().Must().BeEqualTo((object)true);
 
-            var restrictedCashCell = reportCache.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.RestrictedCash));
+            var restrictedCashCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.RestrictedCash));
             restrictedCashCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Valid);
             restrictedCashCell.GetValidationMessageOrNull().AsTest().Must().BeNull();
             restrictedCashCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Disabled);
             restrictedCashCell.GetAvailabilityCheckMessageOrNull().AsTest().Must().BeEqualTo("got-disabled-2");
             Record.Exception(() => restrictedCashCell.GetCellObjectValue()).AsArg().Must().BeOfType<InvalidOperationException>();
 
-            var partiallyRestrictedCashCell = reportCache.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.PartiallyRestrictedCash));
+            var partiallyRestrictedCashCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.PartiallyRestrictedCash));
             partiallyRestrictedCashCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Valid);
             partiallyRestrictedCashCell.GetValidationMessageOrNull().AsTest().Must().BeNull();
             partiallyRestrictedCashCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Disabled);
@@ -243,19 +763,19 @@ namespace OBeautifulCode.DataStructure.Test
             // Arrange
             var report = BuildReport();
 
-            var reportCache = new ReportCache(report);
+            var reportAgent = new ReportAgent(report);
 
             var protocolFactoryFuncs = new Func<IProtocolFactory, IProtocolFactory>[]
             {
                 frameworkFactory => new ProprietaryProtocols(frameworkFactory).ToProtocolFactory(),
             };
 
-            var isForProfitCell = reportCache.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.IsForProfit));
+            var isForProfitCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.IsForProfit));
 
             isForProfitCell.SetCellValue(false, DateTime.UtcNow);
 
             // Act
-            report.Recalc(DateTime.UtcNow, protocolFactoryFuncs);
+            reportAgent.Recalc(DateTime.UtcNow, protocolFactoryFuncs);
 
             // Assert
             isForProfitCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Valid);
@@ -264,14 +784,14 @@ namespace OBeautifulCode.DataStructure.Test
             isForProfitCell.GetAvailabilityCheckMessageOrNull().AsTest().Must().BeNull();
             isForProfitCell.GetCellObjectValue().Must().BeEqualTo((object)false);
 
-            var restrictedCashCell = reportCache.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.RestrictedCash));
+            var restrictedCashCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.RestrictedCash));
             restrictedCashCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Valid);
             restrictedCashCell.GetValidationMessageOrNull().AsTest().Must().BeNull();
             restrictedCashCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Enabled);
             restrictedCashCell.GetAvailabilityCheckMessageOrNull().AsTest().Must().BeEqualTo("got-enabled");
             Record.Exception(() => restrictedCashCell.GetCellObjectValue()).AsArg().Must().BeOfType<InvalidOperationException>();
 
-            var partiallyRestrictedCashCell = reportCache.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.PartiallyRestrictedCash));
+            var partiallyRestrictedCashCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.PartiallyRestrictedCash));
             partiallyRestrictedCashCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Valid);
             partiallyRestrictedCashCell.GetValidationMessageOrNull().AsTest().Must().BeNull();
             partiallyRestrictedCashCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Enabled);
@@ -285,19 +805,19 @@ namespace OBeautifulCode.DataStructure.Test
             // Arrange
             var report = BuildReport();
 
-            var reportCache = new ReportCache(report);
+            var reportAgent = new ReportAgent(report);
 
             var protocolFactoryFuncs = new Func<IProtocolFactory, IProtocolFactory>[]
             {
                 frameworkFactory => new ProprietaryProtocols(frameworkFactory).ToProtocolFactory(),
             };
 
-            var isForProfitCell = reportCache.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.IsForProfit));
+            var isForProfitCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.IsForProfit));
 
             isForProfitCell.SetCellValue(false, DateTime.UtcNow);
 
             // Act
-            await report.RecalcAsync(DateTime.UtcNow, protocolFactoryFuncs);
+            await reportAgent.RecalcAsync(DateTime.UtcNow, protocolFactoryFuncs);
 
             // Assert
             isForProfitCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Valid);
@@ -306,14 +826,14 @@ namespace OBeautifulCode.DataStructure.Test
             isForProfitCell.GetAvailabilityCheckMessageOrNull().AsTest().Must().BeNull();
             isForProfitCell.GetCellObjectValue().Must().BeEqualTo((object)false);
 
-            var restrictedCashCell = reportCache.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.RestrictedCash));
+            var restrictedCashCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.RestrictedCash));
             restrictedCashCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Valid);
             restrictedCashCell.GetValidationMessageOrNull().AsTest().Must().BeNull();
             restrictedCashCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Enabled);
             restrictedCashCell.GetAvailabilityCheckMessageOrNull().AsTest().Must().BeEqualTo("got-enabled");
             Record.Exception(() => restrictedCashCell.GetCellObjectValue()).AsArg().Must().BeOfType<InvalidOperationException>();
 
-            var partiallyRestrictedCashCell = reportCache.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.PartiallyRestrictedCash));
+            var partiallyRestrictedCashCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.PartiallyRestrictedCash));
             partiallyRestrictedCashCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Valid);
             partiallyRestrictedCashCell.GetValidationMessageOrNull().AsTest().Must().BeNull();
             partiallyRestrictedCashCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Enabled);
@@ -327,23 +847,23 @@ namespace OBeautifulCode.DataStructure.Test
             // Arrange
             var report = BuildReport();
 
-            var reportCache = new ReportCache(report);
+            var reportAgent = new ReportAgent(report);
 
             var protocolFactoryFuncs = new Func<IProtocolFactory, IProtocolFactory>[]
             {
                 frameworkFactory => new ProprietaryProtocols(frameworkFactory).ToProtocolFactory(),
             };
 
-            var isForProfitCell = reportCache.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.IsForProfit));
-            var restrictedCashCell = reportCache.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.RestrictedCash));
-            var partiallyRestrictedCashCell = reportCache.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.PartiallyRestrictedCash));
+            var isForProfitCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.IsForProfit));
+            var restrictedCashCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.RestrictedCash));
+            var partiallyRestrictedCashCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.PartiallyRestrictedCash));
 
             isForProfitCell.SetCellValue(true, DateTime.UtcNow);
             restrictedCashCell.SetCellValue(123.45m, DateTime.UtcNow);
             partiallyRestrictedCashCell.SetCellValue(6789.10m, DateTime.UtcNow);
 
             // Act
-            report.Recalc(DateTime.UtcNow, protocolFactoryFuncs);
+            reportAgent.Recalc(DateTime.UtcNow, protocolFactoryFuncs);
 
             // Assert
             isForProfitCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Valid);
@@ -371,23 +891,23 @@ namespace OBeautifulCode.DataStructure.Test
             // Arrange
             var report = BuildReport();
 
-            var reportCache = new ReportCache(report);
+            var reportAgent = new ReportAgent(report);
 
             var protocolFactoryFuncs = new Func<IProtocolFactory, IProtocolFactory>[]
             {
                 frameworkFactory => new ProprietaryProtocols(frameworkFactory).ToProtocolFactory(),
             };
 
-            var isForProfitCell = reportCache.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.IsForProfit));
-            var restrictedCashCell = reportCache.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.RestrictedCash));
-            var partiallyRestrictedCashCell = reportCache.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.PartiallyRestrictedCash));
+            var isForProfitCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.IsForProfit));
+            var restrictedCashCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.RestrictedCash));
+            var partiallyRestrictedCashCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.PartiallyRestrictedCash));
 
             isForProfitCell.SetCellValue(true, DateTime.UtcNow);
             restrictedCashCell.SetCellValue(123.45m, DateTime.UtcNow);
             partiallyRestrictedCashCell.SetCellValue(6789.10m, DateTime.UtcNow);
 
             // Act
-            await report.RecalcAsync(DateTime.UtcNow, protocolFactoryFuncs);
+            await reportAgent.RecalcAsync(DateTime.UtcNow, protocolFactoryFuncs);
 
             // Assert
             // Assert
@@ -416,7 +936,7 @@ namespace OBeautifulCode.DataStructure.Test
             // Arrange
             var report = BuildReport();
 
-            var reportCache = new ReportCache(report);
+            var reportAgent = new ReportAgent(report);
 
             var protocolFactoryFuncs = new Func<IProtocolFactory, IProtocolFactory>[]
             {
@@ -424,24 +944,24 @@ namespace OBeautifulCode.DataStructure.Test
             };
 
             // Act
-            report.Recalc(DateTime.UtcNow, protocolFactoryFuncs);
+            reportAgent.Recalc(DateTime.UtcNow, protocolFactoryFuncs);
 
             // Assert
-            var salesFteCell = reportCache.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section2, CellIds.SalesFte));
+            var salesFteCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section2, CellIds.SalesFte));
             salesFteCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Invalid);
             salesFteCell.GetValidationMessageOrNull().AsTest().Must().BeEqualTo("input required for sales");
             salesFteCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Enabled);
             salesFteCell.GetAvailabilityCheckMessageOrNull().AsTest().Must().BeNull();
             Record.Exception(() => salesFteCell.GetCellObjectValue()).AsArg().Must().BeOfType<InvalidOperationException>();
 
-            var warehouseFteCell = reportCache.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section2, CellIds.WarehouseFte));
+            var warehouseFteCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section2, CellIds.WarehouseFte));
             warehouseFteCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Invalid);
             warehouseFteCell.GetValidationMessageOrNull().AsTest().Must().BeEqualTo("input required for warehouse");
             warehouseFteCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Enabled);
             warehouseFteCell.GetAvailabilityCheckMessageOrNull().AsTest().Must().BeNull();
             Record.Exception(() => warehouseFteCell.GetCellObjectValue()).AsArg().Must().BeOfType<InvalidOperationException>();
 
-            var warehouseSupportFteCell = reportCache.GetCell<IOperationOutputCell>(new ReportCellLocator(SectionIds.Section2, CellIds.WarehouseSupportFte));
+            var warehouseSupportFteCell = reportAgent.GetCell<IOperationOutputCell>(new ReportCellLocator(SectionIds.Section2, CellIds.WarehouseSupportFte));
             warehouseSupportFteCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Valid);
             warehouseSupportFteCell.GetValidationMessageOrNull().AsTest().Must().BeNull();
             warehouseSupportFteCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Enabled);
@@ -449,7 +969,7 @@ namespace OBeautifulCode.DataStructure.Test
             warehouseSupportFteCell.GetCellOpExecutionOutcome().AsTest().Must().BeEqualTo(CellOpExecutionOutcome.NotApplicable);
             Record.Exception(() => warehouseSupportFteCell.GetCellObjectValue()).AsArg().Must().BeOfType<InvalidOperationException>();
 
-            var totalFteCell = reportCache.GetCell<IOperationOutputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.TotalFte));
+            var totalFteCell = reportAgent.GetCell<IOperationOutputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.TotalFte));
             totalFteCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Aborted);
             totalFteCell.GetValidationMessageOrNull().AsTest().Must().BeNull();
             totalFteCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Enabled);
@@ -464,7 +984,7 @@ namespace OBeautifulCode.DataStructure.Test
             // Arrange
             var report = BuildReport();
 
-            var reportCache = new ReportCache(report);
+            var reportAgent = new ReportAgent(report);
 
             var protocolFactoryFuncs = new Func<IProtocolFactory, IProtocolFactory>[]
             {
@@ -472,24 +992,24 @@ namespace OBeautifulCode.DataStructure.Test
             };
 
             // Act
-            await report.RecalcAsync(DateTime.UtcNow, protocolFactoryFuncs);
+            await reportAgent.RecalcAsync(DateTime.UtcNow, protocolFactoryFuncs);
 
             // Assert
-            var salesFteCell = reportCache.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section2, CellIds.SalesFte));
+            var salesFteCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section2, CellIds.SalesFte));
             salesFteCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Invalid);
             salesFteCell.GetValidationMessageOrNull().AsTest().Must().BeEqualTo("input required for sales");
             salesFteCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Enabled);
             salesFteCell.GetAvailabilityCheckMessageOrNull().AsTest().Must().BeNull();
             Record.Exception(() => salesFteCell.GetCellObjectValue()).AsArg().Must().BeOfType<InvalidOperationException>();
 
-            var warehouseFteCell = reportCache.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section2, CellIds.WarehouseFte));
+            var warehouseFteCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section2, CellIds.WarehouseFte));
             warehouseFteCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Invalid);
             warehouseFteCell.GetValidationMessageOrNull().AsTest().Must().BeEqualTo("input required for warehouse");
             warehouseFteCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Enabled);
             warehouseFteCell.GetAvailabilityCheckMessageOrNull().AsTest().Must().BeNull();
             Record.Exception(() => warehouseFteCell.GetCellObjectValue()).AsArg().Must().BeOfType<InvalidOperationException>();
 
-            var warehouseSupportFteCell = reportCache.GetCell<IOperationOutputCell>(new ReportCellLocator(SectionIds.Section2, CellIds.WarehouseSupportFte));
+            var warehouseSupportFteCell = reportAgent.GetCell<IOperationOutputCell>(new ReportCellLocator(SectionIds.Section2, CellIds.WarehouseSupportFte));
             warehouseSupportFteCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Valid);
             warehouseSupportFteCell.GetValidationMessageOrNull().AsTest().Must().BeNull();
             warehouseSupportFteCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Enabled);
@@ -497,7 +1017,7 @@ namespace OBeautifulCode.DataStructure.Test
             warehouseSupportFteCell.GetCellOpExecutionOutcome().AsTest().Must().BeEqualTo(CellOpExecutionOutcome.NotApplicable);
             Record.Exception(() => warehouseSupportFteCell.GetCellObjectValue()).AsArg().Must().BeOfType<InvalidOperationException>();
 
-            var totalFteCell = reportCache.GetCell<IOperationOutputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.TotalFte));
+            var totalFteCell = reportAgent.GetCell<IOperationOutputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.TotalFte));
             totalFteCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Aborted);
             totalFteCell.GetValidationMessageOrNull().AsTest().Must().BeNull();
             totalFteCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Enabled);
@@ -512,21 +1032,21 @@ namespace OBeautifulCode.DataStructure.Test
             // Arrange
             var report = BuildReport();
 
-            var reportCache = new ReportCache(report);
+            var reportAgent = new ReportAgent(report);
 
             var protocolFactoryFuncs = new Func<IProtocolFactory, IProtocolFactory>[]
             {
                 frameworkFactory => new ProprietaryProtocols(frameworkFactory).ToProtocolFactory(),
             };
 
-            var salesFteCell = reportCache.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section2, CellIds.SalesFte));
-            var warehouseFteCell = reportCache.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section2, CellIds.WarehouseFte));
+            var salesFteCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section2, CellIds.SalesFte));
+            var warehouseFteCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section2, CellIds.WarehouseFte));
 
             salesFteCell.SetCellValue(-4m, DateTime.UtcNow);
             warehouseFteCell.SetCellValue(-5m, DateTime.UtcNow);
 
             // Act
-            report.Recalc(DateTime.UtcNow, protocolFactoryFuncs);
+            reportAgent.Recalc(DateTime.UtcNow, protocolFactoryFuncs);
 
             // Assert
             salesFteCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Invalid);
@@ -541,7 +1061,7 @@ namespace OBeautifulCode.DataStructure.Test
             warehouseFteCell.GetAvailabilityCheckMessageOrNull().AsTest().Must().BeNull();
             warehouseFteCell.GetCellObjectValue().AsTest().Must().BeEqualTo((object)-5m);
 
-            var warehouseSupportFteCell = reportCache.GetCell<IOperationOutputCell>(new ReportCellLocator(SectionIds.Section2, CellIds.WarehouseSupportFte));
+            var warehouseSupportFteCell = reportAgent.GetCell<IOperationOutputCell>(new ReportCellLocator(SectionIds.Section2, CellIds.WarehouseSupportFte));
             warehouseSupportFteCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Valid);
             warehouseSupportFteCell.GetValidationMessageOrNull().AsTest().Must().BeNull();
             warehouseSupportFteCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Enabled);
@@ -549,7 +1069,7 @@ namespace OBeautifulCode.DataStructure.Test
             warehouseSupportFteCell.GetCellOpExecutionOutcome().AsTest().Must().BeEqualTo(CellOpExecutionOutcome.Completed);
             warehouseSupportFteCell.GetCellObjectValue().AsTest().Must().BeEqualTo((object)-2.5m);
 
-            var totalFteCell = reportCache.GetCell<IOperationOutputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.TotalFte));
+            var totalFteCell = reportAgent.GetCell<IOperationOutputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.TotalFte));
             totalFteCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Invalid);
             totalFteCell.GetValidationMessageOrNull().AsTest().Must().BeEqualTo("total must be >= 0");
             totalFteCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Enabled);
@@ -564,21 +1084,21 @@ namespace OBeautifulCode.DataStructure.Test
             // Arrange
             var report = BuildReport();
 
-            var reportCache = new ReportCache(report);
+            var reportAgent = new ReportAgent(report);
 
             var protocolFactoryFuncs = new Func<IProtocolFactory, IProtocolFactory>[]
             {
                 frameworkFactory => new ProprietaryProtocols(frameworkFactory).ToProtocolFactory(),
             };
 
-            var salesFteCell = reportCache.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section2, CellIds.SalesFte));
-            var warehouseFteCell = reportCache.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section2, CellIds.WarehouseFte));
+            var salesFteCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section2, CellIds.SalesFte));
+            var warehouseFteCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section2, CellIds.WarehouseFte));
 
             salesFteCell.SetCellValue(-4m, DateTime.UtcNow);
             warehouseFteCell.SetCellValue(-5m, DateTime.UtcNow);
 
             // Act
-            await report.RecalcAsync(DateTime.UtcNow, protocolFactoryFuncs);
+            await reportAgent.RecalcAsync(DateTime.UtcNow, protocolFactoryFuncs);
 
             // Assert
             salesFteCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Invalid);
@@ -593,7 +1113,7 @@ namespace OBeautifulCode.DataStructure.Test
             warehouseFteCell.GetAvailabilityCheckMessageOrNull().AsTest().Must().BeNull();
             warehouseFteCell.GetCellObjectValue().AsTest().Must().BeEqualTo((object)-5m);
 
-            var warehouseSupportFteCell = reportCache.GetCell<IOperationOutputCell>(new ReportCellLocator(SectionIds.Section2, CellIds.WarehouseSupportFte));
+            var warehouseSupportFteCell = reportAgent.GetCell<IOperationOutputCell>(new ReportCellLocator(SectionIds.Section2, CellIds.WarehouseSupportFte));
             warehouseSupportFteCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Valid);
             warehouseSupportFteCell.GetValidationMessageOrNull().AsTest().Must().BeNull();
             warehouseSupportFteCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Enabled);
@@ -601,7 +1121,7 @@ namespace OBeautifulCode.DataStructure.Test
             warehouseSupportFteCell.GetCellOpExecutionOutcome().AsTest().Must().BeEqualTo(CellOpExecutionOutcome.Completed);
             warehouseSupportFteCell.GetCellObjectValue().AsTest().Must().BeEqualTo((object)-2.5m);
 
-            var totalFteCell = reportCache.GetCell<IOperationOutputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.TotalFte));
+            var totalFteCell = reportAgent.GetCell<IOperationOutputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.TotalFte));
             totalFteCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Invalid);
             totalFteCell.GetValidationMessageOrNull().AsTest().Must().BeEqualTo("total must be >= 0");
             totalFteCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Enabled);
@@ -616,21 +1136,21 @@ namespace OBeautifulCode.DataStructure.Test
             // Arrange
             var report = BuildReport();
 
-            var reportCache = new ReportCache(report);
+            var reportAgent = new ReportAgent(report);
 
             var protocolFactoryFuncs = new Func<IProtocolFactory, IProtocolFactory>[]
             {
                 frameworkFactory => new ProprietaryProtocols(frameworkFactory).ToProtocolFactory(),
             };
 
-            var salesFteCell = reportCache.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section2, CellIds.SalesFte));
-            var warehouseFteCell = reportCache.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section2, CellIds.WarehouseFte));
+            var salesFteCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section2, CellIds.SalesFte));
+            var warehouseFteCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section2, CellIds.WarehouseFte));
 
             salesFteCell.SetCellValue(4m, DateTime.UtcNow);
             warehouseFteCell.SetCellValue(5m, DateTime.UtcNow);
 
             // Act
-            report.Recalc(DateTime.UtcNow, protocolFactoryFuncs);
+            reportAgent.Recalc(DateTime.UtcNow, protocolFactoryFuncs);
 
             // Assert
             salesFteCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Valid);
@@ -645,7 +1165,7 @@ namespace OBeautifulCode.DataStructure.Test
             warehouseFteCell.GetAvailabilityCheckMessageOrNull().AsTest().Must().BeNull();
             warehouseFteCell.GetCellObjectValue().AsTest().Must().BeEqualTo((object)5m);
 
-            var warehouseSupportFteCell = reportCache.GetCell<IOperationOutputCell>(new ReportCellLocator(SectionIds.Section2, CellIds.WarehouseSupportFte));
+            var warehouseSupportFteCell = reportAgent.GetCell<IOperationOutputCell>(new ReportCellLocator(SectionIds.Section2, CellIds.WarehouseSupportFte));
             warehouseSupportFteCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Valid);
             warehouseSupportFteCell.GetValidationMessageOrNull().AsTest().Must().BeNull();
             warehouseSupportFteCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Enabled);
@@ -653,7 +1173,7 @@ namespace OBeautifulCode.DataStructure.Test
             warehouseSupportFteCell.GetCellOpExecutionOutcome().AsTest().Must().BeEqualTo(CellOpExecutionOutcome.Completed);
             warehouseSupportFteCell.GetCellObjectValue().AsTest().Must().BeEqualTo((object)2.5m);
 
-            var totalFteCell = reportCache.GetCell<IOperationOutputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.TotalFte));
+            var totalFteCell = reportAgent.GetCell<IOperationOutputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.TotalFte));
             totalFteCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Valid);
             totalFteCell.GetValidationMessageOrNull().AsTest().Must().BeNull();
             totalFteCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Enabled);
@@ -668,21 +1188,21 @@ namespace OBeautifulCode.DataStructure.Test
             // Arrange
             var report = BuildReport();
 
-            var reportCache = new ReportCache(report);
+            var reportAgent = new ReportAgent(report);
 
             var protocolFactoryFuncs = new Func<IProtocolFactory, IProtocolFactory>[]
             {
                 frameworkFactory => new ProprietaryProtocols(frameworkFactory).ToProtocolFactory(),
             };
 
-            var salesFteCell = reportCache.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section2, CellIds.SalesFte));
-            var warehouseFteCell = reportCache.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section2, CellIds.WarehouseFte));
+            var salesFteCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section2, CellIds.SalesFte));
+            var warehouseFteCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section2, CellIds.WarehouseFte));
 
             salesFteCell.SetCellValue(4m, DateTime.UtcNow);
             warehouseFteCell.SetCellValue(5m, DateTime.UtcNow);
 
             // Act
-            await report.RecalcAsync(DateTime.UtcNow, protocolFactoryFuncs);
+            await reportAgent.RecalcAsync(DateTime.UtcNow, protocolFactoryFuncs);
 
             // Assert
             salesFteCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Valid);
@@ -697,7 +1217,7 @@ namespace OBeautifulCode.DataStructure.Test
             warehouseFteCell.GetAvailabilityCheckMessageOrNull().AsTest().Must().BeNull();
             warehouseFteCell.GetCellObjectValue().AsTest().Must().BeEqualTo((object)5m);
 
-            var warehouseSupportFteCell = reportCache.GetCell<IOperationOutputCell>(new ReportCellLocator(SectionIds.Section2, CellIds.WarehouseSupportFte));
+            var warehouseSupportFteCell = reportAgent.GetCell<IOperationOutputCell>(new ReportCellLocator(SectionIds.Section2, CellIds.WarehouseSupportFte));
             warehouseSupportFteCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Valid);
             warehouseSupportFteCell.GetValidationMessageOrNull().AsTest().Must().BeNull();
             warehouseSupportFteCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Enabled);
@@ -705,7 +1225,7 @@ namespace OBeautifulCode.DataStructure.Test
             warehouseSupportFteCell.GetCellOpExecutionOutcome().AsTest().Must().BeEqualTo(CellOpExecutionOutcome.Completed);
             warehouseSupportFteCell.GetCellObjectValue().AsTest().Must().BeEqualTo((object)2.5m);
 
-            var totalFteCell = reportCache.GetCell<IOperationOutputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.TotalFte));
+            var totalFteCell = reportAgent.GetCell<IOperationOutputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.TotalFte));
             totalFteCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Valid);
             totalFteCell.GetValidationMessageOrNull().AsTest().Must().BeNull();
             totalFteCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Enabled);
@@ -720,7 +1240,7 @@ namespace OBeautifulCode.DataStructure.Test
             // Arrange
             var report = BuildReport();
 
-            var reportCache = new ReportCache(report);
+            var reportAgent = new ReportAgent(report);
 
             var protocolFactoryFuncs = new Func<IProtocolFactory, IProtocolFactory>[]
             {
@@ -735,10 +1255,10 @@ namespace OBeautifulCode.DataStructure.Test
             };
 
             // Act
-            report.Recalc(DateTime.UtcNow, protocolFactoryFuncs);
+            reportAgent.Recalc(DateTime.UtcNow, protocolFactoryFuncs);
 
             // Assert
-            var quartileCell = reportCache.GetCell<IOperationOutputCell>(new ReportCellLocator(SectionIds.Section3, CellIds.Quartiles));
+            var quartileCell = reportAgent.GetCell<IOperationOutputCell>(new ReportCellLocator(SectionIds.Section3, CellIds.Quartiles));
             quartileCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Valid);
             quartileCell.GetValidationMessageOrNull().AsTest().Must().BeNull();
             quartileCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Enabled);
@@ -757,7 +1277,7 @@ namespace OBeautifulCode.DataStructure.Test
             // Arrange
             var report = BuildReport();
 
-            var reportCache = new ReportCache(report);
+            var reportAgent = new ReportAgent(report);
 
             var protocolFactoryFuncs = new Func<IProtocolFactory, IProtocolFactory>[]
             {
@@ -772,10 +1292,10 @@ namespace OBeautifulCode.DataStructure.Test
             };
 
             // Act
-            await report.RecalcAsync(DateTime.UtcNow, protocolFactoryFuncs);
+            await reportAgent.RecalcAsync(DateTime.UtcNow, protocolFactoryFuncs);
 
             // Assert
-            var quartileCell = reportCache.GetCell<IOperationOutputCell>(new ReportCellLocator(SectionIds.Section3, CellIds.Quartiles));
+            var quartileCell = reportAgent.GetCell<IOperationOutputCell>(new ReportCellLocator(SectionIds.Section3, CellIds.Quartiles));
             quartileCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Valid);
             quartileCell.GetValidationMessageOrNull().AsTest().Must().BeNull();
             quartileCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Enabled);

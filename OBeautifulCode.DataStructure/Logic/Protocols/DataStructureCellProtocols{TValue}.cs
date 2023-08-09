@@ -35,7 +35,7 @@ namespace OBeautifulCode.DataStructure
           ISyncAndAsyncReturningProtocol<GetValidityOp, Validity>,
           ISyncAndAsyncReturningProtocol<GetAvailabilityOp, Availability>
     {
-        private readonly ReportCache reportCache;
+        private readonly ReportAgent reportAgent;
 
         private readonly IProtocolFactory protocolFactory;
 
@@ -46,19 +46,19 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Initializes a new instance of the <see cref="DataStructureCellProtocols{TValue}"/> class.
         /// </summary>
-        /// <param name="reportCache">The report cache in-context.</param>
+        /// <param name="reportAgent">The report cache in-context.</param>
         /// <param name="protocolFactory">The protocol factory to use when executing an <see cref="IOperationOutputCell{TValue}"/>'s <see cref="IOperationOutputCell{TValue}.Operation"/>.</param>
         /// <param name="timestampUtc">The timestamp (in UTC) to use when recording a <see cref="CellOpExecutionEventBase"/> with an <see cref="IOperationOutputCell{TValue}"/>.</param>
         /// <param name="getRecalcPhaseFunc">Func that gets the <see cref="RecalcPhase"/>.</param>
         public DataStructureCellProtocols(
-            ReportCache reportCache,
+            ReportAgent reportAgent,
             IProtocolFactory protocolFactory,
             DateTime timestampUtc,
             Func<RecalcPhase> getRecalcPhaseFunc)
         {
-            if (reportCache == null)
+            if (reportAgent == null)
             {
-                throw new ArgumentNullException(nameof(reportCache));
+                throw new ArgumentNullException(nameof(reportAgent));
             }
 
             // ReSharper disable once JoinNullCheckWithUsage
@@ -77,7 +77,7 @@ namespace OBeautifulCode.DataStructure
                 throw new ArgumentNullException(nameof(getRecalcPhaseFunc));
             }
 
-            this.reportCache = reportCache;
+            this.reportAgent = reportAgent;
             this.protocolFactory = protocolFactory;
             this.timestampUtc = timestampUtc;
             this.getRecalcPhaseFunc = getRecalcPhaseFunc;
@@ -1064,13 +1064,13 @@ namespace OBeautifulCode.DataStructure
 
             if (cellLocator is ReportCellLocator reportCellLocator)
             {
-                result = this.reportCache.GetCell(reportCellLocator);
+                result = this.reportAgent.GetCell(reportCellLocator);
             }
             else if (cellLocator is SectionCellLocator sectionCellLocator)
             {
                 var currentCell = DataStructureCellProtocols.CurrentCellStack.Peek();
 
-                result = this.reportCache.GetCell(sectionCellLocator, currentCell);
+                result = this.reportAgent.GetCell(sectionCellLocator, currentCell);
             }
             else if (cellLocator is ThisCellLocator)
             {

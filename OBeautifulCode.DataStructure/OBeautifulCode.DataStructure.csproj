@@ -188,12 +188,11 @@
     <Compile Include="Interfaces\Classification\CellValue\IMedia.cs" />
     <Compile Include="Logic\Builders\Op.cs" />
     <Compile Include="Logic\Builders\Cell.cs" />
-    <Compile Include="Logic\Builders\ReportCache.cs" />
+    <Compile Include="Logic\Builders\ReportAgent.cs" />
     <Compile Include="Logic\Enums\RecalcPhase.cs" />
     <Compile Include="Logic\Extensions\CellExtensions.cs" />
     <Compile Include="Logic\Extensions\TableRowsExtensions.cs" />
     <Compile Include="Logic\Extensions\TreeTableExtensions.cs" />
-    <Compile Include="Logic\Extensions\ReportExtensions.cs" />
     <Compile Include="Logic\Protocols\DataStructureCellProtocols.cs" />
     <Compile Include="Logic\Protocols\DataStructureConvenienceProtocols{TResult}.cs" />
     <Compile Include="Logic\Protocols\DataStructureCellProtocols{TValue}.cs" />

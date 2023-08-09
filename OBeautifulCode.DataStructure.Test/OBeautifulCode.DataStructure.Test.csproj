@@ -293,10 +293,9 @@
     </Compile>
     <Compile Include="Exception\CellValueMissingExceptionTest.cs" />
     <Compile Include="Exception\CellNotFoundExceptionTest.cs" />
-    <Compile Include="Logic\Builders\ReportCacheTest.cs" />
+    <Compile Include="Logic\Builders\ReportAgentTest.cs" />
     <Compile Include="Logic\Builders\OpTest.cs" />
     <Compile Include="Logic\Builders\CellTest.cs" />
-    <Compile Include="Logic\Extensions\ReportExtensionsTest.cs" />
     <Compile Include="Logic\Extensions\CellExtensionsTest.cs" />
     <Compile Include="Logic\Protocols\DataStructureConvenienceProtocolsTest.cs" />
     <Compile Include="Logic\Protocols\DataStructureCellProtocolsTest.cs" />

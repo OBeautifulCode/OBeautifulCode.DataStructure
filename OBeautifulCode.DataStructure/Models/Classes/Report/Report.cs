@@ -9,7 +9,6 @@ namespace OBeautifulCode.DataStructure
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using OBeautifulCode.Equality.Recipes;
     using OBeautifulCode.Type;
 
     using static System.FormattableString;
@@ -66,15 +65,6 @@ namespace OBeautifulCode.DataStructure
             if (sections.Select(_ => _.Id).Distinct().Count() != sections.Count)
             {
                 throw new ArgumentException(Invariant($"{nameof(sections)} contains two or more elements with the same {nameof(Section.Id)}."));
-            }
-
-            var allCells = sections.SelectMany(_ => _.TreeTable.GetAllCells()).ToList();
-
-            var distinctCells = allCells.Distinct(new ReferenceEqualityComparer<ICell>()).ToList();
-
-            if (allCells.Count != distinctCells.Count)
-            {
-                throw new ArgumentException(Invariant($"One or more {nameof(ICell)} objects are used multiple times in the report."));
             }
 
             if ((timestampUtc != null) && (((DateTime)timestampUtc).Kind != DateTimeKind.Utc))

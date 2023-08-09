@@ -174,35 +174,6 @@ namespace OBeautifulCode.DataStructure.Test
                 .AddScenario(() =>
                     new ConstructorArgumentValidationTestScenario<Report>
                     {
-                        Name = "constructor should throw ArgumentException when the same cell object is used multiple times",
-                        ConstructionFunc = () =>
-                        {
-                            var referenceObject = A.Dummy<Report>();
-
-                            var treeTable = A.Dummy<TreeTable>().Whose(_ => _.GetAllCells().Count > 0);
-
-                            var result = new Report(
-                                referenceObject.Id,
-                                new[]
-                                {
-                                    new Section("id1", treeTable),
-                                    new Section("id2", A.Dummy<TreeTable>()),
-                                    new Section("id3", treeTable),
-                                },
-                                referenceObject.Title,
-                                referenceObject.TimestampUtc,
-                                referenceObject.DownloadLinks,
-                                referenceObject.AdditionalInfo,
-                                referenceObject.Format);
-
-                            return result;
-                        },
-                        ExpectedExceptionType = typeof(ArgumentException),
-                        ExpectedExceptionMessageContains = new[] { "One or more ICell objects are used multiple times in the report", },
-                    })
-                .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<Report>
-                    {
                         Name = "constructor should throw ArgumentException when parameter 'timestampUtc' is a UTC DateTime",
                         ConstructionFunc = () =>
                         {
