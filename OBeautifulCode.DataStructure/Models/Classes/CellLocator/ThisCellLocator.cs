@@ -9,10 +9,10 @@ namespace OBeautifulCode.DataStructure
     using OBeautifulCode.Type;
 
     /// <summary>
-    /// Locates an <see cref="ICell"/> corresponding to the cells in-context.
+    /// Locates the current cell.
     /// </summary>
     // ReSharper disable once RedundantExtendsListEntry
-    public partial class ThisCellLocator : CellLocatorBase, IModelViaCodeGen
+    public partial class ThisCellLocator : ICellLocator, IModelViaCodeGen
     {
     }
 }

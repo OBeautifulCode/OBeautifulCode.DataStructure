@@ -132,61 +132,62 @@ namespace OBeautifulCode.DataStructure.Test
         }
 
         [Fact]
-        public static void GetCell_reportCellLocator___Should_throw_ArgumentNullException___When_parameter_reportCellLocator_is_null()
+        public static void GetCell_StandardCellLocator___Should_throw_ArgumentNullException___When_parameter_cellLocator_is_null()
         {
             // Arrange
             var systemUnderTest = new ReportAgent(A.Dummy<Report>());
 
             // Act
-            var actual = Record.Exception(() => systemUnderTest.GetCell(null));
+            var actual = Record.Exception(() => systemUnderTest.GetCell((StandardCellLocator)null));
 
             // Assert
             actual.AsTest().Must().BeOfType<ArgumentNullException>();
-            actual.Message.AsTest().Must().ContainString("reportCellLocator");
+            actual.Message.AsTest().Must().ContainString("cellLocator");
         }
 
         [Fact]
-        public static void GetCell_reportCellLocator___Should_throw_CellNotFoundException___When_section_is_not_found()
+        public static void GetCell_StandardCellLocator___Should_throw_CellNotFoundException___When_cell_with_specified_id_is_not_found()
         {
             // Arrange
             var report = A.Dummy<Report>();
 
-            var reportCellLocator = new ReportCellLocator(A.Dummy<string>(), report.Sections.First().TreeTable.GetAllCells().First().Id);
+            var cellLocator = new StandardCellLocator(A.Dummy<string>());
 
             var systemUnderTest = new ReportAgent(report);
 
             // Act
-            var actual = Record.Exception(() => systemUnderTest.GetCell(reportCellLocator));
+            var actual = Record.Exception(() => systemUnderTest.GetCell(cellLocator));
 
             // Assert
             actual.AsTest().Must().BeOfType<CellNotFoundException>();
-            actual.Message.AsTest().Must().ContainString(Invariant($"There is no section with id '{reportCellLocator.SectionId}'."));
-            ((CellNotFoundException)actual).CellLocator.AsTest().Must().BeEqualTo((CellLocatorBase)reportCellLocator);
+            actual.Message.AsTest().Must().ContainString(Invariant($"There is no cell with id '{cellLocator.CellId}' in the report."));
+            ((CellNotFoundException)actual).CellLocator.AsTest().Must().BeEqualTo((ICellLocator)cellLocator);
         }
 
         [Fact]
-        public static void GetCell_reportCellLocator___Should_throw_CellNotFoundException___When_cell_with_specified_id_is_not_found()
+        public static void GetCell_StandardCellLocator___Should_throw_CellNotFoundException___When_multiple_cells_with_specified_id_are_found()
         {
             // Arrange
-            var report = A.Dummy<Report>();
+            var section1 = A.Dummy<Section>();
+            var section2 = section1.DeepCloneWithId(A.Dummy<string>());
 
-            var section = report.Sections.First();
+            var report = new Report(A.Dummy<string>(), new[] { section1, section2 });
 
-            var reportCellLocator = new ReportCellLocator(section.Id, A.Dummy<string>());
+            var cellLocator = new StandardCellLocator(section1.TreeTable.GetAllCells().First().Id);
 
             var systemUnderTest = new ReportAgent(report);
 
             // Act
-            var actual = Record.Exception(() => systemUnderTest.GetCell(reportCellLocator));
+            var actual = Record.Exception(() => systemUnderTest.GetCell(cellLocator));
 
             // Assert
             actual.AsTest().Must().BeOfType<CellNotFoundException>();
-            actual.Message.AsTest().Must().ContainString(Invariant($"There is no cell with id '{reportCellLocator.CellId}' in section '{section.Id}'."));
-            ((CellNotFoundException)actual).CellLocator.AsTest().Must().BeEqualTo((CellLocatorBase)reportCellLocator);
+            actual.Message.AsTest().Must().ContainString(Invariant($"There are multiple cells with id '{cellLocator.CellId}' in the report."));
+            ((CellNotFoundException)actual).CellLocator.AsTest().Must().BeEqualTo((ICellLocator)cellLocator);
         }
 
         [Fact]
-        public static void GetCell_reportCellLocator___Should_throw_CellNotFoundException___When_slotId_specified_for_cell_that_is_not_slotted()
+        public static void GetCell_StandardCellLocator___Should_throw_CellNotFoundException___When_slotId_specified_for_cell_that_is_not_slotted()
         {
             // Arrange
             var report = A.Dummy<Report>();
@@ -195,21 +196,21 @@ namespace OBeautifulCode.DataStructure.Test
 
             var cell = section.TreeTable.GetAllCells().First(_ => _ is INotSlottedCell);
 
-            var reportCellLocator = new ReportCellLocator(section.Id, cell.Id, A.Dummy<string>());
+            var cellLocator = new StandardCellLocator(cell.Id, A.Dummy<string>());
 
             var systemUnderTest = new ReportAgent(report);
 
             // Act
-            var actual = Record.Exception(() => systemUnderTest.GetCell(reportCellLocator));
+            var actual = Record.Exception(() => systemUnderTest.GetCell(cellLocator));
 
             // Assert
             actual.AsTest().Must().BeOfType<CellNotFoundException>();
-            actual.Message.AsTest().Must().ContainString(Invariant($"Slot id '{reportCellLocator.SlotId}' was specified, but the addressed cell '{cell.Id}' in section '{section.Id}' is not a slotted cell"));
-            ((CellNotFoundException)actual).CellLocator.AsTest().Must().BeEqualTo((CellLocatorBase)reportCellLocator);
+            actual.Message.AsTest().Must().ContainString(Invariant($"Slot id '{cellLocator.SlotId}' was specified, but the addressed cell '{cell.Id}' is not a slotted cell"));
+            ((CellNotFoundException)actual).CellLocator.AsTest().Must().BeEqualTo((ICellLocator)cellLocator);
         }
 
         [Fact]
-        public static void GetCell_reportCellLocator___Should_throw_CellNotFoundException___When_addressing_slotted_cell_but_there_is_no_slot_having_slotId()
+        public static void GetCell_StandardCellLocator___Should_throw_CellNotFoundException___When_addressing_slotted_cell_but_there_is_no_slot_having_slotId()
         {
             // Arrange
             var report = A.Dummy<Report>().Whose(_ => _.Sections.Any(s => s.TreeTable.GetAllCells().Any(c => c is ISlottedCell)));
@@ -218,21 +219,21 @@ namespace OBeautifulCode.DataStructure.Test
 
             var cell = section.TreeTable.GetAllCells().First(_ => _ is ISlottedCell);
 
-            var reportCellLocator = new ReportCellLocator(section.Id, cell.Id, A.Dummy<string>());
+            var cellLocator = new StandardCellLocator(cell.Id, A.Dummy<string>());
 
             var systemUnderTest = new ReportAgent(report);
 
             // Act
-            var actual = Record.Exception(() => systemUnderTest.GetCell(reportCellLocator));
+            var actual = Record.Exception(() => systemUnderTest.GetCell(cellLocator));
 
             // Assert
             actual.AsTest().Must().BeOfType<CellNotFoundException>();
-            actual.Message.AsTest().Must().ContainString(Invariant($"Slot id '{reportCellLocator.SlotId}' was specified, but the addressed cell '{cell.Id}' in section '{section.Id}' does not contain a slot having that id."));
-            ((CellNotFoundException)actual).CellLocator.AsTest().Must().BeEqualTo((CellLocatorBase)reportCellLocator);
+            actual.Message.AsTest().Must().ContainString(Invariant($"Slot id '{cellLocator.SlotId}' was specified, but the addressed cell '{cell.Id}' does not contain a slot having that id."));
+            ((CellNotFoundException)actual).CellLocator.AsTest().Must().BeEqualTo((ICellLocator)cellLocator);
         }
 
         [Fact]
-        public static void GetCell_reportCellLocator___Should_throw_CellNotFoundException___When_addressing_slotted_cell_and_SlotId_not_specified_and_SlotSelectionStrategy_is_ThrowIfSlotIdNotSpecified()
+        public static void GetCell_StandardCellLocator___Should_throw_CellNotFoundException___When_addressing_slotted_cell_and_SlotId_not_specified_and_SlotSelectionStrategy_is_ThrowIfSlotIdNotSpecified()
         {
             // Arrange
             var report = A.Dummy<Report>().Whose(_ => _.Sections.Any(s => s.TreeTable.GetAllCells().Any(c => c is ISlottedCell)));
@@ -241,21 +242,21 @@ namespace OBeautifulCode.DataStructure.Test
 
             var cell = section.TreeTable.GetAllCells().First(_ => _ is ISlottedCell);
 
-            var reportCellLocator = new ReportCellLocator(section.Id, cell.Id, null, SlotSelectionStrategy.ThrowIfSlotIdNotSpecified);
+            var cellLocator = new StandardCellLocator(cell.Id, null, SlotSelectionStrategy.ThrowIfSlotIdNotSpecified);
 
             var systemUnderTest = new ReportAgent(report);
 
             // Act
-            var actual = Record.Exception(() => systemUnderTest.GetCell(reportCellLocator));
+            var actual = Record.Exception(() => systemUnderTest.GetCell(cellLocator));
 
             // Assert
             actual.AsTest().Must().BeOfType<CellNotFoundException>();
             actual.Message.AsTest().Must().ContainString(Invariant($"Located an {nameof(ISlottedCell)} (and not a slot within that cell) and {nameof(SlotSelectionStrategy)} is {nameof(SlotSelectionStrategy.ThrowIfSlotIdNotSpecified)}."));
-            ((CellNotFoundException)actual).CellLocator.AsTest().Must().BeEqualTo((CellLocatorBase)reportCellLocator);
+            ((CellNotFoundException)actual).CellLocator.AsTest().Must().BeEqualTo((ICellLocator)cellLocator);
         }
 
         [Fact]
-        public static void GetCell_reportCellLocator___Should_return_cell___When_cell_is_not_slotted()
+        public static void GetCell_StandardCellLocator___Should_return_cell___When_cell_is_not_slotted()
         {
             // Arrange
             var report = A.Dummy<Report>();
@@ -264,19 +265,19 @@ namespace OBeautifulCode.DataStructure.Test
 
             var expected = section.TreeTable.GetAllCells().First(_ => _ is INotSlottedCell);
 
-            var reportCellLocator = new ReportCellLocator(section.Id, expected.Id);
+            var cellLocator = new StandardCellLocator(expected.Id);
 
             var systemUnderTest = new ReportAgent(report);
 
             // Act
-            var actual = systemUnderTest.GetCell(reportCellLocator);
+            var actual = systemUnderTest.GetCell(cellLocator);
 
             // Assert
             actual.AsTest().Must().BeSameReferenceAs(expected);
         }
 
         [Fact]
-        public static void GetCell_reportCellLocator___Should_return_cell_in_default_slot___When_addressing_slotted_cell_and_SlotSelectionStrategy_is_DefaultSlot()
+        public static void GetCell_StandardCellLocator___Should_return_cell_in_default_slot___When_addressing_slotted_cell_and_SlotSelectionStrategy_is_DefaultSlot()
         {
             // Arrange
             var report = A.Dummy<Report>().Whose(_ => _.Sections.Any(s => s.TreeTable.GetAllCells().Any(c => c is ISlottedCell)));
@@ -287,19 +288,19 @@ namespace OBeautifulCode.DataStructure.Test
 
             var expected = (ICell)cell.SlotIdToCellMap[cell.DefaultSlotId];
 
-            var reportCellLocator = new ReportCellLocator(section.Id, cell.Id, null, SlotSelectionStrategy.DefaultSlot);
+            var cellLocator = new StandardCellLocator(cell.Id, null, SlotSelectionStrategy.DefaultSlot);
 
             var systemUnderTest = new ReportAgent(report);
 
             // Act
-            var actual = systemUnderTest.GetCell(reportCellLocator);
+            var actual = systemUnderTest.GetCell(cellLocator);
 
             // Assert
             actual.AsTest().Must().BeSameReferenceAs(expected);
         }
 
         [Fact]
-        public static void GetCell_reportCellLocator___Should_return_cell_in_specified_slot___When_addressing_slot_within_slotted_cell()
+        public static void GetCell_StandardCellLocator___Should_return_cell_in_specified_slot___When_addressing_slot_within_slotted_cell()
         {
             // Arrange
             var report = A.Dummy<Report>().Whose(_ => _.Sections.Any(s => s.TreeTable.GetAllCells().OfType<ISlottedCell>().Any(c => c.SlotIdToCellMap.Count > 1)));
@@ -312,19 +313,211 @@ namespace OBeautifulCode.DataStructure.Test
 
             var expected = (ICell)cell.SlotIdToCellMap[slotId];
 
-            var reportCellLocator = new ReportCellLocator(section.Id, cell.Id, slotId, SlotSelectionStrategy.ThrowIfSlotIdNotSpecified);
+            var cellLocator = new StandardCellLocator(cell.Id, slotId, SlotSelectionStrategy.ThrowIfSlotIdNotSpecified);
 
             var systemUnderTest = new ReportAgent(report);
 
             // Act
-            var actual = systemUnderTest.GetCell(reportCellLocator);
+            var actual = systemUnderTest.GetCell(cellLocator);
 
             // Assert
             actual.AsTest().Must().BeSameReferenceAs(expected);
         }
 
         [Fact]
-        public static void GetCell_sectionCellLocator___Should_throw_ArgumentNullException___When_parameter_sectionCellLocator_is_null()
+        public static void GetCell_ReportCellLocator___Should_throw_ArgumentNullException___When_parameter_cellLocator_is_null()
+        {
+            // Arrange
+            var systemUnderTest = new ReportAgent(A.Dummy<Report>());
+
+            // Act
+            var actual = Record.Exception(() => systemUnderTest.GetCell((ReportCellLocator)null));
+
+            // Assert
+            actual.AsTest().Must().BeOfType<ArgumentNullException>();
+            actual.Message.AsTest().Must().ContainString("cellLocator");
+        }
+
+        [Fact]
+        public static void GetCell_ReportCellLocator___Should_throw_CellNotFoundException___When_section_is_not_found()
+        {
+            // Arrange
+            var report = A.Dummy<Report>();
+
+            var cellLocator = new ReportCellLocator(A.Dummy<string>(), report.Sections.First().TreeTable.GetAllCells().First().Id);
+
+            var systemUnderTest = new ReportAgent(report);
+
+            // Act
+            var actual = Record.Exception(() => systemUnderTest.GetCell(cellLocator));
+
+            // Assert
+            actual.AsTest().Must().BeOfType<CellNotFoundException>();
+            actual.Message.AsTest().Must().ContainString(Invariant($"There is no section with id '{cellLocator.SectionId}'."));
+            ((CellNotFoundException)actual).CellLocator.AsTest().Must().BeEqualTo((ICellLocator)cellLocator);
+        }
+
+        [Fact]
+        public static void GetCell_ReportCellLocator___Should_throw_CellNotFoundException___When_cell_with_specified_id_is_not_found()
+        {
+            // Arrange
+            var report = A.Dummy<Report>();
+
+            var section = report.Sections.First();
+
+            var cellLocator = new ReportCellLocator(section.Id, A.Dummy<string>());
+
+            var systemUnderTest = new ReportAgent(report);
+
+            // Act
+            var actual = Record.Exception(() => systemUnderTest.GetCell(cellLocator));
+
+            // Assert
+            actual.AsTest().Must().BeOfType<CellNotFoundException>();
+            actual.Message.AsTest().Must().ContainString(Invariant($"There is no cell with id '{cellLocator.CellId}' in section '{section.Id}'."));
+            ((CellNotFoundException)actual).CellLocator.AsTest().Must().BeEqualTo((ICellLocator)cellLocator);
+        }
+
+        [Fact]
+        public static void GetCell_ReportCellLocator___Should_throw_CellNotFoundException___When_slotId_specified_for_cell_that_is_not_slotted()
+        {
+            // Arrange
+            var report = A.Dummy<Report>();
+
+            var section = report.Sections.First();
+
+            var cell = section.TreeTable.GetAllCells().First(_ => _ is INotSlottedCell);
+
+            var cellLocator = new ReportCellLocator(section.Id, cell.Id, A.Dummy<string>());
+
+            var systemUnderTest = new ReportAgent(report);
+
+            // Act
+            var actual = Record.Exception(() => systemUnderTest.GetCell(cellLocator));
+
+            // Assert
+            actual.AsTest().Must().BeOfType<CellNotFoundException>();
+            actual.Message.AsTest().Must().ContainString(Invariant($"Slot id '{cellLocator.SlotId}' was specified, but the addressed cell '{cell.Id}' in section '{section.Id}' is not a slotted cell"));
+            ((CellNotFoundException)actual).CellLocator.AsTest().Must().BeEqualTo((ICellLocator)cellLocator);
+        }
+
+        [Fact]
+        public static void GetCell_ReportCellLocator___Should_throw_CellNotFoundException___When_addressing_slotted_cell_but_there_is_no_slot_having_slotId()
+        {
+            // Arrange
+            var report = A.Dummy<Report>().Whose(_ => _.Sections.Any(s => s.TreeTable.GetAllCells().Any(c => c is ISlottedCell)));
+
+            var section = report.Sections.First(_ => _.TreeTable.GetAllCells().Any(c => c is ISlottedCell));
+
+            var cell = section.TreeTable.GetAllCells().First(_ => _ is ISlottedCell);
+
+            var cellLocator = new ReportCellLocator(section.Id, cell.Id, A.Dummy<string>());
+
+            var systemUnderTest = new ReportAgent(report);
+
+            // Act
+            var actual = Record.Exception(() => systemUnderTest.GetCell(cellLocator));
+
+            // Assert
+            actual.AsTest().Must().BeOfType<CellNotFoundException>();
+            actual.Message.AsTest().Must().ContainString(Invariant($"Slot id '{cellLocator.SlotId}' was specified, but the addressed cell '{cell.Id}' in section '{section.Id}' does not contain a slot having that id."));
+            ((CellNotFoundException)actual).CellLocator.AsTest().Must().BeEqualTo((ICellLocator)cellLocator);
+        }
+
+        [Fact]
+        public static void GetCell_ReportCellLocator___Should_throw_CellNotFoundException___When_addressing_slotted_cell_and_SlotId_not_specified_and_SlotSelectionStrategy_is_ThrowIfSlotIdNotSpecified()
+        {
+            // Arrange
+            var report = A.Dummy<Report>().Whose(_ => _.Sections.Any(s => s.TreeTable.GetAllCells().Any(c => c is ISlottedCell)));
+
+            var section = report.Sections.First(_ => _.TreeTable.GetAllCells().Any(c => c is ISlottedCell));
+
+            var cell = section.TreeTable.GetAllCells().First(_ => _ is ISlottedCell);
+
+            var cellLocator = new ReportCellLocator(section.Id, cell.Id, null, SlotSelectionStrategy.ThrowIfSlotIdNotSpecified);
+
+            var systemUnderTest = new ReportAgent(report);
+
+            // Act
+            var actual = Record.Exception(() => systemUnderTest.GetCell(cellLocator));
+
+            // Assert
+            actual.AsTest().Must().BeOfType<CellNotFoundException>();
+            actual.Message.AsTest().Must().ContainString(Invariant($"Located an {nameof(ISlottedCell)} (and not a slot within that cell) and {nameof(SlotSelectionStrategy)} is {nameof(SlotSelectionStrategy.ThrowIfSlotIdNotSpecified)}."));
+            ((CellNotFoundException)actual).CellLocator.AsTest().Must().BeEqualTo((ICellLocator)cellLocator);
+        }
+
+        [Fact]
+        public static void GetCell_ReportCellLocator___Should_return_cell___When_cell_is_not_slotted()
+        {
+            // Arrange
+            var report = A.Dummy<Report>();
+
+            var section = report.Sections.First();
+
+            var expected = section.TreeTable.GetAllCells().First(_ => _ is INotSlottedCell);
+
+            var cellLocator = new ReportCellLocator(section.Id, expected.Id);
+
+            var systemUnderTest = new ReportAgent(report);
+
+            // Act
+            var actual = systemUnderTest.GetCell(cellLocator);
+
+            // Assert
+            actual.AsTest().Must().BeSameReferenceAs(expected);
+        }
+
+        [Fact]
+        public static void GetCell_ReportCellLocator___Should_return_cell_in_default_slot___When_addressing_slotted_cell_and_SlotSelectionStrategy_is_DefaultSlot()
+        {
+            // Arrange
+            var report = A.Dummy<Report>().Whose(_ => _.Sections.Any(s => s.TreeTable.GetAllCells().Any(c => c is ISlottedCell)));
+
+            var section = report.Sections.First(_ => _.TreeTable.GetAllCells().Any(c => c is ISlottedCell));
+
+            var cell = section.TreeTable.GetAllCells().OfType<ISlottedCell>().First();
+
+            var expected = (ICell)cell.SlotIdToCellMap[cell.DefaultSlotId];
+
+            var cellLocator = new ReportCellLocator(section.Id, cell.Id, null, SlotSelectionStrategy.DefaultSlot);
+
+            var systemUnderTest = new ReportAgent(report);
+
+            // Act
+            var actual = systemUnderTest.GetCell(cellLocator);
+
+            // Assert
+            actual.AsTest().Must().BeSameReferenceAs(expected);
+        }
+
+        [Fact]
+        public static void GetCell_ReportCellLocator___Should_return_cell_in_specified_slot___When_addressing_slot_within_slotted_cell()
+        {
+            // Arrange
+            var report = A.Dummy<Report>().Whose(_ => _.Sections.Any(s => s.TreeTable.GetAllCells().OfType<ISlottedCell>().Any(c => c.SlotIdToCellMap.Count > 1)));
+
+            var section = report.Sections.First(_ => _.TreeTable.GetAllCells().Any(c => c is ISlottedCell));
+
+            var cell = section.TreeTable.GetAllCells().OfType<ISlottedCell>().First(_ => _.SlotIdToCellMap.Count > 1);
+
+            var slotId = cell.SlotIdToCellMap.First(_ => _.Key != cell.DefaultSlotId).Key;
+
+            var expected = (ICell)cell.SlotIdToCellMap[slotId];
+
+            var cellLocator = new ReportCellLocator(section.Id, cell.Id, slotId, SlotSelectionStrategy.ThrowIfSlotIdNotSpecified);
+
+            var systemUnderTest = new ReportAgent(report);
+
+            // Act
+            var actual = systemUnderTest.GetCell(cellLocator);
+
+            // Assert
+            actual.AsTest().Must().BeSameReferenceAs(expected);
+        }
+
+        [Fact]
+        public static void GetCell_SectionCellLocator___Should_throw_ArgumentNullException___When_parameter_cellLocator_is_null()
         {
             // Arrange
             var systemUnderTest = new ReportAgent(A.Dummy<Report>());
@@ -334,11 +527,11 @@ namespace OBeautifulCode.DataStructure.Test
 
             // Assert
             actual.AsTest().Must().BeOfType<ArgumentNullException>();
-            actual.Message.AsTest().Must().ContainString("sectionCellLocator");
+            actual.Message.AsTest().Must().ContainString("cellLocator");
         }
 
         [Fact]
-        public static void GetCell_sectionCellLocator___Should_throw_ArgumentNullException___When_parameter_referenceCell_is_null()
+        public static void GetCell_SectionCellLocator___Should_throw_ArgumentNullException___When_parameter_referenceCell_is_null()
         {
             // Arrange
             var systemUnderTest = new ReportAgent(A.Dummy<Report>());
@@ -352,26 +545,26 @@ namespace OBeautifulCode.DataStructure.Test
         }
 
         [Fact]
-        public static void GetCell_sectionCellLocator___Should_throw_ArgumentNullException___When_referenceCell_is_not_a_cell_in_the_report()
+        public static void GetCell_SectionCellLocator___Should_throw_ArgumentNullException___When_referenceCell_is_not_a_cell_in_the_report()
         {
             // Arrange
             var report = A.Dummy<Report>();
 
             var systemUnderTest = new ReportAgent(report);
 
-            var sectionCellLocator = new SectionCellLocator(report.Sections.First().TreeTable.GetAllCells().First().Id);
+            var cellLocator = new SectionCellLocator(report.Sections.First().TreeTable.GetAllCells().First().Id);
 
             // Act
-            var actual = Record.Exception(() => systemUnderTest.GetCell(sectionCellLocator, A.Dummy<ICell>()));
+            var actual = Record.Exception(() => systemUnderTest.GetCell(cellLocator, A.Dummy<ICell>()));
 
             // Assert
             actual.AsTest().Must().BeOfType<CellNotFoundException>();
             actual.Message.AsTest().Must().ContainString("referenceCell is not a cell in the report.");
-            ((CellNotFoundException)actual).CellLocator.AsTest().Must().BeEqualTo((CellLocatorBase)sectionCellLocator);
+            ((CellNotFoundException)actual).CellLocator.AsTest().Must().BeEqualTo((ICellLocator)cellLocator);
         }
 
         [Fact]
-        public static void GetCell_sectionCellLocator___Should_throw_CellNotFoundException___When_cell_with_specified_id_is_not_found()
+        public static void GetCell_SectionCellLocator___Should_throw_CellNotFoundException___When_cell_with_specified_id_is_not_found()
         {
             // Arrange
             var report = A.Dummy<Report>();
@@ -380,23 +573,23 @@ namespace OBeautifulCode.DataStructure.Test
 
             var referenceCell = section.TreeTable.GetAllCells().First();
 
-            var sectionCellLocator = new SectionCellLocator(A.Dummy<string>());
+            var cellLocator = new SectionCellLocator(A.Dummy<string>());
 
             var systemUnderTest = new ReportAgent(report);
 
-            var expectedReportCellLocator = new ReportCellLocator(section.Id, sectionCellLocator.CellId);
+            var expectedReportCellLocator = new ReportCellLocator(section.Id, cellLocator.CellId);
 
             // Act
-            var actual = Record.Exception(() => systemUnderTest.GetCell(sectionCellLocator, referenceCell));
+            var actual = Record.Exception(() => systemUnderTest.GetCell(cellLocator, referenceCell));
 
             // Assert
             actual.AsTest().Must().BeOfType<CellNotFoundException>();
-            actual.Message.AsTest().Must().ContainString(Invariant($"There is no cell with id '{sectionCellLocator.CellId}' in section '{section.Id}'."));
-            ((CellNotFoundException)actual).CellLocator.AsTest().Must().BeEqualTo((CellLocatorBase)expectedReportCellLocator);
+            actual.Message.AsTest().Must().ContainString(Invariant($"There is no cell with id '{cellLocator.CellId}' in section '{section.Id}'."));
+            ((CellNotFoundException)actual).CellLocator.AsTest().Must().BeEqualTo((ICellLocator)expectedReportCellLocator);
         }
 
         [Fact]
-        public static void GetCell_sectionCellLocator___Should_throw_CellNotFoundException___When_slotId_specified_for_cell_that_is_not_slotted()
+        public static void GetCell_SectionCellLocator___Should_throw_CellNotFoundException___When_slotId_specified_for_cell_that_is_not_slotted()
         {
             // Arrange
             var report = A.Dummy<Report>();
@@ -409,23 +602,23 @@ namespace OBeautifulCode.DataStructure.Test
 
             var referenceCell = allCells.First(_ => !_.Equals(cell));
 
-            var sectionCellLocator = new SectionCellLocator(cell.Id, A.Dummy<string>());
+            var cellLocator = new SectionCellLocator(cell.Id, A.Dummy<string>());
 
-            var expectedReportCellLocator = new ReportCellLocator(section.Id, sectionCellLocator.CellId, sectionCellLocator.SlotId);
+            var expectedReportCellLocator = new ReportCellLocator(section.Id, cellLocator.CellId, cellLocator.SlotId);
 
             var systemUnderTest = new ReportAgent(report);
 
             // Act
-            var actual = Record.Exception(() => systemUnderTest.GetCell(sectionCellLocator, referenceCell));
+            var actual = Record.Exception(() => systemUnderTest.GetCell(cellLocator, referenceCell));
 
             // Assert
             actual.AsTest().Must().BeOfType<CellNotFoundException>();
-            actual.Message.AsTest().Must().ContainString(Invariant($"Slot id '{sectionCellLocator.SlotId}' was specified, but the addressed cell '{cell.Id}' in section '{section.Id}' is not a slotted cell"));
-            ((CellNotFoundException)actual).CellLocator.AsTest().Must().BeEqualTo((CellLocatorBase)expectedReportCellLocator);
+            actual.Message.AsTest().Must().ContainString(Invariant($"Slot id '{cellLocator.SlotId}' was specified, but the addressed cell '{cell.Id}' in section '{section.Id}' is not a slotted cell"));
+            ((CellNotFoundException)actual).CellLocator.AsTest().Must().BeEqualTo((ICellLocator)expectedReportCellLocator);
         }
 
         [Fact]
-        public static void GetCell_sectionCellLocator___Should_throw_CellNotFoundException___When_addressing_slotted_cell_but_there_is_no_slot_having_slotId()
+        public static void GetCell_SectionCellLocator___Should_throw_CellNotFoundException___When_addressing_slotted_cell_but_there_is_no_slot_having_slotId()
         {
             // Arrange
             var report = A.Dummy<Report>().Whose(_ => _.Sections.Any(s => s.TreeTable.GetAllCells().Any(c => c is ISlottedCell)));
@@ -438,23 +631,23 @@ namespace OBeautifulCode.DataStructure.Test
 
             var referenceCell = allCells.First(_ => !_.Equals(cell));
 
-            var sectionCellLocator = new SectionCellLocator(cell.Id, A.Dummy<string>());
+            var cellLocator = new SectionCellLocator(cell.Id, A.Dummy<string>());
 
-            var expectedReportCellLocator = new ReportCellLocator(section.Id, sectionCellLocator.CellId, sectionCellLocator.SlotId);
+            var expectedReportCellLocator = new ReportCellLocator(section.Id, cellLocator.CellId, cellLocator.SlotId);
 
             var systemUnderTest = new ReportAgent(report);
 
             // Act
-            var actual = Record.Exception(() => systemUnderTest.GetCell(sectionCellLocator, referenceCell));
+            var actual = Record.Exception(() => systemUnderTest.GetCell(cellLocator, referenceCell));
 
             // Assert
             actual.AsTest().Must().BeOfType<CellNotFoundException>();
-            actual.Message.AsTest().Must().ContainString(Invariant($"Slot id '{sectionCellLocator.SlotId}' was specified, but the addressed cell '{cell.Id}' in section '{section.Id}' does not contain a slot having that id."));
-            ((CellNotFoundException)actual).CellLocator.AsTest().Must().BeEqualTo((CellLocatorBase)expectedReportCellLocator);
+            actual.Message.AsTest().Must().ContainString(Invariant($"Slot id '{cellLocator.SlotId}' was specified, but the addressed cell '{cell.Id}' in section '{section.Id}' does not contain a slot having that id."));
+            ((CellNotFoundException)actual).CellLocator.AsTest().Must().BeEqualTo((ICellLocator)expectedReportCellLocator);
         }
 
         [Fact]
-        public static void GetCell_sectionCellLocator___Should_throw_CellNotFoundException___When_addressing_slotted_cell_and_SlotId_not_specified_and_SlotSelectionStrategy_is_ThrowIfSlotIdNotSpecified()
+        public static void GetCell_SectionCellLocator___Should_throw_CellNotFoundException___When_addressing_slotted_cell_and_SlotId_not_specified_and_SlotSelectionStrategy_is_ThrowIfSlotIdNotSpecified()
         {
             // Arrange
             var report = A.Dummy<Report>().Whose(_ => _.Sections.Any(s => s.TreeTable.GetAllCells().Any(c => c is ISlottedCell)));
@@ -467,23 +660,23 @@ namespace OBeautifulCode.DataStructure.Test
 
             var referenceCell = allCells.First(_ => !_.Equals(cell));
 
-            var sectionCellLocator = new SectionCellLocator(cell.Id, null, SlotSelectionStrategy.ThrowIfSlotIdNotSpecified);
+            var cellLocator = new SectionCellLocator(cell.Id, null, SlotSelectionStrategy.ThrowIfSlotIdNotSpecified);
 
-            var expectedReportCellLocator = new ReportCellLocator(section.Id, sectionCellLocator.CellId, sectionCellLocator.SlotId);
+            var expectedReportCellLocator = new ReportCellLocator(section.Id, cellLocator.CellId, cellLocator.SlotId);
 
             var systemUnderTest = new ReportAgent(report);
 
             // Act
-            var actual = Record.Exception(() => systemUnderTest.GetCell(sectionCellLocator, referenceCell));
+            var actual = Record.Exception(() => systemUnderTest.GetCell(cellLocator, referenceCell));
 
             // Assert
             actual.AsTest().Must().BeOfType<CellNotFoundException>();
             actual.Message.AsTest().Must().ContainString(Invariant($"Located an {nameof(ISlottedCell)} (and not a slot within that cell) and {nameof(SlotSelectionStrategy)} is {nameof(SlotSelectionStrategy.ThrowIfSlotIdNotSpecified)}."));
-            ((CellNotFoundException)actual).CellLocator.AsTest().Must().BeEqualTo((CellLocatorBase)expectedReportCellLocator);
+            ((CellNotFoundException)actual).CellLocator.AsTest().Must().BeEqualTo((ICellLocator)expectedReportCellLocator);
         }
 
         [Fact]
-        public static void GetCell_sectionCellLocator___Should_return_cell___When_cell_is_not_slotted()
+        public static void GetCell_SectionCellLocator___Should_return_cell___When_cell_is_not_slotted()
         {
             // Arrange
             var report = A.Dummy<Report>().Whose(_ => _.Sections.First().TreeTable.GetAllCells().Any(c => c is INotSlottedCell));
@@ -496,19 +689,19 @@ namespace OBeautifulCode.DataStructure.Test
 
             var referenceCell = allCells.First(_ => !_.Equals(expected));
 
-            var sectionCellLocator = new SectionCellLocator(expected.Id);
+            var cellLocator = new SectionCellLocator(expected.Id);
 
             var systemUnderTest = new ReportAgent(report);
 
             // Act
-            var actual = systemUnderTest.GetCell(sectionCellLocator, referenceCell);
+            var actual = systemUnderTest.GetCell(cellLocator, referenceCell);
 
             // Assert
             actual.AsTest().Must().BeSameReferenceAs(expected);
         }
 
         [Fact]
-        public static void GetCell_sectionCellLocator___Should_return_cell_in_default_slot___When_addressing_slotted_cell_and_SlotSelectionStrategy_is_DefaultSlot()
+        public static void GetCell_SectionCellLocator___Should_return_cell_in_default_slot___When_addressing_slotted_cell_and_SlotSelectionStrategy_is_DefaultSlot()
         {
             // Arrange
             var report = A.Dummy<Report>().Whose(_ => _.Sections.Any(s => s.TreeTable.GetAllCells().Any(c => c is ISlottedCell)));
@@ -523,19 +716,19 @@ namespace OBeautifulCode.DataStructure.Test
 
             var expected = (ICell)cell.SlotIdToCellMap[cell.DefaultSlotId];
 
-            var sectionCellLocator = new SectionCellLocator(cell.Id, null, SlotSelectionStrategy.DefaultSlot);
+            var cellLocator = new SectionCellLocator(cell.Id, null, SlotSelectionStrategy.DefaultSlot);
 
             var systemUnderTest = new ReportAgent(report);
 
             // Act
-            var actual = systemUnderTest.GetCell(sectionCellLocator, referenceCell);
+            var actual = systemUnderTest.GetCell(cellLocator, referenceCell);
 
             // Assert
             actual.AsTest().Must().BeSameReferenceAs(expected);
         }
 
         [Fact]
-        public static void GetCell_sectionCellLocator___Should_return_cell_in_specified_slot___When_addressing_slot_within_slotted_cell()
+        public static void GetCell_SectionCellLocator___Should_return_cell_in_specified_slot___When_addressing_slot_within_slotted_cell()
         {
             // Arrange
             var report = A.Dummy<Report>().Whose(_ => _.Sections.Any(s => s.TreeTable.GetAllCells().OfType<ISlottedCell>().Any(c => c.SlotIdToCellMap.Count > 1)));
@@ -552,12 +745,12 @@ namespace OBeautifulCode.DataStructure.Test
 
             var expected = (ICell)cell.SlotIdToCellMap[slotId];
 
-            var sectionCellLocator = new SectionCellLocator(cell.Id, slotId, SlotSelectionStrategy.ThrowIfSlotIdNotSpecified);
+            var cellLocator = new SectionCellLocator(cell.Id, slotId, SlotSelectionStrategy.ThrowIfSlotIdNotSpecified);
 
             var systemUnderTest = new ReportAgent(report);
 
             // Act
-            var actual = systemUnderTest.GetCell(sectionCellLocator, referenceCell);
+            var actual = systemUnderTest.GetCell(cellLocator, referenceCell);
 
             // Assert
             actual.AsTest().Must().BeSameReferenceAs(expected);
@@ -1315,8 +1508,8 @@ namespace OBeautifulCode.DataStructure.Test
             var nonProfitAvailabilityCheck = Cell.CreateAvailabilityCheck(
                 new[]
                 {
-                    new AvailabilityCheckStep(Cell.InThisSection(isForProfitCell.Id).HasValue(), Op.Const("got-disabled-1")),
-                    new AvailabilityCheckStep(Op.Not(Cell.InThisSection(isForProfitCell.Id).GetValue<bool>()), Op.Const("got-disabled-2")),
+                    new AvailabilityCheckStep(Cell.InSameSection(isForProfitCell.Id).HasValue(), Op.Const("got-disabled-1")),
+                    new AvailabilityCheckStep(Op.Not(Cell.InSameSection(isForProfitCell.Id).GetValue<bool>()), Op.Const("got-disabled-2")),
                 },
                 endMessageOp: Op.Const("got-enabled"));
 
@@ -1334,10 +1527,10 @@ namespace OBeautifulCode.DataStructure.Test
                     Cell.CreateValidation(
                         new[]
                         {
-                            new ValidationStep(Cell.This().HasValue(), Op.Const("input required for sales")),
+                            new ValidationStep(Cell.Self().HasValue(), Op.Const("input required for sales")),
                             new ValidationStep(
                                 Op.IsGreaterThanOrEqualTo(
-                                    Cell.This().GetValue<decimal>(),
+                                    Cell.Self().GetValue<decimal>(),
                                     Op.Const(0m)),
                                 Op.Const("sales must be >= 0")),
                         }));
@@ -1348,10 +1541,10 @@ namespace OBeautifulCode.DataStructure.Test
                     Cell.CreateValidation(
                         new[]
                         {
-                            new ValidationStep(Cell.This().HasValue(), Op.Const("input required for warehouse")),
+                            new ValidationStep(Cell.Self().HasValue(), Op.Const("input required for warehouse")),
                             new ValidationStep(
                                 Op.IsGreaterThanOrEqualTo(
-                                    Cell.This().GetValue<decimal>(),
+                                    Cell.Self().GetValue<decimal>(),
                                     Op.Const(0m)),
                                 Op.Const("warehouse must be >= 0")),
                         }));
@@ -1359,9 +1552,9 @@ namespace OBeautifulCode.DataStructure.Test
             var numberOfWarehouseSupportFteCell = Cell.CreateOp(
                 id: CellIds.WarehouseSupportFte,
                 operation: Op.IfThenElse(
-                    Cell.InThisSection(numberOfWarehouseFteCell.Id).HasValue(),
+                    Cell.InSameSection(numberOfWarehouseFteCell.Id).HasValue(),
                     Op.Divide(
-                        Cell.InThisSection(numberOfWarehouseFteCell.Id).GetValue<decimal>(),
+                        Cell.InSameSection(numberOfWarehouseFteCell.Id).GetValue<decimal>(),
                         Op.Const(2m)),
                     Op.NotApplicable<decimal>()));
 
@@ -1370,12 +1563,12 @@ namespace OBeautifulCode.DataStructure.Test
                     operation:
                         Op.IfThenElse(
                             Op.AndAlso(
-                                Cell.InThisReport(SectionIds.Section2, numberOfSalesFteCell.Id).HasValue(),
-                                Cell.InThisReport(SectionIds.Section2, numberOfWarehouseFteCell.Id).HasValue()),
+                                Cell.InSomeSection(SectionIds.Section2, numberOfSalesFteCell.Id).HasValue(),
+                                Cell.InSomeSection(SectionIds.Section2, numberOfWarehouseFteCell.Id).HasValue()),
                             Op.Sum(
-                                Cell.InThisReport(SectionIds.Section2, numberOfSalesFteCell.Id).GetValue<decimal>(),
-                                Cell.InThisReport(SectionIds.Section2, numberOfWarehouseFteCell.Id).GetValue<decimal>(),
-                                Cell.InThisReport(SectionIds.Section2, numberOfWarehouseSupportFteCell.Id).GetValue<decimal>()),
+                                Cell.InSomeSection(SectionIds.Section2, numberOfSalesFteCell.Id).GetValue<decimal>(),
+                                Cell.InSomeSection(SectionIds.Section2, numberOfWarehouseFteCell.Id).GetValue<decimal>(),
+                                Cell.InSomeSection(SectionIds.Section2, numberOfWarehouseSupportFteCell.Id).GetValue<decimal>()),
                             Op.Abort<decimal>("cannot perform sum")),
                     validation:
                         Cell.CreateValidation(
@@ -1383,12 +1576,12 @@ namespace OBeautifulCode.DataStructure.Test
                             {
                                 new ValidationStep(
                                     Op.IsEqualTo(
-                                        Cell.This().GetOpExecutionOutcome(),
+                                        Cell.Self().GetOpExecutionOutcome(),
                                         Op.Const(CellOpExecutionOutcome.Completed)),
                                     falseAction: ValidationStepAction.StopToAbort),
                                 new ValidationStep(
                                     Op.IsGreaterThan(
-                                        Cell.This().GetValue<decimal>(),
+                                        Cell.Self().GetValue<decimal>(),
                                         Op.Const(0m)),
                                     Op.Const("total must be >= 0")),
                             }));
@@ -1412,15 +1605,15 @@ namespace OBeautifulCode.DataStructure.Test
                 id: CellIds.CoScores);
 
             var scoresCellCopy = Cell.CreateOp(
-                Cell.InThisSection(scoresCell.Id).GetValue<NamedDecimalSet>(),
+                Cell.InSameSection(scoresCell.Id).GetValue<NamedDecimalSet>(),
                 id: CellIds.CoScoresCopy);
 
             var intConstCell = new ConstCell<int>(4, id: CellIds.NumberOfTiles);
 
             var quartileCell = Cell.CreateOp(
                 new TileOp(
-                    Cell.InThisSection(scoresCellCopy.Id).GetValue<NamedDecimalSet>(),
-                    Cell.InThisSection(intConstCell.Id).GetValue<int>()),
+                    Cell.InSameSection(scoresCellCopy.Id).GetValue<NamedDecimalSet>(),
+                    Cell.InSameSection(intConstCell.Id).GetValue<int>()),
                 id: CellIds.Quartiles);
 
             var rows1 = new[]

@@ -21,7 +21,7 @@ namespace OBeautifulCode.DataStructure
         /// <returns>
         /// A <see cref="ThisCellLocator"/>.
         /// </returns>
-        public static ThisCellLocator This()
+        public static ThisCellLocator Self()
         {
             var result = new ThisCellLocator();
 
@@ -37,7 +37,7 @@ namespace OBeautifulCode.DataStructure
         /// <returns>
         /// A <see cref="SectionCellLocator"/>.
         /// </returns>
-        public static SectionCellLocator InThisSection(
+        public static SectionCellLocator InSameSection(
             string cellId,
             string slotId = null,
             SlotSelectionStrategy slotSelectionStrategy = SlotSelectionStrategy.ThrowIfSlotIdNotSpecified)
@@ -57,13 +57,32 @@ namespace OBeautifulCode.DataStructure
         /// <returns>
         /// A <see cref="ReportCellLocator"/>.
         /// </returns>
-        public static ReportCellLocator InThisReport(
+        public static ReportCellLocator InSomeSection(
             string sectionId,
             string cellId,
             string slotId = null,
             SlotSelectionStrategy slotSelectionStrategy = SlotSelectionStrategy.ThrowIfSlotIdNotSpecified)
         {
             var result = new ReportCellLocator(sectionId, cellId, slotId, slotSelectionStrategy);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Builds a <see cref="StandardCellLocator"/>.
+        /// </summary>
+        /// <param name="cellId">The id of the cell.</param>
+        /// <param name="slotId">OPTIONAL id of the slot to use -OR- null if not addressing an <see cref="ISlottedCell"/>.  DEFAULT is to address an <see cref="INotSlottedCell"/>.</param>
+        /// <param name="slotSelectionStrategy">OPTIONAL strategy to use to select a slot if addressing an <see cref="ISlottedCell"/>.  DEFAULT is to throw if addressing an <see cref="ISlottedCell"/> -AND- <paramref name="slotId"/> is not specified.</param>
+        /// <returns>
+        /// A <see cref="ReportCellLocator"/>.
+        /// </returns>
+        public static StandardCellLocator InReport(
+            string cellId,
+            string slotId = null,
+            SlotSelectionStrategy slotSelectionStrategy = SlotSelectionStrategy.ThrowIfSlotIdNotSpecified)
+        {
+            var result = new StandardCellLocator(cellId, slotId, slotSelectionStrategy);
 
             return result;
         }
@@ -76,7 +95,7 @@ namespace OBeautifulCode.DataStructure
         /// The operation.
         /// </returns>
         public static HasCellValueOp HasValue(
-            this CellLocatorBase cellLocator)
+            this ICellLocator cellLocator)
         {
             var result = new HasCellValueOp(Op.Const(cellLocator));
 
@@ -92,7 +111,7 @@ namespace OBeautifulCode.DataStructure
         /// The operation.
         /// </returns>
         public static GetCellValueOp<TValue> GetValue<TValue>(
-            this CellLocatorBase cellLocator)
+            this ICellLocator cellLocator)
         {
             var result = new GetCellValueOp<TValue>(Op.Const(cellLocator));
 
@@ -107,7 +126,7 @@ namespace OBeautifulCode.DataStructure
         /// The operation.
         /// </returns>
         public static GetCellOpExecutionOutcomeOp GetOpExecutionOutcome(
-            this CellLocatorBase cellLocator)
+            this ICellLocator cellLocator)
         {
             var result = new GetCellOpExecutionOutcomeOp(Op.Const(cellLocator));
 
@@ -122,7 +141,7 @@ namespace OBeautifulCode.DataStructure
         /// The operation.
         /// </returns>
         public static GetValidityOp GetValidity(
-            this CellLocatorBase cellLocator)
+            this ICellLocator cellLocator)
         {
             var result = new GetValidityOp(Op.Const(cellLocator));
 
@@ -137,7 +156,7 @@ namespace OBeautifulCode.DataStructure
         /// The operation.
         /// </returns>
         public static GetAvailabilityOp GetAvailability(
-            this CellLocatorBase cellLocator)
+            this ICellLocator cellLocator)
         {
             var result = new GetAvailabilityOp(Op.Const(cellLocator));
 

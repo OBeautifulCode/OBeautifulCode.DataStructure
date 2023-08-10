@@ -47,7 +47,7 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new SystemUnderTestExpectedStringRepresentation<ReportCellLocator>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.ReportCellLocator: SectionId = {systemUnderTest.SectionId?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, CellId = {systemUnderTest.CellId?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, SlotId = {systemUnderTest.SlotId?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, SlotSelectionStrategy = {systemUnderTest.SlotSelectionStrategy.ToString() ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.ReportCellLocator: CellId = {systemUnderTest.CellId?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, SlotId = {systemUnderTest.SlotId?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, SlotSelectionStrategy = {systemUnderTest.SlotSelectionStrategy.ToString() ?? "<null>"}, SectionId = {systemUnderTest.SectionId?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}."),
                         };
 
                         return result;
@@ -264,26 +264,6 @@ namespace OBeautifulCode.DataStructure.Test
             .AddScenario(() =>
                 new DeepCloneWithTestScenario<ReportCellLocator>
                 {
-                    Name = "DeepCloneWithSectionId should deep clone object and replace SectionId with the provided sectionId",
-                    WithPropertyName = "SectionId",
-                    SystemUnderTestDeepCloneWithValueFunc = () =>
-                    {
-                        var systemUnderTest = A.Dummy<ReportCellLocator>();
-
-                        var referenceObject = A.Dummy<ReportCellLocator>().ThatIs(_ => !systemUnderTest.SectionId.IsEqualTo(_.SectionId));
-
-                        var result = new SystemUnderTestDeepCloneWithValue<ReportCellLocator>
-                        {
-                            SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.SectionId,
-                        };
-
-                        return result;
-                    },
-                })
-            .AddScenario(() =>
-                new DeepCloneWithTestScenario<ReportCellLocator>
-                {
                     Name = "DeepCloneWithCellId should deep clone object and replace CellId with the provided cellId",
                     WithPropertyName = "CellId",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
@@ -340,6 +320,26 @@ namespace OBeautifulCode.DataStructure.Test
 
                         return result;
                     },
+                })
+            .AddScenario(() =>
+                new DeepCloneWithTestScenario<ReportCellLocator>
+                {
+                    Name = "DeepCloneWithSectionId should deep clone object and replace SectionId with the provided sectionId",
+                    WithPropertyName = "SectionId",
+                    SystemUnderTestDeepCloneWithValueFunc = () =>
+                    {
+                        var systemUnderTest = A.Dummy<ReportCellLocator>();
+
+                        var referenceObject = A.Dummy<ReportCellLocator>().ThatIs(_ => !systemUnderTest.SectionId.IsEqualTo(_.SectionId));
+
+                        var result = new SystemUnderTestDeepCloneWithValue<ReportCellLocator>
+                        {
+                            SystemUnderTest = systemUnderTest,
+                            DeepCloneWithValue = referenceObject.SectionId,
+                        };
+
+                        return result;
+                    },
                 });
 
         private static readonly ReportCellLocator ReferenceObjectForEquatableTestScenarios = A.Dummy<ReportCellLocator>();
@@ -361,11 +361,6 @@ namespace OBeautifulCode.DataStructure.Test
                     ObjectsThatAreNotEqualToReferenceObject = new ReportCellLocator[]
                     {
                         new ReportCellLocator(
-                                A.Dummy<ReportCellLocator>().Whose(_ => !_.SectionId.IsEqualTo(ReferenceObjectForEquatableTestScenarios.SectionId)).SectionId,
-                                ReferenceObjectForEquatableTestScenarios.CellId,
-                                ReferenceObjectForEquatableTestScenarios.SlotId,
-                                ReferenceObjectForEquatableTestScenarios.SlotSelectionStrategy),
-                        new ReportCellLocator(
                                 ReferenceObjectForEquatableTestScenarios.SectionId,
                                 A.Dummy<ReportCellLocator>().Whose(_ => !_.CellId.IsEqualTo(ReferenceObjectForEquatableTestScenarios.CellId)).CellId,
                                 ReferenceObjectForEquatableTestScenarios.SlotId,
@@ -380,6 +375,11 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.CellId,
                                 ReferenceObjectForEquatableTestScenarios.SlotId,
                                 A.Dummy<ReportCellLocator>().Whose(_ => !_.SlotSelectionStrategy.IsEqualTo(ReferenceObjectForEquatableTestScenarios.SlotSelectionStrategy)).SlotSelectionStrategy),
+                        new ReportCellLocator(
+                                A.Dummy<ReportCellLocator>().Whose(_ => !_.SectionId.IsEqualTo(ReferenceObjectForEquatableTestScenarios.SectionId)).SectionId,
+                                ReferenceObjectForEquatableTestScenarios.CellId,
+                                ReferenceObjectForEquatableTestScenarios.SlotId,
+                                ReferenceObjectForEquatableTestScenarios.SlotSelectionStrategy),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
                     {
@@ -389,7 +389,7 @@ namespace OBeautifulCode.DataStructure.Test
                         A.Dummy<int?>(),
                         A.Dummy<Guid>(),
                         A.Dummy<SectionCellLocator>(),
-                        A.Dummy<ThisCellLocator>(),
+                        A.Dummy<StandardCellLocator>(),
                     },
                 });
 
@@ -680,7 +680,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "SectionId", "CellId", "SlotId", "SlotSelectionStrategy" };
+                var propertyNames = new string[] { "CellId", "SlotId", "SlotSelectionStrategy", "SectionId" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 

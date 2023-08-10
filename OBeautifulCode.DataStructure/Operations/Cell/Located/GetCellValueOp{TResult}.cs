@@ -21,7 +21,7 @@ namespace OBeautifulCode.DataStructure
         /// <param name="cellLocator">A cell locator.</param>
         /// <param name="defaultValue">OPTIONAL value to use if the cell does not have a value.  DEFAULT is to throw if cell does not have a value.</param>
         public GetCellValueOp(
-            IReturningOperation<CellLocatorBase> cellLocator,
+            IReturningOperation<ICellLocator> cellLocator,
             IReturningOperation<TResult> defaultValue = null)
             : base(cellLocator)
         {

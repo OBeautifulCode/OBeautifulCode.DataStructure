@@ -83,11 +83,10 @@ namespace OBeautifulCode.DataStructure
             .Value;
 
         /// <inheritdoc />
-        public new ThisCellLocator DeepClone() => (ThisCellLocator)this.DeepCloneInternal();
+        public object Clone() => this.DeepClone();
 
         /// <inheritdoc />
-        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
-        protected override CellLocatorBase DeepCloneInternal()
+        public ThisCellLocator DeepClone()
         {
             var result = new ThisCellLocator();
 

@@ -18,7 +18,7 @@ namespace OBeautifulCode.DataStructure
         /// </summary>
         /// <param name="cellLocator">The cell locator.</param>
         public HasCellValueOp(
-            IReturningOperation<CellLocatorBase> cellLocator)
+            IReturningOperation<ICellLocator> cellLocator)
             : base(cellLocator)
         {
         }

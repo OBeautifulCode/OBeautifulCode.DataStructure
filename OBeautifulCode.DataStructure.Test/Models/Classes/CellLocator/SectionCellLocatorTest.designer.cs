@@ -293,7 +293,7 @@ namespace OBeautifulCode.DataStructure.Test
                         A.Dummy<int?>(),
                         A.Dummy<Guid>(),
                         A.Dummy<ReportCellLocator>(),
-                        A.Dummy<ThisCellLocator>(),
+                        A.Dummy<StandardCellLocator>(),
                     },
                 });
 

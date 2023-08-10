@@ -160,6 +160,7 @@
     <Compile Include="Interfaces\Behavior\IClearCellValue.cs" />
     <Compile Include="Interfaces\Behavior\IGetCellValue.cs" />
     <Compile Include="Interfaces\Behavior\IGetCellValue{TValue}.cs" />
+    <Compile Include="Interfaces\Classification\CellLocator\ICellLocator.cs" />
     <Compile Include="Interfaces\Classification\Cell\Feature\IAvailabilityCheckCell.cs" />
     <Compile Include="Interfaces\Classification\Cell\Feature\IOperationOutputCell.cs" />
     <Compile Include="Interfaces\Classification\Cell\Feature\IConstOutputCell.cs" />
@@ -221,6 +222,10 @@
     </Compile>
     <Compile Include="Models\Classes\CellLocator\SectionCellLocator.designer.cs">
       <DependentUpon>SectionCellLocator.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\CellLocator\StandardCellLocator.cs" />
+    <Compile Include="Models\Classes\CellLocator\StandardCellLocator.designer.cs">
+      <DependentUpon>StandardCellLocator.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Classes\CellLocator\ThisCellLocator.cs" />
     <Compile Include="Models\Classes\CellLocator\SectionCellLocator.cs" />
@@ -570,6 +575,7 @@
     <Compile Include="Operations\Cell\LocatedCellOpBase{TResult}.designer.cs">
       <DependentUpon>LocatedCellOpBase{TResult}.cs</DependentUpon>
     </Compile>
+    <Compile Include="Operations\Cell\Located\GetAvailabilityOp.cs" />
     <Compile Include="Operations\Cell\Located\GetAvailabilityOp.designer.cs">
       <DependentUpon>GetAvailabilityOp.cs</DependentUpon>
     </Compile>
@@ -579,7 +585,6 @@
     <Compile Include="Operations\Cell\Located\GetCellValueOp{TResult}.designer.cs">
       <DependentUpon>GetCellValueOp{TResult}.cs</DependentUpon>
     </Compile>
-    <Compile Include="Operations\Cell\Located\GetAvailabilityOp.cs" />
     <Compile Include="Operations\Cell\Located\GetValidityOp.cs" />
     <Compile Include="Operations\Cell\Located\GetCellOpExecutionOutcomeOp.cs" />
     <Compile Include="Operations\Cell\Located\GetValidityOp.designer.cs">

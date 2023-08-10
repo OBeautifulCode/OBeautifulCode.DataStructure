@@ -74,6 +74,7 @@ namespace OBeautifulCode.DataStructure.Test
             AutoFixtureBackedDummyFactory.AddDummyCreator<IMedia>(A.Dummy<MediaBase>);
             AutoFixtureBackedDummyFactory.AddDummyCreator<IOperationOutputCell<Version>>(A.Dummy<OperationCell<Version>>);
             AutoFixtureBackedDummyFactory.AddDummyCreator<IDetails>(A.Dummy<DetailsBase>);
+            AutoFixtureBackedDummyFactory.UseRandomInterfaceImplementationForDummy<ICellLocator>();
 
             // <------------------- OPERATIONS ------------------------>
             RegisterReturningOperation<bool>();
@@ -83,7 +84,7 @@ namespace OBeautifulCode.DataStructure.Test
             RegisterReturningOperation<AvailabilityCheckResult>();
             RegisterReturningOperation<Availability>();
             RegisterReturningOperation<Validity>();
-            RegisterReturningOperation<CellLocatorBase>();
+            RegisterReturningOperation<ICellLocator>();
             RegisterReturningOperation<CompareOperator>();
 
             // <------------------- MODELS ------------------------>

@@ -89,11 +89,7 @@ namespace OBeautifulCode.DataStructure
         /// <inheritdoc />
         public new SectionCellLocator DeepClone() => (SectionCellLocator)this.DeepCloneInternal();
 
-        /// <summary>
-        /// Deep clones this object with a new <see cref="CellId" />.
-        /// </summary>
-        /// <param name="cellId">The new <see cref="CellId" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="SectionCellLocator" /> using the specified <paramref name="cellId" /> for <see cref="CellId" /> and a deep clone of every other property.</returns>
+        /// <inheritdoc />
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -111,7 +107,7 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public SectionCellLocator DeepCloneWithCellId(string cellId)
+        public override CellLocatorBase DeepCloneWithCellId(string cellId)
         {
             var result = new SectionCellLocator(
                                  cellId,
@@ -121,11 +117,7 @@ namespace OBeautifulCode.DataStructure
             return result;
         }
 
-        /// <summary>
-        /// Deep clones this object with a new <see cref="SlotId" />.
-        /// </summary>
-        /// <param name="slotId">The new <see cref="SlotId" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="SectionCellLocator" /> using the specified <paramref name="slotId" /> for <see cref="SlotId" /> and a deep clone of every other property.</returns>
+        /// <inheritdoc />
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -143,7 +135,7 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public SectionCellLocator DeepCloneWithSlotId(string slotId)
+        public override CellLocatorBase DeepCloneWithSlotId(string slotId)
         {
             var result = new SectionCellLocator(
                                  this.CellId?.DeepClone(),
@@ -153,11 +145,7 @@ namespace OBeautifulCode.DataStructure
             return result;
         }
 
-        /// <summary>
-        /// Deep clones this object with a new <see cref="SlotSelectionStrategy" />.
-        /// </summary>
-        /// <param name="slotSelectionStrategy">The new <see cref="SlotSelectionStrategy" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="SectionCellLocator" /> using the specified <paramref name="slotSelectionStrategy" /> for <see cref="SlotSelectionStrategy" /> and a deep clone of every other property.</returns>
+        /// <inheritdoc />
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -175,7 +163,7 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public SectionCellLocator DeepCloneWithSlotSelectionStrategy(SlotSelectionStrategy slotSelectionStrategy)
+        public override CellLocatorBase DeepCloneWithSlotSelectionStrategy(SlotSelectionStrategy slotSelectionStrategy)
         {
             var result = new SectionCellLocator(
                                  this.CellId?.DeepClone(),

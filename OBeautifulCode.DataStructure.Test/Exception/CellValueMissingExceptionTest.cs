@@ -24,7 +24,7 @@ namespace OBeautifulCode.DataStructure.Test
         public static void CellLocator___Should_return_same_cellLocator_passed_to_constructor___When_getting()
         {
             // Arrange
-            var expected = A.Dummy<CellLocatorBase>();
+            var expected = A.Dummy<ICellLocator>();
 
             var systemUnderTest1 = new CellValueMissingException(expected);
             var systemUnderTest2 = new CellValueMissingException(A.Dummy<string>(), expected);
@@ -47,8 +47,8 @@ namespace OBeautifulCode.DataStructure.Test
             // Arrange
             var expected = A.Dummy<string>();
 
-            var systemUnderTest1 = new CellValueMissingException(expected, A.Dummy<CellLocatorBase>());
-            var systemUnderTest2 = new CellValueMissingException(expected, A.Dummy<Exception>(), A.Dummy<CellLocatorBase>());
+            var systemUnderTest1 = new CellValueMissingException(expected, A.Dummy<ICellLocator>());
+            var systemUnderTest2 = new CellValueMissingException(expected, A.Dummy<Exception>(), A.Dummy<ICellLocator>());
 
             // Act
             var actual1 = systemUnderTest1.Message;
@@ -65,7 +65,7 @@ namespace OBeautifulCode.DataStructure.Test
             // Arrange
             var expected = A.Dummy<Exception>();
 
-            var systemUnderTest = new CellValueMissingException(A.Dummy<string>(), expected, A.Dummy<CellLocatorBase>());
+            var systemUnderTest = new CellValueMissingException(A.Dummy<string>(), expected, A.Dummy<ICellLocator>());
 
             // Act
             var actual = systemUnderTest.InnerException;

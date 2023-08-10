@@ -98,7 +98,7 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public virtual LocatedCellOpBase<TResult> DeepCloneWithCellLocator(IReturningOperation<CellLocatorBase> cellLocator)
+        public virtual LocatedCellOpBase<TResult> DeepCloneWithCellLocator(IReturningOperation<ICellLocator> cellLocator)
         {
             throw new NotImplementedException("This method should be abstract.  It was generated as virtual so that you aren't forced to override it when you create a new model that derives from this model.  It will be overridden in the generated designer file.");
         }

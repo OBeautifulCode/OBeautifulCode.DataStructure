@@ -23,7 +23,7 @@ namespace OBeautifulCode.DataStructure
         /// </summary>
         /// <param name="cellLocator">The cell locator.</param>
         public CellNotFoundException(
-            CellLocatorBase cellLocator)
+            ICellLocator cellLocator)
         {
             this.CellLocator = cellLocator;
         }
@@ -35,7 +35,7 @@ namespace OBeautifulCode.DataStructure
         /// <param name="cellLocator">The cell locator.</param>
         public CellNotFoundException(
             string message,
-            CellLocatorBase cellLocator)
+            ICellLocator cellLocator)
             : base(message)
         {
             this.CellLocator = cellLocator;
@@ -50,7 +50,7 @@ namespace OBeautifulCode.DataStructure
         public CellNotFoundException(
             string message,
             Exception innerException,
-            CellLocatorBase cellLocator)
+            ICellLocator cellLocator)
             : base(message, innerException)
         {
             this.CellLocator = cellLocator;
@@ -59,7 +59,7 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Gets the cell locator.
         /// </summary>
-        public CellLocatorBase CellLocator { get; private set; }
+        public ICellLocator CellLocator { get; private set; }
 
         /// <inheritdoc />
         public override string ToString()

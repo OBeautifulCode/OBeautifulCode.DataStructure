@@ -91,7 +91,7 @@ namespace OBeautifulCode.DataStructure
             typeof(IReadOnlyList<NamedValue<bool?>>),
             typeof(IReadOnlyList<NamedValue<DateTime?>>),
             typeof(IReadOnlyList<NamedValue<Guid?>>),
-            typeof(CellLocatorBase),
+            typeof(ICellLocator),
             typeof(AvailabilityCheckResult),
             typeof(ValidationResult),
             typeof(CellOpExecutionOutcome),
@@ -115,6 +115,8 @@ namespace OBeautifulCode.DataStructure
 
         private readonly Dictionary<ICell, string> cellToSectionIdMap;
 
+        private readonly Dictionary<string, IReadOnlyCollection<ICell>> cellIdToCellsMap;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ReportAgent"/> class.
         /// </summary>
@@ -127,9 +129,9 @@ namespace OBeautifulCode.DataStructure
                 throw new ArgumentNullException(nameof(report));
             }
 
-            var sectionIdToAllCellsMap = report.Sections.ToDictionary(_ => _.Id, _ => _.TreeTable.GetAllCells());
+            var sectionToCellsMap = report.Sections.ToDictionary(_ => _, _ => _.TreeTable.GetAllCells());
 
-            var allCells = sectionIdToAllCellsMap.Values.SelectMany(_ => _).ToList();
+            var allCells = sectionToCellsMap.Values.SelectMany(_ => _).ToList();
 
             var distinctCells = allCells.Distinct(new ReferenceEqualityComparer<ICell>()).ToList();
 
@@ -146,18 +148,41 @@ namespace OBeautifulCode.DataStructure
 
             var availabilityCheckCells = allCells.OfType<IAvailabilityCheckCell>().ToList();
 
-            var localSectionIdToCellIdToCellMap = sectionIdToAllCellsMap.ToDictionary(
-                _ => _.Key,
-                _ => _.Value
-                    .Where(cell => !string.IsNullOrWhiteSpace(cell.Id))
-                    .ToDictionary(cell => cell.Id, cell => cell));
+            var localSectionIdToCellIdToCellMap = new Dictionary<string, Dictionary<string, ICell>>();
 
-            var localCellToSectionIdMap = sectionIdToAllCellsMap
-                .SelectMany(_ => _.Value.Select(cell => new { SectionId = _.Key, Cell = cell }))
-                .ToDictionary(_ => _.Cell, _ => _.SectionId, new ReferenceEqualityComparer<ICell>());
+            var localCellToSectionIdMap = new Dictionary<ICell, string>(new ReferenceEqualityComparer<ICell>());
+
+            var localCellIdToCellsMap = new Dictionary<string, IReadOnlyCollection<ICell>>();
+
+            foreach (var sectionToCellsMapKvp in sectionToCellsMap)
+            {
+                var section = sectionToCellsMapKvp.Key;
+                var thisSectionCellIdToCellMap = new Dictionary<string, ICell>();
+
+                foreach (var cell in sectionToCellsMapKvp.Value)
+                {
+                    if (!string.IsNullOrWhiteSpace(cell.Id))
+                    {
+                        thisSectionCellIdToCellMap.Add(cell.Id, cell);
+
+                        if (!localCellIdToCellsMap.TryGetValue(cell.Id, out var thisIdCells))
+                        {
+                            thisIdCells = new List<ICell>();
+                            localCellIdToCellsMap.Add(cell.Id, thisIdCells);
+                        }
+
+                        ((List<ICell>)thisIdCells).Add(cell);
+                    }
+
+                    localCellToSectionIdMap.Add(cell, section.Id);
+                }
+
+                localSectionIdToCellIdToCellMap.Add(section.Id, thisSectionCellIdToCellMap);
+            }
 
             this.sectionIdToCellIdToCellMap = localSectionIdToCellIdToCellMap;
             this.cellToSectionIdMap = localCellToSectionIdMap;
+            this.cellIdToCellsMap = localCellIdToCellsMap;
 
             this.OperationCells = operationCells;
             this.InputCells = inputCells;
@@ -194,76 +219,31 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Gets a cell.
         /// </summary>
-        /// <param name="reportCellLocator">The report cell locator.</param>
+        /// <param name="cellLocator">The cell locator.</param>
         /// <returns>
         /// The cell.
         /// </returns>
         public ICell GetCell(
-            ReportCellLocator reportCellLocator)
+            StandardCellLocator cellLocator)
         {
-            if (reportCellLocator == null)
+            if (cellLocator == null)
             {
-                throw new ArgumentNullException(nameof(reportCellLocator));
+                throw new ArgumentNullException(nameof(cellLocator));
             }
 
-            var sectionId = reportCellLocator.SectionId;
-
-            if (!this.sectionIdToCellIdToCellMap.ContainsKey(sectionId))
+            if (!this.cellIdToCellsMap.TryGetValue(cellLocator.CellId, out var cells))
             {
-                throw new CellNotFoundException(Invariant($"There is no section with id '{sectionId}'."), reportCellLocator);
+                throw new CellNotFoundException(Invariant($"There is no cell with id '{cellLocator.CellId}' in the report."), cellLocator);
             }
 
-            var cellIdToCellMap = this.sectionIdToCellIdToCellMap[sectionId];
-
-            var cellId = reportCellLocator.CellId;
-
-            if (!cellIdToCellMap.TryGetValue(cellId, out var cell))
+            if (cells.Count > 1)
             {
-                throw new CellNotFoundException(Invariant($"There is no cell with id '{cellId}' in section '{sectionId}'."), reportCellLocator);
+                throw new CellNotFoundException(Invariant($"There are multiple cells with id '{cellLocator.CellId}' in the report."), cellLocator);
             }
 
-            ICell result;
+            var cell = cells.Single();
 
-            var slotId = reportCellLocator.SlotId;
-
-            if (string.IsNullOrWhiteSpace(slotId))
-            {
-                result = cell;
-            }
-            else
-            {
-                if (cell is ISlottedCell slottedCell)
-                {
-                    if (slottedCell.SlotIdToCellMap.ContainsKey(slotId))
-                    {
-                        result = slottedCell.SlotIdToCellMap[slotId];
-                    }
-                    else
-                    {
-                        throw new CellNotFoundException(Invariant($"Slot id '{slotId}' was specified, but the addressed cell '{cellId}' in section '{sectionId}' does not contain a slot having that id."), reportCellLocator);
-                    }
-                }
-                else
-                {
-                    throw new CellNotFoundException(Invariant($"Slot id '{slotId}' was specified, but the addressed cell '{cellId}' in section '{sectionId}' is not a slotted cell."), reportCellLocator);
-                }
-            }
-
-            if (result is ISlottedCell addressedSlottedCell)
-            {
-                if (reportCellLocator.SlotSelectionStrategy == SlotSelectionStrategy.DefaultSlot)
-                {
-                    result = addressedSlottedCell.SlotIdToCellMap[addressedSlottedCell.DefaultSlotId];
-                }
-                else if (reportCellLocator.SlotSelectionStrategy == SlotSelectionStrategy.ThrowIfSlotIdNotSpecified)
-                {
-                    throw new CellNotFoundException(Invariant($"Located an {nameof(ISlottedCell)} (and not a slot within that cell) and {nameof(SlotSelectionStrategy)} is {nameof(SlotSelectionStrategy.ThrowIfSlotIdNotSpecified)}."), reportCellLocator);
-                }
-                else
-                {
-                    throw new NotSupportedException(Invariant($"This {nameof(SlotSelectionStrategy)} is not supported: {reportCellLocator.SlotSelectionStrategy}."));
-                }
-            }
+            var result = GetCellResolvingSlotting(cell, cellLocator);
 
             return result;
         }
@@ -272,19 +252,19 @@ namespace OBeautifulCode.DataStructure
         /// Gets a cell.
         /// </summary>
         /// <typeparam name="TCell">The type of cell to return.</typeparam>
-        /// <param name="reportCellLocator">The report cell locator.</param>
+        /// <param name="cellLocator">The cell locator.</param>
         /// <returns>
         /// The cell.
         /// </returns>
         public TCell GetCell<TCell>(
-            ReportCellLocator reportCellLocator)
+            StandardCellLocator cellLocator)
             where TCell : ICell
         {
-            var cell = this.GetCell(reportCellLocator);
+            var cell = this.GetCell(cellLocator);
 
             if (!(cell is TCell result))
             {
-                throw new CellNotFoundException(Invariant($"The operation addresses a cell of type {cell.GetType().ToStringReadable()}, which is not assignable to the specified {nameof(TCell)}."), reportCellLocator);
+                throw new CellNotFoundException(Invariant($"Addressing a cell of type {cell.GetType().ToStringReadable()}, which is not assignable to the specified {nameof(TCell)}."), cellLocator);
             }
 
             return result;
@@ -293,18 +273,74 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Gets a cell.
         /// </summary>
-        /// <param name="sectionCellLocator">The section cell locator.</param>
-        /// <param name="referenceCell">A reference cell; any cell in the section containing the cell targeted by <paramref name="sectionCellLocator"/>.</param>
+        /// <param name="cellLocator">The cell locator.</param>
         /// <returns>
         /// The cell.
         /// </returns>
         public ICell GetCell(
-            SectionCellLocator sectionCellLocator,
+            ReportCellLocator cellLocator)
+        {
+            if (cellLocator == null)
+            {
+                throw new ArgumentNullException(nameof(cellLocator));
+            }
+
+            var sectionId = cellLocator.SectionId;
+
+            if (!this.sectionIdToCellIdToCellMap.ContainsKey(sectionId))
+            {
+                throw new CellNotFoundException(Invariant($"There is no section with id '{sectionId}'."), cellLocator);
+            }
+
+            var cellIdToCellMap = this.sectionIdToCellIdToCellMap[sectionId];
+
+            if (!cellIdToCellMap.TryGetValue(cellLocator.CellId, out var cell))
+            {
+                throw new CellNotFoundException(Invariant($"There is no cell with id '{cellLocator.CellId}' in section '{sectionId}'."), cellLocator);
+            }
+
+            var result = GetCellResolvingSlotting(cell, cellLocator, sectionId);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Gets a cell.
+        /// </summary>
+        /// <typeparam name="TCell">The type of cell to return.</typeparam>
+        /// <param name="cellLocator">The cell locator.</param>
+        /// <returns>
+        /// The cell.
+        /// </returns>
+        public TCell GetCell<TCell>(
+            ReportCellLocator cellLocator)
+            where TCell : ICell
+        {
+            var cell = this.GetCell(cellLocator);
+
+            if (!(cell is TCell result))
+            {
+                throw new CellNotFoundException(Invariant($"Addressing a cell of type {cell.GetType().ToStringReadable()}, which is not assignable to the specified {nameof(TCell)}."), cellLocator);
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Gets a cell.
+        /// </summary>
+        /// <param name="cellLocator">The cell locator.</param>
+        /// <param name="referenceCell">A reference cell; any cell in the section containing the cell targeted by <paramref name="cellLocator"/>.</param>
+        /// <returns>
+        /// The cell.
+        /// </returns>
+        public ICell GetCell(
+            SectionCellLocator cellLocator,
             ICell referenceCell)
         {
-            if (sectionCellLocator == null)
+            if (cellLocator == null)
             {
-                throw new ArgumentNullException(nameof(sectionCellLocator));
+                throw new ArgumentNullException(nameof(cellLocator));
             }
 
             if (referenceCell == null)
@@ -314,10 +350,10 @@ namespace OBeautifulCode.DataStructure
 
             if (!this.cellToSectionIdMap.TryGetValue(referenceCell, out var sectionId))
             {
-                throw new CellNotFoundException(Invariant($"{nameof(referenceCell)} is not a cell in the report."), sectionCellLocator);
+                throw new CellNotFoundException(Invariant($"{nameof(referenceCell)} is not a cell in the report."), cellLocator);
             }
 
-            var reportCellLocator = new ReportCellLocator(sectionId, sectionCellLocator.CellId, sectionCellLocator.SlotId, sectionCellLocator.SlotSelectionStrategy);
+            var reportCellLocator = new ReportCellLocator(sectionId, cellLocator.CellId, cellLocator.SlotId, cellLocator.SlotSelectionStrategy);
 
             var result = this.GetCell(reportCellLocator);
 
@@ -383,6 +419,61 @@ namespace OBeautifulCode.DataStructure
             }
 
             await RecalcSynchronizer.RunAsync(() => this.ReCalcInternalAsync(timestampUtc, protocolFactoryFuncs, additionalTypesForCoreCellOps));
+        }
+
+        private static ICell GetCellResolvingSlotting(
+            ICell cell,
+            CellLocatorBase cellLocator,
+            string sectionId = null)
+        {
+            ICell result;
+
+            var slotId = cellLocator.SlotId;
+
+            if (string.IsNullOrWhiteSpace(slotId))
+            {
+                result = cell;
+            }
+            else
+            {
+                var exceptionMessageSectionQualifier = sectionId == null
+                ? string.Empty
+                : Invariant($"in section '{sectionId}' ");
+
+                if (cell is ISlottedCell slottedCell)
+                {
+                    if (slottedCell.SlotIdToCellMap.ContainsKey(slotId))
+                    {
+                        result = slottedCell.SlotIdToCellMap[slotId];
+                    }
+                    else
+                    {
+                        throw new CellNotFoundException(Invariant($"Slot id '{slotId}' was specified, but the addressed cell '{cellLocator.CellId}' {exceptionMessageSectionQualifier}does not contain a slot having that id."), cellLocator);
+                    }
+                }
+                else
+                {
+                    throw new CellNotFoundException(Invariant($"Slot id '{slotId}' was specified, but the addressed cell '{cellLocator.CellId}' {exceptionMessageSectionQualifier}is not a slotted cell."), cellLocator);
+                }
+            }
+
+            if (result is ISlottedCell addressedSlottedCell)
+            {
+                if (cellLocator.SlotSelectionStrategy == SlotSelectionStrategy.DefaultSlot)
+                {
+                    result = addressedSlottedCell.SlotIdToCellMap[addressedSlottedCell.DefaultSlotId];
+                }
+                else if (cellLocator.SlotSelectionStrategy == SlotSelectionStrategy.ThrowIfSlotIdNotSpecified)
+                {
+                    throw new CellNotFoundException(Invariant($"Located an {nameof(ISlottedCell)} (and not a slot within that cell) and {nameof(SlotSelectionStrategy)} is {nameof(SlotSelectionStrategy.ThrowIfSlotIdNotSpecified)}."), cellLocator);
+                }
+                else
+                {
+                    throw new NotSupportedException(Invariant($"This {nameof(SlotSelectionStrategy)} is not supported: {cellLocator.SlotSelectionStrategy}."));
+                }
+            }
+
+            return result;
         }
 
         private static IOperation BuildExecuteOperationCellIfNecessaryOp(

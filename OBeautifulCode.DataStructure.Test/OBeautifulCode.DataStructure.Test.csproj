@@ -752,6 +752,10 @@
     <Compile Include="Models\Classes\Cell\Slotted\SlottedCellTest.cs" />
     <Compile Include="Operations\Decimal\SumOpTest.cs" />
     <AdditionalFiles Include=".analyzers\stylecop.json" />
+    <Compile Include="Models\Classes\CellLocator\StandardCellLocatorTest.cs" />
+    <Compile Include="Models\Classes\CellLocator\StandardCellLocatorTest.designer.cs">
+      <DependentUpon>StandardCellLocatorTest.cs</DependentUpon>
+    </Compile>
     <None Include=".analyzers\test.ruleset" />
     <None Include="DummyFactory.recipe-nuspec" />
     <Compile Include="Models\Classes\CellLocator\ReportCellLocatorTest.cs" />
