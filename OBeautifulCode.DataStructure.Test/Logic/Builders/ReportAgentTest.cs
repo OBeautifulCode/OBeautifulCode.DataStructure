@@ -1563,11 +1563,11 @@ namespace OBeautifulCode.DataStructure.Test
                     operation:
                         Op.IfThenElse(
                             Op.AndAlso(
-                                Cell.InSomeSection(SectionIds.Section2, numberOfSalesFteCell.Id).HasValue(),
+                                Cell.InReport(numberOfSalesFteCell.Id).HasValue(),
                                 Cell.InSomeSection(SectionIds.Section2, numberOfWarehouseFteCell.Id).HasValue()),
                             Op.Sum(
                                 Cell.InSomeSection(SectionIds.Section2, numberOfSalesFteCell.Id).GetValue<decimal>(),
-                                Cell.InSomeSection(SectionIds.Section2, numberOfWarehouseFteCell.Id).GetValue<decimal>(),
+                                Cell.InReport(numberOfWarehouseFteCell.Id).GetValue<decimal>(),
                                 Cell.InSomeSection(SectionIds.Section2, numberOfWarehouseSupportFteCell.Id).GetValue<decimal>()),
                             Op.Abort<decimal>("cannot perform sum")),
                     validation:

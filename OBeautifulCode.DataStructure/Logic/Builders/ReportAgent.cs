@@ -23,6 +23,7 @@ namespace OBeautifulCode.DataStructure
     /// <summary>
     /// Assists in working with a <see cref="Report"/>.
     /// </summary>
+    [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = ObcSuppressBecause.CA1506_AvoidExcessiveClassCoupling_DisagreeWithAssessment)]
     public class ReportAgent
     {
         /// <summary>
