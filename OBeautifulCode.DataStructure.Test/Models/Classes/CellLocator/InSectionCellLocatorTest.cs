@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SectionCellLocatorTest.cs" company="OBeautifulCode">
+// <copyright file="InSectionCellLocatorTest.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -23,23 +23,23 @@ namespace OBeautifulCode.DataStructure.Test
     using static System.FormattableString;
 
     [SuppressMessage("Microsoft.Maintainability", "CA1505:AvoidUnmaintainableCode", Justification = ObcSuppressBecause.CA1505_AvoidUnmaintainableCode_DisagreeWithAssessment)]
-    public static partial class SectionCellLocatorTest
+    public static partial class InSectionCellLocatorTest
     {
         [SuppressMessage("Microsoft.Maintainability", "CA1505:AvoidUnmaintainableCode", Justification = ObcSuppressBecause.CA1505_AvoidUnmaintainableCode_DisagreeWithAssessment)]
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = ObcSuppressBecause.CA1810_InitializeReferenceTypeStaticFieldsInline_FieldsDeclaredInCodeGeneratedPartialTestClass)]
-        static SectionCellLocatorTest()
+        static InSectionCellLocatorTest()
         {
             ConstructorArgumentValidationTestScenarios
                .RemoveAllScenarios()
                .AddScenario(() =>
-                   new ConstructorArgumentValidationTestScenario<SectionCellLocator>
+                   new ConstructorArgumentValidationTestScenario<InSectionCellLocator>
                    {
                        Name = "constructor should throw ArgumentNullException when parameter 'cellId' is null scenario",
                        ConstructionFunc = () =>
                        {
-                           var referenceObject = A.Dummy<SectionCellLocator>();
+                           var referenceObject = A.Dummy<InSectionCellLocator>();
 
-                           var result = new SectionCellLocator(
+                           var result = new InSectionCellLocator(
                                                 null,
                                                 referenceObject.SlotId,
                                                 referenceObject.SlotSelectionStrategy);
@@ -50,14 +50,14 @@ namespace OBeautifulCode.DataStructure.Test
                        ExpectedExceptionMessageContains = new[] { "cellId", },
                    })
                .AddScenario(() =>
-                   new ConstructorArgumentValidationTestScenario<SectionCellLocator>
+                   new ConstructorArgumentValidationTestScenario<InSectionCellLocator>
                    {
                        Name = "constructor should throw ArgumentException when parameter 'cellId' is white space scenario",
                        ConstructionFunc = () =>
                        {
-                           var referenceObject = A.Dummy<SectionCellLocator>();
+                           var referenceObject = A.Dummy<InSectionCellLocator>();
 
-                           var result = new SectionCellLocator(
+                           var result = new InSectionCellLocator(
                                                 Invariant($"  {Environment.NewLine}  "),
                                                 referenceObject.SlotId,
                                                 referenceObject.SlotSelectionStrategy);
@@ -68,14 +68,14 @@ namespace OBeautifulCode.DataStructure.Test
                        ExpectedExceptionMessageContains = new[] { "cellId", "white space", },
                    })
                .AddScenario(() =>
-                   new ConstructorArgumentValidationTestScenario<SectionCellLocator>
+                   new ConstructorArgumentValidationTestScenario<InSectionCellLocator>
                    {
                        Name = "constructor should throw ArgumentOutOfRangeException when parameter 'slotSelectionStrategy' is SlotSelectionStrategy.Unknown",
                        ConstructionFunc = () =>
                        {
-                           var referenceObject = A.Dummy<SectionCellLocator>();
+                           var referenceObject = A.Dummy<InSectionCellLocator>();
 
-                           var result = new SectionCellLocator(
+                           var result = new InSectionCellLocator(
                                                 referenceObject.CellId,
                                                 referenceObject.SlotId,
                                                 SlotSelectionStrategy.Unknown);

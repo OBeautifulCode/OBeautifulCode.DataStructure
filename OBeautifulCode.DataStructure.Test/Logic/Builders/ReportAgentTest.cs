@@ -331,7 +331,7 @@ namespace OBeautifulCode.DataStructure.Test
             var systemUnderTest = new ReportAgent(A.Dummy<Report>());
 
             // Act
-            var actual = Record.Exception(() => systemUnderTest.GetCell((ReportCellLocator)null));
+            var actual = Record.Exception(() => systemUnderTest.GetCell((InReportCellLocator)null));
 
             // Assert
             actual.AsTest().Must().BeOfType<ArgumentNullException>();
@@ -344,7 +344,7 @@ namespace OBeautifulCode.DataStructure.Test
             // Arrange
             var report = A.Dummy<Report>();
 
-            var cellLocator = new ReportCellLocator(A.Dummy<string>(), report.Sections.First().TreeTable.GetAllCells().First().Id);
+            var cellLocator = new InReportCellLocator(A.Dummy<string>(), report.Sections.First().TreeTable.GetAllCells().First().Id);
 
             var systemUnderTest = new ReportAgent(report);
 
@@ -365,7 +365,7 @@ namespace OBeautifulCode.DataStructure.Test
 
             var section = report.Sections.First();
 
-            var cellLocator = new ReportCellLocator(section.Id, A.Dummy<string>());
+            var cellLocator = new InReportCellLocator(section.Id, A.Dummy<string>());
 
             var systemUnderTest = new ReportAgent(report);
 
@@ -388,7 +388,7 @@ namespace OBeautifulCode.DataStructure.Test
 
             var cell = section.TreeTable.GetAllCells().First(_ => _ is INotSlottedCell);
 
-            var cellLocator = new ReportCellLocator(section.Id, cell.Id, A.Dummy<string>());
+            var cellLocator = new InReportCellLocator(section.Id, cell.Id, A.Dummy<string>());
 
             var systemUnderTest = new ReportAgent(report);
 
@@ -411,7 +411,7 @@ namespace OBeautifulCode.DataStructure.Test
 
             var cell = section.TreeTable.GetAllCells().First(_ => _ is ISlottedCell);
 
-            var cellLocator = new ReportCellLocator(section.Id, cell.Id, A.Dummy<string>());
+            var cellLocator = new InReportCellLocator(section.Id, cell.Id, A.Dummy<string>());
 
             var systemUnderTest = new ReportAgent(report);
 
@@ -434,7 +434,7 @@ namespace OBeautifulCode.DataStructure.Test
 
             var cell = section.TreeTable.GetAllCells().First(_ => _ is ISlottedCell);
 
-            var cellLocator = new ReportCellLocator(section.Id, cell.Id, null, SlotSelectionStrategy.ThrowIfSlotIdNotSpecified);
+            var cellLocator = new InReportCellLocator(section.Id, cell.Id, null, SlotSelectionStrategy.ThrowIfSlotIdNotSpecified);
 
             var systemUnderTest = new ReportAgent(report);
 
@@ -457,7 +457,7 @@ namespace OBeautifulCode.DataStructure.Test
 
             var expected = section.TreeTable.GetAllCells().First(_ => _ is INotSlottedCell);
 
-            var cellLocator = new ReportCellLocator(section.Id, expected.Id);
+            var cellLocator = new InReportCellLocator(section.Id, expected.Id);
 
             var systemUnderTest = new ReportAgent(report);
 
@@ -480,7 +480,7 @@ namespace OBeautifulCode.DataStructure.Test
 
             var expected = (ICell)cell.SlotIdToCellMap[cell.DefaultSlotId];
 
-            var cellLocator = new ReportCellLocator(section.Id, cell.Id, null, SlotSelectionStrategy.DefaultSlot);
+            var cellLocator = new InReportCellLocator(section.Id, cell.Id, null, SlotSelectionStrategy.DefaultSlot);
 
             var systemUnderTest = new ReportAgent(report);
 
@@ -505,7 +505,7 @@ namespace OBeautifulCode.DataStructure.Test
 
             var expected = (ICell)cell.SlotIdToCellMap[slotId];
 
-            var cellLocator = new ReportCellLocator(section.Id, cell.Id, slotId, SlotSelectionStrategy.ThrowIfSlotIdNotSpecified);
+            var cellLocator = new InReportCellLocator(section.Id, cell.Id, slotId, SlotSelectionStrategy.ThrowIfSlotIdNotSpecified);
 
             var systemUnderTest = new ReportAgent(report);
 
@@ -537,7 +537,7 @@ namespace OBeautifulCode.DataStructure.Test
             var systemUnderTest = new ReportAgent(A.Dummy<Report>());
 
             // Act
-            var actual = Record.Exception(() => systemUnderTest.GetCell(A.Dummy<SectionCellLocator>(), null));
+            var actual = Record.Exception(() => systemUnderTest.GetCell(A.Dummy<InSectionCellLocator>(), null));
 
             // Assert
             actual.AsTest().Must().BeOfType<ArgumentNullException>();
@@ -552,7 +552,7 @@ namespace OBeautifulCode.DataStructure.Test
 
             var systemUnderTest = new ReportAgent(report);
 
-            var cellLocator = new SectionCellLocator(report.Sections.First().TreeTable.GetAllCells().First().Id);
+            var cellLocator = new InSectionCellLocator(report.Sections.First().TreeTable.GetAllCells().First().Id);
 
             // Act
             var actual = Record.Exception(() => systemUnderTest.GetCell(cellLocator, A.Dummy<ICell>()));
@@ -573,11 +573,11 @@ namespace OBeautifulCode.DataStructure.Test
 
             var referenceCell = section.TreeTable.GetAllCells().First();
 
-            var cellLocator = new SectionCellLocator(A.Dummy<string>());
+            var cellLocator = new InSectionCellLocator(A.Dummy<string>());
 
             var systemUnderTest = new ReportAgent(report);
 
-            var expectedReportCellLocator = new ReportCellLocator(section.Id, cellLocator.CellId);
+            var expectedReportCellLocator = new InReportCellLocator(section.Id, cellLocator.CellId);
 
             // Act
             var actual = Record.Exception(() => systemUnderTest.GetCell(cellLocator, referenceCell));
@@ -602,9 +602,9 @@ namespace OBeautifulCode.DataStructure.Test
 
             var referenceCell = allCells.First(_ => !_.Equals(cell));
 
-            var cellLocator = new SectionCellLocator(cell.Id, A.Dummy<string>());
+            var cellLocator = new InSectionCellLocator(cell.Id, A.Dummy<string>());
 
-            var expectedReportCellLocator = new ReportCellLocator(section.Id, cellLocator.CellId, cellLocator.SlotId);
+            var expectedReportCellLocator = new InReportCellLocator(section.Id, cellLocator.CellId, cellLocator.SlotId);
 
             var systemUnderTest = new ReportAgent(report);
 
@@ -631,9 +631,9 @@ namespace OBeautifulCode.DataStructure.Test
 
             var referenceCell = allCells.First(_ => !_.Equals(cell));
 
-            var cellLocator = new SectionCellLocator(cell.Id, A.Dummy<string>());
+            var cellLocator = new InSectionCellLocator(cell.Id, A.Dummy<string>());
 
-            var expectedReportCellLocator = new ReportCellLocator(section.Id, cellLocator.CellId, cellLocator.SlotId);
+            var expectedReportCellLocator = new InReportCellLocator(section.Id, cellLocator.CellId, cellLocator.SlotId);
 
             var systemUnderTest = new ReportAgent(report);
 
@@ -660,9 +660,9 @@ namespace OBeautifulCode.DataStructure.Test
 
             var referenceCell = allCells.First(_ => !_.Equals(cell));
 
-            var cellLocator = new SectionCellLocator(cell.Id, null, SlotSelectionStrategy.ThrowIfSlotIdNotSpecified);
+            var cellLocator = new InSectionCellLocator(cell.Id, null, SlotSelectionStrategy.ThrowIfSlotIdNotSpecified);
 
-            var expectedReportCellLocator = new ReportCellLocator(section.Id, cellLocator.CellId, cellLocator.SlotId);
+            var expectedReportCellLocator = new InReportCellLocator(section.Id, cellLocator.CellId, cellLocator.SlotId);
 
             var systemUnderTest = new ReportAgent(report);
 
@@ -689,7 +689,7 @@ namespace OBeautifulCode.DataStructure.Test
 
             var referenceCell = allCells.First(_ => !_.Equals(expected));
 
-            var cellLocator = new SectionCellLocator(expected.Id);
+            var cellLocator = new InSectionCellLocator(expected.Id);
 
             var systemUnderTest = new ReportAgent(report);
 
@@ -716,7 +716,7 @@ namespace OBeautifulCode.DataStructure.Test
 
             var expected = (ICell)cell.SlotIdToCellMap[cell.DefaultSlotId];
 
-            var cellLocator = new SectionCellLocator(cell.Id, null, SlotSelectionStrategy.DefaultSlot);
+            var cellLocator = new InSectionCellLocator(cell.Id, null, SlotSelectionStrategy.DefaultSlot);
 
             var systemUnderTest = new ReportAgent(report);
 
@@ -745,7 +745,7 @@ namespace OBeautifulCode.DataStructure.Test
 
             var expected = (ICell)cell.SlotIdToCellMap[slotId];
 
-            var cellLocator = new SectionCellLocator(cell.Id, slotId, SlotSelectionStrategy.ThrowIfSlotIdNotSpecified);
+            var cellLocator = new InSectionCellLocator(cell.Id, slotId, SlotSelectionStrategy.ThrowIfSlotIdNotSpecified);
 
             var systemUnderTest = new ReportAgent(report);
 
@@ -805,21 +805,21 @@ namespace OBeautifulCode.DataStructure.Test
             reportAgent.Recalc(DateTime.UtcNow, protocolFactoryFuncs);
 
             // Assert
-            var isForProfitCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.IsForProfit));
+            var isForProfitCell = reportAgent.GetCell<IInputCell>(new InReportCellLocator(SectionIds.Section1, CellIds.IsForProfit));
             isForProfitCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Valid);
             isForProfitCell.GetValidationMessageOrNull().AsTest().Must().BeNull();
             isForProfitCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Enabled);
             isForProfitCell.GetAvailabilityCheckMessageOrNull().AsTest().Must().BeNull();
             Record.Exception(() => isForProfitCell.GetCellObjectValue()).AsArg().Must().BeOfType<InvalidOperationException>();
 
-            var restrictedCashCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.RestrictedCash));
+            var restrictedCashCell = reportAgent.GetCell<IInputCell>(new InReportCellLocator(SectionIds.Section1, CellIds.RestrictedCash));
             restrictedCashCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Valid);
             restrictedCashCell.GetValidationMessageOrNull().AsTest().Must().BeNull();
             restrictedCashCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Disabled);
             restrictedCashCell.GetAvailabilityCheckMessageOrNull().AsTest().Must().BeEqualTo("got-disabled-1");
             Record.Exception(() => restrictedCashCell.GetCellObjectValue()).AsArg().Must().BeOfType<InvalidOperationException>();
 
-            var partiallyRestrictedCashCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.PartiallyRestrictedCash));
+            var partiallyRestrictedCashCell = reportAgent.GetCell<IInputCell>(new InReportCellLocator(SectionIds.Section1, CellIds.PartiallyRestrictedCash));
             partiallyRestrictedCashCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Valid);
             partiallyRestrictedCashCell.GetValidationMessageOrNull().AsTest().Must().BeNull();
             partiallyRestrictedCashCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Disabled);
@@ -844,21 +844,21 @@ namespace OBeautifulCode.DataStructure.Test
             await reportAgent.RecalcAsync(DateTime.UtcNow, protocolFactoryFuncs);
 
             // Assert
-            var isForProfitCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.IsForProfit));
+            var isForProfitCell = reportAgent.GetCell<IInputCell>(new InReportCellLocator(SectionIds.Section1, CellIds.IsForProfit));
             isForProfitCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Valid);
             isForProfitCell.GetValidationMessageOrNull().AsTest().Must().BeNull();
             isForProfitCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Enabled);
             isForProfitCell.GetAvailabilityCheckMessageOrNull().AsTest().Must().BeNull();
             Record.Exception(() => isForProfitCell.GetCellObjectValue()).AsArg().Must().BeOfType<InvalidOperationException>();
 
-            var restrictedCashCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.RestrictedCash));
+            var restrictedCashCell = reportAgent.GetCell<IInputCell>(new InReportCellLocator(SectionIds.Section1, CellIds.RestrictedCash));
             restrictedCashCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Valid);
             restrictedCashCell.GetValidationMessageOrNull().AsTest().Must().BeNull();
             restrictedCashCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Disabled);
             restrictedCashCell.GetAvailabilityCheckMessageOrNull().AsTest().Must().BeEqualTo("got-disabled-1");
             Record.Exception(() => restrictedCashCell.GetCellObjectValue()).AsArg().Must().BeOfType<InvalidOperationException>();
 
-            var partiallyRestrictedCashCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.PartiallyRestrictedCash));
+            var partiallyRestrictedCashCell = reportAgent.GetCell<IInputCell>(new InReportCellLocator(SectionIds.Section1, CellIds.PartiallyRestrictedCash));
             partiallyRestrictedCashCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Valid);
             partiallyRestrictedCashCell.GetValidationMessageOrNull().AsTest().Must().BeNull();
             partiallyRestrictedCashCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Disabled);
@@ -879,7 +879,7 @@ namespace OBeautifulCode.DataStructure.Test
                 frameworkFactory => new ProprietaryProtocols(frameworkFactory).ToProtocolFactory(),
             };
 
-            var isForProfitCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.IsForProfit));
+            var isForProfitCell = reportAgent.GetCell<IInputCell>(new InReportCellLocator(SectionIds.Section1, CellIds.IsForProfit));
 
             isForProfitCell.SetCellValue(true, DateTime.UtcNow);
 
@@ -893,14 +893,14 @@ namespace OBeautifulCode.DataStructure.Test
             isForProfitCell.GetAvailabilityCheckMessageOrNull().AsTest().Must().BeNull();
             isForProfitCell.GetCellObjectValue().Must().BeEqualTo((object)true);
 
-            var restrictedCashCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.RestrictedCash));
+            var restrictedCashCell = reportAgent.GetCell<IInputCell>(new InReportCellLocator(SectionIds.Section1, CellIds.RestrictedCash));
             restrictedCashCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Valid);
             restrictedCashCell.GetValidationMessageOrNull().AsTest().Must().BeNull();
             restrictedCashCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Disabled);
             restrictedCashCell.GetAvailabilityCheckMessageOrNull().AsTest().Must().BeEqualTo("got-disabled-2");
             Record.Exception(() => restrictedCashCell.GetCellObjectValue()).AsArg().Must().BeOfType<InvalidOperationException>();
 
-            var partiallyRestrictedCashCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.PartiallyRestrictedCash));
+            var partiallyRestrictedCashCell = reportAgent.GetCell<IInputCell>(new InReportCellLocator(SectionIds.Section1, CellIds.PartiallyRestrictedCash));
             partiallyRestrictedCashCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Valid);
             partiallyRestrictedCashCell.GetValidationMessageOrNull().AsTest().Must().BeNull();
             partiallyRestrictedCashCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Disabled);
@@ -921,7 +921,7 @@ namespace OBeautifulCode.DataStructure.Test
                 frameworkFactory => new ProprietaryProtocols(frameworkFactory).ToProtocolFactory(),
             };
 
-            var isForProfitCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.IsForProfit));
+            var isForProfitCell = reportAgent.GetCell<IInputCell>(new InReportCellLocator(SectionIds.Section1, CellIds.IsForProfit));
 
             isForProfitCell.SetCellValue(true, DateTime.UtcNow);
 
@@ -935,14 +935,14 @@ namespace OBeautifulCode.DataStructure.Test
             isForProfitCell.GetAvailabilityCheckMessageOrNull().AsTest().Must().BeNull();
             isForProfitCell.GetCellObjectValue().Must().BeEqualTo((object)true);
 
-            var restrictedCashCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.RestrictedCash));
+            var restrictedCashCell = reportAgent.GetCell<IInputCell>(new InReportCellLocator(SectionIds.Section1, CellIds.RestrictedCash));
             restrictedCashCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Valid);
             restrictedCashCell.GetValidationMessageOrNull().AsTest().Must().BeNull();
             restrictedCashCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Disabled);
             restrictedCashCell.GetAvailabilityCheckMessageOrNull().AsTest().Must().BeEqualTo("got-disabled-2");
             Record.Exception(() => restrictedCashCell.GetCellObjectValue()).AsArg().Must().BeOfType<InvalidOperationException>();
 
-            var partiallyRestrictedCashCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.PartiallyRestrictedCash));
+            var partiallyRestrictedCashCell = reportAgent.GetCell<IInputCell>(new InReportCellLocator(SectionIds.Section1, CellIds.PartiallyRestrictedCash));
             partiallyRestrictedCashCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Valid);
             partiallyRestrictedCashCell.GetValidationMessageOrNull().AsTest().Must().BeNull();
             partiallyRestrictedCashCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Disabled);
@@ -963,7 +963,7 @@ namespace OBeautifulCode.DataStructure.Test
                 frameworkFactory => new ProprietaryProtocols(frameworkFactory).ToProtocolFactory(),
             };
 
-            var isForProfitCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.IsForProfit));
+            var isForProfitCell = reportAgent.GetCell<IInputCell>(new InReportCellLocator(SectionIds.Section1, CellIds.IsForProfit));
 
             isForProfitCell.SetCellValue(false, DateTime.UtcNow);
 
@@ -977,14 +977,14 @@ namespace OBeautifulCode.DataStructure.Test
             isForProfitCell.GetAvailabilityCheckMessageOrNull().AsTest().Must().BeNull();
             isForProfitCell.GetCellObjectValue().Must().BeEqualTo((object)false);
 
-            var restrictedCashCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.RestrictedCash));
+            var restrictedCashCell = reportAgent.GetCell<IInputCell>(new InReportCellLocator(SectionIds.Section1, CellIds.RestrictedCash));
             restrictedCashCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Valid);
             restrictedCashCell.GetValidationMessageOrNull().AsTest().Must().BeNull();
             restrictedCashCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Enabled);
             restrictedCashCell.GetAvailabilityCheckMessageOrNull().AsTest().Must().BeEqualTo("got-enabled");
             Record.Exception(() => restrictedCashCell.GetCellObjectValue()).AsArg().Must().BeOfType<InvalidOperationException>();
 
-            var partiallyRestrictedCashCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.PartiallyRestrictedCash));
+            var partiallyRestrictedCashCell = reportAgent.GetCell<IInputCell>(new InReportCellLocator(SectionIds.Section1, CellIds.PartiallyRestrictedCash));
             partiallyRestrictedCashCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Valid);
             partiallyRestrictedCashCell.GetValidationMessageOrNull().AsTest().Must().BeNull();
             partiallyRestrictedCashCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Enabled);
@@ -1005,7 +1005,7 @@ namespace OBeautifulCode.DataStructure.Test
                 frameworkFactory => new ProprietaryProtocols(frameworkFactory).ToProtocolFactory(),
             };
 
-            var isForProfitCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.IsForProfit));
+            var isForProfitCell = reportAgent.GetCell<IInputCell>(new InReportCellLocator(SectionIds.Section1, CellIds.IsForProfit));
 
             isForProfitCell.SetCellValue(false, DateTime.UtcNow);
 
@@ -1019,14 +1019,14 @@ namespace OBeautifulCode.DataStructure.Test
             isForProfitCell.GetAvailabilityCheckMessageOrNull().AsTest().Must().BeNull();
             isForProfitCell.GetCellObjectValue().Must().BeEqualTo((object)false);
 
-            var restrictedCashCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.RestrictedCash));
+            var restrictedCashCell = reportAgent.GetCell<IInputCell>(new InReportCellLocator(SectionIds.Section1, CellIds.RestrictedCash));
             restrictedCashCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Valid);
             restrictedCashCell.GetValidationMessageOrNull().AsTest().Must().BeNull();
             restrictedCashCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Enabled);
             restrictedCashCell.GetAvailabilityCheckMessageOrNull().AsTest().Must().BeEqualTo("got-enabled");
             Record.Exception(() => restrictedCashCell.GetCellObjectValue()).AsArg().Must().BeOfType<InvalidOperationException>();
 
-            var partiallyRestrictedCashCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.PartiallyRestrictedCash));
+            var partiallyRestrictedCashCell = reportAgent.GetCell<IInputCell>(new InReportCellLocator(SectionIds.Section1, CellIds.PartiallyRestrictedCash));
             partiallyRestrictedCashCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Valid);
             partiallyRestrictedCashCell.GetValidationMessageOrNull().AsTest().Must().BeNull();
             partiallyRestrictedCashCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Enabled);
@@ -1047,9 +1047,9 @@ namespace OBeautifulCode.DataStructure.Test
                 frameworkFactory => new ProprietaryProtocols(frameworkFactory).ToProtocolFactory(),
             };
 
-            var isForProfitCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.IsForProfit));
-            var restrictedCashCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.RestrictedCash));
-            var partiallyRestrictedCashCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.PartiallyRestrictedCash));
+            var isForProfitCell = reportAgent.GetCell<IInputCell>(new InReportCellLocator(SectionIds.Section1, CellIds.IsForProfit));
+            var restrictedCashCell = reportAgent.GetCell<IInputCell>(new InReportCellLocator(SectionIds.Section1, CellIds.RestrictedCash));
+            var partiallyRestrictedCashCell = reportAgent.GetCell<IInputCell>(new InReportCellLocator(SectionIds.Section1, CellIds.PartiallyRestrictedCash));
 
             isForProfitCell.SetCellValue(true, DateTime.UtcNow);
             restrictedCashCell.SetCellValue(123.45m, DateTime.UtcNow);
@@ -1091,9 +1091,9 @@ namespace OBeautifulCode.DataStructure.Test
                 frameworkFactory => new ProprietaryProtocols(frameworkFactory).ToProtocolFactory(),
             };
 
-            var isForProfitCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.IsForProfit));
-            var restrictedCashCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.RestrictedCash));
-            var partiallyRestrictedCashCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.PartiallyRestrictedCash));
+            var isForProfitCell = reportAgent.GetCell<IInputCell>(new InReportCellLocator(SectionIds.Section1, CellIds.IsForProfit));
+            var restrictedCashCell = reportAgent.GetCell<IInputCell>(new InReportCellLocator(SectionIds.Section1, CellIds.RestrictedCash));
+            var partiallyRestrictedCashCell = reportAgent.GetCell<IInputCell>(new InReportCellLocator(SectionIds.Section1, CellIds.PartiallyRestrictedCash));
 
             isForProfitCell.SetCellValue(true, DateTime.UtcNow);
             restrictedCashCell.SetCellValue(123.45m, DateTime.UtcNow);
@@ -1140,21 +1140,21 @@ namespace OBeautifulCode.DataStructure.Test
             reportAgent.Recalc(DateTime.UtcNow, protocolFactoryFuncs);
 
             // Assert
-            var salesFteCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section2, CellIds.SalesFte));
+            var salesFteCell = reportAgent.GetCell<IInputCell>(new InReportCellLocator(SectionIds.Section2, CellIds.SalesFte));
             salesFteCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Invalid);
             salesFteCell.GetValidationMessageOrNull().AsTest().Must().BeEqualTo("input required for sales");
             salesFteCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Enabled);
             salesFteCell.GetAvailabilityCheckMessageOrNull().AsTest().Must().BeNull();
             Record.Exception(() => salesFteCell.GetCellObjectValue()).AsArg().Must().BeOfType<InvalidOperationException>();
 
-            var warehouseFteCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section2, CellIds.WarehouseFte));
+            var warehouseFteCell = reportAgent.GetCell<IInputCell>(new InReportCellLocator(SectionIds.Section2, CellIds.WarehouseFte));
             warehouseFteCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Invalid);
             warehouseFteCell.GetValidationMessageOrNull().AsTest().Must().BeEqualTo("input required for warehouse");
             warehouseFteCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Enabled);
             warehouseFteCell.GetAvailabilityCheckMessageOrNull().AsTest().Must().BeNull();
             Record.Exception(() => warehouseFteCell.GetCellObjectValue()).AsArg().Must().BeOfType<InvalidOperationException>();
 
-            var warehouseSupportFteCell = reportAgent.GetCell<IOperationOutputCell>(new ReportCellLocator(SectionIds.Section2, CellIds.WarehouseSupportFte));
+            var warehouseSupportFteCell = reportAgent.GetCell<IOperationOutputCell>(new InReportCellLocator(SectionIds.Section2, CellIds.WarehouseSupportFte));
             warehouseSupportFteCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Valid);
             warehouseSupportFteCell.GetValidationMessageOrNull().AsTest().Must().BeNull();
             warehouseSupportFteCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Enabled);
@@ -1162,7 +1162,7 @@ namespace OBeautifulCode.DataStructure.Test
             warehouseSupportFteCell.GetCellOpExecutionOutcome().AsTest().Must().BeEqualTo(CellOpExecutionOutcome.NotApplicable);
             Record.Exception(() => warehouseSupportFteCell.GetCellObjectValue()).AsArg().Must().BeOfType<InvalidOperationException>();
 
-            var totalFteCell = reportAgent.GetCell<IOperationOutputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.TotalFte));
+            var totalFteCell = reportAgent.GetCell<IOperationOutputCell>(new InReportCellLocator(SectionIds.Section1, CellIds.TotalFte));
             totalFteCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Aborted);
             totalFteCell.GetValidationMessageOrNull().AsTest().Must().BeNull();
             totalFteCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Enabled);
@@ -1188,21 +1188,21 @@ namespace OBeautifulCode.DataStructure.Test
             await reportAgent.RecalcAsync(DateTime.UtcNow, protocolFactoryFuncs);
 
             // Assert
-            var salesFteCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section2, CellIds.SalesFte));
+            var salesFteCell = reportAgent.GetCell<IInputCell>(new InReportCellLocator(SectionIds.Section2, CellIds.SalesFte));
             salesFteCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Invalid);
             salesFteCell.GetValidationMessageOrNull().AsTest().Must().BeEqualTo("input required for sales");
             salesFteCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Enabled);
             salesFteCell.GetAvailabilityCheckMessageOrNull().AsTest().Must().BeNull();
             Record.Exception(() => salesFteCell.GetCellObjectValue()).AsArg().Must().BeOfType<InvalidOperationException>();
 
-            var warehouseFteCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section2, CellIds.WarehouseFte));
+            var warehouseFteCell = reportAgent.GetCell<IInputCell>(new InReportCellLocator(SectionIds.Section2, CellIds.WarehouseFte));
             warehouseFteCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Invalid);
             warehouseFteCell.GetValidationMessageOrNull().AsTest().Must().BeEqualTo("input required for warehouse");
             warehouseFteCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Enabled);
             warehouseFteCell.GetAvailabilityCheckMessageOrNull().AsTest().Must().BeNull();
             Record.Exception(() => warehouseFteCell.GetCellObjectValue()).AsArg().Must().BeOfType<InvalidOperationException>();
 
-            var warehouseSupportFteCell = reportAgent.GetCell<IOperationOutputCell>(new ReportCellLocator(SectionIds.Section2, CellIds.WarehouseSupportFte));
+            var warehouseSupportFteCell = reportAgent.GetCell<IOperationOutputCell>(new InReportCellLocator(SectionIds.Section2, CellIds.WarehouseSupportFte));
             warehouseSupportFteCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Valid);
             warehouseSupportFteCell.GetValidationMessageOrNull().AsTest().Must().BeNull();
             warehouseSupportFteCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Enabled);
@@ -1210,7 +1210,7 @@ namespace OBeautifulCode.DataStructure.Test
             warehouseSupportFteCell.GetCellOpExecutionOutcome().AsTest().Must().BeEqualTo(CellOpExecutionOutcome.NotApplicable);
             Record.Exception(() => warehouseSupportFteCell.GetCellObjectValue()).AsArg().Must().BeOfType<InvalidOperationException>();
 
-            var totalFteCell = reportAgent.GetCell<IOperationOutputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.TotalFte));
+            var totalFteCell = reportAgent.GetCell<IOperationOutputCell>(new InReportCellLocator(SectionIds.Section1, CellIds.TotalFte));
             totalFteCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Aborted);
             totalFteCell.GetValidationMessageOrNull().AsTest().Must().BeNull();
             totalFteCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Enabled);
@@ -1232,8 +1232,8 @@ namespace OBeautifulCode.DataStructure.Test
                 frameworkFactory => new ProprietaryProtocols(frameworkFactory).ToProtocolFactory(),
             };
 
-            var salesFteCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section2, CellIds.SalesFte));
-            var warehouseFteCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section2, CellIds.WarehouseFte));
+            var salesFteCell = reportAgent.GetCell<IInputCell>(new InReportCellLocator(SectionIds.Section2, CellIds.SalesFte));
+            var warehouseFteCell = reportAgent.GetCell<IInputCell>(new InReportCellLocator(SectionIds.Section2, CellIds.WarehouseFte));
 
             salesFteCell.SetCellValue(-4m, DateTime.UtcNow);
             warehouseFteCell.SetCellValue(-5m, DateTime.UtcNow);
@@ -1254,7 +1254,7 @@ namespace OBeautifulCode.DataStructure.Test
             warehouseFteCell.GetAvailabilityCheckMessageOrNull().AsTest().Must().BeNull();
             warehouseFteCell.GetCellObjectValue().AsTest().Must().BeEqualTo((object)-5m);
 
-            var warehouseSupportFteCell = reportAgent.GetCell<IOperationOutputCell>(new ReportCellLocator(SectionIds.Section2, CellIds.WarehouseSupportFte));
+            var warehouseSupportFteCell = reportAgent.GetCell<IOperationOutputCell>(new InReportCellLocator(SectionIds.Section2, CellIds.WarehouseSupportFte));
             warehouseSupportFteCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Valid);
             warehouseSupportFteCell.GetValidationMessageOrNull().AsTest().Must().BeNull();
             warehouseSupportFteCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Enabled);
@@ -1262,7 +1262,7 @@ namespace OBeautifulCode.DataStructure.Test
             warehouseSupportFteCell.GetCellOpExecutionOutcome().AsTest().Must().BeEqualTo(CellOpExecutionOutcome.Completed);
             warehouseSupportFteCell.GetCellObjectValue().AsTest().Must().BeEqualTo((object)-2.5m);
 
-            var totalFteCell = reportAgent.GetCell<IOperationOutputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.TotalFte));
+            var totalFteCell = reportAgent.GetCell<IOperationOutputCell>(new InReportCellLocator(SectionIds.Section1, CellIds.TotalFte));
             totalFteCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Invalid);
             totalFteCell.GetValidationMessageOrNull().AsTest().Must().BeEqualTo("total must be >= 0");
             totalFteCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Enabled);
@@ -1284,8 +1284,8 @@ namespace OBeautifulCode.DataStructure.Test
                 frameworkFactory => new ProprietaryProtocols(frameworkFactory).ToProtocolFactory(),
             };
 
-            var salesFteCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section2, CellIds.SalesFte));
-            var warehouseFteCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section2, CellIds.WarehouseFte));
+            var salesFteCell = reportAgent.GetCell<IInputCell>(new InReportCellLocator(SectionIds.Section2, CellIds.SalesFte));
+            var warehouseFteCell = reportAgent.GetCell<IInputCell>(new InReportCellLocator(SectionIds.Section2, CellIds.WarehouseFte));
 
             salesFteCell.SetCellValue(-4m, DateTime.UtcNow);
             warehouseFteCell.SetCellValue(-5m, DateTime.UtcNow);
@@ -1306,7 +1306,7 @@ namespace OBeautifulCode.DataStructure.Test
             warehouseFteCell.GetAvailabilityCheckMessageOrNull().AsTest().Must().BeNull();
             warehouseFteCell.GetCellObjectValue().AsTest().Must().BeEqualTo((object)-5m);
 
-            var warehouseSupportFteCell = reportAgent.GetCell<IOperationOutputCell>(new ReportCellLocator(SectionIds.Section2, CellIds.WarehouseSupportFte));
+            var warehouseSupportFteCell = reportAgent.GetCell<IOperationOutputCell>(new InReportCellLocator(SectionIds.Section2, CellIds.WarehouseSupportFte));
             warehouseSupportFteCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Valid);
             warehouseSupportFteCell.GetValidationMessageOrNull().AsTest().Must().BeNull();
             warehouseSupportFteCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Enabled);
@@ -1314,7 +1314,7 @@ namespace OBeautifulCode.DataStructure.Test
             warehouseSupportFteCell.GetCellOpExecutionOutcome().AsTest().Must().BeEqualTo(CellOpExecutionOutcome.Completed);
             warehouseSupportFteCell.GetCellObjectValue().AsTest().Must().BeEqualTo((object)-2.5m);
 
-            var totalFteCell = reportAgent.GetCell<IOperationOutputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.TotalFte));
+            var totalFteCell = reportAgent.GetCell<IOperationOutputCell>(new InReportCellLocator(SectionIds.Section1, CellIds.TotalFte));
             totalFteCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Invalid);
             totalFteCell.GetValidationMessageOrNull().AsTest().Must().BeEqualTo("total must be >= 0");
             totalFteCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Enabled);
@@ -1336,8 +1336,8 @@ namespace OBeautifulCode.DataStructure.Test
                 frameworkFactory => new ProprietaryProtocols(frameworkFactory).ToProtocolFactory(),
             };
 
-            var salesFteCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section2, CellIds.SalesFte));
-            var warehouseFteCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section2, CellIds.WarehouseFte));
+            var salesFteCell = reportAgent.GetCell<IInputCell>(new InReportCellLocator(SectionIds.Section2, CellIds.SalesFte));
+            var warehouseFteCell = reportAgent.GetCell<IInputCell>(new InReportCellLocator(SectionIds.Section2, CellIds.WarehouseFte));
 
             salesFteCell.SetCellValue(4m, DateTime.UtcNow);
             warehouseFteCell.SetCellValue(5m, DateTime.UtcNow);
@@ -1358,7 +1358,7 @@ namespace OBeautifulCode.DataStructure.Test
             warehouseFteCell.GetAvailabilityCheckMessageOrNull().AsTest().Must().BeNull();
             warehouseFteCell.GetCellObjectValue().AsTest().Must().BeEqualTo((object)5m);
 
-            var warehouseSupportFteCell = reportAgent.GetCell<IOperationOutputCell>(new ReportCellLocator(SectionIds.Section2, CellIds.WarehouseSupportFte));
+            var warehouseSupportFteCell = reportAgent.GetCell<IOperationOutputCell>(new InReportCellLocator(SectionIds.Section2, CellIds.WarehouseSupportFte));
             warehouseSupportFteCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Valid);
             warehouseSupportFteCell.GetValidationMessageOrNull().AsTest().Must().BeNull();
             warehouseSupportFteCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Enabled);
@@ -1366,7 +1366,7 @@ namespace OBeautifulCode.DataStructure.Test
             warehouseSupportFteCell.GetCellOpExecutionOutcome().AsTest().Must().BeEqualTo(CellOpExecutionOutcome.Completed);
             warehouseSupportFteCell.GetCellObjectValue().AsTest().Must().BeEqualTo((object)2.5m);
 
-            var totalFteCell = reportAgent.GetCell<IOperationOutputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.TotalFte));
+            var totalFteCell = reportAgent.GetCell<IOperationOutputCell>(new InReportCellLocator(SectionIds.Section1, CellIds.TotalFte));
             totalFteCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Valid);
             totalFteCell.GetValidationMessageOrNull().AsTest().Must().BeNull();
             totalFteCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Enabled);
@@ -1388,8 +1388,8 @@ namespace OBeautifulCode.DataStructure.Test
                 frameworkFactory => new ProprietaryProtocols(frameworkFactory).ToProtocolFactory(),
             };
 
-            var salesFteCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section2, CellIds.SalesFte));
-            var warehouseFteCell = reportAgent.GetCell<IInputCell>(new ReportCellLocator(SectionIds.Section2, CellIds.WarehouseFte));
+            var salesFteCell = reportAgent.GetCell<IInputCell>(new InReportCellLocator(SectionIds.Section2, CellIds.SalesFte));
+            var warehouseFteCell = reportAgent.GetCell<IInputCell>(new InReportCellLocator(SectionIds.Section2, CellIds.WarehouseFte));
 
             salesFteCell.SetCellValue(4m, DateTime.UtcNow);
             warehouseFteCell.SetCellValue(5m, DateTime.UtcNow);
@@ -1410,7 +1410,7 @@ namespace OBeautifulCode.DataStructure.Test
             warehouseFteCell.GetAvailabilityCheckMessageOrNull().AsTest().Must().BeNull();
             warehouseFteCell.GetCellObjectValue().AsTest().Must().BeEqualTo((object)5m);
 
-            var warehouseSupportFteCell = reportAgent.GetCell<IOperationOutputCell>(new ReportCellLocator(SectionIds.Section2, CellIds.WarehouseSupportFte));
+            var warehouseSupportFteCell = reportAgent.GetCell<IOperationOutputCell>(new InReportCellLocator(SectionIds.Section2, CellIds.WarehouseSupportFte));
             warehouseSupportFteCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Valid);
             warehouseSupportFteCell.GetValidationMessageOrNull().AsTest().Must().BeNull();
             warehouseSupportFteCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Enabled);
@@ -1418,7 +1418,7 @@ namespace OBeautifulCode.DataStructure.Test
             warehouseSupportFteCell.GetCellOpExecutionOutcome().AsTest().Must().BeEqualTo(CellOpExecutionOutcome.Completed);
             warehouseSupportFteCell.GetCellObjectValue().AsTest().Must().BeEqualTo((object)2.5m);
 
-            var totalFteCell = reportAgent.GetCell<IOperationOutputCell>(new ReportCellLocator(SectionIds.Section1, CellIds.TotalFte));
+            var totalFteCell = reportAgent.GetCell<IOperationOutputCell>(new InReportCellLocator(SectionIds.Section1, CellIds.TotalFte));
             totalFteCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Valid);
             totalFteCell.GetValidationMessageOrNull().AsTest().Must().BeNull();
             totalFteCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Enabled);
@@ -1451,7 +1451,7 @@ namespace OBeautifulCode.DataStructure.Test
             reportAgent.Recalc(DateTime.UtcNow, protocolFactoryFuncs);
 
             // Assert
-            var quartileCell = reportAgent.GetCell<IOperationOutputCell>(new ReportCellLocator(SectionIds.Section3, CellIds.Quartiles));
+            var quartileCell = reportAgent.GetCell<IOperationOutputCell>(new InReportCellLocator(SectionIds.Section3, CellIds.Quartiles));
             quartileCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Valid);
             quartileCell.GetValidationMessageOrNull().AsTest().Must().BeNull();
             quartileCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Enabled);
@@ -1488,7 +1488,7 @@ namespace OBeautifulCode.DataStructure.Test
             await reportAgent.RecalcAsync(DateTime.UtcNow, protocolFactoryFuncs);
 
             // Assert
-            var quartileCell = reportAgent.GetCell<IOperationOutputCell>(new ReportCellLocator(SectionIds.Section3, CellIds.Quartiles));
+            var quartileCell = reportAgent.GetCell<IOperationOutputCell>(new InReportCellLocator(SectionIds.Section3, CellIds.Quartiles));
             quartileCell.GetValidity().AsTest().Must().BeEqualTo(Validity.Valid);
             quartileCell.GetValidationMessageOrNull().AsTest().Must().BeNull();
             quartileCell.GetAvailability().AsTest().Must().BeEqualTo(Availability.Enabled);

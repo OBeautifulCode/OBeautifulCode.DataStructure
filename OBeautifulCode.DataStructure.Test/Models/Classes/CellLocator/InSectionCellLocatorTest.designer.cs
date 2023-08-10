@@ -33,37 +33,37 @@ namespace OBeautifulCode.DataStructure.Test
 
     using static global::System.FormattableString;
 
-    public static partial class SectionCellLocatorTest
+    public static partial class InSectionCellLocatorTest
     {
-        private static readonly StringRepresentationTestScenarios<SectionCellLocator> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<SectionCellLocator>()
+        private static readonly StringRepresentationTestScenarios<InSectionCellLocator> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<InSectionCellLocator>()
             .AddScenario(() =>
-                new StringRepresentationTestScenario<SectionCellLocator>
+                new StringRepresentationTestScenario<InSectionCellLocator>
                 {
                     Name = "Default Code Generated Scenario",
                     SystemUnderTestExpectedStringRepresentationFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<SectionCellLocator>();
+                        var systemUnderTest = A.Dummy<InSectionCellLocator>();
 
-                        var result = new SystemUnderTestExpectedStringRepresentation<SectionCellLocator>
+                        var result = new SystemUnderTestExpectedStringRepresentation<InSectionCellLocator>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.SectionCellLocator: CellId = {systemUnderTest.CellId?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, SlotId = {systemUnderTest.SlotId?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, SlotSelectionStrategy = {systemUnderTest.SlotSelectionStrategy.ToString() ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.InSectionCellLocator: CellId = {systemUnderTest.CellId?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, SlotId = {systemUnderTest.SlotId?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, SlotSelectionStrategy = {systemUnderTest.SlotSelectionStrategy.ToString() ?? "<null>"}."),
                         };
 
                         return result;
                     },
                 });
 
-        private static readonly ConstructorArgumentValidationTestScenarios<SectionCellLocator> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<SectionCellLocator>()
+        private static readonly ConstructorArgumentValidationTestScenarios<InSectionCellLocator> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<InSectionCellLocator>()
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<SectionCellLocator>
+                new ConstructorArgumentValidationTestScenario<InSectionCellLocator>
                 {
                     Name = "constructor should throw ArgumentNullException when parameter 'cellId' is null scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<SectionCellLocator>();
+                        var referenceObject = A.Dummy<InSectionCellLocator>();
 
-                        var result = new SectionCellLocator(
+                        var result = new InSectionCellLocator(
                                              null,
                                              referenceObject.SlotId,
                                              referenceObject.SlotSelectionStrategy);
@@ -74,14 +74,14 @@ namespace OBeautifulCode.DataStructure.Test
                     ExpectedExceptionMessageContains = new[] { "cellId", },
                 })
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<SectionCellLocator>
+                new ConstructorArgumentValidationTestScenario<InSectionCellLocator>
                 {
                     Name = "constructor should throw ArgumentException when parameter 'cellId' is white space scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<SectionCellLocator>();
+                        var referenceObject = A.Dummy<InSectionCellLocator>();
 
-                        var result = new SectionCellLocator(
+                        var result = new InSectionCellLocator(
                                              Invariant($"  {Environment.NewLine}  "),
                                              referenceObject.SlotId,
                                              referenceObject.SlotSelectionStrategy);
@@ -92,14 +92,14 @@ namespace OBeautifulCode.DataStructure.Test
                     ExpectedExceptionMessageContains = new[] { "cellId", "white space", },
                 })
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<SectionCellLocator>
+                new ConstructorArgumentValidationTestScenario<InSectionCellLocator>
                 {
                     Name = "constructor should throw ArgumentNullException when parameter 'slotId' is null scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<SectionCellLocator>();
+                        var referenceObject = A.Dummy<InSectionCellLocator>();
 
-                        var result = new SectionCellLocator(
+                        var result = new InSectionCellLocator(
                                              referenceObject.CellId,
                                              null,
                                              referenceObject.SlotSelectionStrategy);
@@ -110,14 +110,14 @@ namespace OBeautifulCode.DataStructure.Test
                     ExpectedExceptionMessageContains = new[] { "slotId", },
                 })
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<SectionCellLocator>
+                new ConstructorArgumentValidationTestScenario<InSectionCellLocator>
                 {
                     Name = "constructor should throw ArgumentException when parameter 'slotId' is white space scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<SectionCellLocator>();
+                        var referenceObject = A.Dummy<InSectionCellLocator>();
 
-                        var result = new SectionCellLocator(
+                        var result = new InSectionCellLocator(
                                              referenceObject.CellId,
                                              Invariant($"  {Environment.NewLine}  "),
                                              referenceObject.SlotSelectionStrategy);
@@ -128,18 +128,18 @@ namespace OBeautifulCode.DataStructure.Test
                     ExpectedExceptionMessageContains = new[] { "slotId", "white space", },
                 });
 
-        private static readonly ConstructorPropertyAssignmentTestScenarios<SectionCellLocator> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<SectionCellLocator>()
+        private static readonly ConstructorPropertyAssignmentTestScenarios<InSectionCellLocator> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<InSectionCellLocator>()
             .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<SectionCellLocator>
+                new ConstructorPropertyAssignmentTestScenario<InSectionCellLocator>
                 {
                     Name = "CellId should return same 'cellId' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
-                        var referenceObject = A.Dummy<SectionCellLocator>();
+                        var referenceObject = A.Dummy<InSectionCellLocator>();
 
-                        var result = new SystemUnderTestExpectedPropertyValue<SectionCellLocator>
+                        var result = new SystemUnderTestExpectedPropertyValue<InSectionCellLocator>
                         {
-                            SystemUnderTest = new SectionCellLocator(
+                            SystemUnderTest = new InSectionCellLocator(
                                                       referenceObject.CellId,
                                                       referenceObject.SlotId,
                                                       referenceObject.SlotSelectionStrategy),
@@ -151,16 +151,16 @@ namespace OBeautifulCode.DataStructure.Test
                     PropertyName = "CellId",
                 })
             .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<SectionCellLocator>
+                new ConstructorPropertyAssignmentTestScenario<InSectionCellLocator>
                 {
                     Name = "SlotId should return same 'slotId' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
-                        var referenceObject = A.Dummy<SectionCellLocator>();
+                        var referenceObject = A.Dummy<InSectionCellLocator>();
 
-                        var result = new SystemUnderTestExpectedPropertyValue<SectionCellLocator>
+                        var result = new SystemUnderTestExpectedPropertyValue<InSectionCellLocator>
                         {
-                            SystemUnderTest = new SectionCellLocator(
+                            SystemUnderTest = new InSectionCellLocator(
                                                       referenceObject.CellId,
                                                       referenceObject.SlotId,
                                                       referenceObject.SlotSelectionStrategy),
@@ -172,16 +172,16 @@ namespace OBeautifulCode.DataStructure.Test
                     PropertyName = "SlotId",
                 })
             .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<SectionCellLocator>
+                new ConstructorPropertyAssignmentTestScenario<InSectionCellLocator>
                 {
                     Name = "SlotSelectionStrategy should return same 'slotSelectionStrategy' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
-                        var referenceObject = A.Dummy<SectionCellLocator>();
+                        var referenceObject = A.Dummy<InSectionCellLocator>();
 
-                        var result = new SystemUnderTestExpectedPropertyValue<SectionCellLocator>
+                        var result = new SystemUnderTestExpectedPropertyValue<InSectionCellLocator>
                         {
-                            SystemUnderTest = new SectionCellLocator(
+                            SystemUnderTest = new InSectionCellLocator(
                                                       referenceObject.CellId,
                                                       referenceObject.SlotId,
                                                       referenceObject.SlotSelectionStrategy),
@@ -193,19 +193,19 @@ namespace OBeautifulCode.DataStructure.Test
                     PropertyName = "SlotSelectionStrategy",
                 });
 
-        private static readonly DeepCloneWithTestScenarios<SectionCellLocator> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<SectionCellLocator>()
+        private static readonly DeepCloneWithTestScenarios<InSectionCellLocator> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<InSectionCellLocator>()
             .AddScenario(() =>
-                new DeepCloneWithTestScenario<SectionCellLocator>
+                new DeepCloneWithTestScenario<InSectionCellLocator>
                 {
                     Name = "DeepCloneWithCellId should deep clone object and replace CellId with the provided cellId",
                     WithPropertyName = "CellId",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<SectionCellLocator>();
+                        var systemUnderTest = A.Dummy<InSectionCellLocator>();
 
-                        var referenceObject = A.Dummy<SectionCellLocator>().ThatIs(_ => !systemUnderTest.CellId.IsEqualTo(_.CellId));
+                        var referenceObject = A.Dummy<InSectionCellLocator>().ThatIs(_ => !systemUnderTest.CellId.IsEqualTo(_.CellId));
 
-                        var result = new SystemUnderTestDeepCloneWithValue<SectionCellLocator>
+                        var result = new SystemUnderTestDeepCloneWithValue<InSectionCellLocator>
                         {
                             SystemUnderTest = systemUnderTest,
                             DeepCloneWithValue = referenceObject.CellId,
@@ -215,17 +215,17 @@ namespace OBeautifulCode.DataStructure.Test
                     },
                 })
             .AddScenario(() =>
-                new DeepCloneWithTestScenario<SectionCellLocator>
+                new DeepCloneWithTestScenario<InSectionCellLocator>
                 {
                     Name = "DeepCloneWithSlotId should deep clone object and replace SlotId with the provided slotId",
                     WithPropertyName = "SlotId",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<SectionCellLocator>();
+                        var systemUnderTest = A.Dummy<InSectionCellLocator>();
 
-                        var referenceObject = A.Dummy<SectionCellLocator>().ThatIs(_ => !systemUnderTest.SlotId.IsEqualTo(_.SlotId));
+                        var referenceObject = A.Dummy<InSectionCellLocator>().ThatIs(_ => !systemUnderTest.SlotId.IsEqualTo(_.SlotId));
 
-                        var result = new SystemUnderTestDeepCloneWithValue<SectionCellLocator>
+                        var result = new SystemUnderTestDeepCloneWithValue<InSectionCellLocator>
                         {
                             SystemUnderTest = systemUnderTest,
                             DeepCloneWithValue = referenceObject.SlotId,
@@ -235,17 +235,17 @@ namespace OBeautifulCode.DataStructure.Test
                     },
                 })
             .AddScenario(() =>
-                new DeepCloneWithTestScenario<SectionCellLocator>
+                new DeepCloneWithTestScenario<InSectionCellLocator>
                 {
                     Name = "DeepCloneWithSlotSelectionStrategy should deep clone object and replace SlotSelectionStrategy with the provided slotSelectionStrategy",
                     WithPropertyName = "SlotSelectionStrategy",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<SectionCellLocator>();
+                        var systemUnderTest = A.Dummy<InSectionCellLocator>();
 
-                        var referenceObject = A.Dummy<SectionCellLocator>().ThatIs(_ => !systemUnderTest.SlotSelectionStrategy.IsEqualTo(_.SlotSelectionStrategy));
+                        var referenceObject = A.Dummy<InSectionCellLocator>().ThatIs(_ => !systemUnderTest.SlotSelectionStrategy.IsEqualTo(_.SlotSelectionStrategy));
 
-                        var result = new SystemUnderTestDeepCloneWithValue<SectionCellLocator>
+                        var result = new SystemUnderTestDeepCloneWithValue<InSectionCellLocator>
                         {
                             SystemUnderTest = systemUnderTest,
                             DeepCloneWithValue = referenceObject.SlotSelectionStrategy,
@@ -255,35 +255,35 @@ namespace OBeautifulCode.DataStructure.Test
                     },
                 });
 
-        private static readonly SectionCellLocator ReferenceObjectForEquatableTestScenarios = A.Dummy<SectionCellLocator>();
+        private static readonly InSectionCellLocator ReferenceObjectForEquatableTestScenarios = A.Dummy<InSectionCellLocator>();
 
-        private static readonly EquatableTestScenarios<SectionCellLocator> EquatableTestScenarios = new EquatableTestScenarios<SectionCellLocator>()
+        private static readonly EquatableTestScenarios<InSectionCellLocator> EquatableTestScenarios = new EquatableTestScenarios<InSectionCellLocator>()
             .AddScenario(() =>
-                new EquatableTestScenario<SectionCellLocator>
+                new EquatableTestScenario<InSectionCellLocator>
                 {
                     Name = "Default Code Generated Scenario",
                     ReferenceObject = ReferenceObjectForEquatableTestScenarios,
-                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new SectionCellLocator[]
+                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new InSectionCellLocator[]
                     {
-                        new SectionCellLocator(
+                        new InSectionCellLocator(
                                 ReferenceObjectForEquatableTestScenarios.CellId,
                                 ReferenceObjectForEquatableTestScenarios.SlotId,
                                 ReferenceObjectForEquatableTestScenarios.SlotSelectionStrategy),
                     },
-                    ObjectsThatAreNotEqualToReferenceObject = new SectionCellLocator[]
+                    ObjectsThatAreNotEqualToReferenceObject = new InSectionCellLocator[]
                     {
-                        new SectionCellLocator(
-                                A.Dummy<SectionCellLocator>().Whose(_ => !_.CellId.IsEqualTo(ReferenceObjectForEquatableTestScenarios.CellId)).CellId,
+                        new InSectionCellLocator(
+                                A.Dummy<InSectionCellLocator>().Whose(_ => !_.CellId.IsEqualTo(ReferenceObjectForEquatableTestScenarios.CellId)).CellId,
                                 ReferenceObjectForEquatableTestScenarios.SlotId,
                                 ReferenceObjectForEquatableTestScenarios.SlotSelectionStrategy),
-                        new SectionCellLocator(
+                        new InSectionCellLocator(
                                 ReferenceObjectForEquatableTestScenarios.CellId,
-                                A.Dummy<SectionCellLocator>().Whose(_ => !_.SlotId.IsEqualTo(ReferenceObjectForEquatableTestScenarios.SlotId)).SlotId,
+                                A.Dummy<InSectionCellLocator>().Whose(_ => !_.SlotId.IsEqualTo(ReferenceObjectForEquatableTestScenarios.SlotId)).SlotId,
                                 ReferenceObjectForEquatableTestScenarios.SlotSelectionStrategy),
-                        new SectionCellLocator(
+                        new InSectionCellLocator(
                                 ReferenceObjectForEquatableTestScenarios.CellId,
                                 ReferenceObjectForEquatableTestScenarios.SlotId,
-                                A.Dummy<SectionCellLocator>().Whose(_ => !_.SlotSelectionStrategy.IsEqualTo(ReferenceObjectForEquatableTestScenarios.SlotSelectionStrategy)).SlotSelectionStrategy),
+                                A.Dummy<InSectionCellLocator>().Whose(_ => !_.SlotSelectionStrategy.IsEqualTo(ReferenceObjectForEquatableTestScenarios.SlotSelectionStrategy)).SlotSelectionStrategy),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
                     {
@@ -292,7 +292,7 @@ namespace OBeautifulCode.DataStructure.Test
                         A.Dummy<int>(),
                         A.Dummy<int?>(),
                         A.Dummy<Guid>(),
-                        A.Dummy<ReportCellLocator>(),
+                        A.Dummy<InReportCellLocator>(),
                         A.Dummy<StandardCellLocator>(),
                     },
                 });
@@ -315,12 +315,12 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void SectionCellLocator___Should_implement_IModel_of_SectionCellLocator___When_reflecting()
+            public static void InSectionCellLocator___Should_implement_IModel_of_InSectionCellLocator___When_reflecting()
             {
                 // Arrange
-                var type = typeof(SectionCellLocator);
+                var type = typeof(InSectionCellLocator);
 
-                var expectedModelMethods = typeof(IModel<SectionCellLocator>).GetInterfaceDeclaredAndImplementedMethods();
+                var expectedModelMethods = typeof(IModel<InSectionCellLocator>).GetInterfaceDeclaredAndImplementedMethods();
 
                 var expectedModelMethodHashes = expectedModelMethods.Select(_ => _.GetSignatureHash());
 
@@ -330,7 +330,7 @@ namespace OBeautifulCode.DataStructure.Test
                 var actualModelMethodHashes = actualModelMethods.Select(_ => _.GetSignatureHash());
 
                 // Assert
-                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<SectionCellLocator>));
+                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<InSectionCellLocator>));
                 expectedModelMethodHashes.Except(actualModelMethodHashes).AsTest().Must().BeEmptyEnumerable();
             }
 
@@ -348,10 +348,10 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void SectionCellLocator___Should_be_attributed_with_Serializable____When_reflecting()
+            public static void InSectionCellLocator___Should_be_attributed_with_Serializable____When_reflecting()
             {
                 // Arrange
-                var type = typeof(SectionCellLocator);
+                var type = typeof(InSectionCellLocator);
 
                 // Act
                 var actualAttributes = type.GetCustomAttributes(typeof(SerializableAttribute), false);
@@ -531,10 +531,10 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Clone___Should_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<SectionCellLocator>();
+                var systemUnderTest = A.Dummy<InSectionCellLocator>();
 
                 // Act
-                var actual = (SectionCellLocator)systemUnderTest.Clone();
+                var actual = (InSectionCellLocator)systemUnderTest.Clone();
 
                 // Assert
                 actual.AsTest().Must().BeEqualTo(systemUnderTest);
@@ -558,7 +558,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void DeepClone___Should_deep_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<SectionCellLocator>();
+                var systemUnderTest = A.Dummy<InSectionCellLocator>();
 
                 // Act
                 var actual = systemUnderTest.DeepClone();
@@ -597,12 +597,12 @@ namespace OBeautifulCode.DataStructure.Test
                     }
 
                     // Act
-                    var actual = (SectionCellLocator)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
+                    var actual = (InSectionCellLocator)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
 
                     // Assert
                     foreach(var propertyName in propertyNames)
                     {
-                        var propertyInfo = typeof(SectionCellLocator).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
+                        var propertyInfo = typeof(InSectionCellLocator).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
 
                         var actualPropertyValue = propertyInfo.GetValue(actual);
 
@@ -664,7 +664,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<SectionCellLocator>();
+                var expected = A.Dummy<InSectionCellLocator>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -693,7 +693,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<SectionCellLocator>();
+                var expected = A.Dummy<InSectionCellLocator>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -722,7 +722,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<SectionCellLocator>();
+                var expected = A.Dummy<InSectionCellLocator>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -751,7 +751,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<SectionCellLocator>();
+                var expected = A.Dummy<InSectionCellLocator>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -785,8 +785,8 @@ namespace OBeautifulCode.DataStructure.Test
             public static void EqualsOperator___Should_return_true___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                SectionCellLocator systemUnderTest1 = null;
-                SectionCellLocator systemUnderTest2 = null;
+                InSectionCellLocator systemUnderTest1 = null;
+                InSectionCellLocator systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 == systemUnderTest2;
@@ -816,7 +816,7 @@ namespace OBeautifulCode.DataStructure.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    SectionCellLocator systemUnderTest = null;
+                    InSectionCellLocator systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest == scenario.ReferenceObject;
@@ -965,8 +965,8 @@ namespace OBeautifulCode.DataStructure.Test
             public static void NotEqualsOperator___Should_return_false___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                SectionCellLocator systemUnderTest1 = null;
-                SectionCellLocator systemUnderTest2 = null;
+                InSectionCellLocator systemUnderTest1 = null;
+                InSectionCellLocator systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 != systemUnderTest2;
@@ -996,7 +996,7 @@ namespace OBeautifulCode.DataStructure.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    SectionCellLocator systemUnderTest = null;
+                    InSectionCellLocator systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest != scenario.ReferenceObject;
@@ -1285,14 +1285,14 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_SectionCellLocator___Should_return_false___When_parameter_other_is_null()
+            public static void Equals_with_InSectionCellLocator___Should_return_false___When_parameter_other_is_null()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    SectionCellLocator systemUnderTest = null;
+                    InSectionCellLocator systemUnderTest = null;
 
                     // Act
                     var actual = scenario.ReferenceObject.Equals(systemUnderTest);
@@ -1316,7 +1316,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_SectionCellLocator___Should_return_true___When_parameter_other_is_same_object()
+            public static void Equals_with_InSectionCellLocator___Should_return_true___When_parameter_other_is_same_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1344,7 +1344,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_SectionCellLocator___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
+            public static void Equals_with_InSectionCellLocator___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1372,7 +1372,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_SectionCellLocator___Should_return_false___When_objects_being_compared_have_different_property_values()
+            public static void Equals_with_InSectionCellLocator___Should_return_false___When_objects_being_compared_have_different_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1400,7 +1400,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_SectionCellLocator___Should_return_true___When_objects_being_compared_have_same_property_values()
+            public static void Equals_with_InSectionCellLocator___Should_return_true___When_objects_being_compared_have_same_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 

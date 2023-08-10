@@ -23,15 +23,15 @@ namespace OBeautifulCode.DataStructure
     using static global::System.FormattableString;
 
     [Serializable]
-    public partial class ThisCellLocator : IModel<ThisCellLocator>
+    public partial class SelfCellLocator : IModel<SelfCellLocator>
     {
         /// <summary>
-        /// Determines whether two objects of type <see cref="ThisCellLocator"/> are equal.
+        /// Determines whether two objects of type <see cref="SelfCellLocator"/> are equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are equal; otherwise false.</returns>
-        public static bool operator ==(ThisCellLocator left, ThisCellLocator right)
+        public static bool operator ==(SelfCellLocator left, SelfCellLocator right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -49,15 +49,15 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <summary>
-        /// Determines whether two objects of type <see cref="ThisCellLocator"/> are not equal.
+        /// Determines whether two objects of type <see cref="SelfCellLocator"/> are not equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are not equal; otherwise false.</returns>
-        public static bool operator !=(ThisCellLocator left, ThisCellLocator right) => !(left == right);
+        public static bool operator !=(SelfCellLocator left, SelfCellLocator right) => !(left == right);
 
         /// <inheritdoc />
-        public bool Equals(ThisCellLocator other)
+        public bool Equals(SelfCellLocator other)
         {
             if (ReferenceEquals(this, other))
             {
@@ -75,20 +75,20 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => this == (obj as ThisCellLocator);
+        public override bool Equals(object obj) => this == (obj as SelfCellLocator);
 
         /// <inheritdoc />
         public override int GetHashCode() => HashCodeHelper.Initialize()
-            .Hash("ThisCellLocator")
+            .Hash("SelfCellLocator")
             .Value;
 
         /// <inheritdoc />
         public object Clone() => this.DeepClone();
 
         /// <inheritdoc />
-        public ThisCellLocator DeepClone()
+        public SelfCellLocator DeepClone()
         {
-            var result = new ThisCellLocator();
+            var result = new SelfCellLocator();
 
             return result;
         }
@@ -97,7 +97,7 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"OBeautifulCode.DataStructure.ThisCellLocator: <no properties>.");
+            var result = Invariant($"OBeautifulCode.DataStructure.SelfCellLocator: <no properties>.");
 
             return result;
         }

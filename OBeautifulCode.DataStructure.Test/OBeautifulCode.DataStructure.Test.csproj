@@ -661,9 +661,9 @@
     <Compile Include="Models\Classes\Validation\ValidationResultTest.designer.cs">
       <DependentUpon>ValidationResultTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Classes\CellLocator\ThisCellLocatorTest.cs" />
-    <Compile Include="Models\Classes\CellLocator\ThisCellLocatorTest.designer.cs">
-      <DependentUpon>ThisCellLocatorTest.cs</DependentUpon>
+    <Compile Include="Models\Classes\CellLocator\SelfCellLocatorTest.cs" />
+    <Compile Include="Models\Classes\CellLocator\SelfCellLocatorTest.designer.cs">
+      <DependentUpon>SelfCellLocatorTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Operations\TwoStatementOpBase{TStatement,TResult}Test.cs" />
     <Compile Include="Operations\TwoStatementOpBase{TStatement,TResult}Test.designer.cs">
@@ -758,13 +758,13 @@
     </Compile>
     <None Include=".analyzers\test.ruleset" />
     <None Include="DummyFactory.recipe-nuspec" />
-    <Compile Include="Models\Classes\CellLocator\ReportCellLocatorTest.cs" />
-    <Compile Include="Models\Classes\CellLocator\ReportCellLocatorTest.designer.cs">
-      <DependentUpon>ReportCellLocatorTest.cs</DependentUpon>
+    <Compile Include="Models\Classes\CellLocator\InReportCellLocatorTest.cs" />
+    <Compile Include="Models\Classes\CellLocator\InReportCellLocatorTest.designer.cs">
+      <DependentUpon>InReportCellLocatorTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Classes\CellLocator\SectionCellLocatorTest.cs" />
-    <Compile Include="Models\Classes\CellLocator\SectionCellLocatorTest.designer.cs">
-      <DependentUpon>SectionCellLocatorTest.cs</DependentUpon>
+    <Compile Include="Models\Classes\CellLocator\InSectionCellLocatorTest.cs" />
+    <Compile Include="Models\Classes\CellLocator\InSectionCellLocatorTest.designer.cs">
+      <DependentUpon>InSectionCellLocatorTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\ProjectInfo.cs" />
     <Compile Include="SerializationConfigurationTypes.cs" />

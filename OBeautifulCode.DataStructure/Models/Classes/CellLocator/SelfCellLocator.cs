@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ThisCellLocator.cs" company="OBeautifulCode">
+// <copyright file="SelfCellLocator.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -12,7 +12,7 @@ namespace OBeautifulCode.DataStructure
     /// Locates the current cell.
     /// </summary>
     // ReSharper disable once RedundantExtendsListEntry
-    public partial class ThisCellLocator : ICellLocator, IModelViaCodeGen
+    public partial class SelfCellLocator : ICellLocator, IModelViaCodeGen
     {
     }
 }

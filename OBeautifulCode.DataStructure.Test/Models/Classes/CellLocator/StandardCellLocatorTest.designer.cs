@@ -292,8 +292,8 @@ namespace OBeautifulCode.DataStructure.Test
                         A.Dummy<int>(),
                         A.Dummy<int?>(),
                         A.Dummy<Guid>(),
-                        A.Dummy<ReportCellLocator>(),
-                        A.Dummy<SectionCellLocator>(),
+                        A.Dummy<InReportCellLocator>(),
+                        A.Dummy<InSectionCellLocator>(),
                     },
                 });
 

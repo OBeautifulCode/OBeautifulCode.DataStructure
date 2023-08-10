@@ -278,7 +278,7 @@ namespace OBeautifulCode.DataStructure
         /// The cell.
         /// </returns>
         public ICell GetCell(
-            ReportCellLocator cellLocator)
+            InReportCellLocator cellLocator)
         {
             if (cellLocator == null)
             {
@@ -313,7 +313,7 @@ namespace OBeautifulCode.DataStructure
         /// The cell.
         /// </returns>
         public TCell GetCell<TCell>(
-            ReportCellLocator cellLocator)
+            InReportCellLocator cellLocator)
             where TCell : ICell
         {
             var cell = this.GetCell(cellLocator);
@@ -335,7 +335,7 @@ namespace OBeautifulCode.DataStructure
         /// The cell.
         /// </returns>
         public ICell GetCell(
-            SectionCellLocator cellLocator,
+            InSectionCellLocator cellLocator,
             ICell referenceCell)
         {
             if (cellLocator == null)
@@ -353,7 +353,7 @@ namespace OBeautifulCode.DataStructure
                 throw new CellNotFoundException(Invariant($"{nameof(referenceCell)} is not a cell in the report."), cellLocator);
             }
 
-            var reportCellLocator = new ReportCellLocator(sectionId, cellLocator.CellId, cellLocator.SlotId, cellLocator.SlotSelectionStrategy);
+            var reportCellLocator = new InReportCellLocator(sectionId, cellLocator.CellId, cellLocator.SlotId, cellLocator.SlotSelectionStrategy);
 
             var result = this.GetCell(reportCellLocator);
 

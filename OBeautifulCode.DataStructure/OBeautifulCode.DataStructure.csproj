@@ -217,20 +217,20 @@
     <Compile Include="Models\Classes\CellLocator\CellLocatorBase.designer.cs">
       <DependentUpon>CellLocatorBase.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Classes\CellLocator\ReportCellLocator.designer.cs">
-      <DependentUpon>ReportCellLocator.cs</DependentUpon>
+    <Compile Include="Models\Classes\CellLocator\InReportCellLocator.designer.cs">
+      <DependentUpon>InReportCellLocator.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Classes\CellLocator\SectionCellLocator.designer.cs">
-      <DependentUpon>SectionCellLocator.cs</DependentUpon>
+    <Compile Include="Models\Classes\CellLocator\InSectionCellLocator.designer.cs">
+      <DependentUpon>InSectionCellLocator.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Classes\CellLocator\StandardCellLocator.cs" />
     <Compile Include="Models\Classes\CellLocator\StandardCellLocator.designer.cs">
       <DependentUpon>StandardCellLocator.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Classes\CellLocator\ThisCellLocator.cs" />
-    <Compile Include="Models\Classes\CellLocator\SectionCellLocator.cs" />
-    <Compile Include="Models\Classes\CellLocator\ThisCellLocator.designer.cs">
-      <DependentUpon>ThisCellLocator.cs</DependentUpon>
+    <Compile Include="Models\Classes\CellLocator\SelfCellLocator.cs" />
+    <Compile Include="Models\Classes\CellLocator\InSectionCellLocator.cs" />
+    <Compile Include="Models\Classes\CellLocator\SelfCellLocator.designer.cs">
+      <DependentUpon>SelfCellLocator.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Classes\CellValue\IdentifiedMedia.designer.cs">
       <DependentUpon>IdentifiedMedia.cs</DependentUpon>
@@ -470,7 +470,7 @@
       <DependentUpon>UrlLinkedResource.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Classes\Link\StandardLink.cs" />
-    <Compile Include="Models\Classes\CellLocator\ReportCellLocator.cs" />
+    <Compile Include="Models\Classes\CellLocator\InReportCellLocator.cs" />
     <Compile Include="Models\Classes\Link\StandardLink.designer.cs">
       <DependentUpon>StandardLink.cs</DependentUpon>
     </Compile>

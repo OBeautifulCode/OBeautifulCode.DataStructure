@@ -1066,17 +1066,17 @@ namespace OBeautifulCode.DataStructure
             {
                 result = this.reportAgent.GetCell(standardCellLocator);
             }
-            else if (cellLocator is ReportCellLocator reportCellLocator)
+            else if (cellLocator is InReportCellLocator reportCellLocator)
             {
                 result = this.reportAgent.GetCell(reportCellLocator);
             }
-            else if (cellLocator is SectionCellLocator sectionCellLocator)
+            else if (cellLocator is InSectionCellLocator sectionCellLocator)
             {
                 var currentCell = DataStructureCellProtocols.CurrentCellStack.Peek();
 
                 result = this.reportAgent.GetCell(sectionCellLocator, currentCell);
             }
-            else if (cellLocator is ThisCellLocator)
+            else if (cellLocator is SelfCellLocator)
             {
                 result = DataStructureCellProtocols.CurrentCellStack.Peek();
             }

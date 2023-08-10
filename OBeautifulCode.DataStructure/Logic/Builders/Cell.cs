@@ -16,54 +16,54 @@ namespace OBeautifulCode.DataStructure
     public static class Cell
     {
         /// <summary>
-        /// Builds a <see cref="ThisCellLocator"/>.
+        /// Builds a <see cref="SelfCellLocator"/>.
         /// </summary>
         /// <returns>
-        /// A <see cref="ThisCellLocator"/>.
+        /// A <see cref="SelfCellLocator"/>.
         /// </returns>
-        public static ThisCellLocator Self()
+        public static SelfCellLocator Self()
         {
-            var result = new ThisCellLocator();
+            var result = new SelfCellLocator();
 
             return result;
         }
 
         /// <summary>
-        /// Builds a <see cref="SectionCellLocator"/>.
+        /// Builds a <see cref="InSectionCellLocator"/>.
         /// </summary>
         /// <param name="cellId">The id of the cell.</param>
         /// <param name="slotId">OPTIONAL id of the slot to use -OR- null if not addressing an <see cref="ISlottedCell"/>.  DEFAULT is to address an <see cref="INotSlottedCell"/>.</param>
         /// <param name="slotSelectionStrategy">OPTIONAL strategy to use to select a slot if addressing an <see cref="ISlottedCell"/>.  DEFAULT is to throw if addressing an <see cref="ISlottedCell"/> -AND- <paramref name="slotId"/> is not specified.</param>
         /// <returns>
-        /// A <see cref="SectionCellLocator"/>.
+        /// A <see cref="InSectionCellLocator"/>.
         /// </returns>
-        public static SectionCellLocator InSameSection(
+        public static InSectionCellLocator InSameSection(
             string cellId,
             string slotId = null,
             SlotSelectionStrategy slotSelectionStrategy = SlotSelectionStrategy.ThrowIfSlotIdNotSpecified)
         {
-            var result = new SectionCellLocator(cellId, slotId, slotSelectionStrategy);
+            var result = new InSectionCellLocator(cellId, slotId, slotSelectionStrategy);
 
             return result;
         }
 
         /// <summary>
-        /// Builds a <see cref="ReportCellLocator"/>.
+        /// Builds a <see cref="InReportCellLocator"/>.
         /// </summary>
         /// <param name="sectionId">The id of the section that contains the cell.</param>
         /// <param name="cellId">The id of the cell.</param>
         /// <param name="slotId">OPTIONAL id of the slot to use -OR- null if not addressing an <see cref="ISlottedCell"/>.  DEFAULT is to address an <see cref="INotSlottedCell"/>.</param>
         /// <param name="slotSelectionStrategy">OPTIONAL strategy to use to select a slot if addressing an <see cref="ISlottedCell"/>.  DEFAULT is to throw if addressing an <see cref="ISlottedCell"/> -AND- <paramref name="slotId"/> is not specified.</param>
         /// <returns>
-        /// A <see cref="ReportCellLocator"/>.
+        /// A <see cref="InReportCellLocator"/>.
         /// </returns>
-        public static ReportCellLocator InSomeSection(
+        public static InReportCellLocator InSomeSection(
             string sectionId,
             string cellId,
             string slotId = null,
             SlotSelectionStrategy slotSelectionStrategy = SlotSelectionStrategy.ThrowIfSlotIdNotSpecified)
         {
-            var result = new ReportCellLocator(sectionId, cellId, slotId, slotSelectionStrategy);
+            var result = new InReportCellLocator(sectionId, cellId, slotId, slotSelectionStrategy);
 
             return result;
         }
@@ -75,7 +75,7 @@ namespace OBeautifulCode.DataStructure
         /// <param name="slotId">OPTIONAL id of the slot to use -OR- null if not addressing an <see cref="ISlottedCell"/>.  DEFAULT is to address an <see cref="INotSlottedCell"/>.</param>
         /// <param name="slotSelectionStrategy">OPTIONAL strategy to use to select a slot if addressing an <see cref="ISlottedCell"/>.  DEFAULT is to throw if addressing an <see cref="ISlottedCell"/> -AND- <paramref name="slotId"/> is not specified.</param>
         /// <returns>
-        /// A <see cref="ReportCellLocator"/>.
+        /// A <see cref="StandardCellLocator"/>.
         /// </returns>
         public static StandardCellLocator InReport(
             string cellId,

@@ -95,11 +95,11 @@ namespace OBeautifulCode.DataStructure.Test
         public static void ToString___Should_return_string_representation_of_exception___When_cellLocator_is_not_null()
         {
             // Arrange
-            var cellLocator = new SectionCellLocator("cell-id");
+            var cellLocator = new InSectionCellLocator("cell-id");
 
             var systemUnderTest = new CellValueMissingException("my-message", new Exception("my-inner-exception"), cellLocator);
 
-            var expected = Invariant($"The cell that was found using the following locator does not yet have a value: OBeautifulCode.DataStructure.SectionCellLocator: CellId = cell-id, SlotId = <null>, SlotSelectionStrategy = ThrowIfSlotIdNotSpecified.{Environment.NewLine}OBeautifulCode.DataStructure.CellValueMissingException: my-message ---> System.Exception: my-inner-exception{Environment.NewLine}   --- End of inner exception stack trace ---");
+            var expected = Invariant($"The cell that was found using the following locator does not yet have a value: OBeautifulCode.DataStructure.InSectionCellLocator: CellId = cell-id, SlotId = <null>, SlotSelectionStrategy = ThrowIfSlotIdNotSpecified.{Environment.NewLine}OBeautifulCode.DataStructure.CellValueMissingException: my-message ---> System.Exception: my-inner-exception{Environment.NewLine}   --- End of inner exception stack trace ---");
 
             // Act
             var actual = systemUnderTest.ToString();
