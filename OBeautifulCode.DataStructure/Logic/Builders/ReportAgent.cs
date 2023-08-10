@@ -257,7 +257,7 @@ namespace OBeautifulCode.DataStructure
                 }
                 else if (reportCellLocator.SlotSelectionStrategy == SlotSelectionStrategy.ThrowIfSlotIdNotSpecified)
                 {
-                    throw new CellNotFoundException(Invariant($"The operation addresses an {nameof(ISlottedCell)} (and not a slot within that cell) and {nameof(SlotSelectionStrategy)} is {nameof(SlotSelectionStrategy.ThrowIfSlotIdNotSpecified)}."), reportCellLocator);
+                    throw new CellNotFoundException(Invariant($"Located an {nameof(ISlottedCell)} (and not a slot within that cell) and {nameof(SlotSelectionStrategy)} is {nameof(SlotSelectionStrategy.ThrowIfSlotIdNotSpecified)}."), reportCellLocator);
                 }
                 else
                 {
@@ -294,27 +294,27 @@ namespace OBeautifulCode.DataStructure
         /// Gets a cell.
         /// </summary>
         /// <param name="sectionCellLocator">The section cell locator.</param>
-        /// <param name="currentCell">The current cell.</param>
+        /// <param name="referenceCell">A reference cell; any cell in the section containing the cell targeted by <paramref name="sectionCellLocator"/>.</param>
         /// <returns>
         /// The cell.
         /// </returns>
         public ICell GetCell(
             SectionCellLocator sectionCellLocator,
-            ICell currentCell)
+            ICell referenceCell)
         {
             if (sectionCellLocator == null)
             {
                 throw new ArgumentNullException(nameof(sectionCellLocator));
             }
 
-            if (currentCell == null)
+            if (referenceCell == null)
             {
-                throw new ArgumentNullException(nameof(currentCell));
+                throw new ArgumentNullException(nameof(referenceCell));
             }
 
-            if (!this.cellToSectionIdMap.TryGetValue(currentCell, out var sectionId))
+            if (!this.cellToSectionIdMap.TryGetValue(referenceCell, out var sectionId))
             {
-                throw new CellNotFoundException(Invariant($"{nameof(currentCell)} is not a cell in the report."), sectionCellLocator);
+                throw new CellNotFoundException(Invariant($"{nameof(referenceCell)} is not a cell in the report."), sectionCellLocator);
             }
 
             var reportCellLocator = new ReportCellLocator(sectionId, sectionCellLocator.CellId, sectionCellLocator.SlotId, sectionCellLocator.SlotSelectionStrategy);
