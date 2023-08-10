@@ -70,5 +70,10 @@ namespace OBeautifulCode.DataStructure
         /// A ZIP file.
         /// </summary>
         Zip,
+
+        /// <summary>
+        /// A website.
+        /// </summary>
+        Website,
     }
 }
