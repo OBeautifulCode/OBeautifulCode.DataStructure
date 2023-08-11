@@ -60,7 +60,7 @@ namespace OBeautifulCode.DataStructure
         /// <param name="downloadLinks">OPTIONAL download options for the report as links.  DEFAULT is no download options.</param>
         /// <param name="additionalInfo">OPTIONAL additional information related to the report.  DEFAULT no additional information.</param>
         /// <param name="format">OPTIONAL format to apply to the report.  DEFAULT is to leave the format unchanged.</param>
-        /// <param name="sectionId">OPTIONAL section unique identifier.  DEFAULT is to use <see cref="Default.SectionId"/>.</param>
+        /// <param name="sectionId">OPTIONAL section unique identifier.  DEFAULT is to use <see cref="DefaultIds.DefaultSectionId"/>.</param>
         /// <param name="sectionName">OPTIONAL name of the section.  DEFAULT is a section with no name.</param>
         /// <param name="sectionTitle">OPTIONAL title of the section.  DEFAULT is a section with no title.</param>
         /// <param name="sectionAdditionalInfo">OPTIONAL additional information related to the section.  DEFAULT no additional information.</param>
@@ -76,7 +76,7 @@ namespace OBeautifulCode.DataStructure
             IReadOnlyList<ILink> downloadLinks = null,
             AdditionalReportInfo additionalInfo = null,
             ReportFormat format = null,
-            string sectionId = Default.SectionId,
+            string sectionId = DefaultIds.DefaultSectionId,
             string sectionName = null,
             string sectionTitle = null,
             AdditionalSectionInfo sectionAdditionalInfo = null,
@@ -93,7 +93,7 @@ namespace OBeautifulCode.DataStructure
         /// Converts a <see cref="TreeTable"/> to a <see cref="Section"/>.
         /// </summary>
         /// <param name="treeTable">The tree table.</param>
-        /// <param name="id">OPTIONAL section unique identifier.  DEFAULT is to use <see cref="Default.SectionId"/>.</param>
+        /// <param name="id">OPTIONAL section unique identifier.  DEFAULT is to use <see cref="DefaultIds.DefaultSectionId"/>.</param>
         /// <param name="name">OPTIONAL name of the section.  DEFAULT is a section with no name.</param>
         /// <param name="title">OPTIONAL title of the section.  DEFAULT is a section with no title.</param>
         /// <param name="additionalInfo">OPTIONAL additional information related to the section.  DEFAULT no additional information.</param>
@@ -103,7 +103,7 @@ namespace OBeautifulCode.DataStructure
         /// </returns>
         public static Section ToSection(
             this TreeTable treeTable,
-            string id = Default.SectionId,
+            string id = DefaultIds.DefaultSectionId,
             string name = null,
             string title = null,
             AdditionalSectionInfo additionalInfo = null,
@@ -130,7 +130,7 @@ namespace OBeautifulCode.DataStructure
         /// <param name="downloadLinks">OPTIONAL download options for the report as links.  DEFAULT is no download options.</param>
         /// <param name="additionalInfo">OPTIONAL additional information related to the report.  DEFAULT no additional information.</param>
         /// <param name="format">OPTIONAL format to apply to the report.  DEFAULT is to leave the format unchanged.</param>
-        /// <param name="sectionId">OPTIONAL section unique identifier.  DEFAULT is to use <see cref="Default.SectionId"/>.</param>
+        /// <param name="sectionId">OPTIONAL section unique identifier.  DEFAULT is to use <see cref="DefaultIds.DefaultSectionId"/>.</param>
         /// <param name="sectionName">OPTIONAL name of the section.  DEFAULT is a section with no name.</param>
         /// <param name="sectionTitle">OPTIONAL title of the section.  DEFAULT is a section with no title.</param>
         /// <param name="sectionAdditionalInfo">OPTIONAL additional information related to the section.  DEFAULT no additional information.</param>
@@ -159,7 +159,7 @@ namespace OBeautifulCode.DataStructure
             IReadOnlyList<ILink> downloadLinks = null,
             AdditionalReportInfo additionalInfo = null,
             ReportFormat format = null,
-            string sectionId = Default.SectionId,
+            string sectionId = DefaultIds.DefaultSectionId,
             string sectionName = null,
             string sectionTitle = null,
             AdditionalSectionInfo sectionAdditionalInfo = null,
@@ -183,7 +183,7 @@ namespace OBeautifulCode.DataStructure
         /// Converts an ordered collection of <see cref="RowBase"/> into a <see cref="Section"/>, treating them as data rows.
         /// </summary>
         /// <param name="rows">The rows.</param>
-        /// <param name="id">OPTIONAL section unique identifier.  DEFAULT is to use <see cref="Default.SectionId"/>.</param>
+        /// <param name="id">OPTIONAL section unique identifier.  DEFAULT is to use <see cref="DefaultIds.DefaultSectionId"/>.</param>
         /// <param name="name">OPTIONAL name of the section.  DEFAULT is a section with no name.</param>
         /// <param name="title">OPTIONAL title of the section.  DEFAULT is a section with no title.</param>
         /// <param name="additionalInfo">OPTIONAL additional information related to the section.  DEFAULT no additional information.</param>
@@ -206,7 +206,7 @@ namespace OBeautifulCode.DataStructure
         /// </returns>
         public static Section ToSection(
             this IReadOnlyList<RowBase> rows,
-            string id = Default.SectionId,
+            string id = DefaultIds.DefaultSectionId,
             string name = null,
             string title = null,
             AdditionalSectionInfo additionalInfo = null,
@@ -280,7 +280,7 @@ namespace OBeautifulCode.DataStructure
             }
 
             var columns = Enumerable.Range(1, numberOfColumns)
-                    .Select(_ => new Column(columnIdPrefix != null ? (columnIdPrefix + _) : null))
+                    .Select(_ => new Column(columnIdPrefix != null ? (columnIdPrefix + _.ToStringInvariantPreferred()) : null))
                     .ToArray();
 
             var tableColumns = new TableColumns(columns, tableColumnsColumnsFormat);
@@ -300,7 +300,7 @@ namespace OBeautifulCode.DataStructure
         /// <param name="downloadLinks">OPTIONAL download options for the report as links.  DEFAULT is no download options.</param>
         /// <param name="additionalInfo">OPTIONAL additional information related to the report.  DEFAULT no additional information.</param>
         /// <param name="format">OPTIONAL format to apply to the report.  DEFAULT is to leave the format unchanged.</param>
-        /// <param name="sectionId">OPTIONAL section unique identifier.  DEFAULT is to use <see cref="Default.SectionId"/>.</param>
+        /// <param name="sectionId">OPTIONAL section unique identifier.  DEFAULT is to use <see cref="DefaultIds.DefaultSectionId"/>.</param>
         /// <param name="sectionName">OPTIONAL name of the section.  DEFAULT is a section with no name.</param>
         /// <param name="sectionTitle">OPTIONAL title of the section.  DEFAULT is a section with no title.</param>
         /// <param name="sectionAdditionalInfo">OPTIONAL additional information related to the section.  DEFAULT no additional information.</param>
@@ -329,7 +329,7 @@ namespace OBeautifulCode.DataStructure
             IReadOnlyList<ILink> downloadLinks = null,
             AdditionalReportInfo additionalInfo = null,
             ReportFormat format = null,
-            string sectionId = Default.SectionId,
+            string sectionId = DefaultIds.DefaultSectionId,
             string sectionName = null,
             string sectionTitle = null,
             AdditionalSectionInfo sectionAdditionalInfo = null,
@@ -352,7 +352,7 @@ namespace OBeautifulCode.DataStructure
         /// Converts a <see cref="RowBase"/> into a <see cref="Section"/>, treating it as a data row.
         /// </summary>
         /// <param name="row">The row.</param>
-        /// <param name="id">OPTIONAL section unique identifier.  DEFAULT is to use <see cref="Default.SectionId"/>.</param>
+        /// <param name="id">OPTIONAL section unique identifier.  DEFAULT is to use <see cref="DefaultIds.DefaultSectionId"/>.</param>
         /// <param name="name">OPTIONAL name of the section.  DEFAULT is a section with no name.</param>
         /// <param name="title">OPTIONAL title of the section.  DEFAULT is a section with no title.</param>
         /// <param name="additionalInfo">OPTIONAL additional information related to the section.  DEFAULT no additional information.</param>
@@ -375,7 +375,7 @@ namespace OBeautifulCode.DataStructure
         /// </returns>
         public static Section ToSection(
             this RowBase row,
-            string id = Default.SectionId,
+            string id = DefaultIds.DefaultSectionId,
             string name = null,
             string title = null,
             AdditionalSectionInfo additionalInfo = null,
@@ -440,7 +440,7 @@ namespace OBeautifulCode.DataStructure
         /// <param name="downloadLinks">OPTIONAL download options for the report as links.  DEFAULT is no download options.</param>
         /// <param name="additionalInfo">OPTIONAL additional information related to the report.  DEFAULT no additional information.</param>
         /// <param name="format">OPTIONAL format to apply to the report.  DEFAULT is to leave the format unchanged.</param>
-        /// <param name="sectionId">OPTIONAL section unique identifier.  DEFAULT is to use <see cref="Default.SectionId"/>.</param>
+        /// <param name="sectionId">OPTIONAL section unique identifier.  DEFAULT is to use <see cref="DefaultIds.DefaultSectionId"/>.</param>
         /// <param name="sectionName">OPTIONAL name of the section.  DEFAULT is a section with no name.</param>
         /// <param name="sectionTitle">OPTIONAL title of the section.  DEFAULT is a section with no title.</param>
         /// <param name="sectionAdditionalInfo">OPTIONAL additional information related to the section.  DEFAULT no additional information.</param>
@@ -470,7 +470,7 @@ namespace OBeautifulCode.DataStructure
             IReadOnlyList<ILink> downloadLinks = null,
             AdditionalReportInfo additionalInfo = null,
             ReportFormat format = null,
-            string sectionId = Default.SectionId,
+            string sectionId = DefaultIds.DefaultSectionId,
             string sectionName = null,
             string sectionTitle = null,
             AdditionalSectionInfo sectionAdditionalInfo = null,
@@ -495,7 +495,7 @@ namespace OBeautifulCode.DataStructure
         /// Converts an ordered collection of <see cref="ICell"/>s into a <see cref="Section"/>, treating them as cells in a single data row.
         /// </summary>
         /// <param name="cells">The cells.</param>
-        /// <param name="id">OPTIONAL section unique identifier.  DEFAULT is to use <see cref="Default.SectionId"/>.</param>
+        /// <param name="id">OPTIONAL section unique identifier.  DEFAULT is to use <see cref="DefaultIds.DefaultSectionId"/>.</param>
         /// <param name="name">OPTIONAL name of the section.  DEFAULT is a section with no name.</param>
         /// <param name="title">OPTIONAL title of the section.  DEFAULT is a section with no title.</param>
         /// <param name="additionalInfo">OPTIONAL additional information related to the section.  DEFAULT no additional information.</param>
@@ -519,7 +519,7 @@ namespace OBeautifulCode.DataStructure
         /// </returns>
         public static Section ToSection(
             this IReadOnlyList<ICell> cells,
-            string id = Default.SectionId,
+            string id = DefaultIds.DefaultSectionId,
             string name = null,
             string title = null,
             AdditionalSectionInfo additionalInfo = null,
@@ -589,7 +589,7 @@ namespace OBeautifulCode.DataStructure
         /// <param name="downloadLinks">OPTIONAL download options for the report as links.  DEFAULT is no download options.</param>
         /// <param name="additionalInfo">OPTIONAL additional information related to the report.  DEFAULT no additional information.</param>
         /// <param name="format">OPTIONAL format to apply to the report.  DEFAULT is to leave the format unchanged.</param>
-        /// <param name="sectionId">OPTIONAL section unique identifier.  DEFAULT is to use <see cref="Default.SectionId"/>.</param>
+        /// <param name="sectionId">OPTIONAL section unique identifier.  DEFAULT is to use <see cref="DefaultIds.DefaultSectionId"/>.</param>
         /// <param name="sectionName">OPTIONAL name of the section.  DEFAULT is a section with no name.</param>
         /// <param name="sectionTitle">OPTIONAL title of the section.  DEFAULT is a section with no title.</param>
         /// <param name="sectionAdditionalInfo">OPTIONAL additional information related to the section.  DEFAULT no additional information.</param>
@@ -619,7 +619,7 @@ namespace OBeautifulCode.DataStructure
             IReadOnlyList<ILink> downloadLinks = null,
             AdditionalReportInfo additionalInfo = null,
             ReportFormat format = null,
-            string sectionId = Default.SectionId,
+            string sectionId = DefaultIds.DefaultSectionId,
             string sectionName = null,
             string sectionTitle = null,
             AdditionalSectionInfo sectionAdditionalInfo = null,
@@ -643,7 +643,7 @@ namespace OBeautifulCode.DataStructure
         /// Converts an <see cref="ICell"/> into a <see cref="Section"/>, treating it as as a cell in a single data row.
         /// </summary>
         /// <param name="cell">The cell.</param>
-        /// <param name="id">OPTIONAL section unique identifier.  DEFAULT is to use <see cref="Default.SectionId"/>.</param>
+        /// <param name="id">OPTIONAL section unique identifier.  DEFAULT is to use <see cref="DefaultIds.DefaultSectionId"/>.</param>
         /// <param name="name">OPTIONAL name of the section.  DEFAULT is a section with no name.</param>
         /// <param name="title">OPTIONAL title of the section.  DEFAULT is a section with no title.</param>
         /// <param name="additionalInfo">OPTIONAL additional information related to the section.  DEFAULT no additional information.</param>
@@ -667,7 +667,7 @@ namespace OBeautifulCode.DataStructure
         /// </returns>
         public static Section ToSection(
             this ICell cell,
-            string id = Default.SectionId,
+            string id = DefaultIds.DefaultSectionId,
             string name = null,
             string title = null,
             AdditionalSectionInfo additionalInfo = null,

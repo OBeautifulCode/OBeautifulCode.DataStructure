@@ -190,7 +190,7 @@
     <Compile Include="Logic\Builders\Op.cs" />
     <Compile Include="Logic\Builders\Cell.cs" />
     <Compile Include="Logic\Builders\ReportAgent.cs" />
-    <Compile Include="Logic\Constants\Default.cs" />
+    <Compile Include="Logic\Constants\DefaultIds.cs" />
     <Compile Include="Logic\Enums\RecalcPhase.cs" />
     <Compile Include="Logic\Extensions\CellExtensions.cs" />
     <Compile Include="Logic\Extensions\ToExtensions.cs" />

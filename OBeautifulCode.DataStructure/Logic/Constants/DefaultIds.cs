@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Default.cs" company="OBeautifulCode">
+// <copyright file="DefaultIds.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -7,13 +7,13 @@
 namespace OBeautifulCode.DataStructure
 {
     /// <summary>
-    /// Default value constants.
+    /// Contains well-known ids.
     /// </summary>
-    public static class Default
+    public static class DefaultIds
     {
         /// <summary>
         /// The default section identifier.
         /// </summary>
-        public const string SectionId = "default-section";
+        public const string DefaultSectionId = "default-section";
     }
 }
