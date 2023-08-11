@@ -344,53 +344,5 @@ namespace OBeautifulCode.DataStructure
                     return Availability.Unknown;
             }
         }
-
-        /// <summary>
-        /// Creates a single-cell <see cref="FlatRow"/>.
-        /// </summary>
-        /// <param name="cell">The cell.</param>
-        /// <param name="id">OPTIONAL row identifier.  DEFAULT is a row without an identifier.</param>
-        /// <param name="format">OPTIONAL format to apply to the whole row.  DEFAULT is to leave the format unchanged.</param>
-        /// <returns>
-        /// The single-cell <see cref="FlatRow"/>.
-        /// </returns>
-        public static FlatRow ToFlatRow(
-            this ICell cell,
-            string id = null,
-            RowFormat format = null)
-        {
-            if (cell == null)
-            {
-                throw new ArgumentNullException(nameof(cell));
-            }
-
-            var result = new FlatRow(new[] { cell }, id, format);
-
-            return result;
-        }
-
-        /// <summary>
-        /// Creates a single-cell <see cref="Row"/>.
-        /// </summary>
-        /// <param name="cell">The cell.</param>
-        /// <param name="id">OPTIONAL row identifier.  DEFAULT is a row without an identifier.</param>
-        /// <param name="format">OPTIONAL format to apply to the whole row.  DEFAULT is to leave the format unchanged.</param>
-        /// <returns>
-        /// The single-cell <see cref="Row"/>.
-        /// </returns>
-        public static Row ToRow(
-            this ICell cell,
-            string id = null,
-            RowFormat format = null)
-        {
-            if (cell == null)
-            {
-                throw new ArgumentNullException(nameof(cell));
-            }
-
-            var result = new Row(new[] { cell }, id, format);
-
-            return result;
-        }
     }
 }

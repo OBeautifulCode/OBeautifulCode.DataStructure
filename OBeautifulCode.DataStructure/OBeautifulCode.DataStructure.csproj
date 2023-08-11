@@ -192,6 +192,7 @@
     <Compile Include="Logic\Builders\ReportAgent.cs" />
     <Compile Include="Logic\Enums\RecalcPhase.cs" />
     <Compile Include="Logic\Extensions\CellExtensions.cs" />
+    <Compile Include="Logic\Extensions\ToExtensions.cs" />
     <Compile Include="Logic\Extensions\TableRowsExtensions.cs" />
     <Compile Include="Logic\Extensions\TreeTableExtensions.cs" />
     <Compile Include="Logic\Protocols\DataStructureCellProtocols.cs" />

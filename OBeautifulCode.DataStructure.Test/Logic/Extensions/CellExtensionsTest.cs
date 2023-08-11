@@ -8,12 +8,9 @@ namespace OBeautifulCode.DataStructure.Test
 {
     using System;
     using System.Linq;
-
     using FakeItEasy;
-
     using OBeautifulCode.Assertion.Recipes;
     using OBeautifulCode.AutoFakeItEasy;
-
     using Xunit;
 
     public static class CellExtensionsTest
@@ -1214,62 +1211,6 @@ namespace OBeautifulCode.DataStructure.Test
 
             // Assert
             actual.AsTest().Must().BeEqualTo(Availability.Unknown);
-        }
-
-        [Fact]
-        public static void ToFlatRow___Should_throw_ArgumentNullException___When_parameter_cell_is_null()
-        {
-            // Arrange, Act
-            var actual = Record.Exception(() => CellExtensions.ToFlatRow(null));
-
-            // Assert
-            actual.AsTest().Must().BeOfType<ArgumentNullException>();
-            actual.Message.AsTest().Must().ContainString("cell");
-        }
-
-        [Fact]
-        public static void ToFlatRow___Should_return_single_cell_FlatRow___When_called()
-        {
-            // Arrange
-            var id = A.Dummy<string>();
-            var cell = A.Dummy<ICell>();
-            var format = A.Dummy<RowFormat>();
-
-            var expected = new FlatRow(new[] { cell }, id, format);
-
-            // Act
-            var actual = cell.ToFlatRow(id, format);
-
-            // Assert
-            actual.AsTest().Must().BeEqualTo(expected);
-        }
-
-        [Fact]
-        public static void ToRow___Should_throw_ArgumentNullException___When_parameter_cell_is_null()
-        {
-            // Arrange, Act
-            var actual = Record.Exception(() => CellExtensions.ToRow(null));
-            actual.Message.AsTest().Must().ContainString("cell");
-
-            // Assert
-            actual.AsTest().Must().BeOfType<ArgumentNullException>();
-        }
-
-        [Fact]
-        public static void ToRow___Should_return_single_cell_Row___When_called()
-        {
-            // Arrange
-            var id = A.Dummy<string>();
-            var cell = A.Dummy<ICell>();
-            var format = A.Dummy<RowFormat>();
-
-            var expected = new Row(new[] { cell }, id, format);
-
-            // Act
-            var actual = cell.ToRow(id, format);
-
-            // Assert
-            actual.AsTest().Must().BeEqualTo(expected);
         }
     }
 }
