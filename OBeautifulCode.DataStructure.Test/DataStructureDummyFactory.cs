@@ -473,7 +473,7 @@ namespace OBeautifulCode.DataStructure.Test
             });
         }
 
-        private static TableRows BuildTableRows(
+        public static TableRows BuildTableRows(
             int numberOfColumns)
         {
             var allHeaderRows = BuildFlatRows(numberOfColumns);
@@ -493,7 +493,7 @@ namespace OBeautifulCode.DataStructure.Test
             return result;
         }
 
-        private static IReadOnlyList<FlatRow> BuildFlatRows(
+        public static IReadOnlyList<FlatRow> BuildFlatRows(
             int numberOfColumns)
         {
             var numberOfRows = GetRandomNumberOfRows();
@@ -512,7 +512,7 @@ namespace OBeautifulCode.DataStructure.Test
             return result;
         }
 
-        private static FlatRow BuildFlatRow(
+        public static FlatRow BuildFlatRow(
             int numberOfColumns,
             bool allowSpanningCells)
         {
@@ -524,7 +524,7 @@ namespace OBeautifulCode.DataStructure.Test
 
         }
 
-        private static IReadOnlyList<RowBase> BuildRowBases(
+        public static IReadOnlyList<RowBase> BuildRowBases(
             int numberOfColumns,
             int depth = 0)
         {
@@ -542,7 +542,7 @@ namespace OBeautifulCode.DataStructure.Test
             return result;
         }
 
-        private static RowBase BuildRowBase(
+        public static RowBase BuildRowBase(
             int numberOfColumns,
             int depth = 0)
         {
@@ -562,7 +562,7 @@ namespace OBeautifulCode.DataStructure.Test
             return result;
         }
 
-        private static Row BuildRow(
+        public static Row BuildRow(
             int numberOfColumns,
             int depth = 0)
         {
@@ -585,7 +585,7 @@ namespace OBeautifulCode.DataStructure.Test
             return result;
         }
 
-        private static IReadOnlyList<ICell> BuildRowCells(
+        public static IReadOnlyList<ICell> BuildRowCells(
             int numberOfColumns,
             bool allowSpanningCells)
         {
