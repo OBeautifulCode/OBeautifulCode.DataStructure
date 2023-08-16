@@ -275,6 +275,76 @@ namespace OBeautifulCode.DataStructure
         /// Gets a cell.
         /// </summary>
         /// <param name="cellLocator">The cell locator.</param>
+        /// <param name="cell">When this method returns, contains the cell if the cell is found; otherwise null.
+        /// </param>
+        /// <returns>
+        /// true if the cell was found; otherwise, false.
+        /// </returns>
+        public bool TryGetCell(
+            StandardCellLocator cellLocator,
+            out ICell cell)
+        {
+            if (cellLocator == null)
+            {
+                throw new ArgumentNullException(nameof(cellLocator));
+            }
+
+            cell = null;
+
+            if (!this.cellIdToCellsMap.TryGetValue(cellLocator.CellId, out var cells))
+            {
+                return false;
+            }
+
+            if (cells.Count > 1)
+            {
+                return false;
+            }
+
+            cell = cells.Single();
+
+            cell = GetCellResolvingSlottingOrNull(cell, cellLocator);
+
+            var result = cell != null;
+
+            return result;
+        }
+
+        /// <summary>
+        /// Gets a cell.
+        /// </summary>
+        /// <typeparam name="TCell">The type of cell to return.</typeparam>
+        /// <param name="cellLocator">The cell locator.</param>
+        /// <param name="cell">When this method returns, contains the cell if the cell is found and is of type <typeparamref name="TCell"/>; otherwise null.</param>
+        /// <returns>
+        /// true if the cell was found; otherwise, false.
+        /// </returns>
+        public bool TryGetCell<TCell>(
+            StandardCellLocator cellLocator,
+            out TCell cell)
+            where TCell : ICell
+        {
+            cell = default;
+
+            var result = false;
+
+            if (this.TryGetCell(cellLocator, out var untypedCell))
+            {
+                if (untypedCell is TCell typedCell)
+                {
+                    cell = typedCell;
+
+                    result = true;
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Gets a cell.
+        /// </summary>
+        /// <param name="cellLocator">The cell locator.</param>
         /// <returns>
         /// The cell.
         /// </returns>
@@ -331,32 +401,70 @@ namespace OBeautifulCode.DataStructure
         /// Gets a cell.
         /// </summary>
         /// <param name="cellLocator">The cell locator.</param>
-        /// <param name="referenceCell">A reference cell; any cell in the section containing the cell targeted by <paramref name="cellLocator"/>.</param>
+        /// <param name="cell">When this method returns, contains the cell if the cell is found; otherwise null.
+        /// </param>
         /// <returns>
-        /// The cell.
+        /// true if the cell was found; otherwise, false.
         /// </returns>
-        public ICell GetCell(
-            InSectionCellLocator cellLocator,
-            ICell referenceCell)
+        public bool TryGetCell(
+            InReportCellLocator cellLocator,
+            out ICell cell)
         {
             if (cellLocator == null)
             {
                 throw new ArgumentNullException(nameof(cellLocator));
             }
 
-            if (referenceCell == null)
+            cell = null;
+
+            var sectionId = cellLocator.SectionId;
+
+            if (!this.sectionIdToCellIdToCellMap.ContainsKey(sectionId))
             {
-                throw new ArgumentNullException(nameof(referenceCell));
+                return false;
             }
 
-            if (!this.cellToSectionIdMap.TryGetValue(referenceCell, out var sectionId))
+            var cellIdToCellMap = this.sectionIdToCellIdToCellMap[sectionId];
+
+            if (!cellIdToCellMap.TryGetValue(cellLocator.CellId, out cell))
             {
-                throw new CellNotFoundException(Invariant($"{nameof(referenceCell)} is not a cell in the report."), cellLocator);
+                return false;
             }
 
-            var reportCellLocator = new InReportCellLocator(sectionId, cellLocator.CellId, cellLocator.SlotId, cellLocator.SlotSelectionStrategy);
+            cell = GetCellResolvingSlottingOrNull(cell, cellLocator, sectionId);
 
-            var result = this.GetCell(reportCellLocator);
+            var result = cell != null;
+
+            return result;
+        }
+
+        /// <summary>
+        /// Gets a cell.
+        /// </summary>
+        /// <typeparam name="TCell">The type of cell to return.</typeparam>
+        /// <param name="cellLocator">The cell locator.</param>
+        /// <param name="cell">When this method returns, contains the cell if the cell is found and is of type <typeparamref name="TCell"/>; otherwise null.</param>
+        /// <returns>
+        /// true if the cell was found; otherwise, false.
+        /// </returns>
+        public bool TryGetCell<TCell>(
+            InReportCellLocator cellLocator,
+            out TCell cell)
+            where TCell : ICell
+        {
+            cell = default;
+
+            var result = false;
+
+            if (this.TryGetCell(cellLocator, out var untypedCell))
+            {
+                if (untypedCell is TCell typedCell)
+                {
+                    cell = typedCell;
+
+                    result = true;
+                }
+            }
 
             return result;
         }
@@ -422,6 +530,40 @@ namespace OBeautifulCode.DataStructure
             await RecalcSynchronizer.RunAsync(() => this.ReCalcInternalAsync(timestampUtc, protocolFactoryFuncs, additionalTypesForCoreCellOps));
         }
 
+        /// <summary>
+        /// Gets a cell.
+        /// </summary>
+        /// <param name="cellLocator">The cell locator.</param>
+        /// <param name="referenceCell">A reference cell; any cell in the section containing the cell targeted by <paramref name="cellLocator"/>.</param>
+        /// <returns>
+        /// The cell.
+        /// </returns>
+        internal ICell GetCell(
+            InSectionCellLocator cellLocator,
+            ICell referenceCell)
+        {
+            if (cellLocator == null)
+            {
+                throw new ArgumentNullException(nameof(cellLocator));
+            }
+
+            if (referenceCell == null)
+            {
+                throw new ArgumentNullException(nameof(referenceCell));
+            }
+
+            if (!this.cellToSectionIdMap.TryGetValue(referenceCell, out var sectionId))
+            {
+                throw new CellNotFoundException(Invariant($"{nameof(referenceCell)} is not a cell in the report."), cellLocator);
+            }
+
+            var reportCellLocator = new InReportCellLocator(sectionId, cellLocator.CellId, cellLocator.SlotId, cellLocator.SlotSelectionStrategy);
+
+            var result = this.GetCell(reportCellLocator);
+
+            return result;
+        }
+
         private static ICell GetCellResolvingSlotting(
             ICell cell,
             CellLocatorBase cellLocator,
@@ -467,6 +609,52 @@ namespace OBeautifulCode.DataStructure
                 else if (cellLocator.SlotSelectionStrategy == SlotSelectionStrategy.ThrowIfSlotIdNotSpecified)
                 {
                     throw new CellNotFoundException(Invariant($"Located an {nameof(ISlottedCell)} (and not a slot within that cell) and {nameof(SlotSelectionStrategy)} is {nameof(SlotSelectionStrategy.ThrowIfSlotIdNotSpecified)}."), cellLocator);
+                }
+                else
+                {
+                    throw new NotSupportedException(Invariant($"This {nameof(SlotSelectionStrategy)} is not supported: {cellLocator.SlotSelectionStrategy}."));
+                }
+            }
+
+            return result;
+        }
+
+        private static ICell GetCellResolvingSlottingOrNull(
+            ICell cell,
+            CellLocatorBase cellLocator,
+            string sectionId = null)
+        {
+            ICell result;
+
+            var slotId = cellLocator.SlotId;
+
+            if (string.IsNullOrWhiteSpace(slotId))
+            {
+                result = cell;
+            }
+            else
+            {
+                if (cell is ISlottedCell slottedCell)
+                {
+                    result = slottedCell.SlotIdToCellMap.ContainsKey(slotId)
+                        ? slottedCell.SlotIdToCellMap[slotId]
+                        : null;
+                }
+                else
+                {
+                    result = null;
+                }
+            }
+
+            if (result is ISlottedCell addressedSlottedCell)
+            {
+                if (cellLocator.SlotSelectionStrategy == SlotSelectionStrategy.DefaultSlot)
+                {
+                    result = addressedSlottedCell.SlotIdToCellMap[addressedSlottedCell.DefaultSlotId];
+                }
+                else if (cellLocator.SlotSelectionStrategy == SlotSelectionStrategy.ThrowIfSlotIdNotSpecified)
+                {
+                    result = null;
                 }
                 else
                 {
