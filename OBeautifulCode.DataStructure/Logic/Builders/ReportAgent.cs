@@ -431,7 +431,7 @@ namespace OBeautifulCode.DataStructure
                 return false;
             }
 
-            cell = GetCellResolvingSlottingOrNull(cell, cellLocator, sectionId);
+            cell = GetCellResolvingSlottingOrNull(cell, cellLocator);
 
             var result = cell != null;
 
@@ -621,8 +621,7 @@ namespace OBeautifulCode.DataStructure
 
         private static ICell GetCellResolvingSlottingOrNull(
             ICell cell,
-            CellLocatorBase cellLocator,
-            string sectionId = null)
+            CellLocatorBase cellLocator)
         {
             ICell result;
 
