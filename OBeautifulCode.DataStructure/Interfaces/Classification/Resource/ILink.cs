@@ -16,7 +16,7 @@ namespace OBeautifulCode.DataStructure
     /// (e.g. show the resource in another pane).
     /// </summary>
     [SuppressMessage("Microsoft.Design", "CA1040:AvoidEmptyInterfaces", Justification = ObcSuppressBecause.CA1040_AvoidEmptyInterfaces_NeedToIdentifyGroupOfTypesAndPreferInterfaceOverAttribute)]
-    public interface ILink
+    public interface ILink : IHaveLinkedResource
     {
     }
 }

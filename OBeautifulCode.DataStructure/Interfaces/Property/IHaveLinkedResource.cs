@@ -12,7 +12,7 @@ namespace OBeautifulCode.DataStructure
     public interface IHaveLinkedResource
     {
         /// <summary>
-        /// Gets the resource.
+        /// Gets the linked resource.
         /// </summary>
         ILinkedResource Resource { get; }
     }

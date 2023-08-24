@@ -11,7 +11,7 @@ namespace OBeautifulCode.DataStructure
     /// <summary>
     /// Base implementation of <see cref="ILink"/>.
     /// </summary>
-    public abstract partial class LinkBase : ILink, IHaveLinkedResource, IModelViaCodeGen
+    public abstract partial class LinkBase : ILink, IModelViaCodeGen
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="LinkBase"/> class.
@@ -28,9 +28,7 @@ namespace OBeautifulCode.DataStructure
             this.Resource = resource;
         }
 
-        /// <summary>
-        /// Gets the resource.
-        /// </summary>
+        /// <inheritdoc />
         public ILinkedResource Resource { get; private set; }
     }
 }
