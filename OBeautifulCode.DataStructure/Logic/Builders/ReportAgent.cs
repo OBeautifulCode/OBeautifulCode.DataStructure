@@ -145,6 +145,8 @@ namespace OBeautifulCode.DataStructure
 
             var inputCells = allCells.OfType<IInputCell>().ToList();
 
+            var constOutputCells = allCells.OfType<IConstOutputCell>().ToList();
+
             var validationCells = allCells.OfType<IValidationCell>().ToList();
 
             var availabilityCheckCells = allCells.OfType<IAvailabilityCheckCell>().ToList();
@@ -185,8 +187,10 @@ namespace OBeautifulCode.DataStructure
             this.cellToSectionIdMap = localCellToSectionIdMap;
             this.cellIdToCellsMap = localCellIdToCellsMap;
 
+            this.Cells = allCells;
             this.OperationCells = operationCells;
             this.InputCells = inputCells;
+            this.ConstOutputCells = constOutputCells;
             this.ValidationCells = validationCells;
             this.AvailabilityCheckCells = availabilityCheckCells;
             this.Report = report;
@@ -198,6 +202,11 @@ namespace OBeautifulCode.DataStructure
         public Report Report { get; }
 
         /// <summary>
+        /// Gets all cells.
+        /// </summary>
+        public IReadOnlyCollection<ICell> Cells { get; }
+
+        /// <summary>
         /// Gets all operation cells.
         /// </summary>
         public IReadOnlyCollection<IOperationOutputCell> OperationCells { get; }
@@ -206,6 +215,11 @@ namespace OBeautifulCode.DataStructure
         /// Gets all input cells.
         /// </summary>
         public IReadOnlyCollection<IInputCell> InputCells { get; }
+
+        /// <summary>
+        /// Gets all constant output cells.
+        /// </summary>
+        public IReadOnlyCollection<IConstOutputCell> ConstOutputCells { get; }
 
         /// <summary>
         /// Gets all validation cells.
