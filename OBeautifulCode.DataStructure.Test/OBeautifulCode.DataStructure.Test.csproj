@@ -211,24 +211,24 @@
     <Compile Include="Models\Classes\Link\Resource\IdentifiedLinkedResourceTest.designer.cs">
       <DependentUpon>IdentifiedLinkedResourceTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Classes\CellValue\IdentifiedMediaTest.cs" />
-    <Compile Include="Models\Classes\CellValue\IdentifiedMediaTest.designer.cs">
+    <Compile Include="Models\Classes\CellValue\Media\IdentifiedMediaTest.cs" />
+    <Compile Include="Models\Classes\CellValue\Media\IdentifiedMediaTest.designer.cs">
       <DependentUpon>IdentifiedMediaTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Classes\CellValue\InlinedMediaTest.cs" />
-    <Compile Include="Models\Classes\CellValue\InlinedMediaTest.designer.cs">
+    <Compile Include="Models\Classes\CellValue\Media\InlinedMediaTest.cs" />
+    <Compile Include="Models\Classes\CellValue\Media\InlinedMediaTest.designer.cs">
       <DependentUpon>InlinedMediaTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Classes\CellValue\SourcedMediaTest.cs" />
-    <Compile Include="Models\Classes\CellValue\SourcedMediaTest.designer.cs">
+    <Compile Include="Models\Classes\CellValue\Media\SourcedMediaTest.cs" />
+    <Compile Include="Models\Classes\CellValue\Media\SourcedMediaTest.designer.cs">
       <DependentUpon>SourcedMediaTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Classes\Details\LogoDetailsTest.cs" />
     <Compile Include="Models\Classes\Details\LogoDetailsTest.designer.cs">
       <DependentUpon>LogoDetailsTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Classes\CellValue\MediaBaseTest.cs" />
-    <Compile Include="Models\Classes\CellValue\MediaBaseTest.designer.cs">
+    <Compile Include="Models\Classes\CellValue\Media\MediaBaseTest.cs" />
+    <Compile Include="Models\Classes\CellValue\Media\MediaBaseTest.designer.cs">
       <DependentUpon>MediaBaseTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Classes\Format\CellValue\Number\CurrencyCellValueFormat{TValue}Test.cs" />

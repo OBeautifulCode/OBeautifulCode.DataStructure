@@ -234,20 +234,20 @@
     <Compile Include="Models\Classes\CellLocator\SelfCellLocator.designer.cs">
       <DependentUpon>SelfCellLocator.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Classes\CellValue\IdentifiedMedia.designer.cs">
+    <Compile Include="Models\Classes\CellValue\Media\IdentifiedMedia.designer.cs">
       <DependentUpon>IdentifiedMedia.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Classes\CellValue\InlinedMedia.designer.cs">
+    <Compile Include="Models\Classes\CellValue\Media\InlinedMedia.designer.cs">
       <DependentUpon>InlinedMedia.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Classes\CellValue\IdentifiedMedia.cs" />
-    <Compile Include="Models\Classes\CellValue\SourcedMedia.designer.cs">
+    <Compile Include="Models\Classes\CellValue\Media\IdentifiedMedia.cs" />
+    <Compile Include="Models\Classes\CellValue\Media\SourcedMedia.designer.cs">
       <DependentUpon>SourcedMedia.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Classes\CellValue\MediaBase.cs" />
-    <Compile Include="Models\Classes\CellValue\InlinedMedia.cs" />
-    <Compile Include="Models\Classes\CellValue\SourcedMedia.cs" />
-    <Compile Include="Models\Classes\CellValue\MediaBase.designer.cs">
+    <Compile Include="Models\Classes\CellValue\Media\MediaBase.cs" />
+    <Compile Include="Models\Classes\CellValue\Media\InlinedMedia.cs" />
+    <Compile Include="Models\Classes\CellValue\Media\SourcedMedia.cs" />
+    <Compile Include="Models\Classes\CellValue\Media\MediaBase.designer.cs">
       <DependentUpon>MediaBase.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Classes\Cell\Input\InputCellBase{TValue}.designer.cs">
