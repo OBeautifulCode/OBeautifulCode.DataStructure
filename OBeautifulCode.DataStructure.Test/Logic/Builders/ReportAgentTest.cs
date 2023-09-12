@@ -2917,7 +2917,7 @@ namespace OBeautifulCode.DataStructure.Test
 
         private static Report BuildReport()
         {
-            var isForProfitCell = Cell.CreateEnabledInput<bool>(CellIds.IsForProfit);
+            var isForProfitCell = Cell.CreateEnabledInputCell<bool>(CellIds.IsForProfit);
 
             var nonProfitAvailabilityCheck = Cell.CreateAvailabilityCheck(
                 new[]
@@ -2927,15 +2927,15 @@ namespace OBeautifulCode.DataStructure.Test
                 },
                 endMessageOp: Op.Const("got-enabled"));
 
-            var restrictedCash = Cell.CreateDisabledInput<decimal>(
+            var restrictedCash = Cell.CreateDisabledInputCell<decimal>(
                 CellIds.RestrictedCash,
                 availabilityCheck: nonProfitAvailabilityCheck);
 
-            var partiallyRestrictedCash = Cell.CreateDisabledInput<decimal>(
+            var partiallyRestrictedCash = Cell.CreateDisabledInputCell<decimal>(
                 CellIds.PartiallyRestrictedCash,
                 availabilityCheck: nonProfitAvailabilityCheck);
 
-            var numberOfSalesFteCell = Cell.CreateEnabledInput<decimal>(
+            var numberOfSalesFteCell = Cell.CreateEnabledInputCell<decimal>(
                 id: CellIds.SalesFte,
                 validation:
                     Cell.CreateValidation(
@@ -2949,7 +2949,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 Op.Const("sales must be >= 0")),
                         }));
 
-            var numberOfWarehouseFteCell = Cell.CreateEnabledInput<decimal>(
+            var numberOfWarehouseFteCell = Cell.CreateEnabledInputCell<decimal>(
                 id: CellIds.WarehouseFte,
                 validation:
                     Cell.CreateValidation(
@@ -2963,7 +2963,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 Op.Const("warehouse must be >= 0")),
                         }));
 
-            var numberOfWarehouseSupportFteCell = Cell.CreateOp(
+            var numberOfWarehouseSupportFteCell = Cell.CreateOpCell(
                 id: CellIds.WarehouseSupportFte,
                 operation: Op.IfThenElse(
                     Cell.InSameSection(numberOfWarehouseFteCell.Id).HasValue(),
@@ -2972,7 +2972,7 @@ namespace OBeautifulCode.DataStructure.Test
                         Op.Const(2m)),
                     Op.NotApplicable<decimal>()));
 
-            var numberOfTotalFte = Cell.CreateOp(
+            var numberOfTotalFte = Cell.CreateOpCell(
                     id: CellIds.TotalFte,
                     operation:
                         Op.IfThenElse(
@@ -3000,7 +3000,7 @@ namespace OBeautifulCode.DataStructure.Test
                                     Op.Const("total must be >= 0")),
                             }));
 
-            var scoresCell = Cell.CreateConst<NamedDecimalSet>(
+            var scoresCell = Cell.CreateConstCell<NamedDecimalSet>(
                 new[]
                 {
                     new NamedValue<decimal>("bob", 5),
@@ -3018,13 +3018,13 @@ namespace OBeautifulCode.DataStructure.Test
                 },
                 id: CellIds.CoScores);
 
-            var scoresCellCopy = Cell.CreateOp(
+            var scoresCellCopy = Cell.CreateOpCell(
                 Cell.InSameSection(scoresCell.Id).GetValue<NamedDecimalSet>(),
                 id: CellIds.CoScoresCopy);
 
             var intConstCell = new ConstCell<int>(4, id: CellIds.NumberOfTiles);
 
-            var quartileCell = Cell.CreateOp(
+            var quartileCell = Cell.CreateOpCell(
                 new TileOp(
                     Cell.InSameSection(scoresCellCopy.Id).GetValue<NamedDecimalSet>(),
                     Cell.InSameSection(intConstCell.Id).GetValue<int>()),

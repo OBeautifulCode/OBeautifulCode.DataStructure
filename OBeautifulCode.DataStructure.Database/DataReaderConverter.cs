@@ -56,7 +56,7 @@ namespace OBeautifulCode.DataStructure.Database
             var tableColumns = new TableColumns(columns, context.ColumnsFormat);
 
             // todo: add per header cell value and cell format.
-            var headerCells = columnNames.Select(_ => Cell.CreateConst(_)).ToList();
+            var headerCells = columnNames.Select(_ => Cell.CreateConstCell(_)).ToList();
 
             var headerRow = new FlatRow(headerCells, format: context.HeaderRowFormat);
 

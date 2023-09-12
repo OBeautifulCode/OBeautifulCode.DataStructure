@@ -179,8 +179,8 @@ namespace OBeautifulCode.DataStructure
         /// <returns>
         /// The cell.
         /// </returns>
-        public static OperationCell<TValue> CreateOp<TValue>(
-            IReturningOperation<TValue> operation,
+        public static OperationCell<TValue> CreateOpCell<TValue>(
+            this IReturningOperation<TValue> operation,
             string id = null,
             int? columnsSpanned = null,
             string details = null,
@@ -210,8 +210,8 @@ namespace OBeautifulCode.DataStructure
         /// <returns>
         /// The cell.
         /// </returns>
-        public static ConstCell<TValue> CreateConst<TValue>(
-            TValue value,
+        public static ConstCell<TValue> CreateConstCell<TValue>(
+            this TValue value,
             string id = null,
             int? columnsSpanned = null,
             string details = null,
@@ -237,7 +237,7 @@ namespace OBeautifulCode.DataStructure
         /// <returns>
         /// The cell.
         /// </returns>
-        public static NullCell CreateNull(
+        public static NullCell CreateNullCell(
             string id = null,
             int? columnsSpanned = null,
             string details = null,
@@ -265,7 +265,7 @@ namespace OBeautifulCode.DataStructure
         /// <returns>
         /// The cell.
         /// </returns>
-        public static InputCell<TValue> CreateEnabledInput<TValue>(
+        public static InputCell<TValue> CreateEnabledInputCell<TValue>(
             string id = null,
             int? columnsSpanned = null,
             string details = null,
@@ -295,7 +295,7 @@ namespace OBeautifulCode.DataStructure
         /// <returns>
         /// The cell.
         /// </returns>
-        public static InputCell<TValue> CreateDisabledInput<TValue>(
+        public static InputCell<TValue> CreateDisabledInputCell<TValue>(
             string id = null,
             int? columnsSpanned = null,
             string details = null,
