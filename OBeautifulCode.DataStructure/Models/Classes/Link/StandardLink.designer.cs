@@ -70,7 +70,6 @@ namespace OBeautifulCode.DataStructure
             }
 
             var result = this.Resource.IsEqualTo(other.Resource)
-                      && this.Media.IsEqualTo(other.Media)
                       && this.Target.IsEqualTo(other.Target)
                       && this.FormatsToApplyWhenActivated.IsEqualTo(other.FormatsToApplyWhenActivated);
 
@@ -83,7 +82,6 @@ namespace OBeautifulCode.DataStructure
         /// <inheritdoc />
         public override int GetHashCode() => HashCodeHelper.Initialize()
             .Hash(this.Resource)
-            .Hash(this.Media)
             .Hash(this.Target)
             .Hash(this.FormatsToApplyWhenActivated)
             .Value;
@@ -113,40 +111,6 @@ namespace OBeautifulCode.DataStructure
         {
             var result = new StandardLink(
                                  resource,
-                                 this.Media?.DeepClone(),
-                                 this.Target?.DeepClone(),
-                                 this.FormatsToApplyWhenActivated?.DeepClone());
-
-            return result;
-        }
-
-        /// <summary>
-        /// Deep clones this object with a new <see cref="Media" />.
-        /// </summary>
-        /// <param name="media">The new <see cref="Media" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="StandardLink" /> using the specified <paramref name="media" /> for <see cref="Media" /> and a deep clone of every other property.</returns>
-        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
-        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
-        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
-        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public StandardLink DeepCloneWithMedia(IMedia media)
-        {
-            var result = new StandardLink(
-                                 this.Resource?.DeepClone(),
-                                 media,
                                  this.Target?.DeepClone(),
                                  this.FormatsToApplyWhenActivated?.DeepClone());
 
@@ -179,7 +143,6 @@ namespace OBeautifulCode.DataStructure
         {
             var result = new StandardLink(
                                  this.Resource?.DeepClone(),
-                                 this.Media?.DeepClone(),
                                  target,
                                  this.FormatsToApplyWhenActivated?.DeepClone());
 
@@ -212,7 +175,6 @@ namespace OBeautifulCode.DataStructure
         {
             var result = new StandardLink(
                                  this.Resource?.DeepClone(),
-                                 this.Media?.DeepClone(),
                                  this.Target?.DeepClone(),
                                  formatsToApplyWhenActivated);
 
@@ -225,7 +187,6 @@ namespace OBeautifulCode.DataStructure
         {
             var result = new StandardLink(
                                  this.Resource?.DeepClone(),
-                                 this.Media?.DeepClone(),
                                  this.Target?.DeepClone(),
                                  this.FormatsToApplyWhenActivated?.DeepClone());
 
@@ -236,7 +197,7 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"OBeautifulCode.DataStructure.StandardLink: Resource = {this.Resource?.ToString() ?? "<null>"}, Media = {this.Media?.ToString() ?? "<null>"}, Target = {this.Target?.ToString() ?? "<null>"}, FormatsToApplyWhenActivated = {this.FormatsToApplyWhenActivated?.ToString() ?? "<null>"}.");
+            var result = Invariant($"OBeautifulCode.DataStructure.StandardLink: Resource = {this.Resource?.ToString() ?? "<null>"}, Target = {this.Target?.ToString() ?? "<null>"}, FormatsToApplyWhenActivated = {this.FormatsToApplyWhenActivated?.ToString() ?? "<null>"}.");
 
             return result;
         }

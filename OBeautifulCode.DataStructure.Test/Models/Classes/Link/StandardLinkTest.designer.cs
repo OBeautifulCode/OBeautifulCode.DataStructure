@@ -47,7 +47,7 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new SystemUnderTestExpectedStringRepresentation<StandardLink>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.StandardLink: Resource = {systemUnderTest.Resource?.ToString() ?? "<null>"}, Media = {systemUnderTest.Media?.ToString() ?? "<null>"}, Target = {systemUnderTest.Target?.ToString() ?? "<null>"}, FormatsToApplyWhenActivated = {systemUnderTest.FormatsToApplyWhenActivated?.ToString() ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.StandardLink: Resource = {systemUnderTest.Resource?.ToString() ?? "<null>"}, Target = {systemUnderTest.Target?.ToString() ?? "<null>"}, FormatsToApplyWhenActivated = {systemUnderTest.FormatsToApplyWhenActivated?.ToString() ?? "<null>"}."),
                         };
 
                         return result;
@@ -65,7 +65,6 @@ namespace OBeautifulCode.DataStructure.Test
 
                         var result = new StandardLink(
                                              null,
-                                             referenceObject.Media,
                                              referenceObject.Target,
                                              referenceObject.FormatsToApplyWhenActivated);
 
@@ -77,25 +76,6 @@ namespace OBeautifulCode.DataStructure.Test
             .AddScenario(() =>
                 new ConstructorArgumentValidationTestScenario<StandardLink>
                 {
-                    Name = "constructor should throw ArgumentNullException when parameter 'media' is null scenario",
-                    ConstructionFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<StandardLink>();
-
-                        var result = new StandardLink(
-                                             referenceObject.Resource,
-                                             null,
-                                             referenceObject.Target,
-                                             referenceObject.FormatsToApplyWhenActivated);
-
-                        return result;
-                    },
-                    ExpectedExceptionType = typeof(ArgumentNullException),
-                    ExpectedExceptionMessageContains = new[] { "media", },
-                })
-            .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<StandardLink>
-                {
                     Name = "constructor should throw ArgumentNullException when parameter 'formatsToApplyWhenActivated' is null scenario",
                     ConstructionFunc = () =>
                     {
@@ -103,7 +83,6 @@ namespace OBeautifulCode.DataStructure.Test
 
                         var result = new StandardLink(
                                              referenceObject.Resource,
-                                             referenceObject.Media,
                                              referenceObject.Target,
                                              null);
 
@@ -122,7 +101,6 @@ namespace OBeautifulCode.DataStructure.Test
 
                         var result = new StandardLink(
                                              referenceObject.Resource,
-                                             referenceObject.Media,
                                              referenceObject.Target,
                                              new List<RegionFormatBase>());
 
@@ -141,7 +119,6 @@ namespace OBeautifulCode.DataStructure.Test
 
                         var result = new StandardLink(
                                              referenceObject.Resource,
-                                             referenceObject.Media,
                                              referenceObject.Target,
                                              new RegionFormatBase[0].Concat(referenceObject.FormatsToApplyWhenActivated).Concat(new RegionFormatBase[] { null }).Concat(referenceObject.FormatsToApplyWhenActivated).ToList());
 
@@ -164,7 +141,6 @@ namespace OBeautifulCode.DataStructure.Test
                         {
                             SystemUnderTest = new StandardLink(
                                                       referenceObject.Resource,
-                                                      referenceObject.Media,
                                                       referenceObject.Target,
                                                       referenceObject.FormatsToApplyWhenActivated),
                             ExpectedPropertyValue = referenceObject.Resource,
@@ -173,28 +149,6 @@ namespace OBeautifulCode.DataStructure.Test
                         return result;
                     },
                     PropertyName = "Resource",
-                })
-            .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<StandardLink>
-                {
-                    Name = "Media should return same 'media' parameter passed to constructor when getting",
-                    SystemUnderTestExpectedPropertyValueFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<StandardLink>();
-
-                        var result = new SystemUnderTestExpectedPropertyValue<StandardLink>
-                        {
-                            SystemUnderTest = new StandardLink(
-                                                      referenceObject.Resource,
-                                                      referenceObject.Media,
-                                                      referenceObject.Target,
-                                                      referenceObject.FormatsToApplyWhenActivated),
-                            ExpectedPropertyValue = referenceObject.Media,
-                        };
-
-                        return result;
-                    },
-                    PropertyName = "Media",
                 })
             .AddScenario(() =>
                 new ConstructorPropertyAssignmentTestScenario<StandardLink>
@@ -208,7 +162,6 @@ namespace OBeautifulCode.DataStructure.Test
                         {
                             SystemUnderTest = new StandardLink(
                                                       referenceObject.Resource,
-                                                      referenceObject.Media,
                                                       referenceObject.Target,
                                                       referenceObject.FormatsToApplyWhenActivated),
                             ExpectedPropertyValue = referenceObject.Target,
@@ -230,7 +183,6 @@ namespace OBeautifulCode.DataStructure.Test
                         {
                             SystemUnderTest = new StandardLink(
                                                       referenceObject.Resource,
-                                                      referenceObject.Media,
                                                       referenceObject.Target,
                                                       referenceObject.FormatsToApplyWhenActivated),
                             ExpectedPropertyValue = referenceObject.FormatsToApplyWhenActivated,
@@ -257,26 +209,6 @@ namespace OBeautifulCode.DataStructure.Test
                         {
                             SystemUnderTest = systemUnderTest,
                             DeepCloneWithValue = referenceObject.Resource,
-                        };
-
-                        return result;
-                    },
-                })
-            .AddScenario(() =>
-                new DeepCloneWithTestScenario<StandardLink>
-                {
-                    Name = "DeepCloneWithMedia should deep clone object and replace Media with the provided media",
-                    WithPropertyName = "Media",
-                    SystemUnderTestDeepCloneWithValueFunc = () =>
-                    {
-                        var systemUnderTest = A.Dummy<StandardLink>();
-
-                        var referenceObject = A.Dummy<StandardLink>().ThatIs(_ => !systemUnderTest.Media.IsEqualTo(_.Media));
-
-                        var result = new SystemUnderTestDeepCloneWithValue<StandardLink>
-                        {
-                            SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.Media,
                         };
 
                         return result;
@@ -335,7 +267,6 @@ namespace OBeautifulCode.DataStructure.Test
                     {
                         new StandardLink(
                                 ReferenceObjectForEquatableTestScenarios.Resource,
-                                ReferenceObjectForEquatableTestScenarios.Media,
                                 ReferenceObjectForEquatableTestScenarios.Target,
                                 ReferenceObjectForEquatableTestScenarios.FormatsToApplyWhenActivated),
                     },
@@ -343,22 +274,14 @@ namespace OBeautifulCode.DataStructure.Test
                     {
                         new StandardLink(
                                 A.Dummy<StandardLink>().Whose(_ => !_.Resource.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Resource)).Resource,
-                                ReferenceObjectForEquatableTestScenarios.Media,
                                 ReferenceObjectForEquatableTestScenarios.Target,
                                 ReferenceObjectForEquatableTestScenarios.FormatsToApplyWhenActivated),
                         new StandardLink(
                                 ReferenceObjectForEquatableTestScenarios.Resource,
-                                A.Dummy<StandardLink>().Whose(_ => !_.Media.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Media)).Media,
-                                ReferenceObjectForEquatableTestScenarios.Target,
-                                ReferenceObjectForEquatableTestScenarios.FormatsToApplyWhenActivated),
-                        new StandardLink(
-                                ReferenceObjectForEquatableTestScenarios.Resource,
-                                ReferenceObjectForEquatableTestScenarios.Media,
                                 A.Dummy<StandardLink>().Whose(_ => !_.Target.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Target)).Target,
                                 ReferenceObjectForEquatableTestScenarios.FormatsToApplyWhenActivated),
                         new StandardLink(
                                 ReferenceObjectForEquatableTestScenarios.Resource,
-                                ReferenceObjectForEquatableTestScenarios.Media,
                                 ReferenceObjectForEquatableTestScenarios.Target,
                                 A.Dummy<StandardLink>().Whose(_ => !_.FormatsToApplyWhenActivated.IsEqualTo(ReferenceObjectForEquatableTestScenarios.FormatsToApplyWhenActivated)).FormatsToApplyWhenActivated),
                     },
@@ -654,18 +577,6 @@ namespace OBeautifulCode.DataStructure.Test
                     actual.Resource.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.Resource);
                 }
 
-                if (systemUnderTest.Media == null)
-                {
-                    actual.Media.AsTest().Must().BeNull();
-                }
-                else if (!actual.Media.GetType().IsValueType)
-                {
-                    // When the declared type is a reference type, we still have to check the runtime type.
-                    // The object could be a boxed value type, which will fail this asseration because
-                    // a deep clone of a value type object is the same object.
-                    actual.Media.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.Media);
-                }
-
                 if (systemUnderTest.FormatsToApplyWhenActivated == null)
                 {
                     actual.FormatsToApplyWhenActivated.AsTest().Must().BeNull();
@@ -695,7 +606,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "Resource", "Media", "Target", "FormatsToApplyWhenActivated" };
+                var propertyNames = new string[] { "Resource", "Target", "FormatsToApplyWhenActivated" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 

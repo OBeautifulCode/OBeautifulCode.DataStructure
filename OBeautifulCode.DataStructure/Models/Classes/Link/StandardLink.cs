@@ -20,12 +20,10 @@ namespace OBeautifulCode.DataStructure
         /// Initializes a new instance of the <see cref="StandardLink"/> class.
         /// </summary>
         /// <param name="resource">The resource.</param>
-        /// <param name="media">OPTIONAL media that the link should be attached to.  DEFAULT is no media.</param>
         /// <param name="target">OPTIONAL value that specifies where/how a linked resource is displayed/experienced.  DEFAULT is to leave the target unspecified.</param>
         /// <param name="formatsToApplyWhenActivated">OPTIONAL formatting to apply, in order, when the link is activated (e.g. clicked).  DEFAULT is to leave the formatting unchanged.</param>
         public StandardLink(
             ILinkedResource resource,
-            IMedia media = null,
             LinkTarget? target = null,
             IReadOnlyList<RegionFormatBase> formatsToApplyWhenActivated = null)
             : base(resource)
@@ -48,15 +46,9 @@ namespace OBeautifulCode.DataStructure
                 }
             }
 
-            this.Media = media;
             this.Target = target;
             this.FormatsToApplyWhenActivated = formatsToApplyWhenActivated;
         }
-
-        /// <summary>
-        /// Gets the media that the link should be attached to.
-        /// </summary>
-        public IMedia Media { get; private set; }
 
         /// <summary>
         /// Gets a value that specifies where/how a linked resource is displayed/experienced.

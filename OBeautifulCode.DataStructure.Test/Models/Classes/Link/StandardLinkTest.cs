@@ -41,7 +41,6 @@ namespace OBeautifulCode.DataStructure.Test
 
                             var result = new StandardLink(
                                 null,
-                                referenceObject.Media,
                                 referenceObject.Target,
                                 referenceObject.FormatsToApplyWhenActivated);
 
@@ -60,7 +59,6 @@ namespace OBeautifulCode.DataStructure.Test
 
                             var result = new StandardLink(
                                 referenceObject.Resource,
-                                referenceObject.Media,
                                 LinkTarget.Unknown,
                                 referenceObject.FormatsToApplyWhenActivated);
 
@@ -80,7 +78,6 @@ namespace OBeautifulCode.DataStructure.Test
 
                             var result = new StandardLink(
                                                  referenceObject.Resource,
-                                                 referenceObject.Media,
                                                  referenceObject.Target,
                                                  new List<RegionFormatBase>());
 
@@ -99,7 +96,6 @@ namespace OBeautifulCode.DataStructure.Test
 
                             var result = new StandardLink(
                                                  referenceObject.Resource,
-                                                 referenceObject.Media,
                                                  referenceObject.Target,
                                                  new RegionFormatBase[0].Concat(referenceObject.FormatsToApplyWhenActivated).Concat(new RegionFormatBase[] { null }).Concat(referenceObject.FormatsToApplyWhenActivated).ToList());
 

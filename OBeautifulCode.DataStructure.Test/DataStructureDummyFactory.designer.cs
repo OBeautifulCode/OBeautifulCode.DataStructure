@@ -1116,7 +1116,6 @@ namespace OBeautifulCode.DataStructure.Test
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new StandardLink(
                                  A.Dummy<ILinkedResource>(),
-                                 A.Dummy<IMedia>(),
                                  A.Dummy<LinkTarget?>(),
                                  A.Dummy<IReadOnlyList<RegionFormatBase>>()));
 
