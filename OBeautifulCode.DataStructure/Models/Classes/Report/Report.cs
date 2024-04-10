@@ -16,7 +16,7 @@ namespace OBeautifulCode.DataStructure
     /// <summary>
     /// An organized collection of <see cref="TreeTable"/> objects.
     /// </summary>
-    public partial class Report : IModelViaCodeGen
+    public partial class Report : IHaveStringId, IModelViaCodeGen
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Report"/> class.
@@ -86,9 +86,7 @@ namespace OBeautifulCode.DataStructure
             this.Format = format;
         }
 
-        /// <summary>
-        /// Gets the report's unique identifier.
-        /// </summary>
+        /// <inheritdoc />
         public string Id { get; private set; }
 
         /// <summary>
