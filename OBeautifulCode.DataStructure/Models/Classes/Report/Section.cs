@@ -13,7 +13,7 @@ namespace OBeautifulCode.DataStructure
     /// <summary>
     /// A section of a <see cref="Report"/>.
     /// </summary>
-    public partial class Section : IModelViaCodeGen
+    public partial class Section : IHaveName, IModelViaCodeGen
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Section"/> class.
@@ -65,9 +65,7 @@ namespace OBeautifulCode.DataStructure
         /// </summary>
         public TreeTable TreeTable { get; private set; }
 
-        /// <summary>
-        /// Gets the section's name.
-        /// </summary>
+        /// <inheritdoc/>
         public string Name { get; private set; }
 
         /// <summary>

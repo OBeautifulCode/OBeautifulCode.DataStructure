@@ -14,7 +14,7 @@ namespace OBeautifulCode.DataStructure
     /// Base class implementation of <see cref="IMedia"/>.
     /// </summary>
     // ReSharper disable once RedundantExtendsListEntry
-    public abstract partial class MediaBase : IMedia, IModelViaCodeGen
+    public abstract partial class MediaBase : IMedia, IHaveName, IModelViaCodeGen
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="MediaBase"/> class.
@@ -39,9 +39,7 @@ namespace OBeautifulCode.DataStructure
         /// </summary>
         public MediaKind MediaKind { get; private set; }
 
-        /// <summary>
-        /// Gets the name of the media.
-        /// </summary>
+        /// <inheritdoc/>
         public string Name { get; private set; }
     }
 }
