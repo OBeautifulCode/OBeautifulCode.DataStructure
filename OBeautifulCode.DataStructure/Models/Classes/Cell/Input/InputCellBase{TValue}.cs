@@ -66,6 +66,11 @@ namespace OBeautifulCode.DataStructure
                 throw new ArgumentNullException(nameof(inputEvent));
             }
 
+            if ((!(inputEvent is CellInputAppliedEvent<TValue>)) && (!(inputEvent is CellInputClearedEvent)))
+            {
+                throw new ArgumentException(Invariant($"{nameof(inputEvent)} is of type '{inputEvent.GetType().ToStringReadable()}', which is not applicable to this cell, which is of type '{this.GetType().ToStringReadable()}'."));
+            }
+
             this.InputEvents = new CellInputEventBase[0]
                 .Concat(this.InputEvents ?? new CellInputEventBase[0])
                 .Concat(new[] { inputEvent })

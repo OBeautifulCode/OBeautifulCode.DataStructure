@@ -783,6 +783,22 @@ namespace OBeautifulCode.DataStructure.Test
         }
 
         [Fact]
+        public static void Record_CellInputEventBase___Should_throw_ArgumentException___When_inputEvent_cannot_be_applied_to_cell()
+        {
+            // Arrange
+            var systemUnderTest = A.Dummy<InputCell<Version>>();
+
+            var inputEvent = new CellInputAppliedEvent<string>(DateTime.UtcNow, A.Dummy<string>(), A.Dummy<string>());
+
+            // Act
+            var actual = Record.Exception(() => systemUnderTest.Record(inputEvent));
+
+            // Assert
+            actual.AsTest().Must().BeOfType<ArgumentException>();
+            actual.Message.AsTest().Must().BeEqualTo("inputEvent is of type 'CellInputAppliedEvent<string>', which is not applicable to this cell, which is of type 'InputCell<Version>'.");
+        }
+
+        [Fact]
         public static void Record_CellInputEventBase___Should_add_inputEvent_to_the_end_of_InputEvents___When_InputEvents_is_null()
         {
             // Arrange
