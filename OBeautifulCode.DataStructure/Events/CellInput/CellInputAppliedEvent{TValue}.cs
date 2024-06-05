@@ -15,7 +15,7 @@ namespace OBeautifulCode.DataStructure
     /// </summary>
     /// <typeparam name="TValue">The type of inputted value.</typeparam>
     // ReSharper disable once RedundantExtendsListEntry
-    public partial class CellInputAppliedEvent<TValue> : CellInputEventBase, IModelViaCodeGen
+    public partial class CellInputAppliedEvent<TValue> : CellInputEventBase, ICellInputAppliedEvent, IModelViaCodeGen
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CellInputAppliedEvent{TValue}"/> class.
