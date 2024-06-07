@@ -75,7 +75,7 @@ namespace OBeautifulCode.DataStructure.Test
             AutoFixtureBackedDummyFactory.AddDummyCreator<IOperationOutputCell<Version>>(A.Dummy<OperationCell<Version>>);
             AutoFixtureBackedDummyFactory.AddDummyCreator<IDetails>(A.Dummy<DetailsBase>);
             AutoFixtureBackedDummyFactory.UseRandomInterfaceImplementationForDummy<ICellLocator>();
-            AutoFixtureBackedDummyFactory.UseRandomInterfaceImplementationForDummy<ICellInputAppliedEvent>();
+            AutoFixtureBackedDummyFactory.AddDummyCreator<ICellInputAppliedEvent>(A.Dummy<CellInputAppliedEvent<Version>>);
 
             // <------------------- OPERATIONS ------------------------>
             RegisterReturningOperation<bool>();
