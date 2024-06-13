@@ -206,6 +206,10 @@
     <Compile Include=".recipes\OBeautifulCode.Type\TypeDummyFactory.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeDummyFactory.designer.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
+    <Compile Include="Models\Classes\CellValue\Controls\DropdownSelectorTest.cs" />
+    <Compile Include="Models\Classes\CellValue\Controls\DropdownSelectorTest.designer.cs">
+      <DependentUpon>DropdownSelectorTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Logic\Extensions\ToExtensionsTest.cs" />
     <Compile Include="Models\Classes\Link\Resource\IdentifiedLinkedResourceTest.cs" />
     <Compile Include="Models\Classes\Link\Resource\IdentifiedLinkedResourceTest.designer.cs">

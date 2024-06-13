@@ -41,7 +41,7 @@ namespace OBeautifulCode.DataStructure.Test
 
                             var result = new IdentifiedLinkedResource(
                                 null,
-                                referenceObject.Kind);
+                                referenceObject.AdditionalInfoIdToValueMap);
 
                             return result;
                         },
@@ -58,7 +58,7 @@ namespace OBeautifulCode.DataStructure.Test
 
                             var result = new IdentifiedLinkedResource(
                                 Invariant($"  {Environment.NewLine}  "),
-                                referenceObject.Kind);
+                                referenceObject.AdditionalInfoIdToValueMap);
 
                             return result;
                         },

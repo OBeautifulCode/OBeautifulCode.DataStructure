@@ -23,15 +23,15 @@ namespace OBeautifulCode.DataStructure
     using static global::System.FormattableString;
 
     [Serializable]
-    public partial class IdentifiedLinkedResource : IModel<IdentifiedLinkedResource>
+    public partial class DropdownSelector : IModel<DropdownSelector>
     {
         /// <summary>
-        /// Determines whether two objects of type <see cref="IdentifiedLinkedResource"/> are equal.
+        /// Determines whether two objects of type <see cref="DropdownSelector"/> are equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are equal; otherwise false.</returns>
-        public static bool operator ==(IdentifiedLinkedResource left, IdentifiedLinkedResource right)
+        public static bool operator ==(DropdownSelector left, DropdownSelector right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -49,15 +49,15 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <summary>
-        /// Determines whether two objects of type <see cref="IdentifiedLinkedResource"/> are not equal.
+        /// Determines whether two objects of type <see cref="DropdownSelector"/> are not equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are not equal; otherwise false.</returns>
-        public static bool operator !=(IdentifiedLinkedResource left, IdentifiedLinkedResource right) => !(left == right);
+        public static bool operator !=(DropdownSelector left, DropdownSelector right) => !(left == right);
 
         /// <inheritdoc />
-        public bool Equals(IdentifiedLinkedResource other)
+        public bool Equals(DropdownSelector other)
         {
             if (ReferenceEquals(this, other))
             {
@@ -69,93 +69,92 @@ namespace OBeautifulCode.DataStructure
                 return false;
             }
 
-            var result = this.Id.IsEqualTo(other.Id, StringComparer.Ordinal)
-                      && this.AdditionalInfoIdToValueMap.IsEqualTo(other.AdditionalInfoIdToValueMap);
+            var result = this.Items.IsEqualTo(other.Items)
+                      && this.SelectedItemName.IsEqualTo(other.SelectedItemName, StringComparer.Ordinal);
 
             return result;
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => this == (obj as IdentifiedLinkedResource);
+        public override bool Equals(object obj) => this == (obj as DropdownSelector);
 
         /// <inheritdoc />
         public override int GetHashCode() => HashCodeHelper.Initialize()
-            .Hash(this.Id)
-            .Hash(this.AdditionalInfoIdToValueMap)
+            .Hash(this.Items)
+            .Hash(this.SelectedItemName)
             .Value;
 
         /// <inheritdoc />
-        public new IdentifiedLinkedResource DeepClone() => (IdentifiedLinkedResource)this.DeepCloneInternal();
-
-        /// <summary>
-        /// Deep clones this object with a new <see cref="Id" />.
-        /// </summary>
-        /// <param name="id">The new <see cref="Id" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="IdentifiedLinkedResource" /> using the specified <paramref name="id" /> for <see cref="Id" /> and a deep clone of every other property.</returns>
-        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
-        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
-        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
-        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public IdentifiedLinkedResource DeepCloneWithId(string id)
-        {
-            var result = new IdentifiedLinkedResource(
-                                 id,
-                                 this.AdditionalInfoIdToValueMap?.DeepClone());
-
-            return result;
-        }
-
-        /// <summary>
-        /// Deep clones this object with a new <see cref="AdditionalInfoIdToValueMap" />.
-        /// </summary>
-        /// <param name="additionalInfoIdToValueMap">The new <see cref="AdditionalInfoIdToValueMap" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="IdentifiedLinkedResource" /> using the specified <paramref name="additionalInfoIdToValueMap" /> for <see cref="AdditionalInfoIdToValueMap" /> and a deep clone of every other property.</returns>
-        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
-        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
-        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
-        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public IdentifiedLinkedResource DeepCloneWithAdditionalInfoIdToValueMap(IReadOnlyDictionary<string, string> additionalInfoIdToValueMap)
-        {
-            var result = new IdentifiedLinkedResource(
-                                 this.Id?.DeepClone(),
-                                 additionalInfoIdToValueMap);
-
-            return result;
-        }
+        public object Clone() => this.DeepClone();
 
         /// <inheritdoc />
-        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
-        protected override LinkedResourceBase DeepCloneInternal()
+        public DropdownSelector DeepClone()
         {
-            var result = new IdentifiedLinkedResource(
-                                 this.Id?.DeepClone(),
-                                 this.AdditionalInfoIdToValueMap?.DeepClone());
+            var result = new DropdownSelector(
+                                 this.Items?.DeepClone(),
+                                 this.SelectedItemName?.DeepClone());
+
+            return result;
+        }
+
+        /// <summary>
+        /// Deep clones this object with a new <see cref="Items" />.
+        /// </summary>
+        /// <param name="items">The new <see cref="Items" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="DropdownSelector" /> using the specified <paramref name="items" /> for <see cref="Items" /> and a deep clone of every other property.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
+        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
+        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
+        public DropdownSelector DeepCloneWithItems(IReadOnlyList<NamedValue<ILink>> items)
+        {
+            var result = new DropdownSelector(
+                                 items,
+                                 this.SelectedItemName?.DeepClone());
+
+            return result;
+        }
+
+        /// <summary>
+        /// Deep clones this object with a new <see cref="SelectedItemName" />.
+        /// </summary>
+        /// <param name="selectedItemName">The new <see cref="SelectedItemName" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="DropdownSelector" /> using the specified <paramref name="selectedItemName" /> for <see cref="SelectedItemName" /> and a deep clone of every other property.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
+        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
+        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
+        public DropdownSelector DeepCloneWithSelectedItemName(string selectedItemName)
+        {
+            var result = new DropdownSelector(
+                                 this.Items?.DeepClone(),
+                                 selectedItemName);
 
             return result;
         }
@@ -164,7 +163,7 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"OBeautifulCode.DataStructure.IdentifiedLinkedResource: Id = {this.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, AdditionalInfoIdToValueMap = {this.AdditionalInfoIdToValueMap?.ToString() ?? "<null>"}.");
+            var result = Invariant($"OBeautifulCode.DataStructure.DropdownSelector: Items = {this.Items?.ToString() ?? "<null>"}, SelectedItemName = {this.SelectedItemName?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}.");
 
             return result;
         }

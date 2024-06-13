@@ -33,226 +33,220 @@ namespace OBeautifulCode.DataStructure.Test
 
     using static global::System.FormattableString;
 
-    public static partial class IdentifiedLinkedResourceTest
+    public static partial class DropdownSelectorTest
     {
-        private static readonly StringRepresentationTestScenarios<IdentifiedLinkedResource> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<IdentifiedLinkedResource>()
+        private static readonly StringRepresentationTestScenarios<DropdownSelector> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<DropdownSelector>()
             .AddScenario(() =>
-                new StringRepresentationTestScenario<IdentifiedLinkedResource>
+                new StringRepresentationTestScenario<DropdownSelector>
                 {
                     Name = "Default Code Generated Scenario",
                     SystemUnderTestExpectedStringRepresentationFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<IdentifiedLinkedResource>();
+                        var systemUnderTest = A.Dummy<DropdownSelector>();
 
-                        var result = new SystemUnderTestExpectedStringRepresentation<IdentifiedLinkedResource>
+                        var result = new SystemUnderTestExpectedStringRepresentation<DropdownSelector>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.IdentifiedLinkedResource: Id = {systemUnderTest.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, AdditionalInfoIdToValueMap = {systemUnderTest.AdditionalInfoIdToValueMap?.ToString() ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.DropdownSelector: Items = {systemUnderTest.Items?.ToString() ?? "<null>"}, SelectedItemName = {systemUnderTest.SelectedItemName?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}."),
                         };
 
                         return result;
                     },
                 });
 
-        private static readonly ConstructorArgumentValidationTestScenarios<IdentifiedLinkedResource> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<IdentifiedLinkedResource>()
+        private static readonly ConstructorArgumentValidationTestScenarios<DropdownSelector> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<DropdownSelector>()
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<IdentifiedLinkedResource>
+                new ConstructorArgumentValidationTestScenario<DropdownSelector>
                 {
-                    Name = "constructor should throw ArgumentNullException when parameter 'id' is null scenario",
+                    Name = "constructor should throw ArgumentNullException when parameter 'items' is null scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<IdentifiedLinkedResource>();
+                        var referenceObject = A.Dummy<DropdownSelector>();
 
-                        var result = new IdentifiedLinkedResource(
+                        var result = new DropdownSelector(
                                              null,
-                                             referenceObject.AdditionalInfoIdToValueMap);
+                                             referenceObject.SelectedItemName);
 
                         return result;
                     },
                     ExpectedExceptionType = typeof(ArgumentNullException),
-                    ExpectedExceptionMessageContains = new[] { "id", },
+                    ExpectedExceptionMessageContains = new[] { "items", },
                 })
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<IdentifiedLinkedResource>
+                new ConstructorArgumentValidationTestScenario<DropdownSelector>
                 {
-                    Name = "constructor should throw ArgumentException when parameter 'id' is white space scenario",
+                    Name = "constructor should throw ArgumentException when parameter 'items' is an empty enumerable scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<IdentifiedLinkedResource>();
+                        var referenceObject = A.Dummy<DropdownSelector>();
 
-                        var result = new IdentifiedLinkedResource(
-                                             Invariant($"  {Environment.NewLine}  "),
-                                             referenceObject.AdditionalInfoIdToValueMap);
+                        var result = new DropdownSelector(
+                                             new List<NamedValue<ILink>>(),
+                                             referenceObject.SelectedItemName);
 
                         return result;
                     },
                     ExpectedExceptionType = typeof(ArgumentException),
-                    ExpectedExceptionMessageContains = new[] { "id", "white space", },
+                    ExpectedExceptionMessageContains = new[] { "items", "is an empty enumerable", },
                 })
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<IdentifiedLinkedResource>
+                new ConstructorArgumentValidationTestScenario<DropdownSelector>
                 {
-                    Name = "constructor should throw ArgumentNullException when parameter 'additionalInfoIdToValueMap' is null scenario",
+                    Name = "constructor should throw ArgumentException when parameter 'items' contains a null element scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<IdentifiedLinkedResource>();
+                        var referenceObject = A.Dummy<DropdownSelector>();
 
-                        var result = new IdentifiedLinkedResource(
-                                             referenceObject.Id,
+                        var result = new DropdownSelector(
+                                             new NamedValue<ILink>[0].Concat(referenceObject.Items).Concat(new NamedValue<ILink>[] { null }).Concat(referenceObject.Items).ToList(),
+                                             referenceObject.SelectedItemName);
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentException),
+                    ExpectedExceptionMessageContains = new[] { "items", "contains at least one null element", },
+                })
+            .AddScenario(() =>
+                new ConstructorArgumentValidationTestScenario<DropdownSelector>
+                {
+                    Name = "constructor should throw ArgumentNullException when parameter 'selectedItemName' is null scenario",
+                    ConstructionFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<DropdownSelector>();
+
+                        var result = new DropdownSelector(
+                                             referenceObject.Items,
                                              null);
 
                         return result;
                     },
                     ExpectedExceptionType = typeof(ArgumentNullException),
-                    ExpectedExceptionMessageContains = new[] { "additionalInfoIdToValueMap", },
+                    ExpectedExceptionMessageContains = new[] { "selectedItemName", },
                 })
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<IdentifiedLinkedResource>
+                new ConstructorArgumentValidationTestScenario<DropdownSelector>
                 {
-                    Name = "constructor should throw ArgumentException when parameter 'additionalInfoIdToValueMap' is an empty dictionary scenario",
+                    Name = "constructor should throw ArgumentException when parameter 'selectedItemName' is white space scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<IdentifiedLinkedResource>();
+                        var referenceObject = A.Dummy<DropdownSelector>();
 
-                        var result = new IdentifiedLinkedResource(
-                                             referenceObject.Id,
-                                             new Dictionary<string, string>());
+                        var result = new DropdownSelector(
+                                             referenceObject.Items,
+                                             Invariant($"  {Environment.NewLine}  "));
 
                         return result;
                     },
                     ExpectedExceptionType = typeof(ArgumentException),
-                    ExpectedExceptionMessageContains = new[] { "additionalInfoIdToValueMap", "is an empty dictionary", },
-                })
-            .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<IdentifiedLinkedResource>
-                {
-                    Name = "constructor should throw ArgumentException when parameter 'additionalInfoIdToValueMap' contains a key-value pair with a null value scenario",
-                    ConstructionFunc = () =>
-                    {
-                        var referenceObject = A.Dummy<IdentifiedLinkedResource>();
-
-                        var dictionaryWithNullValue = referenceObject.AdditionalInfoIdToValueMap.ToDictionary(_ => _.Key, _ => _.Value);
-
-                        var randomKey = dictionaryWithNullValue.Keys.ElementAt(ThreadSafeRandom.Next(0, dictionaryWithNullValue.Count));
-
-                        dictionaryWithNullValue[randomKey] = null;
-
-                        var result = new IdentifiedLinkedResource(
-                                             referenceObject.Id,
-                                             dictionaryWithNullValue);
-
-                        return result;
-                    },
-                    ExpectedExceptionType = typeof(ArgumentException),
-                    ExpectedExceptionMessageContains = new[] { "additionalInfoIdToValueMap", "contains at least one key-value pair with a null value", },
+                    ExpectedExceptionMessageContains = new[] { "selectedItemName", "white space", },
                 });
 
-        private static readonly ConstructorPropertyAssignmentTestScenarios<IdentifiedLinkedResource> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<IdentifiedLinkedResource>()
+        private static readonly ConstructorPropertyAssignmentTestScenarios<DropdownSelector> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<DropdownSelector>()
             .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<IdentifiedLinkedResource>
+                new ConstructorPropertyAssignmentTestScenario<DropdownSelector>
                 {
-                    Name = "Id should return same 'id' parameter passed to constructor when getting",
+                    Name = "Items should return same 'items' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
-                        var referenceObject = A.Dummy<IdentifiedLinkedResource>();
+                        var referenceObject = A.Dummy<DropdownSelector>();
 
-                        var result = new SystemUnderTestExpectedPropertyValue<IdentifiedLinkedResource>
+                        var result = new SystemUnderTestExpectedPropertyValue<DropdownSelector>
                         {
-                            SystemUnderTest = new IdentifiedLinkedResource(
-                                                      referenceObject.Id,
-                                                      referenceObject.AdditionalInfoIdToValueMap),
-                            ExpectedPropertyValue = referenceObject.Id,
+                            SystemUnderTest = new DropdownSelector(
+                                                      referenceObject.Items,
+                                                      referenceObject.SelectedItemName),
+                            ExpectedPropertyValue = referenceObject.Items,
                         };
 
                         return result;
                     },
-                    PropertyName = "Id",
+                    PropertyName = "Items",
                 })
             .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<IdentifiedLinkedResource>
+                new ConstructorPropertyAssignmentTestScenario<DropdownSelector>
                 {
-                    Name = "AdditionalInfoIdToValueMap should return same 'additionalInfoIdToValueMap' parameter passed to constructor when getting",
+                    Name = "SelectedItemName should return same 'selectedItemName' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
-                        var referenceObject = A.Dummy<IdentifiedLinkedResource>();
+                        var referenceObject = A.Dummy<DropdownSelector>();
 
-                        var result = new SystemUnderTestExpectedPropertyValue<IdentifiedLinkedResource>
+                        var result = new SystemUnderTestExpectedPropertyValue<DropdownSelector>
                         {
-                            SystemUnderTest = new IdentifiedLinkedResource(
-                                                      referenceObject.Id,
-                                                      referenceObject.AdditionalInfoIdToValueMap),
-                            ExpectedPropertyValue = referenceObject.AdditionalInfoIdToValueMap,
+                            SystemUnderTest = new DropdownSelector(
+                                                      referenceObject.Items,
+                                                      referenceObject.SelectedItemName),
+                            ExpectedPropertyValue = referenceObject.SelectedItemName,
                         };
 
                         return result;
                     },
-                    PropertyName = "AdditionalInfoIdToValueMap",
+                    PropertyName = "SelectedItemName",
                 });
 
-        private static readonly DeepCloneWithTestScenarios<IdentifiedLinkedResource> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<IdentifiedLinkedResource>()
+        private static readonly DeepCloneWithTestScenarios<DropdownSelector> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<DropdownSelector>()
             .AddScenario(() =>
-                new DeepCloneWithTestScenario<IdentifiedLinkedResource>
+                new DeepCloneWithTestScenario<DropdownSelector>
                 {
-                    Name = "DeepCloneWithId should deep clone object and replace Id with the provided id",
-                    WithPropertyName = "Id",
+                    Name = "DeepCloneWithItems should deep clone object and replace Items with the provided items",
+                    WithPropertyName = "Items",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<IdentifiedLinkedResource>();
+                        var systemUnderTest = A.Dummy<DropdownSelector>();
 
-                        var referenceObject = A.Dummy<IdentifiedLinkedResource>().ThatIs(_ => !systemUnderTest.Id.IsEqualTo(_.Id));
+                        var referenceObject = A.Dummy<DropdownSelector>().ThatIs(_ => !systemUnderTest.Items.IsEqualTo(_.Items));
 
-                        var result = new SystemUnderTestDeepCloneWithValue<IdentifiedLinkedResource>
+                        var result = new SystemUnderTestDeepCloneWithValue<DropdownSelector>
                         {
                             SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.Id,
+                            DeepCloneWithValue = referenceObject.Items,
                         };
 
                         return result;
                     },
                 })
             .AddScenario(() =>
-                new DeepCloneWithTestScenario<IdentifiedLinkedResource>
+                new DeepCloneWithTestScenario<DropdownSelector>
                 {
-                    Name = "DeepCloneWithAdditionalInfoIdToValueMap should deep clone object and replace AdditionalInfoIdToValueMap with the provided additionalInfoIdToValueMap",
-                    WithPropertyName = "AdditionalInfoIdToValueMap",
+                    Name = "DeepCloneWithSelectedItemName should deep clone object and replace SelectedItemName with the provided selectedItemName",
+                    WithPropertyName = "SelectedItemName",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<IdentifiedLinkedResource>();
+                        var systemUnderTest = A.Dummy<DropdownSelector>();
 
-                        var referenceObject = A.Dummy<IdentifiedLinkedResource>().ThatIs(_ => !systemUnderTest.AdditionalInfoIdToValueMap.IsEqualTo(_.AdditionalInfoIdToValueMap));
+                        var referenceObject = A.Dummy<DropdownSelector>().ThatIs(_ => !systemUnderTest.SelectedItemName.IsEqualTo(_.SelectedItemName));
 
-                        var result = new SystemUnderTestDeepCloneWithValue<IdentifiedLinkedResource>
+                        var result = new SystemUnderTestDeepCloneWithValue<DropdownSelector>
                         {
                             SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.AdditionalInfoIdToValueMap,
+                            DeepCloneWithValue = referenceObject.SelectedItemName,
                         };
 
                         return result;
                     },
                 });
 
-        private static readonly IdentifiedLinkedResource ReferenceObjectForEquatableTestScenarios = A.Dummy<IdentifiedLinkedResource>();
+        private static readonly DropdownSelector ReferenceObjectForEquatableTestScenarios = A.Dummy<DropdownSelector>();
 
-        private static readonly EquatableTestScenarios<IdentifiedLinkedResource> EquatableTestScenarios = new EquatableTestScenarios<IdentifiedLinkedResource>()
+        private static readonly EquatableTestScenarios<DropdownSelector> EquatableTestScenarios = new EquatableTestScenarios<DropdownSelector>()
             .AddScenario(() =>
-                new EquatableTestScenario<IdentifiedLinkedResource>
+                new EquatableTestScenario<DropdownSelector>
                 {
                     Name = "Default Code Generated Scenario",
                     ReferenceObject = ReferenceObjectForEquatableTestScenarios,
-                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new IdentifiedLinkedResource[]
+                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new DropdownSelector[]
                     {
-                        new IdentifiedLinkedResource(
-                                ReferenceObjectForEquatableTestScenarios.Id,
-                                ReferenceObjectForEquatableTestScenarios.AdditionalInfoIdToValueMap),
+                        new DropdownSelector(
+                                ReferenceObjectForEquatableTestScenarios.Items,
+                                ReferenceObjectForEquatableTestScenarios.SelectedItemName),
                     },
-                    ObjectsThatAreNotEqualToReferenceObject = new IdentifiedLinkedResource[]
+                    ObjectsThatAreNotEqualToReferenceObject = new DropdownSelector[]
                     {
-                        new IdentifiedLinkedResource(
-                                A.Dummy<IdentifiedLinkedResource>().Whose(_ => !_.Id.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Id)).Id,
-                                ReferenceObjectForEquatableTestScenarios.AdditionalInfoIdToValueMap),
-                        new IdentifiedLinkedResource(
-                                ReferenceObjectForEquatableTestScenarios.Id,
-                                A.Dummy<IdentifiedLinkedResource>().Whose(_ => !_.AdditionalInfoIdToValueMap.IsEqualTo(ReferenceObjectForEquatableTestScenarios.AdditionalInfoIdToValueMap)).AdditionalInfoIdToValueMap),
+                        new DropdownSelector(
+                                A.Dummy<DropdownSelector>().Whose(_ => !_.Items.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Items)).Items,
+                                ReferenceObjectForEquatableTestScenarios.SelectedItemName),
+                        new DropdownSelector(
+                                ReferenceObjectForEquatableTestScenarios.Items,
+                                A.Dummy<DropdownSelector>().Whose(_ => !_.SelectedItemName.IsEqualTo(ReferenceObjectForEquatableTestScenarios.SelectedItemName)).SelectedItemName),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
                     {
@@ -261,10 +255,6 @@ namespace OBeautifulCode.DataStructure.Test
                         A.Dummy<int>(),
                         A.Dummy<int?>(),
                         A.Dummy<Guid>(),
-                        A.Dummy<BytesPayloadLinkedResource>(),
-                        A.Dummy<NullLinkedResource>(),
-                        A.Dummy<StringPayloadLinkedResource>(),
-                        A.Dummy<UrlLinkedResource>(),
                     },
                 });
 
@@ -286,12 +276,12 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void IdentifiedLinkedResource___Should_implement_IModel_of_IdentifiedLinkedResource___When_reflecting()
+            public static void DropdownSelector___Should_implement_IModel_of_DropdownSelector___When_reflecting()
             {
                 // Arrange
-                var type = typeof(IdentifiedLinkedResource);
+                var type = typeof(DropdownSelector);
 
-                var expectedModelMethods = typeof(IModel<IdentifiedLinkedResource>).GetInterfaceDeclaredAndImplementedMethods();
+                var expectedModelMethods = typeof(IModel<DropdownSelector>).GetInterfaceDeclaredAndImplementedMethods();
 
                 var expectedModelMethodHashes = expectedModelMethods.Select(_ => _.GetSignatureHash());
 
@@ -301,7 +291,7 @@ namespace OBeautifulCode.DataStructure.Test
                 var actualModelMethodHashes = actualModelMethods.Select(_ => _.GetSignatureHash());
 
                 // Assert
-                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<IdentifiedLinkedResource>));
+                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<DropdownSelector>));
                 expectedModelMethodHashes.Except(actualModelMethodHashes).AsTest().Must().BeEmptyEnumerable();
             }
 
@@ -319,10 +309,10 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void IdentifiedLinkedResource___Should_be_attributed_with_Serializable____When_reflecting()
+            public static void DropdownSelector___Should_be_attributed_with_Serializable____When_reflecting()
             {
                 // Arrange
-                var type = typeof(IdentifiedLinkedResource);
+                var type = typeof(DropdownSelector);
 
                 // Act
                 var actualAttributes = type.GetCustomAttributes(typeof(SerializableAttribute), false);
@@ -502,10 +492,10 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Clone___Should_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<IdentifiedLinkedResource>();
+                var systemUnderTest = A.Dummy<DropdownSelector>();
 
                 // Act
-                var actual = (IdentifiedLinkedResource)systemUnderTest.Clone();
+                var actual = (DropdownSelector)systemUnderTest.Clone();
 
                 // Assert
                 actual.AsTest().Must().BeEqualTo(systemUnderTest);
@@ -529,7 +519,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void DeepClone___Should_deep_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<IdentifiedLinkedResource>();
+                var systemUnderTest = A.Dummy<DropdownSelector>();
 
                 // Act
                 var actual = systemUnderTest.DeepClone();
@@ -538,16 +528,16 @@ namespace OBeautifulCode.DataStructure.Test
                 actual.AsTest().Must().BeEqualTo(systemUnderTest);
                 actual.AsTest().Must().NotBeSameReferenceAs(systemUnderTest);
 
-                if (systemUnderTest.AdditionalInfoIdToValueMap == null)
+                if (systemUnderTest.Items == null)
                 {
-                    actual.AdditionalInfoIdToValueMap.AsTest().Must().BeNull();
+                    actual.Items.AsTest().Must().BeNull();
                 }
-                else if (!actual.AdditionalInfoIdToValueMap.GetType().IsValueType)
+                else if (!actual.Items.GetType().IsValueType)
                 {
                     // When the declared type is a reference type, we still have to check the runtime type.
                     // The object could be a boxed value type, which will fail this asseration because
                     // a deep clone of a value type object is the same object.
-                    actual.AdditionalInfoIdToValueMap.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.AdditionalInfoIdToValueMap);
+                    actual.Items.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.Items);
                 }
             }
 
@@ -567,7 +557,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "Id", "AdditionalInfoIdToValueMap" };
+                var propertyNames = new string[] { "Items", "SelectedItemName" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 
@@ -580,12 +570,12 @@ namespace OBeautifulCode.DataStructure.Test
                     }
 
                     // Act
-                    var actual = (IdentifiedLinkedResource)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
+                    var actual = (DropdownSelector)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
 
                     // Assert
                     foreach(var propertyName in propertyNames)
                     {
-                        var propertyInfo = typeof(IdentifiedLinkedResource).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
+                        var propertyInfo = typeof(DropdownSelector).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
 
                         var actualPropertyValue = propertyInfo.GetValue(actual);
 
@@ -647,7 +637,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<IdentifiedLinkedResource>();
+                var expected = A.Dummy<DropdownSelector>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -676,7 +666,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<IdentifiedLinkedResource>();
+                var expected = A.Dummy<DropdownSelector>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -705,7 +695,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<IdentifiedLinkedResource>();
+                var expected = A.Dummy<DropdownSelector>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -734,7 +724,7 @@ namespace OBeautifulCode.DataStructure.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<IdentifiedLinkedResource>();
+                var expected = A.Dummy<DropdownSelector>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -768,8 +758,8 @@ namespace OBeautifulCode.DataStructure.Test
             public static void EqualsOperator___Should_return_true___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                IdentifiedLinkedResource systemUnderTest1 = null;
-                IdentifiedLinkedResource systemUnderTest2 = null;
+                DropdownSelector systemUnderTest1 = null;
+                DropdownSelector systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 == systemUnderTest2;
@@ -799,7 +789,7 @@ namespace OBeautifulCode.DataStructure.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    IdentifiedLinkedResource systemUnderTest = null;
+                    DropdownSelector systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest == scenario.ReferenceObject;
@@ -948,8 +938,8 @@ namespace OBeautifulCode.DataStructure.Test
             public static void NotEqualsOperator___Should_return_false___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                IdentifiedLinkedResource systemUnderTest1 = null;
-                IdentifiedLinkedResource systemUnderTest2 = null;
+                DropdownSelector systemUnderTest1 = null;
+                DropdownSelector systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 != systemUnderTest2;
@@ -979,7 +969,7 @@ namespace OBeautifulCode.DataStructure.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    IdentifiedLinkedResource systemUnderTest = null;
+                    DropdownSelector systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest != scenario.ReferenceObject;
@@ -1125,157 +1115,14 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_LinkedResourceBase___Should_return_false___When_parameter_other_is_null()
+            public static void Equals_with_DropdownSelector___Should_return_false___When_parameter_other_is_null()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    LinkedResourceBase systemUnderTest = null;
-
-                    // Act
-                    var actual = scenario.ReferenceObject.Equals((LinkedResourceBase)systemUnderTest);
-
-                    // Assert
-                    actual.AsTest().Must().BeFalse(because: scenario.Id);
-                }
-            }
-
-            [Fact]
-            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_LinkedResourceBase___Should_return_true___When_parameter_other_is_same_object()
-            {
-                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
-
-                foreach (var scenario in scenarios)
-                {
-                    // Arrange, Act
-                    var actual = scenario.ReferenceObject.Equals((LinkedResourceBase)scenario.ReferenceObject);
-
-                    // Assert
-                    actual.AsTest().Must().BeTrue(because: scenario.Id);
-                }
-            }
-
-            [Fact]
-            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_LinkedResourceBase___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
-            {
-                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
-
-                foreach (var scenario in scenarios)
-                {
-                    // Arrange, Act
-                    var actuals = scenario.ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((LinkedResourceBase)_)).ToList();
-
-                    // Assert
-                    actuals.AsTest().Must().Each().BeFalse(because: scenario.Id);
-                }
-            }
-
-            [Fact]
-            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_LinkedResourceBase___Should_return_false___When_objects_being_compared_have_different_property_values()
-            {
-                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
-
-                foreach (var scenario in scenarios)
-                {
-                    // Arrange, Act
-                    var actuals = scenario.ObjectsThatAreNotEqualToReferenceObject.Select(_ => scenario.ReferenceObject.Equals((LinkedResourceBase)_)).ToList();
-
-                    // Assert
-                    actuals.AsTest().Must().Each().BeFalse(because: scenario.Id);
-                }
-            }
-
-            [Fact]
-            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_LinkedResourceBase___Should_return_true___When_objects_being_compared_have_same_property_values()
-            {
-                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
-
-                foreach (var scenario in scenarios)
-                {
-                    // Arrange, Act
-                    var actuals = scenario.ObjectsThatAreEqualToButNotTheSameAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((LinkedResourceBase)_)).ToList();
-
-                    // Assert
-                    actuals.AsTest().Must().Each().BeTrue(because: scenario.Id);
-                }
-            }
-
-            [Fact]
-            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_IdentifiedLinkedResource___Should_return_false___When_parameter_other_is_null()
-            {
-                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
-
-                foreach (var scenario in scenarios)
-                {
-                    // Arrange
-                    IdentifiedLinkedResource systemUnderTest = null;
+                    DropdownSelector systemUnderTest = null;
 
                     // Act
                     var actual = scenario.ReferenceObject.Equals(systemUnderTest);
@@ -1299,7 +1146,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_IdentifiedLinkedResource___Should_return_true___When_parameter_other_is_same_object()
+            public static void Equals_with_DropdownSelector___Should_return_true___When_parameter_other_is_same_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1327,7 +1174,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_IdentifiedLinkedResource___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
+            public static void Equals_with_DropdownSelector___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1355,7 +1202,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_IdentifiedLinkedResource___Should_return_false___When_objects_being_compared_have_different_property_values()
+            public static void Equals_with_DropdownSelector___Should_return_false___When_objects_being_compared_have_different_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1383,7 +1230,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_IdentifiedLinkedResource___Should_return_true___When_objects_being_compared_have_same_property_values()
+            public static void Equals_with_DropdownSelector___Should_return_true___When_objects_being_compared_have_same_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 

@@ -6,6 +6,7 @@
 namespace OBeautifulCode.DataStructure
 {
     using System;
+    using System.Collections.Generic;
     using OBeautifulCode.Type;
     using static System.FormattableString;
 
@@ -19,10 +20,13 @@ namespace OBeautifulCode.DataStructure
         /// Initializes a new instance of the <see cref="IdentifiedLinkedResource"/> class.
         /// </summary>
         /// <param name="id">The identifier.</param>
-        /// <param name="kind">OPTIONAL kind of resource.  Can be used to group resources or qualify the identifier.  DEFAULT is no specified type.</param>
+        /// <param name="additionalInfoIdToValueMap">
+        /// OPTIONAL map of additional information that supplements the specified <paramref name="id"/>.
+        /// DEFAULT is no additional information.
+        /// </param>
         public IdentifiedLinkedResource(
             string id,
-            string kind = null)
+            IReadOnlyDictionary<string, string> additionalInfoIdToValueMap = null)
         {
             if (id == null)
             {
@@ -35,15 +39,15 @@ namespace OBeautifulCode.DataStructure
             }
 
             this.Id = id;
-            this.Kind = kind;
+            this.AdditionalInfoIdToValueMap = additionalInfoIdToValueMap;
         }
 
         /// <inheritdoc />
         public string Id { get; private set; }
 
         /// <summary>
-        /// Gets the kind of resource.  Can be used to group resources or qualify the identifier.
+        /// Gets a map of additional information that supplements the specified <see cref="Id"/>.
         /// </summary>
-        public string Kind { get; private set; }
+        public IReadOnlyDictionary<string, string> AdditionalInfoIdToValueMap { get; private set; }
     }
 }

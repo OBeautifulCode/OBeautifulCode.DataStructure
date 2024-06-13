@@ -465,10 +465,21 @@ namespace OBeautifulCode.DataStructure.Test
                 return result;
             });
 
-            // Details
+            // CellValue
             AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
             {
                 var result = new LogoDetails(A.Dummy<MediaBase>().Whose(_ => _.MediaKind == MediaKind.Image));
+
+                return result;
+            });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(() =>
+            {
+                var items = Some.ReadOnlyDummies<NamedValue<ILink>>().ToList();
+
+                var selectedItem = items[ThreadSafeRandom.Next(0, items.Count)].Name;
+
+                var result = new DropdownSelector(items, selectedItem);
 
                 return result;
             });

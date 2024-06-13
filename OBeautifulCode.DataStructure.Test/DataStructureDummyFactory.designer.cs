@@ -476,6 +476,11 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<IReturningOperation<decimal>>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new DropdownSelector(
+                                 A.Dummy<IReadOnlyList<NamedValue<ILink>>>(),
+                                 A.Dummy<string>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new ExecuteOperationCellIfNecessaryOp<Version>(
                                  A.Dummy<IOperationOutputCell<Version>>()));
 
@@ -581,7 +586,7 @@ namespace OBeautifulCode.DataStructure.Test
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new IdentifiedLinkedResource(
                                  A.Dummy<string>(),
-                                 A.Dummy<string>()));
+                                 A.Dummy<IReadOnlyDictionary<string, string>>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new IdentifiedMedia(
