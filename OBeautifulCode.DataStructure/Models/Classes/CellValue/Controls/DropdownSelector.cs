@@ -31,7 +31,7 @@ namespace OBeautifulCode.DataStructure
         /// <paramref name="selectedItemName"/> null.
         /// </param>
         /// <param name="selectedItemName">
-        /// OPTIONAL name of the item to select on load.  DEFAULT is to select the first item in <paramref name="selectedItemName"/>.
+        /// OPTIONAL name of the item to select on load.  DEFAULT is to select the first item in <paramref name="items"/>.
         /// </param>
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings", MessageId = "0#", Justification = ObcSuppressBecause.CA1054_UriParametersShouldNotBeStrings_PreferToRepresentUrlAsString)]
         public DropdownSelector(
