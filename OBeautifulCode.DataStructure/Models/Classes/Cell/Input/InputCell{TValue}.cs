@@ -6,9 +6,10 @@
 
 namespace OBeautifulCode.DataStructure
 {
+    using System;
     using System.Collections.Generic;
-
     using OBeautifulCode.Type;
+    using static System.FormattableString;
 
     /// <summary>
     /// Implementation of <see cref="IInputCell{TValue}"/> with a standard set of features.
@@ -65,6 +66,34 @@ namespace OBeautifulCode.DataStructure
         public ICellValueFormat GetCellValueFormat()
         {
             var result = this.ValueFormat;
+
+            return result;
+        }
+
+        /// <inheritdoc />
+        public override IConstOutputCell ToConstOutputCell()
+        {
+            if (!this.HasCellValue())
+            {
+                throw new InvalidOperationException(Invariant($"This cell's value has not been set."));
+            }
+
+            var value = this.GetCellValue();
+
+            var result = new ConstCell<TValue>(
+                value,
+                this.Id,
+                this.ColumnsSpanned,
+                this.Details,
+                this.Validation,
+                this.ValidationEvents,
+                this.DefaultAvailability,
+                this.AvailabilityCheck,
+                this.AvailabilityCheckEvents,
+                this.ValueFormat,
+                this.Format,
+                this.HoverOver,
+                link: null);
 
             return result;
         }
