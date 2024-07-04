@@ -35,14 +35,5 @@ namespace OBeautifulCode.DataStructure
             object value,
             DateTime timestampUtc,
             string details = null);
-
-        /// <summary>
-        /// Converts the cell to a <see cref="IConstOutputCell"/> if the cell value was set;
-        /// otherwise throws <see cref="InvalidOperationException"/>.
-        /// </summary>
-        /// <returns>
-        /// The <see cref="IConstOutputCell"/> converted from this cell.
-        /// </returns>
-        IConstOutputCell ToConstOutputCell();
     }
 }

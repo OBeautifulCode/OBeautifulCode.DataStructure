@@ -139,9 +139,6 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <inheritdoc />
-        public abstract IConstOutputCell ToConstOutputCell();
-
-        /// <inheritdoc />
         public override Type GetValueTypeOrNull() => typeof(TValue);
 
         /// <inheritdoc />

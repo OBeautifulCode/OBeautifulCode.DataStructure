@@ -1023,46 +1023,5 @@ namespace OBeautifulCode.DataStructure.Test
             // Assert
             actual.AsTest().Must().BeTrue();
         }
-
-        [Fact]
-        public static void ToConstOutputCell___Should_throw_InvalidOperationException___When_cell_value_has_not_been_set()
-        {
-            // Arrange
-            var systemUnderTest = A.Dummy<InputCell<Version>>().Whose(_ => !_.HasCellValue());
-
-            // Act
-            var actual = Record.Exception(() => systemUnderTest.ToConstOutputCell());
-
-            // Assert
-            actual.AsTest().Must().BeOfType<InvalidOperationException>();
-        }
-
-        [Fact]
-        public static void ToConstOutputCell___Should_convert_cell_to_ConstOutput_cell___When_cell_value_has_been_set()
-        {
-            // Arrange
-            var systemUnderTest = A.Dummy<InputCell<Version>>().Whose(_ => _.HasCellValue());
-
-            IConstOutputCell expected = new ConstCell<Version>(
-                systemUnderTest.GetCellValue(),
-                systemUnderTest.Id,
-                systemUnderTest.ColumnsSpanned,
-                systemUnderTest.Details,
-                systemUnderTest.Validation,
-                systemUnderTest.ValidationEvents,
-                systemUnderTest.DefaultAvailability,
-                systemUnderTest.AvailabilityCheck,
-                systemUnderTest.AvailabilityCheckEvents,
-                systemUnderTest.ValueFormat,
-                systemUnderTest.Format,
-                systemUnderTest.HoverOver,
-                link: null);
-
-            // Act
-            var actual = systemUnderTest.ToConstOutputCell();
-
-            // Assert
-            actual.AsTest().Must().BeEqualTo(expected);
-        }
     }
 }
