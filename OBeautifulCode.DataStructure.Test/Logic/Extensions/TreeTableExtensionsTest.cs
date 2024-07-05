@@ -12,6 +12,7 @@ namespace OBeautifulCode.DataStructure.Test
     using FakeItEasy;
     using OBeautifulCode.Assertion.Recipes;
     using OBeautifulCode.AutoFakeItEasy;
+    using OBeautifulCode.Math.Recipes;
     using Xunit;
 
     public static class TreeTableExtensionsTest
@@ -179,6 +180,603 @@ namespace OBeautifulCode.DataStructure.Test
 
             // Act
             var actual = treeTable.GetAllCells();
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+        }
+
+        [Fact]
+        public static void ReplaceCell___Should_throw_ArgumentNullException___When_parameter_treeTable_is_null()
+        {
+            // Arrange, Act
+            var actual = Record.Exception(() => TreeTableExtensions.ReplaceCell(null, A.Dummy<ICell>(), A.Dummy<ICell>()));
+
+            // Assert
+            actual.AsTest().Must().BeOfType<ArgumentNullException>();
+            actual.Message.AsTest().Must().ContainString("treeTable");
+        }
+
+        [Fact]
+        public static void ReplaceCell___Should_throw_ArgumentNullException___When_parameter_cellToReplace_is_null()
+        {
+            // Arrange, Act
+            var actual = Record.Exception(() => A.Dummy<TreeTable>().ReplaceCell(null, A.Dummy<ICell>()));
+
+            // Assert
+            actual.AsTest().Must().BeOfType<ArgumentNullException>();
+            actual.Message.AsTest().Must().ContainString("cellToReplace");
+        }
+
+        [Fact]
+        public static void ReplaceCell___Should_throw_ArgumentNullException___When_parameter_cellToUse_is_null()
+        {
+            // Arrange, Act
+            var actual = Record.Exception(() => A.Dummy<TreeTable>().ReplaceCell(A.Dummy<ICell>(), null));
+
+            // Assert
+            actual.AsTest().Must().BeOfType<ArgumentNullException>();
+            actual.Message.AsTest().Must().ContainString("cellToUse");
+        }
+
+        [Fact]
+        public static void ReplaceCell___Should_throw_ArgumentException___When_parameter_cellToReplace_does_not_span_the_same_number_of_columns_as_parameter_cellToUse()
+        {
+            // Arrange
+            var treeTable = A.Dummy<TreeTable>();
+            var cellToReplace = A.Dummy<ICell>();
+            var cellToUse = A.Dummy<ICell>().Whose(_ => (_.ColumnsSpanned ?? 1) != (cellToReplace.ColumnsSpanned ?? 1));
+
+            // Act
+            var actual = Record.Exception(() => treeTable.ReplaceCell(cellToReplace, cellToUse));
+
+            // Assert
+            actual.AsTest().Must().BeOfType<ArgumentException>();
+            actual.Message.AsTest().Must().ContainString("cellToReplace and cellToUse do not span the same number of columns");
+        }
+
+        [Fact]
+        public static void ReplaceCell___Should_throw_InvalidOperationException___When_cellToReplace_does_not_exist_in_tree_table()
+        {
+            // Arrange
+            var treeTable = A.Dummy<TreeTable>();
+            var cellToReplace = A.Dummy<ICell>();
+            var cellToUse = A.Dummy<ICell>().Whose(_ => (_.ColumnsSpanned ?? 1) == (cellToReplace.ColumnsSpanned ?? 1));
+
+            // Act
+            var actual = Record.Exception(() => treeTable.ReplaceCell(cellToReplace, cellToUse));
+
+            // Assert
+            actual.AsTest().Must().BeOfType<InvalidOperationException>();
+            actual.Message.AsTest().Must().ContainString("cellToReplace was not found.");
+        }
+
+        [Fact]
+        public static void ReplaceCell___Should_throw_InvalidOperationException___When_cellToReplace_is_contained_within_a_slot_but_cellToUse_is_not_an_INotSlottedCell()
+        {
+            // Arrange
+            var treeTable = A.Dummy<TreeTable>().Whose(_ => _.GetAllCells().OfType<ISlottedCell>().Any());
+            var slottedCells = treeTable.GetAllCells().OfType<ISlottedCell>().ToList();
+            var slottedCell = slottedCells[ThreadSafeRandom.Next(0, slottedCells.Count)];
+            var cellToReplace = slottedCell.SlotIdToCellMap.ElementAt(ThreadSafeRandom.Next(0, slottedCell.SlotIdToCellMap.Count)).Value;
+            var cellToUse = A.Dummy<SlottedCell>().Whose(_ => (_.ColumnsSpanned ?? 1) == (cellToReplace.ColumnsSpanned ?? 1));
+
+            // Act
+            var actual = Record.Exception(() => treeTable.ReplaceCell(cellToReplace, cellToUse));
+
+            // Assert
+            actual.AsTest().Must().BeOfType<InvalidOperationException>();
+            actual.Message.AsTest().Must().ContainString("cellToReplace was found in a slot of an ISlottedCell, but cellToUse is not an INotSlottedCell.");
+        }
+
+        [Fact]
+        public static void ReplaceCell___Should_throw_InvalidOperationException_with_ArgumentException_in_InnerException___When_the_replacement_results_in_a_malformed_tree_table()
+        {
+            // Arrange
+            var treeTable = A.Dummy<TreeTable>().Whose(_ => _.GetAllCells().Count > 2);
+            var cells = treeTable.GetAllCells().ToList();
+            var randomCellIndex = ThreadSafeRandom.Next(0, cells.Count);
+            var cellToReplace = cells[randomCellIndex];
+            cells.RemoveAt(randomCellIndex);
+            var cellToUse = A.Dummy<ConstCell<Version>>()  // use an INotSlottedCell, which can be used to replace a cell within a slot or a cell within a row
+                .Whose(_ => (_.ColumnsSpanned ?? 1) == (cellToReplace.ColumnsSpanned ?? 1))
+                .DeepCloneWithId(cells[ThreadSafeRandom.Next(0, cells.Count)].Id);
+
+            // Act
+            var actual = Record.Exception(() => treeTable.ReplaceCell(cellToReplace, cellToUse));
+
+            // Assert
+            actual.AsTest().Must().BeOfType<InvalidOperationException>();
+            actual.Message.AsTest().Must().ContainString("Replacing cellToReplace with cellToUse results in a malformed TreeTable.  See inner exception.");
+            actual.InnerException.AsTest().Must().BeOfType<ArgumentException>();
+            actual.InnerException.Message.AsTest().Must().ContainString("Two or more elements (i.e. columns, rows, cells) have the same identifier");
+        }
+
+        [Fact]
+        public static void ReplaceCell___Should_replace_cell_within_header_row___When_called()
+        {
+            // Arrange
+            var cellToUse = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(null);
+
+            var tableColumns = new TableColumns(Some.ReadOnlyDummies<Column>(3).ToList());
+
+            var headerRow1Cell1 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(null);
+            var headerRow1Cell2 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(2);
+            var headerRow2Cell1 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(2);
+            var headerRow2Cell2 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1);
+
+            var actualAllHeaderRows = new[]
+            {
+                new FlatRow(
+                    new ICell[]
+                    {
+                        headerRow1Cell1,
+                        headerRow1Cell2,
+                    }),
+                new FlatRow(
+                    new ICell[]
+                    {
+                        headerRow2Cell1,
+                        headerRow2Cell2,
+                    }),
+            };
+
+            var expectedAllHeaderRows = new[]
+            {
+                new FlatRow(
+                    new ICell[]
+                    {
+                        headerRow1Cell1,
+                        headerRow1Cell2,
+                    }),
+                new FlatRow(
+                    new ICell[]
+                    {
+                        headerRow2Cell1,
+                        cellToUse,
+                    }),
+            };
+
+            var actualHeaderRows = new HeaderRows(actualAllHeaderRows);
+            var expectedHeaderRows = new HeaderRows(expectedAllHeaderRows);
+
+            var dataRow1Cell1 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(3);
+            var dataRow2Cells = Some.ReadOnlyDummies<NotSlottedCellBase>(3).Select(_ => _.DeepCloneWithColumnsSpanned(null)).ToList();
+            var dataRow3Cells = new Row(Some.ReadOnlyDummies<NotSlottedCellBase>(3).Select(_ => _.DeepCloneWithColumnsSpanned(null)).ToList());
+            var dataRow4Cell1 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(2);
+            var defaultSlot = A.Dummy<string>();
+            var otherSlot = A.Dummy<string>();
+            var dataRow4Cell2Slot1 = (INotSlottedCell)A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1);
+            var dataRow4Cell2Slot2 = (INotSlottedCell)A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1);
+
+            var dataRow4Cell2 = new SlottedCell(
+                new Dictionary<string, INotSlottedCell>
+                {
+                    { otherSlot, dataRow4Cell2Slot1 },
+                    { defaultSlot, dataRow4Cell2Slot2 },
+                },
+                defaultSlot);
+
+            var allDataRows = new[]
+            {
+                new Row(new[] { dataRow1Cell1 }),
+                new Row(
+                    dataRow2Cells,
+                    childRows: new[]
+                    {
+                        dataRow3Cells,
+                        new Row(
+                            new ICell[]
+                            {
+                                dataRow4Cell1,
+                                dataRow4Cell2,
+                            }),
+                    }),
+            };
+
+            var dataRows = new DataRows(allDataRows);
+
+            var footerRow1Cell1 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(null);
+            var footerRow1Cell2 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(2);
+            var footerRow2Cell1 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1);
+            var footerRow2Cell2 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(null);
+            var footerRow2Cell3 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1);
+
+            var allFooterRows = new[]
+            {
+                new FlatRow(
+                    new ICell[]
+                    {
+                        footerRow1Cell1,
+                        footerRow1Cell2,
+                    }),
+                new FlatRow(
+                    new ICell[]
+                    {
+                        footerRow2Cell1,
+                        footerRow2Cell2,
+                        footerRow2Cell3,
+                    }),
+            };
+
+            var footerRows = new FooterRows(allFooterRows);
+            var expectedTableRows = new TableRows(expectedHeaderRows, dataRows, footerRows);
+            var actualTableRows = new TableRows(actualHeaderRows, dataRows, footerRows);
+            var actual = new TreeTable(tableColumns, actualTableRows);
+            var expected = new TreeTable(tableColumns, expectedTableRows);
+
+            // Act
+            actual.ReplaceCell(headerRow2Cell2, cellToUse);
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+        }
+
+        [Fact]
+        public static void ReplaceCell___Should_replace_cell_within_data_row___When_called()
+        {
+            // Arrange
+            var cellToUse = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(2);
+
+            var tableColumns = new TableColumns(Some.ReadOnlyDummies<Column>(3).ToList());
+
+            var headerRow1Cell1 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(null);
+            var headerRow1Cell2 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(2);
+            var headerRow2Cell1 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(2);
+            var headerRow2Cell2 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1);
+
+            var allHeaderRows = new[]
+            {
+                new FlatRow(
+                    new ICell[]
+                    {
+                        headerRow1Cell1,
+                        headerRow1Cell2,
+                    }),
+                new FlatRow(
+                    new ICell[]
+                    {
+                        headerRow2Cell1,
+                        headerRow2Cell2,
+                    }),
+            };
+
+            var headerRows = new HeaderRows(allHeaderRows);
+
+            var dataRow1Cell1 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(3);
+            var dataRow2Cells = Some.ReadOnlyDummies<NotSlottedCellBase>(3).Select(_ => _.DeepCloneWithColumnsSpanned(null)).ToList();
+            var dataRow3Cells = new Row(Some.ReadOnlyDummies<NotSlottedCellBase>(3).Select(_ => _.DeepCloneWithColumnsSpanned(null)).ToList());
+            var dataRow4Cell1 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(2);
+            var defaultSlot = A.Dummy<string>();
+            var otherSlot = A.Dummy<string>();
+            var dataRow4Cell2Slot1 = (INotSlottedCell)A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1);
+            var dataRow4Cell2Slot2 = (INotSlottedCell)A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1);
+
+            var dataRow4Cell2 = new SlottedCell(
+                new Dictionary<string, INotSlottedCell>
+                {
+                    { otherSlot, dataRow4Cell2Slot1 },
+                    { defaultSlot, dataRow4Cell2Slot2 },
+                },
+                defaultSlot);
+
+            var allActualDataRows = new[]
+            {
+                new Row(new[] { dataRow1Cell1 }),
+                new Row(
+                    dataRow2Cells,
+                    childRows: new[]
+                    {
+                        dataRow3Cells,
+                        new Row(
+                            new ICell[]
+                            {
+                                dataRow4Cell1,
+                                dataRow4Cell2,
+                            }),
+                    }),
+            };
+
+            var allExpectedDataRows = new[]
+            {
+                new Row(new[] { dataRow1Cell1 }),
+                new Row(
+                    dataRow2Cells,
+                    childRows: new[]
+                    {
+                        dataRow3Cells,
+                        new Row(
+                            new ICell[]
+                            {
+                                cellToUse,
+                                dataRow4Cell2,
+                            }),
+                    }),
+            };
+
+            var expectedDataRows = new DataRows(allExpectedDataRows);
+            var actualDataRows = new DataRows(allActualDataRows);
+
+            var footerRow1Cell1 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(null);
+            var footerRow1Cell2 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(2);
+            var footerRow2Cell1 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1);
+            var footerRow2Cell2 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(null);
+            var footerRow2Cell3 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1);
+
+            var allFooterRows = new[]
+            {
+                new FlatRow(
+                    new ICell[]
+                    {
+                        footerRow1Cell1,
+                        footerRow1Cell2,
+                    }),
+                new FlatRow(
+                    new ICell[]
+                    {
+                        footerRow2Cell1,
+                        footerRow2Cell2,
+                        footerRow2Cell3,
+                    }),
+            };
+
+            var footerRows = new FooterRows(allFooterRows);
+            var expectedTableRows = new TableRows(headerRows, expectedDataRows, footerRows);
+            var actualTableRows = new TableRows(headerRows, actualDataRows, footerRows);
+            var actual = new TreeTable(tableColumns, actualTableRows);
+            var expected = new TreeTable(tableColumns, expectedTableRows);
+
+            // Act
+            actual.ReplaceCell(dataRow4Cell1, cellToUse);
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+        }
+
+        [Fact]
+        public static void ReplaceCell___Should_replace_cell_within_footer_row___When_called()
+        {
+            // Arrange
+            var cellToUse = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1);
+
+            var tableColumns = new TableColumns(Some.ReadOnlyDummies<Column>(3).ToList());
+
+            var headerRow1Cell1 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(null);
+            var headerRow1Cell2 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(2);
+            var headerRow2Cell1 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(2);
+            var headerRow2Cell2 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1);
+
+            var allHeaderRows = new[]
+            {
+                new FlatRow(
+                    new ICell[]
+                    {
+                        headerRow1Cell1,
+                        headerRow1Cell2,
+                    }),
+                new FlatRow(
+                    new ICell[]
+                    {
+                        headerRow2Cell1,
+                        headerRow2Cell2,
+                    }),
+            };
+
+            var headerRows = new HeaderRows(allHeaderRows);
+
+            var dataRow1Cell1 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(3);
+            var dataRow2Cells = Some.ReadOnlyDummies<NotSlottedCellBase>(3).Select(_ => _.DeepCloneWithColumnsSpanned(null)).ToList();
+            var dataRow3Cells = new Row(Some.ReadOnlyDummies<NotSlottedCellBase>(3).Select(_ => _.DeepCloneWithColumnsSpanned(null)).ToList());
+            var dataRow4Cell1 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(2);
+            var defaultSlot = A.Dummy<string>();
+            var otherSlot = A.Dummy<string>();
+            var dataRow4Cell2Slot1 = (INotSlottedCell)A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1);
+            var dataRow4Cell2Slot2 = (INotSlottedCell)A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1);
+
+            var dataRow4Cell2 = new SlottedCell(
+                new Dictionary<string, INotSlottedCell>
+                {
+                    { otherSlot, dataRow4Cell2Slot1 },
+                    { defaultSlot, dataRow4Cell2Slot2 },
+                },
+                defaultSlot);
+
+            var allDataRows = new[]
+            {
+                new Row(new[] { dataRow1Cell1 }),
+                new Row(
+                    dataRow2Cells,
+                    childRows: new[]
+                    {
+                        dataRow3Cells,
+                        new Row(
+                            new ICell[]
+                            {
+                                dataRow4Cell1,
+                                dataRow4Cell2,
+                            }),
+                    }),
+            };
+
+            var dataRows = new DataRows(allDataRows);
+
+            var footerRow1Cell1 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(null);
+            var footerRow1Cell2 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(2);
+            var footerRow2Cell1 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1);
+            var footerRow2Cell2 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(null);
+            var footerRow2Cell3 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1);
+
+            var actualAllFooterRows = new[]
+            {
+                new FlatRow(
+                    new ICell[]
+                    {
+                        footerRow1Cell1,
+                        footerRow1Cell2,
+                    }),
+                new FlatRow(
+                    new ICell[]
+                    {
+                        footerRow2Cell1,
+                        footerRow2Cell2,
+                        footerRow2Cell3,
+                    }),
+            };
+
+            var expectedAllFooterRows = new[]
+            {
+                new FlatRow(
+                    new ICell[]
+                    {
+                        footerRow1Cell1,
+                        footerRow1Cell2,
+                    }),
+                new FlatRow(
+                    new ICell[]
+                    {
+                        footerRow2Cell1,
+                        cellToUse,
+                        footerRow2Cell3,
+                    }),
+            };
+
+            var actualFooterRows = new FooterRows(actualAllFooterRows);
+            var expectedFooterRows = new FooterRows(expectedAllFooterRows);
+            var expectedTableRows = new TableRows(headerRows, dataRows, expectedFooterRows);
+            var actualTableRows = new TableRows(headerRows, dataRows, actualFooterRows);
+            var actual = new TreeTable(tableColumns, actualTableRows);
+            var expected = new TreeTable(tableColumns, expectedTableRows);
+
+            // Act
+            actual.ReplaceCell(footerRow2Cell2, cellToUse);
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+        }
+
+        [Fact]
+        public static void ReplaceCell___Should_replace_cell_in_slot___When_called()
+        {
+            // Arrange
+            var cellToUse = (NotSlottedCellBase)A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1);
+
+            var tableColumns = new TableColumns(Some.ReadOnlyDummies<Column>(3).ToList());
+
+            var headerRow1Cell1 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(null);
+            var headerRow1Cell2 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(2);
+            var headerRow2Cell1 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(2);
+            var headerRow2Cell2 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1);
+
+            var allHeaderRows = new[]
+            {
+                new FlatRow(
+                    new ICell[]
+                    {
+                        headerRow1Cell1,
+                        headerRow1Cell2,
+                    }),
+                new FlatRow(
+                    new ICell[]
+                    {
+                        headerRow2Cell1,
+                        headerRow2Cell2,
+                    }),
+            };
+
+            var headerRows = new HeaderRows(allHeaderRows);
+
+            var dataRow1Cell1 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(3);
+            var dataRow2Cells = Some.ReadOnlyDummies<NotSlottedCellBase>(3).Select(_ => _.DeepCloneWithColumnsSpanned(null)).ToList();
+            var dataRow3Cells = new Row(Some.ReadOnlyDummies<NotSlottedCellBase>(3).Select(_ => _.DeepCloneWithColumnsSpanned(null)).ToList());
+            var dataRow4Cell1 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(2);
+            var defaultSlot = A.Dummy<string>();
+            var otherSlot = A.Dummy<string>();
+            var dataRow4Cell2Slot1 = (INotSlottedCell)A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1);
+            var dataRow4Cell2Slot2 = (INotSlottedCell)A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1);
+
+            var actualDataRow4Cell2 = new SlottedCell(
+                new Dictionary<string, INotSlottedCell>
+                {
+                    { otherSlot, dataRow4Cell2Slot1 },
+                    { defaultSlot, dataRow4Cell2Slot2 },
+                },
+                defaultSlot);
+
+            var expectedDataRow4Cell2 = new SlottedCell(
+                new Dictionary<string, INotSlottedCell>
+                {
+                    { otherSlot, dataRow4Cell2Slot1 },
+                    { defaultSlot, cellToUse },
+                },
+                defaultSlot);
+
+            var allActualDataRows = new[]
+            {
+                new Row(new[] { dataRow1Cell1 }),
+                new Row(
+                    dataRow2Cells,
+                    childRows: new[]
+                    {
+                        dataRow3Cells,
+                        new Row(
+                            new ICell[]
+                            {
+                                dataRow4Cell1,
+                                actualDataRow4Cell2,
+                            }),
+                    }),
+            };
+
+            var allExpectedDataRows = new[]
+            {
+                new Row(new[] { dataRow1Cell1 }),
+                new Row(
+                    dataRow2Cells,
+                    childRows: new[]
+                    {
+                        dataRow3Cells,
+                        new Row(
+                            new ICell[]
+                            {
+                                dataRow4Cell1,
+                                expectedDataRow4Cell2,
+                            }),
+                    }),
+            };
+
+            var expectedDataRows = new DataRows(allExpectedDataRows);
+            var actualDataRows = new DataRows(allActualDataRows);
+
+            var footerRow1Cell1 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(null);
+            var footerRow1Cell2 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(2);
+            var footerRow2Cell1 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1);
+            var footerRow2Cell2 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(null);
+            var footerRow2Cell3 = A.Dummy<NotSlottedCellBase>().DeepCloneWithColumnsSpanned(1);
+
+            var allFooterRows = new[]
+            {
+                new FlatRow(
+                    new ICell[]
+                    {
+                        footerRow1Cell1,
+                        footerRow1Cell2,
+                    }),
+                new FlatRow(
+                    new ICell[]
+                    {
+                        footerRow2Cell1,
+                        footerRow2Cell2,
+                        footerRow2Cell3,
+                    }),
+            };
+
+            var footerRows = new FooterRows(allFooterRows);
+            var expectedTableRows = new TableRows(headerRows, expectedDataRows, footerRows);
+            var actualTableRows = new TableRows(headerRows, actualDataRows, footerRows);
+            var actual = new TreeTable(tableColumns, actualTableRows);
+            var expected = new TreeTable(tableColumns, expectedTableRows);
+
+            // Act
+            actual.ReplaceCell(dataRow4Cell2Slot2, cellToUse);
 
             // Assert
             actual.AsTest().Must().BeEqualTo(expected);
