@@ -2171,6 +2171,56 @@ namespace OBeautifulCode.DataStructure.Test
         ////}
 
         [Fact]
+        public static void GetSection___Should_throw_ArgumentNullException___When_parameter_cell_is_null()
+        {
+            // Arrange
+            var systemUnderTest = new ReportAgent(A.Dummy<Report>());
+
+            // Act
+            var actual = Record.Exception(() => systemUnderTest.GetSection(null));
+
+            // Assert
+            actual.AsTest().Must().BeOfType<ArgumentNullException>();
+            actual.Message.AsTest().Must().ContainString("cell");
+        }
+
+        [Fact]
+        public static void GetSection___Should_throw_InvalidOperationException___When_cell_does_not_exist_in_report()
+        {
+            // Arrange
+            var systemUnderTest = new ReportAgent(A.Dummy<Report>());
+            var cell = A.Dummy<ICell>();
+
+            // Act
+            var actual = Record.Exception(() => systemUnderTest.GetSection(cell));
+
+            // Assert
+            actual.AsTest().Must().BeOfType<InvalidOperationException>();
+            actual.Message.AsTest().Must().ContainString("The specified cell does not exist in the report.");
+        }
+
+        [Fact]
+        public static void GetSection___Should_return_section_containing_cell___When_cell_exists_in_report()
+        {
+            // Arrange
+            var report = A.Dummy<Report>().Whose(_ => _.Sections.Count > 1);
+
+            var section = report.Sections.ElementAt(ThreadSafeRandom.Next(0, report.Sections.Count));
+
+            var cells = section.TreeTable.GetAllCells();
+
+            var cell = cells.ElementAt(ThreadSafeRandom.Next(0, cells.Count));
+
+            var systemUnderTest = new ReportAgent(report);
+
+            // Act
+            var actual = systemUnderTest.GetSection(cell);
+
+            // Assert
+            actual.AsTest().Must().BeSameReferenceAs(section);
+        }
+
+        [Fact]
         public static void Recalc___Should_throw_ArgumentException___When_parameter_timestampUtc_is_in_UTC_time()
         {
             // Arrange

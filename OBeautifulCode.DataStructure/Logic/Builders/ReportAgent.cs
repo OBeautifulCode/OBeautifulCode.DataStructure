@@ -484,6 +484,31 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <summary>
+        /// Gets the section containing the specified cell.
+        /// </summary>
+        /// <param name="cell">The cell.</param>
+        /// <returns>
+        /// The section containing the specified cell.
+        /// </returns>
+        public Section GetSection(
+            ICell cell)
+        {
+            if (cell == null)
+            {
+                throw new ArgumentNullException(nameof(cell));
+            }
+
+            if (!this.cellToSectionIdMap.TryGetValue(cell, out var sectionId))
+            {
+                throw new InvalidOperationException(Invariant($"The specified cell does not exist in the report."));
+            }
+
+            var result = this.Report.Sections.Single(_ => _.Id == sectionId);
+
+            return result;
+        }
+
+        /// <summary>
         /// Executes all cell operations, validations, and availability checks, and records the results.
         /// </summary>
         /// <param name="timestampUtc">The timestamp (in UTC) to use when recording a <see cref="CellOpExecutionEventBase"/> with an <see cref="IOperationOutputCell{TValue}"/>.</param>
