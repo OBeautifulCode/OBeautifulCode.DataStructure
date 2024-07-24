@@ -62,8 +62,9 @@ namespace OBeautifulCode.DataStructure.Excel
                 return;
             }
 
-            var implementedOptions = new ReportFormatOptions[]
+            var implementedOptions = new[]
             {
+                ReportFormatOptions.None,
             };
 
             var reportFormatOptions = (ReportFormatOptions)options;
