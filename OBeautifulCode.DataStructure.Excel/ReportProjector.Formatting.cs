@@ -105,6 +105,7 @@ namespace OBeautifulCode.DataStructure.Excel
 
             var implementedOptions = new[]
             {
+                SectionFormatOptions.None,
                 SectionFormatOptions.Hide,
             };
 
