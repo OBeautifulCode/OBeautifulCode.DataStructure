@@ -114,7 +114,7 @@ namespace OBeautifulCode.DataStructure.Excel
 
             sectionFormatOptions.ThrowOnNotImplementedEnumFlag(implementedOptions);
 
-            if (sectionFormatOptions.HasFlag(ColumnFormatOptions.Hide))
+            if (sectionFormatOptions.HasFlag(SectionFormatOptions.Hide))
             {
                 var sectionIdsToPermanentlyHide = context.ExternalContext.SectionIdsToTreatHiddenAsPermanentlyHidden ?? new string[0];
 
