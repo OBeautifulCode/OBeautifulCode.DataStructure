@@ -13,6 +13,7 @@ namespace OBeautifulCode.DataStructure.Excel
     using System.Linq;
     using System.Reflection;
     using Aspose.Cells;
+    using OBeautifulCode.DateTime.Recipes;
     using OBeautifulCode.Enum.Recipes;
     using OBeautifulCode.Excel;
     using OBeautifulCode.Excel.AsposeCells;
@@ -726,29 +727,47 @@ namespace OBeautifulCode.DataStructure.Excel
         }
 
         private static string Format(
-            this DateTime value,
+            this DateTime valueUtc,
             DateTimeFormat dateTimeFormat,
             InternalProjectionContext context)
         {
             var cultureKind = dateTimeFormat?.CultureKind ?? context.ExternalContext.CultureKind ?? CultureKind.Invariant;
 
-            var dateTimeFormatKind = dateTimeFormat?.FormatKind ?? DateTimeFormatKind.FullDateTimePatternShortTime;
+            var dateTimeFormatKind = dateTimeFormat?.FormatKind;
 
-            var localizeTimeZone = dateTimeFormat?.LocalizeTimeZone ?? false;
+            var localizeTimeZone = dateTimeFormat?.LocalizeTimeZone ?? (context.ExternalContext.LocalTimeZone != null);
 
             var localTimeZone = dateTimeFormat?.LocalTimeZone ?? context.ExternalContext.LocalTimeZone ?? StandardTimeZone.Unknown;
 
-            if (localizeTimeZone && (localTimeZone == StandardTimeZone.Unknown))
-            {
-                throw new InvalidOperationException("Cannot localize time zone of timestamp unless the local time zone is specified.");
-            }
+            TimeZoneInfo localTimeZoneInfo = null;
 
             if (localizeTimeZone)
             {
-                value = TimeZoneInfo.ConvertTimeFromUtc(value, localTimeZone.ToTimeZoneInfo());
+                if (localTimeZone == StandardTimeZone.Unknown)
+                {
+                    throw new InvalidOperationException("Cannot localize time zone of timestamp unless the local time zone is specified.");
+                }
+
+                localTimeZoneInfo = localTimeZone.ToTimeZoneInfo();
             }
 
-            var result = value.ToString(dateTimeFormatKind, cultureKind);
+            string result;
+
+            if (dateTimeFormatKind == null)
+            {
+                result = valueUtc.ToStringPretty(localTimeZoneInfo);
+            }
+            else
+            {
+                DateTime valueToUse = valueUtc;
+
+                if (localizeTimeZone)
+                {
+                    valueToUse = TimeZoneInfo.ConvertTimeFromUtc(valueUtc, localTimeZoneInfo);
+                }
+
+                result = valueToUse.ToString((DateTimeFormatKind)dateTimeFormatKind, cultureKind);
+            }
 
             return result;
         }
