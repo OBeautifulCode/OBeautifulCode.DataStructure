@@ -42,6 +42,7 @@ namespace OBeautifulCode.DataStructure.Test
                             var result = new AdditionalReportInfo(
                                 referenceObject.Copyright,
                                 referenceObject.TermsOfUse,
+                                referenceObject.Version,
                                 new IDetails[0].Concat(referenceObject.Details).Concat(new IDetails[] { null }).Concat(referenceObject.Details).ToList());
 
                             return result;

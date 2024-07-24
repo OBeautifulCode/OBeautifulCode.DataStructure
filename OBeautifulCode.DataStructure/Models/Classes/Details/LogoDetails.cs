@@ -8,7 +8,6 @@ namespace OBeautifulCode.DataStructure
 {
     using System;
     using OBeautifulCode.Type;
-    using static System.FormattableString;
 
     /// <summary>
     /// Details about a logo.

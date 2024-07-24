@@ -22,10 +22,12 @@ namespace OBeautifulCode.DataStructure
         /// </summary>
         /// <param name="copyright">OPTIONAL copyright of the report.  DEFAULT is no copyright.</param>
         /// <param name="termsOfUse">OPTIONAL terms-of-use for the report.  DEFAULT is no terms-of-use.</param>
+        /// <param name="version">OPTIONAL version of the report.  DEFAULT is no version specified.</param>
         /// <param name="details">OPTIONAL details for the report.  DEFAULT is no details.</param>
         public AdditionalReportInfo(
             string copyright = null,
             string termsOfUse = null,
+            Version version = null,
             IReadOnlyList<IDetails> details = null)
         {
             if ((details != null) && details.Any(_ => _ == null))
@@ -35,6 +37,7 @@ namespace OBeautifulCode.DataStructure
 
             this.Copyright = copyright;
             this.TermsOfUse = termsOfUse;
+            this.Version = version;
             this.Details = details;
         }
 
@@ -47,6 +50,11 @@ namespace OBeautifulCode.DataStructure
         /// Gets the terms-of-use for the report.
         /// </summary>
         public string TermsOfUse { get; private set; }
+
+        /// <summary>
+        /// Gets the version of the report.
+        /// </summary>
+        public Version Version { get; private set; }
 
         /// <summary>
         /// Gets the details for the report.
