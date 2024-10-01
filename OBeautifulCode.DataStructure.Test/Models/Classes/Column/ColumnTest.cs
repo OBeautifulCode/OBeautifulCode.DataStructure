@@ -30,7 +30,6 @@ namespace OBeautifulCode.DataStructure.Test
         static ColumnTest()
         {
             ConstructorArgumentValidationTestScenarios
-                .RemoveAllScenarios()
                 .AddScenario(() =>
                     new ConstructorArgumentValidationTestScenario<Column>
                     {

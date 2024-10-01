@@ -308,6 +308,8 @@ namespace OBeautifulCode.DataStructure.Excel
 
                     wholeColumnRange.ApplyColumnFormat(dataCellsRange, lastHeaderCellToLastNonSummaryDataCellRange, column.Format);
 
+                    dataCellsRange.ApplyCellValueFormat(column.ValueFormat);
+
                     cursor.MoveRight();
                 }
 

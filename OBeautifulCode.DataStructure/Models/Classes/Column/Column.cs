@@ -28,9 +28,11 @@ namespace OBeautifulCode.DataStructure
         /// will NOT be applied to <see cref="HeaderRows"/> nor <see cref="FooterRows"/>).
         /// DEFAULT is to leave the format unchanged.
         /// </param>
+        /// <param name="valueFormat">OPTIONAL formatting that is applied to the value of all of the cells in the column (just the <see cref="DataRows"/>, not the <see cref="HeaderRows"/> nor <see cref="FooterRows"/>).  DEFAULT is to leave the format unchanged.</param>
         public Column(
             string id = null,
-            ColumnFormat format = null)
+            ColumnFormat format = null,
+            ICellValueFormat valueFormat = null)
         {
             if ((id != null) && string.IsNullOrWhiteSpace(id))
             {
@@ -39,6 +41,7 @@ namespace OBeautifulCode.DataStructure
 
             this.Id = id;
             this.Format = format;
+            this.ValueFormat = valueFormat;
         }
 
         /// <summary>
@@ -53,5 +56,10 @@ namespace OBeautifulCode.DataStructure
         /// will NOT be applied to <see cref="HeaderRows"/> nor <see cref="FooterRows"/>).
         /// </summary>
         public ColumnFormat Format { get; private set; }
+
+        /// <summary>
+        /// Gets the formatting that is applied to the value of all of the cells in the column (just the <see cref="DataRows"/>, not the <see cref="HeaderRows"/> nor <see cref="FooterRows"/>).
+        /// </summary>
+        public ICellValueFormat ValueFormat { get; private set; }
     }
 }
