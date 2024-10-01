@@ -851,14 +851,14 @@ namespace OBeautifulCode.DataStructure
 
             if (protocolFactoryFuncs.Any(_ => _ == null))
             {
-                throw new ArgumentException(Invariant($"{nameof(protocolFactoryFuncs)} contains a null element."));
+                throw new ArgumentException(Invariant($"{nameof(protocolFactoryFuncs)} contains at least one null element."));
             }
 
             additionalTypesForCoreCellOps = additionalTypesForCoreCellOps ?? new List<Type>();
 
             if (additionalTypesForCoreCellOps.Any(_ => _ == null))
             {
-                throw new ArgumentException(Invariant($"{nameof(additionalTypesForCoreCellOps)} contains a null element."));
+                throw new ArgumentException(Invariant($"{nameof(additionalTypesForCoreCellOps)} contains at least one null element."));
             }
 
             var result = new ChainOfResponsibilityProtocolFactory();

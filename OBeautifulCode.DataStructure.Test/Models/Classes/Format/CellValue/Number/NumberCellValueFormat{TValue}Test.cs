@@ -30,7 +30,6 @@ namespace OBeautifulCode.DataStructure.Test
         static NumberCellValueFormatTValueTest()
         {
             ConstructorArgumentValidationTestScenarios
-                .RemoveAllScenarios()
                 .AddScenario(() =>
                     new ConstructorArgumentValidationTestScenario<NumberCellValueFormat<Version>>
                     {
@@ -78,54 +77,6 @@ namespace OBeautifulCode.DataStructure.Test
                         },
                         ExpectedExceptionType = typeof(ArgumentException),
                         ExpectedExceptionMessageContains = new[] { "roundingStrategy is not null, but numberOfDecimalPlaces is null." },
-                    })
-                .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<NumberCellValueFormat<Version>>
-                    {
-                        Name = "constructor should throw ArgumentOutOfRangeException when parameter 'digitGroupKind' is NumberFormatDigitGroupKind.Unknown",
-                        ConstructionFunc = () =>
-                        {
-                            var referenceObject = A.Dummy<NumberCellValueFormat<Version>>();
-
-                            var result = new NumberCellValueFormat<Version>(
-                                                 referenceObject.Prefix,
-                                                 referenceObject.Suffix,
-                                                 referenceObject.NumberOfDecimalPlaces,
-                                                 referenceObject.RoundingStrategy,
-                                                 referenceObject.DecimalSeparator,
-                                                 NumberFormatDigitGroupKind.Unknown,
-                                                 referenceObject.DigitGroupSeparator,
-                                                 referenceObject.NegativeNumberDisplayKind,
-                                                 referenceObject.MissingValueText);
-
-                            return result;
-                        },
-                        ExpectedExceptionType = typeof(ArgumentOutOfRangeException),
-                        ExpectedExceptionMessageContains = new[] { "digitGroupKind", "Unknown" },
-                    })
-                .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<NumberCellValueFormat<Version>>
-                    {
-                        Name = "constructor should throw ArgumentOutOfRangeException when parameter 'negativeNumberDisplayKind' is NumberFormatNegativeDisplayKind.Unknown",
-                        ConstructionFunc = () =>
-                        {
-                            var referenceObject = A.Dummy<NumberCellValueFormat<Version>>();
-
-                            var result = new NumberCellValueFormat<Version>(
-                                referenceObject.Prefix,
-                                referenceObject.Suffix,
-                                referenceObject.NumberOfDecimalPlaces,
-                                referenceObject.RoundingStrategy,
-                                referenceObject.DecimalSeparator,
-                                referenceObject.DigitGroupKind,
-                                referenceObject.DigitGroupSeparator,
-                                NumberFormatNegativeDisplayKind.Unknown,
-                                referenceObject.MissingValueText);
-
-                            return result;
-                        },
-                        ExpectedExceptionType = typeof(ArgumentOutOfRangeException),
-                        ExpectedExceptionMessageContains = new[] { "negativeNumberDisplayKind", "Unknown" },
                     });
         }
     }

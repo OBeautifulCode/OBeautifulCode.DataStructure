@@ -47,7 +47,7 @@ namespace OBeautifulCode.DataStructure
             {
                 if (expandedSummaryRows.Any(_ => _ == null))
                 {
-                    throw new ArgumentException(Invariant($"{nameof(expandedSummaryRows)} contains a null element."));
+                    throw new ArgumentException(Invariant($"{nameof(expandedSummaryRows)} contains at least one null element."));
                 }
 
                 if (expandedSummaryRows.Any() && ((childRows == null) || (!childRows.Any())))
@@ -60,7 +60,7 @@ namespace OBeautifulCode.DataStructure
             {
                 if (collapsedSummaryRows.Any(_ => _ == null))
                 {
-                    throw new ArgumentException(Invariant($"{nameof(collapsedSummaryRows)} contains a null element."));
+                    throw new ArgumentException(Invariant($"{nameof(collapsedSummaryRows)} contains at least one null element."));
                 }
 
                 if (collapsedSummaryRows.Any() && ((childRows == null) || (!childRows.Any())))

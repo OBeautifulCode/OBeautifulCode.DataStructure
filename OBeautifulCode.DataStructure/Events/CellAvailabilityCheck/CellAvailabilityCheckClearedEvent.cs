@@ -20,10 +20,10 @@ namespace OBeautifulCode.DataStructure
         /// Initializes a new instance of the <see cref="CellAvailabilityCheckClearedEvent"/> class.
         /// </summary>
         /// <param name="timestampUtc">The timestamp.</param>
-        /// <param name="details">Details about the cleared-out availability check.</param>
+        /// <param name="details">OPTIONAL details about the cleared-out availability check.  DEFAULT is no details.</param>
         public CellAvailabilityCheckClearedEvent(
             DateTime timestampUtc,
-            string details)
+            string details = null)
             : base(timestampUtc, details)
         {
         }

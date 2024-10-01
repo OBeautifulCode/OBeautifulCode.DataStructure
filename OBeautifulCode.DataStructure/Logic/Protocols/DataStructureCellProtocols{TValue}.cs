@@ -577,7 +577,7 @@ namespace OBeautifulCode.DataStructure
                 {
                     var operationResult = this.protocolFactory.GetProtocolAndExecuteViaReflection<TValue>(cell.Operation);
 
-                    operationExecutionEvent = new CellOpExecutionCompletedEvent<TValue>(this.timestampUtc, null, operationResult);
+                    operationExecutionEvent = new CellOpExecutionCompletedEvent<TValue>(operationResult, this.timestampUtc, null);
                 }
                 catch (OpExecutionAbortedExceptionBase ex)
                 {
@@ -614,7 +614,7 @@ namespace OBeautifulCode.DataStructure
                 {
                     var operationResult = await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync<TValue>(cell.Operation);
 
-                    operationExecutionEvent = new CellOpExecutionCompletedEvent<TValue>(this.timestampUtc, null, operationResult);
+                    operationExecutionEvent = new CellOpExecutionCompletedEvent<TValue>(operationResult, this.timestampUtc, null);
                 }
                 catch (OpExecutionAbortedExceptionBase ex)
                 {
@@ -670,19 +670,19 @@ namespace OBeautifulCode.DataStructure
 
                     if (validity == Validity.Invalid)
                     {
-                        validationEvent = new CellValidationDeterminedCellInvalidEvent(this.timestampUtc, null, message);
+                        validationEvent = new CellValidationDeterminedCellInvalidEvent(message, this.timestampUtc, null);
                     }
                     else if (validity == Validity.Valid)
                     {
-                        validationEvent = new CellValidationDeterminedCellValidEvent(this.timestampUtc, null, message);
+                        validationEvent = new CellValidationDeterminedCellValidEvent(message, this.timestampUtc, null);
                     }
                     else if (validity == Validity.NotApplicable)
                     {
-                        validationEvent = new CellValidationDeemedNotApplicableEvent(this.timestampUtc, null, message);
+                        validationEvent = new CellValidationDeemedNotApplicableEvent(message, this.timestampUtc, null);
                     }
                     else if (validity == Validity.Aborted)
                     {
-                        validationEvent = new CellValidationAbortedEvent(this.timestampUtc, null, message);
+                        validationEvent = new CellValidationAbortedEvent(message, this.timestampUtc, null);
                     }
                     else
                     {
@@ -693,13 +693,13 @@ namespace OBeautifulCode.DataStructure
                 {
                     // Here are are purposefully setting message to null because we have no idea who the thrower is
                     // nor whether the report author wants to emit this message to the user.
-                    validationEvent = new CellValidationAbortedEvent(this.timestampUtc, ex.ToString(), null);
+                    validationEvent = new CellValidationAbortedEvent(null, this.timestampUtc, ex.ToString());
                 }
                 catch (OpExecutionDeemedNotApplicableExceptionBase ex)
                 {
                     // Here are are purposefully setting message to null because we have no idea who the thrower is
                     // nor whether the report author wants to emit this message to the user.
-                    validationEvent = new CellValidationDeemedNotApplicableEvent(this.timestampUtc, ex.ToString(), null);
+                    validationEvent = new CellValidationDeemedNotApplicableEvent(null, this.timestampUtc, ex.ToString());
                 }
                 catch (Exception ex)
                 {
@@ -747,19 +747,19 @@ namespace OBeautifulCode.DataStructure
 
                     if (validity == Validity.Invalid)
                     {
-                        validationEvent = new CellValidationDeterminedCellInvalidEvent(this.timestampUtc, null, message);
+                        validationEvent = new CellValidationDeterminedCellInvalidEvent(message, this.timestampUtc, null);
                     }
                     else if (validity == Validity.Valid)
                     {
-                        validationEvent = new CellValidationDeterminedCellValidEvent(this.timestampUtc, null, message);
+                        validationEvent = new CellValidationDeterminedCellValidEvent(message, this.timestampUtc, null);
                     }
                     else if (validity == Validity.NotApplicable)
                     {
-                        validationEvent = new CellValidationDeemedNotApplicableEvent(this.timestampUtc, null, message);
+                        validationEvent = new CellValidationDeemedNotApplicableEvent(message, this.timestampUtc, null);
                     }
                     else if (validity == Validity.Aborted)
                     {
-                        validationEvent = new CellValidationAbortedEvent(this.timestampUtc, null, message);
+                        validationEvent = new CellValidationAbortedEvent(message, this.timestampUtc, null);
                     }
                     else
                     {
@@ -770,13 +770,13 @@ namespace OBeautifulCode.DataStructure
                 {
                     // Here are are purposefully setting message to null because we have no idea who the thrower is
                     // nor whether the report author wants to emit this message to the user.
-                    validationEvent = new CellValidationAbortedEvent(this.timestampUtc, ex.ToString(), null);
+                    validationEvent = new CellValidationAbortedEvent(null, this.timestampUtc, ex.ToString());
                 }
                 catch (OpExecutionDeemedNotApplicableExceptionBase ex)
                 {
                     // Here are are purposefully setting message to null because we have no idea who the thrower is
                     // nor whether the report author wants to emit this message to the user.
-                    validationEvent = new CellValidationDeemedNotApplicableEvent(this.timestampUtc, ex.ToString(), null);
+                    validationEvent = new CellValidationDeemedNotApplicableEvent(null, this.timestampUtc, ex.ToString());
                 }
                 catch (Exception ex)
                 {
@@ -824,11 +824,11 @@ namespace OBeautifulCode.DataStructure
 
                     if (availability == Availability.Disabled)
                     {
-                        availabilityCheckEvent = new CellAvailabilityCheckDeterminedCellDisabledEvent(this.timestampUtc, null, message);
+                        availabilityCheckEvent = new CellAvailabilityCheckDeterminedCellDisabledEvent(message, this.timestampUtc, null);
                     }
                     else if (availability == Availability.Enabled)
                     {
-                        availabilityCheckEvent = new CellAvailabilityCheckDeterminedCellEnabledEvent(this.timestampUtc, null, message);
+                        availabilityCheckEvent = new CellAvailabilityCheckDeterminedCellEnabledEvent(message, this.timestampUtc, null);
                     }
                     else
                     {
@@ -881,11 +881,11 @@ namespace OBeautifulCode.DataStructure
 
                     if (availability == Availability.Disabled)
                     {
-                        availabilityCheckEvent = new CellAvailabilityCheckDeterminedCellDisabledEvent(this.timestampUtc, null, message);
+                        availabilityCheckEvent = new CellAvailabilityCheckDeterminedCellDisabledEvent(message, this.timestampUtc, null);
                     }
                     else if (availability == Availability.Enabled)
                     {
-                        availabilityCheckEvent = new CellAvailabilityCheckDeterminedCellEnabledEvent(this.timestampUtc, null, message);
+                        availabilityCheckEvent = new CellAvailabilityCheckDeterminedCellEnabledEvent(message, this.timestampUtc, null);
                     }
                     else
                     {

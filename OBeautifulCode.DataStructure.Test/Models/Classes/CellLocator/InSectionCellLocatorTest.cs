@@ -29,62 +29,6 @@ namespace OBeautifulCode.DataStructure.Test
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = ObcSuppressBecause.CA1810_InitializeReferenceTypeStaticFieldsInline_FieldsDeclaredInCodeGeneratedPartialTestClass)]
         static InSectionCellLocatorTest()
         {
-            ConstructorArgumentValidationTestScenarios
-               .RemoveAllScenarios()
-               .AddScenario(() =>
-                   new ConstructorArgumentValidationTestScenario<InSectionCellLocator>
-                   {
-                       Name = "constructor should throw ArgumentNullException when parameter 'cellId' is null scenario",
-                       ConstructionFunc = () =>
-                       {
-                           var referenceObject = A.Dummy<InSectionCellLocator>();
-
-                           var result = new InSectionCellLocator(
-                                                null,
-                                                referenceObject.SlotId,
-                                                referenceObject.SlotSelectionStrategy);
-
-                           return result;
-                       },
-                       ExpectedExceptionType = typeof(ArgumentNullException),
-                       ExpectedExceptionMessageContains = new[] { "cellId", },
-                   })
-               .AddScenario(() =>
-                   new ConstructorArgumentValidationTestScenario<InSectionCellLocator>
-                   {
-                       Name = "constructor should throw ArgumentException when parameter 'cellId' is white space scenario",
-                       ConstructionFunc = () =>
-                       {
-                           var referenceObject = A.Dummy<InSectionCellLocator>();
-
-                           var result = new InSectionCellLocator(
-                                                Invariant($"  {Environment.NewLine}  "),
-                                                referenceObject.SlotId,
-                                                referenceObject.SlotSelectionStrategy);
-
-                           return result;
-                       },
-                       ExpectedExceptionType = typeof(ArgumentException),
-                       ExpectedExceptionMessageContains = new[] { "cellId", "white space", },
-                   })
-               .AddScenario(() =>
-                   new ConstructorArgumentValidationTestScenario<InSectionCellLocator>
-                   {
-                       Name = "constructor should throw ArgumentOutOfRangeException when parameter 'slotSelectionStrategy' is SlotSelectionStrategy.Unknown",
-                       ConstructionFunc = () =>
-                       {
-                           var referenceObject = A.Dummy<InSectionCellLocator>();
-
-                           var result = new InSectionCellLocator(
-                                                referenceObject.CellId,
-                                                referenceObject.SlotId,
-                                                SlotSelectionStrategy.Unknown);
-
-                           return result;
-                       },
-                       ExpectedExceptionType = typeof(ArgumentOutOfRangeException),
-                       ExpectedExceptionMessageContains = new[] { "slotSelectionStrategy", "Unknown", },
-                   });
         }
     }
 }

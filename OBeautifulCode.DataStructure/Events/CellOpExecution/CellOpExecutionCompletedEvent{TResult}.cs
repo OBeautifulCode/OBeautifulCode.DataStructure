@@ -20,13 +20,13 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Initializes a new instance of the <see cref="CellOpExecutionCompletedEvent{TResult}"/> class.
         /// </summary>
+        /// <param name="executionResult">The result of executing the operation.  DEFAULT is no result.</param>
         /// <param name="timestampUtc">The timestamp.</param>
-        /// <param name="details">Details about the completed execution.</param>
-        /// <param name="executionResult">The result of executing the operation.</param>
+        /// <param name="details">OPTIONAL details about the completed execution.  DEFAULT is no details.</param>
         public CellOpExecutionCompletedEvent(
+            TResult executionResult,
             DateTime timestampUtc,
-            string details,
-            TResult executionResult)
+            string details = null)
             : base(timestampUtc, details)
         {
             this.ExecutionResult = executionResult;

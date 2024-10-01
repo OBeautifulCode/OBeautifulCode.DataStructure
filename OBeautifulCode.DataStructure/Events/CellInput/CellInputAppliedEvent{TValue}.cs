@@ -20,12 +20,12 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Initializes a new instance of the <see cref="CellInputAppliedEvent{TValue}"/> class.
         /// </summary>
-        /// <param name="timestampUtc">The timestamp.</param>
         /// <param name="value">The inputted value.</param>
+        /// <param name="timestampUtc">The timestamp.</param>
         /// <param name="details">OPTIONAL details about the input that was applied to the cell.  DEFAULT is to omit any details.</param>
         public CellInputAppliedEvent(
-            DateTime timestampUtc,
             TValue value,
+            DateTime timestampUtc,
             string details = null)
             : base(timestampUtc, details)
         {

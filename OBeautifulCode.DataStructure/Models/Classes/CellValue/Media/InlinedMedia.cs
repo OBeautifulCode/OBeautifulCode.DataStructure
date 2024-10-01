@@ -38,7 +38,7 @@ namespace OBeautifulCode.DataStructure
 
             if (bytes.Length == 0)
             {
-                throw new ArgumentException(Invariant($"{nameof(bytes)} is empty."));
+                throw new ArgumentException(Invariant($"{nameof(bytes)} is an empty enumerable."));
             }
 
             this.Bytes = bytes;

@@ -29,68 +29,6 @@ namespace OBeautifulCode.DataStructure.Test
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = ObcSuppressBecause.CA1810_InitializeReferenceTypeStaticFieldsInline_FieldsDeclaredInCodeGeneratedPartialTestClass)]
         static ValidationStepTest()
         {
-            ConstructorArgumentValidationTestScenarios
-                .RemoveAllScenarios()
-                .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<ValidationStep>
-                    {
-                        Name = "constructor should throw ArgumentNullException when parameter 'operation' is null scenario",
-                        ConstructionFunc = () =>
-                        {
-                            var referenceObject = A.Dummy<ValidationStep>();
-
-                            var result = new ValidationStep(
-                                                 null,
-                                                 referenceObject.StopMessageOp,
-                                                 referenceObject.TrueAction,
-                                                 referenceObject.FalseAction,
-                                                 referenceObject.Details);
-
-                            return result;
-                        },
-                        ExpectedExceptionType = typeof(ArgumentNullException),
-                        ExpectedExceptionMessageContains = new[] { "operation", },
-                    })
-                .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<ValidationStep>
-                    {
-                        Name = "constructor should throw ArgumentOutOfRangeException when parameter 'trueAction' is ValidationStepAction.Unknown",
-                        ConstructionFunc = () =>
-                        {
-                            var referenceObject = A.Dummy<ValidationStep>();
-
-                            var result = new ValidationStep(
-                                                 referenceObject.Operation,
-                                                 referenceObject.StopMessageOp,
-                                                 ValidationStepAction.Unknown,
-                                                 referenceObject.FalseAction,
-                                                 referenceObject.Details);
-
-                            return result;
-                        },
-                        ExpectedExceptionType = typeof(ArgumentOutOfRangeException),
-                        ExpectedExceptionMessageContains = new[] { "trueAction", "Unknown" },
-                    })
-                .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<ValidationStep>
-                    {
-                        Name = "constructor should throw ArgumentOutOfRangeException when parameter 'falseAction' is ValidationStepAction.Unknown",
-                        ConstructionFunc = () =>
-                        {
-                            var referenceObject = A.Dummy<ValidationStep>();
-
-                            var result = new ValidationStep(
-                                referenceObject.Operation,
-                                referenceObject.StopMessageOp,
-                                referenceObject.TrueAction,
-                                ValidationStepAction.Unknown,
-                                referenceObject.Details);
-
-                            return result;
-                        },
-                        ExpectedExceptionType = typeof(ArgumentOutOfRangeException),
-                        ExpectedExceptionMessageContains = new[] { "falseAction", "Unknown" },
-                    });
         }
     }
 }

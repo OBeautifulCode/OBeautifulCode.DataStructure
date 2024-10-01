@@ -30,62 +30,6 @@ namespace OBeautifulCode.DataStructure.Test
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = ObcSuppressBecause.CA1810_InitializeReferenceTypeStaticFieldsInline_FieldsDeclaredInCodeGeneratedPartialTestClass)]
         static InlinedMediaTest()
         {
-            ConstructorArgumentValidationTestScenarios
-                .RemoveAllScenarios()
-                .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<InlinedMedia>
-                    {
-                        Name = "constructor should throw ArgumentNullException when parameter 'bytes' is null scenario",
-                        ConstructionFunc = () =>
-                        {
-                            var referenceObject = A.Dummy<InlinedMedia>();
-
-                            var result = new InlinedMedia(
-                                                 null,
-                                                 referenceObject.MediaKind,
-                                                 referenceObject.Name);
-
-                            return result;
-                        },
-                        ExpectedExceptionType = typeof(ArgumentNullException),
-                        ExpectedExceptionMessageContains = new[] { "bytes", },
-                    })
-                .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<InlinedMedia>
-                    {
-                        Name = "constructor should throw ArgumentException when parameter 'bytes' is empty",
-                        ConstructionFunc = () =>
-                        {
-                            var referenceObject = A.Dummy<InlinedMedia>();
-
-                            var result = new InlinedMedia(
-                                                 new byte[0],
-                                                 referenceObject.MediaKind,
-                                                 referenceObject.Name);
-
-                            return result;
-                        },
-                        ExpectedExceptionType = typeof(ArgumentException),
-                        ExpectedExceptionMessageContains = new[] { "bytes", "empty", },
-                    })
-                .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<InlinedMedia>
-                    {
-                        Name = "constructor should throw ArgumentOutOfRangeException when parameter 'mediaKind' is Unknown",
-                        ConstructionFunc = () =>
-                        {
-                            var referenceObject = A.Dummy<InlinedMedia>();
-
-                            var result = new InlinedMedia(
-                                Some.ReadOnlyDummies<byte>().ToArray(),
-                                MediaKind.Unknown,
-                                referenceObject.Name);
-
-                            return result;
-                        },
-                        ExpectedExceptionType = typeof(ArgumentOutOfRangeException),
-                        ExpectedExceptionMessageContains = new[] { "mediaKind", "Unknown", },
-                    });
         }
     }
 }

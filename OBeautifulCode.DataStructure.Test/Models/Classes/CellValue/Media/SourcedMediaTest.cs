@@ -29,62 +29,6 @@ namespace OBeautifulCode.DataStructure.Test
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = ObcSuppressBecause.CA1810_InitializeReferenceTypeStaticFieldsInline_FieldsDeclaredInCodeGeneratedPartialTestClass)]
         static SourcedMediaTest()
         {
-            ConstructorArgumentValidationTestScenarios
-                .RemoveAllScenarios()
-                .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<SourcedMedia>
-                    {
-                        Name = "constructor should throw ArgumentNullException when parameter 'url' is null scenario",
-                        ConstructionFunc = () =>
-                        {
-                            var referenceObject = A.Dummy<SourcedMedia>();
-
-                            var result = new SourcedMedia(
-                                                 null,
-                                                 referenceObject.MediaKind,
-                                                 referenceObject.Name);
-
-                            return result;
-                        },
-                        ExpectedExceptionType = typeof(ArgumentNullException),
-                        ExpectedExceptionMessageContains = new[] { "url", },
-                    })
-                .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<SourcedMedia>
-                    {
-                        Name = "constructor should throw ArgumentException when parameter 'url' is white space scenario",
-                        ConstructionFunc = () =>
-                        {
-                            var referenceObject = A.Dummy<SourcedMedia>();
-
-                            var result = new SourcedMedia(
-                                                 Invariant($"  {Environment.NewLine}  "),
-                                                 referenceObject.MediaKind,
-                                                 referenceObject.Name);
-
-                            return result;
-                        },
-                        ExpectedExceptionType = typeof(ArgumentException),
-                        ExpectedExceptionMessageContains = new[] { "url", "white space", },
-                    })
-                .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<SourcedMedia>
-                    {
-                        Name = "constructor should throw ArgumentOutOfRangeException when parameter 'mediaKind' is Unknown",
-                        ConstructionFunc = () =>
-                        {
-                            var referenceObject = A.Dummy<SourcedMedia>();
-
-                            var result = new SourcedMedia(
-                                referenceObject.Url,
-                                MediaKind.Unknown,
-                                referenceObject.Name);
-
-                            return result;
-                        },
-                        ExpectedExceptionType = typeof(ArgumentOutOfRangeException),
-                        ExpectedExceptionMessageContains = new[] { "mediaKind", "Unknown", },
-                    });
         }
     }
 }

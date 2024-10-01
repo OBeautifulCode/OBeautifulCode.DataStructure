@@ -30,58 +30,6 @@ namespace OBeautifulCode.DataStructure.Test
         static DropdownSelectorTest()
         {
             ConstructorArgumentValidationTestScenarios
-                .RemoveAllScenarios()
-                .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<DropdownSelector>
-                    {
-                        Name = "constructor should throw ArgumentNullException when parameter 'items' is null scenario",
-                        ConstructionFunc = () =>
-                        {
-                            var referenceObject = A.Dummy<DropdownSelector>();
-
-                            var result = new DropdownSelector(
-                                                 null,
-                                                 referenceObject.SelectedItemName);
-
-                            return result;
-                        },
-                        ExpectedExceptionType = typeof(ArgumentNullException),
-                        ExpectedExceptionMessageContains = new[] { "items", },
-                    })
-                .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<DropdownSelector>
-                    {
-                        Name = "constructor should throw ArgumentException when parameter 'items' is an empty enumerable scenario",
-                        ConstructionFunc = () =>
-                        {
-                            var referenceObject = A.Dummy<DropdownSelector>();
-
-                            var result = new DropdownSelector(
-                                                 new List<NamedValue<ILink>>(),
-                                                 referenceObject.SelectedItemName);
-
-                            return result;
-                        },
-                        ExpectedExceptionType = typeof(ArgumentException),
-                        ExpectedExceptionMessageContains = new[] { "items", "is an empty enumerable", },
-                    })
-                .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<DropdownSelector>
-                    {
-                        Name = "constructor should throw ArgumentException when parameter 'items' contains a null element scenario",
-                        ConstructionFunc = () =>
-                        {
-                            var referenceObject = A.Dummy<DropdownSelector>();
-
-                            var result = new DropdownSelector(
-                                                 new NamedValue<ILink>[0].Concat(referenceObject.Items).Concat(new NamedValue<ILink>[] { null }).Concat(referenceObject.Items).ToList(),
-                                                 referenceObject.SelectedItemName);
-
-                            return result;
-                        },
-                        ExpectedExceptionType = typeof(ArgumentException),
-                        ExpectedExceptionMessageContains = new[] { "items", "contains at least one null element", },
-                    })
                 .AddScenario(() =>
                     new ConstructorArgumentValidationTestScenario<DropdownSelector>
                     {

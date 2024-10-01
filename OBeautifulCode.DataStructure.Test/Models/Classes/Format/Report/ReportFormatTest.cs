@@ -31,7 +31,6 @@ namespace OBeautifulCode.DataStructure.Test
         static ReportFormatTest()
         {
             ConstructorArgumentValidationTestScenarios
-                .RemoveAllScenarios()
                 .AddScenario(() =>
                     new ConstructorArgumentValidationTestScenario<ReportFormat>
                     {

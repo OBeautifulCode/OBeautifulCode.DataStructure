@@ -30,53 +30,6 @@ namespace OBeautifulCode.DataStructure.Test
         static CellFormatTest()
         {
             ConstructorArgumentValidationTestScenarios
-                .RemoveAllScenarios()
-                .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<CellFormat>
-                    {
-                        Name = "constructor should throw ArgumentOutOfRangeException when parameter 'verticalAlignment' is VerticalAlignment.Unknown",
-                        ConstructionFunc = () =>
-                        {
-                            var referenceObject = A.Dummy<CellFormat>();
-
-                            var result = new CellFormat(
-                                referenceObject.OuterBorders,
-                                referenceObject.FontFormat,
-                                referenceObject.BackgroundColor,
-                                VerticalAlignment.Unknown,
-                                referenceObject.HorizontalAlignment,
-                                referenceObject.FontRotationAngle,
-                                referenceObject.FillPattern,
-                                referenceObject.Options);
-
-                            return result;
-                        },
-                        ExpectedExceptionType = typeof(ArgumentOutOfRangeException),
-                        ExpectedExceptionMessageContains = new[] { "verticalAlignment", "Unknown", },
-                    })
-                .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<CellFormat>
-                    {
-                        Name = "constructor should throw ArgumentOutOfRangeException when parameter 'horizontalAlignment' is HorizontalAlignment.Unknown",
-                        ConstructionFunc = () =>
-                        {
-                            var referenceObject = A.Dummy<CellFormat>();
-
-                            var result = new CellFormat(
-                                referenceObject.OuterBorders,
-                                referenceObject.FontFormat,
-                                referenceObject.BackgroundColor,
-                                referenceObject.VerticalAlignment,
-                                HorizontalAlignment.Unknown,
-                                referenceObject.FontRotationAngle,
-                                referenceObject.FillPattern,
-                                referenceObject.Options);
-
-                            return result;
-                        },
-                        ExpectedExceptionType = typeof(ArgumentOutOfRangeException),
-                        ExpectedExceptionMessageContains = new[] { "horizontalAlignment", "Unknown", },
-                    })
                 .AddScenario(() =>
                     new ConstructorArgumentValidationTestScenario<CellFormat>
                     {
@@ -99,29 +52,6 @@ namespace OBeautifulCode.DataStructure.Test
                         },
                         ExpectedExceptionType = typeof(ArgumentException),
                         ExpectedExceptionMessageContains = new[] { "outerBorders", "is an empty enumerable", },
-                    })
-                .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<CellFormat>
-                    {
-                        Name = "constructor should throw ArgumentException when parameter 'outerBorders' contains a null element scenario",
-                        ConstructionFunc = () =>
-                        {
-                            var referenceObject = A.Dummy<CellFormat>();
-
-                            var result = new CellFormat(
-                                new OuterBorder[0].Concat(referenceObject.OuterBorders).Concat(new OuterBorder[] { null }).Concat(referenceObject.OuterBorders).ToList(),
-                                referenceObject.FontFormat,
-                                referenceObject.BackgroundColor,
-                                referenceObject.VerticalAlignment,
-                                referenceObject.HorizontalAlignment,
-                                referenceObject.FontRotationAngle,
-                                referenceObject.FillPattern,
-                                referenceObject.Options);
-
-                            return result;
-                        },
-                        ExpectedExceptionType = typeof(ArgumentException),
-                        ExpectedExceptionMessageContains = new[] { "outerBorders", "contains at least one null element", },
                     });
         }
     }

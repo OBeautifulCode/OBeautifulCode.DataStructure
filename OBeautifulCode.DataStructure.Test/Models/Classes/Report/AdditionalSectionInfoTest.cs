@@ -29,24 +29,6 @@ namespace OBeautifulCode.DataStructure.Test
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = ObcSuppressBecause.CA1810_InitializeReferenceTypeStaticFieldsInline_FieldsDeclaredInCodeGeneratedPartialTestClass)]
         static AdditionalSectionInfoTest()
         {
-            ConstructorArgumentValidationTestScenarios
-                .RemoveAllScenarios()
-                .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<AdditionalSectionInfo>
-                    {
-                        Name = "constructor should throw ArgumentException when parameter 'details' contains a null element scenario",
-                        ConstructionFunc = () =>
-                        {
-                            var referenceObject = A.Dummy<AdditionalSectionInfo>();
-
-                            var result = new AdditionalSectionInfo(
-                                new IDetails[0].Concat(referenceObject.Details).Concat(new IDetails[] { null }).Concat(referenceObject.Details).ToList());
-
-                            return result;
-                        },
-                        ExpectedExceptionType = typeof(ArgumentException),
-                        ExpectedExceptionMessageContains = new[] { "details", "contains at least one null element", },
-                    });
         }
     }
 }

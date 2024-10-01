@@ -54,7 +54,7 @@ namespace OBeautifulCode.DataStructure
 
             if ((operationExecutionEvents != null) && operationExecutionEvents.Any(_ => _ == null))
             {
-                throw new ArgumentException(Invariant($"{nameof(operationExecutionEvents)} contains a null element."));
+                throw new ArgumentException(Invariant($"{nameof(operationExecutionEvents)} contains at least one null element."));
             }
 
             this.Operation = operation;

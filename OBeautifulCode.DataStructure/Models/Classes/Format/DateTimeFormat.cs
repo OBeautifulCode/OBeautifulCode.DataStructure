@@ -43,6 +43,11 @@ namespace OBeautifulCode.DataStructure
                 throw new ArgumentException(Invariant($"{nameof(localizeTimeZone)} is false, but {nameof(localTimeZone)} is not null."));
             }
 
+            if ((localTimeZone != null) && (localTimeZone == StandardTimeZone.Unknown))
+            {
+                throw new ArgumentOutOfRangeException(nameof(localTimeZone), Invariant($"{nameof(localTimeZone)} is {nameof(StandardTimeZone.Unknown)}."));
+            }
+
             this.FormatKind = formatKind;
             this.CultureKind = cultureKind;
             this.LocalizeTimeZone = localizeTimeZone;

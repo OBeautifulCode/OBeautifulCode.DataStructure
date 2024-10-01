@@ -8,6 +8,7 @@ namespace OBeautifulCode.DataStructure
 {
     using System;
     using OBeautifulCode.Type;
+    using static System.FormattableString;
 
     /// <summary>
     /// A cell value format for a currency value.
@@ -38,6 +39,11 @@ namespace OBeautifulCode.DataStructure
             string missingValueText = null)
             : base(numberOfDecimalPlaces, roundingStrategy, decimalSeparator, digitGroupKind, digitGroupSeparator, negativeNumberDisplayKind, missingValueText)
         {
+            if ((currencyCode != null) && (currencyCode == OBeautifulCode.Type.CurrencyCode.Unknown))
+            {
+                throw new ArgumentOutOfRangeException(Invariant($"{nameof(currencyCode)} is {nameof(OBeautifulCode.Type.CurrencyCode)}.{nameof(OBeautifulCode.Type.CurrencyCode.Unknown)}."));
+            }
+
             this.CurrencyCode = currencyCode;
         }
 

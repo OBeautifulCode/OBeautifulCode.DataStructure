@@ -29,25 +29,6 @@ namespace OBeautifulCode.DataStructure.Test
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = ObcSuppressBecause.CA1810_InitializeReferenceTypeStaticFieldsInline_FieldsDeclaredInCodeGeneratedPartialTestClass)]
         static DateTimeCellValueFormatTest()
         {
-            ConstructorArgumentValidationTestScenarios
-                .RemoveAllScenarios()
-                .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<DateTimeCellValueFormat>
-                    {
-                        Name = "constructor should throw ArgumentNullException when parameter 'format' is null scenario",
-                        ConstructionFunc = () =>
-                        {
-                            var referenceObject = A.Dummy<DateTimeCellValueFormat>();
-
-                            var result = new DateTimeCellValueFormat(
-                                null,
-                                referenceObject.MissingValueText);
-
-                            return result;
-                        },
-                        ExpectedExceptionType = typeof(ArgumentNullException),
-                        ExpectedExceptionMessageContains = new[] { "format", },
-                    });
         }
     }
 }

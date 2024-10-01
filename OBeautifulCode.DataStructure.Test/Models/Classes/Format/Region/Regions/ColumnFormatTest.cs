@@ -30,7 +30,6 @@ namespace OBeautifulCode.DataStructure.Test
         static ColumnFormatTest()
         {
             ConstructorArgumentValidationTestScenarios
-                .RemoveAllScenarios()
                 .AddScenario(() =>
                     new ConstructorArgumentValidationTestScenario<ColumnFormat>
                     {
@@ -55,27 +54,6 @@ namespace OBeautifulCode.DataStructure.Test
                 .AddScenario(() =>
                     new ConstructorArgumentValidationTestScenario<ColumnFormat>
                     {
-                        Name = "constructor should throw ArgumentException when parameter 'outerBorders' contains a null element scenario",
-                        ConstructionFunc = () =>
-                        {
-                            var referenceObject = A.Dummy<ColumnFormat>();
-
-                            var result = new ColumnFormat(
-                                new OuterBorder[0].Concat(referenceObject.OuterBorders).Concat(new OuterBorder[] { null }).Concat(referenceObject.OuterBorders).ToList(),
-                                referenceObject.InnerBorders,
-                                referenceObject.CellsFormat,
-                                referenceObject.WidthInPixels,
-                                referenceObject.AutofitColumnWidth,
-                                referenceObject.Options);
-
-                            return result;
-                        },
-                        ExpectedExceptionType = typeof(ArgumentException),
-                        ExpectedExceptionMessageContains = new[] { "outerBorders", "contains at least one null element", },
-                    })
-                .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<ColumnFormat>
-                    {
                         Name = "constructor should throw ArgumentException when parameter 'innerBorders' is an empty enumerable scenario",
                         ConstructionFunc = () =>
                         {
@@ -93,27 +71,6 @@ namespace OBeautifulCode.DataStructure.Test
                         },
                         ExpectedExceptionType = typeof(ArgumentException),
                         ExpectedExceptionMessageContains = new[] { "innerBorders", "is an empty enumerable", },
-                    })
-                .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<ColumnFormat>
-                    {
-                        Name = "constructor should throw ArgumentException when parameter 'innerBorders' contains a null element scenario",
-                        ConstructionFunc = () =>
-                        {
-                            var referenceObject = A.Dummy<ColumnFormat>();
-
-                            var result = new ColumnFormat(
-                                referenceObject.OuterBorders,
-                                new InnerBorder[0].Concat(referenceObject.InnerBorders).Concat(new InnerBorder[] { null }).Concat(referenceObject.InnerBorders).ToList(),
-                                referenceObject.CellsFormat,
-                                referenceObject.WidthInPixels,
-                                referenceObject.AutofitColumnWidth,
-                                referenceObject.Options);
-
-                            return result;
-                        },
-                        ExpectedExceptionType = typeof(ArgumentException),
-                        ExpectedExceptionMessageContains = new[] { "innerBorders", "contains at least one null element", },
                     });
         }
     }

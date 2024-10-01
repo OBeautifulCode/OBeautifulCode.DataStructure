@@ -32,25 +32,6 @@ namespace OBeautifulCode.DataStructure.Test
         static TreeTableTest()
         {
             ConstructorArgumentValidationTestScenarios
-                .RemoveAllScenarios()
-                .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<TreeTable>
-                    {
-                        Name = "constructor should throw ArgumentNullException when parameter 'tableColumns' is null scenario",
-                        ConstructionFunc = () =>
-                        {
-                            var referenceObject = A.Dummy<TreeTable>();
-
-                            var result = new TreeTable(
-                                                 null,
-                                                 referenceObject.TableRows,
-                                                 referenceObject.Format);
-
-                            return result;
-                        },
-                        ExpectedExceptionType = typeof(ArgumentNullException),
-                        ExpectedExceptionMessageContains = new[] { "tableColumns", },
-                    })
                 .AddScenario(() =>
                     new ConstructorArgumentValidationTestScenario<TreeTable>
                     {

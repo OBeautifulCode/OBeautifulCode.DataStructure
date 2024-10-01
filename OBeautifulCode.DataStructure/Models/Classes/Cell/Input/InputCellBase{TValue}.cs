@@ -48,7 +48,7 @@ namespace OBeautifulCode.DataStructure
         {
             if ((inputEvents != null) && inputEvents.Any(_ => _ == null))
             {
-                throw new ArgumentException(Invariant($"{nameof(inputEvents)} contains a null element."));
+                throw new ArgumentException(Invariant($"{nameof(inputEvents)} contains at least one null element."));
             }
 
             this.InputEvents = inputEvents;
@@ -106,7 +106,7 @@ namespace OBeautifulCode.DataStructure
             DateTime timestampUtc,
             string details = null)
         {
-            var cellInputAppliedEvent = new CellInputAppliedEvent<TValue>(timestampUtc, value, details);
+            var cellInputAppliedEvent = new CellInputAppliedEvent<TValue>(value, timestampUtc, details);
 
             this.Record(cellInputAppliedEvent);
         }

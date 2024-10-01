@@ -31,45 +31,6 @@ namespace OBeautifulCode.DataStructure.Test
         static DateTimeFormatTest()
         {
             ConstructorArgumentValidationTestScenarios
-                .RemoveAllScenarios()
-                .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<DateTimeFormat>
-                    {
-                        Name = "constructor should throw ArgumentOutOfRangeException when parameter 'formatKind' is DateTimeFormatKind.Unknown scenario",
-                        ConstructionFunc = () =>
-                        {
-                            var referenceObject = A.Dummy<DateTimeFormat>();
-
-                            var result = new DateTimeFormat(
-                                DateTimeFormatKind.Unknown,
-                                referenceObject.CultureKind,
-                                referenceObject.LocalizeTimeZone,
-                                referenceObject.LocalTimeZone);
-
-                            return result;
-                        },
-                        ExpectedExceptionType = typeof(ArgumentOutOfRangeException),
-                        ExpectedExceptionMessageContains = new[] { "formatKind is Unknown", },
-                    })
-                .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<DateTimeFormat>
-                    {
-                        Name = "constructor should throw ArgumentOutOfRangeException when parameter 'cultureKind' is CultureKind.Unknown scenario",
-                        ConstructionFunc = () =>
-                        {
-                            var referenceObject = A.Dummy<DateTimeFormat>();
-
-                            var result = new DateTimeFormat(
-                                referenceObject.FormatKind,
-                                CultureKind.Unknown,
-                                referenceObject.LocalizeTimeZone,
-                                referenceObject.LocalTimeZone);
-
-                            return result;
-                        },
-                        ExpectedExceptionType = typeof(ArgumentOutOfRangeException),
-                        ExpectedExceptionMessageContains = new[] { "cultureKind is Unknown", },
-                    })
                 .AddScenario(() =>
                     new ConstructorArgumentValidationTestScenario<DateTimeFormat>
                     {

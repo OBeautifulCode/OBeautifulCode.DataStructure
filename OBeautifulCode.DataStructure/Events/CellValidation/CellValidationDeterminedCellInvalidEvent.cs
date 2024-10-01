@@ -19,13 +19,13 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Initializes a new instance of the <see cref="CellValidationDeterminedCellInvalidEvent"/> class.
         /// </summary>
-        /// <param name="timestampUtc">The timestamp.</param>
-        /// <param name="details">Details about the validation that determined that the cell is invalid.</param>
         /// <param name="message">The message to emit about the invalid cell.</param>
+        /// <param name="timestampUtc">The timestamp.</param>
+        /// <param name="details">OPTIONAL details about the validation that determined that the cell is invalid.  DEFAULT is no details.</param>
         public CellValidationDeterminedCellInvalidEvent(
+            string message,
             DateTime timestampUtc,
-            string details,
-            string message)
+            string details = null)
             : base(timestampUtc, details)
         {
             this.Message = message;

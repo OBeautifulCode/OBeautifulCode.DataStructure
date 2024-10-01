@@ -110,8 +110,8 @@ namespace OBeautifulCode.DataStructure
         public override EventBase DeepCloneWithTimestampUtc(DateTime timestampUtc)
         {
             var result = new CellInputAppliedEvent<TValue>(
-                                 timestampUtc,
                                  this.Value == null ? default : this.Value.DeepClone(),
+                                 timestampUtc,
                                  this.Details?.DeepClone());
 
             return result;
@@ -138,8 +138,8 @@ namespace OBeautifulCode.DataStructure
         public override CellInputEventBase DeepCloneWithDetails(string details)
         {
             var result = new CellInputAppliedEvent<TValue>(
-                                 this.TimestampUtc.DeepClone(),
                                  this.Value == null ? default : this.Value.DeepClone(),
+                                 this.TimestampUtc.DeepClone(),
                                  details);
 
             return result;
@@ -170,8 +170,8 @@ namespace OBeautifulCode.DataStructure
         public CellInputAppliedEvent<TValue> DeepCloneWithValue(TValue value)
         {
             var result = new CellInputAppliedEvent<TValue>(
-                                 this.TimestampUtc.DeepClone(),
                                  value,
+                                 this.TimestampUtc.DeepClone(),
                                  this.Details?.DeepClone());
 
             return result;
@@ -182,8 +182,8 @@ namespace OBeautifulCode.DataStructure
         protected override EventBase DeepCloneInternal()
         {
             var result = new CellInputAppliedEvent<TValue>(
-                                 this.TimestampUtc.DeepClone(),
                                  this.Value == null ? default : this.Value.DeepClone(),
+                                 this.TimestampUtc.DeepClone(),
                                  this.Details?.DeepClone());
 
             return result;

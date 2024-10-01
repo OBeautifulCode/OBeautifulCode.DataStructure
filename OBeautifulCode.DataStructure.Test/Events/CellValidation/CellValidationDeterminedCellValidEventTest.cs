@@ -16,6 +16,7 @@ namespace OBeautifulCode.DataStructure.Test
     using OBeautifulCode.AutoFakeItEasy;
     using OBeautifulCode.CodeAnalysis.Recipes;
     using OBeautifulCode.CodeGen.ModelObject.Recipes;
+    using OBeautifulCode.DateTime.Recipes;
     using OBeautifulCode.Math.Recipes;
 
     using Xunit;
@@ -31,7 +32,42 @@ namespace OBeautifulCode.DataStructure.Test
         {
             ConstructorArgumentValidationTestScenarios
                 .RemoveAllScenarios()
-                .AddScenario(ConstructorArgumentValidationTestScenario<CellValidationDeterminedCellValidEvent>.ConstructorCannotThrowScenario);
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<CellValidationDeterminedCellValidEvent>
+                    {
+                        Name = "constructor should throw ArgumentException when parameter 'timestampUtc' is not a UTC DateTime (it's Local)",
+                        ConstructionFunc = () =>
+                        {
+                            var referenceObject = A.Dummy<CellValidationDeterminedCellValidEvent>();
+
+                            var result = new CellValidationDeterminedCellValidEvent(
+                                                 referenceObject.Message,
+                                                 DateTime.Now,
+                                                 referenceObject.Details);
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentException),
+                        ExpectedExceptionMessageContains = new[] { "timestampUtc", "Kind that is not DateTimeKind.Utc", "DateTimeKind.Local" },
+                    })
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<CellValidationDeterminedCellValidEvent>
+                    {
+                        Name = "constructor should throw ArgumentException when parameter 'timestampUtc' is not a UTC DateTime (it's Unspecified)",
+                        ConstructionFunc = () =>
+                        {
+                            var referenceObject = A.Dummy<CellValidationDeterminedCellValidEvent>();
+
+                            var result = new CellValidationDeterminedCellValidEvent(
+                                                 referenceObject.Message,
+                                                 DateTime.UtcNow.ToUnspecified(),
+                                                 referenceObject.Details);
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentException),
+                        ExpectedExceptionMessageContains = new[] { "timestampUtc", "Kind that is not DateTimeKind.Utc", "DateTimeKind.Unspecified" },
+                    });
         }
     }
 }

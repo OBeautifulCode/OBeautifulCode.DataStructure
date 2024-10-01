@@ -31,73 +31,6 @@ namespace OBeautifulCode.DataStructure.Test
         static SlottedCellTest()
         {
             ConstructorArgumentValidationTestScenarios
-                .RemoveAllScenarios()
-                .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<SlottedCell>
-                    {
-                        Name = "constructor should throw ArgumentNullException when parameter 'slotIdToCellMap' is null scenario",
-                        ConstructionFunc = () =>
-                        {
-                            var referenceObject = A.Dummy<SlottedCell>();
-
-                            var result = new SlottedCell(
-                                                 null,
-                                                 referenceObject.DefaultSlotId,
-                                                 referenceObject.Id,
-                                                 referenceObject.ColumnsSpanned,
-                                                 referenceObject.Details);
-
-                            return result;
-                        },
-                        ExpectedExceptionType = typeof(ArgumentNullException),
-                        ExpectedExceptionMessageContains = new[] { "slotIdToCellMap", },
-                    })
-                .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<SlottedCell>
-                    {
-                        Name = "constructor should throw ArgumentException when parameter 'slotIdToCellMap' is an empty dictionary scenario",
-                        ConstructionFunc = () =>
-                        {
-                            var referenceObject = A.Dummy<SlottedCell>();
-
-                            var result = new SlottedCell(
-                                                 new Dictionary<string, INotSlottedCell>(),
-                                                 referenceObject.DefaultSlotId,
-                                                 referenceObject.Id,
-                                                 referenceObject.ColumnsSpanned,
-                                                 referenceObject.Details);
-
-                            return result;
-                        },
-                        ExpectedExceptionType = typeof(ArgumentException),
-                        ExpectedExceptionMessageContains = new[] { "slotIdToCellMap", "is an empty dictionary", },
-                    })
-                .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<SlottedCell>
-                    {
-                        Name = "constructor should throw ArgumentException when parameter 'slotIdToCellMap' contains a key-value pair with a null value scenario",
-                        ConstructionFunc = () =>
-                        {
-                            var referenceObject = A.Dummy<SlottedCell>();
-
-                            var dictionaryWithNullValue = referenceObject.SlotIdToCellMap.ToDictionary(_ => _.Key, _ => _.Value);
-
-                            var randomKey = dictionaryWithNullValue.Keys.ElementAt(ThreadSafeRandom.Next(0, dictionaryWithNullValue.Count));
-
-                            dictionaryWithNullValue[randomKey] = null;
-
-                            var result = new SlottedCell(
-                                                 dictionaryWithNullValue,
-                                                 referenceObject.DefaultSlotId,
-                                                 referenceObject.Id,
-                                                 referenceObject.ColumnsSpanned,
-                                                 referenceObject.Details);
-
-                            return result;
-                        },
-                        ExpectedExceptionType = typeof(ArgumentException),
-                        ExpectedExceptionMessageContains = new[] { "slotIdToCellMap", "contains at least one key-value pair with a null value", },
-                    })
                 .AddScenario(() =>
                     new ConstructorArgumentValidationTestScenario<SlottedCell>
                     {
@@ -121,46 +54,6 @@ namespace OBeautifulCode.DataStructure.Test
                         },
                         ExpectedExceptionType = typeof(ArgumentException),
                         ExpectedExceptionMessageContains = new[] { "slotIdToCellMap", "contains at least one key-value pair with a white space key" },
-                    })
-                .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<SlottedCell>
-                    {
-                        Name = "constructor should throw ArgumentNullException when parameter 'defaultSlotId' is null scenario",
-                        ConstructionFunc = () =>
-                        {
-                            var referenceObject = A.Dummy<SlottedCell>();
-
-                            var result = new SlottedCell(
-                                                 referenceObject.SlotIdToCellMap,
-                                                 null,
-                                                 referenceObject.Id,
-                                                 referenceObject.ColumnsSpanned,
-                                                 referenceObject.Details);
-
-                            return result;
-                        },
-                        ExpectedExceptionType = typeof(ArgumentNullException),
-                        ExpectedExceptionMessageContains = new[] { "defaultSlotId", },
-                    })
-                .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<SlottedCell>
-                    {
-                        Name = "constructor should throw ArgumentException when parameter 'defaultSlotId' is white space scenario",
-                        ConstructionFunc = () =>
-                        {
-                            var referenceObject = A.Dummy<SlottedCell>();
-
-                            var result = new SlottedCell(
-                                                 referenceObject.SlotIdToCellMap,
-                                                 Invariant($"  {Environment.NewLine}  "),
-                                                 referenceObject.Id,
-                                                 referenceObject.ColumnsSpanned,
-                                                 referenceObject.Details);
-
-                            return result;
-                        },
-                        ExpectedExceptionType = typeof(ArgumentException),
-                        ExpectedExceptionMessageContains = new[] { "defaultSlotId", "white space", },
                     })
                 .AddScenario(() =>
                     new ConstructorArgumentValidationTestScenario<SlottedCell>

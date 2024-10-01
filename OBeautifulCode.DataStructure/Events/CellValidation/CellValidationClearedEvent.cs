@@ -20,10 +20,10 @@ namespace OBeautifulCode.DataStructure
         /// Initializes a new instance of the <see cref="CellValidationClearedEvent"/> class.
         /// </summary>
         /// <param name="timestampUtc">The timestamp.</param>
-        /// <param name="details">Details about the cleared-out validation.</param>
+        /// <param name="details">OPTIONAL details about the cleared-out validation.  DEFAULT is no details.</param>
         public CellValidationClearedEvent(
             DateTime timestampUtc,
-            string details)
+            string details = null)
             : base(timestampUtc, details)
         {
         }

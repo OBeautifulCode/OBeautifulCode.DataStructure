@@ -110,9 +110,9 @@ namespace OBeautifulCode.DataStructure
         public override EventBase DeepCloneWithTimestampUtc(DateTime timestampUtc)
         {
             var result = new CellValidationDeterminedCellValidEvent(
+                                 this.Message?.DeepClone(),
                                  timestampUtc,
-                                 this.Details?.DeepClone(),
-                                 this.Message?.DeepClone());
+                                 this.Details?.DeepClone());
 
             return result;
         }
@@ -138,9 +138,9 @@ namespace OBeautifulCode.DataStructure
         public override CellValidationEventBase DeepCloneWithDetails(string details)
         {
             var result = new CellValidationDeterminedCellValidEvent(
+                                 this.Message?.DeepClone(),
                                  this.TimestampUtc.DeepClone(),
-                                 details,
-                                 this.Message?.DeepClone());
+                                 details);
 
             return result;
         }
@@ -170,9 +170,9 @@ namespace OBeautifulCode.DataStructure
         public CellValidationDeterminedCellValidEvent DeepCloneWithMessage(string message)
         {
             var result = new CellValidationDeterminedCellValidEvent(
+                                 message,
                                  this.TimestampUtc.DeepClone(),
-                                 this.Details?.DeepClone(),
-                                 message);
+                                 this.Details?.DeepClone());
 
             return result;
         }
@@ -182,9 +182,9 @@ namespace OBeautifulCode.DataStructure
         protected override EventBase DeepCloneInternal()
         {
             var result = new CellValidationDeterminedCellValidEvent(
+                                 this.Message?.DeepClone(),
                                  this.TimestampUtc.DeepClone(),
-                                 this.Details?.DeepClone(),
-                                 this.Message?.DeepClone());
+                                 this.Details?.DeepClone());
 
             return result;
         }

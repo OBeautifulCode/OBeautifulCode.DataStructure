@@ -31,36 +31,6 @@ namespace OBeautifulCode.DataStructure.Test
         static OperationCellTValueTest()
         {
             ConstructorArgumentValidationTestScenarios
-                .RemoveAllScenarios()
-                .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<OperationCell<Version>>
-                    {
-                        Name = "constructor should throw ArgumentNullException when parameter 'operation' is null",
-                        ConstructionFunc = () =>
-                        {
-                            var referenceObject = A.Dummy<OperationCell<Version>>();
-
-                            var result = new OperationCell<Version>(
-                                null,
-                                referenceObject.Id,
-                                referenceObject.ColumnsSpanned,
-                                referenceObject.Details,
-                                referenceObject.Validation,
-                                referenceObject.ValidationEvents,
-                                referenceObject.DefaultAvailability,
-                                referenceObject.AvailabilityCheck,
-                                referenceObject.AvailabilityCheckEvents,
-                                referenceObject.OperationExecutionEvents,
-                                referenceObject.ValueFormat,
-                                referenceObject.Format,
-                                referenceObject.HoverOver,
-                                referenceObject.Link);
-
-                            return result;
-                        },
-                        ExpectedExceptionType = typeof(ArgumentNullException),
-                        ExpectedExceptionMessageContains = new[] { "operation", },
-                    })
                 .AddScenario(() =>
                     new ConstructorArgumentValidationTestScenario<OperationCell<Version>>
                     {
@@ -151,35 +121,6 @@ namespace OBeautifulCode.DataStructure.Test
                 .AddScenario(() =>
                     new ConstructorArgumentValidationTestScenario<OperationCell<Version>>
                     {
-                        Name = "constructor should throw ArgumentException when parameter 'validationEvents' contains a null element",
-                        ConstructionFunc = () =>
-                        {
-                            var referenceObject = A.Dummy<OperationCell<Version>>();
-
-                            var result = new OperationCell<Version>(
-                                referenceObject.Operation,
-                                referenceObject.Id,
-                                referenceObject.ColumnsSpanned,
-                                referenceObject.Details,
-                                referenceObject.Validation,
-                                new[] { A.Dummy<CellValidationEventBase>(), null, A.Dummy<CellValidationEventBase>() },
-                                referenceObject.DefaultAvailability,
-                                referenceObject.AvailabilityCheck,
-                                referenceObject.AvailabilityCheckEvents,
-                                referenceObject.OperationExecutionEvents,
-                                referenceObject.ValueFormat,
-                                referenceObject.Format,
-                                referenceObject.HoverOver,
-                                referenceObject.Link);
-
-                            return result;
-                        },
-                        ExpectedExceptionType = typeof(ArgumentException),
-                        ExpectedExceptionMessageContains = new[] { "validationEvents contains a null element", },
-                    })
-                .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<OperationCell<Version>>
-                    {
                         Name = "constructor should throw ArgumentException when parameter 'validation' is is null but parameter 'validationEvents' is not null nor empty.",
                         ConstructionFunc = () =>
                         {
@@ -209,35 +150,6 @@ namespace OBeautifulCode.DataStructure.Test
                 .AddScenario(() =>
                     new ConstructorArgumentValidationTestScenario<OperationCell<Version>>
                     {
-                        Name = "constructor should throw ArgumentOutOfRangeException when parameter 'defaultAvailability' is neither Availability.Enabled nor Availabilty.Disabled",
-                        ConstructionFunc = () =>
-                        {
-                            var referenceObject = A.Dummy<OperationCell<Version>>();
-
-                            var result = new OperationCell<Version>(
-                                referenceObject.Operation,
-                                referenceObject.Id,
-                                referenceObject.ColumnsSpanned,
-                                referenceObject.Details,
-                                referenceObject.Validation,
-                                referenceObject.ValidationEvents,
-                                Availability.Unknown,
-                                referenceObject.AvailabilityCheck,
-                                referenceObject.AvailabilityCheckEvents,
-                                referenceObject.OperationExecutionEvents,
-                                referenceObject.ValueFormat,
-                                referenceObject.Format,
-                                referenceObject.HoverOver,
-                                referenceObject.Link);
-
-                            return result;
-                        },
-                        ExpectedExceptionType = typeof(ArgumentOutOfRangeException),
-                        ExpectedExceptionMessageContains = new[] { "defaultAvailability is neither Availability.Enabled nor Availability.Disabled", },
-                    })
-                .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<OperationCell<Version>>
-                    {
                         Name = "constructor should throw ArgumentException when parameter 'availabilityCheckEvents' contains a null element",
                         ConstructionFunc = () =>
                         {
@@ -262,7 +174,7 @@ namespace OBeautifulCode.DataStructure.Test
                             return result;
                         },
                         ExpectedExceptionType = typeof(ArgumentException),
-                        ExpectedExceptionMessageContains = new[] { "availabilityCheckEvents contains a null element", },
+                        ExpectedExceptionMessageContains = new[] { "availabilityCheckEvents contains at least one null element", },
                     })
                 .AddScenario(() =>
                     new ConstructorArgumentValidationTestScenario<OperationCell<Version>>
@@ -292,35 +204,6 @@ namespace OBeautifulCode.DataStructure.Test
                         },
                         ExpectedExceptionType = typeof(ArgumentException),
                         ExpectedExceptionMessageContains = new[] { "There is no availabilityCheck specified, however one or more availabilityCheckEvents exists", },
-                    })
-                .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<OperationCell<Version>>
-                    {
-                        Name = "constructor should throw ArgumentException when parameter 'operationExecutionEvents' contains a null element",
-                        ConstructionFunc = () =>
-                        {
-                            var referenceObject = A.Dummy<OperationCell<Version>>();
-
-                            var result = new OperationCell<Version>(
-                                referenceObject.Operation,
-                                referenceObject.Id,
-                                referenceObject.ColumnsSpanned,
-                                referenceObject.Details,
-                                referenceObject.Validation,
-                                referenceObject.ValidationEvents,
-                                referenceObject.DefaultAvailability,
-                                referenceObject.AvailabilityCheck,
-                                referenceObject.AvailabilityCheckEvents,
-                                new[] { A.Dummy<CellOpExecutionEventBase>(), null, A.Dummy<CellOpExecutionEventBase>() },
-                                referenceObject.ValueFormat,
-                                referenceObject.Format,
-                                referenceObject.HoverOver,
-                                referenceObject.Link);
-
-                            return result;
-                        },
-                        ExpectedExceptionType = typeof(ArgumentException),
-                        ExpectedExceptionMessageContains = new[] { "operationExecutionEvents contains a null element", },
                     });
         }
 
@@ -762,9 +645,9 @@ namespace OBeautifulCode.DataStructure.Test
 
             var expected = A.Dummy<Version>();
 
-            systemUnderTest.Record(new CellOpExecutionCompletedEvent<Version>(A.Dummy<UtcDateTime>(), A.Dummy<string>(), A.Dummy<Version>()));
+            systemUnderTest.Record(new CellOpExecutionCompletedEvent<Version>(A.Dummy<Version>(), A.Dummy<UtcDateTime>(), A.Dummy<string>()));
 
-            systemUnderTest.Record(new CellOpExecutionCompletedEvent<Version>(A.Dummy<UtcDateTime>(), A.Dummy<string>(), expected));
+            systemUnderTest.Record(new CellOpExecutionCompletedEvent<Version>(expected, A.Dummy<UtcDateTime>(), A.Dummy<string>()));
 
             // Act
             var actual = systemUnderTest.GetCellObjectValue();
@@ -825,9 +708,9 @@ namespace OBeautifulCode.DataStructure.Test
 
             var expected = A.Dummy<Version>();
 
-            systemUnderTest.Record(new CellOpExecutionCompletedEvent<Version>(A.Dummy<UtcDateTime>(), A.Dummy<string>(), A.Dummy<Version>()));
+            systemUnderTest.Record(new CellOpExecutionCompletedEvent<Version>(A.Dummy<Version>(), A.Dummy<UtcDateTime>(), A.Dummy<string>()));
 
-            systemUnderTest.Record(new CellOpExecutionCompletedEvent<Version>(A.Dummy<UtcDateTime>(), A.Dummy<string>(), expected));
+            systemUnderTest.Record(new CellOpExecutionCompletedEvent<Version>(expected, A.Dummy<UtcDateTime>(), A.Dummy<string>()));
 
             // Act
             var actual = systemUnderTest.GetCellValue();
@@ -885,7 +768,7 @@ namespace OBeautifulCode.DataStructure.Test
 
             var expected = A.Dummy<Version>();
 
-            systemUnderTest.Record(new CellOpExecutionCompletedEvent<Version>(A.Dummy<UtcDateTime>(), A.Dummy<string>(), expected));
+            systemUnderTest.Record(new CellOpExecutionCompletedEvent<Version>(expected, A.Dummy<UtcDateTime>(), A.Dummy<string>()));
 
             // Act
             var actual = systemUnderTest.HasCellValue();

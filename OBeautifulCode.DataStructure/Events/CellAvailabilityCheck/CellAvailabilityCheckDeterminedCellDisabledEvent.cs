@@ -19,13 +19,13 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Initializes a new instance of the <see cref="CellAvailabilityCheckDeterminedCellDisabledEvent"/> class.
         /// </summary>
-        /// <param name="timestampUtc">The timestamp.</param>
-        /// <param name="details">Details about the availability check that determined that the cell is disabled.</param>
         /// <param name="message">The message to emit about the disabled cell.</param>
+        /// <param name="timestampUtc">The timestamp.</param>
+        /// <param name="details">OPTIONAL details about the availability check that determined that the cell is disabled.  DEFAULT is no details.</param>
         public CellAvailabilityCheckDeterminedCellDisabledEvent(
+            string message,
             DateTime timestampUtc,
-            string details,
-            string message)
+            string details = null)
             : base(timestampUtc, details)
         {
             this.Message = message;

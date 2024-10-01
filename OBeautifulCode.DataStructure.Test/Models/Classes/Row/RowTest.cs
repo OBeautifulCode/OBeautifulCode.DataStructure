@@ -31,70 +31,6 @@ namespace OBeautifulCode.DataStructure.Test
         static RowTest()
         {
             ConstructorArgumentValidationTestScenarios
-                .RemoveAllScenarios()
-                .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<Row>
-                    {
-                        Name = "constructor should throw ArgumentNullException when parameter 'cells' is null scenario",
-                        ConstructionFunc = () =>
-                        {
-                            var referenceObject = A.Dummy<Row>();
-
-                            var result = new Row(
-                                                 null,
-                                                 referenceObject.Id,
-                                                 referenceObject.Format,
-                                                 referenceObject.ChildRows,
-                                                 referenceObject.ExpandedSummaryRows,
-                                                 referenceObject.CollapsedSummaryRows);
-
-                            return result;
-                        },
-                        ExpectedExceptionType = typeof(ArgumentNullException),
-                        ExpectedExceptionMessageContains = new[] { "cells", },
-                    })
-                .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<Row>
-                    {
-                        Name = "constructor should throw ArgumentException when parameter 'cells' is an empty enumerable scenario",
-                        ConstructionFunc = () =>
-                        {
-                            var referenceObject = A.Dummy<Row>();
-
-                            var result = new Row(
-                                                 new List<ICell>(),
-                                                 referenceObject.Id,
-                                                 referenceObject.Format,
-                                                 referenceObject.ChildRows,
-                                                 referenceObject.ExpandedSummaryRows,
-                                                 referenceObject.CollapsedSummaryRows);
-
-                            return result;
-                        },
-                        ExpectedExceptionType = typeof(ArgumentException),
-                        ExpectedExceptionMessageContains = new[] { "cells", "is an empty enumerable", },
-                    })
-                .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<Row>
-                    {
-                        Name = "constructor should throw ArgumentException when parameter 'cells' contains a null element scenario",
-                        ConstructionFunc = () =>
-                        {
-                            var referenceObject = A.Dummy<Row>();
-
-                            var result = new Row(
-                                                 new ICell[0].Concat(referenceObject.Cells).Concat(new ICell[] { null }).Concat(referenceObject.Cells).ToList(),
-                                                 referenceObject.Id,
-                                                 referenceObject.Format,
-                                                 referenceObject.ChildRows,
-                                                 referenceObject.ExpandedSummaryRows,
-                                                 referenceObject.CollapsedSummaryRows);
-
-                            return result;
-                        },
-                        ExpectedExceptionType = typeof(ArgumentException),
-                        ExpectedExceptionMessageContains = new[] { "cells", "contains at least one null element", },
-                    })
                 .AddScenario(() =>
                     new ConstructorArgumentValidationTestScenario<Row>
                     {
@@ -115,48 +51,6 @@ namespace OBeautifulCode.DataStructure.Test
                         },
                         ExpectedExceptionType = typeof(ArgumentException),
                         ExpectedExceptionMessageContains = new[] { "id", "white space", },
-                    })
-                .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<Row>
-                    {
-                        Name = "constructor should throw ArgumentException when parameter 'childRows' contains a null element scenario",
-                        ConstructionFunc = () =>
-                        {
-                            var referenceObject = A.Dummy<Row>();
-
-                            var result = new Row(
-                                referenceObject.Cells,
-                                referenceObject.Id,
-                                referenceObject.Format,
-                                new Row[0].Concat(referenceObject.ChildRows).Concat(new Row[] { null }).Concat(referenceObject.ChildRows).ToList(),
-                                referenceObject.ExpandedSummaryRows,
-                                referenceObject.CollapsedSummaryRows);
-
-                            return result;
-                        },
-                        ExpectedExceptionType = typeof(ArgumentException),
-                        ExpectedExceptionMessageContains = new[] { "childRows", "contains at least one null element", },
-                    })
-                .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<Row>
-                    {
-                        Name = "constructor should throw ArgumentException when parameter 'expandedSummaryRows' contains a null element.",
-                        ConstructionFunc = () =>
-                        {
-                            var referenceObject = A.Dummy<Row>();
-
-                            var result = new Row(
-                                referenceObject.Cells,
-                                referenceObject.Id,
-                                referenceObject.Format,
-                                referenceObject.ChildRows,
-                                new[] { A.Dummy<FlatRow>(), null, A.Dummy<FlatRow>() },
-                                null);
-
-                            return result;
-                        },
-                        ExpectedExceptionType = typeof(ArgumentException),
-                        ExpectedExceptionMessageContains = new[] { "expandedSummaryRows contains a null element", },
                     })
                 .AddScenario(() =>
                     new ConstructorArgumentValidationTestScenario<Row>
@@ -199,27 +93,6 @@ namespace OBeautifulCode.DataStructure.Test
                         },
                         ExpectedExceptionType = typeof(ArgumentException),
                         ExpectedExceptionMessageContains = new[] { "expandedSummaryRows is specified when there are no rows in childRows", },
-                    })
-                .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<Row>
-                    {
-                        Name = "constructor should throw ArgumentException when parameter 'collapsedSummaryRows' contains a null element.",
-                        ConstructionFunc = () =>
-                        {
-                            var referenceObject = A.Dummy<Row>();
-
-                            var result = new Row(
-                                referenceObject.Cells,
-                                referenceObject.Id,
-                                referenceObject.Format,
-                                null,
-                                null,
-                                new[] { A.Dummy<FlatRow>(), null, A.Dummy<FlatRow>() });
-
-                            return result;
-                        },
-                        ExpectedExceptionType = typeof(ArgumentException),
-                        ExpectedExceptionMessageContains = new[] { "collapsedSummaryRows contains a null element", },
                     })
                 .AddScenario(() =>
                     new ConstructorArgumentValidationTestScenario<Row>

@@ -69,12 +69,12 @@ namespace OBeautifulCode.DataStructure
 
             if ((timestampUtc != null) && (((DateTime)timestampUtc).Kind != DateTimeKind.Utc))
             {
-                throw new ArgumentException(Invariant($"{nameof(timestampUtc)} is not in UTC."));
+                throw new ArgumentException(Invariant($"{nameof(timestampUtc)} has a {nameof(DateTime.Kind)} that is not {nameof(DateTimeKind)}.{nameof(DateTimeKind.Utc)}.  It is {nameof(DateTimeKind)}.{((DateTime)timestampUtc).Kind}."));
             }
 
             if ((downloadLinks != null) && downloadLinks.Any(_ => _ == null))
             {
-                throw new ArgumentException(Invariant($"{nameof(downloadLinks)} contains a null element."));
+                throw new ArgumentException(Invariant($"{nameof(downloadLinks)} contains at least one null element."));
             }
 
             this.Id = id;

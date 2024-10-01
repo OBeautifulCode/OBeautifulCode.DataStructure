@@ -103,16 +103,19 @@
       <DependentUpon>CellAvailabilityCheckDeterminedCellDisabledEvent.cs</DependentUpon>
     </Compile>
     <Compile Include="Events\CellAvailabilityCheck\CellAvailabilityCheckDeterminedCellEnabledEvent.cs" />
+    <Compile Include="Events\CellAvailabilityCheck\CellAvailabilityCheckClearedEvent.cs" />
     <Compile Include="Events\CellAvailabilityCheck\CellAvailabilityCheckDeterminedCellEnabledEvent.designer.cs">
       <DependentUpon>CellAvailabilityCheckDeterminedCellEnabledEvent.cs</DependentUpon>
     </Compile>
-    <Compile Include="Events\CellAvailabilityCheck\CellAvailabilityCheckClearedEvent.cs" />
     <Compile Include="Events\CellAvailabilityCheck\CellAvailabilityCheckFailedEvent.cs" />
     <Compile Include="Events\CellAvailabilityCheck\CellAvailabilityCheckFailedEvent.designer.cs">
       <DependentUpon>CellAvailabilityCheckFailedEvent.cs</DependentUpon>
     </Compile>
     <Compile Include="Events\CellInputEventBase.designer.cs">
       <DependentUpon>CellInputEventBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Events\CellInput\CellInputAppliedEvent{TValue}.designer.cs">
+      <DependentUpon>CellInputAppliedEvent{TValue}.cs</DependentUpon>
     </Compile>
     <Compile Include="Events\CellInput\CellInputClearedEvent.designer.cs">
       <DependentUpon>CellInputClearedEvent.cs</DependentUpon>
@@ -173,9 +176,6 @@
     <Compile Include="Events\CellInput\CellInputAppliedEvent{TValue}.cs" />
     <Compile Include="Events\CellOpExecution\CellOpExecutionFailedEvent.cs" />
     <Compile Include="Events\CellOpExecution\CellOpExecutionCompletedEvent{TResult}.cs" />
-    <Compile Include="Events\CellInput\CellInputAppliedEvent{TValue}.designer.cs">
-      <DependentUpon>CellInputAppliedEvent{TValue}.cs</DependentUpon>
-    </Compile>
     <Compile Include="Exception\CellValueMissingException.cs" />
     <Compile Include="Exception\CellNotFoundException.cs" />
     <Compile Include="Interfaces\Behavior\IClearCellValue.cs" />

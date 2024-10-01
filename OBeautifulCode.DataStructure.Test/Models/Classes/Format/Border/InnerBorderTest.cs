@@ -30,37 +30,6 @@ namespace OBeautifulCode.DataStructure.Test
         static InnerBorderTest()
         {
             ConstructorArgumentValidationTestScenarios
-                .RemoveAllScenarios()
-                .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<InnerBorder>
-                    {
-                        Name = "constructor should throw ArgumentOutOfRangeException when parameter 'weight' is BorderWeight.Unknown",
-                        ConstructionFunc = () =>
-                        {
-                            var referenceObject = A.Dummy<InnerBorder>();
-
-                            var result = new InnerBorder(BorderWeight.Unknown, referenceObject.Style, referenceObject.Color, referenceObject.Edges);
-
-                            return result;
-                        },
-                        ExpectedExceptionType = typeof(ArgumentOutOfRangeException),
-                        ExpectedExceptionMessageContains = new[] { "weight", "Unknown", },
-                    })
-                .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<InnerBorder>
-                    {
-                        Name = "constructor should throw ArgumentOutOfRangeException when parameter 'style' is BorderStyle.Unknown",
-                        ConstructionFunc = () =>
-                        {
-                            var referenceObject = A.Dummy<InnerBorder>();
-
-                            var result = new InnerBorder(referenceObject.Weight, BorderStyle.Unknown, referenceObject.Color, referenceObject.Edges);
-
-                            return result;
-                        },
-                        ExpectedExceptionType = typeof(ArgumentOutOfRangeException),
-                        ExpectedExceptionMessageContains = new[] { "style", "Unknown", },
-                    })
                 .AddScenario(() =>
                     new ConstructorArgumentValidationTestScenario<InnerBorder>
                     {

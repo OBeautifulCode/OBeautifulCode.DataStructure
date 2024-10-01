@@ -30,7 +30,6 @@ namespace OBeautifulCode.DataStructure.Test
         static FontFormatTest()
         {
             ConstructorArgumentValidationTestScenarios
-                .RemoveAllScenarios()
                 .AddScenario(() =>
                     new ConstructorArgumentValidationTestScenario<FontFormat>
                     {
@@ -49,25 +48,6 @@ namespace OBeautifulCode.DataStructure.Test
                         },
                         ExpectedExceptionType = typeof(ArgumentException),
                         ExpectedExceptionMessageContains = new[] { "fontNamesInFallbackOrder", "is an empty enumerable", },
-                    })
-                .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<FontFormat>
-                    {
-                        Name = "constructor should throw ArgumentException when parameter 'fontNamesInFallbackOrder' contains a null element scenario",
-                        ConstructionFunc = () =>
-                        {
-                            var referenceObject = A.Dummy<FontFormat>();
-
-                            var result = new FontFormat(
-                                                 referenceObject.FontColor,
-                                                 new string[0].Concat(referenceObject.FontNamesInFallbackOrder).Concat(new string[] { null }).Concat(referenceObject.FontNamesInFallbackOrder).ToList(),
-                                                 referenceObject.FontSizeInPoints,
-                                                 referenceObject.Options);
-
-                            return result;
-                        },
-                        ExpectedExceptionType = typeof(ArgumentException),
-                        ExpectedExceptionMessageContains = new[] { "fontNamesInFallbackOrder", "contains at least one null element", },
                     })
                 .AddScenario(() =>
                     new ConstructorArgumentValidationTestScenario<FontFormat>

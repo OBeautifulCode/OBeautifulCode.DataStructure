@@ -44,7 +44,7 @@ namespace OBeautifulCode.DataStructure
         {
             if ((validationEvents != null) && validationEvents.Any(_ => _ == null))
             {
-                throw new ArgumentException(Invariant($"{nameof(validationEvents)} contains a null element."));
+                throw new ArgumentException(Invariant($"{nameof(validationEvents)} contains at least one null element."));
             }
 
             if ((validation == null) && (validationEvents != null) && validationEvents.Any())
@@ -54,12 +54,12 @@ namespace OBeautifulCode.DataStructure
 
             if ((defaultAvailability != Availability.Enabled) && (defaultAvailability != Availability.Disabled))
             {
-                throw new ArgumentOutOfRangeException(Invariant($"{nameof(defaultAvailability)} is neither {nameof(Availability)}.{nameof(Availability.Enabled)} nor {nameof(Availability)}.{nameof(Availability.Disabled)}."));
+                throw new ArgumentOutOfRangeException(Invariant($"{nameof(defaultAvailability)} is {nameof(Availability)}.{nameof(Availability.Unknown)}."));
             }
 
             if ((availabilityCheckEvents != null) && availabilityCheckEvents.Any(_ => _ == null))
             {
-                throw new ArgumentException(Invariant($"{nameof(availabilityCheckEvents)} contains a null element."));
+                throw new ArgumentException(Invariant($"{nameof(availabilityCheckEvents)} contains at least one null element."));
             }
 
             if ((availabilityCheck == null) && (availabilityCheckEvents != null) && availabilityCheckEvents.Any())

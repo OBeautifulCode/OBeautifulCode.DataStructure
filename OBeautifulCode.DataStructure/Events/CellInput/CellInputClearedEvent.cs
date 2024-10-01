@@ -23,7 +23,7 @@ namespace OBeautifulCode.DataStructure
         /// <param name="details">OPTIONAL details about input that was cleared-out from the cell.  DEFAULT is to omit any details.</param>
         public CellInputClearedEvent(
             DateTime timestampUtc,
-            string details)
+            string details = null)
             : base(timestampUtc, details)
         {
         }

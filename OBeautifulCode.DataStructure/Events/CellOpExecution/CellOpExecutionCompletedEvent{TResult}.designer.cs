@@ -110,9 +110,9 @@ namespace OBeautifulCode.DataStructure
         public override EventBase DeepCloneWithTimestampUtc(DateTime timestampUtc)
         {
             var result = new CellOpExecutionCompletedEvent<TResult>(
+                                 this.ExecutionResult == null ? default : this.ExecutionResult.DeepClone(),
                                  timestampUtc,
-                                 this.Details?.DeepClone(),
-                                 this.ExecutionResult == null ? default : this.ExecutionResult.DeepClone());
+                                 this.Details?.DeepClone());
 
             return result;
         }
@@ -138,9 +138,9 @@ namespace OBeautifulCode.DataStructure
         public override CellOpExecutionEventBase DeepCloneWithDetails(string details)
         {
             var result = new CellOpExecutionCompletedEvent<TResult>(
+                                 this.ExecutionResult == null ? default : this.ExecutionResult.DeepClone(),
                                  this.TimestampUtc.DeepClone(),
-                                 details,
-                                 this.ExecutionResult == null ? default : this.ExecutionResult.DeepClone());
+                                 details);
 
             return result;
         }
@@ -170,9 +170,9 @@ namespace OBeautifulCode.DataStructure
         public CellOpExecutionCompletedEvent<TResult> DeepCloneWithExecutionResult(TResult executionResult)
         {
             var result = new CellOpExecutionCompletedEvent<TResult>(
+                                 executionResult,
                                  this.TimestampUtc.DeepClone(),
-                                 this.Details?.DeepClone(),
-                                 executionResult);
+                                 this.Details?.DeepClone());
 
             return result;
         }
@@ -182,9 +182,9 @@ namespace OBeautifulCode.DataStructure
         protected override EventBase DeepCloneInternal()
         {
             var result = new CellOpExecutionCompletedEvent<TResult>(
+                                 this.ExecutionResult == null ? default : this.ExecutionResult.DeepClone(),
                                  this.TimestampUtc.DeepClone(),
-                                 this.Details?.DeepClone(),
-                                 this.ExecutionResult == null ? default : this.ExecutionResult.DeepClone());
+                                 this.Details?.DeepClone());
 
             return result;
         }

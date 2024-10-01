@@ -30,7 +30,6 @@ namespace OBeautifulCode.DataStructure.Test
         static TableRowsTest()
         {
             ConstructorArgumentValidationTestScenarios
-                .RemoveAllScenarios()
                 .AddScenario(ConstructorArgumentValidationTestScenario<TableRows>.ConstructorCannotThrowScenario);
         }
     }

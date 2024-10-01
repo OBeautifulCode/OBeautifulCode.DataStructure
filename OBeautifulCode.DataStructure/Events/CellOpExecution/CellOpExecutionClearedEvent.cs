@@ -20,10 +20,10 @@ namespace OBeautifulCode.DataStructure
         /// Initializes a new instance of the <see cref="CellOpExecutionClearedEvent"/> class.
         /// </summary>
         /// <param name="timestampUtc">The timestamp.</param>
-        /// <param name="details">Details about the cleared-out execution.</param>
+        /// <param name="details">OPTIONAL details about the cleared-out execution.  DEFAULT is no details.</param>
         public CellOpExecutionClearedEvent(
             DateTime timestampUtc,
-            string details)
+            string details = null)
             : base(timestampUtc, details)
         {
         }

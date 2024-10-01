@@ -31,7 +31,6 @@ namespace OBeautifulCode.DataStructure.Test
         static NullCellTest()
         {
             ConstructorArgumentValidationTestScenarios
-                .RemoveAllScenarios()
                 .AddScenario(() =>
                     new ConstructorArgumentValidationTestScenario<NullCell>
                     {
@@ -110,31 +109,6 @@ namespace OBeautifulCode.DataStructure.Test
                 .AddScenario(() =>
                     new ConstructorArgumentValidationTestScenario<NullCell>
                     {
-                        Name = "constructor should throw ArgumentException when parameter 'validationEvents' contains a null element",
-                        ConstructionFunc = () =>
-                        {
-                            var referenceObject = A.Dummy<NullCell>();
-
-                            var result = new NullCell(
-                                referenceObject.Id,
-                                referenceObject.ColumnsSpanned,
-                                referenceObject.Details,
-                                referenceObject.Validation,
-                                new[] { A.Dummy<CellValidationEventBase>(), null, A.Dummy<CellValidationEventBase>() },
-                                referenceObject.DefaultAvailability,
-                                referenceObject.AvailabilityCheck,
-                                referenceObject.AvailabilityCheckEvents,
-                                referenceObject.Format,
-                                referenceObject.HoverOver);
-
-                            return result;
-                        },
-                        ExpectedExceptionType = typeof(ArgumentException),
-                        ExpectedExceptionMessageContains = new[] { "validationEvents contains a null element", },
-                    })
-                .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<NullCell>
-                    {
                         Name = "constructor should throw ArgumentException when parameter 'validation' is is null but parameter 'validationEvents' is not null nor empty.",
                         ConstructionFunc = () =>
                         {
@@ -156,56 +130,6 @@ namespace OBeautifulCode.DataStructure.Test
                         },
                         ExpectedExceptionType = typeof(ArgumentException),
                         ExpectedExceptionMessageContains = new[] { "There is no validation specified, however one or more validationEvents exists.", },
-                    })
-                .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<NullCell>
-                    {
-                        Name = "constructor should throw ArgumentOutOfRangeException when parameter 'defaultAvailability' is neither Availability.Enabled nor Availabilty.Disabled",
-                        ConstructionFunc = () =>
-                        {
-                            var referenceObject = A.Dummy<NullCell>();
-
-                            var result = new NullCell(
-                                referenceObject.Id,
-                                referenceObject.ColumnsSpanned,
-                                referenceObject.Details,
-                                referenceObject.Validation,
-                                referenceObject.ValidationEvents,
-                                Availability.Unknown,
-                                referenceObject.AvailabilityCheck,
-                                referenceObject.AvailabilityCheckEvents,
-                                referenceObject.Format,
-                                referenceObject.HoverOver);
-
-                            return result;
-                        },
-                        ExpectedExceptionType = typeof(ArgumentOutOfRangeException),
-                        ExpectedExceptionMessageContains = new[] { "defaultAvailability is neither Availability.Enabled nor Availability.Disabled", },
-                    })
-                .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<NullCell>
-                    {
-                        Name = "constructor should throw ArgumentException when parameter 'availabilityCheckEvents' contains a null element",
-                        ConstructionFunc = () =>
-                        {
-                            var referenceObject = A.Dummy<NullCell>();
-
-                            var result = new NullCell(
-                                referenceObject.Id,
-                                referenceObject.ColumnsSpanned,
-                                referenceObject.Details,
-                                referenceObject.Validation,
-                                referenceObject.ValidationEvents,
-                                referenceObject.DefaultAvailability,
-                                referenceObject.AvailabilityCheck,
-                                new[] { A.Dummy<CellAvailabilityCheckEventBase>(), null, A.Dummy<CellAvailabilityCheckEventBase>() },
-                                referenceObject.Format,
-                                referenceObject.HoverOver);
-
-                            return result;
-                        },
-                        ExpectedExceptionType = typeof(ArgumentException),
-                        ExpectedExceptionMessageContains = new[] { "availabilityCheckEvents contains a null element", },
                     })
                 .AddScenario(() =>
                     new ConstructorArgumentValidationTestScenario<NullCell>

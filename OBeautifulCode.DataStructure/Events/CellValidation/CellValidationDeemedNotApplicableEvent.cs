@@ -19,13 +19,13 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Initializes a new instance of the <see cref="CellValidationDeemedNotApplicableEvent"/> class.
         /// </summary>
-        /// <param name="timestampUtc">The timestamp.</param>
-        /// <param name="details">Details about the validation that is not applicable.</param>
         /// <param name="message">The message to emit about determination that the validation is not applicable.</param>
+        /// <param name="timestampUtc">The timestamp.</param>
+        /// <param name="details">OPTIONAL details about the validation that is not applicable.  DEFAULT is no details.</param>
         public CellValidationDeemedNotApplicableEvent(
+            string message,
             DateTime timestampUtc,
-            string details,
-            string message)
+            string details = null)
             : base(timestampUtc, details)
         {
             this.Message = message;

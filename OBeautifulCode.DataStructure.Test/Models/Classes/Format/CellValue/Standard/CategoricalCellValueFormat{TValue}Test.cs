@@ -30,64 +30,6 @@ namespace OBeautifulCode.DataStructure.Test
         static CategoricalCellValueFormatTValueTest()
         {
             ConstructorArgumentValidationTestScenarios
-                .RemoveAllScenarios()
-                .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<CategoricalCellValueFormat<Version>>
-                    {
-                        Name = "constructor should throw ArgumentNullException when parameter 'valueToTextMap' is null scenario",
-                        ConstructionFunc = () =>
-                        {
-                            var referenceObject = A.Dummy<CategoricalCellValueFormat<Version>>();
-
-                            var result = new CategoricalCellValueFormat<Version>(
-                                                 null,
-                                                 referenceObject.MissingValueText);
-
-                            return result;
-                        },
-                        ExpectedExceptionType = typeof(ArgumentNullException),
-                        ExpectedExceptionMessageContains = new[] { "valueToTextMap", },
-                    })
-                .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<CategoricalCellValueFormat<Version>>
-                    {
-                        Name = "constructor should throw ArgumentException when parameter 'valueToTextMap' is an empty dictionary scenario",
-                        ConstructionFunc = () =>
-                        {
-                            var referenceObject = A.Dummy<CategoricalCellValueFormat<Version>>();
-
-                            var result = new CategoricalCellValueFormat<Version>(
-                                                 new Dictionary<Version, string>(),
-                                                 referenceObject.MissingValueText);
-
-                            return result;
-                        },
-                        ExpectedExceptionType = typeof(ArgumentException),
-                        ExpectedExceptionMessageContains = new[] { "valueToTextMap", "is an empty dictionary", },
-                    })
-                .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<CategoricalCellValueFormat<Version>>
-                    {
-                        Name = "constructor should throw ArgumentException when parameter 'valueToTextMap' contains a key-value pair with a null value scenario",
-                        ConstructionFunc = () =>
-                        {
-                            var referenceObject = A.Dummy<CategoricalCellValueFormat<Version>>();
-
-                            var dictionaryWithNullValue = referenceObject.ValueToTextMap.ToDictionary(_ => _.Key, _ => _.Value);
-
-                            var randomKey = dictionaryWithNullValue.Keys.ElementAt(ThreadSafeRandom.Next(0, dictionaryWithNullValue.Count));
-
-                            dictionaryWithNullValue[randomKey] = null;
-
-                            var result = new CategoricalCellValueFormat<Version>(
-                                                 dictionaryWithNullValue,
-                                                 referenceObject.MissingValueText);
-
-                            return result;
-                        },
-                        ExpectedExceptionType = typeof(ArgumentException),
-                        ExpectedExceptionMessageContains = new[] { "valueToTextMap", "contains at least one key-value pair with a null value", },
-                    })
                 .AddScenario(() =>
                     new ConstructorArgumentValidationTestScenario<CategoricalCellValueFormat<Version>>
                     {

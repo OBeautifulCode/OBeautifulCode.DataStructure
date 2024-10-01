@@ -30,7 +30,6 @@ namespace OBeautifulCode.DataStructure.Test
         static PercentCellValueFormatTValueTest()
         {
             ConstructorArgumentValidationTestScenarios
-                .RemoveAllScenarios()
                 .AddScenario(() =>
                     new ConstructorArgumentValidationTestScenario<PercentCellValueFormat<Version>>
                     {
@@ -76,29 +75,6 @@ namespace OBeautifulCode.DataStructure.Test
                         },
                         ExpectedExceptionType = typeof(ArgumentException),
                         ExpectedExceptionMessageContains = new[] { "roundingStrategy is not null, but numberOfDecimalPlaces is null." },
-                    })
-                .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<PercentCellValueFormat<Version>>
-                    {
-                        Name = "constructor should throw ArgumentOutOfRangeException when parameter 'percentDisplayKind' is NumberFormatPercentDisplayKind.Unknown",
-                        ConstructionFunc = () =>
-                        {
-                            var referenceObject = A.Dummy<PercentCellValueFormat<Version>>();
-
-                            var result = new PercentCellValueFormat<Version>(
-                                NumberFormatPercentDisplayKind.Unknown,
-                                referenceObject.NumberOfDecimalPlaces,
-                                referenceObject.RoundingStrategy,
-                                referenceObject.DecimalSeparator,
-                                referenceObject.DigitGroupKind,
-                                referenceObject.DigitGroupSeparator,
-                                referenceObject.NegativeNumberDisplayKind,
-                                referenceObject.MissingValueText);
-
-                            return result;
-                        },
-                        ExpectedExceptionType = typeof(ArgumentOutOfRangeException),
-                        ExpectedExceptionMessageContains = new[] { "percentDisplayKind", "Unknown" },
                     });
         }
     }

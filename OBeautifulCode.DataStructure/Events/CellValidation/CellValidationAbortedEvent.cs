@@ -19,13 +19,13 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Initializes a new instance of the <see cref="CellValidationAbortedEvent"/> class.
         /// </summary>
-        /// <param name="timestampUtc">The timestamp.</param>
-        /// <param name="details">Details about the aborted validation.</param>
         /// <param name="message">The message to emit about the aborted validation.</param>
+        /// <param name="timestampUtc">The timestamp.</param>
+        /// <param name="details">OPTIONAL details about the aborted validation.  DEFAULT is no details.</param>
         public CellValidationAbortedEvent(
+            string message,
             DateTime timestampUtc,
-            string details,
-            string message)
+            string details = null)
             : base(timestampUtc, details)
         {
             this.Message = message;
