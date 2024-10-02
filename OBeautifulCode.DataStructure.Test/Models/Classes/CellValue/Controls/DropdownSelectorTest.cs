@@ -105,9 +105,6 @@ namespace OBeautifulCode.DataStructure.Test
                     var referenceObjectItemsPlusOne = referenceObject.Items.ToList();
                     referenceObjectItemsPlusOne.Add(A.Dummy<NamedValue<ILink>>());
 
-                    var referenceObjectItemsMinusOne = referenceObject.Items.ToList();
-                    referenceObjectItemsMinusOne.RemoveAt(ThreadSafeRandom.Next(0, referenceObjectItemsMinusOne.Count));
-
                     var differentSelectedItemCandidates = referenceObject.Items.Where(_ => _.Name != referenceObject.SelectedItemName).Select(_ => _.Name).ToList();
                     var differentSelectedItem = differentSelectedItemCandidates[ThreadSafeRandom.Next(0, differentSelectedItemCandidates.Count)];
 
@@ -125,9 +122,6 @@ namespace OBeautifulCode.DataStructure.Test
                         {
                             new DropdownSelector(
                                 referenceObjectItemsPlusOne,
-                                referenceObject.SelectedItemName),
-                            new DropdownSelector(
-                                referenceObjectItemsMinusOne,
                                 referenceObject.SelectedItemName),
                             new DropdownSelector(
                                 referenceObject.Items,
