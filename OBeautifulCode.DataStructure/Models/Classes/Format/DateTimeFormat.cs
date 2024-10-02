@@ -38,14 +38,14 @@ namespace OBeautifulCode.DataStructure
                 throw new ArgumentOutOfRangeException(nameof(cultureKind), Invariant($"{nameof(cultureKind)} is {nameof(OBeautifulCode.Type.CultureKind.Unknown)}."));
             }
 
-            if ((localizeTimeZone == false) && (localTimeZone != null))
-            {
-                throw new ArgumentException(Invariant($"{nameof(localizeTimeZone)} is false, but {nameof(localTimeZone)} is not null."));
-            }
-
             if ((localTimeZone != null) && (localTimeZone == StandardTimeZone.Unknown))
             {
                 throw new ArgumentOutOfRangeException(nameof(localTimeZone), Invariant($"{nameof(localTimeZone)} is {nameof(StandardTimeZone.Unknown)}."));
+            }
+
+            if ((localizeTimeZone == false) && (localTimeZone != null))
+            {
+                throw new ArgumentException(Invariant($"{nameof(localizeTimeZone)} is false, but {nameof(localTimeZone)} is not null."));
             }
 
             this.FormatKind = formatKind;
