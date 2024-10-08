@@ -308,7 +308,7 @@ namespace OBeautifulCode.DataStructure.Excel
 
                     wholeColumnRange.ApplyColumnFormat(dataCellsRange, lastHeaderCellToLastNonSummaryDataCellRange, column.Format);
 
-                    dataCellsRange.ApplyCellValueFormat(column.ValueFormat);
+                    dataCellsRange.ApplyCellValueFormat(column.ValueFormat, context);
 
                     cursor.MoveRight();
                 }
@@ -632,7 +632,7 @@ namespace OBeautifulCode.DataStructure.Excel
             {
                 var valueFormat = haveCellValueFormat.GetCellValueFormat();
 
-                cursor.CellRange.ApplyCellValueFormat(valueFormat);
+                cursor.CellRange.ApplyCellValueFormat(valueFormat, context);
             }
 
             var notSupportedException = new NotSupportedException(Invariant($"This type of cell is not supported: {cell.GetType().ToStringReadable()}."));

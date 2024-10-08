@@ -474,7 +474,8 @@ namespace OBeautifulCode.DataStructure.Excel
 
         private static void ApplyCellValueFormat(
             this Range range,
-            ICellValueFormat valueFormat)
+            ICellValueFormat valueFormat,
+            InternalProjectionContext context)
         {
             if (valueFormat == null)
             {
