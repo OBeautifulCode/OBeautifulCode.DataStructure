@@ -610,9 +610,48 @@ namespace OBeautifulCode.DataStructure.Excel
                     range.SetCustomFormat(Invariant($"0.{new string('0', (int)numberOfDecimalPlaces)}%"));
                 }
             }
+            else if (valueFormat is DateTimeCellValueFormat dateTimeCellValueFormat)
+            {
+                var implementedProperties = new[]
+                {
+                    nameof(DateTimeCellValueFormat.Format),
+                };
+
+                dateTimeCellValueFormat.ThrowOnNotImplementedProperty(valueFormatType, implementedProperties);
+
+                range.ApplyDateTimeFormat(dateTimeCellValueFormat.Format, context);
+            }
             else
             {
                 throw new NotImplementedException(Invariant($"This {nameof(ICellValueFormat)} is not yet implemented: {valueFormat.GetType().ToStringReadable()}."));
+            }
+        }
+
+        private static void ApplyDateTimeFormat(
+            this Range range,
+            DateTimeFormat format,
+            InternalProjectionContext context)
+        {
+            if (format == null)
+            {
+                return;
+            }
+
+            var implementedProperties = new[]
+            {
+                nameof(DateTimeFormat.FormatKind),
+                nameof(DateTimeFormat.CultureKind),
+            };
+
+            format.ThrowOnNotImplementedProperty(implementedProperties);
+
+            var cultureKind = format.CultureKind ?? context.ExternalContext.CultureKind ?? CultureKind.Invariant;
+
+            if (format.FormatKind != null)
+            {
+                var customFormatString = ((DateTimeFormatKind)format.FormatKind).ToExcelCustomFormatString(cultureKind);
+
+                range.SetCustomFormat(customFormatString);
             }
         }
 
