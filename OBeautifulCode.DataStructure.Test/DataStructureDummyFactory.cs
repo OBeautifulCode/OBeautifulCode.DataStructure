@@ -54,6 +54,7 @@ namespace OBeautifulCode.DataStructure.Test
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(NumberFormatNegativeDisplayKind.Unknown);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(NumberFormatPercentDisplayKind.Unknown);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(OuterBorderSides.None);
+            AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(ReportRenderMode.Unknown);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(SlotSelectionStrategy.Unknown);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(StringPayloadLinkedResourceKind.Unknown);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(UrlLinkedResourceKind.Unknown);

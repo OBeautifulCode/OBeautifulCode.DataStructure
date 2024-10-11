@@ -562,6 +562,7 @@
     </Compile>
     <Compile Include="Models\Enums\AvailabilityCheck\AvailabilityCheckStepAction.cs" />
     <Compile Include="Models\Enums\CellValue\MediaKind.cs" />
+    <Compile Include="Models\Enums\Formatting\ReportRenderMode.cs" />
     <Compile Include="Models\Enums\Formatting\SectionFormatOptions.cs" />
     <Compile Include="Models\Enums\Formatting\ReportFormatOptions.cs" />
     <Compile Include="Models\Enums\Formatting\MessageFormatKind.cs" />

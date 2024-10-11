@@ -71,7 +71,8 @@ namespace OBeautifulCode.DataStructure
 
             var result = this.DisplayTimestamp.IsEqualTo(other.DisplayTimestamp)
                       && this.TimestampFormat.IsEqualTo(other.TimestampFormat)
-                      && this.Options.IsEqualTo(other.Options);
+                      && this.Options.IsEqualTo(other.Options)
+                      && this.RenderMode.IsEqualTo(other.RenderMode);
 
             return result;
         }
@@ -84,6 +85,7 @@ namespace OBeautifulCode.DataStructure
             .Hash(this.DisplayTimestamp)
             .Hash(this.TimestampFormat)
             .Hash(this.Options)
+            .Hash(this.RenderMode)
             .Value;
 
         /// <inheritdoc />
@@ -95,7 +97,8 @@ namespace OBeautifulCode.DataStructure
             var result = new ReportFormat(
                                  this.DisplayTimestamp?.DeepClone(),
                                  this.TimestampFormat?.DeepClone(),
-                                 this.Options?.DeepClone());
+                                 this.Options?.DeepClone(),
+                                 this.RenderMode?.DeepClone());
 
             return result;
         }
@@ -127,7 +130,8 @@ namespace OBeautifulCode.DataStructure
             var result = new ReportFormat(
                                  displayTimestamp,
                                  this.TimestampFormat?.DeepClone(),
-                                 this.Options?.DeepClone());
+                                 this.Options?.DeepClone(),
+                                 this.RenderMode?.DeepClone());
 
             return result;
         }
@@ -159,7 +163,8 @@ namespace OBeautifulCode.DataStructure
             var result = new ReportFormat(
                                  this.DisplayTimestamp?.DeepClone(),
                                  timestampFormat,
-                                 this.Options?.DeepClone());
+                                 this.Options?.DeepClone(),
+                                 this.RenderMode?.DeepClone());
 
             return result;
         }
@@ -191,7 +196,41 @@ namespace OBeautifulCode.DataStructure
             var result = new ReportFormat(
                                  this.DisplayTimestamp?.DeepClone(),
                                  this.TimestampFormat?.DeepClone(),
-                                 options);
+                                 options,
+                                 this.RenderMode?.DeepClone());
+
+            return result;
+        }
+
+        /// <summary>
+        /// Deep clones this object with a new <see cref="RenderMode" />.
+        /// </summary>
+        /// <param name="renderMode">The new <see cref="RenderMode" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="ReportFormat" /> using the specified <paramref name="renderMode" /> for <see cref="RenderMode" /> and a deep clone of every other property.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
+        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
+        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
+        public ReportFormat DeepCloneWithRenderMode(ReportRenderMode? renderMode)
+        {
+            var result = new ReportFormat(
+                                 this.DisplayTimestamp?.DeepClone(),
+                                 this.TimestampFormat?.DeepClone(),
+                                 this.Options?.DeepClone(),
+                                 renderMode);
 
             return result;
         }
@@ -200,7 +239,7 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"OBeautifulCode.DataStructure.ReportFormat: DisplayTimestamp = {this.DisplayTimestamp?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, TimestampFormat = {this.TimestampFormat?.ToString() ?? "<null>"}, Options = {this.Options?.ToString() ?? "<null>"}.");
+            var result = Invariant($"OBeautifulCode.DataStructure.ReportFormat: DisplayTimestamp = {this.DisplayTimestamp?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, TimestampFormat = {this.TimestampFormat?.ToString() ?? "<null>"}, Options = {this.Options?.ToString() ?? "<null>"}, RenderMode = {this.RenderMode?.ToString() ?? "<null>"}.");
 
             return result;
         }

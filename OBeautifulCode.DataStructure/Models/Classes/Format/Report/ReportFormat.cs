@@ -21,10 +21,12 @@ namespace OBeautifulCode.DataStructure
         /// <param name="displayTimestamp">OPTIONAL value that specifies whether to display the report's timestamp.  DEFAULT is to let the consumer decide (e.g. always display the timestamp when it's not null).</param>
         /// <param name="timestampFormat">OPTIONAL format to apply to the timestamp when displaying it.  DEFAULT is to let the consumer decide (e.g. when displaying the timestamp, use a pre-specified/standard format).</param>
         /// <param name="options">OPTIONAL formatting options to apply to the report.  DEFAULT is to not apply any of the formatting options.</param>
+        /// <param name="renderMode">OPTIONAL value that indicates the mode of report rendering.  DEFAULT is no specified rendering mode.</param>
         public ReportFormat(
             bool? displayTimestamp = null,
             DateTimeFormat timestampFormat = null,
-            ReportFormatOptions? options = null)
+            ReportFormatOptions? options = null,
+            ReportRenderMode? renderMode = null)
         {
             if ((displayTimestamp == false) && (timestampFormat != null))
             {
@@ -34,6 +36,7 @@ namespace OBeautifulCode.DataStructure
             this.DisplayTimestamp = displayTimestamp;
             this.TimestampFormat = timestampFormat;
             this.Options = options;
+            this.RenderMode = renderMode;
         }
 
         /// <summary>
@@ -56,5 +59,10 @@ namespace OBeautifulCode.DataStructure
         /// Gets the formatting options to apply to the report.
         /// </summary>
         public ReportFormatOptions? Options { get; private set; }
+
+        /// <summary>
+        /// Gets a value that indicates the mode of report rendering.
+        /// </summary>
+        public ReportRenderMode? RenderMode { get; private set; }
     }
 }

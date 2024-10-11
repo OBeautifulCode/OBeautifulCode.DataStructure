@@ -48,14 +48,33 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new SystemUnderTestExpectedStringRepresentation<ReportFormat>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.ReportFormat: DisplayTimestamp = {systemUnderTest.DisplayTimestamp?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, TimestampFormat = {systemUnderTest.TimestampFormat?.ToString() ?? "<null>"}, Options = {systemUnderTest.Options?.ToString() ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.ReportFormat: DisplayTimestamp = {systemUnderTest.DisplayTimestamp?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, TimestampFormat = {systemUnderTest.TimestampFormat?.ToString() ?? "<null>"}, Options = {systemUnderTest.Options?.ToString() ?? "<null>"}, RenderMode = {systemUnderTest.RenderMode?.ToString() ?? "<null>"}."),
                         };
 
                         return result;
                     },
                 });
 
-        private static readonly ConstructorArgumentValidationTestScenarios<ReportFormat> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<ReportFormat>();
+        private static readonly ConstructorArgumentValidationTestScenarios<ReportFormat> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<ReportFormat>()
+            .AddScenario(() =>
+                new ConstructorArgumentValidationTestScenario<ReportFormat>
+                {
+                    Name = "constructor should throw ArgumentOutOfRangeException when parameter 'renderMode' is ReportRenderMode.Unknown",
+                    ConstructionFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<ReportFormat>();
+
+                        var result = new ReportFormat(
+                                             referenceObject.DisplayTimestamp,
+                                             referenceObject.TimestampFormat,
+                                             referenceObject.Options,
+                                             ReportRenderMode.Unknown);
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentOutOfRangeException),
+                    ExpectedExceptionMessageContains = new[] { "renderMode", "Unknown", },
+                });
 
         private static readonly ConstructorPropertyAssignmentTestScenarios<ReportFormat> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<ReportFormat>()
             .AddScenario(() =>
@@ -71,7 +90,8 @@ namespace OBeautifulCode.DataStructure.Test
                             SystemUnderTest = new ReportFormat(
                                                       referenceObject.DisplayTimestamp,
                                                       referenceObject.TimestampFormat,
-                                                      referenceObject.Options),
+                                                      referenceObject.Options,
+                                                      referenceObject.RenderMode),
                             ExpectedPropertyValue = referenceObject.DisplayTimestamp,
                         };
 
@@ -92,7 +112,8 @@ namespace OBeautifulCode.DataStructure.Test
                             SystemUnderTest = new ReportFormat(
                                                       referenceObject.DisplayTimestamp,
                                                       referenceObject.TimestampFormat,
-                                                      referenceObject.Options),
+                                                      referenceObject.Options,
+                                                      referenceObject.RenderMode),
                             ExpectedPropertyValue = referenceObject.TimestampFormat,
                         };
 
@@ -113,13 +134,36 @@ namespace OBeautifulCode.DataStructure.Test
                             SystemUnderTest = new ReportFormat(
                                                       referenceObject.DisplayTimestamp,
                                                       referenceObject.TimestampFormat,
-                                                      referenceObject.Options),
+                                                      referenceObject.Options,
+                                                      referenceObject.RenderMode),
                             ExpectedPropertyValue = referenceObject.Options,
                         };
 
                         return result;
                     },
                     PropertyName = "Options",
+                })
+            .AddScenario(() =>
+                new ConstructorPropertyAssignmentTestScenario<ReportFormat>
+                {
+                    Name = "RenderMode should return same 'renderMode' parameter passed to constructor when getting",
+                    SystemUnderTestExpectedPropertyValueFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<ReportFormat>();
+
+                        var result = new SystemUnderTestExpectedPropertyValue<ReportFormat>
+                        {
+                            SystemUnderTest = new ReportFormat(
+                                                      referenceObject.DisplayTimestamp,
+                                                      referenceObject.TimestampFormat,
+                                                      referenceObject.Options,
+                                                      referenceObject.RenderMode),
+                            ExpectedPropertyValue = referenceObject.RenderMode,
+                        };
+
+                        return result;
+                    },
+                    PropertyName = "RenderMode",
                 });
 
         private static readonly DeepCloneWithTestScenarios<ReportFormat> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<ReportFormat>()
@@ -182,6 +226,26 @@ namespace OBeautifulCode.DataStructure.Test
 
                         return result;
                     },
+                })
+            .AddScenario(() =>
+                new DeepCloneWithTestScenario<ReportFormat>
+                {
+                    Name = "DeepCloneWithRenderMode should deep clone object and replace RenderMode with the provided renderMode",
+                    WithPropertyName = "RenderMode",
+                    SystemUnderTestDeepCloneWithValueFunc = () =>
+                    {
+                        var systemUnderTest = A.Dummy<ReportFormat>();
+
+                        var referenceObject = A.Dummy<ReportFormat>().ThatIs(_ => !systemUnderTest.RenderMode.IsEqualTo(_.RenderMode));
+
+                        var result = new SystemUnderTestDeepCloneWithValue<ReportFormat>
+                        {
+                            SystemUnderTest = systemUnderTest,
+                            DeepCloneWithValue = referenceObject.RenderMode,
+                        };
+
+                        return result;
+                    },
                 });
 
         private static readonly ReportFormat ReferenceObjectForEquatableTestScenarios = A.Dummy<ReportFormat>();
@@ -197,22 +261,31 @@ namespace OBeautifulCode.DataStructure.Test
                         new ReportFormat(
                                 ReferenceObjectForEquatableTestScenarios.DisplayTimestamp,
                                 ReferenceObjectForEquatableTestScenarios.TimestampFormat,
-                                ReferenceObjectForEquatableTestScenarios.Options),
+                                ReferenceObjectForEquatableTestScenarios.Options,
+                                ReferenceObjectForEquatableTestScenarios.RenderMode),
                     },
                     ObjectsThatAreNotEqualToReferenceObject = new ReportFormat[]
                     {
                         new ReportFormat(
                                 A.Dummy<ReportFormat>().Whose(_ => !_.DisplayTimestamp.IsEqualTo(ReferenceObjectForEquatableTestScenarios.DisplayTimestamp)).DisplayTimestamp,
                                 ReferenceObjectForEquatableTestScenarios.TimestampFormat,
-                                ReferenceObjectForEquatableTestScenarios.Options),
+                                ReferenceObjectForEquatableTestScenarios.Options,
+                                ReferenceObjectForEquatableTestScenarios.RenderMode),
                         new ReportFormat(
                                 ReferenceObjectForEquatableTestScenarios.DisplayTimestamp,
                                 A.Dummy<ReportFormat>().Whose(_ => !_.TimestampFormat.IsEqualTo(ReferenceObjectForEquatableTestScenarios.TimestampFormat)).TimestampFormat,
-                                ReferenceObjectForEquatableTestScenarios.Options),
+                                ReferenceObjectForEquatableTestScenarios.Options,
+                                ReferenceObjectForEquatableTestScenarios.RenderMode),
                         new ReportFormat(
                                 ReferenceObjectForEquatableTestScenarios.DisplayTimestamp,
                                 ReferenceObjectForEquatableTestScenarios.TimestampFormat,
-                                A.Dummy<ReportFormat>().Whose(_ => !_.Options.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Options)).Options),
+                                A.Dummy<ReportFormat>().Whose(_ => !_.Options.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Options)).Options,
+                                ReferenceObjectForEquatableTestScenarios.RenderMode),
+                        new ReportFormat(
+                                ReferenceObjectForEquatableTestScenarios.DisplayTimestamp,
+                                ReferenceObjectForEquatableTestScenarios.TimestampFormat,
+                                ReferenceObjectForEquatableTestScenarios.Options,
+                                A.Dummy<ReportFormat>().Whose(_ => !_.RenderMode.IsEqualTo(ReferenceObjectForEquatableTestScenarios.RenderMode)).RenderMode),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
                     {
@@ -523,7 +596,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "DisplayTimestamp", "TimestampFormat", "Options" };
+                var propertyNames = new string[] { "DisplayTimestamp", "TimestampFormat", "Options", "RenderMode" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 
