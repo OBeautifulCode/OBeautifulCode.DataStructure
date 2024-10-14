@@ -33,6 +33,11 @@ namespace OBeautifulCode.DataStructure
                 throw new ArgumentException(Invariant($"{nameof(displayTimestamp)} is false, but {nameof(timestampFormat)} is not null."));
             }
 
+            if ((renderMode != null) && (renderMode == ReportRenderMode.Unknown))
+            {
+                throw new ArgumentOutOfRangeException(Invariant($"{nameof(renderMode)} is {nameof(ReportRenderMode.Unknown)}."));
+            }
+
             this.DisplayTimestamp = displayTimestamp;
             this.TimestampFormat = timestampFormat;
             this.Options = options;
