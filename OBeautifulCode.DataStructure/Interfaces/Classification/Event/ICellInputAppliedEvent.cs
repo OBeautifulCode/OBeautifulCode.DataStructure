@@ -16,5 +16,12 @@ namespace OBeautifulCode.DataStructure
     [SuppressMessage("Microsoft.Design", "CA1040:AvoidEmptyInterfaces", Justification = ObcSuppressBecause.CA1040_AvoidEmptyInterfaces_NeedToIdentifyGroupOfTypesAndPreferInterfaceOverAttribute)]
     public interface ICellInputAppliedEvent : IModel
     {
+        /// <summary>
+        /// Gets the inputted value as an object.
+        /// </summary>
+        /// <returns>
+        /// The inputted value.
+        /// </returns>
+        object GetObjectValue();
     }
 }

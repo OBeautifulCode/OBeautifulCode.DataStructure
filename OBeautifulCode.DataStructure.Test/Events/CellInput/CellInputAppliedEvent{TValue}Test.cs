@@ -12,7 +12,7 @@ namespace OBeautifulCode.DataStructure.Test
     using System.Linq;
 
     using FakeItEasy;
-
+    using OBeautifulCode.Assertion.Recipes;
     using OBeautifulCode.AutoFakeItEasy;
     using OBeautifulCode.CodeAnalysis.Recipes;
     using OBeautifulCode.CodeGen.ModelObject.Recipes;
@@ -68,6 +68,21 @@ namespace OBeautifulCode.DataStructure.Test
                         ExpectedExceptionType = typeof(ArgumentException),
                         ExpectedExceptionMessageContains = new[] { "timestampUtc", "Kind that is not DateTimeKind.Utc", "DateTimeKind.Unspecified" },
                     });
+        }
+
+        [Fact]
+        public static void GetObjectValue___Returns_Value___When_called()
+        {
+            // Arrange
+            var expected = A.Dummy<string>();
+
+            var systemUnderTest = new CellInputAppliedEvent<string>(expected, A.Dummy<UtcDateTime>());
+
+            // Act
+            var actual = systemUnderTest.GetObjectValue();
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo((object)expected);
         }
     }
 }

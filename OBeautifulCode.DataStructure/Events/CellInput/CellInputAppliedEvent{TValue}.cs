@@ -36,5 +36,13 @@ namespace OBeautifulCode.DataStructure
         /// Gets the inputted value.
         /// </summary>
         public TValue Value { get; private set; }
+
+        /// <inheritdoc />
+        public object GetObjectValue()
+        {
+            var result = this.Value;
+
+            return result;
+        }
     }
 }
