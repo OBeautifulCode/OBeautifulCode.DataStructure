@@ -720,6 +720,72 @@ namespace OBeautifulCode.DataStructure.Test
         }
 
         [Fact]
+        public static void GetCellValueCellOpExecutionCompletedEvent___Should_throw_InvalidOperationException___When_OperationExecutionEvents_is_null()
+        {
+            // Arrange
+            var systemUnderTest = A.Dummy<OperationCell<Version>>().DeepCloneWithOperationExecutionEvents(null);
+
+            // Act
+            var actual = Record.Exception(() => systemUnderTest.GetCellValueCellOpExecutionCompletedEvent());
+
+            // Assert
+            actual.AsTest().Must().BeOfType<InvalidOperationException>();
+            actual.Message.AsTest().Must().BeEqualTo("The operation hasn't been executed to completion.");
+        }
+
+        [Fact]
+        public static void GetCellValueCellOpExecutionCompletedEvent___Should_throw_InvalidOperationException___When_OperationExecutionEvents_is_empty()
+        {
+            // Arrange
+            var systemUnderTest = A.Dummy<OperationCell<Version>>().DeepCloneWithOperationExecutionEvents(new CellOpExecutionEventBase[0]);
+
+            // Act
+            var actual = Record.Exception(() => systemUnderTest.GetCellValueCellOpExecutionCompletedEvent());
+
+            // Assert
+            actual.AsTest().Must().BeOfType<InvalidOperationException>();
+            actual.Message.AsTest().Must().BeEqualTo("The operation hasn't been executed to completion.");
+        }
+
+        [Fact]
+        public static void GetCellValueCellOpExecutionCompletedEvent___Should_throw_InvalidOperationException___When_OperationExecutionEvents_does_not_contain_CellOpExecutionCompletedEvent()
+        {
+            // Arrange
+            var systemUnderTest = A.Dummy<OperationCell<Version>>().DeepCloneWithOperationExecutionEvents(new CellOpExecutionEventBase[0]);
+
+            systemUnderTest.ClearCellValue(A.Dummy<UtcDateTime>(), A.Dummy<string>());
+
+            // Act
+            var actual = Record.Exception(() => systemUnderTest.GetCellValueCellOpExecutionCompletedEvent());
+
+            // Assert
+            actual.AsTest().Must().BeOfType<InvalidOperationException>();
+            actual.Message.AsTest().Must().BeEqualTo("The operation hasn't been executed to completion.");
+        }
+
+        [Fact]
+        public static void GetCellValueCellOpExecutionCompletedEvent___Should_return_last_completed_execution_result___When_called()
+        {
+            // Arrange
+            var systemUnderTest = A.Dummy<OperationCell<Version>>();
+
+            var expectedVersion = A.Dummy<Version>();
+
+            systemUnderTest.Record(new CellOpExecutionCompletedEvent<Version>(A.Dummy<Version>(), A.Dummy<UtcDateTime>(), A.Dummy<string>()));
+
+            systemUnderTest.Record(new CellOpExecutionCompletedEvent<Version>(expectedVersion, A.Dummy<UtcDateTime>(), A.Dummy<string>()));
+
+            var expected = (CellOpExecutionCompletedEvent<Version>)systemUnderTest.OperationExecutionEvents.Last();
+
+            // Act
+            var actual = systemUnderTest.GetCellValueCellOpExecutionCompletedEvent();
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+            actual.GetExecutionResultObjectValue().AsTest().Must().BeEqualTo((object)expectedVersion);
+        }
+
+        [Fact]
         public static void HasCellValue___Should_return_false___When_OperationExecutionEvents_is_null()
         {
             // Arrange
@@ -775,6 +841,72 @@ namespace OBeautifulCode.DataStructure.Test
 
             // Assert
             actual.AsTest().Must().BeTrue();
+        }
+
+        [Fact]
+        public static void GetCellValueCellOpExecutionCompletedEventInterface___Should_throw_InvalidOperationException___When_OperationExecutionEvents_is_null()
+        {
+            // Arrange
+            var systemUnderTest = A.Dummy<OperationCell<Version>>().DeepCloneWithOperationExecutionEvents(null);
+
+            // Act
+            var actual = Record.Exception(() => systemUnderTest.GetCellValueCellOpExecutionCompletedEventInterface());
+
+            // Assert
+            actual.AsTest().Must().BeOfType<InvalidOperationException>();
+            actual.Message.AsTest().Must().BeEqualTo("The operation hasn't been executed to completion.");
+        }
+
+        [Fact]
+        public static void GetCellValueCellOpExecutionCompletedEventInterface___Should_throw_InvalidOperationException___When_OperationExecutionEvents_is_empty()
+        {
+            // Arrange
+            var systemUnderTest = A.Dummy<OperationCell<Version>>().DeepCloneWithOperationExecutionEvents(new CellOpExecutionEventBase[0]);
+
+            // Act
+            var actual = Record.Exception(() => systemUnderTest.GetCellValueCellOpExecutionCompletedEventInterface());
+
+            // Assert
+            actual.AsTest().Must().BeOfType<InvalidOperationException>();
+            actual.Message.AsTest().Must().BeEqualTo("The operation hasn't been executed to completion.");
+        }
+
+        [Fact]
+        public static void GetCellValueCellOpExecutionCompletedEventInterface___Should_throw_InvalidOperationException___When_OperationExecutionEvents_does_not_contain_CellOpExecutionCompletedEvent()
+        {
+            // Arrange
+            var systemUnderTest = A.Dummy<OperationCell<Version>>().DeepCloneWithOperationExecutionEvents(new CellOpExecutionEventBase[0]);
+
+            systemUnderTest.ClearCellValue(A.Dummy<UtcDateTime>(), A.Dummy<string>());
+
+            // Act
+            var actual = Record.Exception(() => systemUnderTest.GetCellValueCellOpExecutionCompletedEventInterface());
+
+            // Assert
+            actual.AsTest().Must().BeOfType<InvalidOperationException>();
+            actual.Message.AsTest().Must().BeEqualTo("The operation hasn't been executed to completion.");
+        }
+
+        [Fact]
+        public static void GetCellValueCellOpExecutionCompletedEventInterface___Should_return_last_completed_execution_result___When_called()
+        {
+            // Arrange
+            var systemUnderTest = A.Dummy<OperationCell<Version>>();
+
+            var expectedVersion = A.Dummy<Version>();
+
+            systemUnderTest.Record(new CellOpExecutionCompletedEvent<Version>(A.Dummy<Version>(), A.Dummy<UtcDateTime>(), A.Dummy<string>()));
+
+            systemUnderTest.Record(new CellOpExecutionCompletedEvent<Version>(expectedVersion, A.Dummy<UtcDateTime>(), A.Dummy<string>()));
+
+            var expected = (ICellOpExecutionCompletedEvent)systemUnderTest.OperationExecutionEvents.Last();
+
+            // Act
+            var actual = systemUnderTest.GetCellValueCellOpExecutionCompletedEventInterface();
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+            actual.GetExecutionResultObjectValue().AsTest().Must().BeEqualTo((object)expectedVersion);
         }
     }
 }

@@ -95,12 +95,20 @@ namespace OBeautifulCode.DataStructure
         /// <inheritdoc />
         public override TValue GetCellValue()
         {
+            var result = this.GetCellValueCellOpExecutionCompletedEvent().ExecutionResult;
+
+            return result;
+        }
+
+        /// <inheritdoc />
+        public CellOpExecutionCompletedEvent<TValue> GetCellValueCellOpExecutionCompletedEvent()
+        {
             if (!this.HasCellValue())
             {
                 throw new InvalidOperationException("The operation hasn't been executed to completion.");
             }
 
-            var result = ((CellOpExecutionCompletedEvent<TValue>)this.OperationExecutionEvents.Last()).ExecutionResult;
+            var result = (CellOpExecutionCompletedEvent<TValue>)this.OperationExecutionEvents.Last();
 
             return result;
         }
@@ -110,5 +118,13 @@ namespace OBeautifulCode.DataStructure
 
         /// <inheritdoc />
         public override bool HasCellValue() => this.OperationExecutionEvents?.LastOrDefault() is CellOpExecutionCompletedEvent<TValue>;
+
+        /// <inheritdoc />
+        public ICellOpExecutionCompletedEvent GetCellValueCellOpExecutionCompletedEventInterface()
+        {
+            var result = (ICellOpExecutionCompletedEvent)this.GetCellValueCellOpExecutionCompletedEvent();
+
+            return result;
+        }
     }
 }

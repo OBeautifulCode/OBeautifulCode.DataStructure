@@ -18,5 +18,13 @@ namespace OBeautifulCode.DataStructure
         /// Gets the operation.
         /// </summary>
         IReturningOperation<TValue> Operation { get; }
+
+        /// <summary>
+        /// Gets the <see cref="CellOpExecutionCompletedEvent{TValue}"/> that recorded the cell's value.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="CellOpExecutionCompletedEvent{TValue}"/> that recorded the cell's value.
+        /// </returns>
+        CellOpExecutionCompletedEvent<TValue> GetCellValueCellOpExecutionCompletedEvent();
     }
 }

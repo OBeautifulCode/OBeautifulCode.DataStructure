@@ -9,10 +9,8 @@ namespace OBeautifulCode.DataStructure
     using System;
     using System.Collections.Generic;
     using System.Linq;
-
     using OBeautifulCode.Type;
     using OBeautifulCode.Type.Recipes;
-
     using static System.FormattableString;
 
     /// <summary>
@@ -80,12 +78,20 @@ namespace OBeautifulCode.DataStructure
         /// <inheritdoc />
         public TValue GetCellValue()
         {
+            var result = this.GetCellValueCellInputAppliedEvent().Value;
+
+            return result;
+        }
+
+        /// <inheritdoc />
+        public CellInputAppliedEvent<TValue> GetCellValueCellInputAppliedEvent()
+        {
             if (!this.HasCellValue())
             {
                 throw new InvalidOperationException("No input has been applied to the cell.");
             }
 
-            var result = ((CellInputAppliedEvent<TValue>)this.InputEvents.Last()).Value;
+            var result = (CellInputAppliedEvent<TValue>)this.InputEvents.Last();
 
             return result;
         }
@@ -146,5 +152,13 @@ namespace OBeautifulCode.DataStructure
 
         /// <inheritdoc />
         public object GetCellObjectValue() => this.GetCellValue();
+
+        /// <inheritdoc />
+        public ICellInputAppliedEvent GetCellValueCellInputAppliedEventInterface()
+        {
+            var result = (ICellInputAppliedEvent)this.GetCellValueCellInputAppliedEvent();
+
+            return result;
+        }
     }
 }

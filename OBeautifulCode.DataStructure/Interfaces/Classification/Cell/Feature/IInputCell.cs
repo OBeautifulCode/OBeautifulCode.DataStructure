@@ -35,5 +35,13 @@ namespace OBeautifulCode.DataStructure
             object value,
             DateTime timestampUtc,
             string details = null);
+
+        /// <summary>
+        /// Gets the <see cref="ICellInputAppliedEvent"/> that recorded the cell's value.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="ICellInputAppliedEvent"/> that recorded the cell's value.
+        /// </returns>
+        ICellInputAppliedEvent GetCellValueCellInputAppliedEventInterface();
     }
 }

@@ -23,5 +23,13 @@ namespace OBeautifulCode.DataStructure
         /// </summary>
         /// <param name="operationExecutionEvent">The event to record.</param>
         void Record(CellOpExecutionEventBase operationExecutionEvent);
+
+        /// <summary>
+        /// Gets the <see cref="ICellOpExecutionCompletedEvent"/> that recorded the cell's value.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="ICellOpExecutionCompletedEvent"/> that recorded the cell's value.
+        /// </returns>
+        ICellOpExecutionCompletedEvent GetCellValueCellOpExecutionCompletedEventInterface();
     }
 }

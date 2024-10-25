@@ -24,5 +24,13 @@ namespace OBeautifulCode.DataStructure
             TValue value,
             DateTime timestampUtc,
             string details = null);
+
+        /// <summary>
+        /// Gets the <see cref="CellInputAppliedEvent{TValue}"/> that recorded the cell's value.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="CellInputAppliedEvent{TValue}"/> that recorded the cell's value.
+        /// </returns>
+        CellInputAppliedEvent<TValue> GetCellValueCellInputAppliedEvent();
     }
 }

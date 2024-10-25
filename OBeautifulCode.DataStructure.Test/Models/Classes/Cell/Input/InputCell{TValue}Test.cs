@@ -860,6 +860,72 @@ namespace OBeautifulCode.DataStructure.Test
         }
 
         [Fact]
+        public static void GetCellValueCellInputAppliedEvent___Should_throw_InvalidOperationException___When_InputEvents_is_null()
+        {
+            // Arrange
+            var systemUnderTest = A.Dummy<InputCell<Version>>().DeepCloneWithInputEvents(null);
+
+            // Act
+            var actual = Record.Exception(() => systemUnderTest.GetCellValueCellInputAppliedEvent());
+
+            // Assert
+            actual.AsTest().Must().BeOfType<InvalidOperationException>();
+            actual.Message.AsTest().Must().BeEqualTo("No input has been applied to the cell.");
+        }
+
+        [Fact]
+        public static void GetCellValueCellInputAppliedEvent___Should_throw_InvalidOperationException___When_InputEvents_is_empty()
+        {
+            // Arrange
+            var systemUnderTest = A.Dummy<InputCell<Version>>().DeepCloneWithInputEvents(new CellInputEventBase[0]);
+
+            // Act
+            var actual = Record.Exception(() => systemUnderTest.GetCellValueCellInputAppliedEvent());
+
+            // Assert
+            actual.AsTest().Must().BeOfType<InvalidOperationException>();
+            actual.Message.AsTest().Must().BeEqualTo("No input has been applied to the cell.");
+        }
+
+        [Fact]
+        public static void GetCellValueCellInputAppliedEvent___Should_throw_InvalidOperationException___When_InputEvents_does_not_contain_CellInputAppliedEvent()
+        {
+            // Arrange
+            var systemUnderTest = A.Dummy<InputCell<Version>>().DeepCloneWithInputEvents(new CellInputEventBase[0]);
+
+            systemUnderTest.ClearCellValue(A.Dummy<UtcDateTime>(), A.Dummy<string>());
+
+            // Act
+            var actual = Record.Exception(() => systemUnderTest.GetCellValueCellInputAppliedEvent());
+
+            // Assert
+            actual.AsTest().Must().BeOfType<InvalidOperationException>();
+            actual.Message.AsTest().Must().BeEqualTo("No input has been applied to the cell.");
+        }
+
+        [Fact]
+        public static void GetCellValueCellInputAppliedEvent___Should_return_last_inputted_value___When_called()
+        {
+            // Arrange
+            var systemUnderTest = A.Dummy<InputCell<Version>>();
+
+            var expectedVersion = A.Dummy<Version>();
+
+            systemUnderTest.SetCellValue(A.Dummy<Version>(), A.Dummy<UtcDateTime>());
+
+            systemUnderTest.SetCellValue(expectedVersion, A.Dummy<UtcDateTime>());
+
+            var expected = (CellInputAppliedEvent<Version>)systemUnderTest.InputEvents.Last();
+
+            // Act
+            var actual = systemUnderTest.GetCellValueCellInputAppliedEvent();
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+            actual.Value.AsTest().Must().BeEqualTo(expectedVersion);
+        }
+
+        [Fact]
         public static void HasCellValue___Should_return_false___When_InputEvents_is_null()
         {
             // Arrange
@@ -913,6 +979,72 @@ namespace OBeautifulCode.DataStructure.Test
 
             // Assert
             actual.AsTest().Must().BeTrue();
+        }
+
+        [Fact]
+        public static void GetCellValueCellInputAppliedEventInterface___Should_throw_InvalidOperationException___When_InputEvents_is_null()
+        {
+            // Arrange
+            var systemUnderTest = A.Dummy<InputCell<Version>>().DeepCloneWithInputEvents(null);
+
+            // Act
+            var actual = Record.Exception(() => systemUnderTest.GetCellValueCellInputAppliedEventInterface());
+
+            // Assert
+            actual.AsTest().Must().BeOfType<InvalidOperationException>();
+            actual.Message.AsTest().Must().BeEqualTo("No input has been applied to the cell.");
+        }
+
+        [Fact]
+        public static void GetCellValueCellInputAppliedEventInterface___Should_throw_InvalidOperationException___When_InputEvents_is_empty()
+        {
+            // Arrange
+            var systemUnderTest = A.Dummy<InputCell<Version>>().DeepCloneWithInputEvents(new CellInputEventBase[0]);
+
+            // Act
+            var actual = Record.Exception(() => systemUnderTest.GetCellValueCellInputAppliedEventInterface());
+
+            // Assert
+            actual.AsTest().Must().BeOfType<InvalidOperationException>();
+            actual.Message.AsTest().Must().BeEqualTo("No input has been applied to the cell.");
+        }
+
+        [Fact]
+        public static void GetCellValueCellInputAppliedEventInterface___Should_throw_InvalidOperationException___When_InputEvents_does_not_contain_CellInputAppliedEvent()
+        {
+            // Arrange
+            var systemUnderTest = A.Dummy<InputCell<Version>>().DeepCloneWithInputEvents(new CellInputEventBase[0]);
+
+            systemUnderTest.ClearCellValue(A.Dummy<UtcDateTime>(), A.Dummy<string>());
+
+            // Act
+            var actual = Record.Exception(() => systemUnderTest.GetCellValueCellInputAppliedEventInterface());
+
+            // Assert
+            actual.AsTest().Must().BeOfType<InvalidOperationException>();
+            actual.Message.AsTest().Must().BeEqualTo("No input has been applied to the cell.");
+        }
+
+        [Fact]
+        public static void GetCellValueCellInputAppliedEventInterface___Should_return_last_inputted_value___When_called()
+        {
+            // Arrange
+            var systemUnderTest = A.Dummy<InputCell<Version>>();
+
+            var expectedVersion = A.Dummy<Version>();
+
+            systemUnderTest.SetCellValue(A.Dummy<Version>(), A.Dummy<UtcDateTime>());
+
+            systemUnderTest.SetCellValue(expectedVersion, A.Dummy<UtcDateTime>());
+
+            var expected = (ICellInputAppliedEvent)systemUnderTest.InputEvents.Last();
+
+            // Act
+            var actual = systemUnderTest.GetCellValueCellInputAppliedEventInterface();
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+            actual.GetObjectValue().AsTest().Must().BeEqualTo((object)expectedVersion);
         }
     }
 }

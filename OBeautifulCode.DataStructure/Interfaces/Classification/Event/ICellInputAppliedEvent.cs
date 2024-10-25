@@ -6,6 +6,7 @@
 
 namespace OBeautifulCode.DataStructure
 {
+    using System;
     using System.Diagnostics.CodeAnalysis;
     using OBeautifulCode.CodeAnalysis.Recipes;
     using OBeautifulCode.Type;
@@ -14,7 +15,7 @@ namespace OBeautifulCode.DataStructure
     /// Input has been applied to a cell.
     /// </summary>
     [SuppressMessage("Microsoft.Design", "CA1040:AvoidEmptyInterfaces", Justification = ObcSuppressBecause.CA1040_AvoidEmptyInterfaces_NeedToIdentifyGroupOfTypesAndPreferInterfaceOverAttribute)]
-    public interface ICellInputAppliedEvent : IModel
+    public interface ICellInputAppliedEvent : IHaveDetails, IHaveTimestampUtc, IModel
     {
         /// <summary>
         /// Gets the inputted value as an object.
