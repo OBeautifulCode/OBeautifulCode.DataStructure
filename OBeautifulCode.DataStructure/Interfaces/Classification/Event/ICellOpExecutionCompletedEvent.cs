@@ -6,6 +6,7 @@
 
 namespace OBeautifulCode.DataStructure
 {
+    using System;
     using System.Diagnostics.CodeAnalysis;
     using OBeautifulCode.CodeAnalysis.Recipes;
     using OBeautifulCode.Type;
@@ -23,5 +24,13 @@ namespace OBeautifulCode.DataStructure
         /// The result of executing the operation.
         /// </returns>
         object GetExecutionResultObjectValue();
+
+        /// <summary>
+        /// Gets the declared type of the execution result.
+        /// </summary>
+        /// <returns>
+        /// The declared type of the execution result.
+        /// </returns>
+        Type GetExecutionResultType();
     }
 }

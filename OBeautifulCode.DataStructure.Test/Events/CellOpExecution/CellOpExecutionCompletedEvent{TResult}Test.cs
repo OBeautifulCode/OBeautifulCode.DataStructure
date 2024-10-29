@@ -84,5 +84,18 @@ namespace OBeautifulCode.DataStructure.Test
             // Assert
             actual.AsTest().Must().BeEqualTo((object)expected);
         }
+
+        [Fact]
+        public static void GetExecutionResultType___Returns_type_of_TResult___When_called()
+        {
+            // Arrange
+            var systemUnderTest = new CellOpExecutionCompletedEvent<string>(A.Dummy<string>(), A.Dummy<UtcDateTime>());
+
+            // Act
+            var actual = systemUnderTest.GetExecutionResultType();
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(typeof(string));
+        }
     }
 }

@@ -44,5 +44,13 @@ namespace OBeautifulCode.DataStructure
 
             return result;
         }
+
+        /// <inheritdoc />
+        public Type GetExecutionResultType()
+        {
+            var result = typeof(TResult);
+
+            return result;
+        }
     }
 }

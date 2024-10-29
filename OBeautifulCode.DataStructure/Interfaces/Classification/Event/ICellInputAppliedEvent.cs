@@ -24,5 +24,13 @@ namespace OBeautifulCode.DataStructure
         /// The inputted value.
         /// </returns>
         object GetObjectValue();
+
+        /// <summary>
+        /// Gets the declared type of the input value.
+        /// </summary>
+        /// <returns>
+        /// The declared type of the input value.
+        /// </returns>
+        Type GetValueType();
     }
 }

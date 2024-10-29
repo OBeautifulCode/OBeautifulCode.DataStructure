@@ -44,5 +44,13 @@ namespace OBeautifulCode.DataStructure
 
             return result;
         }
+
+        /// <inheritdoc />
+        public Type GetValueType()
+        {
+            var result = typeof(TValue);
+
+            return result;
+        }
     }
 }
