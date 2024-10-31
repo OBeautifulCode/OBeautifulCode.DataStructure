@@ -44,12 +44,15 @@ namespace OBeautifulCode.DataStructure.Excel
                 nameof(ReportFormat.DisplayTimestamp),
                 nameof(ReportFormat.TimestampFormat),
                 nameof(ReportFormat.Options),
+                nameof(ReportFormat.RenderMode),
             };
 
             reportFormat.ThrowOnNotImplementedProperty(implementedProperties);
 
             // Timestamp is added to bottom chrome of worksheet and formatting is managed there.
             range.ApplyReportFormatOptions(reportFormat.Options);
+
+            reportFormat.RenderMode.ApplyReportRenderMode();
         }
 
         [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "range", Justification = "Future-proofing.")]
@@ -70,6 +73,25 @@ namespace OBeautifulCode.DataStructure.Excel
             var reportFormatOptions = (ReportFormatOptions)options;
 
             reportFormatOptions.ThrowOnNotImplementedEnumFlag(implementedOptions);
+        }
+
+        [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "range", Justification = "Future-proofing.")]
+        private static void ApplyReportRenderMode(
+            this ReportRenderMode? renderMode)
+        {
+            if (renderMode == null)
+            {
+                return;
+            }
+
+            var implementedOptions = new[]
+            {
+                ReportRenderMode.TabularData,
+            };
+
+            var reportRenderMode = (ReportRenderMode)renderMode;
+
+            reportRenderMode.ThrowOnNotImplementedEnumFlag(implementedOptions);
         }
 
         private static void ApplySectionFormat(
