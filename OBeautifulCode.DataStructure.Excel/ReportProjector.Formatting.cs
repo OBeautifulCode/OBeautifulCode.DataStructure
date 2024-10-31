@@ -187,19 +187,25 @@ namespace OBeautifulCode.DataStructure.Excel
 
             columnFormat.ThrowOnNotImplementedProperty(implementedProperties);
 
-            dataCellsRange.ApplyCellFormat(columnFormat.CellsFormat);
+            if (dataCellsRange != null)
+            {
+                dataCellsRange.ApplyCellFormat(columnFormat.CellsFormat);
+            }
 
             wholeColumnRange.SetPerColumnWidthInPixels(columnFormat.WidthInPixels);
 
-            // Apply options before auto-fitting, in case options change width of column (e.g. filtering)
-            wholeColumnRange.ApplyColumnFormatOptions(lastHeaderCellToLastNonSummaryDataCellRange, columnFormat.Options);
-
-            if (columnFormat.AutofitColumnWidth == true)
+            if (lastHeaderCellToLastNonSummaryDataCellRange != null)
             {
-                wholeColumnRange.Worksheet.AutoFitColumn(
-                    lastHeaderCellToLastNonSummaryDataCellRange.FirstColumn,
-                    lastHeaderCellToLastNonSummaryDataCellRange.FirstRow,
-                    lastHeaderCellToLastNonSummaryDataCellRange.FirstRow + lastHeaderCellToLastNonSummaryDataCellRange.RowCount - 1);
+                // Apply options before auto-fitting, in case options change width of column (e.g. filtering)
+                wholeColumnRange.ApplyColumnFormatOptions(lastHeaderCellToLastNonSummaryDataCellRange, columnFormat.Options);
+
+                if (columnFormat.AutofitColumnWidth == true)
+                {
+                    wholeColumnRange.Worksheet.AutoFitColumn(
+                        lastHeaderCellToLastNonSummaryDataCellRange.FirstColumn,
+                        lastHeaderCellToLastNonSummaryDataCellRange.FirstRow,
+                        lastHeaderCellToLastNonSummaryDataCellRange.FirstRow + lastHeaderCellToLastNonSummaryDataCellRange.RowCount - 1);
+                }
             }
         }
 
