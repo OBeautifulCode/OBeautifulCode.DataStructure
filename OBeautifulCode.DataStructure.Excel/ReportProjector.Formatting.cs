@@ -670,9 +670,16 @@ namespace OBeautifulCode.DataStructure.Excel
             {
                 nameof(DateTimeFormat.FormatKind),
                 nameof(DateTimeFormat.CultureKind),
+                nameof(DateTimeFormat.LocalizeTimeZone),
+                nameof(DateTimeFormat.LocalTimeZone),
             };
 
             format.ThrowOnNotImplementedProperty(implementedProperties);
+
+            if ((format.LocalizeTimeZone != null) || (format.LocalTimeZone != null))
+            {
+                // no-op: the conversion will be applied to the value before it's written to the cell.
+            }
 
             var cultureKind = format.CultureKind ?? context.ExternalContext.CultureKind ?? CultureKind.Invariant;
 

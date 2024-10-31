@@ -15,6 +15,7 @@ namespace OBeautifulCode.DataStructure.Excel
     using OBeautifulCode.Equality.Recipes;
     using OBeautifulCode.Excel;
     using OBeautifulCode.Excel.AsposeCells;
+    using OBeautifulCode.Type;
     using OBeautifulCode.Type.Recipes;
     using static System.FormattableString;
 
@@ -320,14 +321,19 @@ namespace OBeautifulCode.DataStructure.Excel
             }
 
             // Add rows
-            cursor.AddTableRows(treeTable.TableRows, context, passKind);
+            var columnIndexToColumnCellValueFormatMap = treeTable.TableColumns.Columns
+                .Select((col, index) => new { Index = index, ValueFormat = col.ValueFormat })
+                .ToDictionary(_ => _.Index, _ => _.ValueFormat);
+
+            cursor.AddTableRows(treeTable.TableRows, context, passKind, columnIndexToColumnCellValueFormatMap);
         }
 
         private static void AddTableRows(
             this CellCursor cursor,
             TableRows tableRows,
             InternalProjectionContext context,
-            PassKind passKind)
+            PassKind passKind,
+            IReadOnlyDictionary<int, ICellValueFormat> columnIndexToColumnCellValueFormatMap)
         {
             if (tableRows == null)
             {
@@ -351,7 +357,7 @@ namespace OBeautifulCode.DataStructure.Excel
 
             var moveDownForFirstRow = cursor.AddHeaderRows(tableRows.HeaderRows, false, context, passKind);
 
-            moveDownForFirstRow = cursor.AddDataRows(tableRows.DataRows, moveDownForFirstRow, context, passKind) || moveDownForFirstRow;
+            moveDownForFirstRow = cursor.AddDataRows(tableRows.DataRows, moveDownForFirstRow, context, passKind, columnIndexToColumnCellValueFormatMap) || moveDownForFirstRow;
 
             // ReSharper disable once RedundantAssignment
             moveDownForFirstRow = cursor.AddFooterRows(tableRows.FooterRows, moveDownForFirstRow, context, passKind) || moveDownForFirstRow;
@@ -389,7 +395,7 @@ namespace OBeautifulCode.DataStructure.Excel
                         cursor.CanvassedRowRange.ApplyHeaderRowsFormat(headerRows.Format);
                     }
 
-                    cursor.AddRowCells(headerRows.Rows[x], context, passKind);
+                    cursor.AddRowCells(headerRows.Rows[x], context, passKind, null);
                 }
 
                 if (passKind == PassKind.Data)
@@ -428,7 +434,7 @@ namespace OBeautifulCode.DataStructure.Excel
                         cursor.CanvassedRowRange.ApplyFooterRowsFormat(footerRows.Format);
                     }
 
-                    cursor.AddRowCells(footerRows.Rows[x], context, passKind);
+                    cursor.AddRowCells(footerRows.Rows[x], context, passKind, null);
                 }
 
                 result = true;
@@ -442,7 +448,8 @@ namespace OBeautifulCode.DataStructure.Excel
             DataRows dataRows,
             bool moveDownForFirstRow,
             InternalProjectionContext context,
-            PassKind passKind)
+            PassKind passKind,
+            IReadOnlyDictionary<int, ICellValueFormat> columnIndexToColumnCellValueFormatMap)
         {
             dataRows?.Format.ProcessIntoContext(context);
 
@@ -465,7 +472,7 @@ namespace OBeautifulCode.DataStructure.Excel
                         cursor.AddMarker(TopLeftAndBottomRightDataCellMarker);
                     }
 
-                    cursor.AddRowBase(dataRows.Rows[x], context, passKind);
+                    cursor.AddRowBase(dataRows.Rows[x], context, passKind, columnIndexToColumnCellValueFormatMap);
                 }
 
                 cursor.AddMarker(TopLeftAndBottomRightDataCellMarker);
@@ -485,14 +492,15 @@ namespace OBeautifulCode.DataStructure.Excel
             this CellCursor cursor,
             RowBase rowBase,
             InternalProjectionContext context,
-            PassKind passKind)
+            PassKind passKind,
+            IReadOnlyDictionary<int, ICellValueFormat> columnIndexToColumnCellValueFormatMap)
         {
             if (passKind == PassKind.Formatting)
             {
                 AddTreeLevel(rowBase, context);
             }
 
-            cursor.AddRowCells(rowBase, context, passKind);
+            cursor.AddRowCells(rowBase, context, passKind, columnIndexToColumnCellValueFormatMap);
 
             cursor.RemoveMarker(BottomRightNonSummaryDataCellMarker);
 
@@ -520,7 +528,7 @@ namespace OBeautifulCode.DataStructure.Excel
                             cursor.AddMarker(groupingMarkerName);
                         }
 
-                        cursor.AddRowBase(row.ChildRows[x], context, passKind);
+                        cursor.AddRowBase(row.ChildRows[x], context, passKind, columnIndexToColumnCellValueFormatMap);
                     }
 
                     cursor.AddMarker(groupingMarkerName);
@@ -544,7 +552,7 @@ namespace OBeautifulCode.DataStructure.Excel
                     {
                         cursor.ResetColumn().MoveDown();
 
-                        cursor.AddRowCells(expandedSummaryRow, context, passKind);
+                        cursor.AddRowCells(expandedSummaryRow, context, passKind, columnIndexToColumnCellValueFormatMap);
                     }
 
                     // Note that you can't have summary rows without child rows so we're guaranteed to have the grouping marker at this point.
@@ -590,12 +598,15 @@ namespace OBeautifulCode.DataStructure.Excel
             this CellCursor cursor,
             RowBase rowBase,
             InternalProjectionContext context,
-            PassKind passKind)
+            PassKind passKind,
+            IReadOnlyDictionary<int, ICellValueFormat> columnIndexToColumnCellValueFormatMap)
         {
             if (passKind == PassKind.Formatting)
             {
                 cursor.CanvassedRowRange.ApplyRowFormat(rowBase.Format);
             }
+
+            int columnIndexStart = 0;
 
             for (var x = 0; x < rowBase.Cells.Count; x++)
             {
@@ -604,7 +615,28 @@ namespace OBeautifulCode.DataStructure.Excel
                     cursor.MoveRight(rowBase.Cells[x - 1].ColumnsSpanned ?? 1);
                 }
 
-                cursor.AddCell(rowBase.Cells[x], context, passKind);
+                // Get the ICellValueFormat applied to the column.  While many of the formats won't actually be
+                // applied at the cell level, but rather at the column level in code that deals with that,
+                // some of these formats require manipulating the value itself and thus why we are passing it along.
+                ICellValueFormat columnCellValueFormat = null;
+                if (columnIndexToColumnCellValueFormatMap != null)
+                {
+                    var columnIndexEnd = columnIndexStart + (rowBase.Cells[x].ColumnsSpanned ?? 1) - 1;
+
+                    for (var columnIndex = columnIndexStart; columnIndex <= columnIndexEnd; columnIndex++)
+                    {
+                        // Just take the first non-null column cell value format if a cell spans multiple columns.
+                        if (columnIndexToColumnCellValueFormatMap[columnIndex] != null)
+                        {
+                            columnCellValueFormat = columnIndexToColumnCellValueFormatMap[columnIndex];
+                            break;
+                        }
+                    }
+
+                    columnIndexStart = columnIndexEnd + 1;
+                }
+
+                cursor.AddCell(rowBase.Cells[x], context, passKind, columnCellValueFormat);
             }
         }
 
@@ -613,7 +645,8 @@ namespace OBeautifulCode.DataStructure.Excel
             this CellCursor cursor,
             ICell cell,
             InternalProjectionContext context,
-            PassKind passKind)
+            PassKind passKind,
+            ICellValueFormat columnCellValueFormat)
         {
             if (passKind == PassKind.Data)
             {
@@ -631,11 +664,13 @@ namespace OBeautifulCode.DataStructure.Excel
                 cursor.CellRange.ApplyCellFormat(haveCellFormat.Format);
             }
 
+            ICellValueFormat cellValueFormat = null;
+
             if ((passKind == PassKind.Formatting) && (cell is IHaveCellValueFormat haveCellValueFormat))
             {
-                var valueFormat = haveCellValueFormat.GetCellValueFormat();
+                cellValueFormat = haveCellValueFormat.GetCellValueFormat();
 
-                cursor.CellRange.ApplyCellValueFormat(valueFormat, context);
+                cursor.CellRange.ApplyCellValueFormat(cellValueFormat, context);
             }
 
             var notSupportedException = new NotSupportedException(Invariant($"This type of cell is not supported: {cell.GetType().ToStringReadable()}."));
@@ -644,76 +679,6 @@ namespace OBeautifulCode.DataStructure.Excel
             {
                 if (cell is INullCell)
                 {
-                }
-                else if (cell is ConstCell<string> stringConstCell)
-                {
-                    if (passKind == PassKind.Data)
-                    {
-                        cursor.Cell.Value = stringConstCell.Value;
-                    }
-                }
-                else if (cell is ConstCell<bool> boolConstCell)
-                {
-                    if (passKind == PassKind.Data)
-                    {
-                        cursor.Cell.Value = boolConstCell.Value;
-                    }
-                }
-                else if (cell is ConstCell<int> intConstCell)
-                {
-                    if (passKind == PassKind.Data)
-                    {
-                        cursor.Cell.Value = intConstCell.Value;
-                    }
-                }
-                else if (cell is ConstCell<long> longConstCell)
-                {
-                    if (passKind == PassKind.Data)
-                    {
-                        cursor.Cell.Value = longConstCell.Value;
-                    }
-                }
-                else if (cell is ConstCell<DateTime> dateTimeConstCell)
-                {
-                    if (passKind == PassKind.Data)
-                    {
-                        cursor.Cell.Value = dateTimeConstCell.Value;
-                    }
-                }
-                else if (cell is ConstCell<byte> byteConstCell)
-                {
-                    if (passKind == PassKind.Data)
-                    {
-                        cursor.Cell.Value = byteConstCell.Value;
-                    }
-                }
-                else if (cell is ConstCell<float> floatConstCell)
-                {
-                    if (passKind == PassKind.Data)
-                    {
-                        cursor.Cell.Value = floatConstCell.Value;
-                    }
-                }
-                else if (cell is ConstCell<double> doubleConstCell)
-                {
-                    if (passKind == PassKind.Data)
-                    {
-                        cursor.Cell.Value = doubleConstCell.Value;
-                    }
-                }
-                else if (cell is ConstCell<decimal> decimalConstCell)
-                {
-                    if (passKind == PassKind.Data)
-                    {
-                        cursor.Cell.Value = decimalConstCell.Value;
-                    }
-                }
-                else if (cell is ConstCell<decimal?> nullableDecimalConstCell)
-                {
-                    if ((passKind == PassKind.Data) && (nullableDecimalConstCell.Value != null))
-                    {
-                        cursor.Cell.Value = nullableDecimalConstCell.Value;
-                    }
                 }
                 else if (cell is ConstCell<SourcedMedia> sourcedMedia)
                 {
@@ -728,6 +693,21 @@ namespace OBeautifulCode.DataStructure.Excel
                         else
                         {
                             throw new NotSupportedException(Invariant($"This {nameof(MediaKind)} is not supported: {media.MediaKind}."));
+                        }
+                    }
+                }
+                else if (cell is IConstOutputCell constOutputCell)
+                {
+                    if (passKind == PassKind.Data)
+                    {
+                        var cellValue = ModifyValuePerCellValueFormat(
+                            constOutputCell.GetCellObjectValue(),
+                            cellValueFormat ?? columnCellValueFormat,
+                            context);
+
+                        if (cellValue != null)
+                        {
+                            cursor.Cell.Value = cellValue;
                         }
                     }
                 }
@@ -754,6 +734,48 @@ namespace OBeautifulCode.DataStructure.Excel
             {
                 cursor.CellRange.ApplyTreeLevelFormat(context);
             }
+        }
+
+        private static object ModifyValuePerCellValueFormat(
+            object cellObjectValue,
+            ICellValueFormat columnCellValueFormat,
+            InternalProjectionContext context)
+        {
+            var result = cellObjectValue;
+
+            if (columnCellValueFormat == null)
+            {
+                // no-op
+            }
+            else if (columnCellValueFormat is DateTimeCellValueFormat dateTimeCellValueFormat)
+            {
+                // Is DateTime or non-null nullable DateTime?
+                if ((cellObjectValue != null) && (cellObjectValue is DateTime dateTimeValue))
+                {
+                    var localizeTimeZone = dateTimeCellValueFormat.Format.LocalizeTimeZone ?? (context.ExternalContext.LocalTimeZone != null);
+
+                    var localTimeZone = dateTimeCellValueFormat.Format.LocalTimeZone ?? context.ExternalContext.LocalTimeZone ?? StandardTimeZone.Unknown;
+
+                    if (localizeTimeZone)
+                    {
+                        if (dateTimeValue.Kind != DateTimeKind.Utc)
+                        {
+                            throw new NotImplementedException(Invariant($"Cannot localize time zone of date/time unless it's a UTC date/time."));
+                        }
+
+                        if (localTimeZone == StandardTimeZone.Unknown)
+                        {
+                            throw new InvalidOperationException("Cannot localize time zone of date/time unless the local time zone is specified.");
+                        }
+
+                        var localTimeZoneInfo = localTimeZone.ToTimeZoneInfo();
+
+                        result = TimeZoneInfo.ConvertTimeFromUtc(dateTimeValue, localTimeZoneInfo);
+                    }
+                }
+            }
+
+            return result;
         }
 
         private static void AddHoverOver(
