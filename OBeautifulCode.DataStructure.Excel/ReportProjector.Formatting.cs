@@ -84,14 +84,15 @@ namespace OBeautifulCode.DataStructure.Excel
                 return;
             }
 
-            var implementedOptions = new[]
-            {
-                ReportRenderMode.TabularData,
-            };
-
             var reportRenderMode = (ReportRenderMode)renderMode;
 
-            reportRenderMode.ThrowOnNotImplementedEnumFlag(implementedOptions);
+            switch (reportRenderMode)
+            {
+                case ReportRenderMode.TabularData:
+                    break;
+                default:
+                    throw new NotImplementedException(Invariant($"This {nameof(ReportRenderMode)} is not yet implemented: {reportRenderMode}."));
+            }
         }
 
         private static void ApplySectionFormat(
