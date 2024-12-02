@@ -11,7 +11,7 @@ namespace OBeautifulCode.DataStructure
     /// </summary>
     /// <typeparam name="TValue">The type of value.</typeparam>
     // ReSharper disable once TypeParameterCanBeVariant
-    public interface IGetCellValue<TValue>
+    public interface IGetCellValue<TValue> : IGetCellValue
     {
         /// <summary>
         /// Gets the cell's underlying value.
