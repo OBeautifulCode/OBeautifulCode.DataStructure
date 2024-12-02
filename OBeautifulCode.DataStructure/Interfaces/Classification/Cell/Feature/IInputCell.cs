@@ -37,6 +37,18 @@ namespace OBeautifulCode.DataStructure
             string details = null);
 
         /// <summary>
+        /// Sets the value of the cell.
+        /// </summary>
+        /// <param name="value">The value to use.</param>
+        /// <param name="timestampUtc">The timestamp (in UTC) to use on the event that records the setting of a cell's value.</param>
+        /// <param name="details">OPTIONAL details related to setting the cell's value.  DEFAULT is to omit any details.</param>
+        /// <returns>true if the value was set; otherwise false (the cell value type does not allow for setting it's value using <paramref name="value"/>).</returns>
+        bool TrySetCellValue(
+            object value,
+            DateTime timestampUtc,
+            string details = null);
+
+        /// <summary>
         /// Gets the <see cref="ICellInputAppliedEvent"/> that recorded the cell's value.
         /// </summary>
         /// <returns>

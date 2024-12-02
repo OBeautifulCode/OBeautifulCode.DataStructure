@@ -661,6 +661,118 @@ namespace OBeautifulCode.DataStructure.Test
         }
 
         [Fact]
+        public static void TrySetCellValue_object___Should_return_false___When_value_is_null_but_TValue_is_not_assignable_to_null()
+        {
+            // Arrange
+            var systemUnderTest = new InputCell<int>();
+
+            var timestampUtc = A.Dummy<UtcDateTime>();
+
+            var details = A.Dummy<string>();
+
+            // Act
+            var actual = systemUnderTest.TrySetCellValue(null, timestampUtc, details);
+
+            // Assert
+            actual.AsTest().Must().BeFalse();
+        }
+
+        [Fact]
+        public static void TrySetCellValue_object___Should_return_false___When_value_is_not_null_and_not_assignable_to_TValue()
+        {
+            // Arrange
+            var systemUnderTest = new InputCell<int>();
+
+            var timestampUtc = A.Dummy<UtcDateTime>();
+
+            var details = A.Dummy<string>();
+
+            // Act
+            var actual = systemUnderTest.TrySetCellValue(A.Dummy<Version>(), timestampUtc, details);
+
+            // Assert
+            actual.AsTest().Must().BeFalse();
+        }
+
+        [Fact]
+        public static void TrySetCellValue_object___Should_add_CellInputAppliedEvent_to_the_end_of_InputEvents_and_return_true___When_value_is_null()
+        {
+            // Arrange
+            var systemUnderTest = A.Dummy<InputCell<Version>>().DeepCloneWithInputEvents(null);
+
+            var timestampUtc = A.Dummy<UtcDateTime>();
+
+            var details = A.Dummy<string>();
+
+            IReadOnlyList<CellInputEventBase> expected = new CellInputEventBase[]
+                {
+                    new CellInputAppliedEvent<Version>(null, timestampUtc, details),
+                }
+                .ToList();
+
+            // Act
+            var actual = systemUnderTest.TrySetCellValue(null, timestampUtc, details);
+
+            // Assert
+            actual.AsTest().Must().BeTrue();
+            systemUnderTest.InputEvents.Must().BeEqualTo(expected);
+        }
+
+        [Fact]
+        public static void TrySetCellValue_object___Should_add_CellInputAppliedEvent_to_the_end_of_InputEvents_and_return_true___When_InputEvents_is_null()
+        {
+            // Arrange
+            var systemUnderTest = A.Dummy<InputCell<Version>>().DeepCloneWithInputEvents(null);
+
+            var timestampUtc = A.Dummy<UtcDateTime>();
+
+            var details = A.Dummy<string>();
+
+            var version = A.Dummy<Version>();
+
+            IReadOnlyList<CellInputEventBase> expected = new CellInputEventBase[]
+                {
+                    new CellInputAppliedEvent<Version>(version, timestampUtc, details),
+                }
+                .ToList();
+
+            // Act
+            var actual = systemUnderTest.TrySetCellValue((object)version, timestampUtc, details);
+
+            // Assert
+            actual.AsTest().Must().BeTrue();
+            systemUnderTest.InputEvents.Must().BeEqualTo(expected);
+        }
+
+        [Fact]
+        public static void TrySetCellValue_object___Should_add_CellInputAppliedEvent_to_the_end_of_InputEvents_and_return_true___When_InputEvents_is_not_empty()
+        {
+            // Arrange
+            var systemUnderTest = A.Dummy<InputCell<Version>>();
+
+            var timestampUtc = A.Dummy<UtcDateTime>();
+
+            var details = A.Dummy<string>();
+
+            var version = A.Dummy<Version>();
+
+            IReadOnlyList<CellInputEventBase> expected = new CellInputEventBase[0]
+                .Concat(systemUnderTest.InputEvents)
+                .Concat(new[]
+                {
+                    new CellInputAppliedEvent<Version>(version, timestampUtc, details),
+                })
+                .ToList();
+
+            // Act
+            var actual = systemUnderTest.TrySetCellValue(version, timestampUtc, details);
+
+            // Assert
+            actual.AsTest().Must().BeTrue();
+            systemUnderTest.InputEvents.Must().BeEqualTo(expected);
+        }
+
+        [Fact]
         public static void Record_CellInputEventBase___Should_throw_ArgumentNullException___When_inputEvent_is_null()
         {
             // Arrange

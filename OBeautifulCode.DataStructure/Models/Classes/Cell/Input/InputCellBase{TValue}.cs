@@ -145,6 +145,33 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <inheritdoc />
+        public bool TrySetCellValue(
+            object value,
+            DateTime timestampUtc,
+            string details = null)
+        {
+            var result = false;
+
+            if (value == null)
+            {
+                if (typeof(TValue).IsTypeAssignableToNull())
+                {
+                    this.SetCellValue(default, timestampUtc, details);
+
+                    result = true;
+                }
+            }
+            else if (value is TValue typedValue)
+            {
+                this.SetCellValue(typedValue, timestampUtc, details);
+
+                result = true;
+            }
+
+            return result;
+        }
+
+        /// <inheritdoc />
         public override Type GetValueTypeOrNull() => typeof(TValue);
 
         /// <inheritdoc />
