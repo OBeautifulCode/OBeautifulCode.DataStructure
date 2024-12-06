@@ -552,10 +552,6 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<IReturningOperation<Version>>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new GetConstOp<Version>(
-                                 A.Dummy<Version>()));
-
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new GetNumberOfSignificantDigitsOp(
                                  A.Dummy<IReturningOperation<decimal>>()));
 

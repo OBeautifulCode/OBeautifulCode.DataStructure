@@ -662,7 +662,6 @@
     <Compile Include="Operations\Decimal\SumOpTest.designer.cs">
       <DependentUpon>SumOpTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Operations\GetConstOp{TValue}Test.cs" />
     <Compile Include="Operations\Cell\Located\HasCellValueOpTest.cs" />
     <Compile Include="Operations\Branch\IfThenElseOp{TResult}Test.cs" />
     <Compile Include="Models\Classes\Cell\Input\InputCellBase{TValue}Test.cs" />
@@ -737,9 +736,6 @@
     <Compile Include="Models\Classes\Row\RowTest.cs" />
     <Compile Include="Models\Classes\Row\TableRowsTest.cs" />
     <Compile Include="Models\Classes\Report\TreeTableTest.cs" />
-    <Compile Include="Operations\GetConstOp{TValue}Test.designer.cs">
-      <DependentUpon>GetConstOp{TValue}Test.cs</DependentUpon>
-    </Compile>
     <Compile Include="Operations\MultiStatementOpBase{TStatement,TResult}Test.cs" />
     <Compile Include="Operations\Bool\NotOpTest.cs" />
     <Compile Include="Models\Classes\Cell\Null\NullCellBaseTest.cs" />

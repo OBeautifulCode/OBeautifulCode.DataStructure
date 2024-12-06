@@ -23,7 +23,6 @@ namespace OBeautifulCode.DataStructure
     /// <typeparam name="TValue">The type of value.</typeparam>
     [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = ObcSuppressBecause.CA1506_AvoidExcessiveClassCoupling_DisagreeWithAssessment)]
     public class DataStructureCellProtocols<TValue> :
-          ISyncAndAsyncReturningProtocol<GetConstOp<TValue>, TValue>,
           ISyncAndAsyncReturningProtocol<ThrowOpExecutionAbortedExceptionOp<TValue>, TValue>,
           ISyncAndAsyncReturningProtocol<ThrowOpExecutionDeemedNotApplicableExceptionOp<TValue>, TValue>,
           ISyncAndAsyncVoidProtocol<ExecuteOperationCellIfNecessaryOp<TValue>>,
@@ -81,34 +80,6 @@ namespace OBeautifulCode.DataStructure
             this.protocolFactory = protocolFactory;
             this.timestampUtc = timestampUtc;
             this.getRecalcPhaseFunc = getRecalcPhaseFunc;
-        }
-
-        /// <inheritdoc />
-        public TValue Execute(
-            GetConstOp<TValue> operation)
-        {
-            if (operation == null)
-            {
-                throw new ArgumentNullException(nameof(operation));
-            }
-
-            var result = operation.Value;
-
-            return result;
-        }
-
-        /// <inheritdoc />
-        public async Task<TValue> ExecuteAsync(
-            GetConstOp<TValue> operation)
-        {
-            if (operation == null)
-            {
-                throw new ArgumentNullException(nameof(operation));
-            }
-
-            var result = await Task.FromResult(operation.Value);
-
-            return result;
         }
 
         /// <inheritdoc />

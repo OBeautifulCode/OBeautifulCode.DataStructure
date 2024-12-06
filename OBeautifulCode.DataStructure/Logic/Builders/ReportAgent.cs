@@ -104,6 +104,9 @@ namespace OBeautifulCode.DataStructure
         private static readonly ConcurrentDictionary<Type, ConstructorInfo> CachedTypeToExecuteOperationCellIfNecessaryOpConstructorInfoMap =
             new ConcurrentDictionary<Type, ConstructorInfo>();
 
+        private static readonly ConcurrentDictionary<Type, ConstructorInfo> CachedTypeToGetConstValueProtocolConstructorInfoMap =
+            new ConcurrentDictionary<Type, ConstructorInfo>();
+
         private static readonly ConcurrentDictionary<Type, ConstructorInfo> CachedTypeToCellProtocolsConstructorInfoMap =
             new ConcurrentDictionary<Type, ConstructorInfo>();
 
@@ -876,14 +879,18 @@ namespace OBeautifulCode.DataStructure
 
             var coreProtocolsFactory = new ProtocolFactory();
 
+            ConstructorInfo GetConstValueProtocolFunc(Type type) => typeof(GetConstValueProtocol<>).MakeGenericType(type).GetConstructors().Single();
             ConstructorInfo GetCellProtocolsFunc(Type type) => typeof(DataStructureCellProtocols<>).MakeGenericType(type).GetConstructors().Single();
             ConstructorInfo GetConvenienceProtocolsFunc(Type type) => typeof(DataStructureConvenienceProtocols<>).MakeGenericType(type).GetConstructors().Single();
 
+            var getConstValueProtocolConstructorInfoParams = new object[] { };
             var cellProtocolsConstructorInfoParams = new object[] { this, result, timestampUtc, getRecalcPhaseFunc };
             var convenienceProtocolsConstructorInfoParams = new object[] { result };
 
             foreach (var typeForCoreCellOps in typesForCoreCellOps)
             {
+                RegisterProtocols(typeForCoreCellOps, CachedTypeToGetConstValueProtocolConstructorInfoMap, coreProtocolsFactory, GetConstValueProtocolFunc, getConstValueProtocolConstructorInfoParams);
+
                 RegisterProtocols(typeForCoreCellOps, CachedTypeToCellProtocolsConstructorInfoMap, coreProtocolsFactory, GetCellProtocolsFunc, cellProtocolsConstructorInfoParams);
 
                 RegisterProtocols(typeForCoreCellOps, CachedTypeToConvenienceProtocolsConstructorInfoMap, coreProtocolsFactory, GetConvenienceProtocolsFunc, convenienceProtocolsConstructorInfoParams);

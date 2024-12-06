@@ -195,7 +195,6 @@ namespace OBeautifulCode.DataStructure.Test
                         A.Dummy<ExecuteOperationCellIfNecessaryOp<Version>>(),
                         A.Dummy<GetAvailabilityOp>(),
                         A.Dummy<GetCellOpExecutionOutcomeOp>(),
-                        A.Dummy<GetConstOp<Version>>(),
                         A.Dummy<GetNumberOfSignificantDigitsOp>(),
                         A.Dummy<GetValidityOp>(),
                         A.Dummy<HasCellValueOp>(),

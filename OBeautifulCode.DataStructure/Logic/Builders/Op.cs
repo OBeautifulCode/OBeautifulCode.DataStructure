@@ -55,10 +55,10 @@ namespace OBeautifulCode.DataStructure
         /// <returns>
         /// An operation that gets the specified value.
         /// </returns>
-        public static GetConstOp<TValue> Const<TValue>(
+        public static GetConstValueOp<TValue> Const<TValue>(
             TValue value)
         {
-            var result = new GetConstOp<TValue>(value);
+            var result = new GetConstValueOp<TValue>(value);
 
             return result;
         }

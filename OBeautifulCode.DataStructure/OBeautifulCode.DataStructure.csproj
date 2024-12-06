@@ -660,9 +660,6 @@
     <Compile Include="Operations\Decimal\SumOp.designer.cs">
       <DependentUpon>SumOp.cs</DependentUpon>
     </Compile>
-    <Compile Include="Operations\GetConstOp{TValue}.designer.cs">
-      <DependentUpon>GetConstOp{TValue}.cs</DependentUpon>
-    </Compile>
     <Compile Include="Operations\Integer\GetNumberOfSignificantDigitsOp.cs" />
     <Compile Include="Operations\Integer\GetNumberOfSignificantDigitsOp.designer.cs">
       <DependentUpon>GetNumberOfSignificantDigitsOp.cs</DependentUpon>
@@ -724,7 +721,6 @@
     <Compile Include="Operations\Cell\Referenced\ExecuteOperationCellIfNecessaryOp{TValue}.cs" />
     <Compile Include="Operations\Branch\IfThenElseOp{TResult}.cs" />
     <Compile Include="Operations\Cell\Located\HasCellValueOp.cs" />
-    <Compile Include="Operations\GetConstOp{TValue}.cs" />
     <Compile Include="Operations\Cell\Located\GetCellValueOp{TResult}.cs" />
     <Compile Include="Operations\ValidationResult\ValidateOp.designer.cs">
       <DependentUpon>ValidateOp.cs</DependentUpon>

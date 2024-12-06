@@ -22,11 +22,11 @@ namespace OBeautifulCode.DataStructure.Test
         private static readonly IProtocolFactory ProtocolFactory = new ProtocolFactory(
             new Dictionary<Type, Func<IProtocol>>
             {
-                { typeof(ConstProtocol<int>), () => new ConstProtocol<int>() },
-                { typeof(ConstProtocol<bool>), () => new ConstProtocol<bool>() },
-                { typeof(ConstProtocol<decimal>), () => new ConstProtocol<decimal>() },
-                { typeof(ConstProtocol<CompareOperator>), () => new ConstProtocol<CompareOperator>() },
-                { typeof(ConstProtocol<ValidationBoolWithMessage>), () => new ConstProtocol<ValidationBoolWithMessage>() },
+                { typeof(GetConstValueProtocol<int>), () => new GetConstValueProtocol<int>() },
+                { typeof(GetConstValueProtocol<bool>), () => new GetConstValueProtocol<bool>() },
+                { typeof(GetConstValueProtocol<decimal>), () => new GetConstValueProtocol<decimal>() },
+                { typeof(GetConstValueProtocol<CompareOperator>), () => new GetConstValueProtocol<CompareOperator>() },
+                { typeof(GetConstValueProtocol<ValidationBoolWithMessage>), () => new GetConstValueProtocol<ValidationBoolWithMessage>() },
                 { typeof(ThrowProtocol<int>), () => new ThrowProtocol<int>() },
                 { typeof(ThrowProtocol<bool>), () => new ThrowProtocol<bool>() },
                 { typeof(ThrowProtocol<decimal>), () => new ThrowProtocol<decimal>() },
@@ -2544,22 +2544,6 @@ namespace OBeautifulCode.DataStructure.Test
 
             // Assert
             actual.AsTest().Must().BeEqualTo(.5m);
-        }
-
-        private class ConstProtocol<TValue> : SyncSpecificReturningProtocolBase<GetConstOp<TValue>, TValue>
-        {
-            public override TValue Execute(
-                GetConstOp<TValue> operation)
-            {
-                if (operation == null)
-                {
-                    throw new ArgumentNullException(nameof(operation));
-                }
-
-                var result = operation.Value;
-
-                return result;
-            }
         }
 
         private class ThrowProtocol<TValue> : SyncSpecificReturningProtocolBase<ThrowOpExecutionAbortedExceptionOp<TValue>, TValue>
