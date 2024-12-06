@@ -2262,7 +2262,9 @@ namespace OBeautifulCode.DataStructure.Test
 
             var protocolFactoryFuncs = new Func<IProtocolFactory, IProtocolFactory>[]
             {
-                frameworkFactory => new ProprietaryProtocols(frameworkFactory).ToProtocolFactory(),
+                frameworkFactory => new TileProtocol(frameworkFactory).ToProtocolFactory(),
+                frameworkFactory => new ThisCellGreaterThanZeroProtocol(frameworkFactory).ToProtocolFactory(),
+
             };
 
             // Act
@@ -2301,7 +2303,8 @@ namespace OBeautifulCode.DataStructure.Test
 
             var protocolFactoryFuncs = new Func<IProtocolFactory, IProtocolFactory>[]
             {
-                frameworkFactory => new ProprietaryProtocols(frameworkFactory).ToProtocolFactory(),
+                frameworkFactory => new TileProtocol(frameworkFactory).ToProtocolFactory(),
+                frameworkFactory => new ThisCellGreaterThanZeroProtocol(frameworkFactory).ToProtocolFactory(),
             };
 
             // Act
@@ -2340,7 +2343,8 @@ namespace OBeautifulCode.DataStructure.Test
 
             var protocolFactoryFuncs = new Func<IProtocolFactory, IProtocolFactory>[]
             {
-                frameworkFactory => new ProprietaryProtocols(frameworkFactory).ToProtocolFactory(),
+                frameworkFactory => new TileProtocol(frameworkFactory).ToProtocolFactory(),
+                frameworkFactory => new ThisCellGreaterThanZeroProtocol(frameworkFactory).ToProtocolFactory(),
             };
 
             var isForProfitCell = reportAgent.GetCell<IInputCell>(new InReportCellLocator(SectionIds.Section1, CellIds.IsForProfit));
@@ -2382,7 +2386,8 @@ namespace OBeautifulCode.DataStructure.Test
 
             var protocolFactoryFuncs = new Func<IProtocolFactory, IProtocolFactory>[]
             {
-                frameworkFactory => new ProprietaryProtocols(frameworkFactory).ToProtocolFactory(),
+                frameworkFactory => new TileProtocol(frameworkFactory).ToProtocolFactory(),
+                frameworkFactory => new ThisCellGreaterThanZeroProtocol(frameworkFactory).ToProtocolFactory(),
             };
 
             var isForProfitCell = reportAgent.GetCell<IInputCell>(new InReportCellLocator(SectionIds.Section1, CellIds.IsForProfit));
@@ -2424,7 +2429,8 @@ namespace OBeautifulCode.DataStructure.Test
 
             var protocolFactoryFuncs = new Func<IProtocolFactory, IProtocolFactory>[]
             {
-                frameworkFactory => new ProprietaryProtocols(frameworkFactory).ToProtocolFactory(),
+                frameworkFactory => new TileProtocol(frameworkFactory).ToProtocolFactory(),
+                frameworkFactory => new ThisCellGreaterThanZeroProtocol(frameworkFactory).ToProtocolFactory(),
             };
 
             var isForProfitCell = reportAgent.GetCell<IInputCell>(new InReportCellLocator(SectionIds.Section1, CellIds.IsForProfit));
@@ -2466,7 +2472,8 @@ namespace OBeautifulCode.DataStructure.Test
 
             var protocolFactoryFuncs = new Func<IProtocolFactory, IProtocolFactory>[]
             {
-                frameworkFactory => new ProprietaryProtocols(frameworkFactory).ToProtocolFactory(),
+                frameworkFactory => new TileProtocol(frameworkFactory).ToProtocolFactory(),
+                frameworkFactory => new ThisCellGreaterThanZeroProtocol(frameworkFactory).ToProtocolFactory(),
             };
 
             var isForProfitCell = reportAgent.GetCell<IInputCell>(new InReportCellLocator(SectionIds.Section1, CellIds.IsForProfit));
@@ -2508,7 +2515,8 @@ namespace OBeautifulCode.DataStructure.Test
 
             var protocolFactoryFuncs = new Func<IProtocolFactory, IProtocolFactory>[]
             {
-                frameworkFactory => new ProprietaryProtocols(frameworkFactory).ToProtocolFactory(),
+                frameworkFactory => new TileProtocol(frameworkFactory).ToProtocolFactory(),
+                frameworkFactory => new ThisCellGreaterThanZeroProtocol(frameworkFactory).ToProtocolFactory(),
             };
 
             var isForProfitCell = reportAgent.GetCell<IInputCell>(new InReportCellLocator(SectionIds.Section1, CellIds.IsForProfit));
@@ -2552,7 +2560,8 @@ namespace OBeautifulCode.DataStructure.Test
 
             var protocolFactoryFuncs = new Func<IProtocolFactory, IProtocolFactory>[]
             {
-                frameworkFactory => new ProprietaryProtocols(frameworkFactory).ToProtocolFactory(),
+                frameworkFactory => new TileProtocol(frameworkFactory).ToProtocolFactory(),
+                frameworkFactory => new ThisCellGreaterThanZeroProtocol(frameworkFactory).ToProtocolFactory(),
             };
 
             var isForProfitCell = reportAgent.GetCell<IInputCell>(new InReportCellLocator(SectionIds.Section1, CellIds.IsForProfit));
@@ -2597,7 +2606,8 @@ namespace OBeautifulCode.DataStructure.Test
 
             var protocolFactoryFuncs = new Func<IProtocolFactory, IProtocolFactory>[]
             {
-                frameworkFactory => new ProprietaryProtocols(frameworkFactory).ToProtocolFactory(),
+                frameworkFactory => new TileProtocol(frameworkFactory).ToProtocolFactory(),
+                frameworkFactory => new ThisCellGreaterThanZeroProtocol(frameworkFactory).ToProtocolFactory(),
             };
 
             // Act
@@ -2645,7 +2655,8 @@ namespace OBeautifulCode.DataStructure.Test
 
             var protocolFactoryFuncs = new Func<IProtocolFactory, IProtocolFactory>[]
             {
-                frameworkFactory => new ProprietaryProtocols(frameworkFactory).ToProtocolFactory(),
+                frameworkFactory => new TileProtocol(frameworkFactory).ToProtocolFactory(),
+                frameworkFactory => new ThisCellGreaterThanZeroProtocol(frameworkFactory).ToProtocolFactory(),
             };
 
             // Act
@@ -2693,7 +2704,8 @@ namespace OBeautifulCode.DataStructure.Test
 
             var protocolFactoryFuncs = new Func<IProtocolFactory, IProtocolFactory>[]
             {
-                frameworkFactory => new ProprietaryProtocols(frameworkFactory).ToProtocolFactory(),
+                frameworkFactory => new TileProtocol(frameworkFactory).ToProtocolFactory(),
+                frameworkFactory => new ThisCellGreaterThanZeroProtocol(frameworkFactory).ToProtocolFactory(),
             };
 
             var salesFteCell = reportAgent.GetCell<IInputCell>(new InReportCellLocator(SectionIds.Section2, CellIds.SalesFte));
@@ -2745,7 +2757,8 @@ namespace OBeautifulCode.DataStructure.Test
 
             var protocolFactoryFuncs = new Func<IProtocolFactory, IProtocolFactory>[]
             {
-                frameworkFactory => new ProprietaryProtocols(frameworkFactory).ToProtocolFactory(),
+                frameworkFactory => new TileProtocol(frameworkFactory).ToProtocolFactory(),
+                frameworkFactory => new ThisCellGreaterThanZeroProtocol(frameworkFactory).ToProtocolFactory(),
             };
 
             var salesFteCell = reportAgent.GetCell<IInputCell>(new InReportCellLocator(SectionIds.Section2, CellIds.SalesFte));
@@ -2797,7 +2810,8 @@ namespace OBeautifulCode.DataStructure.Test
 
             var protocolFactoryFuncs = new Func<IProtocolFactory, IProtocolFactory>[]
             {
-                frameworkFactory => new ProprietaryProtocols(frameworkFactory).ToProtocolFactory(),
+                frameworkFactory => new TileProtocol(frameworkFactory).ToProtocolFactory(),
+                frameworkFactory => new ThisCellGreaterThanZeroProtocol(frameworkFactory).ToProtocolFactory(),
             };
 
             var salesFteCell = reportAgent.GetCell<IInputCell>(new InReportCellLocator(SectionIds.Section2, CellIds.SalesFte));
@@ -2849,7 +2863,8 @@ namespace OBeautifulCode.DataStructure.Test
 
             var protocolFactoryFuncs = new Func<IProtocolFactory, IProtocolFactory>[]
             {
-                frameworkFactory => new ProprietaryProtocols(frameworkFactory).ToProtocolFactory(),
+                frameworkFactory => new TileProtocol(frameworkFactory).ToProtocolFactory(),
+                frameworkFactory => new ThisCellGreaterThanZeroProtocol(frameworkFactory).ToProtocolFactory(),
             };
 
             var salesFteCell = reportAgent.GetCell<IInputCell>(new InReportCellLocator(SectionIds.Section2, CellIds.SalesFte));
@@ -2901,7 +2916,8 @@ namespace OBeautifulCode.DataStructure.Test
 
             var protocolFactoryFuncs = new Func<IProtocolFactory, IProtocolFactory>[]
             {
-                frameworkFactory => new ProprietaryProtocols(frameworkFactory).ToProtocolFactory(),
+                frameworkFactory => new TileProtocol(frameworkFactory).ToProtocolFactory(),
+                frameworkFactory => new ThisCellGreaterThanZeroProtocol(frameworkFactory).ToProtocolFactory(),
             };
 
             NamedDecimalSet expectedValue = new List<NamedValue<decimal>>
@@ -2938,7 +2954,8 @@ namespace OBeautifulCode.DataStructure.Test
 
             var protocolFactoryFuncs = new Func<IProtocolFactory, IProtocolFactory>[]
             {
-                frameworkFactory => new ProprietaryProtocols(frameworkFactory).ToProtocolFactory(),
+                frameworkFactory => new TileProtocol(frameworkFactory).ToProtocolFactory(),
+                frameworkFactory => new ThisCellGreaterThanZeroProtocol(frameworkFactory).ToProtocolFactory(),
             };
 
             NamedDecimalSet expectedValue = new List<NamedValue<decimal>>
@@ -2989,10 +3006,10 @@ namespace OBeautifulCode.DataStructure.Test
                 id: CellIds.SalesFte,
                 validation:
                     Cell.CreateValidation(
-                        new[]
+                        new ValidationStepBase[]
                         {
-                            new ValidationStep(Cell.Self().HasValue(), Op.Const("input required for sales")),
-                            new ValidationStep(
+                            new SimpleBooleanValidationStep(Cell.Self().HasValue(), "input required for sales"),
+                            new MessageByOpBooleanValidationStep(
                                 Op.IsGreaterThanOrEqualTo(
                                     Cell.Self().GetValue<decimal>(),
                                     Op.Const(0m)),
@@ -3003,14 +3020,14 @@ namespace OBeautifulCode.DataStructure.Test
                 id: CellIds.WarehouseFte,
                 validation:
                     Cell.CreateValidation(
-                        new[]
+                        new ValidationStepBase[]
                         {
-                            new ValidationStep(Cell.Self().HasValue(), Op.Const("input required for warehouse")),
-                            new ValidationStep(
+                            new MessageByOpBooleanValidationStep(Cell.Self().HasValue(), Op.Const("input required for warehouse")),
+                            new SimpleBooleanValidationStep(
                                 Op.IsGreaterThanOrEqualTo(
                                     Cell.Self().GetValue<decimal>(),
                                     Op.Const(0m)),
-                                Op.Const("warehouse must be >= 0")),
+                                "warehouse must be >= 0"),
                         }));
 
             var numberOfWarehouseSupportFteCell = Cell.CreateOpCell(
@@ -3036,18 +3053,15 @@ namespace OBeautifulCode.DataStructure.Test
                             Op.Abort<decimal>("cannot perform sum")),
                     validation:
                         Cell.CreateValidation(
-                            new[]
+                            new ValidationStepBase[]
                             {
-                                new ValidationStep(
+                                new MessageByOpBooleanValidationStep(
                                     Op.IsEqualTo(
                                         Cell.Self().GetOpExecutionOutcome(),
                                         Op.Const(CellOpExecutionOutcome.Completed)),
                                     falseAction: ValidationStepAction.StopToAbort),
-                                new ValidationStep(
-                                    Op.IsGreaterThan(
-                                        Cell.Self().GetValue<decimal>(),
-                                        Op.Const(0m)),
-                                    Op.Const("total must be >= 0")),
+                                new MessageContainedBooleanValidationStep(
+                                    new ThisCellGreaterThanZeroOp()),
                             }));
 
             var scoresCell = Cell.CreateConstCell<NamedDecimalSet>(
@@ -3209,11 +3223,15 @@ namespace OBeautifulCode.DataStructure.Test
             public IReturningOperation<NamedDecimalSet> SetOp { get; private set; }
         }
 
-        private class ProprietaryProtocols : SyncSpecificReturningProtocolBase<TileOp, NamedDecimalSet>
+        private class ThisCellGreaterThanZeroOp : IReturningOperation<ValidationBoolWithMessage>
+        {
+        }
+
+        private class TileProtocol : SyncSpecificReturningProtocolBase<TileOp, NamedDecimalSet>
         {
             private readonly ISyncReturningProtocol<GetProtocolOp, IProtocol> protocolFactory;
 
-            public ProprietaryProtocols(
+            public TileProtocol(
                 IProtocolFactory protocolFactory)
             {
                 if (protocolFactory == null)
@@ -3227,6 +3245,11 @@ namespace OBeautifulCode.DataStructure.Test
             public override NamedDecimalSet Execute(
                 TileOp operation)
             {
+                if (operation == null)
+                {
+                    throw new ArgumentNullException(nameof(operation));
+                }
+
                 var set = this.protocolFactory.GetProtocolAndExecuteViaReflection<NamedDecimalSet>(operation.SetOp);
 
                 var tiles = this.protocolFactory.GetProtocolAndExecuteViaReflection<int>(operation.NumberOfTilesOp);
@@ -3250,6 +3273,40 @@ namespace OBeautifulCode.DataStructure.Test
                     new NamedValue<decimal>("median", Convert.ToDecimal(median)),
                     new NamedValue<decimal>("upper-quartile", Convert.ToDecimal(upperQuartile)),
                 };
+
+                return result;
+            }
+        }
+
+        private class ThisCellGreaterThanZeroProtocol : SyncSpecificReturningProtocolBase<ThisCellGreaterThanZeroOp, ValidationBoolWithMessage>
+        {
+            private readonly ISyncReturningProtocol<GetProtocolOp, IProtocol> protocolFactory;
+
+            public ThisCellGreaterThanZeroProtocol(
+                IProtocolFactory protocolFactory)
+            {
+                if (protocolFactory == null)
+                {
+                    throw new ArgumentNullException(nameof(protocolFactory));
+                }
+
+                this.protocolFactory = protocolFactory;
+            }
+
+            public override ValidationBoolWithMessage Execute(
+                ThisCellGreaterThanZeroOp operation)
+            {
+                if (operation == null)
+                {
+                    throw new ArgumentNullException(nameof(operation));
+                }
+
+                var outcome = this.protocolFactory.GetProtocolAndExecuteViaReflection<bool>(
+                    Op.IsGreaterThan(
+                        Cell.Self().GetValue<decimal>(),
+                        Op.Const(0m)));
+
+                var result = new ValidationBoolWithMessage(outcome, "total must be >= 0");
 
                 return result;
             }

@@ -341,7 +341,7 @@ namespace OBeautifulCode.DataStructure
         /// The validation.
         /// </returns>
         public static Validation CreateValidation(
-            IReadOnlyList<ValidationStep> steps,
+            IReadOnlyList<ValidationStepBase> steps,
             IReturningOperation<string> endMessageOp = null,
             Validity endValidity = Validity.Valid,
             MessageFormatKind? messageFormatKind = null,

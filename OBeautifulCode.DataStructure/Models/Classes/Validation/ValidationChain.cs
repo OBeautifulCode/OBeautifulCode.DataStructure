@@ -26,7 +26,7 @@ namespace OBeautifulCode.DataStructure
         /// <param name="endMessageOp">OPTIONAL operation to execute to get the message that should be emitted when all <paramref name="steps"/> have been evaluated and none have stopped the validation (we've reached the end of the chain).  DEFAULT is to omit this message.</param>
         /// <param name="endValidity">OPTIONAL value that specifies the validity of the subject when all <paramref name="steps"/> have been evaluated and none have stopped the validation (we've reached the end of the chain).  DEFAULT is to determine that the subject is valid.</param>
         public ValidationChain(
-            IReadOnlyList<ValidationStep> steps,
+            IReadOnlyList<ValidationStepBase> steps,
             IReturningOperation<string> endMessageOp = null,
             Validity endValidity = Validity.Valid)
         {
@@ -58,7 +58,7 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Gets the individual validation steps.
         /// </summary>
-        public IReadOnlyList<ValidationStep> Steps { get; private set; }
+        public IReadOnlyList<ValidationStepBase> Steps { get; private set; }
 
         /// <summary>
         /// Gets the operation to execute to get the message that should be emitted when all <see cref="Steps"/> have been evaluated and none have stopped the validation (we've reached the end of the chain).

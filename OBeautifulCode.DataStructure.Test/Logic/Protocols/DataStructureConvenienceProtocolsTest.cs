@@ -26,6 +26,7 @@ namespace OBeautifulCode.DataStructure.Test
                 { typeof(ConstProtocol<bool>), () => new ConstProtocol<bool>() },
                 { typeof(ConstProtocol<decimal>), () => new ConstProtocol<decimal>() },
                 { typeof(ConstProtocol<CompareOperator>), () => new ConstProtocol<CompareOperator>() },
+                { typeof(ConstProtocol<ValidationBoolWithMessage>), () => new ConstProtocol<ValidationBoolWithMessage>() },
                 { typeof(ThrowProtocol<int>), () => new ThrowProtocol<int>() },
                 { typeof(ThrowProtocol<bool>), () => new ThrowProtocol<bool>() },
                 { typeof(ThrowProtocol<decimal>), () => new ThrowProtocol<decimal>() },
@@ -983,7 +984,7 @@ namespace OBeautifulCode.DataStructure.Test
         }
 
         [Fact]
-        public static void Execute_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_Invalid_and_MessageOp_is_StopMessageOp___When_executing_ValidationStep_operation_returns_true_and_TrueAction_is_StopAsInvalid()
+        public static void Execute_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_Invalid_and_MessageOp_is_StopMessageOp___When_executing_SimpleBooleanValidationStep_operation_returns_false_and_FalseAction_is_StopAsInvalid()
         {
             // Arrange
             var systemUnderTest = new DataStructureConvenienceProtocols<int>(ProtocolFactory);
@@ -992,9 +993,9 @@ namespace OBeautifulCode.DataStructure.Test
 
             var operation = Op.Validate(new[]
             {
-                new ValidationStep(Op.Const(true), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
-                new ValidationStep(Op.Const(false), Op.Const(stopMessage), ValidationStepAction.NextStep, ValidationStepAction.StopAsInvalid),
-                new ValidationStep(Op.Abort<bool>(), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new SimpleBooleanValidationStep(Op.Const(true), A.Dummy<string>(), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new SimpleBooleanValidationStep(Op.Const(false), stopMessage, ValidationStepAction.NextStep, ValidationStepAction.StopAsInvalid),
+                new SimpleBooleanValidationStep(Op.Abort<bool>(), A.Dummy<string>(), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
             });
 
             var expected = new ValidationResult(Op.Const(Validity.Invalid), Op.Const(stopMessage));
@@ -1007,7 +1008,7 @@ namespace OBeautifulCode.DataStructure.Test
         }
 
         [Fact]
-        public static void Execute_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_Invalid_and_MessageOp_is_StopMessageOp___When_executing_ValidationStep_operation_returns_false_and_FalseAction_is_StopAsInvalid()
+        public static void Execute_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_Invalid_and_MessageOp_is_StopMessageOp___When_executing_SimpleBooleanValidationStep_operation_returns_true_and_TrueAction_is_StopAsInvalid()
         {
             // Arrange
             var systemUnderTest = new DataStructureConvenienceProtocols<int>(ProtocolFactory);
@@ -1016,9 +1017,9 @@ namespace OBeautifulCode.DataStructure.Test
 
             var operation = Op.Validate(new[]
             {
-                new ValidationStep(Op.Const(false), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
-                new ValidationStep(Op.Const(true), Op.Const(stopMessage), ValidationStepAction.StopAsInvalid, ValidationStepAction.NextStep),
-                new ValidationStep(Op.Abort<bool>(), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new SimpleBooleanValidationStep(Op.Const(false), A.Dummy<string>(), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new SimpleBooleanValidationStep(Op.Const(true), stopMessage, ValidationStepAction.StopAsInvalid, ValidationStepAction.NextStep),
+                new SimpleBooleanValidationStep(Op.Abort<bool>(), A.Dummy<string>(), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
             });
 
             var expected = new ValidationResult(Op.Const(Validity.Invalid), Op.Const(stopMessage));
@@ -1031,7 +1032,7 @@ namespace OBeautifulCode.DataStructure.Test
         }
 
         [Fact]
-        public static void Execute_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_Valid_and_MessageOp_is_StopMessageOp___When_executing_ValidationStep_operation_returns_true_and_TrueAction_is_StopAsValid()
+        public static void Execute_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_Valid_and_MessageOp_is_StopMessageOp___When_executing_SimpleBooleanValidationStep_operation_returns_false_and_FalseAction_is_StopAsValid()
         {
             // Arrange
             var systemUnderTest = new DataStructureConvenienceProtocols<int>(ProtocolFactory);
@@ -1040,9 +1041,9 @@ namespace OBeautifulCode.DataStructure.Test
 
             var operation = Op.Validate(new[]
             {
-                new ValidationStep(Op.Const(true), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
-                new ValidationStep(Op.Const(false), Op.Const(stopMessage), ValidationStepAction.NextStep, ValidationStepAction.StopAsValid),
-                new ValidationStep(Op.Abort<bool>(), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new SimpleBooleanValidationStep(Op.Const(true), A.Dummy<string>(), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new SimpleBooleanValidationStep(Op.Const(false), stopMessage, ValidationStepAction.NextStep, ValidationStepAction.StopAsValid),
+                new SimpleBooleanValidationStep(Op.Abort<bool>(), A.Dummy<string>(), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
             });
 
             var expected = new ValidationResult(Op.Const(Validity.Valid), Op.Const(stopMessage));
@@ -1055,7 +1056,7 @@ namespace OBeautifulCode.DataStructure.Test
         }
 
         [Fact]
-        public static void Execute_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_Valid_and_MessageOp_is_StopMessageOp___When_executing_ValidationStep_operation_returns_false_and_FalseAction_is_StopAsValid()
+        public static void Execute_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_Valid_and_MessageOp_is_StopMessageOp___When_executing_SimpleBooleanValidationStep_operation_returns_true_and_TrueAction_is_StopAsValid()
         {
             // Arrange
             var systemUnderTest = new DataStructureConvenienceProtocols<int>(ProtocolFactory);
@@ -1064,9 +1065,9 @@ namespace OBeautifulCode.DataStructure.Test
 
             var operation = Op.Validate(new[]
             {
-                new ValidationStep(Op.Const(false), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
-                new ValidationStep(Op.Const(true), Op.Const(stopMessage), ValidationStepAction.StopAsValid, ValidationStepAction.NextStep),
-                new ValidationStep(Op.Abort<bool>(), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new SimpleBooleanValidationStep(Op.Const(false), A.Dummy<string>(), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new SimpleBooleanValidationStep(Op.Const(true), stopMessage, ValidationStepAction.StopAsValid, ValidationStepAction.NextStep),
+                new SimpleBooleanValidationStep(Op.Abort<bool>(), A.Dummy<string>(), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
             });
 
             var expected = new ValidationResult(Op.Const(Validity.Valid), Op.Const(stopMessage));
@@ -1079,7 +1080,7 @@ namespace OBeautifulCode.DataStructure.Test
         }
 
         [Fact]
-        public static void Execute_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_Aborted_and_MessageOp_is_StopMessageOp___When_executing_ValidationStep_operation_returns_true_and_TrueAction_is_StopToAbort()
+        public static void Execute_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_Aborted_and_MessageOp_is_StopMessageOp___When_executing_SimpleBooleanValidationStep_operation_returns_false_and_FalseAction_is_StopToAbort()
         {
             // Arrange
             var systemUnderTest = new DataStructureConvenienceProtocols<int>(ProtocolFactory);
@@ -1088,9 +1089,9 @@ namespace OBeautifulCode.DataStructure.Test
 
             var operation = Op.Validate(new[]
             {
-                new ValidationStep(Op.Const(true), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
-                new ValidationStep(Op.Const(false), Op.Const(stopMessage), ValidationStepAction.NextStep, ValidationStepAction.StopToAbort),
-                new ValidationStep(Op.Abort<bool>(), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new SimpleBooleanValidationStep(Op.Const(true), A.Dummy<string>(), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new SimpleBooleanValidationStep(Op.Const(false), stopMessage, ValidationStepAction.NextStep, ValidationStepAction.StopToAbort),
+                new SimpleBooleanValidationStep(Op.Abort<bool>(), A.Dummy<string>(), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
             });
 
             var expected = new ValidationResult(Op.Const(Validity.Aborted), Op.Const(stopMessage));
@@ -1103,7 +1104,7 @@ namespace OBeautifulCode.DataStructure.Test
         }
 
         [Fact]
-        public static void Execute_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_Aborted_and_MessageOp_is_StopMessageOp___When_executing_ValidationStep_operation_returns_false_and_FalseAction_is_StopToAbort()
+        public static void Execute_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_Aborted_and_MessageOp_is_StopMessageOp___When_executing_SimpleBooleanValidationStep_operation_returns_true_and_TrueAction_is_StopToAbort()
         {
             // Arrange
             var systemUnderTest = new DataStructureConvenienceProtocols<int>(ProtocolFactory);
@@ -1112,9 +1113,9 @@ namespace OBeautifulCode.DataStructure.Test
 
             var operation = Op.Validate(new[]
             {
-                new ValidationStep(Op.Const(false), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
-                new ValidationStep(Op.Const(true), Op.Const(stopMessage), ValidationStepAction.StopToAbort, ValidationStepAction.NextStep),
-                new ValidationStep(Op.Abort<bool>(), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new SimpleBooleanValidationStep(Op.Const(false), A.Dummy<string>(), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new SimpleBooleanValidationStep(Op.Const(true), stopMessage, ValidationStepAction.StopToAbort, ValidationStepAction.NextStep),
+                new SimpleBooleanValidationStep(Op.Abort<bool>(), A.Dummy<string>(), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
             });
 
             var expected = new ValidationResult(Op.Const(Validity.Aborted), Op.Const(stopMessage));
@@ -1127,7 +1128,7 @@ namespace OBeautifulCode.DataStructure.Test
         }
 
         [Fact]
-        public static void Execute_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_NotApplicable_and_MessageOp_is_StopMessageOp___When_executing_ValidationStep_operation_returns_true_and_TrueAction_is_StopAsNotApplicable()
+        public static void Execute_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_NotApplicable_and_MessageOp_is_StopMessageOp___When_executing_SimpleBooleanValidationStep_operation_returns_false_and_FalseAction_is_StopAsNotApplicable()
         {
             // Arrange
             var systemUnderTest = new DataStructureConvenienceProtocols<int>(ProtocolFactory);
@@ -1136,9 +1137,9 @@ namespace OBeautifulCode.DataStructure.Test
 
             var operation = Op.Validate(new[]
             {
-                new ValidationStep(Op.Const(true), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
-                new ValidationStep(Op.Const(false), Op.Const(stopMessage), ValidationStepAction.NextStep, ValidationStepAction.StopAsNotApplicable),
-                new ValidationStep(Op.Abort<bool>(), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new SimpleBooleanValidationStep(Op.Const(true), A.Dummy<string>(), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new SimpleBooleanValidationStep(Op.Const(false), stopMessage, ValidationStepAction.NextStep, ValidationStepAction.StopAsNotApplicable),
+                new SimpleBooleanValidationStep(Op.Abort<bool>(), A.Dummy<string>(), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
             });
 
             var expected = new ValidationResult(Op.Const(Validity.NotApplicable), Op.Const(stopMessage));
@@ -1151,7 +1152,7 @@ namespace OBeautifulCode.DataStructure.Test
         }
 
         [Fact]
-        public static void Execute_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_NotApplicable_and_MessageOp_is_StopMessageOp___When_executing_ValidationStep_operation_returns_false_and_FalseAction_is_StopAsNotApplicable()
+        public static void Execute_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_NotApplicable_and_MessageOp_is_StopMessageOp___When_executing_SimpleBooleanValidationStep_operation_returns_true_and_TrueAction_is_StopAsNotApplicable()
         {
             // Arrange
             var systemUnderTest = new DataStructureConvenienceProtocols<int>(ProtocolFactory);
@@ -1160,9 +1161,9 @@ namespace OBeautifulCode.DataStructure.Test
 
             var operation = Op.Validate(new[]
             {
-                new ValidationStep(Op.Const(false), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
-                new ValidationStep(Op.Const(true), Op.Const(stopMessage), ValidationStepAction.StopAsNotApplicable, ValidationStepAction.NextStep),
-                new ValidationStep(Op.Abort<bool>(), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new SimpleBooleanValidationStep(Op.Const(false), A.Dummy<string>(), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new SimpleBooleanValidationStep(Op.Const(true), stopMessage, ValidationStepAction.StopAsNotApplicable, ValidationStepAction.NextStep),
+                new SimpleBooleanValidationStep(Op.Abort<bool>(), A.Dummy<string>(), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
             });
 
             var expected = new ValidationResult(Op.Const(Validity.NotApplicable), Op.Const(stopMessage));
@@ -1175,7 +1176,7 @@ namespace OBeautifulCode.DataStructure.Test
         }
 
         [Fact]
-        public static void Execute_ValidateOp___Should_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_EndValidity_and_MessageOp_is_EndMessageOp___When_all_ValidationSteps_result_in_NextStep_actions()
+        public static void Execute_ValidateOp___Should_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_EndValidity_and_MessageOp_is_EndMessageOp___When_all_SimpleBooleanValidationSteps_result_in_NextStep_actions()
         {
             // Arrange
             var systemUnderTest = new DataStructureConvenienceProtocols<int>(ProtocolFactory);
@@ -1187,9 +1188,451 @@ namespace OBeautifulCode.DataStructure.Test
             var operation = Op.Validate(
                 new[]
                 {
-                    new ValidationStep(Op.Const(true), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
-                    new ValidationStep(Op.Const(false), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
-                    new ValidationStep(Op.Const(A.Dummy<bool>()), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                    new SimpleBooleanValidationStep(Op.Const(true), A.Dummy<string>(), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                    new SimpleBooleanValidationStep(Op.Const(false), A.Dummy<string>(), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                    new SimpleBooleanValidationStep(Op.Const(A.Dummy<bool>()), A.Dummy<string>(), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                },
+                Op.Const(endMessage),
+                validity);
+
+            var expected = new ValidationResult(Op.Const(validity), Op.Const(endMessage));
+
+            // Act
+            var actual = systemUnderTest.Execute(operation);
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+        }
+
+        [Fact]
+        public static void Execute_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_Invalid_and_MessageOp_is_StopMessageOp___When_executing_MessageByOpBooleanValidationStep_operation_returns_true_and_TrueAction_is_StopAsInvalid()
+        {
+            // Arrange
+            var systemUnderTest = new DataStructureConvenienceProtocols<int>(ProtocolFactory);
+
+            var stopMessage = A.Dummy<string>();
+
+            var operation = Op.Validate(new[]
+            {
+                new MessageByOpBooleanValidationStep(Op.Const(true), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new MessageByOpBooleanValidationStep(Op.Const(false), Op.Const(stopMessage), ValidationStepAction.NextStep, ValidationStepAction.StopAsInvalid),
+                new MessageByOpBooleanValidationStep(Op.Abort<bool>(), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+            });
+
+            var expected = new ValidationResult(Op.Const(Validity.Invalid), Op.Const(stopMessage));
+
+            // Act
+            var actual = systemUnderTest.Execute(operation);
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+        }
+
+        [Fact]
+        public static void Execute_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_Invalid_and_MessageOp_is_StopMessageOp___When_executing_MessageByOpBooleanValidationStep_operation_returns_false_and_FalseAction_is_StopAsInvalid()
+        {
+            // Arrange
+            var systemUnderTest = new DataStructureConvenienceProtocols<int>(ProtocolFactory);
+
+            var stopMessage = A.Dummy<string>();
+
+            var operation = Op.Validate(new[]
+            {
+                new MessageByOpBooleanValidationStep(Op.Const(false), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new MessageByOpBooleanValidationStep(Op.Const(true), Op.Const(stopMessage), ValidationStepAction.StopAsInvalid, ValidationStepAction.NextStep),
+                new MessageByOpBooleanValidationStep(Op.Abort<bool>(), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+            });
+
+            var expected = new ValidationResult(Op.Const(Validity.Invalid), Op.Const(stopMessage));
+
+            // Act
+            var actual = systemUnderTest.Execute(operation);
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+        }
+
+        [Fact]
+        public static void Execute_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_Valid_and_MessageOp_is_StopMessageOp___When_executing_MessageByOpBooleanValidationStep_operation_returns_true_and_TrueAction_is_StopAsValid()
+        {
+            // Arrange
+            var systemUnderTest = new DataStructureConvenienceProtocols<int>(ProtocolFactory);
+
+            var stopMessage = A.Dummy<string>();
+
+            var operation = Op.Validate(new[]
+            {
+                new MessageByOpBooleanValidationStep(Op.Const(true), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new MessageByOpBooleanValidationStep(Op.Const(false), Op.Const(stopMessage), ValidationStepAction.NextStep, ValidationStepAction.StopAsValid),
+                new MessageByOpBooleanValidationStep(Op.Abort<bool>(), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+            });
+
+            var expected = new ValidationResult(Op.Const(Validity.Valid), Op.Const(stopMessage));
+
+            // Act
+            var actual = systemUnderTest.Execute(operation);
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+        }
+
+        [Fact]
+        public static void Execute_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_Valid_and_MessageOp_is_StopMessageOp___When_executing_MessageByOpBooleanValidationStep_operation_returns_false_and_FalseAction_is_StopAsValid()
+        {
+            // Arrange
+            var systemUnderTest = new DataStructureConvenienceProtocols<int>(ProtocolFactory);
+
+            var stopMessage = A.Dummy<string>();
+
+            var operation = Op.Validate(new[]
+            {
+                new MessageByOpBooleanValidationStep(Op.Const(false), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new MessageByOpBooleanValidationStep(Op.Const(true), Op.Const(stopMessage), ValidationStepAction.StopAsValid, ValidationStepAction.NextStep),
+                new MessageByOpBooleanValidationStep(Op.Abort<bool>(), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+            });
+
+            var expected = new ValidationResult(Op.Const(Validity.Valid), Op.Const(stopMessage));
+
+            // Act
+            var actual = systemUnderTest.Execute(operation);
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+        }
+
+        [Fact]
+        public static void Execute_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_Aborted_and_MessageOp_is_StopMessageOp___When_executing_MessageByOpBooleanValidationStep_operation_returns_true_and_TrueAction_is_StopToAbort()
+        {
+            // Arrange
+            var systemUnderTest = new DataStructureConvenienceProtocols<int>(ProtocolFactory);
+
+            var stopMessage = A.Dummy<string>();
+
+            var operation = Op.Validate(new[]
+            {
+                new MessageByOpBooleanValidationStep(Op.Const(true), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new MessageByOpBooleanValidationStep(Op.Const(false), Op.Const(stopMessage), ValidationStepAction.NextStep, ValidationStepAction.StopToAbort),
+                new MessageByOpBooleanValidationStep(Op.Abort<bool>(), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+            });
+
+            var expected = new ValidationResult(Op.Const(Validity.Aborted), Op.Const(stopMessage));
+
+            // Act
+            var actual = systemUnderTest.Execute(operation);
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+        }
+
+        [Fact]
+        public static void Execute_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_Aborted_and_MessageOp_is_StopMessageOp___When_executing_MessageByOpBooleanValidationStep_operation_returns_false_and_FalseAction_is_StopToAbort()
+        {
+            // Arrange
+            var systemUnderTest = new DataStructureConvenienceProtocols<int>(ProtocolFactory);
+
+            var stopMessage = A.Dummy<string>();
+
+            var operation = Op.Validate(new[]
+            {
+                new MessageByOpBooleanValidationStep(Op.Const(false), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new MessageByOpBooleanValidationStep(Op.Const(true), Op.Const(stopMessage), ValidationStepAction.StopToAbort, ValidationStepAction.NextStep),
+                new MessageByOpBooleanValidationStep(Op.Abort<bool>(), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+            });
+
+            var expected = new ValidationResult(Op.Const(Validity.Aborted), Op.Const(stopMessage));
+
+            // Act
+            var actual = systemUnderTest.Execute(operation);
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+        }
+
+        [Fact]
+        public static void Execute_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_NotApplicable_and_MessageOp_is_StopMessageOp___When_executing_MessageByOpBooleanValidationStep_operation_returns_true_and_TrueAction_is_StopAsNotApplicable()
+        {
+            // Arrange
+            var systemUnderTest = new DataStructureConvenienceProtocols<int>(ProtocolFactory);
+
+            var stopMessage = A.Dummy<string>();
+
+            var operation = Op.Validate(new[]
+            {
+                new MessageByOpBooleanValidationStep(Op.Const(true), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new MessageByOpBooleanValidationStep(Op.Const(false), Op.Const(stopMessage), ValidationStepAction.NextStep, ValidationStepAction.StopAsNotApplicable),
+                new MessageByOpBooleanValidationStep(Op.Abort<bool>(), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+            });
+
+            var expected = new ValidationResult(Op.Const(Validity.NotApplicable), Op.Const(stopMessage));
+
+            // Act
+            var actual = systemUnderTest.Execute(operation);
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+        }
+
+        [Fact]
+        public static void Execute_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_NotApplicable_and_MessageOp_is_StopMessageOp___When_executing_MessageByOpBooleanValidationStep_operation_returns_false_and_FalseAction_is_StopAsNotApplicable()
+        {
+            // Arrange
+            var systemUnderTest = new DataStructureConvenienceProtocols<int>(ProtocolFactory);
+
+            var stopMessage = A.Dummy<string>();
+
+            var operation = Op.Validate(new[]
+            {
+                new MessageByOpBooleanValidationStep(Op.Const(false), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new MessageByOpBooleanValidationStep(Op.Const(true), Op.Const(stopMessage), ValidationStepAction.StopAsNotApplicable, ValidationStepAction.NextStep),
+                new MessageByOpBooleanValidationStep(Op.Abort<bool>(), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+            });
+
+            var expected = new ValidationResult(Op.Const(Validity.NotApplicable), Op.Const(stopMessage));
+
+            // Act
+            var actual = systemUnderTest.Execute(operation);
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+        }
+
+        [Fact]
+        public static void Execute_ValidateOp___Should_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_EndValidity_and_MessageOp_is_EndMessageOp___When_all_MessageByOpBooleanValidationSteps_result_in_NextStep_actions()
+        {
+            // Arrange
+            var systemUnderTest = new DataStructureConvenienceProtocols<int>(ProtocolFactory);
+
+            var endMessage = A.Dummy<string>();
+
+            var validity = A.Dummy<Validity>();
+
+            var operation = Op.Validate(
+                new[]
+                {
+                    new MessageByOpBooleanValidationStep(Op.Const(true), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                    new MessageByOpBooleanValidationStep(Op.Const(false), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                    new MessageByOpBooleanValidationStep(Op.Const(A.Dummy<bool>()), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                },
+                Op.Const(endMessage),
+                validity);
+
+            var expected = new ValidationResult(Op.Const(validity), Op.Const(endMessage));
+
+            // Act
+            var actual = systemUnderTest.Execute(operation);
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+        }
+
+        [Fact]
+        public static void Execute_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_Invalid_and_MessageOp_is_StopMessageOp___When_executing_MessageContainedBooleanValidationStep_operation_returns_false_and_FalseAction_is_StopAsInvalid()
+        {
+            // Arrange
+            var systemUnderTest = new DataStructureConvenienceProtocols<int>(ProtocolFactory);
+
+            var stopMessage = A.Dummy<string>();
+
+            var operation = Op.Validate(new[]
+            {
+                new MessageContainedBooleanValidationStep(Op.Const(new ValidationBoolWithMessage(true, A.Dummy<string>())), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new MessageContainedBooleanValidationStep(Op.Const(new ValidationBoolWithMessage(false, stopMessage)), ValidationStepAction.NextStep, ValidationStepAction.StopAsInvalid),
+                new MessageContainedBooleanValidationStep(Op.Abort<ValidationBoolWithMessage>(), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+            });
+
+            var expected = new ValidationResult(Op.Const(Validity.Invalid), Op.Const(stopMessage));
+
+            // Act
+            var actual = systemUnderTest.Execute(operation);
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+        }
+
+        [Fact]
+        public static void Execute_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_Invalid_and_MessageOp_is_StopMessageOp___When_executing_MessageContainedBooleanValidationStep_operation_returns_true_and_TrueAction_is_StopAsInvalid()
+        {
+            // Arrange
+            var systemUnderTest = new DataStructureConvenienceProtocols<int>(ProtocolFactory);
+
+            var stopMessage = A.Dummy<string>();
+
+            var operation = Op.Validate(new[]
+            {
+                new MessageContainedBooleanValidationStep(Op.Const(new ValidationBoolWithMessage(false, A.Dummy<string>())), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new MessageContainedBooleanValidationStep(Op.Const(new ValidationBoolWithMessage(true, stopMessage)), ValidationStepAction.StopAsInvalid, ValidationStepAction.NextStep),
+                new MessageContainedBooleanValidationStep(Op.Abort<ValidationBoolWithMessage>(), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+            });
+
+            var expected = new ValidationResult(Op.Const(Validity.Invalid), Op.Const(stopMessage));
+
+            // Act
+            var actual = systemUnderTest.Execute(operation);
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+        }
+
+        [Fact]
+        public static void Execute_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_Valid_and_MessageOp_is_StopMessageOp___When_executing_MessageContainedBooleanValidationStep_operation_returns_false_and_FalseAction_is_StopAsValid()
+        {
+            // Arrange
+            var systemUnderTest = new DataStructureConvenienceProtocols<int>(ProtocolFactory);
+
+            var stopMessage = A.Dummy<string>();
+
+            var operation = Op.Validate(new[]
+            {
+                new MessageContainedBooleanValidationStep(Op.Const(new ValidationBoolWithMessage(true, A.Dummy<string>())), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new MessageContainedBooleanValidationStep(Op.Const(new ValidationBoolWithMessage(false, stopMessage)), ValidationStepAction.NextStep, ValidationStepAction.StopAsValid),
+                new MessageContainedBooleanValidationStep(Op.Abort<ValidationBoolWithMessage>(), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+            });
+
+            var expected = new ValidationResult(Op.Const(Validity.Valid), Op.Const(stopMessage));
+
+            // Act
+            var actual = systemUnderTest.Execute(operation);
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+        }
+
+        [Fact]
+        public static void Execute_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_Valid_and_MessageOp_is_StopMessageOp___When_executing_MessageContainedBooleanValidationStep_operation_returns_true_and_TrueAction_is_StopAsValid()
+        {
+            // Arrange
+            var systemUnderTest = new DataStructureConvenienceProtocols<int>(ProtocolFactory);
+
+            var stopMessage = A.Dummy<string>();
+
+            var operation = Op.Validate(new[]
+            {
+                new MessageContainedBooleanValidationStep(Op.Const(new ValidationBoolWithMessage(false, A.Dummy<string>())), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new MessageContainedBooleanValidationStep(Op.Const(new ValidationBoolWithMessage(true, stopMessage)), ValidationStepAction.StopAsValid, ValidationStepAction.NextStep),
+                new MessageContainedBooleanValidationStep(Op.Abort<ValidationBoolWithMessage>(), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+            });
+
+            var expected = new ValidationResult(Op.Const(Validity.Valid), Op.Const(stopMessage));
+
+            // Act
+            var actual = systemUnderTest.Execute(operation);
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+        }
+
+        [Fact]
+        public static void Execute_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_Aborted_and_MessageOp_is_StopMessageOp___When_executing_MessageContainedBooleanValidationStep_operation_returns_false_and_FalseAction_is_StopToAbort()
+        {
+            // Arrange
+            var systemUnderTest = new DataStructureConvenienceProtocols<int>(ProtocolFactory);
+
+            var stopMessage = A.Dummy<string>();
+
+            var operation = Op.Validate(new[]
+            {
+                new MessageContainedBooleanValidationStep(Op.Const(new ValidationBoolWithMessage(true, A.Dummy<string>())), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new MessageContainedBooleanValidationStep(Op.Const(new ValidationBoolWithMessage(false, stopMessage)), ValidationStepAction.NextStep, ValidationStepAction.StopToAbort),
+                new MessageContainedBooleanValidationStep(Op.Abort<ValidationBoolWithMessage>(), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+            });
+
+            var expected = new ValidationResult(Op.Const(Validity.Aborted), Op.Const(stopMessage));
+
+            // Act
+            var actual = systemUnderTest.Execute(operation);
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+        }
+
+        [Fact]
+        public static void Execute_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_Aborted_and_MessageOp_is_StopMessageOp___When_executing_MessageContainedBooleanValidationStep_operation_returns_true_and_TrueAction_is_StopToAbort()
+        {
+            // Arrange
+            var systemUnderTest = new DataStructureConvenienceProtocols<int>(ProtocolFactory);
+
+            var stopMessage = A.Dummy<string>();
+
+            var operation = Op.Validate(new[]
+            {
+                new MessageContainedBooleanValidationStep(Op.Const(new ValidationBoolWithMessage(false, A.Dummy<string>())), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new MessageContainedBooleanValidationStep(Op.Const(new ValidationBoolWithMessage(true, stopMessage)), ValidationStepAction.StopToAbort, ValidationStepAction.NextStep),
+                new MessageContainedBooleanValidationStep(Op.Abort<ValidationBoolWithMessage>(), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+            });
+
+            var expected = new ValidationResult(Op.Const(Validity.Aborted), Op.Const(stopMessage));
+
+            // Act
+            var actual = systemUnderTest.Execute(operation);
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+        }
+
+        [Fact]
+        public static void Execute_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_NotApplicable_and_MessageOp_is_StopMessageOp___When_executing_MessageContainedBooleanValidationStep_operation_returns_false_and_FalseAction_is_StopAsNotApplicable()
+        {
+            // Arrange
+            var systemUnderTest = new DataStructureConvenienceProtocols<int>(ProtocolFactory);
+
+            var stopMessage = A.Dummy<string>();
+
+            var operation = Op.Validate(new[]
+            {
+                new MessageContainedBooleanValidationStep(Op.Const(new ValidationBoolWithMessage(true, A.Dummy<string>())), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new MessageContainedBooleanValidationStep(Op.Const(new ValidationBoolWithMessage(false, stopMessage)), ValidationStepAction.NextStep, ValidationStepAction.StopAsNotApplicable),
+                new MessageContainedBooleanValidationStep(Op.Abort<ValidationBoolWithMessage>(), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+            });
+
+            var expected = new ValidationResult(Op.Const(Validity.NotApplicable), Op.Const(stopMessage));
+
+            // Act
+            var actual = systemUnderTest.Execute(operation);
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+        }
+
+        [Fact]
+        public static void Execute_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_NotApplicable_and_MessageOp_is_StopMessageOp___When_executing_MessageContainedBooleanValidationStep_operation_returns_true_and_TrueAction_is_StopAsNotApplicable()
+        {
+            // Arrange
+            var systemUnderTest = new DataStructureConvenienceProtocols<int>(ProtocolFactory);
+
+            var stopMessage = A.Dummy<string>();
+
+            var operation = Op.Validate(new[]
+            {
+                new MessageContainedBooleanValidationStep(Op.Const(new ValidationBoolWithMessage(false, A.Dummy<string>())), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new MessageContainedBooleanValidationStep(Op.Const(new ValidationBoolWithMessage(true, stopMessage)), ValidationStepAction.StopAsNotApplicable, ValidationStepAction.NextStep),
+                new MessageContainedBooleanValidationStep(Op.Abort<ValidationBoolWithMessage>(), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+            });
+
+            var expected = new ValidationResult(Op.Const(Validity.NotApplicable), Op.Const(stopMessage));
+
+            // Act
+            var actual = systemUnderTest.Execute(operation);
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+        }
+
+        [Fact]
+        public static void Execute_ValidateOp___Should_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_EndValidity_and_MessageOp_is_EndMessageOp___When_all_MessageContainedBooleanValidationSteps_result_in_NextStep_actions()
+        {
+            // Arrange
+            var systemUnderTest = new DataStructureConvenienceProtocols<int>(ProtocolFactory);
+
+            var endMessage = A.Dummy<string>();
+
+            var validity = A.Dummy<Validity>();
+
+            var operation = Op.Validate(
+                new[]
+                {
+                    new MessageContainedBooleanValidationStep(Op.Const(new ValidationBoolWithMessage(true, A.Dummy<string>())), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                    new MessageContainedBooleanValidationStep(Op.Const(new ValidationBoolWithMessage(false, A.Dummy<string>())), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                    new MessageContainedBooleanValidationStep(Op.Const(new ValidationBoolWithMessage(A.Dummy<bool>(), A.Dummy<string>())), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
                 },
                 Op.Const(endMessage),
                 validity);
@@ -1217,7 +1660,7 @@ namespace OBeautifulCode.DataStructure.Test
         }
 
         [Fact]
-        public static async Task ExecuteAsync_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_Invalid_and_MessageOp_is_StopMessageOp___When_executing_ValidationStep_operation_returns_false_and_FalseAction_is_StopAsInvalid()
+        public static async Task ExecuteAsync_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_Invalid_and_MessageOp_is_StopMessageOp___When_executing_SimpleBooleanValidationStep_operation_returns_false_and_FalseAction_is_StopAsInvalid()
         {
             // Arrange
             var systemUnderTest = new DataStructureConvenienceProtocols<int>(ProtocolFactory);
@@ -1226,9 +1669,9 @@ namespace OBeautifulCode.DataStructure.Test
 
             var operation = Op.Validate(new[]
             {
-                new ValidationStep(Op.Const(true), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
-                new ValidationStep(Op.Const(false), Op.Const(stopMessage), ValidationStepAction.NextStep, ValidationStepAction.StopAsInvalid),
-                new ValidationStep(Op.Abort<bool>(), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new SimpleBooleanValidationStep(Op.Const(true), A.Dummy<string>(), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new SimpleBooleanValidationStep(Op.Const(false), stopMessage, ValidationStepAction.NextStep, ValidationStepAction.StopAsInvalid),
+                new SimpleBooleanValidationStep(Op.Abort<bool>(), A.Dummy<string>(), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
             });
 
             var expected = new ValidationResult(Op.Const(Validity.Invalid), Op.Const(stopMessage));
@@ -1241,7 +1684,7 @@ namespace OBeautifulCode.DataStructure.Test
         }
 
         [Fact]
-        public static async Task ExecuteAsync_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_Invalid_and_MessageOp_is_StopMessageOp___When_executing_ValidationStep_operation_returns_true_and_TrueAction_is_StopAsInvalid()
+        public static async Task ExecuteAsync_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_Invalid_and_MessageOp_is_StopMessageOp___When_executing_SimpleBooleanValidationStep_operation_returns_true_and_TrueAction_is_StopAsInvalid()
         {
             // Arrange
             var systemUnderTest = new DataStructureConvenienceProtocols<int>(ProtocolFactory);
@@ -1250,9 +1693,9 @@ namespace OBeautifulCode.DataStructure.Test
 
             var operation = Op.Validate(new[]
             {
-                new ValidationStep(Op.Const(false), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
-                new ValidationStep(Op.Const(true), Op.Const(stopMessage), ValidationStepAction.StopAsInvalid, ValidationStepAction.NextStep),
-                new ValidationStep(Op.Abort<bool>(), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new SimpleBooleanValidationStep(Op.Const(false), A.Dummy<string>(), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new SimpleBooleanValidationStep(Op.Const(true), stopMessage, ValidationStepAction.StopAsInvalid, ValidationStepAction.NextStep),
+                new SimpleBooleanValidationStep(Op.Abort<bool>(), A.Dummy<string>(), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
             });
 
             var expected = new ValidationResult(Op.Const(Validity.Invalid), Op.Const(stopMessage));
@@ -1265,7 +1708,7 @@ namespace OBeautifulCode.DataStructure.Test
         }
 
         [Fact]
-        public static async Task ExecuteAsync_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_Valid_and_MessageOp_is_StopMessageOp___When_executing_ValidationStep_operation_returns_false_and_FalseAction_is_StopAsValid()
+        public static async Task ExecuteAsync_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_Valid_and_MessageOp_is_StopMessageOp___When_executing_SimpleBooleanValidationStep_operation_returns_false_and_FalseAction_is_StopAsValid()
         {
             // Arrange
             var systemUnderTest = new DataStructureConvenienceProtocols<int>(ProtocolFactory);
@@ -1274,9 +1717,9 @@ namespace OBeautifulCode.DataStructure.Test
 
             var operation = Op.Validate(new[]
             {
-                new ValidationStep(Op.Const(true), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
-                new ValidationStep(Op.Const(false), Op.Const(stopMessage), ValidationStepAction.NextStep, ValidationStepAction.StopAsValid),
-                new ValidationStep(Op.Abort<bool>(), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new SimpleBooleanValidationStep(Op.Const(true), A.Dummy<string>(), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new SimpleBooleanValidationStep(Op.Const(false), stopMessage, ValidationStepAction.NextStep, ValidationStepAction.StopAsValid),
+                new SimpleBooleanValidationStep(Op.Abort<bool>(), A.Dummy<string>(), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
             });
 
             var expected = new ValidationResult(Op.Const(Validity.Valid), Op.Const(stopMessage));
@@ -1289,7 +1732,7 @@ namespace OBeautifulCode.DataStructure.Test
         }
 
         [Fact]
-        public static async Task ExecuteAsync_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_Valid_and_MessageOp_is_StopMessageOp___When_executing_ValidationStep_operation_returns_true_and_TrueAction_is_StopAsValid()
+        public static async Task ExecuteAsync_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_Valid_and_MessageOp_is_StopMessageOp___When_executing_SimpleBooleanValidationStep_operation_returns_true_and_TrueAction_is_StopAsValid()
         {
             // Arrange
             var systemUnderTest = new DataStructureConvenienceProtocols<int>(ProtocolFactory);
@@ -1298,9 +1741,9 @@ namespace OBeautifulCode.DataStructure.Test
 
             var operation = Op.Validate(new[]
             {
-                new ValidationStep(Op.Const(false), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
-                new ValidationStep(Op.Const(true), Op.Const(stopMessage), ValidationStepAction.StopAsValid, ValidationStepAction.NextStep),
-                new ValidationStep(Op.Abort<bool>(), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new SimpleBooleanValidationStep(Op.Const(false), A.Dummy<string>(), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new SimpleBooleanValidationStep(Op.Const(true), stopMessage, ValidationStepAction.StopAsValid, ValidationStepAction.NextStep),
+                new SimpleBooleanValidationStep(Op.Abort<bool>(), A.Dummy<string>(), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
             });
 
             var expected = new ValidationResult(Op.Const(Validity.Valid), Op.Const(stopMessage));
@@ -1313,7 +1756,7 @@ namespace OBeautifulCode.DataStructure.Test
         }
 
         [Fact]
-        public static async Task ExecuteAsync_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_Aborted_and_MessageOp_is_StopMessageOp___When_executing_ValidationStep_operation_returns_false_and_FalseAction_is_StopToAbort()
+        public static async Task ExecuteAsync_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_Aborted_and_MessageOp_is_StopMessageOp___When_executing_SimpleBooleanValidationStep_operation_returns_false_and_FalseAction_is_StopToAbort()
         {
             // Arrange
             var systemUnderTest = new DataStructureConvenienceProtocols<int>(ProtocolFactory);
@@ -1322,9 +1765,9 @@ namespace OBeautifulCode.DataStructure.Test
 
             var operation = Op.Validate(new[]
             {
-                new ValidationStep(Op.Const(true), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
-                new ValidationStep(Op.Const(false), Op.Const(stopMessage), ValidationStepAction.NextStep, ValidationStepAction.StopToAbort),
-                new ValidationStep(Op.Abort<bool>(), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new SimpleBooleanValidationStep(Op.Const(true), A.Dummy<string>(), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new SimpleBooleanValidationStep(Op.Const(false), stopMessage, ValidationStepAction.NextStep, ValidationStepAction.StopToAbort),
+                new SimpleBooleanValidationStep(Op.Abort<bool>(), A.Dummy<string>(), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
             });
 
             var expected = new ValidationResult(Op.Const(Validity.Aborted), Op.Const(stopMessage));
@@ -1337,7 +1780,7 @@ namespace OBeautifulCode.DataStructure.Test
         }
 
         [Fact]
-        public static async Task ExecuteAsync_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_Aborted_and_MessageOp_is_StopMessageOp___When_executing_ValidationStep_operation_returns_true_and_TrueAction_is_StopToAbort()
+        public static async Task ExecuteAsync_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_Aborted_and_MessageOp_is_StopMessageOp___When_executing_SimpleBooleanValidationStep_operation_returns_true_and_TrueAction_is_StopToAbort()
         {
             // Arrange
             var systemUnderTest = new DataStructureConvenienceProtocols<int>(ProtocolFactory);
@@ -1346,9 +1789,9 @@ namespace OBeautifulCode.DataStructure.Test
 
             var operation = Op.Validate(new[]
             {
-                new ValidationStep(Op.Const(false), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
-                new ValidationStep(Op.Const(true), Op.Const(stopMessage), ValidationStepAction.StopToAbort, ValidationStepAction.NextStep),
-                new ValidationStep(Op.Abort<bool>(), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new SimpleBooleanValidationStep(Op.Const(false), A.Dummy<string>(), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new SimpleBooleanValidationStep(Op.Const(true), stopMessage, ValidationStepAction.StopToAbort, ValidationStepAction.NextStep),
+                new SimpleBooleanValidationStep(Op.Abort<bool>(), A.Dummy<string>(), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
             });
 
             var expected = new ValidationResult(Op.Const(Validity.Aborted), Op.Const(stopMessage));
@@ -1361,7 +1804,7 @@ namespace OBeautifulCode.DataStructure.Test
         }
 
         [Fact]
-        public static async Task ExecuteAsync_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_NotApplicable_and_MessageOp_is_StopMessageOp___When_executing_ValidationStep_operation_returns_false_and_FalseAction_is_StopAsNotApplicable()
+        public static async Task ExecuteAsync_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_NotApplicable_and_MessageOp_is_StopMessageOp___When_executing_SimpleBooleanValidationStep_operation_returns_false_and_FalseAction_is_StopAsNotApplicable()
         {
             // Arrange
             var systemUnderTest = new DataStructureConvenienceProtocols<int>(ProtocolFactory);
@@ -1370,9 +1813,9 @@ namespace OBeautifulCode.DataStructure.Test
 
             var operation = Op.Validate(new[]
             {
-                new ValidationStep(Op.Const(true), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
-                new ValidationStep(Op.Const(false), Op.Const(stopMessage), ValidationStepAction.NextStep, ValidationStepAction.StopAsNotApplicable),
-                new ValidationStep(Op.Abort<bool>(), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new SimpleBooleanValidationStep(Op.Const(true), A.Dummy<string>(), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new SimpleBooleanValidationStep(Op.Const(false), stopMessage, ValidationStepAction.NextStep, ValidationStepAction.StopAsNotApplicable),
+                new SimpleBooleanValidationStep(Op.Abort<bool>(), A.Dummy<string>(), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
             });
 
             var expected = new ValidationResult(Op.Const(Validity.NotApplicable), Op.Const(stopMessage));
@@ -1385,7 +1828,7 @@ namespace OBeautifulCode.DataStructure.Test
         }
 
         [Fact]
-        public static async Task ExecuteAsync_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_NotApplicable_and_MessageOp_is_StopMessageOp___When_executing_ValidationStep_operation_returns_true_and_TrueAction_is_StopAsNotApplicable()
+        public static async Task ExecuteAsync_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_NotApplicable_and_MessageOp_is_StopMessageOp___When_executing_SimpleBooleanValidationStep_operation_returns_true_and_TrueAction_is_StopAsNotApplicable()
         {
             // Arrange
             var systemUnderTest = new DataStructureConvenienceProtocols<int>(ProtocolFactory);
@@ -1394,9 +1837,9 @@ namespace OBeautifulCode.DataStructure.Test
 
             var operation = Op.Validate(new[]
             {
-                new ValidationStep(Op.Const(false), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
-                new ValidationStep(Op.Const(true), Op.Const(stopMessage), ValidationStepAction.StopAsNotApplicable, ValidationStepAction.NextStep),
-                new ValidationStep(Op.Abort<bool>(), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new SimpleBooleanValidationStep(Op.Const(false), A.Dummy<string>(), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new SimpleBooleanValidationStep(Op.Const(true), stopMessage, ValidationStepAction.StopAsNotApplicable, ValidationStepAction.NextStep),
+                new SimpleBooleanValidationStep(Op.Abort<bool>(), A.Dummy<string>(), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
             });
 
             var expected = new ValidationResult(Op.Const(Validity.NotApplicable), Op.Const(stopMessage));
@@ -1409,7 +1852,7 @@ namespace OBeautifulCode.DataStructure.Test
         }
 
         [Fact]
-        public static async Task ExecuteAsync_ValidateOp___Should_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_EndValidity_and_MessageOp_is_EndMessageOp___When_all_ValidationSteps_result_in_NextStep_actions()
+        public static async Task ExecuteAsync_ValidateOp___Should_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_EndValidity_and_MessageOp_is_EndMessageOp___When_all_SimpleBooleanValidationSteps_result_in_NextStep_actions()
         {
             // Arrange
             var systemUnderTest = new DataStructureConvenienceProtocols<int>(ProtocolFactory);
@@ -1421,9 +1864,451 @@ namespace OBeautifulCode.DataStructure.Test
             var operation = Op.Validate(
                 new[]
                 {
-                    new ValidationStep(Op.Const(true), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
-                    new ValidationStep(Op.Const(false), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
-                    new ValidationStep(Op.Const(A.Dummy<bool>()), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                    new SimpleBooleanValidationStep(Op.Const(true), A.Dummy<string>(), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                    new SimpleBooleanValidationStep(Op.Const(false), A.Dummy<string>(), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                    new SimpleBooleanValidationStep(Op.Const(A.Dummy<bool>()), A.Dummy<string>(), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                },
+                Op.Const(endMessage),
+                validity);
+
+            var expected = new ValidationResult(Op.Const(validity), Op.Const(endMessage));
+
+            // Act
+            var actual = await systemUnderTest.ExecuteAsync(operation);
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+        }
+
+        [Fact]
+        public static async Task ExecuteAsync_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_Invalid_and_MessageOp_is_StopMessageOp___When_executing_MessageByOpBooleanValidationStep_operation_returns_false_and_FalseAction_is_StopAsInvalid()
+        {
+            // Arrange
+            var systemUnderTest = new DataStructureConvenienceProtocols<int>(ProtocolFactory);
+
+            var stopMessage = A.Dummy<string>();
+
+            var operation = Op.Validate(new[]
+            {
+                new MessageByOpBooleanValidationStep(Op.Const(true), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new MessageByOpBooleanValidationStep(Op.Const(false), Op.Const(stopMessage), ValidationStepAction.NextStep, ValidationStepAction.StopAsInvalid),
+                new MessageByOpBooleanValidationStep(Op.Abort<bool>(), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+            });
+
+            var expected = new ValidationResult(Op.Const(Validity.Invalid), Op.Const(stopMessage));
+
+            // Act
+            var actual = await systemUnderTest.ExecuteAsync(operation);
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+        }
+
+        [Fact]
+        public static async Task ExecuteAsync_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_Invalid_and_MessageOp_is_StopMessageOp___When_executing_MessageByOpBooleanValidationStep_operation_returns_true_and_TrueAction_is_StopAsInvalid()
+        {
+            // Arrange
+            var systemUnderTest = new DataStructureConvenienceProtocols<int>(ProtocolFactory);
+
+            var stopMessage = A.Dummy<string>();
+
+            var operation = Op.Validate(new[]
+            {
+                new MessageByOpBooleanValidationStep(Op.Const(false), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new MessageByOpBooleanValidationStep(Op.Const(true), Op.Const(stopMessage), ValidationStepAction.StopAsInvalid, ValidationStepAction.NextStep),
+                new MessageByOpBooleanValidationStep(Op.Abort<bool>(), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+            });
+
+            var expected = new ValidationResult(Op.Const(Validity.Invalid), Op.Const(stopMessage));
+
+            // Act
+            var actual = await systemUnderTest.ExecuteAsync(operation);
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+        }
+
+        [Fact]
+        public static async Task ExecuteAsync_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_Valid_and_MessageOp_is_StopMessageOp___When_executing_MessageByOpBooleanValidationStep_operation_returns_false_and_FalseAction_is_StopAsValid()
+        {
+            // Arrange
+            var systemUnderTest = new DataStructureConvenienceProtocols<int>(ProtocolFactory);
+
+            var stopMessage = A.Dummy<string>();
+
+            var operation = Op.Validate(new[]
+            {
+                new MessageByOpBooleanValidationStep(Op.Const(true), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new MessageByOpBooleanValidationStep(Op.Const(false), Op.Const(stopMessage), ValidationStepAction.NextStep, ValidationStepAction.StopAsValid),
+                new MessageByOpBooleanValidationStep(Op.Abort<bool>(), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+            });
+
+            var expected = new ValidationResult(Op.Const(Validity.Valid), Op.Const(stopMessage));
+
+            // Act
+            var actual = await systemUnderTest.ExecuteAsync(operation);
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+        }
+
+        [Fact]
+        public static async Task ExecuteAsync_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_Valid_and_MessageOp_is_StopMessageOp___When_executing_MessageByOpBooleanValidationStep_operation_returns_true_and_TrueAction_is_StopAsValid()
+        {
+            // Arrange
+            var systemUnderTest = new DataStructureConvenienceProtocols<int>(ProtocolFactory);
+
+            var stopMessage = A.Dummy<string>();
+
+            var operation = Op.Validate(new[]
+            {
+                new MessageByOpBooleanValidationStep(Op.Const(false), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new MessageByOpBooleanValidationStep(Op.Const(true), Op.Const(stopMessage), ValidationStepAction.StopAsValid, ValidationStepAction.NextStep),
+                new MessageByOpBooleanValidationStep(Op.Abort<bool>(), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+            });
+
+            var expected = new ValidationResult(Op.Const(Validity.Valid), Op.Const(stopMessage));
+
+            // Act
+            var actual = await systemUnderTest.ExecuteAsync(operation);
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+        }
+
+        [Fact]
+        public static async Task ExecuteAsync_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_Aborted_and_MessageOp_is_StopMessageOp___When_executing_MessageByOpBooleanValidationStep_operation_returns_false_and_FalseAction_is_StopToAbort()
+        {
+            // Arrange
+            var systemUnderTest = new DataStructureConvenienceProtocols<int>(ProtocolFactory);
+
+            var stopMessage = A.Dummy<string>();
+
+            var operation = Op.Validate(new[]
+            {
+                new MessageByOpBooleanValidationStep(Op.Const(true), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new MessageByOpBooleanValidationStep(Op.Const(false), Op.Const(stopMessage), ValidationStepAction.NextStep, ValidationStepAction.StopToAbort),
+                new MessageByOpBooleanValidationStep(Op.Abort<bool>(), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+            });
+
+            var expected = new ValidationResult(Op.Const(Validity.Aborted), Op.Const(stopMessage));
+
+            // Act
+            var actual = await systemUnderTest.ExecuteAsync(operation);
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+        }
+
+        [Fact]
+        public static async Task ExecuteAsync_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_Aborted_and_MessageOp_is_StopMessageOp___When_executing_MessageByOpBooleanValidationStep_operation_returns_true_and_TrueAction_is_StopToAbort()
+        {
+            // Arrange
+            var systemUnderTest = new DataStructureConvenienceProtocols<int>(ProtocolFactory);
+
+            var stopMessage = A.Dummy<string>();
+
+            var operation = Op.Validate(new[]
+            {
+                new MessageByOpBooleanValidationStep(Op.Const(false), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new MessageByOpBooleanValidationStep(Op.Const(true), Op.Const(stopMessage), ValidationStepAction.StopToAbort, ValidationStepAction.NextStep),
+                new MessageByOpBooleanValidationStep(Op.Abort<bool>(), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+            });
+
+            var expected = new ValidationResult(Op.Const(Validity.Aborted), Op.Const(stopMessage));
+
+            // Act
+            var actual = await systemUnderTest.ExecuteAsync(operation);
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+        }
+
+        [Fact]
+        public static async Task ExecuteAsync_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_NotApplicable_and_MessageOp_is_StopMessageOp___When_executing_MessageByOpBooleanValidationStep_operation_returns_false_and_FalseAction_is_StopAsNotApplicable()
+        {
+            // Arrange
+            var systemUnderTest = new DataStructureConvenienceProtocols<int>(ProtocolFactory);
+
+            var stopMessage = A.Dummy<string>();
+
+            var operation = Op.Validate(new[]
+            {
+                new MessageByOpBooleanValidationStep(Op.Const(true), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new MessageByOpBooleanValidationStep(Op.Const(false), Op.Const(stopMessage), ValidationStepAction.NextStep, ValidationStepAction.StopAsNotApplicable),
+                new MessageByOpBooleanValidationStep(Op.Abort<bool>(), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+            });
+
+            var expected = new ValidationResult(Op.Const(Validity.NotApplicable), Op.Const(stopMessage));
+
+            // Act
+            var actual = await systemUnderTest.ExecuteAsync(operation);
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+        }
+
+        [Fact]
+        public static async Task ExecuteAsync_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_NotApplicable_and_MessageOp_is_StopMessageOp___When_executing_MessageByOpBooleanValidationStep_operation_returns_true_and_TrueAction_is_StopAsNotApplicable()
+        {
+            // Arrange
+            var systemUnderTest = new DataStructureConvenienceProtocols<int>(ProtocolFactory);
+
+            var stopMessage = A.Dummy<string>();
+
+            var operation = Op.Validate(new[]
+            {
+                new MessageByOpBooleanValidationStep(Op.Const(false), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new MessageByOpBooleanValidationStep(Op.Const(true), Op.Const(stopMessage), ValidationStepAction.StopAsNotApplicable, ValidationStepAction.NextStep),
+                new MessageByOpBooleanValidationStep(Op.Abort<bool>(), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+            });
+
+            var expected = new ValidationResult(Op.Const(Validity.NotApplicable), Op.Const(stopMessage));
+
+            // Act
+            var actual = await systemUnderTest.ExecuteAsync(operation);
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+        }
+
+        [Fact]
+        public static async Task ExecuteAsync_ValidateOp___Should_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_EndValidity_and_MessageOp_is_EndMessageOp___When_all_MessageByOpBooleanValidationSteps_result_in_NextStep_actions()
+        {
+            // Arrange
+            var systemUnderTest = new DataStructureConvenienceProtocols<int>(ProtocolFactory);
+
+            var endMessage = A.Dummy<string>();
+
+            var validity = A.Dummy<Validity>();
+
+            var operation = Op.Validate(
+                new[]
+                {
+                    new MessageByOpBooleanValidationStep(Op.Const(true), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                    new MessageByOpBooleanValidationStep(Op.Const(false), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                    new MessageByOpBooleanValidationStep(Op.Const(A.Dummy<bool>()), Op.Const(A.Dummy<string>()), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                },
+                Op.Const(endMessage),
+                validity);
+
+            var expected = new ValidationResult(Op.Const(validity), Op.Const(endMessage));
+
+            // Act
+            var actual = await systemUnderTest.ExecuteAsync(operation);
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+        }
+
+        [Fact]
+        public static async Task ExecuteAsync_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_Invalid_and_MessageOp_is_StopMessageOp___When_executing_MessageContainedBooleanValidationStep_operation_returns_false_and_FalseAction_is_StopAsInvalid()
+        {
+            // Arrange
+            var systemUnderTest = new DataStructureConvenienceProtocols<int>(ProtocolFactory);
+
+            var stopMessage = A.Dummy<string>();
+
+            var operation = Op.Validate(new[]
+            {
+                new MessageContainedBooleanValidationStep(Op.Const(new ValidationBoolWithMessage(true, A.Dummy<string>())), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new MessageContainedBooleanValidationStep(Op.Const(new ValidationBoolWithMessage(false, stopMessage)), ValidationStepAction.NextStep, ValidationStepAction.StopAsInvalid),
+                new MessageContainedBooleanValidationStep(Op.Abort<ValidationBoolWithMessage>(), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+            });
+
+            var expected = new ValidationResult(Op.Const(Validity.Invalid), Op.Const(stopMessage));
+
+            // Act
+            var actual = await systemUnderTest.ExecuteAsync(operation);
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+        }
+
+        [Fact]
+        public static async Task ExecuteAsync_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_Invalid_and_MessageOp_is_StopMessageOp___When_executing_MessageContainedBooleanValidationStep_operation_returns_true_and_TrueAction_is_StopAsInvalid()
+        {
+            // Arrange
+            var systemUnderTest = new DataStructureConvenienceProtocols<int>(ProtocolFactory);
+
+            var stopMessage = A.Dummy<string>();
+
+            var operation = Op.Validate(new[]
+            {
+                new MessageContainedBooleanValidationStep(Op.Const(new ValidationBoolWithMessage(false, A.Dummy<string>())), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new MessageContainedBooleanValidationStep(Op.Const(new ValidationBoolWithMessage(true, stopMessage)), ValidationStepAction.StopAsInvalid, ValidationStepAction.NextStep),
+                new MessageContainedBooleanValidationStep(Op.Abort<ValidationBoolWithMessage>(), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+            });
+
+            var expected = new ValidationResult(Op.Const(Validity.Invalid), Op.Const(stopMessage));
+
+            // Act
+            var actual = await systemUnderTest.ExecuteAsync(operation);
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+        }
+
+        [Fact]
+        public static async Task ExecuteAsync_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_Valid_and_MessageOp_is_StopMessageOp___When_executing_MessageContainedBooleanValidationStep_operation_returns_false_and_FalseAction_is_StopAsValid()
+        {
+            // Arrange
+            var systemUnderTest = new DataStructureConvenienceProtocols<int>(ProtocolFactory);
+
+            var stopMessage = A.Dummy<string>();
+
+            var operation = Op.Validate(new[]
+            {
+                new MessageContainedBooleanValidationStep(Op.Const(new ValidationBoolWithMessage(true, A.Dummy<string>())), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new MessageContainedBooleanValidationStep(Op.Const(new ValidationBoolWithMessage(false, stopMessage)), ValidationStepAction.NextStep, ValidationStepAction.StopAsValid),
+                new MessageContainedBooleanValidationStep(Op.Abort<ValidationBoolWithMessage>(), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+            });
+
+            var expected = new ValidationResult(Op.Const(Validity.Valid), Op.Const(stopMessage));
+
+            // Act
+            var actual = await systemUnderTest.ExecuteAsync(operation);
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+        }
+
+        [Fact]
+        public static async Task ExecuteAsync_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_Valid_and_MessageOp_is_StopMessageOp___When_executing_MessageContainedBooleanValidationStep_operation_returns_true_and_TrueAction_is_StopAsValid()
+        {
+            // Arrange
+            var systemUnderTest = new DataStructureConvenienceProtocols<int>(ProtocolFactory);
+
+            var stopMessage = A.Dummy<string>();
+
+            var operation = Op.Validate(new[]
+            {
+                new MessageContainedBooleanValidationStep(Op.Const(new ValidationBoolWithMessage(false, A.Dummy<string>())), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new MessageContainedBooleanValidationStep(Op.Const(new ValidationBoolWithMessage(true, stopMessage)), ValidationStepAction.StopAsValid, ValidationStepAction.NextStep),
+                new MessageContainedBooleanValidationStep(Op.Abort<ValidationBoolWithMessage>(), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+            });
+
+            var expected = new ValidationResult(Op.Const(Validity.Valid), Op.Const(stopMessage));
+
+            // Act
+            var actual = await systemUnderTest.ExecuteAsync(operation);
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+        }
+
+        [Fact]
+        public static async Task ExecuteAsync_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_Aborted_and_MessageOp_is_StopMessageOp___When_executing_MessageContainedBooleanValidationStep_operation_returns_false_and_FalseAction_is_StopToAbort()
+        {
+            // Arrange
+            var systemUnderTest = new DataStructureConvenienceProtocols<int>(ProtocolFactory);
+
+            var stopMessage = A.Dummy<string>();
+
+            var operation = Op.Validate(new[]
+            {
+                new MessageContainedBooleanValidationStep(Op.Const(new ValidationBoolWithMessage(true, A.Dummy<string>())), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new MessageContainedBooleanValidationStep(Op.Const(new ValidationBoolWithMessage(false, stopMessage)), ValidationStepAction.NextStep, ValidationStepAction.StopToAbort),
+                new MessageContainedBooleanValidationStep(Op.Abort<ValidationBoolWithMessage>(), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+            });
+
+            var expected = new ValidationResult(Op.Const(Validity.Aborted), Op.Const(stopMessage));
+
+            // Act
+            var actual = await systemUnderTest.ExecuteAsync(operation);
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+        }
+
+        [Fact]
+        public static async Task ExecuteAsync_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_Aborted_and_MessageOp_is_StopMessageOp___When_executing_MessageContainedBooleanValidationStep_operation_returns_true_and_TrueAction_is_StopToAbort()
+        {
+            // Arrange
+            var systemUnderTest = new DataStructureConvenienceProtocols<int>(ProtocolFactory);
+
+            var stopMessage = A.Dummy<string>();
+
+            var operation = Op.Validate(new[]
+            {
+                new MessageContainedBooleanValidationStep(Op.Const(new ValidationBoolWithMessage(false, A.Dummy<string>())), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new MessageContainedBooleanValidationStep(Op.Const(new ValidationBoolWithMessage(true, stopMessage)), ValidationStepAction.StopToAbort, ValidationStepAction.NextStep),
+                new MessageContainedBooleanValidationStep(Op.Abort<ValidationBoolWithMessage>(), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+            });
+
+            var expected = new ValidationResult(Op.Const(Validity.Aborted), Op.Const(stopMessage));
+
+            // Act
+            var actual = await systemUnderTest.ExecuteAsync(operation);
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+        }
+
+        [Fact]
+        public static async Task ExecuteAsync_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_NotApplicable_and_MessageOp_is_StopMessageOp___When_executing_MessageContainedBooleanValidationStep_operation_returns_false_and_FalseAction_is_StopAsNotApplicable()
+        {
+            // Arrange
+            var systemUnderTest = new DataStructureConvenienceProtocols<int>(ProtocolFactory);
+
+            var stopMessage = A.Dummy<string>();
+
+            var operation = Op.Validate(new[]
+            {
+                new MessageContainedBooleanValidationStep(Op.Const(new ValidationBoolWithMessage(true, A.Dummy<string>())), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new MessageContainedBooleanValidationStep(Op.Const(new ValidationBoolWithMessage(false, stopMessage)), ValidationStepAction.NextStep, ValidationStepAction.StopAsNotApplicable),
+                new MessageContainedBooleanValidationStep(Op.Abort<ValidationBoolWithMessage>(), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+            });
+
+            var expected = new ValidationResult(Op.Const(Validity.NotApplicable), Op.Const(stopMessage));
+
+            // Act
+            var actual = await systemUnderTest.ExecuteAsync(operation);
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+        }
+
+        [Fact]
+        public static async Task ExecuteAsync_ValidateOp___Should_stop_executing_Steps_and_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_NotApplicable_and_MessageOp_is_StopMessageOp___When_executing_MessageContainedBooleanValidationStep_operation_returns_true_and_TrueAction_is_StopAsNotApplicable()
+        {
+            // Arrange
+            var systemUnderTest = new DataStructureConvenienceProtocols<int>(ProtocolFactory);
+
+            var stopMessage = A.Dummy<string>();
+
+            var operation = Op.Validate(new[]
+            {
+                new MessageContainedBooleanValidationStep(Op.Const(new ValidationBoolWithMessage(false, A.Dummy<string>())), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                new MessageContainedBooleanValidationStep(Op.Const(new ValidationBoolWithMessage(true, stopMessage)), ValidationStepAction.StopAsNotApplicable, ValidationStepAction.NextStep),
+                new MessageContainedBooleanValidationStep(Op.Abort<ValidationBoolWithMessage>(), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+            });
+
+            var expected = new ValidationResult(Op.Const(Validity.NotApplicable), Op.Const(stopMessage));
+
+            // Act
+            var actual = await systemUnderTest.ExecuteAsync(operation);
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+        }
+
+        [Fact]
+        public static async Task ExecuteAsync_ValidateOp___Should_return_ValidationResult_where_ValidityOp_is_ConstOp_with_Value_EndValidity_and_MessageOp_is_EndMessageOp___When_all_MessageContainedBooleanValidationSteps_result_in_NextStep_actions()
+        {
+            // Arrange
+            var systemUnderTest = new DataStructureConvenienceProtocols<int>(ProtocolFactory);
+
+            var endMessage = A.Dummy<string>();
+
+            var validity = A.Dummy<Validity>();
+
+            var operation = Op.Validate(
+                new[]
+                {
+                    new MessageContainedBooleanValidationStep(Op.Const(new ValidationBoolWithMessage(true, A.Dummy<string>())), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                    new MessageContainedBooleanValidationStep(Op.Const(new ValidationBoolWithMessage(false, A.Dummy<string>())), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
+                    new MessageContainedBooleanValidationStep(Op.Const(new ValidationBoolWithMessage(A.Dummy<bool>(), A.Dummy<string>())), ValidationStepAction.NextStep, ValidationStepAction.NextStep),
                 },
                 Op.Const(endMessage),
                 validity);

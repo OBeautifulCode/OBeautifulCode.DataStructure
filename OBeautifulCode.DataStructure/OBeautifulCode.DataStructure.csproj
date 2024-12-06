@@ -553,13 +553,33 @@
     <Compile Include="Models\Classes\Validation\ValidationChain.designer.cs">
       <DependentUpon>ValidationChain.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Classes\Validation\ValidationStep.cs" />
+    <Compile Include="Models\Classes\Validation\ValidationStep\BooleanValidationStepBase.designer.cs">
+      <DependentUpon>BooleanValidationStepBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Validation\ValidationStep\MessageByOpBooleanValidationStep.cs" />
+    <Compile Include="Models\Classes\Validation\ValidationStep\MessageByOpBooleanValidationStep.designer.cs">
+      <DependentUpon>MessageByOpBooleanValidationStep.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Validation\ValidationStep\MessageContainedBooleanValidationStep.designer.cs">
+      <DependentUpon>MessageContainedBooleanValidationStep.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Validation\ValidationStep\SimpleBooleanValidationStep.designer.cs">
+      <DependentUpon>SimpleBooleanValidationStep.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Validation\ValidationStep\ValidationBoolWithMessage.cs" />
+    <Compile Include="Models\Classes\Validation\ValidationStep\MessageContainedBooleanValidationStep.cs" />
+    <Compile Include="Models\Classes\Validation\ValidationStep\ValidationBoolWithMessage.designer.cs">
+      <DependentUpon>ValidationBoolWithMessage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Validation\ValidationStep\ValidationStepBase.cs" />
+    <Compile Include="Models\Classes\Validation\ValidationStep\BooleanValidationStepBase.cs" />
+    <Compile Include="Models\Classes\Validation\ValidationStep\SimpleBooleanValidationStep.cs" />
     <Compile Include="Models\Classes\Validation\ValidationResult.cs" />
     <Compile Include="Models\Classes\Validation\ValidationResult.designer.cs">
       <DependentUpon>ValidationResult.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Classes\Validation\ValidationStep.designer.cs">
-      <DependentUpon>ValidationStep.cs</DependentUpon>
+    <Compile Include="Models\Classes\Validation\ValidationStep\ValidationStepBase.designer.cs">
+      <DependentUpon>ValidationStepBase.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Enums\AvailabilityCheck\AvailabilityCheckStepAction.cs" />
     <Compile Include="Models\Enums\CellValue\MediaKind.cs" />

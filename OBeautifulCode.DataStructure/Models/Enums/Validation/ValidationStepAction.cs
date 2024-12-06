@@ -7,7 +7,7 @@
 namespace OBeautifulCode.DataStructure
 {
     /// <summary>
-    /// Determines what to do within the context of executing a <see cref="ValidationStep"/>.
+    /// Determines what to do within the context of executing a <see cref="ValidationStepBase"/>.
     /// </summary>
     public enum ValidationStepAction
     {

@@ -207,6 +207,18 @@
     <Compile Include=".recipes\OBeautifulCode.Type\TypeDummyFactory.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeDummyFactory.designer.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
+    <Compile Include="Models\Classes\Validation\ValidationStep\BooleanValidationStepBaseTest.cs" />
+    <Compile Include="Models\Classes\Validation\ValidationStep\BooleanValidationStepBaseTest.designer.cs">
+      <DependentUpon>BooleanValidationStepBaseTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Validation\ValidationStep\MessageByOpBooleanValidationStepTest.cs" />
+    <Compile Include="Models\Classes\Validation\ValidationStep\MessageByOpBooleanValidationStepTest.designer.cs">
+      <DependentUpon>MessageByOpBooleanValidationStepTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Validation\ValidationStep\MessageContainedBooleanValidationStepTest.cs" />
+    <Compile Include="Models\Classes\Validation\ValidationStep\MessageContainedBooleanValidationStepTest.designer.cs">
+      <DependentUpon>MessageContainedBooleanValidationStepTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Classes\CellValue\Controls\DropdownSelectorTest.cs" />
     <Compile Include="Models\Classes\CellValue\Controls\DropdownSelectorTest.designer.cs">
       <DependentUpon>DropdownSelectorTest.cs</DependentUpon>
@@ -687,10 +699,6 @@
     <Compile Include="Models\Classes\Validation\ValidationChainTest.designer.cs">
       <DependentUpon>ValidationChainTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Classes\Validation\ValidationStepTest.cs" />
-    <Compile Include="Models\Classes\Validation\ValidationStepTest.designer.cs">
-      <DependentUpon>ValidationStepTest.cs</DependentUpon>
-    </Compile>
     <Compile Include="Logic\Extensions\RowBaseExtensionsTest.cs" />
     <Compile Include="Logic\Extensions\TreeTableExtensionsTest.cs" />
     <Compile Include="Models\Classes\Cell\CellBaseTest.cs" />
@@ -761,6 +769,18 @@
     <Compile Include="Models\Classes\CellLocator\StandardCellLocatorTest.cs" />
     <Compile Include="Models\Classes\CellLocator\StandardCellLocatorTest.designer.cs">
       <DependentUpon>StandardCellLocatorTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Validation\ValidationStep\SimpleBooleanValidationStepTest.cs" />
+    <Compile Include="Models\Classes\Validation\ValidationStep\SimpleBooleanValidationStepTest.designer.cs">
+      <DependentUpon>SimpleBooleanValidationStepTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Validation\ValidationStep\ValidationBoolWithMessageTest.cs" />
+    <Compile Include="Models\Classes\Validation\ValidationStep\ValidationBoolWithMessageTest.designer.cs">
+      <DependentUpon>ValidationBoolWithMessageTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Validation\ValidationStep\ValidationStepBaseTest.cs" />
+    <Compile Include="Models\Classes\Validation\ValidationStep\ValidationStepBaseTest.designer.cs">
+      <DependentUpon>ValidationStepBaseTest.cs</DependentUpon>
     </Compile>
     <None Include=".analyzers\test.ruleset" />
     <None Include="DummyFactory.recipe-nuspec" />

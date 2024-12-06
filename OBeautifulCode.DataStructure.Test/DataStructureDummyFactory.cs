@@ -90,6 +90,7 @@ namespace OBeautifulCode.DataStructure.Test
             RegisterReturningOperation<Validity>();
             RegisterReturningOperation<ICellLocator>();
             RegisterReturningOperation<CompareOperator>();
+            RegisterReturningOperation<ValidationBoolWithMessage>();
 
             // <------------------- MODELS ------------------------>
 

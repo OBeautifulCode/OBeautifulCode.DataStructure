@@ -271,7 +271,7 @@ namespace OBeautifulCode.DataStructure
         /// The operation.
         /// </returns>
         public static ValidateOp Validate(
-            this IReadOnlyList<ValidationStep> steps,
+            this IReadOnlyList<ValidationStepBase> steps,
             IReturningOperation<string> endMessageOp = null,
             Validity endValidity = Validity.Valid)
         {

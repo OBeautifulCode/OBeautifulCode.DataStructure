@@ -9,10 +9,9 @@ namespace OBeautifulCode.DataStructure
     using System;
     using System.Linq;
     using System.Threading.Tasks;
-
     using OBeautifulCode.Equality.Recipes;
     using OBeautifulCode.Type;
-
+    using OBeautifulCode.Type.Recipes;
     using static System.FormattableString;
 
     /// <summary>
@@ -403,20 +402,51 @@ namespace OBeautifulCode.DataStructure
 
             foreach (var validationStep in validationChain.Steps)
             {
-                var operationResult = this.protocolFactory.GetProtocolAndExecuteViaReflection<bool>(validationStep.Operation);
+                Validity validity;
+                IReturningOperation<string> stopMessageOp;
 
-                var validationStepAction = operationResult
-                    ? validationStep.TrueAction
-                    : validationStep.FalseAction;
-
-                if (validationStepAction == ValidationStepAction.NextStep)
+                if (validationStep is BooleanValidationStepBase booleanValidationStep)
                 {
-                    continue;
+                    bool operationResult;
+
+                    if (booleanValidationStep is SimpleBooleanValidationStep simpleBooleanValidationStep)
+                    {
+                        operationResult = this.protocolFactory.GetProtocolAndExecuteViaReflection<bool>(simpleBooleanValidationStep.Operation);
+                        stopMessageOp = Op.Const(simpleBooleanValidationStep.StopMessage);
+                    }
+                    else if (booleanValidationStep is MessageContainedBooleanValidationStep messageContainedBooleanValidationStep)
+                    {
+                        var messageContainedResult = this.protocolFactory.GetProtocolAndExecuteViaReflection<ValidationBoolWithMessage>(messageContainedBooleanValidationStep.Operation);
+                        operationResult = messageContainedResult.Outcome;
+                        stopMessageOp = Op.Const(messageContainedResult.Message);
+                    }
+                    else if (booleanValidationStep is MessageByOpBooleanValidationStep messageByOpBooleanValidationStep)
+                    {
+                        operationResult = this.protocolFactory.GetProtocolAndExecuteViaReflection<bool>(messageByOpBooleanValidationStep.Operation);
+                        stopMessageOp = messageByOpBooleanValidationStep.StopMessageOp;
+                    }
+                    else
+                    {
+                        throw new NotSupportedException(Invariant($"This type of {nameof(booleanValidationStep)} is not supported: {booleanValidationStep.GetType().ToStringReadable()}."));
+                    }
+
+                    var validationStepAction = operationResult
+                        ? booleanValidationStep.TrueAction
+                        : booleanValidationStep.FalseAction;
+
+                    if (validationStepAction == ValidationStepAction.NextStep)
+                    {
+                        continue;
+                    }
+
+                    validity = GetValidity(validationStepAction);
+                }
+                else
+                {
+                    throw new NotSupportedException(Invariant($"This type of {nameof(validationStep)} is not supported: {validationStep.GetType().ToStringReadable()}."));
                 }
 
-                var validity = GetValidity(validationStepAction);
-
-                result = new ValidationResult(Op.Const(validity), validationStep.StopMessageOp);
+                result = new ValidationResult(Op.Const(validity), stopMessageOp);
 
                 break;
             }
@@ -445,20 +475,51 @@ namespace OBeautifulCode.DataStructure
 
             foreach (var validationStep in validationChain.Steps)
             {
-                var operationResult = await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync<bool>(validationStep.Operation);
+                Validity validity;
+                IReturningOperation<string> stopMessageOp;
 
-                var validationStepAction = operationResult
-                    ? validationStep.TrueAction
-                    : validationStep.FalseAction;
-
-                if (validationStepAction == ValidationStepAction.NextStep)
+                if (validationStep is BooleanValidationStepBase booleanValidationStep)
                 {
-                    continue;
+                    bool operationResult;
+
+                    if (booleanValidationStep is SimpleBooleanValidationStep simpleBooleanValidationStep)
+                    {
+                        operationResult = await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync<bool>(simpleBooleanValidationStep.Operation);
+                        stopMessageOp = Op.Const(simpleBooleanValidationStep.StopMessage);
+                    }
+                    else if (booleanValidationStep is MessageContainedBooleanValidationStep messageContainedBooleanValidationStep)
+                    {
+                        var messageContainedResult = await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync<ValidationBoolWithMessage>(messageContainedBooleanValidationStep.Operation);
+                        operationResult = messageContainedResult.Outcome;
+                        stopMessageOp = Op.Const(messageContainedResult.Message);
+                    }
+                    else if (booleanValidationStep is MessageByOpBooleanValidationStep messageByOpBooleanValidationStep)
+                    {
+                        operationResult = await this.protocolFactory.GetProtocolAndExecuteViaReflectionAsync<bool>(messageByOpBooleanValidationStep.Operation);
+                        stopMessageOp = messageByOpBooleanValidationStep.StopMessageOp;
+                    }
+                    else
+                    {
+                        throw new NotSupportedException(Invariant($"This type of {nameof(booleanValidationStep)} is not supported: {booleanValidationStep.GetType().ToStringReadable()}."));
+                    }
+
+                    var validationStepAction = operationResult
+                        ? booleanValidationStep.TrueAction
+                        : booleanValidationStep.FalseAction;
+
+                    if (validationStepAction == ValidationStepAction.NextStep)
+                    {
+                        continue;
+                    }
+
+                    validity = GetValidity(validationStepAction);
+                }
+                else
+                {
+                    throw new NotSupportedException(Invariant($"This type of {nameof(validationStep)} is not supported: {validationStep.GetType().ToStringReadable()}."));
                 }
 
-                var validity = GetValidity(validationStepAction);
-
-                result = new ValidationResult(Op.Const(validity), validationStep.StopMessageOp);
+                result = new ValidationResult(Op.Const(validity), stopMessageOp);
 
                 break;
             }
