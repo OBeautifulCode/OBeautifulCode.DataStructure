@@ -2264,7 +2264,6 @@ namespace OBeautifulCode.DataStructure.Test
             {
                 frameworkFactory => new TileProtocol(frameworkFactory).ToProtocolFactory(),
                 frameworkFactory => new ThisCellGreaterThanZeroProtocol(frameworkFactory).ToProtocolFactory(),
-
             };
 
             // Act

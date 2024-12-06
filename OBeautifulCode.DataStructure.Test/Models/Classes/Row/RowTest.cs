@@ -335,7 +335,7 @@ namespace OBeautifulCode.DataStructure.Test
                         {
                             var systemUnderTest = A.Dummy<Row>();
 
-                            var referenceObject = A.Dummy<Row>().ThatIs(_ => (!systemUnderTest.ChildRows.IsEqualTo(_.ChildRows) && (_.ChildRows != null) && (_.ChildRows.Any())));
+                            var referenceObject = A.Dummy<Row>().ThatIs(_ => (!systemUnderTest.ChildRows.IsEqualTo(_.ChildRows) && (_.ChildRows != null) && _.ChildRows.Any()));
 
                             var result = new SystemUnderTestDeepCloneWithValue<Row>
                             {
