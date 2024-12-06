@@ -169,7 +169,7 @@ namespace OBeautifulCode.DataStructure.Test
         public static void GetCell_StandardCellLocator___Should_throw_CellNotFoundException___When_multiple_cells_with_specified_id_are_found()
         {
             // Arrange
-            var section1 = A.Dummy<Section>();
+            var section1 = A.Dummy<Section>().Whose(_ => _.TreeTable.GetAllCells().Any());
             var section2 = section1.DeepCloneWithId(A.Dummy<string>());
 
             var report = new Report(A.Dummy<string>(), new[] { section1, section2 });
@@ -358,7 +358,7 @@ namespace OBeautifulCode.DataStructure.Test
         public static void GetCell_TCell_StandardCellLocator___Should_throw_CellNotFoundException___When_multiple_cells_with_specified_id_are_found()
         {
             // Arrange
-            var section1 = A.Dummy<Section>();
+            var section1 = A.Dummy<Section>().Whose(_ => _.TreeTable.GetAllCells().Any());
             var section2 = section1.DeepCloneWithId(A.Dummy<string>());
 
             var report = new Report(A.Dummy<string>(), new[] { section1, section2 });
@@ -619,7 +619,7 @@ namespace OBeautifulCode.DataStructure.Test
         public static void TryGetCell_StandardCellLocator___Should_return_false_with_null_cell___When_multiple_cells_with_specified_id_are_found()
         {
             // Arrange
-            var section1 = A.Dummy<Section>();
+            var section1 = A.Dummy<Section>().Whose(_ => _.TreeTable.GetAllCells().Any());
             var section2 = section1.DeepCloneWithId(A.Dummy<string>());
 
             var report = new Report(A.Dummy<string>(), new[] { section1, section2 });
@@ -806,7 +806,7 @@ namespace OBeautifulCode.DataStructure.Test
         public static void TryGetCell_TCell_StandardCellLocator___Should_return_false_with_null_cell___When_multiple_cells_with_specified_id_are_found()
         {
             // Arrange
-            var section1 = A.Dummy<Section>();
+            var section1 = A.Dummy<Section>().Whose(_ => _.TreeTable.GetAllCells().Any());
             var section2 = section1.DeepCloneWithId(A.Dummy<string>());
 
             var report = new Report(A.Dummy<string>(), new[] { section1, section2 });
@@ -1041,7 +1041,7 @@ namespace OBeautifulCode.DataStructure.Test
         public static void GetCell_InReportCellLocator___Should_throw_CellNotFoundException___When_section_is_not_found()
         {
             // Arrange
-            var report = A.Dummy<Report>();
+            var report = A.Dummy<Report>().Whose(_ => _.Sections.First().TreeTable.GetAllCells().Any());
 
             var cellLocator = new InReportCellLocator(A.Dummy<string>(), report.Sections.First().TreeTable.GetAllCells().First().Id);
 
@@ -1233,7 +1233,7 @@ namespace OBeautifulCode.DataStructure.Test
         public static void GetCell_TCell_InReportCellLocator___Should_throw_CellNotFoundException___When_section_is_not_found()
         {
             // Arrange
-            var report = A.Dummy<Report>();
+            var report = A.Dummy<Report>().Whose(_ => _.Sections.First().TreeTable.GetAllCells().Any());
 
             var cellLocator = new InReportCellLocator(A.Dummy<string>(), report.Sections.First().TreeTable.GetAllCells().First().Id);
 
@@ -1500,7 +1500,7 @@ namespace OBeautifulCode.DataStructure.Test
         public static void TryGetCell_InReportCellLocator___Should_return_false_with_null_cell___When_section_is_not_found()
         {
             // Arrange
-            var report = A.Dummy<Report>();
+            var report = A.Dummy<Report>().Whose(_ => _.Sections.First().TreeTable.GetAllCells().Any());
 
             var cellLocator = new InReportCellLocator(A.Dummy<string>(), report.Sections.First().TreeTable.GetAllCells().First().Id);
 
@@ -1690,7 +1690,7 @@ namespace OBeautifulCode.DataStructure.Test
         public static void TryGetCell_TCell_InReportCellLocator___Should_return_false_with_null_cell___When_section_is_not_found()
         {
             // Arrange
-            var report = A.Dummy<Report>();
+            var report = A.Dummy<Report>().Whose(_ => _.Sections.First().TreeTable.GetAllCells().Any());
 
             var cellLocator = new InReportCellLocator(A.Dummy<string>(), report.Sections.First().TreeTable.GetAllCells().First().Id);
 
@@ -1962,7 +1962,7 @@ namespace OBeautifulCode.DataStructure.Test
         ////public static void GetCell_SectionCellLocator___Should_throw_ArgumentNullException___When_referenceCell_is_not_a_cell_in_the_report()
         ////{
         ////    // Arrange
-        ////    var report = A.Dummy<Report>();
+        ////    var report = A.Dummy<Report>().Whose(_ => _.Sections.First().TreeTable.GetAllCells().Any());
 
         ////    var systemUnderTest = new ReportAgent(report);
 

@@ -264,6 +264,129 @@ namespace OBeautifulCode.DataStructure.Test
                         ExpectedExceptionMessageContains = new[] { "collapsedSummaryRows is specified when there are no rows in childRows", },
                     });
 
+            DeepCloneWithTestScenarios
+                .RemoveAllScenarios()
+                .AddScenario(() =>
+                    new DeepCloneWithTestScenario<Row>
+                    {
+                        Name = "DeepCloneWithId should deep clone object and replace Id with the provided id",
+                        WithPropertyName = "Id",
+                        SystemUnderTestDeepCloneWithValueFunc = () =>
+                        {
+                            var systemUnderTest = A.Dummy<Row>();
+
+                            var referenceObject = A.Dummy<Row>().ThatIs(_ => !systemUnderTest.Id.IsEqualTo(_.Id));
+
+                            var result = new SystemUnderTestDeepCloneWithValue<Row>
+                            {
+                                SystemUnderTest = systemUnderTest,
+                                DeepCloneWithValue = referenceObject.Id,
+                            };
+
+                            return result;
+                        },
+                    })
+                .AddScenario(() =>
+                    new DeepCloneWithTestScenario<Row>
+                    {
+                        Name = "DeepCloneWithCells should deep clone object and replace Cells with the provided cells",
+                        WithPropertyName = "Cells",
+                        SystemUnderTestDeepCloneWithValueFunc = () =>
+                        {
+                            var systemUnderTest = A.Dummy<Row>();
+
+                            var referenceObject = A.Dummy<Row>().ThatIs(_ => !systemUnderTest.Cells.IsEqualTo(_.Cells));
+
+                            var result = new SystemUnderTestDeepCloneWithValue<Row>
+                            {
+                                SystemUnderTest = systemUnderTest,
+                                DeepCloneWithValue = referenceObject.Cells,
+                            };
+
+                            return result;
+                        },
+                    })
+                .AddScenario(() =>
+                    new DeepCloneWithTestScenario<Row>
+                    {
+                        Name = "DeepCloneWithFormat should deep clone object and replace Format with the provided format",
+                        WithPropertyName = "Format",
+                        SystemUnderTestDeepCloneWithValueFunc = () =>
+                        {
+                            var systemUnderTest = A.Dummy<Row>();
+
+                            var referenceObject = A.Dummy<Row>().ThatIs(_ => !systemUnderTest.Format.IsEqualTo(_.Format));
+
+                            var result = new SystemUnderTestDeepCloneWithValue<Row>
+                            {
+                                SystemUnderTest = systemUnderTest,
+                                DeepCloneWithValue = referenceObject.Format,
+                            };
+
+                            return result;
+                        },
+                    })
+                .AddScenario(() =>
+                    new DeepCloneWithTestScenario<Row>
+                    {
+                        Name = "DeepCloneWithChildRows should deep clone object and replace ChildRows with the provided childRows",
+                        WithPropertyName = "ChildRows",
+                        SystemUnderTestDeepCloneWithValueFunc = () =>
+                        {
+                            var systemUnderTest = A.Dummy<Row>();
+
+                            var referenceObject = A.Dummy<Row>().ThatIs(_ => (!systemUnderTest.ChildRows.IsEqualTo(_.ChildRows) && (_.ChildRows != null) && (_.ChildRows.Any())));
+
+                            var result = new SystemUnderTestDeepCloneWithValue<Row>
+                            {
+                                SystemUnderTest = systemUnderTest,
+                                DeepCloneWithValue = referenceObject.ChildRows,
+                            };
+
+                            return result;
+                        },
+                    })
+                .AddScenario(() =>
+                    new DeepCloneWithTestScenario<Row>
+                    {
+                        Name = "DeepCloneWithExpandedSummaryRows should deep clone object and replace ExpandedSummaryRows with the provided expandedSummaryRows",
+                        WithPropertyName = "ExpandedSummaryRows",
+                        SystemUnderTestDeepCloneWithValueFunc = () =>
+                        {
+                            var systemUnderTest = A.Dummy<Row>().ThatIs(_ => (_.ChildRows != null) && _.ChildRows.Any());
+
+                            var referenceObject = A.Dummy<Row>().ThatIs(_ => !systemUnderTest.ExpandedSummaryRows.IsEqualTo(_.ExpandedSummaryRows));
+
+                            var result = new SystemUnderTestDeepCloneWithValue<Row>
+                            {
+                                SystemUnderTest = systemUnderTest,
+                                DeepCloneWithValue = referenceObject.ExpandedSummaryRows,
+                            };
+
+                            return result;
+                        },
+                    })
+                .AddScenario(() =>
+                    new DeepCloneWithTestScenario<Row>
+                    {
+                        Name = "DeepCloneWithCollapsedSummaryRows should deep clone object and replace CollapsedSummaryRows with the provided collapsedSummaryRows",
+                        WithPropertyName = "CollapsedSummaryRows",
+                        SystemUnderTestDeepCloneWithValueFunc = () =>
+                        {
+                            var systemUnderTest = A.Dummy<Row>().ThatIs(_ => (_.ChildRows != null) && _.ChildRows.Any());
+
+                            var referenceObject = A.Dummy<Row>().ThatIs(_ => !systemUnderTest.CollapsedSummaryRows.IsEqualTo(_.CollapsedSummaryRows));
+
+                            var result = new SystemUnderTestDeepCloneWithValue<Row>
+                            {
+                                SystemUnderTest = systemUnderTest,
+                                DeepCloneWithValue = referenceObject.CollapsedSummaryRows,
+                            };
+
+                            return result;
+                        },
+                    });
+
             EquatableTestScenarios
                 .RemoveAllScenarios()
                 .AddScenario(() =>
@@ -311,7 +434,7 @@ namespace OBeautifulCode.DataStructure.Test
                                     referenceObject.Cells,
                                     referenceObject.Id,
                                     referenceObject.Format,
-                                    A.Dummy<Row>().Whose(_ => (!_.ChildRows.IsEqualTo(referenceObject.ChildRows)) && _.ChildRows.Any()).ChildRows,
+                                    A.Dummy<Row>().Whose(_ => (!_.ChildRows.IsEqualTo(referenceObject.ChildRows)) && (_.ChildRows != null) && _.ChildRows.Any()).ChildRows,
                                     referenceObject.ExpandedSummaryRows,
                                     referenceObject.CollapsedSummaryRows),
                             new Row(
@@ -319,7 +442,7 @@ namespace OBeautifulCode.DataStructure.Test
                                     referenceObject.Id,
                                     referenceObject.Format,
                                     referenceObject.ChildRows,
-                                    A.Dummy<Row>().Whose(_ => (!_.ExpandedSummaryRows.IsEqualTo(referenceObject.ExpandedSummaryRows)) && _.ChildRows.Any()).ExpandedSummaryRows,
+                                    A.Dummy<Row>().Whose(_ => (!_.ExpandedSummaryRows.IsEqualTo(referenceObject.ExpandedSummaryRows)) && (_.ChildRows != null) && _.ChildRows.Any()).ExpandedSummaryRows,
                                     referenceObject.CollapsedSummaryRows),
                             new Row(
                                     referenceObject.Cells,
@@ -327,7 +450,7 @@ namespace OBeautifulCode.DataStructure.Test
                                     referenceObject.Format,
                                     referenceObject.ChildRows,
                                     referenceObject.ExpandedSummaryRows,
-                                    A.Dummy<Row>().Whose(_ => (!_.CollapsedSummaryRows.IsEqualTo(ReferenceObjectForEquatableTestScenarios.CollapsedSummaryRows)) && _.ChildRows.Any()).CollapsedSummaryRows),
+                                    A.Dummy<Row>().Whose(_ => (!_.CollapsedSummaryRows.IsEqualTo(ReferenceObjectForEquatableTestScenarios.CollapsedSummaryRows)) && (_.ChildRows != null) && _.ChildRows.Any()).CollapsedSummaryRows),
                         },
                         ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
                         {
