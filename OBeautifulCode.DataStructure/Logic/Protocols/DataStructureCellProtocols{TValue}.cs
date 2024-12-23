@@ -25,6 +25,7 @@ namespace OBeautifulCode.DataStructure
     public class DataStructureCellProtocols<TValue> :
           ISyncAndAsyncReturningProtocol<ThrowOpExecutionAbortedExceptionOp<TValue>, TValue>,
           ISyncAndAsyncReturningProtocol<ThrowOpExecutionDeemedNotApplicableExceptionOp<TValue>, TValue>,
+          ISyncAndAsyncReturningProtocol<ThrowOpExecutionFailedExceptionOp<TValue>, TValue>,
           ISyncAndAsyncVoidProtocol<ExecuteOperationCellIfNecessaryOp<TValue>>,
           ISyncAndAsyncVoidProtocol<ValidateCellIfNecessaryOp>,
           ISyncAndAsyncVoidProtocol<CheckAvailabilityOfCellIfNecessaryOp>,
@@ -132,6 +133,32 @@ namespace OBeautifulCode.DataStructure
             await Task.FromResult(0);
 
             throw new OpExecutionDeemedNotApplicableException(operation.Details, operation);
+        }
+
+        /// <inheritdoc />
+        public TValue Execute(
+            ThrowOpExecutionFailedExceptionOp<TValue> operation)
+        {
+            if (operation == null)
+            {
+                throw new ArgumentNullException(nameof(operation));
+            }
+
+            throw new OpExecutionFailedException(operation.Details, operation: operation);
+        }
+
+        /// <inheritdoc />
+        public async Task<TValue> ExecuteAsync(
+            ThrowOpExecutionFailedExceptionOp<TValue> operation)
+        {
+            if (operation == null)
+            {
+                throw new ArgumentNullException(nameof(operation));
+            }
+
+            await Task.FromResult(0);
+
+            throw new OpExecutionFailedException(operation.Details, operation: operation);
         }
 
         /// <inheritdoc />

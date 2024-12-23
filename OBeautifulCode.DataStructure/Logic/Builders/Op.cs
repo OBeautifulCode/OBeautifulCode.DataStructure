@@ -48,6 +48,22 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <summary>
+        /// Builds an operation that throws a <see cref="OpExecutionFailedException"/>.
+        /// </summary>
+        /// <typeparam name="TValue">The type of value.</typeparam>
+        /// <param name="details">OPTIONAL details to use with the exception.  DEFAULT is to omit details.</param>
+        /// <returns>
+        /// The operation.
+        /// </returns>
+        public static ThrowOpExecutionFailedExceptionOp<TValue> Throw<TValue>(
+            string details = null)
+        {
+            var result = new ThrowOpExecutionFailedExceptionOp<TValue>(details);
+
+            return result;
+        }
+
+        /// <summary>
         /// Builds an operation that gets a specified const value.
         /// </summary>
         /// <typeparam name="TValue">The type of value.</typeparam>
