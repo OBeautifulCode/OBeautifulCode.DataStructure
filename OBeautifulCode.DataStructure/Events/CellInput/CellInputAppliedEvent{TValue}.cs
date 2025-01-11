@@ -15,7 +15,7 @@ namespace OBeautifulCode.DataStructure
     /// </summary>
     /// <typeparam name="TValue">The type of inputted value.</typeparam>
     // ReSharper disable once RedundantExtendsListEntry
-    public partial class CellInputAppliedEvent<TValue> : CellInputEventBase, ICellInputAppliedEvent, IModelViaCodeGen
+    public partial class CellInputAppliedEvent<TValue> : CellInputAppliedEventBase, IModelViaCodeGen
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CellInputAppliedEvent{TValue}"/> class.
@@ -38,7 +38,7 @@ namespace OBeautifulCode.DataStructure
         public TValue Value { get; private set; }
 
         /// <inheritdoc />
-        public object GetObjectValue()
+        public override object GetObjectValue()
         {
             var result = this.Value;
 
@@ -46,7 +46,7 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <inheritdoc />
-        public Type GetValueType()
+        public override Type GetValueType()
         {
             var result = typeof(TValue);
 

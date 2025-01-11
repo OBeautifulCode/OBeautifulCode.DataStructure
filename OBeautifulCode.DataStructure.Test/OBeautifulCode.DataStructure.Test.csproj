@@ -207,6 +207,14 @@
     <Compile Include=".recipes\OBeautifulCode.Type\TypeDummyFactory.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeDummyFactory.designer.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
+    <Compile Include="Events\CellInput\CellInputAppliedEventBaseTest.cs" />
+    <Compile Include="Events\CellInput\CellInputAppliedEventBaseTest.designer.cs">
+      <DependentUpon>CellInputAppliedEventBaseTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Events\CellOpExecution\CellOpExecutionCompletedEventBaseTest.cs" />
+    <Compile Include="Events\CellOpExecution\CellOpExecutionCompletedEventBaseTest.designer.cs">
+      <DependentUpon>CellOpExecutionCompletedEventBaseTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Classes\Validation\ValidationStep\BooleanValidationStepBaseTest.cs" />
     <Compile Include="Models\Classes\Validation\ValidationStep\BooleanValidationStepBaseTest.designer.cs">
       <DependentUpon>BooleanValidationStepBaseTest.cs</DependentUpon>

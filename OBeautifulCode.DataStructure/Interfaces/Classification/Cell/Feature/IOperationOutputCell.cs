@@ -25,11 +25,11 @@ namespace OBeautifulCode.DataStructure
         void Record(CellOpExecutionEventBase operationExecutionEvent);
 
         /// <summary>
-        /// Gets the <see cref="ICellOpExecutionCompletedEvent"/> that recorded the cell's value.
+        /// Gets the <see cref="CellOpExecutionCompletedEventBase"/> that recorded the cell's value.
         /// </summary>
         /// <returns>
-        /// The <see cref="ICellOpExecutionCompletedEvent"/> that recorded the cell's value.
+        /// The <see cref="CellOpExecutionCompletedEventBase"/> that recorded the cell's value.
         /// </returns>
-        ICellOpExecutionCompletedEvent GetCellValueCellOpExecutionCompletedEventInterface();
+        CellOpExecutionCompletedEventBase GetCellValueCellOpExecutionCompletedEventBase();
     }
 }

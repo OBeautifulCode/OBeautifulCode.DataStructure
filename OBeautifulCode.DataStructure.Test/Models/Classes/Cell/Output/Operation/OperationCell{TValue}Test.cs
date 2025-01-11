@@ -844,13 +844,13 @@ namespace OBeautifulCode.DataStructure.Test
         }
 
         [Fact]
-        public static void GetCellValueCellOpExecutionCompletedEventInterface___Should_throw_InvalidOperationException___When_OperationExecutionEvents_is_null()
+        public static void GetCellValueCellOpExecutionCompletedEventBase___Should_throw_InvalidOperationException___When_OperationExecutionEvents_is_null()
         {
             // Arrange
             var systemUnderTest = A.Dummy<OperationCell<Version>>().DeepCloneWithOperationExecutionEvents(null);
 
             // Act
-            var actual = Record.Exception(() => systemUnderTest.GetCellValueCellOpExecutionCompletedEventInterface());
+            var actual = Record.Exception(() => systemUnderTest.GetCellValueCellOpExecutionCompletedEventBase());
 
             // Assert
             actual.AsTest().Must().BeOfType<InvalidOperationException>();
@@ -858,13 +858,13 @@ namespace OBeautifulCode.DataStructure.Test
         }
 
         [Fact]
-        public static void GetCellValueCellOpExecutionCompletedEventInterface___Should_throw_InvalidOperationException___When_OperationExecutionEvents_is_empty()
+        public static void GetCellValueCellOpExecutionCompletedEventBase___Should_throw_InvalidOperationException___When_OperationExecutionEvents_is_empty()
         {
             // Arrange
             var systemUnderTest = A.Dummy<OperationCell<Version>>().DeepCloneWithOperationExecutionEvents(new CellOpExecutionEventBase[0]);
 
             // Act
-            var actual = Record.Exception(() => systemUnderTest.GetCellValueCellOpExecutionCompletedEventInterface());
+            var actual = Record.Exception(() => systemUnderTest.GetCellValueCellOpExecutionCompletedEventBase());
 
             // Assert
             actual.AsTest().Must().BeOfType<InvalidOperationException>();
@@ -872,7 +872,7 @@ namespace OBeautifulCode.DataStructure.Test
         }
 
         [Fact]
-        public static void GetCellValueCellOpExecutionCompletedEventInterface___Should_throw_InvalidOperationException___When_OperationExecutionEvents_does_not_contain_CellOpExecutionCompletedEvent()
+        public static void GetCellValueCellOpExecutionCompletedEventBase___Should_throw_InvalidOperationException___When_OperationExecutionEvents_does_not_contain_CellOpExecutionCompletedEvent()
         {
             // Arrange
             var systemUnderTest = A.Dummy<OperationCell<Version>>().DeepCloneWithOperationExecutionEvents(new CellOpExecutionEventBase[0]);
@@ -880,7 +880,7 @@ namespace OBeautifulCode.DataStructure.Test
             systemUnderTest.ClearCellValue(A.Dummy<UtcDateTime>(), A.Dummy<string>());
 
             // Act
-            var actual = Record.Exception(() => systemUnderTest.GetCellValueCellOpExecutionCompletedEventInterface());
+            var actual = Record.Exception(() => systemUnderTest.GetCellValueCellOpExecutionCompletedEventBase());
 
             // Assert
             actual.AsTest().Must().BeOfType<InvalidOperationException>();
@@ -888,7 +888,7 @@ namespace OBeautifulCode.DataStructure.Test
         }
 
         [Fact]
-        public static void GetCellValueCellOpExecutionCompletedEventInterface___Should_return_last_completed_execution_result___When_called()
+        public static void GetCellValueCellOpExecutionCompletedEventBase___Should_return_last_completed_execution_result___When_called()
         {
             // Arrange
             var systemUnderTest = A.Dummy<OperationCell<Version>>();
@@ -899,10 +899,10 @@ namespace OBeautifulCode.DataStructure.Test
 
             systemUnderTest.Record(new CellOpExecutionCompletedEvent<Version>(expectedVersion, A.Dummy<UtcDateTime>(), A.Dummy<string>()));
 
-            var expected = (ICellOpExecutionCompletedEvent)systemUnderTest.OperationExecutionEvents.Last();
+            var expected = (CellOpExecutionCompletedEventBase)systemUnderTest.OperationExecutionEvents.Last();
 
             // Act
-            var actual = systemUnderTest.GetCellValueCellOpExecutionCompletedEventInterface();
+            var actual = systemUnderTest.GetCellValueCellOpExecutionCompletedEventBase();
 
             // Assert
             actual.AsTest().Must().BeEqualTo(expected);

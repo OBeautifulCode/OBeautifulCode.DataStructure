@@ -49,11 +49,11 @@ namespace OBeautifulCode.DataStructure
             string details = null);
 
         /// <summary>
-        /// Gets the <see cref="ICellInputAppliedEvent"/> that recorded the cell's value.
+        /// Gets the <see cref="CellInputAppliedEventBase"/> that recorded the cell's value.
         /// </summary>
         /// <returns>
-        /// The <see cref="ICellInputAppliedEvent"/> that recorded the cell's value.
+        /// The <see cref="CellInputAppliedEventBase"/> that recorded the cell's value.
         /// </returns>
-        ICellInputAppliedEvent GetCellValueCellInputAppliedEventInterface();
+        CellInputAppliedEventBase GetCellValueCellInputAppliedEventBase();
     }
 }

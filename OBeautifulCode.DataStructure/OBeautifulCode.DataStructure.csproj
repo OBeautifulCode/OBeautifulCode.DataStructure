@@ -114,6 +114,10 @@
     <Compile Include="Events\CellInputEventBase.designer.cs">
       <DependentUpon>CellInputEventBase.cs</DependentUpon>
     </Compile>
+    <Compile Include="Events\CellInput\CellInputAppliedEventBase.cs" />
+    <Compile Include="Events\CellInput\CellInputAppliedEventBase.designer.cs">
+      <DependentUpon>CellInputAppliedEventBase.cs</DependentUpon>
+    </Compile>
     <Compile Include="Events\CellInput\CellInputAppliedEvent{TValue}.designer.cs">
       <DependentUpon>CellInputAppliedEvent{TValue}.cs</DependentUpon>
     </Compile>
@@ -129,6 +133,10 @@
     </Compile>
     <Compile Include="Events\CellOpExecution\CellOpExecutionClearedEvent.designer.cs">
       <DependentUpon>CellOpExecutionClearedEvent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Events\CellOpExecution\CellOpExecutionCompletedEventBase.cs" />
+    <Compile Include="Events\CellOpExecution\CellOpExecutionCompletedEventBase.designer.cs">
+      <DependentUpon>CellOpExecutionCompletedEventBase.cs</DependentUpon>
     </Compile>
     <Compile Include="Events\CellOpExecution\CellOpExecutionCompletedEvent{TResult}.designer.cs">
       <DependentUpon>CellOpExecutionCompletedEvent{TResult}.cs</DependentUpon>
@@ -192,11 +200,9 @@
     <Compile Include="Interfaces\Classification\Cell\Output\IConstOutputCell{TValue}.cs" />
     <Compile Include="Interfaces\Classification\Cell\Null\INullCell.cs" />
     <Compile Include="Interfaces\Classification\Cell\Slotted\ISlottedCell.cs" />
-    <Compile Include="Interfaces\Classification\Event\ICellOpExecutionCompletedEvent.cs" />
     <Compile Include="Interfaces\Classification\Format\ICellValueFormat.cs" />
     <Compile Include="Interfaces\Classification\Format\ICellValueFormat{TValue}.cs" />
     <Compile Include="Interfaces\Classification\Details\IDetails.cs" />
-    <Compile Include="Interfaces\Classification\Event\ICellInputAppliedEvent.cs" />
     <Compile Include="Interfaces\Classification\Resource\ILink.cs" />
     <Compile Include="Interfaces\Property\IHaveCellValueFormat.cs" />
     <Compile Include="Interfaces\Property\IHaveLinkedResource.cs" />

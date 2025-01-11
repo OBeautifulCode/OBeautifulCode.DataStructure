@@ -1094,13 +1094,13 @@ namespace OBeautifulCode.DataStructure.Test
         }
 
         [Fact]
-        public static void GetCellValueCellInputAppliedEventInterface___Should_throw_InvalidOperationException___When_InputEvents_is_null()
+        public static void GetCellValueCellInputAppliedEventBase___Should_throw_InvalidOperationException___When_InputEvents_is_null()
         {
             // Arrange
             var systemUnderTest = A.Dummy<InputCell<Version>>().DeepCloneWithInputEvents(null);
 
             // Act
-            var actual = Record.Exception(() => systemUnderTest.GetCellValueCellInputAppliedEventInterface());
+            var actual = Record.Exception(() => systemUnderTest.GetCellValueCellInputAppliedEventBase());
 
             // Assert
             actual.AsTest().Must().BeOfType<InvalidOperationException>();
@@ -1108,13 +1108,13 @@ namespace OBeautifulCode.DataStructure.Test
         }
 
         [Fact]
-        public static void GetCellValueCellInputAppliedEventInterface___Should_throw_InvalidOperationException___When_InputEvents_is_empty()
+        public static void GetCellValueCellInputAppliedEventBase___Should_throw_InvalidOperationException___When_InputEvents_is_empty()
         {
             // Arrange
             var systemUnderTest = A.Dummy<InputCell<Version>>().DeepCloneWithInputEvents(new CellInputEventBase[0]);
 
             // Act
-            var actual = Record.Exception(() => systemUnderTest.GetCellValueCellInputAppliedEventInterface());
+            var actual = Record.Exception(() => systemUnderTest.GetCellValueCellInputAppliedEventBase());
 
             // Assert
             actual.AsTest().Must().BeOfType<InvalidOperationException>();
@@ -1122,7 +1122,7 @@ namespace OBeautifulCode.DataStructure.Test
         }
 
         [Fact]
-        public static void GetCellValueCellInputAppliedEventInterface___Should_throw_InvalidOperationException___When_InputEvents_does_not_contain_CellInputAppliedEvent()
+        public static void GetCellValueCellInputAppliedEventBase___Should_throw_InvalidOperationException___When_InputEvents_does_not_contain_CellInputAppliedEvent()
         {
             // Arrange
             var systemUnderTest = A.Dummy<InputCell<Version>>().DeepCloneWithInputEvents(new CellInputEventBase[0]);
@@ -1130,7 +1130,7 @@ namespace OBeautifulCode.DataStructure.Test
             systemUnderTest.ClearCellValue(A.Dummy<UtcDateTime>(), A.Dummy<string>());
 
             // Act
-            var actual = Record.Exception(() => systemUnderTest.GetCellValueCellInputAppliedEventInterface());
+            var actual = Record.Exception(() => systemUnderTest.GetCellValueCellInputAppliedEventBase());
 
             // Assert
             actual.AsTest().Must().BeOfType<InvalidOperationException>();
@@ -1138,7 +1138,7 @@ namespace OBeautifulCode.DataStructure.Test
         }
 
         [Fact]
-        public static void GetCellValueCellInputAppliedEventInterface___Should_return_last_inputted_value___When_called()
+        public static void GetCellValueCellInputAppliedEventBase___Should_return_last_inputted_value___When_called()
         {
             // Arrange
             var systemUnderTest = A.Dummy<InputCell<Version>>();
@@ -1149,10 +1149,10 @@ namespace OBeautifulCode.DataStructure.Test
 
             systemUnderTest.SetCellValue(expectedVersion, A.Dummy<UtcDateTime>());
 
-            var expected = (ICellInputAppliedEvent)systemUnderTest.InputEvents.Last();
+            var expected = (CellInputAppliedEventBase)systemUnderTest.InputEvents.Last();
 
             // Act
-            var actual = systemUnderTest.GetCellValueCellInputAppliedEventInterface();
+            var actual = systemUnderTest.GetCellValueCellInputAppliedEventBase();
 
             // Assert
             actual.AsTest().Must().BeEqualTo(expected);

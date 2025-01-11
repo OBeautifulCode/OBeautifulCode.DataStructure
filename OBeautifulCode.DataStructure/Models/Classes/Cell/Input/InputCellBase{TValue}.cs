@@ -181,9 +181,9 @@ namespace OBeautifulCode.DataStructure
         public object GetCellObjectValue() => this.GetCellValue();
 
         /// <inheritdoc />
-        public ICellInputAppliedEvent GetCellValueCellInputAppliedEventInterface()
+        public CellInputAppliedEventBase GetCellValueCellInputAppliedEventBase()
         {
-            var result = (ICellInputAppliedEvent)this.GetCellValueCellInputAppliedEvent();
+            var result = (CellInputAppliedEventBase)this.GetCellValueCellInputAppliedEvent();
 
             return result;
         }

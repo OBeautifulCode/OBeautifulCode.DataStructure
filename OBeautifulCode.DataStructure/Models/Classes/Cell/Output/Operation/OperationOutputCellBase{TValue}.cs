@@ -120,9 +120,9 @@ namespace OBeautifulCode.DataStructure
         public override bool HasCellValue() => this.OperationExecutionEvents?.LastOrDefault() is CellOpExecutionCompletedEvent<TValue>;
 
         /// <inheritdoc />
-        public ICellOpExecutionCompletedEvent GetCellValueCellOpExecutionCompletedEventInterface()
+        public CellOpExecutionCompletedEventBase GetCellValueCellOpExecutionCompletedEventBase()
         {
-            var result = (ICellOpExecutionCompletedEvent)this.GetCellValueCellOpExecutionCompletedEvent();
+            var result = (CellOpExecutionCompletedEventBase)this.GetCellValueCellOpExecutionCompletedEvent();
 
             return result;
         }
