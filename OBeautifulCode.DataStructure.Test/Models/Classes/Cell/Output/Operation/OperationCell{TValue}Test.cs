@@ -550,6 +550,22 @@ namespace OBeautifulCode.DataStructure.Test
         }
 
         [Fact]
+        public static void Record_CellOpExecutionEventBase___Should_throw_ArgumentException___When_operationExecutionEvent_cannot_be_applied_to_cell()
+        {
+            // Arrange
+            var systemUnderTest = A.Dummy<OperationCell<Version>>();
+
+            var operationExecutionEvent = new CellOpExecutionCompletedEvent<string>(A.Dummy<string>(), A.Dummy<UtcDateTime>());
+
+            // Act
+            var actual = Record.Exception(() => systemUnderTest.Record(operationExecutionEvent));
+
+            // Assert
+            actual.AsTest().Must().BeOfType<ArgumentException>();
+            actual.Message.AsTest().Must().BeEqualTo("operationExecutionEvent is of type 'CellOpExecutionCompletedEvent<string>', which is not applicable to this cell, which is of type 'OperationCell<Version>'.");
+        }
+
+        [Fact]
         public static void Record_CellOpExecutionEventBase___Should_add_operationExecutionEvent_to_the_end_of_OperationExecutionEvents___When_OperationExecutionEvents_is_null()
         {
             // Arrange
@@ -590,6 +606,83 @@ namespace OBeautifulCode.DataStructure.Test
             systemUnderTest.Record(operationExecutionEvent);
 
             // Assert
+            systemUnderTest.OperationExecutionEvents.Must().BeEqualTo(expected);
+        }
+
+        [Fact]
+        public static void TryRecord_CellOpExecutionEventBase___Should_throw_ArgumentNullException___When_operationExecutionEvent_is_null()
+        {
+            // Arrange
+            var systemUnderTest = A.Dummy<OperationCell<Version>>();
+
+            // Act
+            var actual = Record.Exception(() => systemUnderTest.TryRecord((CellOpExecutionEventBase)null));
+
+            // Assert
+            actual.AsTest().Must().BeOfType<ArgumentNullException>();
+        }
+
+        [Fact]
+        public static void TryRecord_CellOpExecutionEventBase___Should_not_add_operationExecutionEvent_to_OperationExecutionEvents_and_return_false___When_operationExecutionEvent_cannot_be_applied_to_cell()
+        {
+            // Arrange
+            var systemUnderTest = A.Dummy<OperationCell<Version>>();
+
+            var expectedOperationExecutionEvents = (IReadOnlyList<CellOpExecutionEventBase>)systemUnderTest.OperationExecutionEvents.ToList();
+
+            var operationExecutionEvent = new CellOpExecutionCompletedEvent<string>(A.Dummy<string>(), A.Dummy<UtcDateTime>());
+
+            // Act
+            var actual = systemUnderTest.TryRecord(operationExecutionEvent);
+
+            // Assert
+            actual.AsTest().Must().BeFalse();
+            systemUnderTest.OperationExecutionEvents.AsTest().Must().BeEqualTo(expectedOperationExecutionEvents);
+        }
+
+        [Fact]
+        public static void TryRecord_CellOpExecutionEventBase___Should_add_operationExecutionEvent_to_the_end_of_OperationExecutionEvents_and_return_true___When_OperationExecutionEvents_is_null()
+        {
+            // Arrange
+            var systemUnderTest = A.Dummy<OperationCell<Version>>().DeepCloneWithOperationExecutionEvents(null);
+
+            var operationExecutionEvent = A.Dummy<CellOpExecutionEventBase>();  // When dummy factory returns CellOpExecutionCompletedEventBase, it will only ever return CellOpExecutionCompletedEvent<Version>
+
+            IReadOnlyList<CellOpExecutionEventBase> expected = new CellOpExecutionEventBase[]
+                {
+                    operationExecutionEvent,
+                }
+                .ToList();
+
+            // Act
+            var actual = systemUnderTest.TryRecord(operationExecutionEvent);
+
+            // Assert
+            actual.AsTest().Must().BeTrue();
+            systemUnderTest.OperationExecutionEvents.Must().BeEqualTo(expected);
+        }
+
+        [Fact]
+        public static void TryRecord_CellOpExecutionEventBase___Should_add_operationExecutionEvent_to_the_end_of_OperationExecutionEvents_and_return_true___When_OperationExecutionEvents_is_not_empty()
+        {
+            // Arrange
+            var systemUnderTest = A.Dummy<OperationCell<Version>>();
+
+            var operationExecutionEvent = A.Dummy<CellOpExecutionEventBase>(); // When dummy factory returns CellOpExecutionCompletedEventBase, it will only ever return CellOpExecutionCompletedEvent<Version>
+
+            IReadOnlyList<CellOpExecutionEventBase> expected = new CellOpExecutionEventBase[0]
+                .Concat(systemUnderTest.OperationExecutionEvents)
+                .Concat(new[]
+                {
+                    operationExecutionEvent,
+                })
+                .ToList();
+
+            // Act
+            var actual = systemUnderTest.TryRecord(operationExecutionEvent);
+
+            // Assert
+            actual.AsTest().Must().BeTrue();
             systemUnderTest.OperationExecutionEvents.Must().BeEqualTo(expected);
         }
 

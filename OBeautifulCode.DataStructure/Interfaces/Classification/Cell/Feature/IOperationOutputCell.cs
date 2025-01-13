@@ -25,6 +25,15 @@ namespace OBeautifulCode.DataStructure
         void Record(CellOpExecutionEventBase operationExecutionEvent);
 
         /// <summary>
+        /// Attempts to record a <see cref="CellOpExecutionEventBase"/>.
+        /// </summary>
+        /// <param name="operationExecutionEvent">The event to record.</param>
+        /// <returns>
+        /// <returns>true if the event was recorded; otherwise false (the cell value type does not allow for recording the event).</returns>
+        /// </returns>
+        bool TryRecord(CellOpExecutionEventBase operationExecutionEvent);
+
+        /// <summary>
         /// Gets the <see cref="CellOpExecutionCompletedEventBase"/> that recorded the cell's value.
         /// </summary>
         /// <returns>

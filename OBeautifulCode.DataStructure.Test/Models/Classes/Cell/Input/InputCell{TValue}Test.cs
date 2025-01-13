@@ -807,7 +807,7 @@ namespace OBeautifulCode.DataStructure.Test
             // Arrange
             var systemUnderTest = A.Dummy<InputCell<Version>>().DeepCloneWithInputEvents(null);
 
-            var inputEvent = A.Dummy<CellInputEventBase>();
+            var inputEvent = A.Dummy<CellInputEventBase>(); // When dummy factory returns CellInputAppliedEventBase, it will only ever return CellInputAppliedEvent<Version>
 
             IReadOnlyList<CellInputEventBase> expected = new CellInputEventBase[]
                 {
@@ -828,7 +828,7 @@ namespace OBeautifulCode.DataStructure.Test
             // Arrange
             var systemUnderTest = A.Dummy<InputCell<Version>>();
 
-            var inputEvent = A.Dummy<CellInputEventBase>();
+            var inputEvent = A.Dummy<CellInputEventBase>(); // When dummy factory returns CellInputAppliedEventBase, it will only ever return CellInputAppliedEvent<Version>
 
             IReadOnlyList<CellInputEventBase> expected = new CellInputEventBase[0]
                 .Concat(systemUnderTest.InputEvents)

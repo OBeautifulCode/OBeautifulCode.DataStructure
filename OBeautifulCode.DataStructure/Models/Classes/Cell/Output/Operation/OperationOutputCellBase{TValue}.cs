@@ -11,7 +11,7 @@ namespace OBeautifulCode.DataStructure
     using System.Linq;
 
     using OBeautifulCode.Type;
-
+    using OBeautifulCode.Type.Recipes;
     using static System.FormattableString;
 
     /// <summary>
@@ -76,10 +76,36 @@ namespace OBeautifulCode.DataStructure
                 throw new ArgumentNullException(nameof(operationExecutionEvent));
             }
 
+            if ((operationExecutionEvent is CellOpExecutionCompletedEventBase) &&
+                !(operationExecutionEvent is CellOpExecutionCompletedEvent<TValue>))
+            {
+                throw new ArgumentException(Invariant($"{nameof(operationExecutionEvent)} is of type '{operationExecutionEvent.GetType().ToStringReadable()}', which is not applicable to this cell, which is of type '{this.GetType().ToStringReadable()}'."));
+            }
+
             this.OperationExecutionEvents = new CellOpExecutionEventBase[0]
                 .Concat(this.OperationExecutionEvents ?? new CellOpExecutionEventBase[0])
                 .Concat(new[] { operationExecutionEvent })
                 .ToList();
+        }
+
+        /// <inheritdoc />
+        public bool TryRecord(
+            CellOpExecutionEventBase operationExecutionEvent)
+        {
+            if (operationExecutionEvent == null)
+            {
+                throw new ArgumentNullException(nameof(operationExecutionEvent));
+            }
+
+            if ((operationExecutionEvent is CellOpExecutionCompletedEventBase) &&
+                !(operationExecutionEvent is CellOpExecutionCompletedEvent<TValue>))
+            {
+                return false;
+            }
+
+            this.Record(operationExecutionEvent);
+
+            return true;
         }
 
         /// <inheritdoc />
