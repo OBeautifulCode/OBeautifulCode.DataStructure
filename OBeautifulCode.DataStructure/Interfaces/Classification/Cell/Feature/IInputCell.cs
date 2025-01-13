@@ -23,7 +23,16 @@ namespace OBeautifulCode.DataStructure
         /// Records a <see cref="CellInputEventBase"/>.
         /// </summary>
         /// <param name="inputEvent">The event to record.</param>
-        void Record(CellInputEventBase inputEvent);
+        void Record(
+            CellInputEventBase inputEvent);
+
+        /// <summary>
+        /// Attempts to record a <see cref="CellInputEventBase"/>.
+        /// </summary>
+        /// <param name="inputEvent">The event to record.</param>
+        /// <returns>true if the event was recorded; otherwise false (the cell value type does not allow for recording the event).</returns>
+        bool TryRecord(
+            CellInputEventBase inputEvent);
 
         /// <summary>
         /// Sets the value of the cell.
@@ -37,7 +46,7 @@ namespace OBeautifulCode.DataStructure
             string details = null);
 
         /// <summary>
-        /// Sets the value of the cell.
+        /// Attempts to set the value of the cell.
         /// </summary>
         /// <param name="value">The value to use.</param>
         /// <param name="timestampUtc">The timestamp (in UTC) to use on the event that records the setting of a cell's value.</param>

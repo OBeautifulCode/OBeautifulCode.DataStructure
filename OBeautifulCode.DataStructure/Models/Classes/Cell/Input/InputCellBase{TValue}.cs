@@ -76,6 +76,25 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <inheritdoc />
+        public bool TryRecord(
+            CellInputEventBase inputEvent)
+        {
+            if (inputEvent == null)
+            {
+                throw new ArgumentNullException(nameof(inputEvent));
+            }
+
+            if ((!(inputEvent is CellInputAppliedEvent<TValue>)) && (!(inputEvent is CellInputClearedEvent)))
+            {
+                return false;
+            }
+
+            this.Record(inputEvent);
+
+            return true;
+        }
+
+        /// <inheritdoc />
         public TValue GetCellValue()
         {
             var result = this.GetCellValueCellInputAppliedEvent().Value;

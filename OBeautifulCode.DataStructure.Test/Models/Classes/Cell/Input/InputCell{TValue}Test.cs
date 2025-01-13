@@ -846,6 +846,83 @@ namespace OBeautifulCode.DataStructure.Test
         }
 
         [Fact]
+        public static void TryRecord_CellInputEventBase___Should_throw_ArgumentNullException___When_inputEvent_is_null()
+        {
+            // Arrange
+            var systemUnderTest = A.Dummy<InputCell<Version>>();
+
+            // Act
+            var actual = Record.Exception(() => systemUnderTest.TryRecord((CellInputEventBase)null));
+
+            // Assert
+            actual.AsTest().Must().BeOfType<ArgumentNullException>();
+        }
+
+        [Fact]
+        public static void TryRecord_CellInputEventBase___Should_not_add_inputEvent_and_return_false___When_inputEvent_cannot_be_applied_to_cell()
+        {
+            // Arrange
+            var systemUnderTest = A.Dummy<InputCell<Version>>();
+
+            var expectedEvents = (IReadOnlyList<CellInputEventBase>)systemUnderTest.InputEvents.ToList();
+
+            var inputEvent = new CellInputAppliedEvent<string>(A.Dummy<string>(), DateTime.UtcNow, A.Dummy<string>());
+
+            // Act
+            var actual = systemUnderTest.TryRecord(inputEvent);
+
+            // Assert
+            actual.AsTest().Must().BeFalse();
+            systemUnderTest.InputEvents.AsTest().Must().BeEqualTo(expectedEvents);
+        }
+
+        [Fact]
+        public static void TryRecord_CellInputEventBase___Should_add_inputEvent_to_the_end_of_InputEvents_and_return_true___When_InputEvents_is_null()
+        {
+            // Arrange
+            var systemUnderTest = A.Dummy<InputCell<Version>>().DeepCloneWithInputEvents(null);
+
+            var inputEvent = A.Dummy<CellInputEventBase>();
+
+            IReadOnlyList<CellInputEventBase> expected = new[]
+                {
+                    inputEvent,
+                }
+                .ToList();
+
+            // Act
+            var actual = systemUnderTest.TryRecord(inputEvent);
+
+            // Assert
+            actual.AsTest().Must().BeTrue();
+            systemUnderTest.InputEvents.Must().BeEqualTo(expected);
+        }
+
+        [Fact]
+        public static void TryRecord_CellInputEventBase___Should_add_inputEvent_to_the_end_of_InputEvents_and_return_true___When_InputEvents_is_not_empty()
+        {
+            // Arrange
+            var systemUnderTest = A.Dummy<InputCell<Version>>();
+
+            var inputEvent = A.Dummy<CellInputEventBase>();
+
+            IReadOnlyList<CellInputEventBase> expected = new CellInputEventBase[0]
+                .Concat(systemUnderTest.InputEvents)
+                .Concat(new[]
+                {
+                    inputEvent,
+                })
+                .ToList();
+
+            // Act
+            var actual = systemUnderTest.TryRecord(inputEvent);
+
+            // Assert
+            actual.AsTest().Must().BeTrue();
+            systemUnderTest.InputEvents.Must().BeEqualTo(expected);
+        }
+
+        [Fact]
         public static void GetCellObjectValue___Should_throw_InvalidOperationException___When_InputEvents_is_null()
         {
             // Arrange
