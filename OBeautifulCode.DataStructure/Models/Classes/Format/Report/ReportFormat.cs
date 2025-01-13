@@ -22,11 +22,13 @@ namespace OBeautifulCode.DataStructure
         /// <param name="timestampFormat">OPTIONAL format to apply to the timestamp when displaying it.  DEFAULT is to let the consumer decide (e.g. when displaying the timestamp, use a pre-specified/standard format).</param>
         /// <param name="options">OPTIONAL formatting options to apply to the report.  DEFAULT is to not apply any of the formatting options.</param>
         /// <param name="renderMode">OPTIONAL value that indicates the mode of report rendering.  DEFAULT is no specified rendering mode.</param>
+        /// <param name="readOnly">OPTIONAL value that indicates whether the report should be displayed in a read-only manner (e.g. cannot set values in input cells).  DEFAULT is not read-only.  Note that this is a formatting-only feature and does not prevent applying input values to input cells (i.e. SetCellValue has no way to check whether the report is being rendered as read-only).</param>
         public ReportFormat(
             bool? displayTimestamp = null,
             DateTimeFormat timestampFormat = null,
             ReportFormatOptions? options = null,
-            ReportRenderMode? renderMode = null)
+            ReportRenderMode? renderMode = null,
+            bool? readOnly = null)
         {
             if ((displayTimestamp == false) && (timestampFormat != null))
             {
@@ -42,6 +44,7 @@ namespace OBeautifulCode.DataStructure
             this.TimestampFormat = timestampFormat;
             this.Options = options;
             this.RenderMode = renderMode;
+            this.ReadOnly = readOnly;
         }
 
         /// <summary>
@@ -69,5 +72,15 @@ namespace OBeautifulCode.DataStructure
         /// Gets a value that indicates the mode of report rendering.
         /// </summary>
         public ReportRenderMode? RenderMode { get; private set; }
+
+        /// <summary>
+        /// Gets a value that indicates whether the report should be displayed in a read-only manner
+        /// (e.g. cannot set values in input cells).
+        /// </summary>
+        /// <remarks>
+        /// This is a formatting-only feature and does not prevent applying input values to input cells
+        /// (i.e. SetCellValue has no way to check whether the report is being rendered as read-only).
+        /// </remarks>
+        public bool? ReadOnly { get; private set; }
     }
 }

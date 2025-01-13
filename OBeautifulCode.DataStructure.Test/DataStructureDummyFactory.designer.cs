@@ -1074,7 +1074,8 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<bool?>(),
                                  A.Dummy<DateTimeFormat>(),
                                  A.Dummy<ReportFormatOptions?>(),
-                                 A.Dummy<ReportRenderMode?>()));
+                                 A.Dummy<ReportRenderMode?>(),
+                                 A.Dummy<bool?>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new Row(
