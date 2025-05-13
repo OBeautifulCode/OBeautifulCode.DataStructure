@@ -838,6 +838,16 @@ namespace OBeautifulCode.DataStructure.Excel
                 worksheetName = section.Id;
             }
 
+            // Remove invalid characters - replace with compiled regex in the future.
+            worksheetName = worksheetName
+                .Replace("[", string.Empty)
+                .Replace("]", string.Empty)
+                .Replace("*", string.Empty)
+                .Replace("/", string.Empty)
+                .Replace("\\", string.Empty)
+                .Replace("?", string.Empty)
+                .Replace(":", string.Empty);
+
             var result = worksheetName.Length > 31
                 ? worksheetName.Substring(0, 31)
                 : worksheetName;
