@@ -1065,7 +1065,7 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<IReadOnlyCollection<Section>>(),
                                  A.Dummy<string>(),
                                  A.Dummy<UtcDateTime>(),
-                                 A.Dummy<IReadOnlyList<ILink>>(),
+                                 A.Dummy<IReadOnlyList<DownloadKind>>(),
                                  A.Dummy<AdditionalReportInfo>(),
                                  A.Dummy<ReportFormat>()));
 

@@ -593,6 +593,7 @@
     <Compile Include="Models\Enums\Formatting\SectionFormatOptions.cs" />
     <Compile Include="Models\Enums\Formatting\ReportFormatOptions.cs" />
     <Compile Include="Models\Enums\Formatting\MessageFormatKind.cs" />
+    <Compile Include="Models\Enums\DownloadKind.cs" />
     <Compile Include="Models\Enums\OperationCell\CellOpExecutionOutcome.cs" />
     <Compile Include="Models\Enums\OperationCell\CellOpExecutionStatus.cs" />
     <Compile Include="Models\Enums\Formatting\NumberFormat\NumberFormatPercentDisplayKind.cs" />

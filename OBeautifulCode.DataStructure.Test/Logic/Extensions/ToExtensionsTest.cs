@@ -24,19 +24,19 @@ namespace OBeautifulCode.DataStructure.Test
             var reportId = A.Dummy<string>();
             var reportTitle = A.Dummy<string>();
             var reportTimestampUtc = (DateTime?)A.Dummy<UtcDateTime>();
-            var reportDownloadLinks = A.Dummy<IReadOnlyList<ILink>>();
+            var reportDownloadKinds = A.Dummy<IReadOnlyList<DownloadKind>>();
             var reportAdditionalInfo = A.Dummy<AdditionalReportInfo>();
             var reportFormat = A.Dummy<ReportFormat>();
 
             // Act
-            var actual = section.ToReport(reportId, reportTitle, reportTimestampUtc, reportDownloadLinks, reportAdditionalInfo, reportFormat);
+            var actual = section.ToReport(reportId, reportTitle, reportTimestampUtc, reportDownloadKinds, reportAdditionalInfo, reportFormat);
 
             // Assert
             actual.Sections.AsTest().Must().HaveCount(1);
             actual.Sections.First().Must().BeSameReferenceAs(section);
             actual.Title.Must().BeSameReferenceAs(reportTitle);
             actual.TimestampUtc.Must().BeEqualTo(reportTimestampUtc);
-            actual.DownloadLinks.Must().BeSameReferenceAs(reportDownloadLinks);
+            actual.DownloadKinds.Must().BeSameReferenceAs(reportDownloadKinds);
             actual.AdditionalInfo.Must().BeSameReferenceAs(reportAdditionalInfo);
             actual.Format.Must().BeSameReferenceAs(reportFormat);
         }
@@ -62,7 +62,7 @@ namespace OBeautifulCode.DataStructure.Test
             var reportId = A.Dummy<string>();
             var reportTitle = A.Dummy<string>();
             var reportTimestampUtc = (DateTime?)A.Dummy<UtcDateTime>();
-            var reportDownloadLinks = A.Dummy<IReadOnlyList<ILink>>();
+            var reportDownloadKinds = A.Dummy<IReadOnlyList<DownloadKind>>();
             var reportAdditionalInfo = A.Dummy<AdditionalReportInfo>();
             var reportFormat = A.Dummy<ReportFormat>();
             var sectionId = A.Dummy<string>();
@@ -74,7 +74,7 @@ namespace OBeautifulCode.DataStructure.Test
             var treeTable = A.Dummy<TreeTable>();
 
             // Act
-            var actual = treeTable.ToReport(reportId, reportTitle, reportTimestampUtc, reportDownloadLinks, reportAdditionalInfo, reportFormat, sectionId, sectionName, sectionTitle, sectionAdditionalInfo, sectionFormat);
+            var actual = treeTable.ToReport(reportId, reportTitle, reportTimestampUtc, reportDownloadKinds, reportAdditionalInfo, reportFormat, sectionId, sectionName, sectionTitle, sectionAdditionalInfo, sectionFormat);
 
             // Assert
             actual.Sections.AsTest().Must().HaveCount(1);
@@ -86,7 +86,7 @@ namespace OBeautifulCode.DataStructure.Test
             actual.Sections.First().Format.AsTest().Must().BeSameReferenceAs(sectionFormat);
             actual.Title.Must().BeSameReferenceAs(reportTitle);
             actual.TimestampUtc.Must().BeEqualTo(reportTimestampUtc);
-            actual.DownloadLinks.Must().BeSameReferenceAs(reportDownloadLinks);
+            actual.DownloadKinds.Must().BeSameReferenceAs(reportDownloadKinds);
             actual.AdditionalInfo.Must().BeSameReferenceAs(reportAdditionalInfo);
             actual.Format.Must().BeSameReferenceAs(reportFormat);
         }
@@ -137,7 +137,7 @@ namespace OBeautifulCode.DataStructure.Test
             var reportId = A.Dummy<string>();
             var reportTitle = A.Dummy<string>();
             var reportTimestampUtc = (DateTime?)A.Dummy<UtcDateTime>();
-            var reportDownloadLinks = A.Dummy<IReadOnlyList<ILink>>();
+            var reportDownloadKinds = A.Dummy<IReadOnlyList<DownloadKind>>();
             var reportAdditionalInfo = A.Dummy<AdditionalReportInfo>();
             var reportFormat = A.Dummy<ReportFormat>();
             var sectionId = A.Dummy<string>();
@@ -155,7 +155,7 @@ namespace OBeautifulCode.DataStructure.Test
             var rows = DataStructureDummyFactory.BuildRowBases(numberOfColumns);
 
             // Act
-            var actual = rows.ToReport(reportId, reportTitle, reportTimestampUtc, reportDownloadLinks, reportAdditionalInfo, reportFormat, sectionId, sectionName, sectionTitle, sectionAdditionalInfo, sectionFormat, treeTableFormat, tableColumnsColumnsFormat, columnIdPrefix, headerRows, footerRows, tableRowsRowsFormat, dataRowsFormat);
+            var actual = rows.ToReport(reportId, reportTitle, reportTimestampUtc, reportDownloadKinds, reportAdditionalInfo, reportFormat, sectionId, sectionName, sectionTitle, sectionAdditionalInfo, sectionFormat, treeTableFormat, tableColumnsColumnsFormat, columnIdPrefix, headerRows, footerRows, tableRowsRowsFormat, dataRowsFormat);
 
             // Assert
             actual.Sections.AsTest().Must().HaveCount(1);
@@ -176,7 +176,7 @@ namespace OBeautifulCode.DataStructure.Test
             actual.Sections.First().Format.AsTest().Must().BeSameReferenceAs(sectionFormat);
             actual.Title.Must().BeSameReferenceAs(reportTitle);
             actual.TimestampUtc.Must().BeEqualTo(reportTimestampUtc);
-            actual.DownloadLinks.Must().BeSameReferenceAs(reportDownloadLinks);
+            actual.DownloadKinds.Must().BeSameReferenceAs(reportDownloadKinds);
             actual.AdditionalInfo.Must().BeSameReferenceAs(reportAdditionalInfo);
             actual.Format.Must().BeSameReferenceAs(reportFormat);
         }
@@ -359,7 +359,7 @@ namespace OBeautifulCode.DataStructure.Test
             var reportId = A.Dummy<string>();
             var reportTitle = A.Dummy<string>();
             var reportTimestampUtc = (DateTime?)A.Dummy<UtcDateTime>();
-            var reportDownloadLinks = A.Dummy<IReadOnlyList<ILink>>();
+            var reportDownloadKinds = A.Dummy<IReadOnlyList<DownloadKind>>();
             var reportAdditionalInfo = A.Dummy<AdditionalReportInfo>();
             var reportFormat = A.Dummy<ReportFormat>();
             var sectionId = A.Dummy<string>();
@@ -377,7 +377,7 @@ namespace OBeautifulCode.DataStructure.Test
             var row = DataStructureDummyFactory.BuildRowBase(numberOfColumns);
 
             // Act
-            var actual = row.ToReport(reportId, reportTitle, reportTimestampUtc, reportDownloadLinks, reportAdditionalInfo, reportFormat, sectionId, sectionName, sectionTitle, sectionAdditionalInfo, sectionFormat, treeTableFormat, tableColumnsColumnsFormat, columnIdPrefix, headerRows, footerRows, tableRowsRowsFormat, dataRowsFormat);
+            var actual = row.ToReport(reportId, reportTitle, reportTimestampUtc, reportDownloadKinds, reportAdditionalInfo, reportFormat, sectionId, sectionName, sectionTitle, sectionAdditionalInfo, sectionFormat, treeTableFormat, tableColumnsColumnsFormat, columnIdPrefix, headerRows, footerRows, tableRowsRowsFormat, dataRowsFormat);
 
             // Assert
             actual.Sections.AsTest().Must().HaveCount(1);
@@ -399,7 +399,7 @@ namespace OBeautifulCode.DataStructure.Test
             actual.Sections.First().Format.AsTest().Must().BeSameReferenceAs(sectionFormat);
             actual.Title.Must().BeSameReferenceAs(reportTitle);
             actual.TimestampUtc.Must().BeEqualTo(reportTimestampUtc);
-            actual.DownloadLinks.Must().BeSameReferenceAs(reportDownloadLinks);
+            actual.DownloadKinds.Must().BeSameReferenceAs(reportDownloadKinds);
             actual.AdditionalInfo.Must().BeSameReferenceAs(reportAdditionalInfo);
             actual.Format.Must().BeSameReferenceAs(reportFormat);
         }
@@ -542,7 +542,7 @@ namespace OBeautifulCode.DataStructure.Test
             var reportId = A.Dummy<string>();
             var reportTitle = A.Dummy<string>();
             var reportTimestampUtc = (DateTime?)A.Dummy<UtcDateTime>();
-            var reportDownloadLinks = A.Dummy<IReadOnlyList<ILink>>();
+            var reportDownloadKinds = A.Dummy<IReadOnlyList<DownloadKind>>();
             var reportAdditionalInfo = A.Dummy<AdditionalReportInfo>();
             var reportFormat = A.Dummy<ReportFormat>();
             var sectionId = A.Dummy<string>();
@@ -561,7 +561,7 @@ namespace OBeautifulCode.DataStructure.Test
             var cells = DataStructureDummyFactory.BuildRowCells(numberOfColumns, true);
 
             // Act
-            var actual = cells.ToReport(reportId, reportTitle, reportTimestampUtc, reportDownloadLinks, reportAdditionalInfo, reportFormat, sectionId, sectionName, sectionTitle, sectionAdditionalInfo, sectionFormat, treeTableFormat, tableColumnsColumnsFormat, columnIdPrefix, headerRows, footerRows, tableRowsRowsFormat, dataRowsFormat, rowId);
+            var actual = cells.ToReport(reportId, reportTitle, reportTimestampUtc, reportDownloadKinds, reportAdditionalInfo, reportFormat, sectionId, sectionName, sectionTitle, sectionAdditionalInfo, sectionFormat, treeTableFormat, tableColumnsColumnsFormat, columnIdPrefix, headerRows, footerRows, tableRowsRowsFormat, dataRowsFormat, rowId);
 
             // Assert
             actual.Sections.AsTest().Must().HaveCount(1);
@@ -582,7 +582,7 @@ namespace OBeautifulCode.DataStructure.Test
             actual.Sections.First().Format.AsTest().Must().BeSameReferenceAs(sectionFormat);
             actual.Title.Must().BeSameReferenceAs(reportTitle);
             actual.TimestampUtc.Must().BeEqualTo(reportTimestampUtc);
-            actual.DownloadLinks.Must().BeSameReferenceAs(reportDownloadLinks);
+            actual.DownloadKinds.Must().BeSameReferenceAs(reportDownloadKinds);
             actual.AdditionalInfo.Must().BeSameReferenceAs(reportAdditionalInfo);
             actual.Format.Must().BeSameReferenceAs(reportFormat);
         }
@@ -727,7 +727,7 @@ namespace OBeautifulCode.DataStructure.Test
             var reportId = A.Dummy<string>();
             var reportTitle = A.Dummy<string>();
             var reportTimestampUtc = (DateTime?)A.Dummy<UtcDateTime>();
-            var reportDownloadLinks = A.Dummy<IReadOnlyList<ILink>>();
+            var reportDownloadKinds = A.Dummy<IReadOnlyList<DownloadKind>>();
             var reportAdditionalInfo = A.Dummy<AdditionalReportInfo>();
             var reportFormat = A.Dummy<ReportFormat>();
             var sectionId = A.Dummy<string>();
@@ -746,7 +746,7 @@ namespace OBeautifulCode.DataStructure.Test
             var cell = DataStructureDummyFactory.BuildRowCells(numberOfColumns, false).First();
 
             // Act
-            var actual = cell.ToReport(reportId, reportTitle, reportTimestampUtc, reportDownloadLinks, reportAdditionalInfo, reportFormat, sectionId, sectionName, sectionTitle, sectionAdditionalInfo, sectionFormat, treeTableFormat, tableColumnsColumnsFormat, columnIdPrefix, headerRows, footerRows, tableRowsRowsFormat, dataRowsFormat, rowId);
+            var actual = cell.ToReport(reportId, reportTitle, reportTimestampUtc, reportDownloadKinds, reportAdditionalInfo, reportFormat, sectionId, sectionName, sectionTitle, sectionAdditionalInfo, sectionFormat, treeTableFormat, tableColumnsColumnsFormat, columnIdPrefix, headerRows, footerRows, tableRowsRowsFormat, dataRowsFormat, rowId);
 
             // Assert
             actual.Sections.AsTest().Must().HaveCount(1);
@@ -768,7 +768,7 @@ namespace OBeautifulCode.DataStructure.Test
             actual.Sections.First().Format.AsTest().Must().BeSameReferenceAs(sectionFormat);
             actual.Title.Must().BeSameReferenceAs(reportTitle);
             actual.TimestampUtc.Must().BeEqualTo(reportTimestampUtc);
-            actual.DownloadLinks.Must().BeSameReferenceAs(reportDownloadLinks);
+            actual.DownloadKinds.Must().BeSameReferenceAs(reportDownloadKinds);
             actual.AdditionalInfo.Must().BeSameReferenceAs(reportAdditionalInfo);
             actual.Format.Must().BeSameReferenceAs(reportFormat);
         }

@@ -73,7 +73,7 @@ namespace OBeautifulCode.DataStructure
                       && this.Sections.IsEqualTo(other.Sections)
                       && this.Title.IsEqualTo(other.Title, StringComparer.Ordinal)
                       && this.TimestampUtc.IsEqualTo(other.TimestampUtc)
-                      && this.DownloadLinks.IsEqualTo(other.DownloadLinks)
+                      && this.DownloadKinds.IsEqualTo(other.DownloadKinds)
                       && this.AdditionalInfo.IsEqualTo(other.AdditionalInfo)
                       && this.Format.IsEqualTo(other.Format);
 
@@ -89,7 +89,7 @@ namespace OBeautifulCode.DataStructure
             .Hash(this.Sections)
             .Hash(this.Title)
             .Hash(this.TimestampUtc)
-            .Hash(this.DownloadLinks)
+            .Hash(this.DownloadKinds)
             .Hash(this.AdditionalInfo)
             .Hash(this.Format)
             .Value;
@@ -105,7 +105,7 @@ namespace OBeautifulCode.DataStructure
                                  this.Sections?.DeepClone(),
                                  this.Title?.DeepClone(),
                                  this.TimestampUtc?.DeepClone(),
-                                 this.DownloadLinks?.DeepClone(),
+                                 this.DownloadKinds?.DeepClone(),
                                  this.AdditionalInfo?.DeepClone(),
                                  this.Format?.DeepClone());
 
@@ -141,7 +141,7 @@ namespace OBeautifulCode.DataStructure
                                  this.Sections?.DeepClone(),
                                  this.Title?.DeepClone(),
                                  this.TimestampUtc?.DeepClone(),
-                                 this.DownloadLinks?.DeepClone(),
+                                 this.DownloadKinds?.DeepClone(),
                                  this.AdditionalInfo?.DeepClone(),
                                  this.Format?.DeepClone());
 
@@ -177,7 +177,7 @@ namespace OBeautifulCode.DataStructure
                                  sections,
                                  this.Title?.DeepClone(),
                                  this.TimestampUtc?.DeepClone(),
-                                 this.DownloadLinks?.DeepClone(),
+                                 this.DownloadKinds?.DeepClone(),
                                  this.AdditionalInfo?.DeepClone(),
                                  this.Format?.DeepClone());
 
@@ -213,7 +213,7 @@ namespace OBeautifulCode.DataStructure
                                  this.Sections?.DeepClone(),
                                  title,
                                  this.TimestampUtc?.DeepClone(),
-                                 this.DownloadLinks?.DeepClone(),
+                                 this.DownloadKinds?.DeepClone(),
                                  this.AdditionalInfo?.DeepClone(),
                                  this.Format?.DeepClone());
 
@@ -249,7 +249,7 @@ namespace OBeautifulCode.DataStructure
                                  this.Sections?.DeepClone(),
                                  this.Title?.DeepClone(),
                                  timestampUtc,
-                                 this.DownloadLinks?.DeepClone(),
+                                 this.DownloadKinds?.DeepClone(),
                                  this.AdditionalInfo?.DeepClone(),
                                  this.Format?.DeepClone());
 
@@ -257,10 +257,10 @@ namespace OBeautifulCode.DataStructure
         }
 
         /// <summary>
-        /// Deep clones this object with a new <see cref="DownloadLinks" />.
+        /// Deep clones this object with a new <see cref="DownloadKinds" />.
         /// </summary>
-        /// <param name="downloadLinks">The new <see cref="DownloadLinks" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="Report" /> using the specified <paramref name="downloadLinks" /> for <see cref="DownloadLinks" /> and a deep clone of every other property.</returns>
+        /// <param name="downloadKinds">The new <see cref="DownloadKinds" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="Report" /> using the specified <paramref name="downloadKinds" /> for <see cref="DownloadKinds" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -278,14 +278,14 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public Report DeepCloneWithDownloadLinks(IReadOnlyList<ILink> downloadLinks)
+        public Report DeepCloneWithDownloadKinds(IReadOnlyList<DownloadKind> downloadKinds)
         {
             var result = new Report(
                                  this.Id?.DeepClone(),
                                  this.Sections?.DeepClone(),
                                  this.Title?.DeepClone(),
                                  this.TimestampUtc?.DeepClone(),
-                                 downloadLinks,
+                                 downloadKinds,
                                  this.AdditionalInfo?.DeepClone(),
                                  this.Format?.DeepClone());
 
@@ -321,7 +321,7 @@ namespace OBeautifulCode.DataStructure
                                  this.Sections?.DeepClone(),
                                  this.Title?.DeepClone(),
                                  this.TimestampUtc?.DeepClone(),
-                                 this.DownloadLinks?.DeepClone(),
+                                 this.DownloadKinds?.DeepClone(),
                                  additionalInfo,
                                  this.Format?.DeepClone());
 
@@ -357,7 +357,7 @@ namespace OBeautifulCode.DataStructure
                                  this.Sections?.DeepClone(),
                                  this.Title?.DeepClone(),
                                  this.TimestampUtc?.DeepClone(),
-                                 this.DownloadLinks?.DeepClone(),
+                                 this.DownloadKinds?.DeepClone(),
                                  this.AdditionalInfo?.DeepClone(),
                                  format);
 
@@ -368,7 +368,7 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"OBeautifulCode.DataStructure.Report: Id = {this.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Sections = {this.Sections?.ToString() ?? "<null>"}, Title = {this.Title?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, TimestampUtc = {this.TimestampUtc?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, DownloadLinks = {this.DownloadLinks?.ToString() ?? "<null>"}, AdditionalInfo = {this.AdditionalInfo?.ToString() ?? "<null>"}, Format = {this.Format?.ToString() ?? "<null>"}.");
+            var result = Invariant($"OBeautifulCode.DataStructure.Report: Id = {this.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Sections = {this.Sections?.ToString() ?? "<null>"}, Title = {this.Title?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, TimestampUtc = {this.TimestampUtc?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, DownloadKinds = {this.DownloadKinds?.ToString() ?? "<null>"}, AdditionalInfo = {this.AdditionalInfo?.ToString() ?? "<null>"}, Format = {this.Format?.ToString() ?? "<null>"}.");
 
             return result;
         }

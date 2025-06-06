@@ -23,7 +23,7 @@ namespace OBeautifulCode.DataStructure
         /// <param name="id">OPTIONAL report unique identifier.  DEFAULT is to use a randomly assigned GUID.</param>
         /// <param name="title">OPTIONAL title of the report.  DEFAULT is a report with no title.</param>
         /// <param name="timestampUtc">OPTIONAL timestamp of the report, in UTC.  DEFAULT is a report that is not timestamped.</param>
-        /// <param name="downloadLinks">OPTIONAL download options for the report as links.  DEFAULT is no download options.</param>
+        /// <param name="downloadKinds">OPTIONAL kinds of download supported.  DEFAULT is no download option.</param>
         /// <param name="additionalInfo">OPTIONAL additional information related to the report.  DEFAULT no additional information.</param>
         /// <param name="format">OPTIONAL format to apply to the report.  DEFAULT is to leave the format unchanged.</param>
         /// <returns>
@@ -34,7 +34,7 @@ namespace OBeautifulCode.DataStructure
             string id = null,
             string title = null,
             DateTime? timestampUtc = null,
-            IReadOnlyList<ILink> downloadLinks = null,
+            IReadOnlyList<DownloadKind> downloadKinds = null,
             AdditionalReportInfo additionalInfo = null,
             ReportFormat format = null)
         {
@@ -43,7 +43,7 @@ namespace OBeautifulCode.DataStructure
                 new[] { section },
                 title,
                 timestampUtc,
-                downloadLinks,
+                downloadKinds,
                 additionalInfo,
                 format);
 
@@ -57,7 +57,7 @@ namespace OBeautifulCode.DataStructure
         /// <param name="id">OPTIONAL report unique identifier.  DEFAULT is to use a randomly assigned GUID.</param>
         /// <param name="title">OPTIONAL title of the report.  DEFAULT is a report with no title.</param>
         /// <param name="timestampUtc">OPTIONAL timestamp of the report, in UTC.  DEFAULT is a report that is not timestamped.</param>
-        /// <param name="downloadLinks">OPTIONAL download options for the report as links.  DEFAULT is no download options.</param>
+        /// <param name="downloadKinds">OPTIONAL kinds of download supported.  DEFAULT is no download option.</param>
         /// <param name="additionalInfo">OPTIONAL additional information related to the report.  DEFAULT no additional information.</param>
         /// <param name="format">OPTIONAL format to apply to the report.  DEFAULT is to leave the format unchanged.</param>
         /// <param name="sectionId">OPTIONAL section unique identifier.  DEFAULT is to use <see cref="DefaultIds.DefaultSectionId"/>.</param>
@@ -73,7 +73,7 @@ namespace OBeautifulCode.DataStructure
             string id = null,
             string title = null,
             DateTime? timestampUtc = null,
-            IReadOnlyList<ILink> downloadLinks = null,
+            IReadOnlyList<DownloadKind> downloadKinds = null,
             AdditionalReportInfo additionalInfo = null,
             ReportFormat format = null,
             string sectionId = DefaultIds.DefaultSectionId,
@@ -84,7 +84,7 @@ namespace OBeautifulCode.DataStructure
         {
             var result = treeTable
                 .ToSection(sectionId, sectionName, sectionTitle, sectionAdditionalInfo, sectionFormat)
-                .ToReport(id, title, timestampUtc, downloadLinks, additionalInfo, format);
+                .ToReport(id, title, timestampUtc, downloadKinds, additionalInfo, format);
 
             return result;
         }
@@ -127,7 +127,7 @@ namespace OBeautifulCode.DataStructure
         /// <param name="id">OPTIONAL report unique identifier.  DEFAULT is to use a randomly assigned GUID.</param>
         /// <param name="title">OPTIONAL title of the report.  DEFAULT is a report with no title.</param>
         /// <param name="timestampUtc">OPTIONAL timestamp of the report, in UTC.  DEFAULT is a report that is not timestamped.</param>
-        /// <param name="downloadLinks">OPTIONAL download options for the report as links.  DEFAULT is no download options.</param>
+        /// <param name="downloadKinds">OPTIONAL kinds of download supported.  DEFAULT is no download option.</param>
         /// <param name="additionalInfo">OPTIONAL additional information related to the report.  DEFAULT no additional information.</param>
         /// <param name="format">OPTIONAL format to apply to the report.  DEFAULT is to leave the format unchanged.</param>
         /// <param name="sectionId">OPTIONAL section unique identifier.  DEFAULT is to use <see cref="DefaultIds.DefaultSectionId"/>.</param>
@@ -156,7 +156,7 @@ namespace OBeautifulCode.DataStructure
             string id = null,
             string title = null,
             DateTime? timestampUtc = null,
-            IReadOnlyList<ILink> downloadLinks = null,
+            IReadOnlyList<DownloadKind> downloadKinds = null,
             AdditionalReportInfo additionalInfo = null,
             ReportFormat format = null,
             string sectionId = DefaultIds.DefaultSectionId,
@@ -174,7 +174,7 @@ namespace OBeautifulCode.DataStructure
         {
             var result = rows
                 .ToTreeTable(treeTableFormat, tableColumnsColumnsFormat, columnIdPrefix, headerRows, footerRows, tableRowsRowsFormat, dataRowsFormat)
-                .ToReport(id, title, timestampUtc, downloadLinks, additionalInfo, format, sectionId, sectionName, sectionTitle, sectionAdditionalInfo, sectionFormat);
+                .ToReport(id, title, timestampUtc, downloadKinds, additionalInfo, format, sectionId, sectionName, sectionTitle, sectionAdditionalInfo, sectionFormat);
 
             return result;
         }
@@ -297,7 +297,7 @@ namespace OBeautifulCode.DataStructure
         /// <param name="id">OPTIONAL report unique identifier.  DEFAULT is to use a randomly assigned GUID.</param>
         /// <param name="title">OPTIONAL title of the report.  DEFAULT is a report with no title.</param>
         /// <param name="timestampUtc">OPTIONAL timestamp of the report, in UTC.  DEFAULT is a report that is not timestamped.</param>
-        /// <param name="downloadLinks">OPTIONAL download options for the report as links.  DEFAULT is no download options.</param>
+        /// <param name="downloadKinds">OPTIONAL kinds of download supported.  DEFAULT is no download option.</param>
         /// <param name="additionalInfo">OPTIONAL additional information related to the report.  DEFAULT no additional information.</param>
         /// <param name="format">OPTIONAL format to apply to the report.  DEFAULT is to leave the format unchanged.</param>
         /// <param name="sectionId">OPTIONAL section unique identifier.  DEFAULT is to use <see cref="DefaultIds.DefaultSectionId"/>.</param>
@@ -326,7 +326,7 @@ namespace OBeautifulCode.DataStructure
             string id = null,
             string title = null,
             DateTime? timestampUtc = null,
-            IReadOnlyList<ILink> downloadLinks = null,
+            IReadOnlyList<DownloadKind> downloadKinds = null,
             AdditionalReportInfo additionalInfo = null,
             ReportFormat format = null,
             string sectionId = DefaultIds.DefaultSectionId,
@@ -343,7 +343,7 @@ namespace OBeautifulCode.DataStructure
             DataRowsFormat dataRowsFormat = null)
         {
             var result = new[] { row }
-                .ToReport(id, title, timestampUtc, downloadLinks, additionalInfo, format, sectionId, sectionName, sectionTitle, sectionAdditionalInfo, sectionFormat, treeTableFormat, tableColumnsColumnsFormat, columnIdPrefix, headerRows, footerRows, tableRowsRowsFormat, dataRowsFormat);
+                .ToReport(id, title, timestampUtc, downloadKinds, additionalInfo, format, sectionId, sectionName, sectionTitle, sectionAdditionalInfo, sectionFormat, treeTableFormat, tableColumnsColumnsFormat, columnIdPrefix, headerRows, footerRows, tableRowsRowsFormat, dataRowsFormat);
 
             return result;
         }
@@ -437,7 +437,7 @@ namespace OBeautifulCode.DataStructure
         /// <param name="id">OPTIONAL report unique identifier.  DEFAULT is to use a randomly assigned GUID.</param>
         /// <param name="title">OPTIONAL title of the report.  DEFAULT is a report with no title.</param>
         /// <param name="timestampUtc">OPTIONAL timestamp of the report, in UTC.  DEFAULT is a report that is not timestamped.</param>
-        /// <param name="downloadLinks">OPTIONAL download options for the report as links.  DEFAULT is no download options.</param>
+        /// <param name="downloadKinds">OPTIONAL kinds of download supported.  DEFAULT is no download option.</param>
         /// <param name="additionalInfo">OPTIONAL additional information related to the report.  DEFAULT no additional information.</param>
         /// <param name="format">OPTIONAL format to apply to the report.  DEFAULT is to leave the format unchanged.</param>
         /// <param name="sectionId">OPTIONAL section unique identifier.  DEFAULT is to use <see cref="DefaultIds.DefaultSectionId"/>.</param>
@@ -467,7 +467,7 @@ namespace OBeautifulCode.DataStructure
             string id = null,
             string title = null,
             DateTime? timestampUtc = null,
-            IReadOnlyList<ILink> downloadLinks = null,
+            IReadOnlyList<DownloadKind> downloadKinds = null,
             AdditionalReportInfo additionalInfo = null,
             ReportFormat format = null,
             string sectionId = DefaultIds.DefaultSectionId,
@@ -486,7 +486,7 @@ namespace OBeautifulCode.DataStructure
         {
             var result = cells
                 .ToFlatRow(rowId)
-                .ToReport(id, title, timestampUtc, downloadLinks, additionalInfo, format, sectionId, sectionName, sectionTitle, sectionAdditionalInfo, sectionFormat, treeTableFormat, tableColumnsColumnsFormat, columnIdPrefix, headerRows, footerRows, tableRowsRowsFormat, dataRowsFormat);
+                .ToReport(id, title, timestampUtc, downloadKinds, additionalInfo, format, sectionId, sectionName, sectionTitle, sectionAdditionalInfo, sectionFormat, treeTableFormat, tableColumnsColumnsFormat, columnIdPrefix, headerRows, footerRows, tableRowsRowsFormat, dataRowsFormat);
 
             return result;
         }
@@ -586,7 +586,7 @@ namespace OBeautifulCode.DataStructure
         /// <param name="id">OPTIONAL report unique identifier.  DEFAULT is to use a randomly assigned GUID.</param>
         /// <param name="title">OPTIONAL title of the report.  DEFAULT is a report with no title.</param>
         /// <param name="timestampUtc">OPTIONAL timestamp of the report, in UTC.  DEFAULT is a report that is not timestamped.</param>
-        /// <param name="downloadLinks">OPTIONAL download options for the report as links.  DEFAULT is no download options.</param>
+        /// <param name="downloadKinds">OPTIONAL kinds of download supported.  DEFAULT is no download option.</param>
         /// <param name="additionalInfo">OPTIONAL additional information related to the report.  DEFAULT no additional information.</param>
         /// <param name="format">OPTIONAL format to apply to the report.  DEFAULT is to leave the format unchanged.</param>
         /// <param name="sectionId">OPTIONAL section unique identifier.  DEFAULT is to use <see cref="DefaultIds.DefaultSectionId"/>.</param>
@@ -616,7 +616,7 @@ namespace OBeautifulCode.DataStructure
             string id = null,
             string title = null,
             DateTime? timestampUtc = null,
-            IReadOnlyList<ILink> downloadLinks = null,
+            IReadOnlyList<DownloadKind> downloadKinds = null,
             AdditionalReportInfo additionalInfo = null,
             ReportFormat format = null,
             string sectionId = DefaultIds.DefaultSectionId,
@@ -634,7 +634,7 @@ namespace OBeautifulCode.DataStructure
             string rowId = null)
         {
             var result = new[] { cell }
-                .ToReport(id, title, timestampUtc, downloadLinks, additionalInfo, format, sectionId, sectionName, sectionTitle, sectionAdditionalInfo, sectionFormat, treeTableFormat, tableColumnsColumnsFormat, columnIdPrefix, headerRows, footerRows, tableRowsRowsFormat, dataRowsFormat, rowId);
+                .ToReport(id, title, timestampUtc, downloadKinds, additionalInfo, format, sectionId, sectionName, sectionTitle, sectionAdditionalInfo, sectionFormat, treeTableFormat, tableColumnsColumnsFormat, columnIdPrefix, headerRows, footerRows, tableRowsRowsFormat, dataRowsFormat, rowId);
 
             return result;
         }

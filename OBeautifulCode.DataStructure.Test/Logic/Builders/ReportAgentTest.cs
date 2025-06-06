@@ -52,7 +52,7 @@ namespace OBeautifulCode.DataStructure.Test
                 },
                 referenceObject.Title,
                 referenceObject.TimestampUtc,
-                referenceObject.DownloadLinks,
+                referenceObject.DownloadKinds,
                 referenceObject.AdditionalInfo,
                 referenceObject.Format);
 

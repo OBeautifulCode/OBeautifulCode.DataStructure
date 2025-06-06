@@ -10,7 +10,6 @@ namespace OBeautifulCode.DataStructure
     using System.Collections.Generic;
     using System.Linq;
     using OBeautifulCode.Type;
-
     using static System.FormattableString;
 
     /// <summary>
@@ -25,7 +24,7 @@ namespace OBeautifulCode.DataStructure
         /// <param name="sections">The sections of the report.</param>
         /// <param name="title">OPTIONAL title of the report.  DEFAULT is a report with no title.</param>
         /// <param name="timestampUtc">OPTIONAL timestamp of the report, in UTC.  DEFAULT is a report that is not timestamped.</param>
-        /// <param name="downloadLinks">OPTIONAL download options for the report as links.  DEFAULT is no download options.</param>
+        /// <param name="downloadKinds">OPTIONAL kinds of download supported.  DEFAULT is no download option.</param>
         /// <param name="additionalInfo">OPTIONAL additional information related to the report.  DEFAULT no additional information.</param>
         /// <param name="format">OPTIONAL format to apply to the report.  DEFAULT is to leave the format unchanged.</param>
         public Report(
@@ -33,7 +32,7 @@ namespace OBeautifulCode.DataStructure
             IReadOnlyCollection<Section> sections,
             string title = null,
             DateTime? timestampUtc = null,
-            IReadOnlyList<ILink> downloadLinks = null,
+            IReadOnlyList<DownloadKind> downloadKinds = null,
             AdditionalReportInfo additionalInfo = null,
             ReportFormat format = null)
         {
@@ -72,16 +71,16 @@ namespace OBeautifulCode.DataStructure
                 throw new ArgumentException(Invariant($"{nameof(timestampUtc)} has a {nameof(DateTime.Kind)} that is not {nameof(DateTimeKind)}.{nameof(DateTimeKind.Utc)}.  It is {nameof(DateTimeKind)}.{((DateTime)timestampUtc).Kind}."));
             }
 
-            if ((downloadLinks != null) && downloadLinks.Any(_ => _ == null))
+            if ((downloadKinds != null) && downloadKinds.Any(_ => _ == DownloadKind.Unknown))
             {
-                throw new ArgumentException(Invariant($"{nameof(downloadLinks)} contains at least one null element."));
+                throw new ArgumentException(Invariant($"{nameof(downloadKinds)} contains an element that is {nameof(DownloadKind)}.{nameof(DownloadKind.Unknown)}."));
             }
 
             this.Id = id;
             this.Sections = sections;
             this.Title = title;
             this.TimestampUtc = timestampUtc;
-            this.DownloadLinks = downloadLinks;
+            this.DownloadKinds = downloadKinds;
             this.AdditionalInfo = additionalInfo;
             this.Format = format;
         }
@@ -105,9 +104,9 @@ namespace OBeautifulCode.DataStructure
         public DateTime? TimestampUtc { get; private set; }
 
         /// <summary>
-        /// Gets download options for the report as links.
+        /// Gets the kinds of download supported.
         /// </summary>
-        public IReadOnlyList<ILink> DownloadLinks { get; private set; }
+        public IReadOnlyList<DownloadKind> DownloadKinds { get; private set; }
 
         /// <summary>
         /// Gets additional information related to the report.

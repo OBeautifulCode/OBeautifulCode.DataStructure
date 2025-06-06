@@ -51,7 +51,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 },
                                 referenceObject.Title,
                                 referenceObject.TimestampUtc,
-                                referenceObject.DownloadLinks,
+                                referenceObject.DownloadKinds,
                                 referenceObject.AdditionalInfo,
                                 referenceObject.Format);
 
@@ -59,6 +59,28 @@ namespace OBeautifulCode.DataStructure.Test
                         },
                         ExpectedExceptionType = typeof(ArgumentException),
                         ExpectedExceptionMessageContains = new[] { "sections", "contains two or more elements with the same Id", },
+                    })
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<Report>
+                    {
+                        Name = "constructor should throw ArgumentException when parameter 'downloadKinds' contains an element that is DownloadKind.Unknown",
+                        ConstructionFunc = () =>
+                        {
+                            var referenceObject = A.Dummy<Report>();
+
+                            var result = new Report(
+                                referenceObject.Id,
+                                referenceObject.Sections,
+                                referenceObject.Title,
+                                referenceObject.TimestampUtc,
+                                new[] { A.Dummy<DownloadKind>(), DownloadKind.Unknown },
+                                referenceObject.AdditionalInfo,
+                                referenceObject.Format);
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentException),
+                        ExpectedExceptionMessageContains = new[] { "downloadKinds", "Unknown", },
                     });
 
             // Need to do this because ReportFormat is currently empty and so there isn't a way to create
@@ -77,7 +99,7 @@ namespace OBeautifulCode.DataStructure.Test
                                     ReferenceObjectForEquatableTestScenarios.Sections,
                                     ReferenceObjectForEquatableTestScenarios.Title,
                                     ReferenceObjectForEquatableTestScenarios.TimestampUtc,
-                                    ReferenceObjectForEquatableTestScenarios.DownloadLinks,
+                                    ReferenceObjectForEquatableTestScenarios.DownloadKinds,
                                     ReferenceObjectForEquatableTestScenarios.AdditionalInfo,
                                     ReferenceObjectForEquatableTestScenarios.Format),
                         },
@@ -88,7 +110,7 @@ namespace OBeautifulCode.DataStructure.Test
                                     ReferenceObjectForEquatableTestScenarios.Sections,
                                     ReferenceObjectForEquatableTestScenarios.Title,
                                     ReferenceObjectForEquatableTestScenarios.TimestampUtc,
-                                    ReferenceObjectForEquatableTestScenarios.DownloadLinks,
+                                    ReferenceObjectForEquatableTestScenarios.DownloadKinds,
                                     ReferenceObjectForEquatableTestScenarios.AdditionalInfo,
                                     ReferenceObjectForEquatableTestScenarios.Format),
                             new Report(
@@ -96,7 +118,7 @@ namespace OBeautifulCode.DataStructure.Test
                                     A.Dummy<Report>().Whose(_ => !_.Sections.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Sections)).Sections,
                                     ReferenceObjectForEquatableTestScenarios.Title,
                                     ReferenceObjectForEquatableTestScenarios.TimestampUtc,
-                                    ReferenceObjectForEquatableTestScenarios.DownloadLinks,
+                                    ReferenceObjectForEquatableTestScenarios.DownloadKinds,
                                     ReferenceObjectForEquatableTestScenarios.AdditionalInfo,
                                     ReferenceObjectForEquatableTestScenarios.Format),
                             new Report(
@@ -104,7 +126,7 @@ namespace OBeautifulCode.DataStructure.Test
                                     ReferenceObjectForEquatableTestScenarios.Sections,
                                     A.Dummy<Report>().Whose(_ => !_.Title.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Title)).Title,
                                     ReferenceObjectForEquatableTestScenarios.TimestampUtc,
-                                    ReferenceObjectForEquatableTestScenarios.DownloadLinks,
+                                    ReferenceObjectForEquatableTestScenarios.DownloadKinds,
                                     ReferenceObjectForEquatableTestScenarios.AdditionalInfo,
                                     ReferenceObjectForEquatableTestScenarios.Format),
                             new Report(
@@ -112,7 +134,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.Sections,
                                 ReferenceObjectForEquatableTestScenarios.Title,
                                 ReferenceObjectForEquatableTestScenarios.TimestampUtc,
-                                A.Dummy<Report>().Whose(_ => !_.DownloadLinks.IsEqualTo(ReferenceObjectForEquatableTestScenarios.DownloadLinks)).DownloadLinks,
+                                A.Dummy<Report>().Whose(_ => !_.DownloadKinds.IsEqualTo(ReferenceObjectForEquatableTestScenarios.DownloadKinds)).DownloadKinds,
                                 ReferenceObjectForEquatableTestScenarios.AdditionalInfo,
                                 ReferenceObjectForEquatableTestScenarios.Format),
                         },

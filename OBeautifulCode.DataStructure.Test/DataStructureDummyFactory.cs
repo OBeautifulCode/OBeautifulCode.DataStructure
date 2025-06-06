@@ -44,6 +44,7 @@ namespace OBeautifulCode.DataStructure.Test
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(CellOpExecutionOutcome.Unknown);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(CellOpExecutionStatus.Unknown);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(CompareOperator.Unknown);
+            AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(DownloadKind.Unknown);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(FillPatternStyle.Unknown);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(HorizontalAlignment.Unknown);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(InnerBorderEdges.None);
@@ -97,7 +98,7 @@ namespace OBeautifulCode.DataStructure.Test
             {
                 var numberOfSections = ThreadSafeRandom.Next(1, 4);
 
-                var result = new Report(A.Dummy<string>(), Some.ReadOnlyDummies<Section>(numberOfSections).ToList(), A.Dummy<string>(), A.Dummy<UtcDateTime>(), Some.ReadOnlyDummies<StandardLink>().ToList(), A.Dummy<AdditionalReportInfo>(), A.Dummy<ReportFormat>());
+                var result = new Report(A.Dummy<string>(), Some.ReadOnlyDummies<Section>(numberOfSections).ToList(), A.Dummy<string>(), A.Dummy<UtcDateTime>(), Some.ReadOnlyDummies<DownloadKind>().ToList(), A.Dummy<AdditionalReportInfo>(), A.Dummy<ReportFormat>());
 
                 return result;
             });

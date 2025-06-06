@@ -1,27 +1,34 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ReportFormatOptions.cs" company="OBeautifulCode">
+// <copyright file="DownloadKind.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace OBeautifulCode.DataStructure
 {
-    using System;
-
     /// <summary>
-    /// Some options for formatting a report.
+    /// Specifies a kind of download that is support when downloading a <see cref="Report"/>.
     /// </summary>
-    [Flags]
-    public enum ReportFormatOptions
+    public enum DownloadKind
     {
         /// <summary>
-        /// None (default).
+        /// Unknown (default).
         /// </summary>
-        None = 0,
+        Unknown,
 
         /// <summary>
-        /// Hide the <see cref="Report.DownloadKinds"/>.
+        /// A Microsoft Excel file.
         /// </summary>
-        HideDownloadKinds = 1,
+        Excel,
+
+        /// <summary>
+        /// A CSV file.
+        /// </summary>
+        Csv,
+
+        /// <summary>
+        /// A PDF file.
+        /// </summary>
+        Pdf,
     }
 }
