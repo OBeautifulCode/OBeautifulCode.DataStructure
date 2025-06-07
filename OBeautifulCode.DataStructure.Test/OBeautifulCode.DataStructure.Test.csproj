@@ -215,6 +215,7 @@
     <Compile Include="Events\CellOpExecution\CellOpExecutionCompletedEventBaseTest.designer.cs">
       <DependentUpon>CellOpExecutionCompletedEventBaseTest.cs</DependentUpon>
     </Compile>
+    <Compile Include="Logic\Extensions\ReportExtensionsTest.cs" />
     <Compile Include="Models\Classes\Validation\ValidationStep\BooleanValidationStepBaseTest.cs" />
     <Compile Include="Models\Classes\Validation\ValidationStep\BooleanValidationStepBaseTest.designer.cs">
       <DependentUpon>BooleanValidationStepBaseTest.cs</DependentUpon>

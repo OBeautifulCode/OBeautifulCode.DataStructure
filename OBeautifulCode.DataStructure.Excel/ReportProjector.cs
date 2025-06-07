@@ -240,11 +240,15 @@ namespace OBeautifulCode.DataStructure.Excel
             if (passKind == PassKind.Data)
             {
                 // By default, display the timestamp if available.
-                if ((report.TimestampUtc != null) && (report.Format?.DisplayTimestamp ?? true))
+                var timestampToDisplay = report.GetFormattedTimestampToDisplayOrNull(
+                    context.ExternalContext.CultureKind,
+                    context.ExternalContext.LocalTimeZone);
+
+                if (timestampToDisplay != null)
                 {
                     chromeCursor.MoveDown();
 
-                    chromeCursor.Cell.Value = ((DateTime)report.TimestampUtc).Format(report.Format?.TimestampFormat, context);
+                    chromeCursor.Cell.Value = timestampToDisplay;
                 }
 
                 var additionalInfo = context.ExternalContext.AdditionalReportInfoOverride ?? report.AdditionalInfo;

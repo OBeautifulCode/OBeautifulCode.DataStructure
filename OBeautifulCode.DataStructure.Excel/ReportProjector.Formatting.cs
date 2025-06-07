@@ -804,52 +804,6 @@ namespace OBeautifulCode.DataStructure.Excel
             }
         }
 
-        private static string Format(
-            this DateTime valueUtc,
-            DateTimeFormat dateTimeFormat,
-            InternalProjectionContext context)
-        {
-            var cultureKind = dateTimeFormat?.CultureKind ?? context.ExternalContext.CultureKind ?? CultureKind.Invariant;
-
-            var dateTimeFormatKind = dateTimeFormat?.FormatKind;
-
-            var localizeTimeZone = dateTimeFormat?.LocalizeTimeZone ?? (context.ExternalContext.LocalTimeZone != null);
-
-            var localTimeZone = dateTimeFormat?.LocalTimeZone ?? context.ExternalContext.LocalTimeZone ?? StandardTimeZone.Unknown;
-
-            TimeZoneInfo localTimeZoneInfo = null;
-
-            if (localizeTimeZone)
-            {
-                if (localTimeZone == StandardTimeZone.Unknown)
-                {
-                    throw new InvalidOperationException("Cannot localize time zone of timestamp unless the local time zone is specified.");
-                }
-
-                localTimeZoneInfo = localTimeZone.ToTimeZoneInfo();
-            }
-
-            string result;
-
-            if (dateTimeFormatKind == null)
-            {
-                result = valueUtc.ToStringPretty(localTimeZoneInfo);
-            }
-            else
-            {
-                DateTime valueToUse = valueUtc;
-
-                if (localizeTimeZone)
-                {
-                    valueToUse = TimeZoneInfo.ConvertTimeFromUtc(valueUtc, localTimeZoneInfo);
-                }
-
-                result = valueToUse.ToString((DateTimeFormatKind)dateTimeFormatKind, cultureKind);
-            }
-
-            return result;
-        }
-
         private static void ThrowOnNotImplementedProperty<TObject>(
             this TObject item,
             IReadOnlyCollection<string> implementedPropertyNames)
