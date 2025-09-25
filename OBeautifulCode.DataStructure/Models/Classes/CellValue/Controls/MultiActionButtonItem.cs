@@ -15,6 +15,7 @@ namespace OBeautifulCode.DataStructure
     /// <summary>
     /// An action item in a <see cref="MultiActionButton"/>.
     /// </summary>
+    [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Multi", Justification = ObcSuppressBecause.CA1704_IdentifiersShouldBeSpelledCorrectly_SpellingIsCorrectInContextOfTheDomain)]
     public partial class MultiActionButtonItem : IModelViaCodeGen
     {
         /// <summary>
@@ -50,7 +51,7 @@ namespace OBeautifulCode.DataStructure
 
             if (availability == Availability.Unknown)
             {
-                throw new ArgumentOutOfRangeException(Invariant($"{nameof(availability)} is {nameof(DataStructure.Availability)}.{nameof(Availability.Unknown)}."), nameof(availability));
+                throw new ArgumentOutOfRangeException(nameof(availability), Invariant($"{nameof(availability)} is {nameof(DataStructure.Availability)}.{nameof(Availability.Unknown)}."));
             }
 
             this.Text = text;

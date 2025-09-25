@@ -22,6 +22,7 @@ namespace OBeautifulCode.DataStructure
     /// in a dropdown selector, and when the desired option is selected, the action is executed.
     /// </remarks>
     // ReSharper disable once RedundantExtendsListEntry
+    [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Multi", Justification = ObcSuppressBecause.CA1704_IdentifiersShouldBeSpelledCorrectly_SpellingIsCorrectInContextOfTheDomain)]
     public partial class MultiActionButton : IModelViaCodeGen
     {
         /// <summary>
