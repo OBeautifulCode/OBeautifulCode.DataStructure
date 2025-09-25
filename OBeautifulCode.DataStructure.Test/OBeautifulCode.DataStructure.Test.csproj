@@ -310,6 +310,14 @@
     <Compile Include="Models\Classes\Format\CellValue\Number\NumberCellValueFormat{TValue}Test.designer.cs">
       <DependentUpon>NumberCellValueFormat{TValue}Test.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\Classes\CellValue\Controls\MultiActionButtonItemTest.cs" />
+    <Compile Include="Models\Classes\CellValue\Controls\MultiActionButtonItemTest.designer.cs">
+      <DependentUpon>MultiActionButtonItemTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\CellValue\Controls\MultiActionButtonTest.cs" />
+    <Compile Include="Models\Classes\CellValue\Controls\MultiActionButtonTest.designer.cs">
+      <DependentUpon>MultiActionButtonTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Operations\AvailabilityCheckResult\CheckAvailabilityOpTest.cs" />
     <Compile Include="Operations\AvailabilityCheckResult\CheckAvailabilityOpTest.designer.cs">
       <DependentUpon>CheckAvailabilityOpTest.cs</DependentUpon>

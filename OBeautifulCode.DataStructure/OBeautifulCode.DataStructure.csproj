@@ -265,9 +265,17 @@
     <Compile Include="Models\Classes\CellLocator\SelfCellLocator.designer.cs">
       <DependentUpon>SelfCellLocator.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\Classes\CellValue\Controls\MultiActionButton.designer.cs">
+      <DependentUpon>MultiActionButton.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\CellValue\Controls\MultiActionButtonItem.cs" />
+    <Compile Include="Models\Classes\CellValue\Controls\MultiActionButton.cs" />
     <Compile Include="Models\Classes\CellValue\Controls\DropdownSelector.cs" />
     <Compile Include="Models\Classes\CellValue\Controls\DropdownSelector.designer.cs">
       <DependentUpon>DropdownSelector.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\CellValue\Controls\MultiActionButtonItem.designer.cs">
+      <DependentUpon>MultiActionButtonItem.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Classes\CellValue\Media\IdentifiedMedia.designer.cs">
       <DependentUpon>IdentifiedMedia.cs</DependentUpon>
