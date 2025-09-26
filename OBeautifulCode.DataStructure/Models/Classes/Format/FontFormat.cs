@@ -48,7 +48,7 @@ namespace OBeautifulCode.DataStructure
 
                 if (fontNamesInFallbackOrder.Any(string.IsNullOrWhiteSpace))
                 {
-                    throw new ArgumentException(Invariant($"{nameof(fontNamesInFallbackOrder)} contains a white space element."));
+                    throw new ArgumentException(Invariant($"{nameof(fontNamesInFallbackOrder)} contains an element that is white space."));
                 }
             }
 
