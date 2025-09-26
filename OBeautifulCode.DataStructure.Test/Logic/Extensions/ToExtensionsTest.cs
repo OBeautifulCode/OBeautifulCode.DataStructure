@@ -148,11 +148,18 @@ namespace OBeautifulCode.DataStructure.Test
             var treeTableFormat = A.Dummy<TableFormat>();
             var tableColumnsColumnsFormat = A.Dummy<ColumnFormat>();
             var columnIdPrefix = "prefix-";
-            var headerRows = A.Dummy<HeaderRows>().DeepCloneWithRows(DataStructureDummyFactory.BuildFlatRows(numberOfColumns));
-            var footerRows = A.Dummy<FooterRows>().DeepCloneWithRows(DataStructureDummyFactory.BuildFlatRows(numberOfColumns));
             var tableRowsRowsFormat = A.Dummy<RowFormat>();
             var dataRowsFormat = A.Dummy<DataRowsFormat>();
-            var rows = DataStructureDummyFactory.BuildRowBases(numberOfColumns);
+
+            HeaderRows headerRows = null;
+            FooterRows footerRows = null;
+            IReadOnlyList<RowBase> rows = null;
+            while (headerRows == null || ((headerRows.Rows.Count + footerRows.Rows.Count + rows.Count) == 0))
+            {
+                headerRows = A.Dummy<HeaderRows>().DeepCloneWithRows(DataStructureDummyFactory.BuildFlatRows(numberOfColumns));
+                footerRows = A.Dummy<FooterRows>().DeepCloneWithRows(DataStructureDummyFactory.BuildFlatRows(numberOfColumns));
+                rows = DataStructureDummyFactory.BuildRowBases(numberOfColumns);
+            }
 
             // Act
             var actual = rows.ToReport(reportId, reportTitle, reportTimestampUtc, reportDownloadKinds, reportAdditionalInfo, reportFormat, sectionId, sectionName, sectionTitle, sectionAdditionalInfo, sectionFormat, treeTableFormat, tableColumnsColumnsFormat, columnIdPrefix, headerRows, footerRows, tableRowsRowsFormat, dataRowsFormat);
@@ -238,11 +245,18 @@ namespace OBeautifulCode.DataStructure.Test
             var treeTableFormat = A.Dummy<TableFormat>();
             var tableColumnsColumnsFormat = A.Dummy<ColumnFormat>();
             var columnIdPrefix = "prefix-";
-            var headerRows = A.Dummy<HeaderRows>().DeepCloneWithRows(DataStructureDummyFactory.BuildFlatRows(numberOfColumns));
-            var footerRows = A.Dummy<FooterRows>().DeepCloneWithRows(DataStructureDummyFactory.BuildFlatRows(numberOfColumns));
             var tableRowsRowsFormat = A.Dummy<RowFormat>();
             var dataRowsFormat = A.Dummy<DataRowsFormat>();
-            var rows = DataStructureDummyFactory.BuildRowBases(numberOfColumns);
+
+            HeaderRows headerRows = null;
+            FooterRows footerRows = null;
+            IReadOnlyList<RowBase> rows = null;
+            while (headerRows == null || ((headerRows.Rows.Count + footerRows.Rows.Count + rows.Count) == 0))
+            {
+                headerRows = A.Dummy<HeaderRows>().DeepCloneWithRows(DataStructureDummyFactory.BuildFlatRows(numberOfColumns));
+                footerRows = A.Dummy<FooterRows>().DeepCloneWithRows(DataStructureDummyFactory.BuildFlatRows(numberOfColumns));
+                rows = DataStructureDummyFactory.BuildRowBases(numberOfColumns);
+            }
 
             // Act
             var actual = rows.ToSection(sectionId, sectionName, sectionTitle, sectionAdditionalInfo, sectionFormat, treeTableFormat, tableColumnsColumnsFormat, columnIdPrefix, headerRows, footerRows, tableRowsRowsFormat, dataRowsFormat);
@@ -301,11 +315,18 @@ namespace OBeautifulCode.DataStructure.Test
             var treeTableFormat = A.Dummy<TableFormat>();
             var tableColumnsColumnsFormat = A.Dummy<ColumnFormat>();
             var columnIdPrefix = "prefix-";
-            var headerRows = A.Dummy<HeaderRows>().DeepCloneWithRows(DataStructureDummyFactory.BuildFlatRows(numberOfColumns));
-            var footerRows = A.Dummy<FooterRows>().DeepCloneWithRows(DataStructureDummyFactory.BuildFlatRows(numberOfColumns));
             var tableRowsRowsFormat = A.Dummy<RowFormat>();
             var dataRowsFormat = A.Dummy<DataRowsFormat>();
-            var rows = DataStructureDummyFactory.BuildRowBases(numberOfColumns);
+
+            HeaderRows headerRows = null;
+            FooterRows footerRows = null;
+            IReadOnlyList<RowBase> rows = null;
+            while (headerRows == null || ((headerRows.Rows.Count + footerRows.Rows.Count + rows.Count) == 0))
+            {
+                headerRows = A.Dummy<HeaderRows>().DeepCloneWithRows(DataStructureDummyFactory.BuildFlatRows(numberOfColumns));
+                footerRows = A.Dummy<FooterRows>().DeepCloneWithRows(DataStructureDummyFactory.BuildFlatRows(numberOfColumns));
+                rows = DataStructureDummyFactory.BuildRowBases(numberOfColumns);
+            }
 
             // Act
             var actual = rows.ToTreeTable(treeTableFormat, tableColumnsColumnsFormat, columnIdPrefix, headerRows, footerRows, tableRowsRowsFormat, dataRowsFormat);
