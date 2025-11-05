@@ -10,7 +10,7 @@
       <dependency id="OBeautifulCode.AutoFakeItEasy" version="1.0.141" />
       <dependency id="OBeautifulCode.CodeAnalysis.Recipes.SuppressBecause" version="1.0.19" />
       <dependency id="OBeautifulCode.CoreOperation.Recipes.DummyFactory" version="1.0.3" />
-      <dependency id="OBeautifulCode.Type.Recipes.DummyFactory" version="1.0.153" />
+      <dependency id="OBeautifulCode.Type.Recipes.DummyFactory" version="1.0.154" />
     </dependencies>
   </metadata>
   <files>

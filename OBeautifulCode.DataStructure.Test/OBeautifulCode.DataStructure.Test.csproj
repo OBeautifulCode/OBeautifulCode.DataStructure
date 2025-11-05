@@ -65,6 +65,12 @@
     <Reference Include="OBeautifulCode.CoreOperation, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\OBeautifulCode.CoreOperation.1.0.3\lib\net462\OBeautifulCode.CoreOperation.dll</HintPath>
     </Reference>
+    <Reference Include="OBeautifulCode.CoreOperation.Serialization.Bson, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.CoreOperation.Serialization.Bson.1.0.3\lib\net462\OBeautifulCode.CoreOperation.Serialization.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="OBeautifulCode.CoreOperation.Serialization.Json, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.CoreOperation.Serialization.Json.1.0.3\lib\net462\OBeautifulCode.CoreOperation.Serialization.Json.dll</HintPath>
+    </Reference>
     <Reference Include="OBeautifulCode.Representation.System, Version=1.0.70.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\OBeautifulCode.Representation.System.1.0.70\lib\net462\OBeautifulCode.Representation.System.dll</HintPath>
     </Reference>
