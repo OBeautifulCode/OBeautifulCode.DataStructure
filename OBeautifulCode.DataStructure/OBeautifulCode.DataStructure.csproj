@@ -230,6 +230,7 @@
     <Compile Include="Logic\Extensions\ToExtensions.cs" />
     <Compile Include="Logic\Extensions\TableRowsExtensions.cs" />
     <Compile Include="Logic\Extensions\TreeTableExtensions.cs" />
+    <Compile Include="Logic\Protocols\DataStructureCellProtocolsBase.cs" />
     <Compile Include="Logic\Protocols\DataStructureCellProtocols.cs" />
     <Compile Include="Logic\Protocols\DataStructureConvenienceProtocols.cs" />
     <Compile Include="Logic\Protocols\DataStructureCellProtocols{TValue}.cs" />

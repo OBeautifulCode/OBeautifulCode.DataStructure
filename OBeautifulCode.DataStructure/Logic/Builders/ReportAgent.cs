@@ -736,8 +736,7 @@ namespace OBeautifulCode.DataStructure
             ConcurrentDictionary<Type, ConstructorInfo> typeToConstructorInfoCache,
             ProtocolFactory protocolFactory,
             Func<Type, ConstructorInfo> getConstructorInfoFunc,
-            object[] constructorInfoParamsToInvoke,
-            ProtocolAlreadyRegisteredForOperationStrategy protocolAlreadyRegisteredForOperationStrategy)
+            object[] constructorInfoParamsToInvoke)
         {
             if (!typeToConstructorInfoCache.TryGetValue(typeForCoreCellOps, out var constructorInfo))
             {
@@ -748,7 +747,7 @@ namespace OBeautifulCode.DataStructure
 
             var protocol = (IProtocol)constructorInfo.Invoke(constructorInfoParamsToInvoke);
 
-            protocolFactory.RegisterProtocolForSupportedOperations(protocol.GetType(), () => protocol, protocolAlreadyRegisteredForOperationStrategy);
+            protocolFactory.RegisterProtocolForSupportedOperations(protocol.GetType(), () => protocol);
         }
 
         private void ReCalcInternal(
@@ -858,6 +857,7 @@ namespace OBeautifulCode.DataStructure
             }
         }
 
+        [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = ObcSuppressBecause.CA1506_AvoidExcessiveClassCoupling_DisagreeWithAssessment)]
         private ChainOfResponsibilityProtocolFactory BuildProtocolFactoryToExecuteAllOperations(
             DateTime timestampUtc,
             IReadOnlyCollection<Func<IProtocolFactory, IProtocolFactory>> protocolFactoryFuncs,
@@ -903,11 +903,16 @@ namespace OBeautifulCode.DataStructure
                 convenienceProtocols.GetType(),
                 () => convenienceProtocols);
 
+            var currentCellStack = new Stack<ICell>();
+            var cellProtocols = new DataStructureCellProtocols(this, result, timestampUtc, getRecalcPhaseFunc, currentCellStack);
+            coreProtocolsFactory.RegisterProtocolForSupportedOperations(
+                cellProtocols.GetType(),
+                () => cellProtocols);
+
             ConstructorInfo GetConstValueProtocolFunc(Type type) => typeof(GetConstValueProtocol<>).MakeGenericType(type).GetConstructors().Single();
             ConstructorInfo GetCellProtocolsFunc(Type type) => typeof(DataStructureCellProtocols<>).MakeGenericType(type).GetConstructors().Single();
             ConstructorInfo GetCoreCompositeOperationProtocolsFunc(Type type) => typeof(CoreCompositeOperationProtocols<>).MakeGenericType(type).GetConstructors().Single();
 
-            var currentCellStack = new Stack<ICell>();
             var getConstValueProtocolConstructorInfoParams = new object[] { };
             var cellProtocolsConstructorInfoParams = new object[] { this, result, timestampUtc, getRecalcPhaseFunc, currentCellStack };
             var coreCompositeOperationProtocolsConstructorInfoParams = new object[] { result };
@@ -919,24 +924,21 @@ namespace OBeautifulCode.DataStructure
                     CachedTypeToGetConstValueProtocolConstructorInfoMap,
                     coreProtocolsFactory,
                     GetConstValueProtocolFunc,
-                    getConstValueProtocolConstructorInfoParams,
-                    ProtocolAlreadyRegisteredForOperationStrategy.Throw);
+                    getConstValueProtocolConstructorInfoParams);
 
                 RegisterProtocols(
                     typeForCoreCellOps,
                     CachedTypeToCellProtocolsConstructorInfoMap,
                     coreProtocolsFactory,
                     GetCellProtocolsFunc,
-                    cellProtocolsConstructorInfoParams,
-                    ProtocolAlreadyRegisteredForOperationStrategy.Skip);
+                    cellProtocolsConstructorInfoParams);
 
                 RegisterProtocols(
                     typeForCoreCellOps,
                     CachedTypeToCoreCompositeOperationProtocolsConstructorInfoMap,
                     coreProtocolsFactory,
                     GetCoreCompositeOperationProtocolsFunc,
-                    coreCompositeOperationProtocolsConstructorInfoParams,
-                    ProtocolAlreadyRegisteredForOperationStrategy.Throw);
+                    coreCompositeOperationProtocolsConstructorInfoParams);
             }
 
             result.AddToEndOfChain(coreProtocolsFactory);
