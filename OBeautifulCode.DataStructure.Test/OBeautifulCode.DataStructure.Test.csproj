@@ -62,6 +62,9 @@
     <Reference Include="OBeautifulCode.Compression, Version=1.0.30.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\OBeautifulCode.Compression.1.0.30\lib\net462\OBeautifulCode.Compression.dll</HintPath>
     </Reference>
+    <Reference Include="OBeautifulCode.CoreOperation, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.CoreOperation.1.0.3\lib\net462\OBeautifulCode.CoreOperation.dll</HintPath>
+    </Reference>
     <Reference Include="OBeautifulCode.Representation.System, Version=1.0.70.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\OBeautifulCode.Representation.System.1.0.70\lib\net462\OBeautifulCode.Representation.System.dll</HintPath>
     </Reference>
@@ -77,8 +80,8 @@
     <Reference Include="OBeautifulCode.Serialization.PropertyBag, Version=1.0.151.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\OBeautifulCode.Serialization.PropertyBag.1.0.151\lib\net462\OBeautifulCode.Serialization.PropertyBag.dll</HintPath>
     </Reference>
-    <Reference Include="OBeautifulCode.Type, Version=1.0.153.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OBeautifulCode.Type.1.0.153\lib\net462\OBeautifulCode.Type.dll</HintPath>
+    <Reference Include="OBeautifulCode.Type, Version=1.0.154.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Type.1.0.154\lib\net462\OBeautifulCode.Type.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
@@ -160,6 +163,8 @@
     <Compile Include=".recipes\OBeautifulCode.Compression\CompressorFactory.cs" />
     <Compile Include=".recipes\OBeautifulCode.Compression\DotNetZipCompressor.cs" />
     <Compile Include=".recipes\OBeautifulCode.Compression\NullCompressor.cs" />
+    <Compile Include=".recipes\OBeautifulCode.CoreOperation\CoreOperationDummyFactory.cs" />
+    <Compile Include=".recipes\OBeautifulCode.CoreOperation\CoreOperationDummyFactory.designer.cs" />
     <Compile Include=".recipes\OBeautifulCode.DateTime\DateTimeExtensions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Enum\EnumExtensions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Equality\ByteArrayEqualityComparer.cs" />
@@ -329,30 +334,14 @@
     <Compile Include="Operations\AvailabilityCheckResult\CheckAvailabilityOpTest.designer.cs">
       <DependentUpon>CheckAvailabilityOpTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Operations\Decimal\DivideOpTest.cs" />
-    <Compile Include="Operations\Decimal\DivideOpTest.designer.cs">
-      <DependentUpon>DivideOpTest.cs</DependentUpon>
-    </Compile>
     <Compile Include="Exception\CellValueMissingExceptionTest.cs" />
     <Compile Include="Exception\CellNotFoundExceptionTest.cs" />
     <Compile Include="Logic\Builders\ReportAgentTest.cs" />
-    <Compile Include="Logic\Builders\OpTest.cs" />
+    <Compile Include="Logic\Extensions\StepExtensionsTest.cs" />
     <Compile Include="Logic\Builders\CellTest.cs" />
     <Compile Include="Logic\Extensions\CellExtensionsTest.cs" />
     <Compile Include="Logic\Protocols\DataStructureConvenienceProtocolsTest.cs" />
     <Compile Include="Logic\Protocols\DataStructureCellProtocolsTest.cs" />
-    <Compile Include="Operations\Null\NullMultiStatementOp{TStatement,TResult}Test.cs" />
-    <Compile Include="Operations\Null\NullMultiStatementOp{TStatement,TResult}Test.designer.cs">
-      <DependentUpon>NullMultiStatementOp{TStatement,TResult}Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Operations\Null\NullSingleStatementOp{TStatement,TResult}Test.cs" />
-    <Compile Include="Operations\Null\NullSingleStatementOp{TStatement,TResult}Test.designer.cs">
-      <DependentUpon>NullSingleStatementOp{TStatement,TResult}Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Operations\Null\NullTwoStatementOp{TStatement,TResult}Test.cs" />
-    <Compile Include="Operations\Null\NullTwoStatementOp{TStatement,TResult}Test.designer.cs">
-      <DependentUpon>NullTwoStatementOp{TStatement,TResult}Test.cs</DependentUpon>
-    </Compile>
     <Compile Include="Operations\Cell\Referenced\CheckAvailabilityOfCellIfNecessaryOpTest.cs" />
     <Compile Include="Operations\Cell\Referenced\CheckAvailabilityOfCellIfNecessaryOpTest.designer.cs">
       <DependentUpon>CheckAvailabilityOfCellIfNecessaryOpTest.cs</DependentUpon>
@@ -372,10 +361,6 @@
     <Compile Include="Operations\Cell\Located\GetValidityOpTest.cs" />
     <Compile Include="Operations\Cell\Located\GetValidityOpTest.designer.cs">
       <DependentUpon>GetValidityOpTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Operations\Bool\IsEqualToOp{TStatement}Test.cs" />
-    <Compile Include="Operations\Bool\IsEqualToOp{TStatement}Test.designer.cs">
-      <DependentUpon>IsEqualToOp{TStatement}Test.cs</DependentUpon>
     </Compile>
     <Compile Include="Operations\Cell\LocatedCellOpBase{TResult}Test.cs" />
     <Compile Include="Operations\Cell\LocatedCellOpBase{TResult}Test.designer.cs">
@@ -440,10 +425,6 @@
     <Compile Include="Events\CellOpExecution\CellOpExecutionClearedEventTest.cs" />
     <Compile Include="Events\CellOpExecution\CellOpExecutionClearedEventTest.designer.cs">
       <DependentUpon>CellOpExecutionClearedEventTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Operations\Integer\GetNumberOfSignificantDigitsOpTest.cs" />
-    <Compile Include="Operations\Integer\GetNumberOfSignificantDigitsOpTest.designer.cs">
-      <DependentUpon>GetNumberOfSignificantDigitsOpTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Classes\Format\Region\Regions\FooterRowsFormatTest.cs" />
     <Compile Include="Models\Classes\Format\Region\Regions\FooterRowsFormatTest.designer.cs">
@@ -652,30 +633,13 @@
     <Compile Include="Models\Classes\Cell\NotSlottedCellBaseTest.designer.cs">
       <DependentUpon>NotSlottedCellBaseTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Operations\Bool\AndAlsoOpTest.designer.cs">
-      <DependentUpon>AndAlsoOpTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Operations\Bool\CompareOpTest.cs" />
     <Compile Include="Events\CellValidationEventBaseTest.cs" />
-    <Compile Include="Operations\Bool\AndAlsoOpTest.cs" />
     <Compile Include="Events\CellOpExecution\CellOpExecutionAbortedEventTest.cs" />
     <Compile Include="Events\CellOpExecution\CellOpExecutionCompletedEvent{TResult}Test.cs" />
     <Compile Include="Events\CellOpExecutionEventBaseTest.cs" />
     <Compile Include="Events\CellOpExecution\CellOpExecutionFailedEventTest.cs" />
     <Compile Include="Models\Classes\Cell\Output\Const\ConstCell{TValue}Test.cs" />
     <Compile Include="Models\Classes\Cell\Output\Const\ConstOutputCellBase{TValue}Test.cs" />
-    <Compile Include="Operations\Bool\CompareOpTest.designer.cs">
-      <DependentUpon>CompareOpTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Operations\Bool\NotOpTest.designer.cs">
-      <DependentUpon>NotOpTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Operations\Bool\OrElseOpTest.designer.cs">
-      <DependentUpon>OrElseOpTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Operations\Branch\IfThenElseOp{TResult}Test.designer.cs">
-      <DependentUpon>IfThenElseOp{TResult}Test.cs</DependentUpon>
-    </Compile>
     <Compile Include="Operations\Cell\Referenced\ExecuteOperationCellIfNecessaryOp{TValue}Test.cs" />
     <Compile Include="Operations\Cell\Referenced\ExecuteOperationCellIfNecessaryOp{TValue}Test.designer.cs">
       <DependentUpon>ExecuteOperationCellIfNecessaryOp{TValue}Test.cs</DependentUpon>
@@ -683,11 +647,7 @@
     <Compile Include="Operations\Cell\Located\HasCellValueOpTest.designer.cs">
       <DependentUpon>HasCellValueOpTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Operations\Decimal\SumOpTest.designer.cs">
-      <DependentUpon>SumOpTest.cs</DependentUpon>
-    </Compile>
     <Compile Include="Operations\Cell\Located\HasCellValueOpTest.cs" />
-    <Compile Include="Operations\Branch\IfThenElseOp{TResult}Test.cs" />
     <Compile Include="Models\Classes\Cell\Input\InputCellBase{TValue}Test.cs" />
     <Compile Include="Models\Classes\Cell\Input\InputCell{TValue}Test.cs" />
     <Compile Include="Models\Classes\Format\CellValue\StandardCellValueFormatBase{TValue}Test.cs" />
@@ -705,10 +665,6 @@
     <Compile Include="Models\Classes\CellLocator\SelfCellLocatorTest.cs" />
     <Compile Include="Models\Classes\CellLocator\SelfCellLocatorTest.designer.cs">
       <DependentUpon>SelfCellLocatorTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Operations\TwoStatementOpBase{TStatement,TResult}Test.cs" />
-    <Compile Include="Operations\TwoStatementOpBase{TStatement,TResult}Test.designer.cs">
-      <DependentUpon>TwoStatementOpBase{TStatement,TResult}Test.cs</DependentUpon>
     </Compile>
     <Compile Include="Operations\Cell\Referenced\ValidateCellIfNecessaryOpTest.cs" />
     <Compile Include="Operations\Cell\Referenced\ValidateCellIfNecessaryOpTest.designer.cs">
@@ -760,20 +716,11 @@
     <Compile Include="Models\Classes\Row\RowTest.cs" />
     <Compile Include="Models\Classes\Row\TableRowsTest.cs" />
     <Compile Include="Models\Classes\Report\TreeTableTest.cs" />
-    <Compile Include="Operations\MultiStatementOpBase{TStatement,TResult}Test.cs" />
-    <Compile Include="Operations\Bool\NotOpTest.cs" />
     <Compile Include="Models\Classes\Cell\Null\NullCellBaseTest.cs" />
     <Compile Include="Models\Classes\Cell\Null\NullCellTest.cs" />
     <Compile Include="Models\Classes\Cell\Output\Operation\OperationCell{TValue}Test.cs" />
     <Compile Include="Models\Classes\Cell\Output\Operation\OperationOutputCellBase{TValue}Test.cs" />
-    <Compile Include="Operations\Bool\OrElseOpTest.cs" />
     <Compile Include="Models\Classes\Cell\Output\OutputCellBase{TValue}Test.cs" />
-    <Compile Include="Operations\MultiStatementOpBase{TStatement,TResult}Test.designer.cs">
-      <DependentUpon>MultiStatementOpBase{TStatement,TResult}Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Operations\SingleStatementOpBase{TStatement,TResult}Test.designer.cs">
-      <DependentUpon>SingleStatementOpBase{TStatement,TResult}Test.cs</DependentUpon>
-    </Compile>
     <Compile Include="Models\Classes\Format\CellValue\Number\PercentCellValueFormat{TValue}Test.cs" />
     <Compile Include="Models\Classes\Format\CellValue\Number\PercentCellValueFormat{TValue}Test.designer.cs">
       <DependentUpon>PercentCellValueFormat{TValue}Test.cs</DependentUpon>
@@ -782,9 +729,7 @@
     <Compile Include="Properties\GlobalSuppressions.cs" />
     <Compile Include="DataStructureDummyFactory.cs" />
     <Compile Include="DataStructureDummyFactoryTest.cs" />
-    <Compile Include="Operations\SingleStatementOpBase{TStatement,TResult}Test.cs" />
     <Compile Include="Models\Classes\Cell\Slotted\SlottedCellTest.cs" />
-    <Compile Include="Operations\Decimal\SumOpTest.cs" />
     <Compile Include="Models\Classes\CellLocator\StandardCellLocatorTest.cs" />
     <Compile Include="Models\Classes\CellLocator\StandardCellLocatorTest.designer.cs">
       <DependentUpon>StandardCellLocatorTest.cs</DependentUpon>

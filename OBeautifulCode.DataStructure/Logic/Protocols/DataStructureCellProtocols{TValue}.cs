@@ -7,14 +7,14 @@
 namespace OBeautifulCode.DataStructure
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Threading.Tasks;
-
     using OBeautifulCode.CodeAnalysis.Recipes;
+    using OBeautifulCode.CoreOperation;
     using OBeautifulCode.Type;
     using OBeautifulCode.Type.Recipes;
-
     using static System.FormattableString;
 
     /// <summary>
@@ -36,12 +36,10 @@ namespace OBeautifulCode.DataStructure
           ISyncAndAsyncReturningProtocol<GetAvailabilityOp, Availability>
     {
         private readonly ReportAgent reportAgent;
-
         private readonly IProtocolFactory protocolFactory;
-
         private readonly DateTime timestampUtc;
-
         private readonly Func<RecalcPhase> getRecalcPhaseFunc;
+        private readonly Stack<ICell> currentCellStack;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DataStructureCellProtocols{TValue}"/> class.
@@ -50,11 +48,13 @@ namespace OBeautifulCode.DataStructure
         /// <param name="protocolFactory">The protocol factory to use when executing an <see cref="IOperationOutputCell{TValue}"/>'s <see cref="IOperationOutputCell{TValue}.Operation"/>.</param>
         /// <param name="timestampUtc">The timestamp (in UTC) to use when recording a <see cref="CellOpExecutionEventBase"/> with an <see cref="IOperationOutputCell{TValue}"/>.</param>
         /// <param name="getRecalcPhaseFunc">Func that gets the <see cref="RecalcPhase"/>.</param>
+        /// <param name="currentCellStack">Gets a stack of cells that are the "current" cell.</param>
         public DataStructureCellProtocols(
             ReportAgent reportAgent,
             IProtocolFactory protocolFactory,
             DateTime timestampUtc,
-            Func<RecalcPhase> getRecalcPhaseFunc)
+            Func<RecalcPhase> getRecalcPhaseFunc,
+            Stack<ICell> currentCellStack)
         {
             if (reportAgent == null)
             {
@@ -81,6 +81,7 @@ namespace OBeautifulCode.DataStructure
             this.protocolFactory = protocolFactory;
             this.timestampUtc = timestampUtc;
             this.getRecalcPhaseFunc = getRecalcPhaseFunc;
+            this.currentCellStack = currentCellStack;
         }
 
         /// <inheritdoc />
@@ -175,13 +176,13 @@ namespace OBeautifulCode.DataStructure
 
             try
             {
-                DataStructureCellProtocols.CurrentCellStack.Push(cell);
+                this.currentCellStack.Push(cell);
 
                 this.ExecuteOperationCellIfNecessary(cell);
             }
             finally
             {
-                var poppedCell = DataStructureCellProtocols.CurrentCellStack.Pop();
+                var poppedCell = this.currentCellStack.Pop();
 
                 DataStructureCellProtocols.ThrowIfUnexpectedCellPoppedOffCurrentCellStack(cell, poppedCell);
             }
@@ -201,13 +202,13 @@ namespace OBeautifulCode.DataStructure
 
             try
             {
-                DataStructureCellProtocols.CurrentCellStack.Push(cell);
+                this.currentCellStack.Push(cell);
 
                 await this.ExecuteOperationCellIfNecessaryAsync(cell);
             }
             finally
             {
-                var poppedCell = DataStructureCellProtocols.CurrentCellStack.Pop();
+                var poppedCell = this.currentCellStack.Pop();
 
                 DataStructureCellProtocols.ThrowIfUnexpectedCellPoppedOffCurrentCellStack(cell, poppedCell);
             }
@@ -227,13 +228,13 @@ namespace OBeautifulCode.DataStructure
 
             try
             {
-                DataStructureCellProtocols.CurrentCellStack.Push(cell);
+                this.currentCellStack.Push(cell);
 
                 this.ValidateCellIfNecessary(cell);
             }
             finally
             {
-                var poppedCell = DataStructureCellProtocols.CurrentCellStack.Pop();
+                var poppedCell = this.currentCellStack.Pop();
 
                 DataStructureCellProtocols.ThrowIfUnexpectedCellPoppedOffCurrentCellStack(cell, poppedCell);
             }
@@ -253,13 +254,13 @@ namespace OBeautifulCode.DataStructure
 
             try
             {
-                DataStructureCellProtocols.CurrentCellStack.Push(cell);
+                this.currentCellStack.Push(cell);
 
                 await this.ValidateCellIfNecessaryAsync(cell);
             }
             finally
             {
-                var poppedCell = DataStructureCellProtocols.CurrentCellStack.Pop();
+                var poppedCell = this.currentCellStack.Pop();
 
                 DataStructureCellProtocols.ThrowIfUnexpectedCellPoppedOffCurrentCellStack(cell, poppedCell);
             }
@@ -279,13 +280,13 @@ namespace OBeautifulCode.DataStructure
 
             try
             {
-                DataStructureCellProtocols.CurrentCellStack.Push(cell);
+                this.currentCellStack.Push(cell);
 
                 this.CheckAvailabilityOfCellIfNecessary(cell);
             }
             finally
             {
-                var poppedCell = DataStructureCellProtocols.CurrentCellStack.Pop();
+                var poppedCell = this.currentCellStack.Pop();
 
                 DataStructureCellProtocols.ThrowIfUnexpectedCellPoppedOffCurrentCellStack(cell, poppedCell);
             }
@@ -305,13 +306,13 @@ namespace OBeautifulCode.DataStructure
 
             try
             {
-                DataStructureCellProtocols.CurrentCellStack.Push(cell);
+                this.currentCellStack.Push(cell);
 
                 await this.CheckAvailabilityOfCellIfNecessaryAsync(cell);
             }
             finally
             {
-                var poppedCell = DataStructureCellProtocols.CurrentCellStack.Pop();
+                var poppedCell = this.currentCellStack.Pop();
 
                 DataStructureCellProtocols.ThrowIfUnexpectedCellPoppedOffCurrentCellStack(cell, poppedCell);
             }
@@ -1070,13 +1071,13 @@ namespace OBeautifulCode.DataStructure
             }
             else if (cellLocator is InSectionCellLocator sectionCellLocator)
             {
-                var currentCell = DataStructureCellProtocols.CurrentCellStack.Peek();
+                var currentCell = this.currentCellStack.Peek();
 
                 result = this.reportAgent.GetCell(sectionCellLocator, currentCell);
             }
             else if (cellLocator is SelfCellLocator)
             {
-                result = DataStructureCellProtocols.CurrentCellStack.Peek();
+                result = this.currentCellStack.Peek();
             }
             else
             {

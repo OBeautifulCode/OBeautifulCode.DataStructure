@@ -14,6 +14,7 @@ namespace OBeautifulCode.DataStructure.Test
     using MathNet.Numerics.Statistics;
     using OBeautifulCode.Assertion.Recipes;
     using OBeautifulCode.AutoFakeItEasy;
+    using OBeautifulCode.CoreOperation;
     using OBeautifulCode.Math.Recipes;
     using OBeautifulCode.Type;
     using OBeautifulCode.Type.Recipes;

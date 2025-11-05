@@ -9,7 +9,7 @@ namespace OBeautifulCode.DataStructure.Serialization.Json
     using System;
     using System.Collections.Generic;
     using System.Linq;
-
+    using OBeautifulCode.CoreOperation.Serialization.Json;
     using OBeautifulCode.Serialization.Json;
     using OBeautifulCode.Type;
     using OBeautifulCode.Type.Recipes;
@@ -28,6 +28,7 @@ namespace OBeautifulCode.DataStructure.Serialization.Json
         protected override IReadOnlyCollection<JsonSerializationConfigurationType> DependentJsonSerializationConfigurationTypes =>
             new JsonSerializationConfigurationType[]
             {
+                typeof(CoreOperationJsonSerializationConfiguration).ToJsonSerializationConfigurationType(),
             };
 
         /// <inheritdoc />

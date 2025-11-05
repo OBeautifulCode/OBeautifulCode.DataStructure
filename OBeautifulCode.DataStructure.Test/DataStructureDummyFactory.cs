@@ -17,6 +17,7 @@ namespace OBeautifulCode.DataStructure.Test
     using FakeItEasy;
 
     using OBeautifulCode.AutoFakeItEasy;
+    using OBeautifulCode.CoreOperation;
     using OBeautifulCode.Math.Recipes;
     using OBeautifulCode.Type;
 
@@ -43,7 +44,6 @@ namespace OBeautifulCode.DataStructure.Test
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(BytesPayloadLinkedResourceKind.Unknown);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(CellOpExecutionOutcome.Unknown);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(CellOpExecutionStatus.Unknown);
-            AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(CompareOperator.Unknown);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(DownloadKind.Unknown);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(FillPatternStyle.Unknown);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(HorizontalAlignment.Unknown);
@@ -80,15 +80,11 @@ namespace OBeautifulCode.DataStructure.Test
             AutoFixtureBackedDummyFactory.AddDummyCreator<ICellValueFormat>(A.Dummy<BooleanCellValueFormat>);
 
             // <------------------- OPERATIONS ------------------------>
-            RegisterReturningOperation<bool>();
-            RegisterReturningOperation<decimal>();
-            RegisterReturningOperation<string>();
             RegisterReturningOperation<ValidationResult>();
             RegisterReturningOperation<AvailabilityCheckResult>();
             RegisterReturningOperation<Availability>();
             RegisterReturningOperation<Validity>();
             RegisterReturningOperation<ICellLocator>();
-            RegisterReturningOperation<CompareOperator>();
             RegisterReturningOperation<ValidationBoolWithMessage>();
 
             // <------------------- MODELS ------------------------>

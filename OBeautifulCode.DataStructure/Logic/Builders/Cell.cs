@@ -7,7 +7,7 @@
 namespace OBeautifulCode.DataStructure
 {
     using System.Collections.Generic;
-
+    using OBeautifulCode.CoreOperation;
     using OBeautifulCode.Type;
 
     /// <summary>

@@ -14,6 +14,7 @@ namespace OBeautifulCode.DataStructure
     using System.Reflection;
     using System.Threading.Tasks;
     using OBeautifulCode.CodeAnalysis.Recipes;
+    using OBeautifulCode.CoreOperation;
     using OBeautifulCode.Equality.Recipes;
     using OBeautifulCode.Execution.Recipes;
     using OBeautifulCode.Type;
@@ -73,7 +74,6 @@ namespace OBeautifulCode.DataStructure
             typeof(float?),
             typeof(double?),
             typeof(decimal?),
-            typeof(string),
             typeof(bool?),
             typeof(DateTime?),
             typeof(Guid?),
@@ -88,7 +88,6 @@ namespace OBeautifulCode.DataStructure
             typeof(IReadOnlyList<NamedValue<float?>>),
             typeof(IReadOnlyList<NamedValue<double?>>),
             typeof(IReadOnlyList<NamedValue<decimal?>>),
-            typeof(IReadOnlyList<NamedValue<string>>),
             typeof(IReadOnlyList<NamedValue<bool?>>),
             typeof(IReadOnlyList<NamedValue<DateTime?>>),
             typeof(IReadOnlyList<NamedValue<Guid?>>),
@@ -110,7 +109,7 @@ namespace OBeautifulCode.DataStructure
         private static readonly ConcurrentDictionary<Type, ConstructorInfo> CachedTypeToCellProtocolsConstructorInfoMap =
             new ConcurrentDictionary<Type, ConstructorInfo>();
 
-        private static readonly ConcurrentDictionary<Type, ConstructorInfo> CachedTypeToConvenienceProtocolsConstructorInfoMap =
+        private static readonly ConcurrentDictionary<Type, ConstructorInfo> CachedTypeToCoreCompositeOperationProtocolsConstructorInfoMap =
             new ConcurrentDictionary<Type, ConstructorInfo>();
 
         private static readonly Synchronizer RecalcSynchronizer = new Synchronizer();
@@ -569,7 +568,10 @@ namespace OBeautifulCode.DataStructure
                 throw new ArgumentException(Invariant($"{nameof(timestampUtc)} is not in UTC."));
             }
 
-            await RecalcSynchronizer.RunAsync(() => this.ReCalcInternalAsync(timestampUtc, protocolFactoryFuncs, additionalTypesForCoreCellOps));
+            await RecalcSynchronizer.RunAsync(() => this.ReCalcInternalAsync(
+                timestampUtc,
+                protocolFactoryFuncs,
+                additionalTypesForCoreCellOps));
         }
 
         /// <summary>
@@ -734,7 +736,8 @@ namespace OBeautifulCode.DataStructure
             ConcurrentDictionary<Type, ConstructorInfo> typeToConstructorInfoCache,
             ProtocolFactory protocolFactory,
             Func<Type, ConstructorInfo> getConstructorInfoFunc,
-            object[] constructorInfoParamsToInvoke)
+            object[] constructorInfoParamsToInvoke,
+            ProtocolAlreadyRegisteredForOperationStrategy protocolAlreadyRegisteredForOperationStrategy)
         {
             if (!typeToConstructorInfoCache.TryGetValue(typeForCoreCellOps, out var constructorInfo))
             {
@@ -745,7 +748,7 @@ namespace OBeautifulCode.DataStructure
 
             var protocol = (IProtocol)constructorInfo.Invoke(constructorInfoParamsToInvoke);
 
-            protocolFactory.RegisterProtocolForSupportedOperations(protocol.GetType(), () => protocol, ProtocolAlreadyRegisteredForOperationStrategy.Skip);
+            protocolFactory.RegisterProtocolForSupportedOperations(protocol.GetType(), () => protocol, protocolAlreadyRegisteredForOperationStrategy);
         }
 
         private void ReCalcInternal(
@@ -759,7 +762,11 @@ namespace OBeautifulCode.DataStructure
             // ReSharper disable once AccessToModifiedClosure
             RecalcPhase GetRecalcPhaseFunc() => recalcPhase;
 
-            var protocolFactory = this.BuildProtocolFactoryToExecuteAllOperations(timestampUtc, protocolFactoryFuncs, additionalTypesForCoreCellOps, GetRecalcPhaseFunc);
+            var protocolFactory = this.BuildProtocolFactoryToExecuteAllOperations(
+                timestampUtc,
+                protocolFactoryFuncs,
+                additionalTypesForCoreCellOps,
+                GetRecalcPhaseFunc);
 
             this.ClearCells(timestampUtc);
 
@@ -807,7 +814,11 @@ namespace OBeautifulCode.DataStructure
             // ReSharper disable once AccessToModifiedClosure
             RecalcPhase GetRecalcPhaseFunc() => recalcPhase;
 
-            var protocolFactory = this.BuildProtocolFactoryToExecuteAllOperations(timestampUtc, protocolFactoryFuncs, additionalTypesForCoreCellOps, GetRecalcPhaseFunc);
+            var protocolFactory = this.BuildProtocolFactoryToExecuteAllOperations(
+                timestampUtc,
+                protocolFactoryFuncs,
+                additionalTypesForCoreCellOps,
+                GetRecalcPhaseFunc);
 
             this.ClearCells(timestampUtc);
 
@@ -840,7 +851,10 @@ namespace OBeautifulCode.DataStructure
 
             if (this.PrepareToRerunRecalc(timestampUtc))
             {
-                await this.ReCalcInternalAsync(timestampUtc, protocolFactoryFuncs, additionalTypesForCoreCellOps);
+                await this.ReCalcInternalAsync(
+                    timestampUtc,
+                    protocolFactoryFuncs,
+                    additionalTypesForCoreCellOps);
             }
         }
 
@@ -879,21 +893,50 @@ namespace OBeautifulCode.DataStructure
 
             var coreProtocolsFactory = new ProtocolFactory();
 
+            var coreCompositeOperationProtocols = new CoreCompositeOperationProtocols(result);
+            coreProtocolsFactory.RegisterProtocolForSupportedOperations(
+                coreCompositeOperationProtocols.GetType(),
+                () => coreCompositeOperationProtocols);
+
+            var convenienceProtocols = new DataStructureConvenienceProtocols(result);
+            coreProtocolsFactory.RegisterProtocolForSupportedOperations(
+                convenienceProtocols.GetType(),
+                () => convenienceProtocols);
+
             ConstructorInfo GetConstValueProtocolFunc(Type type) => typeof(GetConstValueProtocol<>).MakeGenericType(type).GetConstructors().Single();
             ConstructorInfo GetCellProtocolsFunc(Type type) => typeof(DataStructureCellProtocols<>).MakeGenericType(type).GetConstructors().Single();
-            ConstructorInfo GetConvenienceProtocolsFunc(Type type) => typeof(DataStructureConvenienceProtocols<>).MakeGenericType(type).GetConstructors().Single();
+            ConstructorInfo GetCoreCompositeOperationProtocolsFunc(Type type) => typeof(CoreCompositeOperationProtocols<>).MakeGenericType(type).GetConstructors().Single();
 
+            var currentCellStack = new Stack<ICell>();
             var getConstValueProtocolConstructorInfoParams = new object[] { };
-            var cellProtocolsConstructorInfoParams = new object[] { this, result, timestampUtc, getRecalcPhaseFunc };
-            var convenienceProtocolsConstructorInfoParams = new object[] { result };
+            var cellProtocolsConstructorInfoParams = new object[] { this, result, timestampUtc, getRecalcPhaseFunc, currentCellStack };
+            var coreCompositeOperationProtocolsConstructorInfoParams = new object[] { result };
 
             foreach (var typeForCoreCellOps in typesForCoreCellOps)
             {
-                RegisterProtocols(typeForCoreCellOps, CachedTypeToGetConstValueProtocolConstructorInfoMap, coreProtocolsFactory, GetConstValueProtocolFunc, getConstValueProtocolConstructorInfoParams);
+                RegisterProtocols(
+                    typeForCoreCellOps,
+                    CachedTypeToGetConstValueProtocolConstructorInfoMap,
+                    coreProtocolsFactory,
+                    GetConstValueProtocolFunc,
+                    getConstValueProtocolConstructorInfoParams,
+                    ProtocolAlreadyRegisteredForOperationStrategy.Throw);
 
-                RegisterProtocols(typeForCoreCellOps, CachedTypeToCellProtocolsConstructorInfoMap, coreProtocolsFactory, GetCellProtocolsFunc, cellProtocolsConstructorInfoParams);
+                RegisterProtocols(
+                    typeForCoreCellOps,
+                    CachedTypeToCellProtocolsConstructorInfoMap,
+                    coreProtocolsFactory,
+                    GetCellProtocolsFunc,
+                    cellProtocolsConstructorInfoParams,
+                    ProtocolAlreadyRegisteredForOperationStrategy.Skip);
 
-                RegisterProtocols(typeForCoreCellOps, CachedTypeToConvenienceProtocolsConstructorInfoMap, coreProtocolsFactory, GetConvenienceProtocolsFunc, convenienceProtocolsConstructorInfoParams);
+                RegisterProtocols(
+                    typeForCoreCellOps,
+                    CachedTypeToCoreCompositeOperationProtocolsConstructorInfoMap,
+                    coreProtocolsFactory,
+                    GetCoreCompositeOperationProtocolsFunc,
+                    coreCompositeOperationProtocolsConstructorInfoParams,
+                    ProtocolAlreadyRegisteredForOperationStrategy.Throw);
             }
 
             result.AddToEndOfChain(coreProtocolsFactory);

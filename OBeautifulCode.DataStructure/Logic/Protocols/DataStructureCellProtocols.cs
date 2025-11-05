@@ -8,13 +8,10 @@ namespace OBeautifulCode.DataStructure
 {
     using System;
     using System.Collections.Concurrent;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
-
     using OBeautifulCode.Type;
     using OBeautifulCode.Type.Recipes;
-
     using static System.FormattableString;
 
     /// <summary>
@@ -25,16 +22,11 @@ namespace OBeautifulCode.DataStructure
         /// <summary>
         /// Cache of the constructor info to use to build an <see cref="ExecuteOperationCellIfNecessaryOp{TValue}"/>.
         /// </summary>
-        public static readonly ConcurrentDictionary<Type, ConstructorInfo> CachedTypeToExecuteOperationCellIfNecessaryOpConstructorInfoMap =
+        private static readonly ConcurrentDictionary<Type, ConstructorInfo> CachedTypeToExecuteOperationCellIfNecessaryOpConstructorInfoMap =
             new ConcurrentDictionary<Type, ConstructorInfo>();
 
         /// <summary>
-        /// Gets a stack of cells that are the "current" cell.
-        /// </summary>
-        public static readonly Stack<ICell> CurrentCellStack = new Stack<ICell>();
-
-        /// <summary>
-        /// Throws an exception if the cell popped off <see cref="CurrentCellStack"/> is unexpected.
+        /// Throws an exception if the cell popped off stack is unexpected.
         /// </summary>
         /// <param name="expectedCell">The expected cell.</param>
         /// <param name="actualCell">The actual cell.</param>

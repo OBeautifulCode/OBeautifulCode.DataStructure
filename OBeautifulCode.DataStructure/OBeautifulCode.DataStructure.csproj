@@ -39,8 +39,11 @@
     <CodeAnalysisRuleSet />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="OBeautifulCode.Type, Version=1.0.153.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OBeautifulCode.Type.1.0.153\lib\net462\OBeautifulCode.Type.dll</HintPath>
+    <Reference Include="OBeautifulCode.CoreOperation, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.CoreOperation.1.0.3\lib\net462\OBeautifulCode.CoreOperation.dll</HintPath>
+    </Reference>
+    <Reference Include="OBeautifulCode.Type, Version=1.0.154.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Type.1.0.154\lib\net462\OBeautifulCode.Type.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
@@ -217,7 +220,7 @@
     <Compile Include="Interfaces\Classification\Cell\Input\IInputCell{TValue}.cs" />
     <Compile Include="Interfaces\Classification\Resource\ILinkedResource.cs" />
     <Compile Include="Interfaces\Classification\CellValue\IMedia.cs" />
-    <Compile Include="Logic\Builders\Op.cs" />
+    <Compile Include="Logic\Extensions\StepExtensions.cs" />
     <Compile Include="Logic\Builders\Cell.cs" />
     <Compile Include="Logic\Builders\ReportAgent.cs" />
     <Compile Include="Logic\Constants\DefaultIds.cs" />
@@ -228,7 +231,7 @@
     <Compile Include="Logic\Extensions\TableRowsExtensions.cs" />
     <Compile Include="Logic\Extensions\TreeTableExtensions.cs" />
     <Compile Include="Logic\Protocols\DataStructureCellProtocols.cs" />
-    <Compile Include="Logic\Protocols\DataStructureConvenienceProtocols{TResult}.cs" />
+    <Compile Include="Logic\Protocols\DataStructureConvenienceProtocols.cs" />
     <Compile Include="Logic\Protocols\DataStructureCellProtocols{TValue}.cs" />
     <Compile Include="Models\Classes\AvailabilityCheck\AvailabilityCheck.cs" />
     <Compile Include="Models\Classes\AvailabilityCheck\AvailabilityCheck.designer.cs">
@@ -619,25 +622,6 @@
     <Compile Include="Operations\AvailabilityCheckResult\CheckAvailabilityOp.designer.cs">
       <DependentUpon>CheckAvailabilityOp.cs</DependentUpon>
     </Compile>
-    <Compile Include="Operations\Bool\AndAlsoOp.designer.cs">
-      <DependentUpon>AndAlsoOp.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Operations\Bool\CompareOp.designer.cs">
-      <DependentUpon>CompareOp.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Operations\Bool\IsEqualToOp{TStatement}.cs" />
-    <Compile Include="Operations\Bool\IsEqualToOp{TStatement}.designer.cs">
-      <DependentUpon>IsEqualToOp{TStatement}.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Operations\Bool\NotOp.designer.cs">
-      <DependentUpon>NotOp.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Operations\Bool\OrElseOp.designer.cs">
-      <DependentUpon>OrElseOp.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Operations\Branch\IfThenElseOp{TResult}.designer.cs">
-      <DependentUpon>IfThenElseOp{TResult}.cs</DependentUpon>
-    </Compile>
     <Compile Include="Operations\Cell\LocatedCellOpBase{TResult}.cs" />
     <Compile Include="Operations\Cell\LocatedCellOpBase{TResult}.designer.cs">
       <DependentUpon>LocatedCellOpBase{TResult}.cs</DependentUpon>
@@ -670,41 +654,7 @@
     <Compile Include="Operations\Cell\Referenced\ValidateCellIfNecessaryOp.designer.cs">
       <DependentUpon>ValidateCellIfNecessaryOp.cs</DependentUpon>
     </Compile>
-    <Compile Include="Operations\Decimal\DivideOp.cs" />
-    <Compile Include="Operations\Decimal\DivideOp.designer.cs">
-      <DependentUpon>DivideOp.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Operations\Decimal\SumOp.designer.cs">
-      <DependentUpon>SumOp.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Operations\Integer\GetNumberOfSignificantDigitsOp.cs" />
-    <Compile Include="Operations\Integer\GetNumberOfSignificantDigitsOp.designer.cs">
-      <DependentUpon>GetNumberOfSignificantDigitsOp.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Operations\MultiStatementOpBase{TStatement,TResult}.designer.cs">
-      <DependentUpon>MultiStatementOpBase{TStatement,TResult}.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Operations\Null\NullMultiStatementOp{TStatement,TResult}.cs" />
-    <Compile Include="Operations\Null\NullMultiStatementOp{TStatement,TResult}.designer.cs">
-      <DependentUpon>NullMultiStatementOp{TStatement,TResult}.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Operations\Null\NullSingleStatementOp{TStatement,TResult}.cs" />
-    <Compile Include="Operations\Null\NullSingleStatementOp{TStatement,TResult}.designer.cs">
-      <DependentUpon>NullSingleStatementOp{TStatement,TResult}.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Operations\Null\NullTwoStatementOp{TStatement,TResult}.cs" />
-    <Compile Include="Operations\Null\NullTwoStatementOp{TStatement,TResult}.designer.cs">
-      <DependentUpon>NullTwoStatementOp{TStatement,TResult}.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Operations\TwoStatementOpBase{TStatement,TResult}.cs" />
-    <Compile Include="Operations\SingleStatementOpBase{TStatement,TResult}.designer.cs">
-      <DependentUpon>SingleStatementOpBase{TStatement,TResult}.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Operations\TwoStatementOpBase{TStatement,TResult}.designer.cs">
-      <DependentUpon>TwoStatementOpBase{TStatement,TResult}.cs</DependentUpon>
-    </Compile>
     <Compile Include="Operations\ValidationResult\ValidateOp.cs" />
-    <Compile Include="Models\Enums\Operations\CompareOperator.cs" />
     <Compile Include="Models\Enums\Formatting\FontFormatOptions.cs" />
     <Compile Include="Models\Enums\Linking\BytesPayloadLinkedResourceKind.cs" />
     <Compile Include="Models\Enums\Linking\StringPayloadLinkedResourceKind.cs" />
@@ -727,16 +677,8 @@
     <Compile Include="Models\Classes\HoverOver\HtmlHoverOver.cs" />
     <Compile Include="Models\Classes\HoverOver\StringHoverOver.cs" />
     <Compile Include="Models\Enums\CellLocator\SlotSelectionStrategy.cs" />
-    <Compile Include="Operations\Bool\CompareOp.cs" />
-    <Compile Include="Operations\Bool\AndAlsoOp.cs" />
-    <Compile Include="Operations\Bool\OrElseOp.cs" />
-    <Compile Include="Operations\Bool\NotOp.cs" />
     <Compile Include="Operations\Cell\Referenced\ValidateCellIfNecessaryOp.cs" />
-    <Compile Include="Operations\Decimal\SumOp.cs" />
-    <Compile Include="Operations\SingleStatementOpBase{TStatement,TResult}.cs" />
-    <Compile Include="Operations\MultiStatementOpBase{TStatement,TResult}.cs" />
     <Compile Include="Operations\Cell\Referenced\ExecuteOperationCellIfNecessaryOp{TValue}.cs" />
-    <Compile Include="Operations\Branch\IfThenElseOp{TResult}.cs" />
     <Compile Include="Operations\Cell\Located\HasCellValueOp.cs" />
     <Compile Include="Operations\Cell\Located\GetCellValueOp{TResult}.cs" />
     <Compile Include="Operations\ValidationResult\ValidateOp.designer.cs">

@@ -8,6 +8,6 @@ namespace OBeautifulCode.DataStructure.Test
 {
     public static class DataStructureCellProtocolsTest
     {
-        // NOTE: we test many of these methods indirectly in ReportExtensionsTest.
+        // NOTE: we test many of these methods indirectly in ReportAgentTest.
     }
 }

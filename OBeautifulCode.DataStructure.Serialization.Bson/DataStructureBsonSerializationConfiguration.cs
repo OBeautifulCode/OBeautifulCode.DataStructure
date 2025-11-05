@@ -9,7 +9,7 @@ namespace OBeautifulCode.DataStructure.Serialization.Bson
     using System;
     using System.Collections.Generic;
     using System.Linq;
-
+    using OBeautifulCode.CoreOperation.Serialization.Bson;
     using OBeautifulCode.Serialization.Bson;
     using OBeautifulCode.Type;
     using OBeautifulCode.Type.Recipes;
@@ -28,6 +28,7 @@ namespace OBeautifulCode.DataStructure.Serialization.Bson
         protected override IReadOnlyCollection<BsonSerializationConfigurationType> DependentBsonSerializationConfigurationTypes =>
             new BsonSerializationConfigurationType[]
             {
+                typeof(CoreOperationBsonSerializationConfiguration).ToBsonSerializationConfigurationType(),
             };
 
         /// <inheritdoc />
