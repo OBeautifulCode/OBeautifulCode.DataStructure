@@ -48,7 +48,7 @@ namespace OBeautifulCode.DataStructure.Test
                         var result = new SystemUnderTestExpectedStringRepresentation<AdditionalReportInfo>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.AdditionalReportInfo: Copyright = {systemUnderTest.Copyright?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, TermsOfUse = {systemUnderTest.TermsOfUse?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Version = {systemUnderTest.Version?.ToString() ?? "<null>"}, Details = {systemUnderTest.Details?.ToString() ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.DataStructure.AdditionalReportInfo: Copyright = {systemUnderTest.Copyright?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, TermsOfUse = {systemUnderTest.TermsOfUse?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Version = {systemUnderTest.Version?.ToString() ?? "<null>"}, HelpUrl = {systemUnderTest.HelpUrl?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Details = {systemUnderTest.Details?.ToString() ?? "<null>"}."),
                         };
 
                         return result;
@@ -68,6 +68,7 @@ namespace OBeautifulCode.DataStructure.Test
                                              referenceObject.Copyright,
                                              referenceObject.TermsOfUse,
                                              referenceObject.Version,
+                                             referenceObject.HelpUrl,
                                              new IDetails[0].Concat(referenceObject.Details).Concat(new IDetails[] { null }).Concat(referenceObject.Details).ToList());
 
                         return result;
@@ -91,6 +92,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Copyright,
                                                       referenceObject.TermsOfUse,
                                                       referenceObject.Version,
+                                                      referenceObject.HelpUrl,
                                                       referenceObject.Details),
                             ExpectedPropertyValue = referenceObject.Copyright,
                         };
@@ -113,6 +115,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Copyright,
                                                       referenceObject.TermsOfUse,
                                                       referenceObject.Version,
+                                                      referenceObject.HelpUrl,
                                                       referenceObject.Details),
                             ExpectedPropertyValue = referenceObject.TermsOfUse,
                         };
@@ -135,6 +138,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Copyright,
                                                       referenceObject.TermsOfUse,
                                                       referenceObject.Version,
+                                                      referenceObject.HelpUrl,
                                                       referenceObject.Details),
                             ExpectedPropertyValue = referenceObject.Version,
                         };
@@ -142,6 +146,29 @@ namespace OBeautifulCode.DataStructure.Test
                         return result;
                     },
                     PropertyName = "Version",
+                })
+            .AddScenario(() =>
+                new ConstructorPropertyAssignmentTestScenario<AdditionalReportInfo>
+                {
+                    Name = "HelpUrl should return same 'helpUrl' parameter passed to constructor when getting",
+                    SystemUnderTestExpectedPropertyValueFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<AdditionalReportInfo>();
+
+                        var result = new SystemUnderTestExpectedPropertyValue<AdditionalReportInfo>
+                        {
+                            SystemUnderTest = new AdditionalReportInfo(
+                                                      referenceObject.Copyright,
+                                                      referenceObject.TermsOfUse,
+                                                      referenceObject.Version,
+                                                      referenceObject.HelpUrl,
+                                                      referenceObject.Details),
+                            ExpectedPropertyValue = referenceObject.HelpUrl,
+                        };
+
+                        return result;
+                    },
+                    PropertyName = "HelpUrl",
                 })
             .AddScenario(() =>
                 new ConstructorPropertyAssignmentTestScenario<AdditionalReportInfo>
@@ -157,6 +184,7 @@ namespace OBeautifulCode.DataStructure.Test
                                                       referenceObject.Copyright,
                                                       referenceObject.TermsOfUse,
                                                       referenceObject.Version,
+                                                      referenceObject.HelpUrl,
                                                       referenceObject.Details),
                             ExpectedPropertyValue = referenceObject.Details,
                         };
@@ -230,6 +258,26 @@ namespace OBeautifulCode.DataStructure.Test
             .AddScenario(() =>
                 new DeepCloneWithTestScenario<AdditionalReportInfo>
                 {
+                    Name = "DeepCloneWithHelpUrl should deep clone object and replace HelpUrl with the provided helpUrl",
+                    WithPropertyName = "HelpUrl",
+                    SystemUnderTestDeepCloneWithValueFunc = () =>
+                    {
+                        var systemUnderTest = A.Dummy<AdditionalReportInfo>();
+
+                        var referenceObject = A.Dummy<AdditionalReportInfo>().ThatIs(_ => !systemUnderTest.HelpUrl.IsEqualTo(_.HelpUrl));
+
+                        var result = new SystemUnderTestDeepCloneWithValue<AdditionalReportInfo>
+                        {
+                            SystemUnderTest = systemUnderTest,
+                            DeepCloneWithValue = referenceObject.HelpUrl,
+                        };
+
+                        return result;
+                    },
+                })
+            .AddScenario(() =>
+                new DeepCloneWithTestScenario<AdditionalReportInfo>
+                {
                     Name = "DeepCloneWithDetails should deep clone object and replace Details with the provided details",
                     WithPropertyName = "Details",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
@@ -262,6 +310,7 @@ namespace OBeautifulCode.DataStructure.Test
                                 ReferenceObjectForEquatableTestScenarios.Copyright,
                                 ReferenceObjectForEquatableTestScenarios.TermsOfUse,
                                 ReferenceObjectForEquatableTestScenarios.Version,
+                                ReferenceObjectForEquatableTestScenarios.HelpUrl,
                                 ReferenceObjectForEquatableTestScenarios.Details),
                     },
                     ObjectsThatAreNotEqualToReferenceObject = new AdditionalReportInfo[]
@@ -270,21 +319,31 @@ namespace OBeautifulCode.DataStructure.Test
                                 A.Dummy<AdditionalReportInfo>().Whose(_ => !_.Copyright.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Copyright)).Copyright,
                                 ReferenceObjectForEquatableTestScenarios.TermsOfUse,
                                 ReferenceObjectForEquatableTestScenarios.Version,
+                                ReferenceObjectForEquatableTestScenarios.HelpUrl,
                                 ReferenceObjectForEquatableTestScenarios.Details),
                         new AdditionalReportInfo(
                                 ReferenceObjectForEquatableTestScenarios.Copyright,
                                 A.Dummy<AdditionalReportInfo>().Whose(_ => !_.TermsOfUse.IsEqualTo(ReferenceObjectForEquatableTestScenarios.TermsOfUse)).TermsOfUse,
                                 ReferenceObjectForEquatableTestScenarios.Version,
+                                ReferenceObjectForEquatableTestScenarios.HelpUrl,
                                 ReferenceObjectForEquatableTestScenarios.Details),
                         new AdditionalReportInfo(
                                 ReferenceObjectForEquatableTestScenarios.Copyright,
                                 ReferenceObjectForEquatableTestScenarios.TermsOfUse,
                                 A.Dummy<AdditionalReportInfo>().Whose(_ => !_.Version.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Version)).Version,
+                                ReferenceObjectForEquatableTestScenarios.HelpUrl,
                                 ReferenceObjectForEquatableTestScenarios.Details),
                         new AdditionalReportInfo(
                                 ReferenceObjectForEquatableTestScenarios.Copyright,
                                 ReferenceObjectForEquatableTestScenarios.TermsOfUse,
                                 ReferenceObjectForEquatableTestScenarios.Version,
+                                A.Dummy<AdditionalReportInfo>().Whose(_ => !_.HelpUrl.IsEqualTo(ReferenceObjectForEquatableTestScenarios.HelpUrl)).HelpUrl,
+                                ReferenceObjectForEquatableTestScenarios.Details),
+                        new AdditionalReportInfo(
+                                ReferenceObjectForEquatableTestScenarios.Copyright,
+                                ReferenceObjectForEquatableTestScenarios.TermsOfUse,
+                                ReferenceObjectForEquatableTestScenarios.Version,
+                                ReferenceObjectForEquatableTestScenarios.HelpUrl,
                                 A.Dummy<AdditionalReportInfo>().Whose(_ => !_.Details.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Details)).Details),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
@@ -616,7 +675,7 @@ namespace OBeautifulCode.DataStructure.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "Copyright", "TermsOfUse", "Version", "Details" };
+                var propertyNames = new string[] { "Copyright", "TermsOfUse", "Version", "HelpUrl", "Details" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 

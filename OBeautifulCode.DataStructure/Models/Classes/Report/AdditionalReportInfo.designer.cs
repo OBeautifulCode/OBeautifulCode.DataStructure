@@ -72,6 +72,7 @@ namespace OBeautifulCode.DataStructure
             var result = this.Copyright.IsEqualTo(other.Copyright, StringComparer.Ordinal)
                       && this.TermsOfUse.IsEqualTo(other.TermsOfUse, StringComparer.Ordinal)
                       && this.Version.IsEqualTo(other.Version)
+                      && this.HelpUrl.IsEqualTo(other.HelpUrl, StringComparer.Ordinal)
                       && this.Details.IsEqualTo(other.Details);
 
             return result;
@@ -85,6 +86,7 @@ namespace OBeautifulCode.DataStructure
             .Hash(this.Copyright)
             .Hash(this.TermsOfUse)
             .Hash(this.Version)
+            .Hash(this.HelpUrl)
             .Hash(this.Details)
             .Value;
 
@@ -98,6 +100,7 @@ namespace OBeautifulCode.DataStructure
                                  this.Copyright?.DeepClone(),
                                  this.TermsOfUse?.DeepClone(),
                                  this.Version?.DeepClone(),
+                                 this.HelpUrl?.DeepClone(),
                                  this.Details?.DeepClone());
 
             return result;
@@ -131,6 +134,7 @@ namespace OBeautifulCode.DataStructure
                                  copyright,
                                  this.TermsOfUse?.DeepClone(),
                                  this.Version?.DeepClone(),
+                                 this.HelpUrl?.DeepClone(),
                                  this.Details?.DeepClone());
 
             return result;
@@ -164,6 +168,7 @@ namespace OBeautifulCode.DataStructure
                                  this.Copyright?.DeepClone(),
                                  termsOfUse,
                                  this.Version?.DeepClone(),
+                                 this.HelpUrl?.DeepClone(),
                                  this.Details?.DeepClone());
 
             return result;
@@ -197,6 +202,41 @@ namespace OBeautifulCode.DataStructure
                                  this.Copyright?.DeepClone(),
                                  this.TermsOfUse?.DeepClone(),
                                  version,
+                                 this.HelpUrl?.DeepClone(),
+                                 this.Details?.DeepClone());
+
+            return result;
+        }
+
+        /// <summary>
+        /// Deep clones this object with a new <see cref="HelpUrl" />.
+        /// </summary>
+        /// <param name="helpUrl">The new <see cref="HelpUrl" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="AdditionalReportInfo" /> using the specified <paramref name="helpUrl" /> for <see cref="HelpUrl" /> and a deep clone of every other property.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
+        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
+        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
+        public AdditionalReportInfo DeepCloneWithHelpUrl(string helpUrl)
+        {
+            var result = new AdditionalReportInfo(
+                                 this.Copyright?.DeepClone(),
+                                 this.TermsOfUse?.DeepClone(),
+                                 this.Version?.DeepClone(),
+                                 helpUrl,
                                  this.Details?.DeepClone());
 
             return result;
@@ -230,6 +270,7 @@ namespace OBeautifulCode.DataStructure
                                  this.Copyright?.DeepClone(),
                                  this.TermsOfUse?.DeepClone(),
                                  this.Version?.DeepClone(),
+                                 this.HelpUrl?.DeepClone(),
                                  details);
 
             return result;
@@ -239,7 +280,7 @@ namespace OBeautifulCode.DataStructure
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"OBeautifulCode.DataStructure.AdditionalReportInfo: Copyright = {this.Copyright?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, TermsOfUse = {this.TermsOfUse?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Version = {this.Version?.ToString() ?? "<null>"}, Details = {this.Details?.ToString() ?? "<null>"}.");
+            var result = Invariant($"OBeautifulCode.DataStructure.AdditionalReportInfo: Copyright = {this.Copyright?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, TermsOfUse = {this.TermsOfUse?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Version = {this.Version?.ToString() ?? "<null>"}, HelpUrl = {this.HelpUrl?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Details = {this.Details?.ToString() ?? "<null>"}.");
 
             return result;
         }
@@ -300,6 +341,13 @@ namespace OBeautifulCode.DataStructure
                 }
 
                 localValidationFailures = ValidatableExtensions.GetValidationFailures(this.Version, options, propertyPathTracker, nameof(this.Version));
+                result.AddRange(localValidationFailures);
+                if (stopOnFirstObjectWithFailures && result.Any())
+                {
+                    return;
+                }
+
+                localValidationFailures = ValidatableExtensions.GetValidationFailures(this.HelpUrl, options, propertyPathTracker, nameof(this.HelpUrl));
                 result.AddRange(localValidationFailures);
                 if (stopOnFirstObjectWithFailures && result.Any())
                 {

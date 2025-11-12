@@ -41,6 +41,7 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<string>(),
                                  A.Dummy<string>(),
                                  A.Dummy<Version>(),
+                                 A.Dummy<string>(),
                                  A.Dummy<IReadOnlyList<IDetails>>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
