@@ -26,7 +26,6 @@ namespace OBeautifulCode.DataStructure
         /// <param name="availability">OPTIONAL availability of the action item.  DEFAULT is an enabled action.</param>
         /// <param name="media">OPTIONAL media to display alongside the linked text.  DEFAULT is no media.</param>
         /// <param name="hoverOverText">OPTIONAL hover-over text.  DEFAULT is no hover-over text.</param>
-        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings", MessageId = "0#", Justification = ObcSuppressBecause.CA1054_UriParametersShouldNotBeStrings_PreferToRepresentUrlAsString)]
         public MultiActionButtonItem(
             string text,
             ILink link,

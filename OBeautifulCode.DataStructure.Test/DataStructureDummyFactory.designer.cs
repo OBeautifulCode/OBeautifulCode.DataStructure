@@ -117,6 +117,14 @@ namespace OBeautifulCode.DataStructure.Test
                 });
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new Button(
+                                 A.Dummy<string>(),
+                                 A.Dummy<ILink>(),
+                                 A.Dummy<Availability>(),
+                                 A.Dummy<IMedia>(),
+                                 A.Dummy<string>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new BytesPayloadLinkedResource(
                                  A.Dummy<byte[]>(),
                                  A.Dummy<BytesPayloadLinkedResourceKind>()));

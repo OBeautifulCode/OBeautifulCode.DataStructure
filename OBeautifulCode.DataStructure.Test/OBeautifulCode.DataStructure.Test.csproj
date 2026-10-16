@@ -225,6 +225,10 @@
     <Compile Include=".recipes\OBeautifulCode.Type\TypeDummyFactory.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeDummyFactory.designer.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
+    <Compile Include="Models\Classes\CellValue\Controls\ButtonTest.cs" />
+    <Compile Include="Models\Classes\CellValue\Controls\ButtonTest.designer.cs">
+      <DependentUpon>ButtonTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Events\CellInput\CellInputAppliedEventBaseTest.cs" />
     <Compile Include="Events\CellInput\CellInputAppliedEventBaseTest.designer.cs">
       <DependentUpon>CellInputAppliedEventBaseTest.cs</DependentUpon>
