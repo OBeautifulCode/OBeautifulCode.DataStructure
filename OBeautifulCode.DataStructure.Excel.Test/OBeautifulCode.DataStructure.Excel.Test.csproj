@@ -56,20 +56,20 @@
     <Reference Include="MongoDB.Bson, Version=2.4.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MongoDB.Bson.2.4.4\lib\net45\MongoDB.Bson.dll</HintPath>
     </Reference>
-    <Reference Include="OBeautifulCode.AutoFakeItEasy, Version=1.0.141.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OBeautifulCode.AutoFakeItEasy.1.0.141\lib\net462\OBeautifulCode.AutoFakeItEasy.dll</HintPath>
+    <Reference Include="OBeautifulCode.AutoFakeItEasy, Version=1.0.143.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.AutoFakeItEasy.1.0.143\lib\net462\OBeautifulCode.AutoFakeItEasy.dll</HintPath>
     </Reference>
     <Reference Include="OBeautifulCode.Compression, Version=1.0.30.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\OBeautifulCode.Compression.1.0.30\lib\net462\OBeautifulCode.Compression.dll</HintPath>
     </Reference>
-    <Reference Include="OBeautifulCode.CoreOperation, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OBeautifulCode.CoreOperation.1.0.3\lib\net462\OBeautifulCode.CoreOperation.dll</HintPath>
+    <Reference Include="OBeautifulCode.CoreOperation, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.CoreOperation.1.0.5\lib\net462\OBeautifulCode.CoreOperation.dll</HintPath>
     </Reference>
-    <Reference Include="OBeautifulCode.CoreOperation.Serialization.Bson, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OBeautifulCode.CoreOperation.Serialization.Bson.1.0.3\lib\net462\OBeautifulCode.CoreOperation.Serialization.Bson.dll</HintPath>
+    <Reference Include="OBeautifulCode.CoreOperation.Serialization.Bson, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.CoreOperation.Serialization.Bson.1.0.5\lib\net462\OBeautifulCode.CoreOperation.Serialization.Bson.dll</HintPath>
     </Reference>
-    <Reference Include="OBeautifulCode.CoreOperation.Serialization.Json, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OBeautifulCode.CoreOperation.Serialization.Json.1.0.3\lib\net462\OBeautifulCode.CoreOperation.Serialization.Json.dll</HintPath>
+    <Reference Include="OBeautifulCode.CoreOperation.Serialization.Json, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.CoreOperation.Serialization.Json.1.0.5\lib\net462\OBeautifulCode.CoreOperation.Serialization.Json.dll</HintPath>
     </Reference>
     <Reference Include="OBeautifulCode.Excel, Version=1.0.92.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\OBeautifulCode.Excel.1.0.92\lib\net462\OBeautifulCode.Excel.dll</HintPath>
@@ -80,17 +80,17 @@
     <Reference Include="OBeautifulCode.Representation.System, Version=1.0.70.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\OBeautifulCode.Representation.System.1.0.70\lib\net462\OBeautifulCode.Representation.System.dll</HintPath>
     </Reference>
-    <Reference Include="OBeautifulCode.Serialization, Version=1.0.151.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OBeautifulCode.Serialization.1.0.151\lib\net462\OBeautifulCode.Serialization.dll</HintPath>
+    <Reference Include="OBeautifulCode.Serialization, Version=1.0.155.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Serialization.1.0.155\lib\net462\OBeautifulCode.Serialization.dll</HintPath>
     </Reference>
-    <Reference Include="OBeautifulCode.Serialization.Bson, Version=1.0.151.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OBeautifulCode.Serialization.Bson.1.0.151\lib\net462\OBeautifulCode.Serialization.Bson.dll</HintPath>
+    <Reference Include="OBeautifulCode.Serialization.Bson, Version=1.0.155.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Serialization.Bson.1.0.155\lib\net462\OBeautifulCode.Serialization.Bson.dll</HintPath>
     </Reference>
-    <Reference Include="OBeautifulCode.Serialization.Json, Version=1.0.151.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OBeautifulCode.Serialization.Json.1.0.151\lib\net462\OBeautifulCode.Serialization.Json.dll</HintPath>
+    <Reference Include="OBeautifulCode.Serialization.Json, Version=1.0.155.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Serialization.Json.1.0.155\lib\net462\OBeautifulCode.Serialization.Json.dll</HintPath>
     </Reference>
-    <Reference Include="OBeautifulCode.Type, Version=1.0.154.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OBeautifulCode.Type.1.0.154\lib\net462\OBeautifulCode.Type.dll</HintPath>
+    <Reference Include="OBeautifulCode.Type, Version=1.0.158.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Type.1.0.158\lib\net462\OBeautifulCode.Type.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
@@ -200,8 +200,8 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\xunit.core.2.4.1\build\xunit.core.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\xunit.core.2.4.1\build\xunit.core.props'))" />
     <Error Condition="!Exists('..\packages\xunit.core.2.4.1\build\xunit.core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\xunit.core.2.4.1\build\xunit.core.targets'))" />
-    <Error Condition="!Exists('..\packages\OBeautifulCode.Build.Analyzers.1.1.141\build\OBeautifulCode.Build.Analyzers.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\OBeautifulCode.Build.Analyzers.1.1.141\build\OBeautifulCode.Build.Analyzers.targets'))" />
+    <Error Condition="!Exists('..\packages\OBeautifulCode.Build.Analyzers.1.1.142\build\OBeautifulCode.Build.Analyzers.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\OBeautifulCode.Build.Analyzers.1.1.142\build\OBeautifulCode.Build.Analyzers.targets'))" />
   </Target>
   <Import Project="..\packages\xunit.core.2.4.1\build\xunit.core.targets" Condition="Exists('..\packages\xunit.core.2.4.1\build\xunit.core.targets')" />
-  <Import Project="..\packages\OBeautifulCode.Build.Analyzers.1.1.141\build\OBeautifulCode.Build.Analyzers.targets" Condition="Exists('..\packages\OBeautifulCode.Build.Analyzers.1.1.141\build\OBeautifulCode.Build.Analyzers.targets')" />
+  <Import Project="..\packages\OBeautifulCode.Build.Analyzers.1.1.142\build\OBeautifulCode.Build.Analyzers.targets" Condition="Exists('..\packages\OBeautifulCode.Build.Analyzers.1.1.142\build\OBeautifulCode.Build.Analyzers.targets')" />
 </Project>

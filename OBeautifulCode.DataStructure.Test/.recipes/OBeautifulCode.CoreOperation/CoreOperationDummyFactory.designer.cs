@@ -84,6 +84,12 @@ namespace OBeautifulCode.CoreOperation.Test
                              });
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new MultiplyOp
+                             {
+                                 Statements = A.Dummy<IReadOnlyCollection<IReturningOperation<decimal>>>(),
+                             });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () =>
                 {
                     var availableTypes = new[]
@@ -147,6 +153,13 @@ namespace OBeautifulCode.CoreOperation.Test
 
                     return result;
                 });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new SubtractOp
+                             {
+                                 LeftOperand  = A.Dummy<IReturningOperation<decimal>>(),
+                                 RightOperand = A.Dummy<IReturningOperation<decimal>>(),
+                             });
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new SumOp
