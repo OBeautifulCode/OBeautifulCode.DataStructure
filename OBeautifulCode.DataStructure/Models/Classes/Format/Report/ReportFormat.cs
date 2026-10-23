@@ -23,12 +23,14 @@ namespace OBeautifulCode.DataStructure
         /// <param name="options">OPTIONAL formatting options to apply to the report.  DEFAULT is to not apply any of the formatting options.</param>
         /// <param name="renderMode">OPTIONAL value that indicates the mode of report rendering.  DEFAULT is no specified rendering mode.</param>
         /// <param name="readOnly">OPTIONAL value that indicates whether the report should be displayed in a read-only manner (e.g. cannot set values in input cells).  DEFAULT is not read-only.  Note that this is a formatting-only feature and does not prevent applying input values to input cells (i.e. SetCellValue has no way to check whether the report is being rendered as read-only).</param>
+        /// <param name="activeSectionId">OPTIONAL unique identifier of the section that should be active upon loading the report.  DEFAULT is no active section specified.</param>
         public ReportFormat(
             bool? displayTimestamp = null,
             DateTimeFormat timestampFormat = null,
             ReportFormatOptions? options = null,
             ReportRenderMode? renderMode = null,
-            bool? readOnly = null)
+            bool? readOnly = null,
+            string activeSectionId = null)
         {
             if ((displayTimestamp == false) && (timestampFormat != null))
             {
@@ -45,6 +47,7 @@ namespace OBeautifulCode.DataStructure
             this.Options = options;
             this.RenderMode = renderMode;
             this.ReadOnly = readOnly;
+            this.ActiveSectionId = activeSectionId;
         }
 
         /// <summary>
@@ -82,5 +85,10 @@ namespace OBeautifulCode.DataStructure
         /// (i.e. SetCellValue has no way to check whether the report is being rendered as read-only).
         /// </remarks>
         public bool? ReadOnly { get; private set; }
+
+        /// <summary>
+        /// Gets the unique identifier of the section that should be active upon loading the report.
+        /// </summary>
+        public string ActiveSectionId { get; private set; }
     }
 }
