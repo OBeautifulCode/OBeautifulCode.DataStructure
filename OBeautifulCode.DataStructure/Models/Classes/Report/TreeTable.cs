@@ -18,7 +18,7 @@ namespace OBeautifulCode.DataStructure
     using static System.FormattableString;
 
     /// <summary>
-    /// A table (rows and columns) where cells can have arbitrary data, with parent-child relationships between rows
+    /// A table (rows and columns) where cells can have arbitrary data, with optional parent-child relationships between rows
     /// along with various visualization (e.g. setting cell colors) and interaction (e.g. sorting) options.
     /// </summary>
     public partial class TreeTable : IModelViaCodeGen
