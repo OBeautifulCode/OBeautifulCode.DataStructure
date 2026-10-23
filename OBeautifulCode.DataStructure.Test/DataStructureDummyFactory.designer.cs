@@ -1029,7 +1029,8 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<DateTimeFormat>(),
                                  A.Dummy<ReportFormatOptions?>(),
                                  A.Dummy<ReportRenderMode?>(),
-                                 A.Dummy<bool?>()));
+                                 A.Dummy<bool?>(),
+                                 A.Dummy<string>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new Row(
@@ -1073,7 +1074,8 @@ namespace OBeautifulCode.DataStructure.Test
                                  A.Dummy<string>(),
                                  A.Dummy<string>(),
                                  A.Dummy<AdditionalSectionInfo>(),
-                                 A.Dummy<SectionFormat>()));
+                                 A.Dummy<SectionFormat>(),
+                                 A.Dummy<ILink>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new SectionFormat(

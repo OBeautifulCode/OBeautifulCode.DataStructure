@@ -24,13 +24,15 @@ namespace OBeautifulCode.DataStructure
         /// <param name="title">OPTIONAL title of the section.  DEFAULT is a section with no title.</param>
         /// <param name="additionalInfo">OPTIONAL additional information related to the section.  DEFAULT no additional information.</param>
         /// <param name="format">OPTIONAL format to apply to the section.  DEFAULT is to leave the format unchanged.</param>
+        /// <param name="link">OPTIONAL link to some resource.  DEFAULT is no link.</param>
         public Section(
             string id,
             TreeTable treeTable,
             string name = null,
             string title = null,
             AdditionalSectionInfo additionalInfo = null,
-            SectionFormat format = null)
+            SectionFormat format = null,
+            ILink link = null)
         {
             if (id == null)
             {
@@ -53,6 +55,7 @@ namespace OBeautifulCode.DataStructure
             this.Title = title;
             this.AdditionalInfo = additionalInfo;
             this.Format = format;
+            this.Link = link;
         }
 
         /// <summary>
@@ -82,5 +85,10 @@ namespace OBeautifulCode.DataStructure
         /// Gets the format to apply to the section.
         /// </summary>
         public SectionFormat Format { get; private set; }
+
+        /// <summary>
+        /// Gets a link to some resource.
+        /// </summary>
+        public ILink Link { get; private set; }
     }
 }
