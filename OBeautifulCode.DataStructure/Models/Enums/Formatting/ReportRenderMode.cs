@@ -35,5 +35,12 @@ namespace OBeautifulCode.DataStructure
         /// The report is data-heavy, with an emphasis on the tabular information.
         /// </summary>
         TabularData,
+
+        /// <summary>
+        /// The report is data-heavy and tabular, like <see cref="TabularData"/>, but rows may have
+        /// parent/child relationships (a row can contain child rows). Rendered as a tree grid:
+        /// rows and columns, with rows that can be expanded and collapsed.
+        /// </summary>
+        HierarchicalData,
     }
 }
