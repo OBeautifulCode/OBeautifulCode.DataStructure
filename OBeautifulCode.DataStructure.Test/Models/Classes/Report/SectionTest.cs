@@ -75,65 +75,85 @@ namespace OBeautifulCode.DataStructure.Test
                         },
                     })
                 .AddScenario(() =>
-                new DeepCloneWithTestScenario<Section>
-                {
-                    Name = "DeepCloneWithName should deep clone object and replace Name with the provided name",
-                    WithPropertyName = "Name",
-                    SystemUnderTestDeepCloneWithValueFunc = () =>
+                    new DeepCloneWithTestScenario<Section>
                     {
-                        var systemUnderTest = A.Dummy<Section>();
-
-                        var referenceObject = A.Dummy<Section>().ThatIs(_ => !systemUnderTest.Name.IsEqualTo(_.Name));
-
-                        var result = new SystemUnderTestDeepCloneWithValue<Section>
+                        Name = "DeepCloneWithName should deep clone object and replace Name with the provided name",
+                        WithPropertyName = "Name",
+                        SystemUnderTestDeepCloneWithValueFunc = () =>
                         {
-                            SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.Name,
-                        };
+                            var systemUnderTest = A.Dummy<Section>();
 
-                        return result;
-                    },
-                })
-            .AddScenario(() =>
-                new DeepCloneWithTestScenario<Section>
-                {
-                    Name = "DeepCloneWithTitle should deep clone object and replace Title with the provided title",
-                    WithPropertyName = "Title",
-                    SystemUnderTestDeepCloneWithValueFunc = () =>
+                            var referenceObject = A.Dummy<Section>().ThatIs(_ => !systemUnderTest.Name.IsEqualTo(_.Name));
+
+                            var result = new SystemUnderTestDeepCloneWithValue<Section>
+                            {
+                                SystemUnderTest = systemUnderTest,
+                                DeepCloneWithValue = referenceObject.Name,
+                            };
+
+                            return result;
+                        },
+                    })
+                .AddScenario(() =>
+                    new DeepCloneWithTestScenario<Section>
                     {
-                        var systemUnderTest = A.Dummy<Section>();
-
-                        var referenceObject = A.Dummy<Section>().ThatIs(_ => !systemUnderTest.Title.IsEqualTo(_.Title));
-
-                        var result = new SystemUnderTestDeepCloneWithValue<Section>
+                        Name = "DeepCloneWithTitle should deep clone object and replace Title with the provided title",
+                        WithPropertyName = "Title",
+                        SystemUnderTestDeepCloneWithValueFunc = () =>
                         {
-                            SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.Title,
-                        };
+                            var systemUnderTest = A.Dummy<Section>();
 
-                        return result;
-                    },
-                })
-            .AddScenario(() =>
-                new DeepCloneWithTestScenario<Section>
-                {
-                    Name = "DeepCloneWithAdditionalInfo should deep clone object and replace AdditionalInfo with the provided additionalInfo",
-                    WithPropertyName = "AdditionalInfo",
-                    SystemUnderTestDeepCloneWithValueFunc = () =>
+                            var referenceObject = A.Dummy<Section>().ThatIs(_ => !systemUnderTest.Title.IsEqualTo(_.Title));
+
+                            var result = new SystemUnderTestDeepCloneWithValue<Section>
+                            {
+                                SystemUnderTest = systemUnderTest,
+                                DeepCloneWithValue = referenceObject.Title,
+                            };
+
+                            return result;
+                        },
+                    })
+                .AddScenario(() =>
+                    new DeepCloneWithTestScenario<Section>
                     {
-                        var systemUnderTest = A.Dummy<Section>();
-
-                        var referenceObject = A.Dummy<Section>().ThatIs(_ => !systemUnderTest.AdditionalInfo.IsEqualTo(_.AdditionalInfo));
-
-                        var result = new SystemUnderTestDeepCloneWithValue<Section>
+                        Name = "DeepCloneWithAdditionalInfo should deep clone object and replace AdditionalInfo with the provided additionalInfo",
+                        WithPropertyName = "AdditionalInfo",
+                        SystemUnderTestDeepCloneWithValueFunc = () =>
                         {
-                            SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.AdditionalInfo,
-                        };
+                            var systemUnderTest = A.Dummy<Section>();
 
-                        return result;
-                    },
-                });
+                            var referenceObject = A.Dummy<Section>().ThatIs(_ => !systemUnderTest.AdditionalInfo.IsEqualTo(_.AdditionalInfo));
+
+                            var result = new SystemUnderTestDeepCloneWithValue<Section>
+                            {
+                                SystemUnderTest = systemUnderTest,
+                                DeepCloneWithValue = referenceObject.AdditionalInfo,
+                            };
+
+                            return result;
+                        },
+                    })
+                .AddScenario(() =>
+                    new DeepCloneWithTestScenario<Section>
+                    {
+                        Name = "DeepCloneWithLink should deep clone object and replace Link with the provided link",
+                        WithPropertyName = "Link",
+                        SystemUnderTestDeepCloneWithValueFunc = () =>
+                        {
+                            var systemUnderTest = A.Dummy<Section>();
+
+                            var referenceObject = A.Dummy<Section>().ThatIs(_ => !systemUnderTest.Link.IsEqualTo(_.Link));
+
+                            var result = new SystemUnderTestDeepCloneWithValue<Section>
+                            {
+                                SystemUnderTest = systemUnderTest,
+                                DeepCloneWithValue = referenceObject.Link,
+                            };
+
+                            return result;
+                        },
+                    });
 
             // Need to do this because SectionFormat is currently empty and so there isn't a way to create
             // two sections having all the same properties except different formats.
@@ -152,7 +172,8 @@ namespace OBeautifulCode.DataStructure.Test
                                     ReferenceObjectForEquatableTestScenarios.Name,
                                     ReferenceObjectForEquatableTestScenarios.Title,
                                     ReferenceObjectForEquatableTestScenarios.AdditionalInfo,
-                                    ReferenceObjectForEquatableTestScenarios.Format),
+                                    ReferenceObjectForEquatableTestScenarios.Format,
+                                    ReferenceObjectForEquatableTestScenarios.Link),
                         },
                         ObjectsThatAreNotEqualToReferenceObject = new Section[]
                         {
@@ -162,35 +183,56 @@ namespace OBeautifulCode.DataStructure.Test
                                     ReferenceObjectForEquatableTestScenarios.Name,
                                     ReferenceObjectForEquatableTestScenarios.Title,
                                     ReferenceObjectForEquatableTestScenarios.AdditionalInfo,
-                                    ReferenceObjectForEquatableTestScenarios.Format),
+                                    ReferenceObjectForEquatableTestScenarios.Format,
+                                    ReferenceObjectForEquatableTestScenarios.Link),
                             new Section(
                                     ReferenceObjectForEquatableTestScenarios.Id,
                                     A.Dummy<Section>().Whose(_ => !_.TreeTable.IsEqualTo(ReferenceObjectForEquatableTestScenarios.TreeTable)).TreeTable,
                                     ReferenceObjectForEquatableTestScenarios.Name,
                                     ReferenceObjectForEquatableTestScenarios.Title,
                                     ReferenceObjectForEquatableTestScenarios.AdditionalInfo,
-                                    ReferenceObjectForEquatableTestScenarios.Format),
-                            new Section(
-                                    ReferenceObjectForEquatableTestScenarios.Id,
-                                    ReferenceObjectForEquatableTestScenarios.TreeTable,
-                                    ReferenceObjectForEquatableTestScenarios.Name,
-                                    A.Dummy<Section>().Whose(_ => !_.Title.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Title)).Title,
-                                    ReferenceObjectForEquatableTestScenarios.AdditionalInfo,
-                                    ReferenceObjectForEquatableTestScenarios.Format),
+                                    ReferenceObjectForEquatableTestScenarios.Format,
+                                    ReferenceObjectForEquatableTestScenarios.Link),
                             new Section(
                                     ReferenceObjectForEquatableTestScenarios.Id,
                                     ReferenceObjectForEquatableTestScenarios.TreeTable,
                                     A.Dummy<Section>().Whose(_ => !_.Name.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Name)).Name,
                                     ReferenceObjectForEquatableTestScenarios.Title,
                                     ReferenceObjectForEquatableTestScenarios.AdditionalInfo,
-                                    ReferenceObjectForEquatableTestScenarios.Format),
+                                    ReferenceObjectForEquatableTestScenarios.Format,
+                                    ReferenceObjectForEquatableTestScenarios.Link),
                             new Section(
-                                ReferenceObjectForEquatableTestScenarios.Id,
-                                ReferenceObjectForEquatableTestScenarios.TreeTable,
-                                ReferenceObjectForEquatableTestScenarios.Name,
-                                ReferenceObjectForEquatableTestScenarios.Title,
-                                A.Dummy<Section>().Whose(_ => !_.AdditionalInfo.IsEqualTo(ReferenceObjectForEquatableTestScenarios.AdditionalInfo)).AdditionalInfo,
-                                ReferenceObjectForEquatableTestScenarios.Format),
+                                    ReferenceObjectForEquatableTestScenarios.Id,
+                                    ReferenceObjectForEquatableTestScenarios.TreeTable,
+                                    ReferenceObjectForEquatableTestScenarios.Name,
+                                    A.Dummy<Section>().Whose(_ => !_.Title.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Title)).Title,
+                                    ReferenceObjectForEquatableTestScenarios.AdditionalInfo,
+                                    ReferenceObjectForEquatableTestScenarios.Format,
+                                    ReferenceObjectForEquatableTestScenarios.Link),
+                            new Section(
+                                    ReferenceObjectForEquatableTestScenarios.Id,
+                                    ReferenceObjectForEquatableTestScenarios.TreeTable,
+                                    ReferenceObjectForEquatableTestScenarios.Name,
+                                    ReferenceObjectForEquatableTestScenarios.Title,
+                                    A.Dummy<Section>().Whose(_ => !_.AdditionalInfo.IsEqualTo(ReferenceObjectForEquatableTestScenarios.AdditionalInfo)).AdditionalInfo,
+                                    ReferenceObjectForEquatableTestScenarios.Format,
+                                    ReferenceObjectForEquatableTestScenarios.Link),
+                            new Section(
+                                    ReferenceObjectForEquatableTestScenarios.Id,
+                                    ReferenceObjectForEquatableTestScenarios.TreeTable,
+                                    ReferenceObjectForEquatableTestScenarios.Name,
+                                    ReferenceObjectForEquatableTestScenarios.Title,
+                                    ReferenceObjectForEquatableTestScenarios.AdditionalInfo,
+                                    A.Dummy<Section>().Whose(_ => !_.Format.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Format)).Format,
+                                    ReferenceObjectForEquatableTestScenarios.Link),
+                            new Section(
+                                    ReferenceObjectForEquatableTestScenarios.Id,
+                                    ReferenceObjectForEquatableTestScenarios.TreeTable,
+                                    ReferenceObjectForEquatableTestScenarios.Name,
+                                    ReferenceObjectForEquatableTestScenarios.Title,
+                                    ReferenceObjectForEquatableTestScenarios.AdditionalInfo,
+                                    ReferenceObjectForEquatableTestScenarios.Format,
+                                    A.Dummy<Section>().Whose(_ => !_.Link.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Link)).Link),
                         },
                         ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
                         {
