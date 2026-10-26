@@ -145,6 +145,7 @@ namespace OBeautifulCode.DataStructure.Test
             var sectionTitle = A.Dummy<string>();
             var sectionAdditionalInfo = A.Dummy<AdditionalSectionInfo>();
             var sectionFormat = A.Dummy<SectionFormat>();
+            var sectionLink = A.Dummy<ILink>();
             var treeTableFormat = A.Dummy<TableFormat>();
             var tableColumnsColumnsFormat = A.Dummy<ColumnFormat>();
             var columnIdPrefix = "prefix-";
@@ -162,7 +163,7 @@ namespace OBeautifulCode.DataStructure.Test
             }
 
             // Act
-            var actual = rows.ToReport(reportId, reportTitle, reportTimestampUtc, reportDownloadKinds, reportAdditionalInfo, reportFormat, sectionId, sectionName, sectionTitle, sectionAdditionalInfo, sectionFormat, treeTableFormat, tableColumnsColumnsFormat, columnIdPrefix, headerRows, footerRows, tableRowsRowsFormat, dataRowsFormat);
+            var actual = rows.ToReport(reportId, reportTitle, reportTimestampUtc, reportDownloadKinds, reportAdditionalInfo, reportFormat, sectionId, sectionName, sectionTitle, sectionAdditionalInfo, sectionFormat, sectionLink, treeTableFormat, tableColumnsColumnsFormat, columnIdPrefix, headerRows, footerRows, tableRowsRowsFormat, dataRowsFormat);
 
             // Assert
             actual.Sections.AsTest().Must().HaveCount(1);
@@ -181,6 +182,7 @@ namespace OBeautifulCode.DataStructure.Test
             actual.Sections.First().Title.AsTest().Must().BeSameReferenceAs(sectionTitle);
             actual.Sections.First().AdditionalInfo.AsTest().Must().BeSameReferenceAs(sectionAdditionalInfo);
             actual.Sections.First().Format.AsTest().Must().BeSameReferenceAs(sectionFormat);
+            actual.Sections.First().Link.AsTest().Must().BeSameReferenceAs(sectionLink);
             actual.Title.Must().BeSameReferenceAs(reportTitle);
             actual.TimestampUtc.Must().BeEqualTo(reportTimestampUtc);
             actual.DownloadKinds.Must().BeSameReferenceAs(reportDownloadKinds);
@@ -242,6 +244,7 @@ namespace OBeautifulCode.DataStructure.Test
             var sectionTitle = A.Dummy<string>();
             var sectionAdditionalInfo = A.Dummy<AdditionalSectionInfo>();
             var sectionFormat = A.Dummy<SectionFormat>();
+            var sectionLink = A.Dummy<ILink>();
             var treeTableFormat = A.Dummy<TableFormat>();
             var tableColumnsColumnsFormat = A.Dummy<ColumnFormat>();
             var columnIdPrefix = "prefix-";
@@ -259,7 +262,7 @@ namespace OBeautifulCode.DataStructure.Test
             }
 
             // Act
-            var actual = rows.ToSection(sectionId, sectionName, sectionTitle, sectionAdditionalInfo, sectionFormat, treeTableFormat, tableColumnsColumnsFormat, columnIdPrefix, headerRows, footerRows, tableRowsRowsFormat, dataRowsFormat);
+            var actual = rows.ToSection(sectionId, sectionName, sectionTitle, sectionAdditionalInfo, sectionFormat, sectionLink, treeTableFormat, tableColumnsColumnsFormat, columnIdPrefix, headerRows, footerRows, tableRowsRowsFormat, dataRowsFormat);
 
             // Assert
             actual.TreeTable.Format.AsTest().Must().BeSameReferenceAs(treeTableFormat);
@@ -276,6 +279,7 @@ namespace OBeautifulCode.DataStructure.Test
             actual.Title.AsTest().Must().BeSameReferenceAs(sectionTitle);
             actual.AdditionalInfo.AsTest().Must().BeSameReferenceAs(sectionAdditionalInfo);
             actual.Format.AsTest().Must().BeSameReferenceAs(sectionFormat);
+            actual.Link.AsTest().Must().BeSameReferenceAs(sectionLink);
         }
 
         [Fact]
@@ -388,6 +392,7 @@ namespace OBeautifulCode.DataStructure.Test
             var sectionTitle = A.Dummy<string>();
             var sectionAdditionalInfo = A.Dummy<AdditionalSectionInfo>();
             var sectionFormat = A.Dummy<SectionFormat>();
+            var sectionLink = A.Dummy<ILink>();
             var treeTableFormat = A.Dummy<TableFormat>();
             var tableColumnsColumnsFormat = A.Dummy<ColumnFormat>();
             var columnIdPrefix = "prefix-";
@@ -398,7 +403,7 @@ namespace OBeautifulCode.DataStructure.Test
             var row = DataStructureDummyFactory.BuildRowBase(numberOfColumns);
 
             // Act
-            var actual = row.ToReport(reportId, reportTitle, reportTimestampUtc, reportDownloadKinds, reportAdditionalInfo, reportFormat, sectionId, sectionName, sectionTitle, sectionAdditionalInfo, sectionFormat, treeTableFormat, tableColumnsColumnsFormat, columnIdPrefix, headerRows, footerRows, tableRowsRowsFormat, dataRowsFormat);
+            var actual = row.ToReport(reportId, reportTitle, reportTimestampUtc, reportDownloadKinds, reportAdditionalInfo, reportFormat, sectionId, sectionName, sectionTitle, sectionAdditionalInfo, sectionFormat, sectionLink, treeTableFormat, tableColumnsColumnsFormat, columnIdPrefix, headerRows, footerRows, tableRowsRowsFormat, dataRowsFormat);
 
             // Assert
             actual.Sections.AsTest().Must().HaveCount(1);
@@ -418,6 +423,7 @@ namespace OBeautifulCode.DataStructure.Test
             actual.Sections.First().Title.AsTest().Must().BeSameReferenceAs(sectionTitle);
             actual.Sections.First().AdditionalInfo.AsTest().Must().BeSameReferenceAs(sectionAdditionalInfo);
             actual.Sections.First().Format.AsTest().Must().BeSameReferenceAs(sectionFormat);
+            actual.Sections.First().Link.AsTest().Must().BeSameReferenceAs(sectionLink);
             actual.Title.Must().BeSameReferenceAs(reportTitle);
             actual.TimestampUtc.Must().BeEqualTo(reportTimestampUtc);
             actual.DownloadKinds.Must().BeSameReferenceAs(reportDownloadKinds);
@@ -465,6 +471,7 @@ namespace OBeautifulCode.DataStructure.Test
             var sectionTitle = A.Dummy<string>();
             var sectionAdditionalInfo = A.Dummy<AdditionalSectionInfo>();
             var sectionFormat = A.Dummy<SectionFormat>();
+            var sectionLink = A.Dummy<ILink>();
             var treeTableFormat = A.Dummy<TableFormat>();
             var tableColumnsColumnsFormat = A.Dummy<ColumnFormat>();
             var columnIdPrefix = "prefix-";
@@ -475,7 +482,7 @@ namespace OBeautifulCode.DataStructure.Test
             var row = DataStructureDummyFactory.BuildRowBase(numberOfColumns);
 
             // Act
-            var actual = row.ToSection(sectionId, sectionName, sectionTitle, sectionAdditionalInfo, sectionFormat, treeTableFormat, tableColumnsColumnsFormat, columnIdPrefix, headerRows, footerRows, tableRowsRowsFormat, dataRowsFormat);
+            var actual = row.ToSection(sectionId, sectionName, sectionTitle, sectionAdditionalInfo, sectionFormat, sectionLink, treeTableFormat, tableColumnsColumnsFormat, columnIdPrefix, headerRows, footerRows, tableRowsRowsFormat, dataRowsFormat);
 
             // Assert
             actual.TreeTable.Format.AsTest().Must().BeSameReferenceAs(treeTableFormat);
@@ -493,6 +500,7 @@ namespace OBeautifulCode.DataStructure.Test
             actual.Title.AsTest().Must().BeSameReferenceAs(sectionTitle);
             actual.AdditionalInfo.AsTest().Must().BeSameReferenceAs(sectionAdditionalInfo);
             actual.Format.AsTest().Must().BeSameReferenceAs(sectionFormat);
+            actual.Link.AsTest().Must().BeSameReferenceAs(sectionLink);
         }
 
         [Fact]
@@ -571,6 +579,7 @@ namespace OBeautifulCode.DataStructure.Test
             var sectionTitle = A.Dummy<string>();
             var sectionAdditionalInfo = A.Dummy<AdditionalSectionInfo>();
             var sectionFormat = A.Dummy<SectionFormat>();
+            var sectionLink = A.Dummy<ILink>();
             var treeTableFormat = A.Dummy<TableFormat>();
             var tableColumnsColumnsFormat = A.Dummy<ColumnFormat>();
             var columnIdPrefix = "prefix-";
@@ -582,7 +591,7 @@ namespace OBeautifulCode.DataStructure.Test
             var cells = DataStructureDummyFactory.BuildRowCells(numberOfColumns, true);
 
             // Act
-            var actual = cells.ToReport(reportId, reportTitle, reportTimestampUtc, reportDownloadKinds, reportAdditionalInfo, reportFormat, sectionId, sectionName, sectionTitle, sectionAdditionalInfo, sectionFormat, treeTableFormat, tableColumnsColumnsFormat, columnIdPrefix, headerRows, footerRows, tableRowsRowsFormat, dataRowsFormat, rowId);
+            var actual = cells.ToReport(reportId, reportTitle, reportTimestampUtc, reportDownloadKinds, reportAdditionalInfo, reportFormat, sectionId, sectionName, sectionTitle, sectionAdditionalInfo, sectionFormat, sectionLink, treeTableFormat, tableColumnsColumnsFormat, columnIdPrefix, headerRows, footerRows, tableRowsRowsFormat, dataRowsFormat, rowId);
 
             // Assert
             actual.Sections.AsTest().Must().HaveCount(1);
@@ -601,6 +610,7 @@ namespace OBeautifulCode.DataStructure.Test
             actual.Sections.First().Title.AsTest().Must().BeSameReferenceAs(sectionTitle);
             actual.Sections.First().AdditionalInfo.AsTest().Must().BeSameReferenceAs(sectionAdditionalInfo);
             actual.Sections.First().Format.AsTest().Must().BeSameReferenceAs(sectionFormat);
+            actual.Sections.First().Link.AsTest().Must().BeSameReferenceAs(sectionLink);
             actual.Title.Must().BeSameReferenceAs(reportTitle);
             actual.TimestampUtc.Must().BeEqualTo(reportTimestampUtc);
             actual.DownloadKinds.Must().BeSameReferenceAs(reportDownloadKinds);
@@ -648,6 +658,7 @@ namespace OBeautifulCode.DataStructure.Test
             var sectionTitle = A.Dummy<string>();
             var sectionAdditionalInfo = A.Dummy<AdditionalSectionInfo>();
             var sectionFormat = A.Dummy<SectionFormat>();
+            var sectionLink = A.Dummy<ILink>();
             var treeTableFormat = A.Dummy<TableFormat>();
             var tableColumnsColumnsFormat = A.Dummy<ColumnFormat>();
             var columnIdPrefix = "prefix-";
@@ -659,7 +670,7 @@ namespace OBeautifulCode.DataStructure.Test
             var cells = DataStructureDummyFactory.BuildRowCells(numberOfColumns, true);
 
             // Act
-            var actual = cells.ToSection(sectionId, sectionName, sectionTitle, sectionAdditionalInfo, sectionFormat, treeTableFormat, tableColumnsColumnsFormat, columnIdPrefix, headerRows, footerRows, tableRowsRowsFormat, dataRowsFormat, rowId);
+            var actual = cells.ToSection(sectionId, sectionName, sectionTitle, sectionAdditionalInfo, sectionFormat, sectionLink, treeTableFormat, tableColumnsColumnsFormat, columnIdPrefix, headerRows, footerRows, tableRowsRowsFormat, dataRowsFormat, rowId);
 
             // Assert
             actual.TreeTable.Format.AsTest().Must().BeSameReferenceAs(treeTableFormat);
@@ -677,6 +688,7 @@ namespace OBeautifulCode.DataStructure.Test
             actual.Title.AsTest().Must().BeSameReferenceAs(sectionTitle);
             actual.AdditionalInfo.AsTest().Must().BeSameReferenceAs(sectionAdditionalInfo);
             actual.Format.AsTest().Must().BeSameReferenceAs(sectionFormat);
+            actual.Link.AsTest().Must().BeSameReferenceAs(sectionLink);
         }
 
         [Fact]
@@ -756,6 +768,7 @@ namespace OBeautifulCode.DataStructure.Test
             var sectionTitle = A.Dummy<string>();
             var sectionAdditionalInfo = A.Dummy<AdditionalSectionInfo>();
             var sectionFormat = A.Dummy<SectionFormat>();
+            var sectionLink = A.Dummy<ILink>();
             var treeTableFormat = A.Dummy<TableFormat>();
             var tableColumnsColumnsFormat = A.Dummy<ColumnFormat>();
             var columnIdPrefix = "prefix-";
@@ -767,7 +780,7 @@ namespace OBeautifulCode.DataStructure.Test
             var cell = DataStructureDummyFactory.BuildRowCells(numberOfColumns, false).First();
 
             // Act
-            var actual = cell.ToReport(reportId, reportTitle, reportTimestampUtc, reportDownloadKinds, reportAdditionalInfo, reportFormat, sectionId, sectionName, sectionTitle, sectionAdditionalInfo, sectionFormat, treeTableFormat, tableColumnsColumnsFormat, columnIdPrefix, headerRows, footerRows, tableRowsRowsFormat, dataRowsFormat, rowId);
+            var actual = cell.ToReport(reportId, reportTitle, reportTimestampUtc, reportDownloadKinds, reportAdditionalInfo, reportFormat, sectionId, sectionName, sectionTitle, sectionAdditionalInfo, sectionFormat, sectionLink, treeTableFormat, tableColumnsColumnsFormat, columnIdPrefix, headerRows, footerRows, tableRowsRowsFormat, dataRowsFormat, rowId);
 
             // Assert
             actual.Sections.AsTest().Must().HaveCount(1);
@@ -787,6 +800,7 @@ namespace OBeautifulCode.DataStructure.Test
             actual.Sections.First().Title.AsTest().Must().BeSameReferenceAs(sectionTitle);
             actual.Sections.First().AdditionalInfo.AsTest().Must().BeSameReferenceAs(sectionAdditionalInfo);
             actual.Sections.First().Format.AsTest().Must().BeSameReferenceAs(sectionFormat);
+            actual.Sections.First().Link.AsTest().Must().BeSameReferenceAs(sectionLink);
             actual.Title.Must().BeSameReferenceAs(reportTitle);
             actual.TimestampUtc.Must().BeEqualTo(reportTimestampUtc);
             actual.DownloadKinds.Must().BeSameReferenceAs(reportDownloadKinds);
@@ -847,6 +861,7 @@ namespace OBeautifulCode.DataStructure.Test
             var sectionTitle = A.Dummy<string>();
             var sectionAdditionalInfo = A.Dummy<AdditionalSectionInfo>();
             var sectionFormat = A.Dummy<SectionFormat>();
+            var sectionLink = A.Dummy<ILink>();
             var treeTableFormat = A.Dummy<TableFormat>();
             var tableColumnsColumnsFormat = A.Dummy<ColumnFormat>();
             var columnIdPrefix = "prefix-";
@@ -858,7 +873,7 @@ namespace OBeautifulCode.DataStructure.Test
             var cell = DataStructureDummyFactory.BuildRowCells(numberOfColumns, false).First();
 
             // Act
-            var actual = cell.ToSection(sectionId, sectionName, sectionTitle, sectionAdditionalInfo, sectionFormat, treeTableFormat, tableColumnsColumnsFormat, columnIdPrefix, headerRows, footerRows, tableRowsRowsFormat, dataRowsFormat, rowId);
+            var actual = cell.ToSection(sectionId, sectionName, sectionTitle, sectionAdditionalInfo, sectionFormat, sectionLink, treeTableFormat, tableColumnsColumnsFormat, columnIdPrefix, headerRows, footerRows, tableRowsRowsFormat, dataRowsFormat, rowId);
 
             // Assert
             actual.TreeTable.Format.AsTest().Must().BeSameReferenceAs(treeTableFormat);
@@ -877,6 +892,7 @@ namespace OBeautifulCode.DataStructure.Test
             actual.Title.AsTest().Must().BeSameReferenceAs(sectionTitle);
             actual.AdditionalInfo.AsTest().Must().BeSameReferenceAs(sectionAdditionalInfo);
             actual.Format.AsTest().Must().BeSameReferenceAs(sectionFormat);
+            actual.Link.AsTest().Must().BeSameReferenceAs(sectionLink);
         }
 
         [Fact]

@@ -65,6 +65,7 @@ namespace OBeautifulCode.DataStructure
         /// <param name="sectionTitle">OPTIONAL title of the section.  DEFAULT is a section with no title.</param>
         /// <param name="sectionAdditionalInfo">OPTIONAL additional information related to the section.  DEFAULT no additional information.</param>
         /// <param name="sectionFormat">OPTIONAL format to apply to the section.  DEFAULT is to leave the format unchanged.</param>
+        /// <param name="sectionLink">OPTIONAL section link to some resource.  DEFAULT is no link.</param>
         /// <returns>
         /// A single-<see cref="Section"/> <see cref="Report"/> containing the specified <paramref name="treeTable"/>.
         /// </returns>
@@ -80,10 +81,11 @@ namespace OBeautifulCode.DataStructure
             string sectionName = null,
             string sectionTitle = null,
             AdditionalSectionInfo sectionAdditionalInfo = null,
-            SectionFormat sectionFormat = null)
+            SectionFormat sectionFormat = null,
+            ILink sectionLink = null)
         {
             var result = treeTable
-                .ToSection(sectionId, sectionName, sectionTitle, sectionAdditionalInfo, sectionFormat)
+                .ToSection(sectionId, sectionName, sectionTitle, sectionAdditionalInfo, sectionFormat, sectionLink)
                 .ToReport(id, title, timestampUtc, downloadKinds, additionalInfo, format);
 
             return result;
@@ -98,6 +100,7 @@ namespace OBeautifulCode.DataStructure
         /// <param name="title">OPTIONAL title of the section.  DEFAULT is a section with no title.</param>
         /// <param name="additionalInfo">OPTIONAL additional information related to the section.  DEFAULT no additional information.</param>
         /// <param name="format">OPTIONAL format to apply to the section.  DEFAULT is to leave the format unchanged.</param>
+        /// <param name="link">OPTIONAL section link to some resource.  DEFAULT is no link.</param>
         /// <returns>
         /// A <see cref="Section"/> containing the specified <paramref name="treeTable"/>.
         /// </returns>
@@ -107,7 +110,8 @@ namespace OBeautifulCode.DataStructure
             string name = null,
             string title = null,
             AdditionalSectionInfo additionalInfo = null,
-            SectionFormat format = null)
+            SectionFormat format = null,
+            ILink link = null)
         {
             var result = new Section(
                 id,
@@ -115,7 +119,8 @@ namespace OBeautifulCode.DataStructure
                 name,
                 title,
                 additionalInfo,
-                format);
+                format,
+                link);
 
             return result;
         }
@@ -135,6 +140,7 @@ namespace OBeautifulCode.DataStructure
         /// <param name="sectionTitle">OPTIONAL title of the section.  DEFAULT is a section with no title.</param>
         /// <param name="sectionAdditionalInfo">OPTIONAL additional information related to the section.  DEFAULT no additional information.</param>
         /// <param name="sectionFormat">OPTIONAL format to apply to the section.  DEFAULT is to leave the format unchanged.</param>
+        /// <param name="sectionLink">OPTIONAL section link to some resource.  DEFAULT is no link.</param>
         /// <param name="treeTableFormat">OPTIONAL format to apply to the whole table.  DEFAULT is to leave the format unchanged.</param>
         /// <param name="tableColumnsColumnsFormat">
         /// OPTIONAL format to apply to all columns in the table, individually.
@@ -164,6 +170,7 @@ namespace OBeautifulCode.DataStructure
             string sectionTitle = null,
             AdditionalSectionInfo sectionAdditionalInfo = null,
             SectionFormat sectionFormat = null,
+            ILink sectionLink = null,
             TableFormat treeTableFormat = null,
             ColumnFormat tableColumnsColumnsFormat = null,
             string columnIdPrefix = null,
@@ -174,7 +181,7 @@ namespace OBeautifulCode.DataStructure
         {
             var result = rows
                 .ToTreeTable(treeTableFormat, tableColumnsColumnsFormat, columnIdPrefix, headerRows, footerRows, tableRowsRowsFormat, dataRowsFormat)
-                .ToReport(id, title, timestampUtc, downloadKinds, additionalInfo, format, sectionId, sectionName, sectionTitle, sectionAdditionalInfo, sectionFormat);
+                .ToReport(id, title, timestampUtc, downloadKinds, additionalInfo, format, sectionId, sectionName, sectionTitle, sectionAdditionalInfo, sectionFormat, sectionLink);
 
             return result;
         }
@@ -188,6 +195,7 @@ namespace OBeautifulCode.DataStructure
         /// <param name="title">OPTIONAL title of the section.  DEFAULT is a section with no title.</param>
         /// <param name="additionalInfo">OPTIONAL additional information related to the section.  DEFAULT no additional information.</param>
         /// <param name="format">OPTIONAL format to apply to the section.  DEFAULT is to leave the format unchanged.</param>
+        /// <param name="link">OPTIONAL section link to some resource.  DEFAULT is no link.</param>
         /// <param name="treeTableFormat">OPTIONAL format to apply to the whole table.  DEFAULT is to leave the format unchanged.</param>
         /// <param name="tableColumnsColumnsFormat">
         /// OPTIONAL format to apply to all columns in the table, individually.
@@ -211,6 +219,7 @@ namespace OBeautifulCode.DataStructure
             string title = null,
             AdditionalSectionInfo additionalInfo = null,
             SectionFormat format = null,
+            ILink link = null,
             TableFormat treeTableFormat = null,
             ColumnFormat tableColumnsColumnsFormat = null,
             string columnIdPrefix = null,
@@ -221,7 +230,7 @@ namespace OBeautifulCode.DataStructure
         {
             var result = rows
                 .ToTreeTable(treeTableFormat, tableColumnsColumnsFormat, columnIdPrefix, headerRows, footerRows, tableRowsRowsFormat, dataRowsFormat)
-                .ToSection(id, name, title, additionalInfo, format);
+                .ToSection(id, name, title, additionalInfo, format, link);
 
             return result;
         }
@@ -305,6 +314,7 @@ namespace OBeautifulCode.DataStructure
         /// <param name="sectionTitle">OPTIONAL title of the section.  DEFAULT is a section with no title.</param>
         /// <param name="sectionAdditionalInfo">OPTIONAL additional information related to the section.  DEFAULT no additional information.</param>
         /// <param name="sectionFormat">OPTIONAL format to apply to the section.  DEFAULT is to leave the format unchanged.</param>
+        /// <param name="sectionLink">OPTIONAL section link to some resource.  DEFAULT is no link.</param>
         /// <param name="treeTableFormat">OPTIONAL format to apply to the whole table.  DEFAULT is to leave the format unchanged.</param>
         /// <param name="tableColumnsColumnsFormat">
         /// OPTIONAL format to apply to all columns in the table, individually.
@@ -334,6 +344,7 @@ namespace OBeautifulCode.DataStructure
             string sectionTitle = null,
             AdditionalSectionInfo sectionAdditionalInfo = null,
             SectionFormat sectionFormat = null,
+            ILink sectionLink = null,
             TableFormat treeTableFormat = null,
             ColumnFormat tableColumnsColumnsFormat = null,
             string columnIdPrefix = null,
@@ -343,7 +354,7 @@ namespace OBeautifulCode.DataStructure
             DataRowsFormat dataRowsFormat = null)
         {
             var result = new[] { row }
-                .ToReport(id, title, timestampUtc, downloadKinds, additionalInfo, format, sectionId, sectionName, sectionTitle, sectionAdditionalInfo, sectionFormat, treeTableFormat, tableColumnsColumnsFormat, columnIdPrefix, headerRows, footerRows, tableRowsRowsFormat, dataRowsFormat);
+                .ToReport(id, title, timestampUtc, downloadKinds, additionalInfo, format, sectionId, sectionName, sectionTitle, sectionAdditionalInfo, sectionFormat, sectionLink, treeTableFormat, tableColumnsColumnsFormat, columnIdPrefix, headerRows, footerRows, tableRowsRowsFormat, dataRowsFormat);
 
             return result;
         }
@@ -357,6 +368,7 @@ namespace OBeautifulCode.DataStructure
         /// <param name="title">OPTIONAL title of the section.  DEFAULT is a section with no title.</param>
         /// <param name="additionalInfo">OPTIONAL additional information related to the section.  DEFAULT no additional information.</param>
         /// <param name="format">OPTIONAL format to apply to the section.  DEFAULT is to leave the format unchanged.</param>
+        /// <param name="link">OPTIONAL section link to some resource.  DEFAULT is no link.</param>
         /// <param name="treeTableFormat">OPTIONAL format to apply to the whole table.  DEFAULT is to leave the format unchanged.</param>
         /// <param name="tableColumnsColumnsFormat">
         /// OPTIONAL format to apply to all columns in the table, individually.
@@ -380,6 +392,7 @@ namespace OBeautifulCode.DataStructure
             string title = null,
             AdditionalSectionInfo additionalInfo = null,
             SectionFormat format = null,
+            ILink link = null,
             TableFormat treeTableFormat = null,
             ColumnFormat tableColumnsColumnsFormat = null,
             string columnIdPrefix = null,
@@ -389,7 +402,7 @@ namespace OBeautifulCode.DataStructure
             DataRowsFormat dataRowsFormat = null)
         {
             var result = new[] { row }
-                .ToSection(id, name, title, additionalInfo, format, treeTableFormat, tableColumnsColumnsFormat, columnIdPrefix, headerRows, footerRows, tableRowsRowsFormat, dataRowsFormat);
+                .ToSection(id, name, title, additionalInfo, format, link, treeTableFormat, tableColumnsColumnsFormat, columnIdPrefix, headerRows, footerRows, tableRowsRowsFormat, dataRowsFormat);
 
             return result;
         }
@@ -445,6 +458,7 @@ namespace OBeautifulCode.DataStructure
         /// <param name="sectionTitle">OPTIONAL title of the section.  DEFAULT is a section with no title.</param>
         /// <param name="sectionAdditionalInfo">OPTIONAL additional information related to the section.  DEFAULT no additional information.</param>
         /// <param name="sectionFormat">OPTIONAL format to apply to the section.  DEFAULT is to leave the format unchanged.</param>
+        /// <param name="sectionLink">OPTIONAL section link to some resource.  DEFAULT is no link.</param>
         /// <param name="treeTableFormat">OPTIONAL format to apply to the whole table.  DEFAULT is to leave the format unchanged.</param>
         /// <param name="tableColumnsColumnsFormat">
         /// OPTIONAL format to apply to all columns in the table, individually.
@@ -475,6 +489,7 @@ namespace OBeautifulCode.DataStructure
             string sectionTitle = null,
             AdditionalSectionInfo sectionAdditionalInfo = null,
             SectionFormat sectionFormat = null,
+            ILink sectionLink = null,
             TableFormat treeTableFormat = null,
             ColumnFormat tableColumnsColumnsFormat = null,
             string columnIdPrefix = null,
@@ -486,7 +501,7 @@ namespace OBeautifulCode.DataStructure
         {
             var result = cells
                 .ToFlatRow(rowId)
-                .ToReport(id, title, timestampUtc, downloadKinds, additionalInfo, format, sectionId, sectionName, sectionTitle, sectionAdditionalInfo, sectionFormat, treeTableFormat, tableColumnsColumnsFormat, columnIdPrefix, headerRows, footerRows, tableRowsRowsFormat, dataRowsFormat);
+                .ToReport(id, title, timestampUtc, downloadKinds, additionalInfo, format, sectionId, sectionName, sectionTitle, sectionAdditionalInfo, sectionFormat, sectionLink, treeTableFormat, tableColumnsColumnsFormat, columnIdPrefix, headerRows, footerRows, tableRowsRowsFormat, dataRowsFormat);
 
             return result;
         }
@@ -500,6 +515,7 @@ namespace OBeautifulCode.DataStructure
         /// <param name="title">OPTIONAL title of the section.  DEFAULT is a section with no title.</param>
         /// <param name="additionalInfo">OPTIONAL additional information related to the section.  DEFAULT no additional information.</param>
         /// <param name="format">OPTIONAL format to apply to the section.  DEFAULT is to leave the format unchanged.</param>
+        /// <param name="link">OPTIONAL section link to some resource.  DEFAULT is no link.</param>
         /// <param name="treeTableFormat">OPTIONAL format to apply to the whole table.  DEFAULT is to leave the format unchanged.</param>
         /// <param name="tableColumnsColumnsFormat">
         /// OPTIONAL format to apply to all columns in the table, individually.
@@ -524,6 +540,7 @@ namespace OBeautifulCode.DataStructure
             string title = null,
             AdditionalSectionInfo additionalInfo = null,
             SectionFormat format = null,
+            ILink link = null,
             TableFormat treeTableFormat = null,
             ColumnFormat tableColumnsColumnsFormat = null,
             string columnIdPrefix = null,
@@ -535,7 +552,7 @@ namespace OBeautifulCode.DataStructure
         {
             var result = cells
                 .ToFlatRow(rowId)
-                .ToSection(id, name, title, additionalInfo, format, treeTableFormat, tableColumnsColumnsFormat, columnIdPrefix, headerRows, footerRows, tableRowsRowsFormat, dataRowsFormat);
+                .ToSection(id, name, title, additionalInfo, format, link, treeTableFormat, tableColumnsColumnsFormat, columnIdPrefix, headerRows, footerRows, tableRowsRowsFormat, dataRowsFormat);
 
             return result;
         }
@@ -594,6 +611,7 @@ namespace OBeautifulCode.DataStructure
         /// <param name="sectionTitle">OPTIONAL title of the section.  DEFAULT is a section with no title.</param>
         /// <param name="sectionAdditionalInfo">OPTIONAL additional information related to the section.  DEFAULT no additional information.</param>
         /// <param name="sectionFormat">OPTIONAL format to apply to the section.  DEFAULT is to leave the format unchanged.</param>
+        /// <param name="sectionLink">OPTIONAL section link to some resource.  DEFAULT is no link.</param>
         /// <param name="treeTableFormat">OPTIONAL format to apply to the whole table.  DEFAULT is to leave the format unchanged.</param>
         /// <param name="tableColumnsColumnsFormat">
         /// OPTIONAL format to apply to all columns in the table, individually.
@@ -624,6 +642,7 @@ namespace OBeautifulCode.DataStructure
             string sectionTitle = null,
             AdditionalSectionInfo sectionAdditionalInfo = null,
             SectionFormat sectionFormat = null,
+            ILink sectionLink = null,
             TableFormat treeTableFormat = null,
             ColumnFormat tableColumnsColumnsFormat = null,
             string columnIdPrefix = null,
@@ -634,7 +653,7 @@ namespace OBeautifulCode.DataStructure
             string rowId = null)
         {
             var result = new[] { cell }
-                .ToReport(id, title, timestampUtc, downloadKinds, additionalInfo, format, sectionId, sectionName, sectionTitle, sectionAdditionalInfo, sectionFormat, treeTableFormat, tableColumnsColumnsFormat, columnIdPrefix, headerRows, footerRows, tableRowsRowsFormat, dataRowsFormat, rowId);
+                .ToReport(id, title, timestampUtc, downloadKinds, additionalInfo, format, sectionId, sectionName, sectionTitle, sectionAdditionalInfo, sectionFormat, sectionLink, treeTableFormat, tableColumnsColumnsFormat, columnIdPrefix, headerRows, footerRows, tableRowsRowsFormat, dataRowsFormat, rowId);
 
             return result;
         }
@@ -648,6 +667,7 @@ namespace OBeautifulCode.DataStructure
         /// <param name="title">OPTIONAL title of the section.  DEFAULT is a section with no title.</param>
         /// <param name="additionalInfo">OPTIONAL additional information related to the section.  DEFAULT no additional information.</param>
         /// <param name="format">OPTIONAL format to apply to the section.  DEFAULT is to leave the format unchanged.</param>
+        /// <param name="link">OPTIONAL section link to some resource.  DEFAULT is no link.</param>
         /// <param name="treeTableFormat">OPTIONAL format to apply to the whole table.  DEFAULT is to leave the format unchanged.</param>
         /// <param name="tableColumnsColumnsFormat">
         /// OPTIONAL format to apply to all columns in the table, individually.
@@ -672,6 +692,7 @@ namespace OBeautifulCode.DataStructure
             string title = null,
             AdditionalSectionInfo additionalInfo = null,
             SectionFormat format = null,
+            ILink link = null,
             TableFormat treeTableFormat = null,
             ColumnFormat tableColumnsColumnsFormat = null,
             string columnIdPrefix = null,
@@ -682,7 +703,7 @@ namespace OBeautifulCode.DataStructure
             string rowId = null)
         {
             var result = new[] { cell }
-                .ToSection(id, name, title, additionalInfo, format, treeTableFormat, tableColumnsColumnsFormat, columnIdPrefix, headerRows, footerRows, tableRowsRowsFormat, dataRowsFormat, rowId);
+                .ToSection(id, name, title, additionalInfo, format, link, treeTableFormat, tableColumnsColumnsFormat, columnIdPrefix, headerRows, footerRows, tableRowsRowsFormat, dataRowsFormat, rowId);
 
             return result;
         }
