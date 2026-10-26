@@ -94,5 +94,23 @@ namespace OBeautifulCode.DataStructure
         /// Gets the format to apply to the whole table.
         /// </summary>
         public TableFormat Format { get; private set; }
+
+        /// <summary>
+        /// Builds an empty/minimum tree table.
+        /// </summary>
+        /// <returns>
+        /// An empty/minimum tree table.
+        /// </returns>
+        public static TreeTable BuildEmpty()
+        {
+            var result = new TreeTable(
+                new TableColumns(
+                    new[]
+                    {
+                        new Column(),
+                    }));
+
+            return result;
+        }
     }
 }

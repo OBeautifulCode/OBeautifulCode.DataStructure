@@ -525,5 +525,23 @@ namespace OBeautifulCode.DataStructure.Test
             // Assert
             actual.AsTest().Must().BeNull();
         }
+
+        [Fact]
+        public static void BuildEmpty___Returns_an_empty_tree_table___When_called()
+        {
+            // Arrange
+            var expected = new TreeTable(
+                new TableColumns(
+                    new[]
+                    {
+                        new Column(),
+                    }));
+
+            // Act
+            var actual = TreeTable.BuildEmpty();
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+        }
     }
 }
