@@ -45,6 +45,7 @@ namespace OBeautifulCode.DataStructure.Excel
                 nameof(ReportFormat.TimestampFormat),
                 nameof(ReportFormat.Options),
                 nameof(ReportFormat.RenderMode),
+                nameof(ReportFormat.ActiveSectionId),
             };
 
             reportFormat.ThrowOnNotImplementedProperty(implementedProperties);

@@ -79,6 +79,8 @@ namespace OBeautifulCode.DataStructure.Excel
             // Add sections
             var sections = report.Sections.Concat(sectionsToAppend).ToList();
 
+            Worksheet worksheetToActivate = null;
+
             foreach (var section in sections)
             {
                 var worksheetName = section.GetWorksheetName(context);
@@ -95,6 +97,16 @@ namespace OBeautifulCode.DataStructure.Excel
 
                 // On second pass, apply formatting.
                 cursors.AddSection(section, context, PassKind.Formatting, report);
+
+                if (section.Id == report.Format?.ActiveSectionId)
+                {
+                    worksheetToActivate = worksheet;
+                }
+            }
+
+            if (worksheetToActivate != null)
+            {
+                result.Worksheets.ActiveSheetIndex = worksheetToActivate.Index;
             }
 
             return result;
