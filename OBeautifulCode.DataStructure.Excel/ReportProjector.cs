@@ -83,6 +83,14 @@ namespace OBeautifulCode.DataStructure.Excel
 
             foreach (var section in sections)
             {
+                if (section.Link != null)
+                {
+                    // Doesn't make sense to render a link.
+                    // Also, the author shouldn't construct a Section that has a link and a populated TreeTable.
+                    // The Link is meant to navigate to some resource.
+                    continue;
+                }
+
                 var worksheetName = section.GetWorksheetName(context);
 
                 var worksheet = result.Worksheets.Add(worksheetName);
@@ -102,6 +110,11 @@ namespace OBeautifulCode.DataStructure.Excel
                 {
                     worksheetToActivate = worksheet;
                 }
+            }
+
+            if (result.Worksheets.Count == 0)
+            {
+                throw new InvalidOperationException(Invariant($"All {nameof(Section)}s are linked and thus skipped.  The {nameof(Workbook)} has no {nameof(Section)}s."));
             }
 
             if (worksheetToActivate != null)
