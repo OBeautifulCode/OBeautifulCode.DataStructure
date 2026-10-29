@@ -90,6 +90,7 @@ namespace OBeautifulCode.DataStructure.Excel
             switch (reportRenderMode)
             {
                 case ReportRenderMode.TabularData:
+                case ReportRenderMode.HierarchicalData:
                     break;
                 default:
                     throw new NotImplementedException(Invariant($"This {nameof(ReportRenderMode)} is not yet implemented: {reportRenderMode}."));
