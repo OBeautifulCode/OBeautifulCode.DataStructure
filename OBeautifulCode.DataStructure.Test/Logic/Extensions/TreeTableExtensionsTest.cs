@@ -272,12 +272,28 @@ namespace OBeautifulCode.DataStructure.Test
         public static void ReplaceCell___Should_throw_InvalidOperationException_with_ArgumentException_in_InnerException___When_the_replacement_results_in_a_malformed_tree_table()
         {
             // Arrange
-            var treeTable = A.Dummy<TreeTable>().Whose(_ => _.GetAllCells().Count > 2);
+            var treeTable = A.Dummy<TreeTable>().Whose(_ => _.GetAllCells().Count > 5);
             var cells = treeTable.GetAllCells().ToList();
-            var randomCellIndex = ThreadSafeRandom.Next(0, cells.Count);
-            var cellToReplace = cells[randomCellIndex];
-            cells.RemoveAt(randomCellIndex);
-            var cellToUse = A.Dummy<ConstCell<Version>>()  // use an INotSlottedCell, which can be used to replace a cell within a slot or a cell within a row
+
+            // choose a random cell to remove
+            var cellToReplace = cells[ThreadSafeRandom.Next(0, cells.Count)];
+            cells.Remove(cellToReplace);
+
+            // replace it with a new cell, but use an id from the remaining cells
+            // however, if the cell to replace is a slotted cell, then don't choose the id of
+            // one of the contained cells.  If you remove the slotted cell, then the contained cells
+            // are no longer in the tree table, so if you choose the id of one of the contained cells
+            // the tree table will build just fine
+            if (cellToReplace is ISlottedCell slottedCell)
+            {
+                foreach (var cell in slottedCell.SlotIdToCellMap.Values)
+                {
+                    cells.Remove(cell);
+                }
+            }
+
+            // use an INotSlottedCell, which can be used to replace a cell within a slot or a cell within a row.
+            var cellToUse = A.Dummy<ConstCell<Version>>()
                 .Whose(_ => (_.ColumnsSpanned ?? 1) == (cellToReplace.ColumnsSpanned ?? 1))
                 .DeepCloneWithId(cells[ThreadSafeRandom.Next(0, cells.Count)].Id);
 
